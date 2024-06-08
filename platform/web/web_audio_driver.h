@@ -4,15 +4,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef AUDIO_DRIVER_JAVASCRIPT_H
-#define AUDIO_DRIVER_JAVASCRIPT_H
+#ifndef WEB_AUDIO_DRIVER_H
+#define WEB_AUDIO_DRIVER_H
 
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
 #include "rebel_audio.h"
 #include "servers/audio_server.h"
 
-class AudioDriverJavaScript : public AudioDriver {
+class WebAudioDriver : public AudioDriver {
 private:
     struct AudioContext {
         bool inited          = false;
@@ -34,7 +34,7 @@ private:
     static void _state_change_callback(int p_state);
     static void _latency_update_callback(float p_latency);
 
-    static AudioDriverJavaScript* singleton;
+    static WebAudioDriver* singleton;
 
 protected:
     void _audio_driver_process(int p_from = 0, int p_samples = 0);
@@ -74,11 +74,11 @@ public:
 
     static void resume();
 
-    AudioDriverJavaScript() {}
+    WebAudioDriver() {}
 };
 
 #ifdef NO_THREADS
-class AudioDriverScriptProcessor : public AudioDriverJavaScript {
+class AudioDriverScriptProcessor : public WebAudioDriver {
 private:
     static void _process_callback();
 
@@ -107,7 +107,7 @@ public:
     }
 };
 
-class AudioDriverWorklet : public AudioDriverJavaScript {
+class AudioDriverWorklet : public WebAudioDriver {
 private:
     static void _process_callback(int p_pos, int p_samples);
     static void _capture_callback(int p_pos, int p_samples);
@@ -137,7 +137,7 @@ public:
     }
 };
 #else
-class AudioDriverWorklet : public AudioDriverJavaScript {
+class AudioDriverWorklet : public WebAudioDriver {
 private:
     enum {
         STATE_LOCK,
@@ -172,6 +172,6 @@ public:
     void lock() override;
     void unlock() override;
 };
-#endif
+#endif // NO_THREADS
 
-#endif
+#endif // WEB_AUDIO_DRIVER_H

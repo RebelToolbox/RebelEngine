@@ -18,7 +18,7 @@ def is_active():
 
 
 def get_name():
-    return "JavaScript"
+    return "Web"
 
 
 def can_build():
@@ -39,7 +39,7 @@ def get_opts():
         BoolVariable("use_lsan", "Use Emscripten leak sanitizer (LSAN)", False),
         BoolVariable("use_safe_heap", "Use Emscripten SAFE_HEAP sanitizer", False),
         # eval() can be a security concern, so it can be disabled.
-        BoolVariable("javascript_eval", "Enable JavaScript eval interface", True),
+        BoolVariable("web_eval", "Enable Web eval interface", True),
         BoolVariable(
             "threads_enabled",
             "Enable WebAssembly Threads support (limited browser support)",
@@ -195,11 +195,11 @@ def configure(env):
     env["LIBPREFIXES"] = ["$LIBPREFIX"]
     env["LIBSUFFIXES"] = ["$LIBSUFFIX"]
 
-    env.Prepend(CPPPATH=["#platform/javascript"])
-    env.Append(CPPDEFINES=["JAVASCRIPT_ENABLED", "UNIX_ENABLED"])
+    env.Prepend(CPPPATH=["#platform/web"])
+    env.Append(CPPDEFINES=["WEB_ENABLED", "UNIX_ENABLED"])
 
-    if env["javascript_eval"]:
-        env.Append(CPPDEFINES=["JAVASCRIPT_EVAL_ENABLED"])
+    if env["web_eval"]:
+        env.Append(CPPDEFINES=["WEB_EVAL_ENABLED"])
 
     if env["threads_enabled"] and env["gdnative_enabled"]:
         print(

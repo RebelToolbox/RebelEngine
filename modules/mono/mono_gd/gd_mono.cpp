@@ -57,13 +57,13 @@ GDMono* GDMono::singleton = NULL;
 namespace
 {
 
-#if defined(JAVASCRIPT_ENABLED)
+#if defined(WEB_ENABLED)
 extern "C" {
 void mono_wasm_load_runtime(const char* managed_path, int enable_debugging);
 }
 #endif
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
 
 void gd_mono_setup_runtime_main_args() {
     CharString execpath = OS::get_singleton()->get_executable_path().utf8();
@@ -193,9 +193,9 @@ void gd_mono_debug_init() {
     mono_jit_parse_options(2, (char**)options);
 }
 
-#endif // !defined(JAVASCRIPT_ENABLED)
+#endif // !defined(WEB_ENABLED)
 
-#if defined(JAVASCRIPT_ENABLED)
+#if defined(WEB_ENABLED)
 MonoDomain* gd_initialize_mono_runtime() {
     const char* vfs_prefix = "managed";
     int enable_debugging   = 0;
@@ -371,7 +371,7 @@ void GDMono::initialize() {
 
     GDMonoLog::get_singleton()->initialize();
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
     String assembly_rootdir;
     String config_dir;
     determine_mono_dirs(assembly_rootdir, config_dir);
@@ -399,7 +399,7 @@ void GDMono::initialize() {
 
     GDMonoAssembly::initialize();
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
     gd_mono_profiler_init();
 #endif
 
@@ -438,7 +438,7 @@ void GDMono::initialize() {
 
     GDMonoUtils::set_main_thread(GDMonoUtils::get_current_thread());
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
     gd_mono_setup_runtime_main_args(
     ); // Required for System.Environment.GetCommandLineArgs
 #endif

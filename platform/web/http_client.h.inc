@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-// HTTPClient's additional private members in the javascript platform
+// HTTPClient's additional private members in the Web platform
 
 Error make_request(
     Method p_method,

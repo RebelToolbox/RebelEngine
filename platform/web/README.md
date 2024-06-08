@@ -1,12 +1,12 @@
-# HTML5 platform port
+# Web platform port
 
-This folder contains the C++ and JavaScript code for the HTML5/WebAssembly platform port,
+This folder contains the C++ and JavaScript code for the Web platform port,
 compiled using [Emscripten](https://emscripten.org/).
 
 It also contains a ESLint linting setup (see [`package.json`](package.json)).
 
 See also [`tools/dist/html`](/tools/dist/html) folder for files used by this platform
-such as the HTML5 shell.
+such as the Web shell.
 
 ## Artwork license
 

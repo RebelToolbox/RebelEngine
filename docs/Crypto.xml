@@ -41,7 +41,7 @@ SPDX-License-Identifier: MIT
             assert(verified)
             assert(data.to_utf8() == decrypted)
         [/codeblock]
-        [b]Note:[/b] Not available in HTML5 exports.
+        [b]Note:[/b] Not available in Web exports.
     </description>
     <tutorials>
     </tutorials>

@@ -14,8 +14,8 @@
 #include "editor/editor_export.h"
 #include "editor/editor_node.h"
 #include "main/splash.gen.h"
-#include "platform/javascript/logo.gen.h"
-#include "platform/javascript/run_icon.gen.h"
+#include "platform/web/logo.gen.h"
+#include "platform/web/run_icon.gen.h"
 
 class EditorHTTPServer : public Reference {
 private:
@@ -254,8 +254,8 @@ public:
     }
 };
 
-class EditorExportPlatformJavaScript : public EditorExportPlatform {
-    GDCLASS(EditorExportPlatformJavaScript, EditorExportPlatform);
+class WebEditorExportPlatform : public EditorExportPlatform {
+    GDCLASS(WebEditorExportPlatform, EditorExportPlatform);
 
     Ref<ImageTexture> logo;
     Ref<ImageTexture> run_icon;
@@ -412,11 +412,11 @@ public:
         Set<String>& p_features
     ) {}
 
-    EditorExportPlatformJavaScript();
-    ~EditorExportPlatformJavaScript();
+    WebEditorExportPlatform();
+    ~WebEditorExportPlatform();
 };
 
-Error EditorExportPlatformJavaScript::_extract_template(
+Error WebEditorExportPlatform::_extract_template(
     const String& p_template,
     const String& p_dir,
     const String& p_name,
@@ -481,7 +481,7 @@ Error EditorExportPlatformJavaScript::_extract_template(
     return OK;
 }
 
-Error EditorExportPlatformJavaScript::_write_or_error(
+Error WebEditorExportPlatform::_write_or_error(
     const uint8_t* p_content,
     int p_size,
     String p_path
@@ -498,7 +498,7 @@ Error EditorExportPlatformJavaScript::_write_or_error(
     return OK;
 }
 
-void EditorExportPlatformJavaScript::_replace_strings(
+void WebEditorExportPlatform::_replace_strings(
     Map<String, String> p_replaces,
     Vector<uint8_t>& r_template
 ) {
@@ -523,7 +523,7 @@ void EditorExportPlatformJavaScript::_replace_strings(
     }
 }
 
-void EditorExportPlatformJavaScript::_fix_html(
+void WebEditorExportPlatform::_fix_html(
     Vector<uint8_t>& p_html,
     const Ref<EditorExportPreset>& p_preset,
     const String& p_name,
@@ -588,7 +588,7 @@ void EditorExportPlatformJavaScript::_fix_html(
     _replace_strings(replaces, p_html);
 }
 
-Error EditorExportPlatformJavaScript::_add_manifest_icon(
+Error WebEditorExportPlatform::_add_manifest_icon(
     const String& p_path,
     const String& p_icon,
     int p_size,
@@ -630,7 +630,7 @@ Error EditorExportPlatformJavaScript::_add_manifest_icon(
     return err;
 }
 
-Error EditorExportPlatformJavaScript::_build_pwa(
+Error WebEditorExportPlatform::_build_pwa(
     const Ref<EditorExportPreset>& p_preset,
     const String p_path,
     const Vector<SharedObject>& p_shared_objects
@@ -770,7 +770,7 @@ Error EditorExportPlatformJavaScript::_build_pwa(
     return OK;
 }
 
-void EditorExportPlatformJavaScript::get_preset_features(
+void WebEditorExportPlatform::get_preset_features(
     const Ref<EditorExportPreset>& p_preset,
     List<String>* r_features
 ) {
@@ -801,8 +801,7 @@ void EditorExportPlatformJavaScript::get_preset_features(
     }
 }
 
-void EditorExportPlatformJavaScript::get_export_options(
-    List<ExportOption>* r_options
+void WebEditorExportPlatform::get_export_options(List<ExportOption>* r_options
 ) {
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -946,19 +945,19 @@ void EditorExportPlatformJavaScript::get_export_options(
     ));
 }
 
-String EditorExportPlatformJavaScript::get_name() const {
-    return "HTML5";
+String WebEditorExportPlatform::get_name() const {
+    return "Web";
 }
 
-String EditorExportPlatformJavaScript::get_os_name() const {
-    return "HTML5";
+String WebEditorExportPlatform::get_os_name() const {
+    return "Web";
 }
 
-Ref<Texture> EditorExportPlatformJavaScript::get_logo() const {
+Ref<Texture> WebEditorExportPlatform::get_logo() const {
     return logo;
 }
 
-bool EditorExportPlatformJavaScript::can_export(
+bool WebEditorExportPlatform::can_export(
     const Ref<EditorExportPreset>& p_preset,
     String& r_error,
     bool& r_missing_templates
@@ -1005,7 +1004,7 @@ bool EditorExportPlatformJavaScript::can_export(
     return valid;
 }
 
-List<String> EditorExportPlatformJavaScript::get_binary_extensions(
+List<String> WebEditorExportPlatform::get_binary_extensions(
     const Ref<EditorExportPreset>& p_preset
 ) const {
     List<String> list;
@@ -1013,7 +1012,7 @@ List<String> EditorExportPlatformJavaScript::get_binary_extensions(
     return list;
 }
 
-Error EditorExportPlatformJavaScript::export_project(
+Error WebEditorExportPlatform::export_project(
     const Ref<EditorExportPreset>& p_preset,
     bool p_debug,
     const String& p_path,
@@ -1174,7 +1173,7 @@ Error EditorExportPlatformJavaScript::export_project(
     return OK;
 }
 
-bool EditorExportPlatformJavaScript::poll_export() {
+bool WebEditorExportPlatform::poll_export() {
     Ref<EditorExportPreset> preset;
 
     for (int i = 0;
@@ -1201,17 +1200,16 @@ bool EditorExportPlatformJavaScript::poll_export() {
     return menu_options != prev;
 }
 
-Ref<ImageTexture> EditorExportPlatformJavaScript::get_option_icon(int p_index
-) const {
+Ref<ImageTexture> WebEditorExportPlatform::get_option_icon(int p_index) const {
     return p_index == 1 ? stop_icon
                         : EditorExportPlatform::get_option_icon(p_index);
 }
 
-int EditorExportPlatformJavaScript::get_options_count() const {
+int WebEditorExportPlatform::get_options_count() const {
     return menu_options;
 }
 
-Error EditorExportPlatformJavaScript::run(
+Error WebEditorExportPlatform::run(
     const Ref<EditorExportPreset>& p_preset,
     int p_option,
     int p_debug_flags
@@ -1297,12 +1295,12 @@ Error EditorExportPlatformJavaScript::run(
     return OK;
 }
 
-Ref<Texture> EditorExportPlatformJavaScript::get_run_icon() const {
+Ref<Texture> WebEditorExportPlatform::get_run_icon() const {
     return run_icon;
 }
 
-void EditorExportPlatformJavaScript::_server_thread_poll(void* data) {
-    EditorExportPlatformJavaScript* ej = (EditorExportPlatformJavaScript*)data;
+void WebEditorExportPlatform::_server_thread_poll(void* data) {
+    WebEditorExportPlatform* ej = (WebEditorExportPlatform*)data;
     while (!ej->server_quit) {
         OS::get_singleton()->delay_usec(1000);
         {
@@ -1312,15 +1310,15 @@ void EditorExportPlatformJavaScript::_server_thread_poll(void* data) {
     }
 }
 
-EditorExportPlatformJavaScript::EditorExportPlatformJavaScript() {
+WebEditorExportPlatform::WebEditorExportPlatform() {
     server.instance();
     server_thread.start(_server_thread_poll, this);
 
-    Ref<Image> img = memnew(Image(_javascript_logo));
+    Ref<Image> img = memnew(Image(_web_logo));
     logo.instance();
     logo->create_from_image(img);
 
-    img = Ref<Image>(memnew(Image(_javascript_run_icon)));
+    img = Ref<Image>(memnew(Image(_web_run_icon)));
     run_icon.instance();
     run_icon->create_from_image(img);
 
@@ -1332,13 +1330,13 @@ EditorExportPlatformJavaScript::EditorExportPlatformJavaScript() {
     }
 }
 
-EditorExportPlatformJavaScript::~EditorExportPlatformJavaScript() {
+WebEditorExportPlatform::~WebEditorExportPlatform() {
     server->stop();
     server_quit = true;
     server_thread.wait_to_finish();
 }
 
-void register_javascript_exporter() {
+void register_web_exporter() {
     EDITOR_DEF("export/web/http_host", "localhost");
     EDITOR_DEF("export/web/http_port", 8060);
     EDITOR_DEF("export/web/use_ssl", false);
@@ -1363,7 +1361,7 @@ void register_javascript_exporter() {
         "*.crt,*.pem"
     ));
 
-    Ref<EditorExportPlatformJavaScript> platform;
+    Ref<WebEditorExportPlatform> platform;
     platform.instance();
     EditorExport::get_singleton()->add_export_platform(platform);
 }

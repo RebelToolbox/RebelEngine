@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "api/javascript_singleton.h"
+#include "web_javascript.h"
 
 #include "emscripten.h"
 
@@ -17,7 +17,7 @@ extern void rebel_js_os_download_buffer(
 );
 }
 
-#ifdef JAVASCRIPT_EVAL_ENABLED
+#ifdef WEB_EVAL_ENABLED
 
 extern "C" {
 typedef union {
@@ -465,7 +465,7 @@ Variant JavaScript::eval(const String& p_code, bool p_use_global_exec_context) {
     }
 }
 
-#endif // JAVASCRIPT_EVAL_ENABLED
+#endif // WEB_EVAL_ENABLED
 
 void JavaScript::download_buffer(
     Vector<uint8_t> p_arr,

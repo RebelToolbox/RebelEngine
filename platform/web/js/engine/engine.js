@@ -6,7 +6,7 @@
  * of `Promises <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises>`__.
  *
  * @module Engine
- * @header HTML5 shell class reference
+ * @header Web shell class reference
  */
 const Engine = (function () {
 	const preloader = new Preloader();

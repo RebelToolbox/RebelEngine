@@ -4,4 +4,4 @@
 //
 // SPDX-License-Identifier: MIT
 
-void register_javascript_exporter();
+void register_web_exporter();

@@ -7,7 +7,7 @@
 #ifndef WSLPEER_H
 #define WSLPEER_H
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
 
 #include "core/error_list.h"
 #include "core/io/packet_peer.h"
@@ -108,6 +108,6 @@ public:
     ~WSLPeer();
 };
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED
 
 #endif // LSWPEER_H

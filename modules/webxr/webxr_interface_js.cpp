@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "webxr_interface_js.h"
 
@@ -491,4 +491,4 @@ WebXRInterfaceJS::~WebXRInterfaceJS() {
     };
 };
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED

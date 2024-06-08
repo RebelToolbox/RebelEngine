@@ -4,18 +4,18 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_JAVASCRIPT_H
-#define OS_JAVASCRIPT_H
+#ifndef WEB_OS_H
+#define WEB_OS_H
 
-#include "audio_driver_javascript.h"
 #include "drivers/unix/os_unix.h"
 #include "main/input_default.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
+#include "web_audio_driver.h"
 
 #include <emscripten/html5.h>
 
-class OS_JavaScript : public OS_Unix {
+class WebOS : public OS_Unix {
 private:
     struct JSTouchEvent {
         uint32_t identifier[32] = {0};
@@ -49,7 +49,7 @@ private:
 
     MainLoop* main_loop;
     int video_driver_index;
-    List<AudioDriverJavaScript*> audio_drivers;
+    List<WebAudioDriver*> audio_drivers;
     VisualServer* visual_server;
 
     bool swap_ok_cancel;
@@ -117,7 +117,7 @@ public:
     bool check_size_force_redraw();
 
     // Override return type to make writing static callbacks less tedious.
-    static OS_JavaScript* get_singleton();
+    static WebOS* get_singleton();
 
     virtual bool has_virtual_keyboard() const;
     virtual void show_virtual_keyboard(
@@ -224,7 +224,7 @@ public:
         void*& p_library_handle,
         bool p_also_set_library_path
     );
-    OS_JavaScript();
+    WebOS();
 };
 
-#endif
+#endif // WEB_OS_H

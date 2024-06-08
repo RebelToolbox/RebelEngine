@@ -388,11 +388,11 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platform_android.library_extension = "*.so";
         platforms["Android"]               = platform_android;
 
-        NativePlatformConfig platform_html5;
-        platform_html5.name = "HTML5";
-        platform_html5.entries.push_back("wasm32");
-        platform_html5.library_extension = "*.wasm";
-        platforms["HTML5"]               = platform_html5;
+        NativePlatformConfig platform_web;
+        platform_web.name = "Web";
+        platform_web.entries.push_back("wasm32");
+        platform_web.library_extension = "*.wasm";
+        platforms["Web"]               = platform_web;
 
         NativePlatformConfig platform_ios;
         platform_ios.name = "iOS";

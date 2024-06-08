@@ -25,7 +25,7 @@
 #endif
 #include <netinet/in.h>
 #include <sys/socket.h>
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 #include <arpa/inet.h>
 #endif
 

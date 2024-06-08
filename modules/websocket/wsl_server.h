@@ -7,7 +7,7 @@
 #ifndef WSLSERVER_H
 #define WSLSERVER_H
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
 
 #include "core/io/stream_peer_ssl.h"
 #include "core/io/stream_peer_tcp.h"
@@ -84,6 +84,6 @@ public:
     ~WSLServer();
 };
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED
 
 #endif // WSLSERVER_H

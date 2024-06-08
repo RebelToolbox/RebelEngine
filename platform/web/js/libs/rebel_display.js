@@ -414,7 +414,7 @@ const RebelDisplay = {
 		}
 		navigator.clipboard.writeText(text).catch(function (e) {
 			// Setting OS clipboard is only possible from an input callback.
-			RebelRuntime.error('Setting OS clipboard is only possible from an input callback for the HTML5 plafrom. Exception:', e);
+			RebelRuntime.error('Setting OS clipboard is only possible from an input callback for the Web plafrom. Exception:', e);
 		});
 		return 0;
 	},

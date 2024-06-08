@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
 
 #include "wsl_peer.h"
 
@@ -385,4 +385,4 @@ WSLPeer::~WSLPeer() {
     _data = nullptr;
 }
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED

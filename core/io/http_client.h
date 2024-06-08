@@ -124,7 +124,7 @@ private:
         PORT_HTTPS = 443,
     };
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
     Status status;
     IP::ResolverID resolving;
     Array ip_candidates;
@@ -156,7 +156,7 @@ private:
     Error _get_http_data(uint8_t* p_buffer, int p_bytes, int& r_received);
 
 #else
-#include "platform/javascript/http_client.h.inc"
+#include "platform/web/http_client.h.inc"
 #endif
 
     PoolStringArray _get_response_headers();

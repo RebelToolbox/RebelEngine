@@ -4,15 +4,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVASCRIPT_TOOLS_EDITOR_PLUGIN_H
-#define JAVASCRIPT_TOOLS_EDITOR_PLUGIN_H
+#ifndef WEB_TOOLS_EDITOR_PLUGIN_H
+#define WEB_TOOLS_EDITOR_PLUGIN_H
 
-#if defined(TOOLS_ENABLED) && defined(JAVASCRIPT_ENABLED)
+#if defined(TOOLS_ENABLED) && defined(WEB_ENABLED)
 #include "core/io/zip_io.h"
 #include "editor/editor_plugin.h"
 
-class JavaScriptToolsEditorPlugin : public EditorPlugin {
-    GDCLASS(JavaScriptToolsEditorPlugin, EditorPlugin);
+class WebToolsEditorPlugin : public EditorPlugin {
+    GDCLASS(WebToolsEditorPlugin, EditorPlugin);
 
 private:
     void _zip_file(String p_path, String p_base_path, zipFile p_zip);
@@ -26,13 +26,13 @@ protected:
 public:
     static void initialize();
 
-    JavaScriptToolsEditorPlugin(EditorNode* p_editor);
+    WebToolsEditorPlugin(EditorNode* p_editor);
 };
 #else
-class JavaScriptToolsEditorPlugin {
+class WebToolsEditorPlugin {
 public:
     static void initialize() {}
 };
 #endif
 
-#endif // JAVASCRIPT_TOOLS_EDITOR_PLUGIN_H
+#endif // WEB_TOOLS_EDITOR_PLUGIN_H

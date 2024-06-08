@@ -6495,7 +6495,7 @@ void RasterizerStorageGLES2::_render_target_allocate(RenderTarget* rt) {
     /* BACK FBO */
     /* For MSAA */
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
     if (rt->msaa >= VS::VIEWPORT_MSAA_2X && rt->msaa <= VS::VIEWPORT_MSAA_16X
         && config.multisample_supported) {
         rt->multisample_active = true;
@@ -6613,7 +6613,7 @@ void RasterizerStorageGLES2::_render_target_allocate(RenderTarget* rt) {
 #endif
 
     } else
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED
     {
         rt->multisample_active = false;
     }
@@ -8021,7 +8021,7 @@ void RasterizerStorageGLES2::initialize() {
     config.s3tc_supported = false;
 #endif
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
     // RenderBuffer internal format must be 16 bits in WebGL,
     // but depth_texture should default to 32 always
     // if the implementation doesn't support 32, it should just quietly use 16
@@ -8097,7 +8097,7 @@ void RasterizerStorageGLES2::initialize() {
 
 #ifdef GLES_OVER_GL
     config.support_write_depth = true;
-#elif defined(JAVASCRIPT_ENABLED)
+#elif defined(WEB_ENABLED)
     config.support_write_depth = false;
 #else
     config.support_write_depth = config.extensions.has("GL_EXT_frag_depth");
@@ -8106,7 +8106,7 @@ void RasterizerStorageGLES2::initialize() {
     config.support_half_float_vertices = true;
 // every platform should support this except web, iOS has issues with their
 // support, so add option to disable
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
     config.support_half_float_vertices = false;
 #endif
     bool disable_half_float =

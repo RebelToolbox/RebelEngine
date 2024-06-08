@@ -44,11 +44,11 @@ def create_engine_file(env, target, source, externs):
 
 def create_template_zip(env, js, wasm, extra):
     binary_name = "rebel.tools" if env["tools"] else "rebel"
-    zip_dir = env.Dir("#bin/.javascript_zip")
+    zip_dir = env.Dir("#bin/.web_zip")
     in_files = [
         js,
         wasm,
-        "#platform/javascript/js/libs/audio.worklet.js",
+        "#platform/web/js/libs/audio.worklet.js",
     ]
     out_files = [
         zip_dir.File(binary_name + ".js"),

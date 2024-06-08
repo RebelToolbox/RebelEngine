@@ -294,7 +294,7 @@ SPDX-License-Identifier: MIT
         <method name="get_name" qualifiers="const">
             <return type="String" />
             <description>
-                Returns the name of the host OS. Possible values are: [code]"Android"[/code], [code]"iOS"[/code], [code]"HTML5"[/code], [code]"macOS"[/code], [code]"Server"[/code], [code]"Windows"[/code], [code]"UWP"[/code], [code]"X11"[/code].
+                Returns the name of the host OS. Possible values are: [code]"Android"[/code], [code]"iOS"[/code], [code]"Web"[/code], [code]"macOS"[/code], [code]"Server"[/code], [code]"Windows"[/code], [code]"UWP"[/code], [code]"X11"[/code].
             </description>
         </method>
         <method name="get_native_handle">
@@ -500,7 +500,7 @@ SPDX-License-Identifier: MIT
             <description>
                 Returns a string that is unique to the device.
                 [b]Note:[/b] This string may change without notice if the user reinstalls/upgrades their operating system or changes their hardware. This means it should generally not be used to encrypt persistent data as the data saved before an unexpected ID change would become inaccessible. The returned string may also be falsified using external programs, so do not rely on the string returned by [method get_unique_id] for security purposes.
-                [b]Note:[/b] Returns an empty string on HTML5 and UWP, as this method isn't implemented on those platforms yet.
+                [b]Note:[/b] Returns an empty string on Web and UWP, as this method isn't implemented on those platforms yet.
             </description>
         </method>
         <method name="get_unix_time" qualifiers="const">
@@ -656,7 +656,7 @@ SPDX-License-Identifier: MIT
         <method name="is_userfs_persistent" qualifiers="const">
             <return type="bool" />
             <description>
-                If [code]true[/code], the [code]user://[/code] file system is persistent, so that its state is the same after a player quits and starts the game again. Relevant to the HTML5 platform, where this persistence may be unavailable.
+                If [code]true[/code], the [code]user://[/code] file system is persistent, so that its state is the same after a player quits and starts the game again. Relevant to the Web platform, where this persistence may be unavailable.
             </description>
         </method>
         <method name="is_window_always_on_top" qualifiers="const">
@@ -835,7 +835,7 @@ SPDX-License-Identifier: MIT
             <description>
                 Sets the game's icon using an [Image] resource.
                 The same image is used for window caption, taskbar/dock and window selection dialog. Image is scaled as needed.
-                [b]Note:[/b] This method is implemented on HTML5, Linux, macOS and Windows.
+                [b]Note:[/b] This method is implemented on the Linux, macOS, Windows and Web platforms.
             </description>
         </method>
         <method name="set_ime_active">
@@ -914,7 +914,7 @@ SPDX-License-Identifier: MIT
             <description>
                 Sets the window title to the specified string.
                 [b]Note:[/b] This should be used sporadically. Don't set this every frame, as that will negatively affect performance on some window managers.
-                [b]Note:[/b] This method is implemented on HTML5, Linux, macOS and Windows.
+                [b]Note:[/b] This method is implemented on the Linux, macOS, Windows and Web platforms.
             </description>
         </method>
         <method name="shell_open">
@@ -926,7 +926,7 @@ SPDX-License-Identifier: MIT
                 - [code]OS.shell_open("https://rebeltoolbox.com")[/code] opens the default web browser on the official Rebel Toolbox website.
                 - [code]OS.shell_open("mailto:example@example.com")[/code] opens the default email client with the "To" field set to [code]example@example.com[/code]. See [url=https://blog.escapecreative.com/customizing-mailto-links/]Customizing [code]mailto:[/code] Links[/url] for a list of fields that can be added.
                 Use [method ProjectSettings.globalize_path] to convert a [code]res://[/code] or [code]user://[/code] path into a system path for use with this method.
-                [b]Note:[/b] This method is implemented on Android, iOS, HTML5, Linux, macOS and Windows.
+                [b]Note:[/b] This method is implemented on the Linux, macOS, Windows, Android, iOS and Web platforms.
             </description>
         </method>
         <method name="show_virtual_keyboard">
@@ -1002,7 +1002,7 @@ SPDX-License-Identifier: MIT
             If [code]true[/code], the window background is transparent and the window frame is removed.
             Use [code]get_tree().get_root().set_transparent_background(true)[/code] to disable main viewport background rendering.
             [b]Note:[/b] This property has no effect if [member ProjectSettings.display/window/per_pixel_transparency/allowed] setting is disabled.
-            [b]Note:[/b] This property is implemented on HTML5, Linux, macOS, Windows, and Android. It can't be changed at runtime for Android. Use [member ProjectSettings.display/window/per_pixel_transparency/enabled] to set it at startup instead.
+            [b]Note:[/b] This property is implemented on the Linux, macOS, Windows, Android and Web platforms. It can't be changed at runtime for Android. Use [member ProjectSettings.display/window/per_pixel_transparency/enabled] to set it at startup instead.
         </member>
         <member name="window_position" type="Vector2" setter="set_window_position" getter="get_window_position" default="Vector2( 0, 0 )">
             The window position relative to the screen, the origin is the top left corner, +Y axis goes to the bottom and +X axis goes to the right.

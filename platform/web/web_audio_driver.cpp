@@ -4,27 +4,27 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "audio_driver_javascript.h"
+#include "web_audio_driver.h"
 
 #include "core/project_settings.h"
 
 #include <emscripten.h>
 
-AudioDriverJavaScript::AudioContext AudioDriverJavaScript::audio_context;
+WebAudioDriver::AudioContext WebAudioDriver::audio_context;
 
-bool AudioDriverJavaScript::is_available() {
+bool WebAudioDriver::is_available() {
     return rebel_audio_is_available() != 0;
 }
 
-void AudioDriverJavaScript::_state_change_callback(int p_state) {
-    AudioDriverJavaScript::audio_context.state = p_state;
+void WebAudioDriver::_state_change_callback(int p_state) {
+    WebAudioDriver::audio_context.state = p_state;
 }
 
-void AudioDriverJavaScript::_latency_update_callback(float p_latency) {
-    AudioDriverJavaScript::audio_context.output_latency = p_latency;
+void WebAudioDriver::_latency_update_callback(float p_latency) {
+    WebAudioDriver::audio_context.output_latency = p_latency;
 }
 
-void AudioDriverJavaScript::_audio_driver_process(int p_from, int p_samples) {
+void WebAudioDriver::_audio_driver_process(int p_from, int p_samples) {
     int32_t* stream_buffer = reinterpret_cast<int32_t*>(output_rb);
     const int max_samples  = memarr_len(output_rb);
 
@@ -53,7 +53,7 @@ void AudioDriverJavaScript::_audio_driver_process(int p_from, int p_samples) {
     }
 }
 
-void AudioDriverJavaScript::_audio_driver_capture(int p_from, int p_samples) {
+void WebAudioDriver::_audio_driver_capture(int p_from, int p_samples) {
     if (get_input_buffer().size() == 0) {
         return; // Input capture stopped.
     }
@@ -79,7 +79,7 @@ void AudioDriverJavaScript::_audio_driver_capture(int p_from, int p_samples) {
     }
 }
 
-Error AudioDriverJavaScript::init() {
+Error WebAudioDriver::init() {
     int latency = GLOBAL_GET("audio/output_latency");
     if (!audio_context.inited) {
         audio_context.mix_rate      = GLOBAL_GET("audio/mix_rate");
@@ -115,29 +115,29 @@ Error AudioDriverJavaScript::init() {
     return OK;
 }
 
-void AudioDriverJavaScript::start() {
+void WebAudioDriver::start() {
     start(output_rb, memarr_len(output_rb), input_rb, memarr_len(input_rb));
 }
 
-void AudioDriverJavaScript::resume() {
+void WebAudioDriver::resume() {
     if (audio_context.state == 0) { // 'suspended'
         rebel_audio_resume();
     }
 }
 
-float AudioDriverJavaScript::get_latency() {
+float WebAudioDriver::get_latency() {
     return audio_context.output_latency + (float(buffer_length) / mix_rate);
 }
 
-int AudioDriverJavaScript::get_mix_rate() const {
+int WebAudioDriver::get_mix_rate() const {
     return mix_rate;
 }
 
-AudioDriver::SpeakerMode AudioDriverJavaScript::get_speaker_mode() const {
+AudioDriver::SpeakerMode WebAudioDriver::get_speaker_mode() const {
     return get_speaker_mode_by_total_channels(channel_count);
 }
 
-void AudioDriverJavaScript::finish() {
+void WebAudioDriver::finish() {
     finish_driver();
     if (output_rb) {
         memdelete_arr(output_rb);
@@ -149,7 +149,7 @@ void AudioDriverJavaScript::finish() {
     }
 }
 
-Error AudioDriverJavaScript::capture_start() {
+Error WebAudioDriver::capture_start() {
     lock();
     input_buffer_init(buffer_length);
     unlock();
@@ -159,7 +159,7 @@ Error AudioDriverJavaScript::capture_start() {
     return OK;
 }
 
-Error AudioDriverJavaScript::capture_stop() {
+Error WebAudioDriver::capture_stop() {
     rebel_audio_capture_stop();
     lock();
     input_buffer.clear();

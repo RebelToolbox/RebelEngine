@@ -1,4 +1,4 @@
-name: 🌐 JavaScript Builds
+name: 🌐 Web Builds
 on: [push, pull_request]
 
 # Global Settings
@@ -9,11 +9,11 @@ env:
   EM_CACHE_FOLDER: "emsdk-cache"
 
 concurrency:
-  group: ci-${{github.actor}}-${{github.head_ref || github.run_number}}-${{github.ref}}-javascript
+  group: ci-${{github.actor}}-${{github.head_ref || github.run_number}}-${{github.ref}}-web
   cancel-in-progress: true
 
 jobs:
-  javascript-template:
+  web-template:
     runs-on: "ubuntu-20.04"
     name: Template (target=release, tools=no)
 
@@ -22,7 +22,7 @@ jobs:
 
       # Additional cache for Emscripten generated system libraries
       - name: Load Emscripten cache
-        id: javascript-template-emscripten-cache
+        id: web-template-emscripten-cache
         uses: actions/cache@v4
         with:
           path: ${{env.EM_CACHE_FOLDER}}
@@ -49,7 +49,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }}
-          platform: javascript
+          platform: web
           target: release
           tools: false
 

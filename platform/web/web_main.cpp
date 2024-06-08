@@ -6,19 +6,19 @@
 
 #include "core/io/resource_loader.h"
 #include "main/main.h"
-#include "platform/javascript/os_javascript.h"
 #include "rebel_js.h"
+#include "web_os.h"
 
 #include <emscripten/emscripten.h>
 #include <stdlib.h>
 
-static OS_JavaScript* os     = NULL;
+static WebOS* os             = NULL;
 static uint64_t target_ticks = 0;
 
 void exit_callback() {
     emscripten_cancel_main_loop(); // After this, we can exit!
     Main::cleanup();
-    int exit_code = OS_JavaScript::get_singleton()->get_exit_code();
+    int exit_code = WebOS::get_singleton()->get_exit_code();
     memdelete(os);
     os = NULL;
     emscripten_force_exit(exit_code
@@ -64,7 +64,7 @@ extern EMSCRIPTEN_KEEPALIVE int rebel_js_main(int argc, char* argv[]) {
     rebel_js_config_locale_get(locale_ptr, sizeof(locale_ptr));
     setenv("LANG", locale_ptr, true);
 
-    os = new OS_JavaScript();
+    os = new WebOS();
 
     Main::setup(argv[0], argc - 1, &argv[1]);
     // Ease up compatibility.

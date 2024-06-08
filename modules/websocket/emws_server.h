@@ -7,7 +7,7 @@
 #ifndef EMWSSERVER_H
 #define EMWSSERVER_H
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "core/reference.h"
 #include "emws_peer.h"

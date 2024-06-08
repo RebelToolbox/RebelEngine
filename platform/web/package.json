@@ -2,7 +2,7 @@
   "name": "rebel",
   "private": true,
   "version": "1.0.0",
-  "description": "Linting setup for Rebel's HTML5 platform code",
+  "description": "Linting setup for Rebel's Web platform code",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "jsdoc --template js/jsdoc2rst/ js/engine/engine.js js/engine/config.js --destination ''",

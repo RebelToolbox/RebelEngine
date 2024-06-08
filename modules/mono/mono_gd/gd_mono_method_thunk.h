@@ -15,7 +15,7 @@
 
 #include <type_traits>
 
-#if !defined(JAVASCRIPT_ENABLED) && !defined(IOS_ENABLED)
+#if !defined(WEB_ENABLED) && !defined(IOS_ENABLED)
 #define HAVE_METHOD_THUNKS
 #endif
 

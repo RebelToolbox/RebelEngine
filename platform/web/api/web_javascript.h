@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVASCRIPT_SINGLETON_H
-#define JAVASCRIPT_SINGLETON_H
+#ifndef WEB_JAVASCRIPT_H
+#define WEB_JAVASCRIPT_H
 
 #include "core/object.h"
 #include "core/reference.h"
@@ -58,4 +58,4 @@ public:
     ~JavaScript();
 };
 
-#endif // JAVASCRIPT_SINGLETON_H
+#endif // WEB_JAVASCRIPT_H

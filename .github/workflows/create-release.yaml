@@ -196,38 +196,38 @@ jobs:
           - name: Web Engine
             os: ubuntu-latest
             artifact: web-engine
-            build-options: platform=javascript production=yes tools=no target=release
-            rebel-executable: rebel.javascript.opt.zip
+            build-options: platform=web production=yes tools=no target=release
+            rebel-executable: rebel.web.opt.zip
 
           - name: Web Engine Debug
             os: ubuntu-latest
             artifact: web-engine-debug
-            build-options: platform=javascript production=yes tools=no target=release_debug
-            rebel-executable: rebel.javascript.opt.debug.zip
+            build-options: platform=web production=yes tools=no target=release_debug
+            rebel-executable: rebel.web.opt.debug.zip
 
           - name: Web Engine Threads
             os: ubuntu-latest
             artifact: web-engine-threads
-            build-options: platform=javascript production=yes tools=no threads_enabled=yes target=release
-            rebel-executable: rebel.javascript.opt.threads.zip
+            build-options: platform=web production=yes tools=no threads_enabled=yes target=release
+            rebel-executable: rebel.web.opt.threads.zip
 
           - name: Web Engine Threads Debug
             os: ubuntu-latest
             artifact: web-engine-threads-debug
-            build-options: platform=javascript production=yes tools=no threads_enabled=yes target=release_debug
-            rebel-executable: rebel.javascript.opt.debug.threads.zip
+            build-options: platform=web production=yes tools=no threads_enabled=yes target=release_debug
+            rebel-executable: rebel.web.opt.debug.threads.zip
 
           - name: Web Engine GDNative
             os: ubuntu-latest
             artifact: web-engine-gdnative
-            build-options: platform=javascript production=yes tools=no gdnative_enabled=yes target=release
-            rebel-executable: rebel.javascript.opt.gdnative.zip
+            build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release
+            rebel-executable: rebel.web.opt.gdnative.zip
 
           - name: Web Engine GDNative Debug
             os: ubuntu-latest
             artifact: web-engine-gdnative-debug
-            build-options: platform=javascript production=yes tools=no gdnative_enabled=yes target=release_debug
-            rebel-executable: rebel.javascript.opt.debug.gdnative.zip
+            build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release_debug
+            rebel-executable: rebel.web.opt.debug.gdnative.zip
 
     steps:
       - name: Build Rebel
@@ -503,12 +503,12 @@ jobs:
           mv artifacts/android_debug.apk templates/android_debug.apk
           mv artifacts/android_template.zip templates/android_template.zip
           # Move Web templates.
-          mv artifacts/rebel.javascript.opt.zip templates/webassembly_release.zip
-          mv artifacts/rebel.javascript.opt.debug.zip templates/webassembly_debug.zip
-          mv artifacts/rebel.javascript.opt.threads.zip templates/webassembly_threads_release.zip
-          mv artifacts/rebel.javascript.opt.debug.threads.zip templates/webassembly_threads_debug.zip
-          mv artifacts/rebel.javascript.opt.gdnative.zip templates/webassembly_gdnative_release.zip
-          mv artifacts/rebel.javascript.opt.debug.gdnative.zip templates/webassembly_gdnative_debug.zip
+          mv artifacts/rebel.web.opt.zip templates/webassembly_release.zip
+          mv artifacts/rebel.web.opt.debug.zip templates/webassembly_debug.zip
+          mv artifacts/rebel.web.opt.threads.zip templates/webassembly_threads_release.zip
+          mv artifacts/rebel.web.opt.debug.threads.zip templates/webassembly_threads_debug.zip
+          mv artifacts/rebel.web.opt.gdnative.zip templates/webassembly_gdnative_release.zip
+          mv artifacts/rebel.web.opt.debug.gdnative.zip templates/webassembly_gdnative_debug.zip
           # Move version.txt file.
           mv version.txt templates/
           # Zip

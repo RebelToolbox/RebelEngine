@@ -1831,7 +1831,7 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 
     MAIN_PRINT("Main: Setup Logo");
 
-#if defined(JAVASCRIPT_ENABLED) || defined(ANDROID_ENABLED)
+#if defined(WEB_ENABLED) || defined(ANDROID_ENABLED)
     bool show_logo = false;
 #else
     bool show_logo = true;

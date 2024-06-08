@@ -450,7 +450,7 @@ SPDX-License-Identifier: MIT
             Position offset for tooltips, relative to the mouse cursor's hotspot.
         </member>
         <member name="display/window/dpi/allow_hidpi" type="bool" setter="" getter="" default="false">
-            If [code]true[/code], allows HiDPI display on Windows, macOS, and the HTML5 platform. This setting has no effect on desktop Linux, as DPI-awareness fallbacks are not supported there.
+            If [code]true[/code], allows HiDPI display on the Windows, macOS and Web platforms. This setting has no effect on desktop Linux, as DPI-awareness fallbacks are not supported there.
         </member>
         <member name="display/window/energy_saving/keep_screen_on" type="bool" setter="" getter="" default="true">
             If [code]true[/code], keeps the screen on (even in case of inactivity), so the screensaver does not take over. Works on desktop and mobile platforms.
@@ -465,25 +465,25 @@ SPDX-License-Identifier: MIT
         <member name="display/window/per_pixel_transparency/allowed" type="bool" setter="" getter="" default="false">
             If [code]true[/code], allows per-pixel transparency for the window background. This affects performance, so leave it on [code]false[/code] unless you need it.
             See [member OS.window_per_pixel_transparency_enabled] for more details.
-            [b]Note:[/b] This feature is implemented on HTML5, Linux, macOS, Windows, and Android.
+            [b]Note:[/b] This feature is implemented on Linux, macOS, Windows Android and Web platforms.
         </member>
         <member name="display/window/per_pixel_transparency/enabled" type="bool" setter="" getter="" default="false">
             Sets the window background to transparent when it starts.
             See [member OS.window_per_pixel_transparency_enabled] for more details.
-            [b]Note:[/b] This feature is implemented on HTML5, Linux, macOS, Windows, and Android.
+            [b]Note:[/b] This feature is implemented on the Linux, macOS, Windows, Android and Web platforms.
         </member>
         <member name="display/window/size/always_on_top" type="bool" setter="" getter="" default="false">
             Forces the main window to be always on top.
-            [b]Note:[/b] This setting is ignored on iOS, Android, and HTML5.
+            [b]Note:[/b] This setting is ignored on the iOS, Android and Web platforms.
         </member>
         <member name="display/window/size/borderless" type="bool" setter="" getter="" default="false">
             Forces the main window to be borderless.
-            [b]Note:[/b] This setting is ignored on iOS, Android, and HTML5.
+            [b]Note:[/b] This setting is ignored on the iOS, Android and Web platforms.
         </member>
         <member name="display/window/size/fullscreen" type="bool" setter="" getter="" default="false">
             Sets the main window to full screen when the project starts. Note that this is not [i]exclusive[/i] fullscreen. On Windows and Linux, a borderless window is used to emulate fullscreen. On macOS, a new desktop is used to display the running project.
             Regardless of the platform, enabling fullscreen will change the window size to match the monitor's size. Therefore, make sure your project supports [url=https://docs.rebeltoolbox.com/en/latest/tutorials/rendering/multiple_resolutions.html]multiple resolutions[/url] when enabling fullscreen mode.
-            [b]Note:[/b] This setting is ignored on iOS, Android, and HTML5.
+            [b]Note:[/b] This setting is ignored on the iOS, Android and Web platforms.
         </member>
         <member name="display/window/size/height" type="int" setter="" getter="" default="600">
             Sets the game's main viewport height. On desktop platforms, this is the default window size. Stretch mode settings also use this as a reference when enabled.
@@ -505,7 +505,7 @@ SPDX-License-Identifier: MIT
             Specifies the tablet driver to use. If left empty, the default driver will be used.
         </member>
         <member name="display/window/vsync/use_vsync" type="bool" setter="" getter="" default="true">
-            If [code]true[/code], enables vertical synchronization. This eliminates tearing that may appear in moving scenes, at the cost of higher input latency and stuttering at lower framerates. If [code]false[/code], vertical synchronization will be disabled, however, many platforms will enforce it regardless (such as mobile platforms and HTML5).
+            If [code]true[/code], enables vertical synchronization. This eliminates tearing that may appear in moving scenes, at the cost of higher input latency and stuttering at lower framerates. If [code]false[/code], vertical synchronization will be disabled, however, many platforms will enforce it regardless (such as the mobile and Web platforms).
         </member>
         <member name="display/window/vsync/vsync_via_compositor" type="bool" setter="" getter="" default="false">
             If [code]Use Vsync[/code] is enabled and this setting is [code]true[/code], enables vertical synchronization via the operating system's window compositor when in windowed mode and the compositor is enabled. This will prevent stutter in certain situations. (Windows only.)
@@ -1337,7 +1337,7 @@ SPDX-License-Identifier: MIT
         </member>
         <member name="rendering/quality/filters/msaa" type="int" setter="" getter="" default="0">
             Sets the number of MSAA samples to use. MSAA is used to reduce aliasing around the edges of polygons. A higher MSAA value results in smoother edges but can be significantly slower on some hardware.
-            [b]Note:[/b] MSAA is not available on HTML5 export using the GLES2 backend.
+            [b]Note:[/b] MSAA is not available on the Web export using the GLES2 backend.
         </member>
         <member name="rendering/quality/filters/sharpen_intensity" type="float" setter="" getter="" default="0.0">
             If set to a value greater than [code]0.0[/code], contrast-adaptive sharpening will be applied to the 3D viewport. This has a low performance cost and can be used to recover some of the sharpness lost from using FXAA. Values around [code]0.5[/code] generally give the best results. See also [member rendering/quality/filters/use_fxaa].

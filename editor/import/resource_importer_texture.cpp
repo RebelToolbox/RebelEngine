@@ -555,7 +555,7 @@ Error ResourceImporterTexture::import(
                     "%s: Imported a repeating texture with a size of %dx%d, "
                     "but the project is configured to allow falling back to "
                     "GLES2.\nNon-power-of-2 repeating textures may not display "
-                    "correctly on some platforms such as HTML5. This is "
+                    "correctly on some platforms such as the Web. This is "
                     "because GLES2 does not mandate support for non-power-of-2 "
                     "repeating textures.",
                     p_source_file,
@@ -567,7 +567,7 @@ Error ResourceImporterTexture::import(
                     "%s: Imported a repeating texture with a size of %dx%d, "
                     "but the project is configured to use "
                     "GLES2.\nNon-power-of-2 repeating textures may not display "
-                    "correctly on some platforms such as HTML5. This is "
+                    "correctly on some platforms such as the Web. This is "
                     "because GLES2 does not mandate support for non-power-of-2 "
                     "repeating textures.",
                     p_source_file,

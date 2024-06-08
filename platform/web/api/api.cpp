@@ -7,23 +7,23 @@
 #include "api.h"
 
 #include "core/engine.h"
-#include "javascript_singleton.h"
-#include "javascript_tools_editor_plugin.h"
+#include "web_javascript.h"
+#include "web_tools_editor_plugin.h"
 
-static JavaScript* javascript_eval;
+static JavaScript* web_eval;
 
-void register_javascript_api() {
-    JavaScriptToolsEditorPlugin::initialize();
+void register_web_api() {
+    WebToolsEditorPlugin::initialize();
     ClassDB::register_virtual_class<JavaScriptObject>();
     ClassDB::register_virtual_class<JavaScript>();
-    javascript_eval = memnew(JavaScript);
+    web_eval = memnew(JavaScript);
     Engine::get_singleton()->add_singleton(
-        Engine::Singleton("JavaScript", javascript_eval)
+        Engine::Singleton("JavaScript", web_eval)
     );
 }
 
-void unregister_javascript_api() {
-    memdelete(javascript_eval);
+void unregister_web_api() {
+    memdelete(web_eval);
 }
 
 JavaScript* JavaScript::singleton = nullptr;
@@ -35,7 +35,7 @@ JavaScript* JavaScript::get_singleton() {
 JavaScript::JavaScript() {
     ERR_FAIL_COND_MSG(
         singleton != nullptr,
-        "JavaScript singleton already exist."
+        "JavaScript singleton already exists."
     );
     singleton = this;
 }
@@ -74,7 +74,7 @@ void JavaScript::_bind_methods() {
     );
 }
 
-#if !defined(JAVASCRIPT_ENABLED) || !defined(JAVASCRIPT_EVAL_ENABLED)
+#if !defined(WEB_ENABLED) || !defined(WEB_EVAL_ENABLED)
 Variant JavaScript::eval(const String& p_code, bool p_use_global_exec_context) {
     return Variant();
 }
@@ -109,7 +109,7 @@ Variant JavaScript::_create_object_bind(
     return Ref<JavaScriptObject>();
 }
 #endif
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
 void JavaScript::download_buffer(
     Vector<uint8_t> p_arr,
     const String& p_name,

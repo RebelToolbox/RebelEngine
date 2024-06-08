@@ -75,7 +75,7 @@ def is_unix_like(platform):
 
 
 def module_supports_tools_on(platform):
-    return platform not in ["android", "javascript", "ios"]
+    return platform not in ["android", "web", "ios"]
 
 
 def find_wasm_src_dir(mono_root):
@@ -92,7 +92,7 @@ def find_wasm_src_dir(mono_root):
 def configure(env, env_mono):
     bits = env["bits"]
     is_android = env["platform"] == "android"
-    is_javascript = env["platform"] == "javascript"
+    is_web = env["platform"] == "web"
     is_ios = env["platform"] == "ios"
     is_ios_sim = is_ios and env["ios_simulator"]
 
@@ -125,7 +125,7 @@ def configure(env, env_mono):
             "Statically linking Mono is not currently supported for this platform"
         )
 
-    if not mono_static and (is_javascript or is_ios):
+    if not mono_static and (is_web or is_ios):
         raise RuntimeError(
             "Dynamically linking Mono is not currently supported for this platform"
         )
@@ -247,7 +247,7 @@ def configure(env, env_mono):
         mono_lib_path = ""
         mono_so_file = ""
 
-        if not mono_root and (is_android or is_javascript or is_ios):
+        if not mono_root and (is_android or is_web or is_ios):
             raise RuntimeError(
                 "Mono installation directory not found; specify one manually with the 'mono_prefix' SCons parameter"
             )
@@ -294,7 +294,7 @@ def configure(env, env_mono):
             env_mono.Append(CPPDEFINES=["_REENTRANT"])
 
             if mono_static:
-                if not is_javascript:
+                if not is_web:
                     env.Append(LINKFLAGS=["-rdynamic"])
 
                 mono_lib_file = os.path.join(mono_lib_path, "lib" + mono_lib + ".a")
@@ -332,7 +332,7 @@ def configure(env, env_mono):
                             copy_mono_lib("libmono-icall-table")
                             copy_mono_lib("libmono-ilgen")
                 else:
-                    assert is_desktop(env["platform"]) or is_android or is_javascript
+                    assert is_desktop(env["platform"]) or is_android or is_web
                     env.Append(
                         LINKFLAGS=[
                             "-Wl,-whole-archive",
@@ -341,7 +341,7 @@ def configure(env, env_mono):
                         ]
                     )
 
-                if is_javascript:
+                if is_web:
                     env.Append(
                         LIBS=[
                             "mono-icall-table",
@@ -386,7 +386,7 @@ def configure(env, env_mono):
                 pass  # Nothing
             elif is_ios:
                 pass  # Nothing, linking is delegated to the exported Xcode project
-            elif is_javascript:
+            elif is_web:
                 env.Append(LIBS=["m", "rt", "dl", "pthread"])
             else:
                 env.Append(LIBS=["m", "rt", "dl", "pthread"])
@@ -463,7 +463,7 @@ def configure(env, env_mono):
 
             # Copy the required shared libraries
             copy_mono_shared_libs(env, mono_root, None)
-        elif is_javascript:
+        elif is_web:
             pass  # No data directory for this platform
         elif is_ios:
             pass  # No data directory for this platform

@@ -54,7 +54,7 @@ SPDX-License-Identifier: MIT
             }
         }
         [/codeblock]
-        [b]Note:[/b] Not available in HTML5 exports.
+        [b]Note:[/b] Not available in web exports.
     </description>
     <tutorials>
     </tutorials>

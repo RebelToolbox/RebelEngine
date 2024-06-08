@@ -11,7 +11,7 @@
 
 #include <mono/utils/mono-logger.h>
 
-#if !defined(JAVASCRIPT_ENABLED) && !defined(IOS_ENABLED)
+#if !defined(WEB_ENABLED) && !defined(IOS_ENABLED)
 // We have custom mono log callbacks for WASM and iOS
 #define GD_MONO_LOG_ENABLED
 #endif

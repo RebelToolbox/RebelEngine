@@ -53,7 +53,7 @@ static void _setup_clock() {
 }
 #else
 #if defined(CLOCK_MONOTONIC_RAW)                                               \
-    && !defined(JAVASCRIPT_ENABLED) // This is a better clock on Linux.
+    && !defined(WEB_ENABLED) // This is a better clock on Linux.
 #define GODOT_CLOCK CLOCK_MONOTONIC_RAW
 #else
 #define GODOT_CLOCK CLOCK_MONOTONIC
@@ -264,7 +264,7 @@ Error OS_Unix::execute(
 ) {
 #ifdef __EMSCRIPTEN__
     // Don't compile this code at all to avoid undefined references.
-    // Actual virtual call goes to OS_JavaScript.
+    // Actual virtual call goes to WebOS.
     ERR_FAIL_V(ERR_BUG);
 #else
     if (p_blocking && r_pipe) {

@@ -119,7 +119,7 @@ private:
             res_temp_assemblies_base_dir.plus_file(_get_expected_build_config()
             );
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
         mono_user_dir = "user://";
 #else
         mono_user_dir = _get_mono_user_dir();

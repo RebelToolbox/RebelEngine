@@ -64,7 +64,7 @@ Error HTTPClient::connect_to_host(
     if (p_ssl && !p_verify_host) {
         WARN_PRINT(
             "Disabling HTTPClient's host verification is not supported for the "
-            "HTML5 platform, host will be verified"
+            "Web platform, host will be verified"
         );
     }
 
@@ -98,7 +98,7 @@ Error HTTPClient::connect_to_host(
 
 void HTTPClient::set_connection(const Ref<StreamPeer>& p_connection) {
     ERR_FAIL_MSG(
-        "Accessing an HTTPClient's StreamPeer is not supported for the HTML5 "
+        "Accessing an HTTPClient's StreamPeer is not supported for the Web "
         "platform."
     );
 }
@@ -106,7 +106,7 @@ void HTTPClient::set_connection(const Ref<StreamPeer>& p_connection) {
 Ref<StreamPeer> HTTPClient::get_connection() const {
     ERR_FAIL_V_MSG(
         REF(),
-        "Accessing an HTTPClient's StreamPeer is not supported for the HTML5 "
+        "Accessing an HTTPClient's StreamPeer is not supported for the Web "
         "platform."
     );
 }
@@ -122,7 +122,7 @@ Error HTTPClient::make_request(
     ERR_FAIL_COND_V_MSG(
         p_method == METHOD_TRACE || p_method == METHOD_CONNECT,
         ERR_UNAVAILABLE,
-        "HTTP methods TRACE and CONNECT are not supported for the HTML5 "
+        "HTTP methods TRACE and CONNECT are not supported for the Web "
         "platform."
     );
     ERR_FAIL_COND_V(status != STATUS_CONNECTED, ERR_INVALID_PARAMETER);
@@ -260,7 +260,7 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
 void HTTPClient::set_blocking_mode(bool p_enable) {
     ERR_FAIL_COND_MSG(
         p_enable,
-        "HTTPClient blocking mode is not supported for the HTML5 platform."
+        "HTTPClient blocking mode is not supported for the Web platform."
     );
 }
 
@@ -314,7 +314,7 @@ Error HTTPClient::poll() {
                 WARN_PRINT(
                     "HTTPClient polled multiple times in one frame, "
                     "but request cannot progress more than once per "
-                    "frame on the HTML5 platform."
+                    "frame on the Web platform."
                 );
             }
             last_polling_frame = Engine::get_singleton()->get_idle_frames();

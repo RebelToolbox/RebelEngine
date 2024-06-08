@@ -21,7 +21,7 @@ const char* HTTPClient::_methods[METHOD_MAX] = {
     "PATCH"
 };
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
 Error HTTPClient::connect_to_host(
     const String& p_host,
     int p_port,
@@ -824,7 +824,7 @@ HTTPClient::HTTPClient() {
 
 HTTPClient::~HTTPClient() {}
 
-#endif // #ifndef JAVASCRIPT_ENABLED
+#endif // #ifndef WEB_ENABLED
 
 String HTTPClient::query_string_from_dict(const Dictionary& p_dict) {
     String query = "";

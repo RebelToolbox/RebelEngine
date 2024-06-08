@@ -7,7 +7,7 @@
 #ifndef GD_MONO_WASM_M2N_H
 #define GD_MONO_WASM_M2N_H
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "core/typedefs.h"
 #include "core/ustring.h"

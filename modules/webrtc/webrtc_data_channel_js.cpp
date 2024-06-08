@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "webrtc_data_channel_js.h"
 

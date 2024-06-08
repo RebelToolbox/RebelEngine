@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#if defined(TOOLS_ENABLED) && defined(JAVASCRIPT_ENABLED)
-#include "javascript_tools_editor_plugin.h"
+#if defined(TOOLS_ENABLED) && defined(WEB_ENABLED)
+#include "web_tools_editor_plugin.h"
 
 #include "core/engine.h"
 #include "core/os/dir_access.h"
@@ -25,22 +25,22 @@ extern void rebel_js_os_download_buffer(
 );
 }
 
-static void _javascript_editor_init_callback() {
+static void _web_editor_init_callback() {
     EditorNode::get_singleton()->add_editor_plugin(
-        memnew(JavaScriptToolsEditorPlugin(EditorNode::get_singleton()))
+        memnew(WebToolsEditorPlugin(EditorNode::get_singleton()))
     );
 }
 
-void JavaScriptToolsEditorPlugin::initialize() {
-    EditorNode::add_init_callback(_javascript_editor_init_callback);
+void WebToolsEditorPlugin::initialize() {
+    EditorNode::add_init_callback(_web_editor_init_callback);
 }
 
-JavaScriptToolsEditorPlugin::JavaScriptToolsEditorPlugin(EditorNode* p_editor) {
+WebToolsEditorPlugin::WebToolsEditorPlugin(EditorNode* p_editor) {
     Variant v;
     add_tool_menu_item("Download Project Source", this, "_download_zip", v);
 }
 
-void JavaScriptToolsEditorPlugin::_download_zip(Variant p_v) {
+void WebToolsEditorPlugin::_download_zip(Variant p_v) {
     if (!Engine::get_singleton()
         || !Engine::get_singleton()->is_editor_hint()) {
         WARN_PRINT("Project download is only available in Editor mode");
@@ -68,14 +68,11 @@ void JavaScriptToolsEditorPlugin::_download_zip(Variant p_v) {
     );
 }
 
-void JavaScriptToolsEditorPlugin::_bind_methods() {
-    ClassDB::bind_method(
-        "_download_zip",
-        &JavaScriptToolsEditorPlugin::_download_zip
-    );
+void WebToolsEditorPlugin::_bind_methods() {
+    ClassDB::bind_method("_download_zip", &WebToolsEditorPlugin::_download_zip);
 }
 
-void JavaScriptToolsEditorPlugin::_zip_file(
+void WebToolsEditorPlugin::_zip_file(
     String p_path,
     String p_base_path,
     zipFile p_zip
@@ -109,7 +106,7 @@ void JavaScriptToolsEditorPlugin::_zip_file(
     zipCloseFileInZip(p_zip);
 }
 
-void JavaScriptToolsEditorPlugin::_zip_recursive(
+void WebToolsEditorPlugin::_zip_recursive(
     String p_path,
     String p_base_path,
     zipFile p_zip

@@ -27,7 +27,7 @@ namespace GodotTools.Utils
             public const string UWP = "UWP";
             public const string Android = "Android";
             public const string iOS = "iOS";
-            public const string HTML5 = "HTML5";
+            public const string Web = "Web";
         }
 
         public static class Platforms
@@ -39,7 +39,7 @@ namespace GodotTools.Utils
             public const string UWP = "uwp";
             public const string Android = "android";
             public const string iOS = "ios";
-            public const string HTML5 = "javascript";
+            public const string Web = "web";
         }
 
         public static readonly Dictionary<string, string> PlatformNameMap = new Dictionary<string, string>
@@ -51,7 +51,7 @@ namespace GodotTools.Utils
             [Names.UWP] = Platforms.UWP,
             [Names.Android] = Platforms.Android,
             [Names.iOS] = Platforms.iOS,
-            [Names.HTML5] = Platforms.HTML5
+            [Names.Web] = Platforms.Web
         };
 
         private static bool IsOS(string name)
@@ -71,7 +71,7 @@ namespace GodotTools.Utils
         private static readonly Lazy<bool> _isUWP = new Lazy<bool>(() => IsOS(Names.UWP));
         private static readonly Lazy<bool> _isAndroid = new Lazy<bool>(() => IsOS(Names.Android));
         private static readonly Lazy<bool> _isiOS = new Lazy<bool>(() => IsOS(Names.iOS));
-        private static readonly Lazy<bool> _isHTML5 = new Lazy<bool>(() => IsOS(Names.HTML5));
+        private static readonly Lazy<bool> _isWeb = new Lazy<bool>(() => IsOS(Names.Web));
         private static readonly Lazy<bool> _isUnixLike = new Lazy<bool>(() => IsAnyOS(UnixLikePlatforms));
 
         public static bool IsWindows => _isWindows.Value || IsUWP;
@@ -81,7 +81,7 @@ namespace GodotTools.Utils
         public static bool IsUWP => _isUWP.Value;
         public static bool IsAndroid => _isAndroid.Value;
         public static bool IsiOS => _isiOS.Value;
-        public static bool IsHTML5 => _isHTML5.Value;
+        public static bool IsWeb => _isWeb.Value;
 
         private static readonly string[] UnixLikePlatforms = {Names.MacOS, Names.X11, Names.Server, Names.Android, Names.iOS};
 

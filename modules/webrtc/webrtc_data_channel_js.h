@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #ifndef WEBRTC_DATA_CHANNEL_JS_H
 #define WEBRTC_DATA_CHANNEL_JS_H
@@ -75,4 +75,4 @@ public:
 
 #endif // WEBRTC_DATA_CHANNEL_JS_H
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED

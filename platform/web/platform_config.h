@@ -4,10 +4,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVASCRIPT_API_H
-#define JAVASCRIPT_API_H
+#include <alloca.h>
 
-void register_javascript_api();
-void unregister_javascript_api();
-
-#endif // JAVASCRIPT_API_H
+#define GLES3_INCLUDE_H "platform/web/rebel_webgl2.h"

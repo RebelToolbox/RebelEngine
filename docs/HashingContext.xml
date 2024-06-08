@@ -34,7 +34,7 @@ SPDX-License-Identifier: MIT
             # Print the result as hex string and array.
             printt(res.hex_encode(), Array(res))
         [/codeblock]
-        [b]Note:[/b] Not available in HTML5 exports.
+        [b]Note:[/b] Not available in Web exports.
     </description>
     <tutorials>
     </tutorials>

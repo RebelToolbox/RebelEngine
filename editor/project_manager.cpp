@@ -2242,7 +2242,7 @@ void ProjectManager::_global_menu_action(
 
 void ProjectManager::_open_selected_projects() {
     // Show loading text to tell the user that the project manager is busy
-    // loading. This is especially important for the HTML5 project manager.
+    // loading. This is especially important for the Web project manager.
     loading_label->set_modulate(Color(1, 1, 1));
 
     const Set<String>& selected_list =

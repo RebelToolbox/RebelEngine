@@ -220,9 +220,9 @@ Files extracted from upstream source:
 - `src/*` except from: .am, .rc and .in files
 - AUTHORS, COPYING, PATENTS
 
-Important: The files `utils/bit_reader_utils.{c,h}` have Godot-made
-changes to ensure they build for Javascript/HTML5. Those
-changes are marked with `// -- GODOT --` comments.
+Important: The files `utils/bit_reader_utils.{c,h}` have Rebel-made
+changes to ensure they build on the Web platform. Those
+changes are marked with `// -- REBEL --` comments.
 
 
 ## mbedtls

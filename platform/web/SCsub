@@ -2,14 +2,14 @@
 
 Import("env")
 
-javascript_files = [
-    "audio_driver_javascript.cpp",
+web_files = [
+    "api/web_javascript.cpp",
+    "api/web_tools_editor_plugin.cpp",
+    "web_audio_driver.cpp",
+    "web_http_client.cpp",
+    "web_main.cpp",
+    "web_os.cpp",
     "rebel_webgl2.cpp",
-    "http_client_javascript.cpp",
-    "javascript_singleton.cpp",
-    "javascript_main.cpp",
-    "os_javascript.cpp",
-    "api/javascript_tools_editor_plugin.cpp",
 ]
 
 sys_env = env.Clone()
@@ -24,7 +24,7 @@ sys_env.AddJSLibraries(
     ]
 )
 
-if env["javascript_eval"]:
+if env["web_eval"]:
     sys_env.AddJSLibraries(["js/libs/rebel_eval.js"])
 
 for lib in sys_env["JS_LIBS"]:
@@ -50,7 +50,7 @@ if env["gdnative_enabled"]:
     # Force exporting the standard library (printf, malloc, etc.)
     sys_env["ENV"]["EMCC_FORCE_STDLIBS"] = "libc,libc++,libc++abi"
     # The main emscripten runtime, with exported standard libraries.
-    sys = sys_env.Program(build_targets, ["javascript_runtime.cpp"])
+    sys = sys_env.Program(build_targets, ["web_runtime.cpp"])
 
     # The side library, containing all Rebel code.
     wasm_env = env.Clone()
@@ -59,7 +59,7 @@ if env["gdnative_enabled"]:
     )  # So that OS knows it can run GDNative libraries.
     wasm_env.Append(CCFLAGS=["-s", "SIDE_MODULE=2"])
     wasm_env.Append(LINKFLAGS=["-s", "SIDE_MODULE=2"])
-    wasm = wasm_env.add_program("#bin/rebel.side${PROGSUFFIX}.wasm", javascript_files)
+    wasm = wasm_env.add_program("#bin/rebel.side${PROGSUFFIX}.wasm", web_files)
     build = [sys[0], sys[1], wasm[0]]
 else:
     build_targets = ["#bin/rebel${PROGSUFFIX}.js", "#bin/rebel${PROGSUFFIX}.wasm"]
@@ -67,9 +67,7 @@ else:
         build_targets.append("#bin/rebel${PROGSUFFIX}.worker.js")
     # We use IDBFS. Since Emscripten 1.39.1 it needs to be linked explicitly.
     sys_env.Append(LIBS=["idbfs.js"])
-    build = sys_env.Program(
-        build_targets, javascript_files + ["javascript_runtime.cpp"]
-    )
+    build = sys_env.Program(build_targets, web_files + ["web_runtime.cpp"])
 
 sys_env.Depends(build[0], sys_env["JS_LIBS"])
 sys_env.Depends(build[0], sys_env["JS_PRE"])
@@ -80,7 +78,7 @@ engine = [
     "js/engine/config.js",
     "js/engine/engine.js",
 ]
-externs = [env.File("#platform/javascript/js/engine/engine.externs.js")]
+externs = [env.File("#platform/web/js/engine/engine.externs.js")]
 js_engine = env.CreateEngineFile("#bin/rebel${PROGSUFFIX}.engine.js", engine, externs)
 env.Depends(js_engine, externs)
 

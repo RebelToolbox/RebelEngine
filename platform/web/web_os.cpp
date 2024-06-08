@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "os_javascript.h"
+#include "web_os.h"
 
 #include "core/io/json.h"
 #include "drivers/gles2/rasterizer_gles2.h"
@@ -32,8 +32,8 @@
 #define DOM_BUTTON_XBUTTON2 4
 
 // Quit
-void OS_JavaScript::request_quit_callback() {
-    OS_JavaScript* os = get_singleton();
+void WebOS::request_quit_callback() {
+    WebOS* os = get_singleton();
     if (os && os->get_main_loop()) {
         os->get_main_loop()->notification(MainLoop::NOTIFICATION_WM_QUIT_REQUEST
         );
@@ -41,8 +41,8 @@ void OS_JavaScript::request_quit_callback() {
 }
 
 // Files drop (implemented in JS for now).
-void OS_JavaScript::drop_files_callback(char** p_filev, int p_filec) {
-    OS_JavaScript* os = get_singleton();
+void WebOS::drop_files_callback(char** p_filev, int p_filec) {
+    WebOS* os = get_singleton();
     if (!os || !os->get_main_loop()) {
         return;
     }
@@ -53,8 +53,8 @@ void OS_JavaScript::drop_files_callback(char** p_filev, int p_filec) {
     os->get_main_loop()->drop_files(files);
 }
 
-void OS_JavaScript::send_notification_callback(int p_notification) {
-    OS_JavaScript* os = get_singleton();
+void WebOS::send_notification_callback(int p_notification) {
+    WebOS* os = get_singleton();
     if (!os) {
         return;
     }
@@ -71,60 +71,56 @@ void OS_JavaScript::send_notification_callback(int p_notification) {
 
 // Window (canvas)
 
-bool OS_JavaScript::check_size_force_redraw() {
+bool WebOS::check_size_force_redraw() {
     return rebel_js_display_size_update() != 0;
 }
 
-void OS_JavaScript::fullscreen_change_callback(int p_fullscreen) {
-    OS_JavaScript* os         = get_singleton();
+void WebOS::fullscreen_change_callback(int p_fullscreen) {
+    WebOS* os                 = get_singleton();
     os->video_mode.fullscreen = p_fullscreen;
 }
 
-void OS_JavaScript::window_blur_callback() {
+void WebOS::window_blur_callback() {
     get_singleton()->input->release_pressed_events();
 }
 
-void OS_JavaScript::set_video_mode(
-    const VideoMode& p_video_mode,
-    int p_screen
-) {
+void WebOS::set_video_mode(const VideoMode& p_video_mode, int p_screen) {
     video_mode = p_video_mode;
 }
 
-OS::VideoMode OS_JavaScript::get_video_mode(int p_screen) const {
+OS::VideoMode WebOS::get_video_mode(int p_screen) const {
     return video_mode;
 }
 
-Size2 OS_JavaScript::get_screen_size(int p_screen) const {
+Size2 WebOS::get_screen_size(int p_screen) const {
     int size[2];
     rebel_js_display_screen_size_get(size, size + 1);
     return Size2(size[0], size[1]);
 }
 
-void OS_JavaScript::set_window_size(const Size2 p_size) {
+void WebOS::set_window_size(const Size2 p_size) {
     if (video_mode.fullscreen) {
         set_window_fullscreen(false);
     }
     rebel_js_display_desired_size_set(p_size.x, p_size.y);
 }
 
-Size2 OS_JavaScript::get_window_size() const {
+Size2 WebOS::get_window_size() const {
     int size[2];
     rebel_js_display_window_size_get(size, size + 1);
     return Size2(size[0], size[1]);
 }
 
-void OS_JavaScript::set_window_maximized(bool p_enabled) {
-    WARN_PRINT_ONCE(
-        "Maximizing windows is not supported for the HTML5 platform."
+void WebOS::set_window_maximized(bool p_enabled) {
+    WARN_PRINT_ONCE("Maximizing windows is not supported for the Web platform."
     );
 }
 
-bool OS_JavaScript::is_window_maximized() const {
+bool WebOS::is_window_maximized() const {
     return false;
 }
 
-void OS_JavaScript::set_window_fullscreen(bool p_enabled) {
+void WebOS::set_window_fullscreen(bool p_enabled) {
     if (p_enabled == video_mode.fullscreen) {
         return;
     }
@@ -136,7 +132,7 @@ void OS_JavaScript::set_window_fullscreen(bool p_enabled) {
         ERR_FAIL_COND_MSG(
             result,
             "The request was denied. Remember that enabling fullscreen is only "
-            "possible from an input callback for the HTML5 platform."
+            "possible from an input callback for the Web platform."
         );
     } else {
         // No logic allowed here, since exiting w/ ESC key won't use this
@@ -145,26 +141,24 @@ void OS_JavaScript::set_window_fullscreen(bool p_enabled) {
     }
 }
 
-bool OS_JavaScript::is_window_fullscreen() const {
+bool WebOS::is_window_fullscreen() const {
     return video_mode.fullscreen;
 }
 
-void OS_JavaScript::get_fullscreen_mode_list(
-    List<VideoMode>* p_list,
-    int p_screen
-) const {
+void WebOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
+    const {
     Size2 screen = get_screen_size();
     p_list->push_back(OS::VideoMode(screen.width, screen.height, true));
 }
 
-bool OS_JavaScript::get_window_per_pixel_transparency_enabled() const {
+bool WebOS::get_window_per_pixel_transparency_enabled() const {
     if (!is_layered_allowed()) {
         return false;
     }
     return transparency_enabled;
 }
 
-void OS_JavaScript::set_window_per_pixel_transparency_enabled(bool p_enabled) {
+void WebOS::set_window_per_pixel_transparency_enabled(bool p_enabled) {
     if (!is_layered_allowed()) {
         return;
     }
@@ -180,8 +174,8 @@ static void dom2rebel_mod(Ref<InputEventWithModifiers> ev, int p_mod) {
     ev->set_metakey(p_mod & 8);
 }
 
-void OS_JavaScript::key_callback(int p_pressed, int p_repeat, int p_modifiers) {
-    OS_JavaScript* os     = get_singleton();
+void WebOS::key_callback(int p_pressed, int p_repeat, int p_modifiers) {
+    WebOS* os             = get_singleton();
     JSKeyEvent& key_event = os->key_event;
     // Resume audio context after input in case autoplay was denied.
     os->resume_audio();
@@ -211,22 +205,22 @@ void OS_JavaScript::key_callback(int p_pressed, int p_repeat, int p_modifiers) {
 
 // Mouse
 
-Point2 OS_JavaScript::get_mouse_position() const {
+Point2 WebOS::get_mouse_position() const {
     return input->get_mouse_position();
 }
 
-int OS_JavaScript::get_mouse_button_state() const {
+int WebOS::get_mouse_button_state() const {
     return input->get_mouse_button_mask();
 }
 
-int OS_JavaScript::mouse_button_callback(
+int WebOS::mouse_button_callback(
     int p_pressed,
     int p_button,
     double p_x,
     double p_y,
     int p_modifiers
 ) {
-    OS_JavaScript* os = get_singleton();
+    WebOS* os = get_singleton();
 
     Ref<InputEventMouseButton> ev;
     ev.instance();
@@ -305,14 +299,14 @@ int OS_JavaScript::mouse_button_callback(
     return true;
 }
 
-void OS_JavaScript::mouse_move_callback(
+void WebOS::mouse_move_callback(
     double p_x,
     double p_y,
     double p_rel_x,
     double p_rel_y,
     int p_modifiers
 ) {
-    OS_JavaScript* os = get_singleton();
+    WebOS* os = get_singleton();
 
     int input_mask = os->input->get_mouse_button_mask();
     // For motion outside the canvas, only read mouse movement if dragging
@@ -376,7 +370,7 @@ static const char* rebel2dom_cursor(OS::CursorShape p_shape) {
     }
 }
 
-void OS_JavaScript::set_cursor_shape(CursorShape p_shape) {
+void WebOS::set_cursor_shape(CursorShape p_shape) {
     ERR_FAIL_INDEX(p_shape, CURSOR_MAX);
     if (cursor_shape == p_shape) {
         return;
@@ -385,7 +379,7 @@ void OS_JavaScript::set_cursor_shape(CursorShape p_shape) {
     rebel_js_display_cursor_set_shape(rebel2dom_cursor(cursor_shape));
 }
 
-void OS_JavaScript::set_custom_mouse_cursor(
+void WebOS::set_custom_mouse_cursor(
     const RES& p_cursor,
     CursorShape p_shape,
     const Vector2& p_hotspot
@@ -494,10 +488,10 @@ void OS_JavaScript::set_custom_mouse_cursor(
     }
 }
 
-void OS_JavaScript::set_mouse_mode(OS::MouseMode p_mode) {
+void WebOS::set_mouse_mode(OS::MouseMode p_mode) {
     ERR_FAIL_COND_MSG(
         p_mode == MOUSE_MODE_CONFINED,
-        "MOUSE_MODE_CONFINED is not supported for the HTML5 platform."
+        "MOUSE_MODE_CONFINED is not supported for the Web platform."
     );
     if (p_mode == get_mouse_mode()) {
         return;
@@ -517,7 +511,7 @@ void OS_JavaScript::set_mouse_mode(OS::MouseMode p_mode) {
     }
 }
 
-OS::MouseMode OS_JavaScript::get_mouse_mode() const {
+OS::MouseMode WebOS::get_mouse_mode() const {
     if (rebel_js_display_cursor_is_hidden()) {
         return MOUSE_MODE_HIDDEN;
     }
@@ -529,8 +523,8 @@ OS::MouseMode OS_JavaScript::get_mouse_mode() const {
 
 // Wheel
 
-int OS_JavaScript::mouse_wheel_callback(double p_delta_x, double p_delta_y) {
-    OS_JavaScript* os = get_singleton();
+int WebOS::mouse_wheel_callback(double p_delta_x, double p_delta_y) {
+    WebOS* os = get_singleton();
 
     if (!rebel_js_display_canvas_is_focused()) {
         if (os->cursor_inside_canvas) {
@@ -582,12 +576,12 @@ int OS_JavaScript::mouse_wheel_callback(double p_delta_x, double p_delta_y) {
 
 // Touch
 
-bool OS_JavaScript::has_touchscreen_ui_hint() const {
+bool WebOS::has_touchscreen_ui_hint() const {
     return rebel_js_display_touchscreen_is_available();
 }
 
-void OS_JavaScript::touch_callback(int p_type, int p_count) {
-    OS_JavaScript* os = get_singleton();
+void WebOS::touch_callback(int p_type, int p_count) {
+    WebOS* os = get_singleton();
     // Resume audio context after input in case autoplay was denied.
     os->resume_audio();
 
@@ -625,7 +619,7 @@ void OS_JavaScript::touch_callback(int p_type, int p_count) {
 }
 
 // Gamepad
-void OS_JavaScript::gamepad_callback(
+void WebOS::gamepad_callback(
     int p_index,
     int p_connected,
     const char* p_id,
@@ -644,7 +638,7 @@ void OS_JavaScript::gamepad_callback(
     }
 }
 
-void OS_JavaScript::process_joypads() {
+void WebOS::process_joypads() {
     int32_t pads       = rebel_js_input_gamepad_sample_count();
     int32_t s_btns_num = 0;
     int32_t s_axes_num = 0;
@@ -686,21 +680,21 @@ void OS_JavaScript::process_joypads() {
     }
 }
 
-bool OS_JavaScript::is_joy_known(int p_device) {
+bool WebOS::is_joy_known(int p_device) {
     return input->is_joy_mapped(p_device);
 }
 
-String OS_JavaScript::get_joy_guid(int p_device) const {
+String WebOS::get_joy_guid(int p_device) const {
     return input->get_joy_guid_remapped(p_device);
 }
 
 // Video
 
-int OS_JavaScript::get_video_driver_count() const {
+int WebOS::get_video_driver_count() const {
     return VIDEO_DRIVER_MAX;
 }
 
-const char* OS_JavaScript::get_video_driver_name(int p_driver) const {
+const char* WebOS::get_video_driver_name(int p_driver) const {
     switch (p_driver) {
         case VIDEO_DRIVER_GLES3:
             return "GLES3";
@@ -712,11 +706,11 @@ const char* OS_JavaScript::get_video_driver_name(int p_driver) const {
 
 // Audio
 
-int OS_JavaScript::get_audio_driver_count() const {
+int WebOS::get_audio_driver_count() const {
     return audio_drivers.size();
 }
 
-const char* OS_JavaScript::get_audio_driver_name(int p_driver) const {
+const char* WebOS::get_audio_driver_name(int p_driver) const {
     if (audio_drivers.size() <= p_driver) {
         return "Unknown";
     }
@@ -724,32 +718,32 @@ const char* OS_JavaScript::get_audio_driver_name(int p_driver) const {
 }
 
 // Clipboard
-void OS_JavaScript::update_clipboard_callback(const char* p_text) {
+void WebOS::update_clipboard_callback(const char* p_text) {
     // Only call set_clipboard from OS (sets local clipboard)
     get_singleton()->OS::set_clipboard(String::utf8(p_text));
 }
 
-void OS_JavaScript::set_clipboard(const String& p_text) {
+void WebOS::set_clipboard(const String& p_text) {
     OS::set_clipboard(p_text);
     int err = rebel_js_display_clipboard_set(p_text.utf8().get_data());
     ERR_FAIL_COND_MSG(err, "Clipboard API is not supported.");
 }
 
-String OS_JavaScript::get_clipboard() const {
+String WebOS::get_clipboard() const {
     rebel_js_display_clipboard_get(update_clipboard_callback);
     return this->OS::get_clipboard();
 }
 
 // Lifecycle
-int OS_JavaScript::get_current_video_driver() const {
+int WebOS::get_current_video_driver() const {
     return video_driver_index;
 }
 
-void OS_JavaScript::initialize_core() {
+void WebOS::initialize_core() {
     OS_Unix::initialize_core();
 }
 
-Error OS_JavaScript::initialize(
+Error WebOS::initialize(
     const VideoMode& p_desired,
     int p_video_driver,
     int p_audio_driver
@@ -845,28 +839,24 @@ Error OS_JavaScript::initialize(
     input = memnew(InputDefault);
 
     // JS Input interface (js/libs/library_rebel_input.js)
-    rebel_js_input_mouse_button_cb(&OS_JavaScript::mouse_button_callback);
-    rebel_js_input_mouse_move_cb(&OS_JavaScript::mouse_move_callback);
-    rebel_js_input_mouse_wheel_cb(&OS_JavaScript::mouse_wheel_callback);
+    rebel_js_input_mouse_button_cb(&WebOS::mouse_button_callback);
+    rebel_js_input_mouse_move_cb(&WebOS::mouse_move_callback);
+    rebel_js_input_mouse_wheel_cb(&WebOS::mouse_wheel_callback);
     rebel_js_input_touch_cb(
-        &OS_JavaScript::touch_callback,
+        &WebOS::touch_callback,
         touch_event.identifier,
         touch_event.coords
     );
-    rebel_js_input_key_cb(
-        &OS_JavaScript::key_callback,
-        key_event.code,
-        key_event.key
-    );
-    rebel_js_input_gamepad_cb(&OS_JavaScript::gamepad_callback);
-    rebel_js_input_paste_cb(&OS_JavaScript::update_clipboard_callback);
-    rebel_js_input_drop_files_cb(&OS_JavaScript::drop_files_callback);
+    rebel_js_input_key_cb(&WebOS::key_callback, key_event.code, key_event.key);
+    rebel_js_input_gamepad_cb(&WebOS::gamepad_callback);
+    rebel_js_input_paste_cb(&WebOS::update_clipboard_callback);
+    rebel_js_input_drop_files_cb(&WebOS::drop_files_callback);
 
     // JS Display interface (js/libs/library_rebel_display.js)
-    rebel_js_display_fullscreen_cb(&OS_JavaScript::fullscreen_change_callback);
+    rebel_js_display_fullscreen_cb(&WebOS::fullscreen_change_callback);
     rebel_js_display_window_blur_cb(&window_blur_callback);
     rebel_js_display_notification_cb(
-        &OS_JavaScript::send_notification_callback,
+        &WebOS::send_notification_callback,
         MainLoop::NOTIFICATION_WM_MOUSE_ENTER,
         MainLoop::NOTIFICATION_WM_MOUSE_EXIT,
         MainLoop::NOTIFICATION_WM_FOCUS_IN,
@@ -879,8 +869,8 @@ Error OS_JavaScript::initialize(
     return OK;
 }
 
-void OS_JavaScript::input_text_callback(const char* p_text, int p_cursor) {
-    OS_JavaScript* os = OS_JavaScript::get_singleton();
+void WebOS::input_text_callback(const char* p_text, int p_cursor) {
+    WebOS* os = WebOS::get_singleton();
     if (!os || !os->get_main_loop()) {
         return;
     }
@@ -900,11 +890,11 @@ void OS_JavaScript::input_text_callback(const char* p_text, int p_cursor) {
     }
 }
 
-bool OS_JavaScript::has_virtual_keyboard() const {
+bool WebOS::has_virtual_keyboard() const {
     return rebel_js_display_vk_available() != 0;
 }
 
-void OS_JavaScript::show_virtual_keyboard(
+void WebOS::show_virtual_keyboard(
     const String& p_existing_text,
     const Rect2& p_screen_rect,
     bool p_multiline,
@@ -920,40 +910,40 @@ void OS_JavaScript::show_virtual_keyboard(
     );
 }
 
-void OS_JavaScript::hide_virtual_keyboard() {
+void WebOS::hide_virtual_keyboard() {
     rebel_js_display_vk_hide();
 }
 
-bool OS_JavaScript::get_swap_ok_cancel() {
+bool WebOS::get_swap_ok_cancel() {
     return swap_ok_cancel;
 }
 
-void OS_JavaScript::swap_buffers() {
+void WebOS::swap_buffers() {
     emscripten_webgl_commit_frame();
 }
 
-void OS_JavaScript::set_main_loop(MainLoop* p_main_loop) {
+void WebOS::set_main_loop(MainLoop* p_main_loop) {
     main_loop = p_main_loop;
     input->set_main_loop(p_main_loop);
 }
 
-MainLoop* OS_JavaScript::get_main_loop() const {
+MainLoop* WebOS::get_main_loop() const {
     return main_loop;
 }
 
-void OS_JavaScript::resume_audio() {
-    AudioDriverJavaScript::resume();
+void WebOS::resume_audio() {
+    WebAudioDriver::resume();
 }
 
-void OS_JavaScript::fs_sync_callback() {
+void WebOS::fs_sync_callback() {
     get_singleton()->idb_is_syncing = false;
 }
 
-bool OS_JavaScript::main_loop_iterate() {
+bool WebOS::main_loop_iterate() {
     if (is_userfs_persistent() && idb_needs_sync && !idb_is_syncing) {
         idb_is_syncing = true;
         idb_needs_sync = false;
-        rebel_js_os_fs_sync(&OS_JavaScript::fs_sync_callback);
+        rebel_js_os_fs_sync(&WebOS::fs_sync_callback);
     }
 
     input->flush_buffered_events();
@@ -965,24 +955,24 @@ bool OS_JavaScript::main_loop_iterate() {
     return Main::iteration();
 }
 
-int OS_JavaScript::get_screen_dpi(int p_screen) const {
+int WebOS::get_screen_dpi(int p_screen) const {
     return rebel_js_display_screen_dpi_get();
 }
 
-float OS_JavaScript::get_screen_scale(int p_screen) const {
+float WebOS::get_screen_scale(int p_screen) const {
     return rebel_js_display_pixel_ratio_get();
 }
 
-float OS_JavaScript::get_screen_max_scale() const {
+float WebOS::get_screen_max_scale() const {
     return get_screen_scale();
 }
 
-void OS_JavaScript::delete_main_loop() {
+void WebOS::delete_main_loop() {
     memdelete(main_loop);
     main_loop = NULL;
 }
 
-void OS_JavaScript::finalize() {
+void WebOS::finalize() {
     memdelete(input);
     visual_server->finish();
     emscripten_webgl_commit_frame();
@@ -996,7 +986,7 @@ void OS_JavaScript::finalize() {
 
 // Miscellaneous
 
-Error OS_JavaScript::execute(
+Error WebOS::execute(
     const String& p_path,
     const List<String>& p_arguments,
     bool p_blocking,
@@ -1022,30 +1012,30 @@ Error OS_JavaScript::execute(
     return OK;
 }
 
-Error OS_JavaScript::kill(const ProcessID& p_pid) {
+Error WebOS::kill(const ProcessID& p_pid) {
     ERR_FAIL_V_MSG(
         ERR_UNAVAILABLE,
-        "OS::kill() is not available on the HTML5 platform."
+        "OS::kill() is not available on the Web platform."
     );
 }
 
-int OS_JavaScript::get_process_id() const {
+int WebOS::get_process_id() const {
     ERR_FAIL_V_MSG(
         0,
-        "OS::get_process_id() is not available on the HTML5 platform."
+        "OS::get_process_id() is not available on the Web platform."
     );
 }
 
-int OS_JavaScript::get_processor_count() const {
+int WebOS::get_processor_count() const {
     return rebel_js_os_hw_concurrency_get();
 }
 
-bool OS_JavaScript::_check_internal_feature_support(const String& p_feature) {
-    if (p_feature == "HTML5" || p_feature == "web") {
+bool WebOS::_check_internal_feature_support(const String& p_feature) {
+    if (p_feature == "Web" || p_feature == "web") {
         return true;
     }
 
-#ifdef JAVASCRIPT_EVAL_ENABLED
+#ifdef WEB_EVAL_ENABLED
     if (p_feature == "JavaScript") {
         return true;
     }
@@ -1064,15 +1054,15 @@ bool OS_JavaScript::_check_internal_feature_support(const String& p_feature) {
     return false;
 }
 
-void OS_JavaScript::alert(const String& p_alert, const String& p_title) {
+void WebOS::alert(const String& p_alert, const String& p_title) {
     rebel_js_display_alert(p_alert.utf8().get_data());
 }
 
-void OS_JavaScript::set_window_title(const String& p_title) {
+void WebOS::set_window_title(const String& p_title) {
     rebel_js_display_window_title_set(p_title.utf8().get_data());
 }
 
-void OS_JavaScript::set_icon(const Ref<Image>& p_icon) {
+void WebOS::set_icon(const Ref<Image>& p_icon) {
     ERR_FAIL_COND(p_icon.is_null());
     Ref<Image> icon = p_icon;
     if (icon->is_compressed()) {
@@ -1117,69 +1107,66 @@ void OS_JavaScript::set_icon(const Ref<Image>& p_icon) {
     rebel_js_display_window_icon_set(r.ptr(), len);
 }
 
-String OS_JavaScript::get_executable_path() const {
+String WebOS::get_executable_path() const {
     return OS::get_executable_path();
 }
 
-Error OS_JavaScript::shell_open(String p_uri) {
+Error WebOS::shell_open(String p_uri) {
     // Open URI in a new tab, browser will deal with it by protocol.
     rebel_js_os_shell_open(p_uri.utf8().get_data());
     return OK;
 }
 
-String OS_JavaScript::get_name() const {
-    return "HTML5";
+String WebOS::get_name() const {
+    return "Web";
 }
 
-bool OS_JavaScript::can_draw() const {
+bool WebOS::can_draw() const {
     return true; // Always?
 }
 
-String OS_JavaScript::get_user_data_dir() const {
+String WebOS::get_user_data_dir() const {
     return "/userfs";
 };
 
-String OS_JavaScript::get_cache_path() const {
+String WebOS::get_cache_path() const {
     return "/home/web_user/.cache";
 }
 
-String OS_JavaScript::get_config_path() const {
+String WebOS::get_config_path() const {
     return "/home/web_user/.config";
 }
 
-String OS_JavaScript::get_data_path() const {
+String WebOS::get_data_path() const {
     return "/home/web_user/.local/share";
 }
 
-OS::PowerState OS_JavaScript::get_power_state() {
+OS::PowerState WebOS::get_power_state() {
     WARN_PRINT_ONCE(
-        "Power management is not supported for the HTML5 platform, defaulting "
+        "Power management is not supported for the Web platform, defaulting "
         "to POWERSTATE_UNKNOWN"
     );
     return OS::POWERSTATE_UNKNOWN;
 }
 
-int OS_JavaScript::get_power_seconds_left() {
+int WebOS::get_power_seconds_left() {
     WARN_PRINT_ONCE(
-        "Power management is not supported for the HTML5 platform, defaulting "
+        "Power management is not supported for the Web platform, defaulting "
         "to -1"
     );
     return -1;
 }
 
-int OS_JavaScript::get_power_percent_left() {
+int WebOS::get_power_percent_left() {
     WARN_PRINT_ONCE(
-        "Power management is not supported for the HTML5 platform, defaulting "
+        "Power management is not supported for the Web platform, defaulting "
         "to -1"
     );
     return -1;
 }
 
-void OS_JavaScript::file_access_close_callback(
-    const String& p_file,
-    int p_flags
-) {
-    OS_JavaScript* os = get_singleton();
+void WebOS::file_access_close_callback(const String& p_file, int p_flags) {
+    WebOS* os = get_singleton();
 
     if (!(os->is_userfs_persistent() && p_flags & FileAccess::WRITE)) {
         return; // FS persistence is not working or we are not writing.
@@ -1195,11 +1182,11 @@ void OS_JavaScript::file_access_close_callback(
     }
 }
 
-bool OS_JavaScript::is_userfs_persistent() const {
+bool WebOS::is_userfs_persistent() const {
     return idb_available;
 }
 
-Error OS_JavaScript::open_dynamic_library(
+Error WebOS::open_dynamic_library(
     const String p_path,
     void*& p_library_handle,
     bool p_also_set_library_path
@@ -1214,11 +1201,11 @@ Error OS_JavaScript::open_dynamic_library(
     return OK;
 }
 
-OS_JavaScript* OS_JavaScript::get_singleton() {
-    return static_cast<OS_JavaScript*>(OS::get_singleton());
+WebOS* WebOS::get_singleton() {
+    return static_cast<WebOS*>(OS::get_singleton());
 }
 
-OS_JavaScript::OS_JavaScript() {
+WebOS::WebOS() {
     // Expose method for requesting quit.
     rebel_js_os_request_quit_cb(&request_quit_callback);
     // Set canvas ID
@@ -1241,7 +1228,7 @@ OS_JavaScript::OS_JavaScript() {
     idb_needs_sync = false;
     idb_is_syncing = false;
 
-    if (AudioDriverJavaScript::is_available()) {
+    if (WebAudioDriver::is_available()) {
 #ifdef NO_THREADS
         audio_drivers.push_back(memnew(AudioDriverScriptProcessor));
 #endif

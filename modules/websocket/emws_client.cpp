@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "emws_client.h"
 
@@ -76,14 +76,14 @@ Error EMWSClient::connect_to_host(
     String str = "ws://";
 
     if (p_custom_headers.size()) {
-        WARN_PRINT_ONCE("Custom headers are not supported in in HTML5 platform."
+        WARN_PRINT_ONCE("Custom headers are not supported on the Web platform."
         );
     }
     if (p_ssl) {
         str = "wss://";
         if (ssl_cert.is_valid()) {
             WARN_PRINT_ONCE(
-                "Custom SSL certificate is not supported in HTML5 platform."
+                "Custom SSL certificate is not supported on the Web platform."
             );
         }
     }
@@ -132,11 +132,11 @@ void EMWSClient::disconnect_from_host(int p_code, String p_reason) {
 }
 
 IP_Address EMWSClient::get_connected_host() const {
-    ERR_FAIL_V_MSG(IP_Address(), "Not supported in HTML5 export.");
+    ERR_FAIL_V_MSG(IP_Address(), "Not supported on the Web platform.");
 }
 
 uint16_t EMWSClient::get_connected_port() const {
-    ERR_FAIL_V_MSG(0, "Not supported in HTML5 export.");
+    ERR_FAIL_V_MSG(0, "Not supported on the Web platform.");
 }
 
 int EMWSClient::get_max_packet_size() const {
@@ -172,4 +172,4 @@ EMWSClient::~EMWSClient() {
     }
 }
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED
