@@ -14,8 +14,8 @@ exclude_directories="thirdparty platform/android/project/engine/src/main/java/co
 exclude_file_patterns="\-so_wrap\."
 
 # To get consistent formatting, use the same clang-format version as CI.
-recommended_clang_format_major_min="14"
-recommended_clang_format_major_max="17"
+required_clang_format_major_version="16"
+recommended_clang_format_major_version="17"
 
 # Determine the major version of clang-format being used.
 # The returned string can be inconsistent depending on where clang-format comes from.
@@ -25,15 +25,22 @@ recommended_clang_format_major_max="17"
 clang_format_version="$(clang-format --version | sed "s/[^0-9\.]*\([0-9\.]*\).*/\1/")"
 clang_format_major_version="$(echo "$clang_format_version" | cut -d. -f1)"
 
-if [[ "$clang_format_major_version" -lt "$recommended_clang_format_major_min" ]]; then
+if [[ "$clang_format_major_version" -lt "$required_clang_format_major_version" ]]; then
+    echo "Error: Your version of clang-format is $clang_format_version."
+    echo "The minimum required version of clang-format is $required_clang_format_major_version."
+    echo "Please upgrade clang-format to ensure formatting is applied correctly."
+    exit 1
+fi
+
+if [[ "$clang_format_major_version" -lt "$recommended_clang_format_major_version" ]]; then
     echo "Warning: Your version of clang-format is $clang_format_version."
-    echo "The minimum recommended version of clang-format is $recommended_clang_format_major_min."
+    echo "The recommended version of clang-format is $recommended_clang_format_major_version."
     echo "Consider upgrading clang-format as formatting may not be applied correctly."
 fi
 
-if [[ "$clang_format_major_version" -gt "$recommended_clang_format_major_max" ]]; then
+if [[ "$clang_format_major_version" -gt "$recommended_clang_format_major_version" ]]; then
     echo "Warning: Your version of clang-format is $clang_format_version."
-    echo "The maximum recommended version of clang-format is $recommended_clang_format_major_max."
+    echo "The maximum tested version of clang-format is $recommended_clang_format_major_version."
     echo "Consider downgrading clang-format as formatting may not be applied correctly."
 fi
 
