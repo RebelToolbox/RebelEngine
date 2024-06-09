@@ -4,21 +4,20 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef CONTEXT_GL_X11_H
-#define CONTEXT_GL_X11_H
+#ifndef LINUX_CONTEXT_GL_H
+#define LINUX_CONTEXT_GL_H
 
-#ifdef X11_ENABLED
-
-#if defined(OPENGL_ENABLED)
+#ifdef LINUX_ENABLED
+#ifdef OPENGL_ENABLED
 
 #include "core/os/os.h"
 
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrender.h>
 
-struct ContextGL_X11_Private;
+struct LinuxPrivateGLContext;
 
-class ContextGL_X11 {
+class LinuxGLContext {
 public:
     enum ContextType {
         OLDSTYLE,
@@ -27,9 +26,8 @@ public:
     };
 
 private:
-    ContextGL_X11_Private* p;
+    LinuxPrivateGLContext* p;
     OS::VideoMode default_video_mode;
-    //::Colormap x11_colormap;
     ::Display* x11_display;
     ::Window& x11_window;
     bool double_buffer;
@@ -51,16 +49,15 @@ public:
     void set_use_vsync(bool p_use);
     bool is_using_vsync() const;
 
-    ContextGL_X11(
+    LinuxGLContext(
         ::Display* p_x11_display,
         ::Window& p_x11_window,
         const OS::VideoMode& p_default_video_mode,
         ContextType p_context_type
     );
-    ~ContextGL_X11();
+    ~LinuxGLContext();
 };
 
-#endif
-
-#endif
-#endif
+#endif // OPENGL_ENABLED
+#endif // LINUX_ENABLED
+#endif // LINUX_CONTEXT_GL_H

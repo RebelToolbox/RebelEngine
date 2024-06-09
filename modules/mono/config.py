@@ -1,7 +1,7 @@
 supported_platforms = [
     "windows",
     "macos",
-    "x11",
+    "linux",
     "server",
     "android",
     "web",

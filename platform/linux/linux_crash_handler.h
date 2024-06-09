@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef CRASH_HANDLER_X11_H
-#define CRASH_HANDLER_X11_H
+#ifndef LINUX_CRASH_HANDLER_H
+#define LINUX_CRASH_HANDLER_H
 
 class CrashHandler {
     bool disabled;
@@ -23,4 +23,4 @@ public:
     ~CrashHandler();
 };
 
-#endif // CRASH_HANDLER_X11_H
+#endif // LINUX_CRASH_HANDLER_H

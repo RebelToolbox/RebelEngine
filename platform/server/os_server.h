@@ -14,8 +14,8 @@
 #include "platform/macos/macos_crash_handler.h"
 #include "platform/macos/macos_power.h"
 #else
-#include "platform/x11/crash_handler_x11.h"
-#include "platform/x11/power_x11.h"
+#include "platform/linux/linux_crash_handler.h"
+#include "platform/linux/linux_power.h"
 #endif
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
@@ -40,7 +40,7 @@ class OS_Server : public OS_Unix {
 #ifdef __APPLE__
     MacOSPower* power_manager;
 #else
-    PowerX11* power_manager;
+    LinuxPower* power_manager;
 #endif
 
     CrashHandler crash_handler;

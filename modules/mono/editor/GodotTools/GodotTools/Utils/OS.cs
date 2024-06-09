@@ -22,7 +22,7 @@ namespace GodotTools.Utils
         {
             public const string Windows = "Windows";
             public const string MacOS = "MacOS";
-            public const string X11 = "X11";
+            public const string Linux = "Linux";
             public const string Server = "Server";
             public const string UWP = "UWP";
             public const string Android = "Android";
@@ -34,7 +34,7 @@ namespace GodotTools.Utils
         {
             public const string Windows = "windows";
             public const string MacOS = "macos";
-            public const string X11 = "x11";
+            public const string Linux = "linux";
             public const string Server = "server";
             public const string UWP = "uwp";
             public const string Android = "android";
@@ -46,7 +46,7 @@ namespace GodotTools.Utils
         {
             [Names.Windows] = Platforms.Windows,
             [Names.MacOS] = Platforms.MacOS,
-            [Names.X11] = Platforms.X11,
+            [Names.Linux] = Platforms.Linux,
             [Names.Server] = Platforms.Server,
             [Names.UWP] = Platforms.UWP,
             [Names.Android] = Platforms.Android,
@@ -66,7 +66,7 @@ namespace GodotTools.Utils
 
         private static readonly Lazy<bool> _isWindows = new Lazy<bool>(() => IsOS(Names.Windows));
         private static readonly Lazy<bool> _isMacOS = new Lazy<bool>(() => IsOS(Names.MacOS));
-        private static readonly Lazy<bool> _isX11 = new Lazy<bool>(() => IsOS(Names.X11));
+        private static readonly Lazy<bool> _isLinux = new Lazy<bool>(() => IsOS(Names.Linux));
         private static readonly Lazy<bool> _isServer = new Lazy<bool>(() => IsOS(Names.Server));
         private static readonly Lazy<bool> _isUWP = new Lazy<bool>(() => IsOS(Names.UWP));
         private static readonly Lazy<bool> _isAndroid = new Lazy<bool>(() => IsOS(Names.Android));
@@ -76,14 +76,14 @@ namespace GodotTools.Utils
 
         public static bool IsWindows => _isWindows.Value || IsUWP;
         public static bool IsMacOS => _isMacOS.Value;
-        public static bool IsX11 => _isX11.Value;
+        public static bool IsLinux => _isLinux.Value;
         public static bool IsServer => _isServer.Value;
         public static bool IsUWP => _isUWP.Value;
         public static bool IsAndroid => _isAndroid.Value;
         public static bool IsiOS => _isiOS.Value;
         public static bool IsWeb => _isWeb.Value;
 
-        private static readonly string[] UnixLikePlatforms = {Names.MacOS, Names.X11, Names.Server, Names.Android, Names.iOS};
+        private static readonly string[] UnixLikePlatforms = {Names.MacOS, Names.Linux, Names.Server, Names.Android, Names.iOS};
 
         public static bool IsUnixLike => _isUnixLike.Value;
 

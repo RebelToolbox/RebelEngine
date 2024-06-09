@@ -7,26 +7,11 @@
 #ifndef SOFT_BODY_BULLET_H
 #define SOFT_BODY_BULLET_H
 
-#include "collision_object_bullet.h"
-#include "scene/resources/material.h" // TODO remove this please
-
-#ifdef None
-/// This is required to remove the macro None defined by x11 compiler because
-/// this word "None" is used internally by Bullet
-#undef None
-#define x11_None 0L
-#endif
-
 #include "BulletSoftBody/btSoftBodyHelpers.h"
 #include "collision_object_bullet.h"
+#include "scene/resources/material.h" // TODO remove this please
 #include "scene/resources/mesh.h"
 #include "servers/physics_server.h"
-
-#ifdef x11_None
-/// This is required to re add the macro None defined by x11 compiler
-#undef x11_None
-#define None 0L
-#endif
 
 /**
     @author AndreaCatania

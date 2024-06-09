@@ -2647,7 +2647,7 @@ Error IosEditorExportPlatform::export_project(
     int ret = unzGoToFirstFile(src_pkg_zip);
     Vector<uint8_t> project_file_data;
     while (ret == UNZ_OK) {
-#if defined(MACOS_ENABLED) || defined(X11_ENABLED)
+#if defined(MACOS_ENABLED) || defined(LINUX_ENABLED)
         bool is_execute = false;
 #endif
 
@@ -2689,7 +2689,7 @@ Error IosEditorExportPlatform::export_project(
                 continue; // ignore!
             }
             found_library = true;
-#if defined(MACOS_ENABLED) || defined(X11_ENABLED)
+#if defined(MACOS_ENABLED) || defined(LINUX_ENABLED)
             is_execute = true;
 #endif
             file = file.replace(library_to_use, binary_name + ".xcframework");
@@ -2734,7 +2734,7 @@ Error IosEditorExportPlatform::export_project(
             f->close();
             memdelete(f);
 
-#if defined(MACOS_ENABLED) || defined(X11_ENABLED)
+#if defined(MACOS_ENABLED) || defined(LINUX_ENABLED)
             if (is_execute) {
                 // we need execute rights on this file
                 chmod(file.utf8().get_data(), 0755);

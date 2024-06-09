@@ -4,10 +4,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef X11_ENABLED
-#if defined(OPENGL_ENABLED)
+#ifndef LINUX_EXPORT_H
+#define LINUX_EXPORT_H
 
-int detect_prime();
+void register_linux_exporter();
 
-#endif
-#endif
+#endif // LINUX_EXPORT_H

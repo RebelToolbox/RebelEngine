@@ -9,7 +9,7 @@ def is_active():
 
 
 def get_name():
-    return "X11"
+    return "Linux"
 
 
 def can_build():
@@ -17,43 +17,43 @@ def can_build():
         return False
 
     # Check the minimal dependencies
-    x11_error = os.system("pkg-config --version > /dev/null")
-    if x11_error:
+    linux_error = os.system("pkg-config --version > /dev/null")
+    if linux_error:
         print("Error: pkg-config not found. Aborting.")
         return False
 
-    x11_error = os.system("pkg-config x11 --modversion > /dev/null")
-    if x11_error:
-        print("Error: X11 libraries not found. Aborting.")
+    linux_error = os.system("pkg-config x11 --modversion > /dev/null")
+    if linux_error:
+        print("Error: X11 library not found. Aborting.")
         return False
 
-    x11_error = os.system("pkg-config xcursor --modversion > /dev/null")
-    if x11_error:
+    linux_error = os.system("pkg-config xcursor --modversion > /dev/null")
+    if linux_error:
         print("Error: Xcursor library not found. Aborting.")
         return False
 
-    x11_error = os.system("pkg-config xinerama --modversion > /dev/null")
-    if x11_error:
+    linux_error = os.system("pkg-config xinerama --modversion > /dev/null")
+    if linux_error:
         print("Error: Xinerama library not found. Aborting.")
         return False
 
-    x11_error = os.system("pkg-config xext --modversion > /dev/null")
-    if x11_error:
+    linux_error = os.system("pkg-config xext --modversion > /dev/null")
+    if linux_error:
         print("Error: Xext library not found. Aborting.")
         return False
 
-    x11_error = os.system("pkg-config xrandr --modversion > /dev/null")
-    if x11_error:
+    linux_error = os.system("pkg-config xrandr --modversion > /dev/null")
+    if linux_error:
         print("Error: XrandR library not found. Aborting.")
         return False
 
-    x11_error = os.system("pkg-config xrender --modversion > /dev/null")
-    if x11_error:
+    linux_error = os.system("pkg-config xrender --modversion > /dev/null")
+    if linux_error:
         print("Error: XRender library not found. Aborting.")
         return False
 
-    x11_error = os.system("pkg-config xi --modversion > /dev/null")
-    if x11_error:
+    linux_error = os.system("pkg-config xi --modversion > /dev/null")
+    if linux_error:
         print("Error: Xi library not found. Aborting.")
         return False
 
@@ -398,10 +398,10 @@ def configure(env):
     if not env["builtin_zlib"]:
         env.ParseConfig("pkg-config zlib --cflags --libs")
 
-    env.Prepend(CPPPATH=["#platform/x11"])
+    env.Prepend(CPPPATH=["#platform/linux"])
     env.Append(
         CPPDEFINES=[
-            "X11_ENABLED",
+            "LINUX_ENABLED",
             "UNIX_ENABLED",
             "OPENGL_ENABLED",
             "GLES_ENABLED",
@@ -438,9 +438,9 @@ def configure(env):
             )
         else:
             if float(gnu_ld_version.group(1)) >= 2.30:
-                env.Append(LINKFLAGS=["-T", "platform/x11/pck_embed.ld"])
+                env.Append(LINKFLAGS=["-T", "platform/linux/pck_embed.ld"])
             else:
-                env.Append(LINKFLAGS=["-T", "platform/x11/pck_embed.legacy.ld"])
+                env.Append(LINKFLAGS=["-T", "platform/linux/pck_embed.legacy.ld"])
 
     ## Cross-compilation
 

@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef KEY_MAPPING_X11_H
-#define KEY_MAPPING_X11_H
+#ifndef LINUX_KEY_MAPPING_H
+#define LINUX_KEY_MAPPING_H
 
 #include <X11/XF86keysym.h>
 #include <X11/Xlib.h>
@@ -16,8 +16,8 @@
 
 #include <X11/keysymdef.h>
 
-class KeyMappingX11 {
-    KeyMappingX11(){};
+class LinuxKeyMapping {
+    LinuxKeyMapping(){};
 
 public:
     static unsigned int get_keycode(KeySym p_keysym);
@@ -27,4 +27,4 @@ public:
     static KeySym get_keysym_from_unicode(unsigned int p_unicode);
 };
 
-#endif
+#endif // LINUX_KEY_MAPPING_H

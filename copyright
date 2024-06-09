@@ -90,7 +90,7 @@ License: Apache-2.0
 Files: ./platform/android/power_android.cpp
  ./platform/macos/macos_power.cpp
  ./platform/windows/power_windows.cpp
- ./platform/x11/power_x11.cpp
+ ./platform/linux/linux_power.cpp
 Comment: Simple DirectMedia Layer
 Copyright: 2022-Present, Rebel Engine contributors
  2017-2022, Godot Engine contributors

@@ -358,11 +358,11 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platforms["Windows"]               = platform_windows;
 
         NativePlatformConfig platform_linux;
-        platform_linux.name = "Linux/X11";
+        platform_linux.name = "Linux";
         platform_linux.entries.push_back("64");
         platform_linux.entries.push_back("32");
         platform_linux.library_extension = "*.so";
-        platforms["X11"]                 = platform_linux;
+        platforms["Linux"]               = platform_linux;
 
         NativePlatformConfig platform_macos;
         platform_macos.name = "macOS";

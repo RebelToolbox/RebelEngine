@@ -23,7 +23,7 @@ jobs:
             os: ubuntu-latest
             artifact: linux-editor
             build-options: production=yes target=release_debug
-            rebel-executable: rebel.x11.opt.tools.64
+            rebel-executable: rebel.linux.opt.tools.64
 
           - name: Windows Editor
             os: windows-latest
@@ -48,25 +48,25 @@ jobs:
             os: ubuntu-latest
             artifact: linux-engine-x86-64
             build-options: production=yes tools=no target=release
-            rebel-executable: rebel.x11.opt.64
+            rebel-executable: rebel.linux.opt.64
 
           - name: Linux Engine 64 bit Debug
             os: ubuntu-latest
             artifact: linux-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
-            rebel-executable: rebel.x11.opt.debug.64
+            rebel-executable: rebel.linux.opt.debug.64
 
           - name: Linux Engine 32 bit
             os: ubuntu-latest
             artifact: linux-engine-x86-32
             build-options: production=yes tools=no target=release bits=32
-            rebel-executable: rebel.x11.opt.32
+            rebel-executable: rebel.linux.opt.32
 
           - name: Linux Engine 32 bit Debug
             os: ubuntu-latest
             artifact: linux-engine-x86-32-debug
             build-options: production=yes tools=no target=release_debug bits=32
-            rebel-executable: rebel.x11.opt.debug.32
+            rebel-executable: rebel.linux.opt.debug.32
 
           # Rebel Engine Windows builds
           - name: Windows Engine 64 bit
@@ -485,10 +485,10 @@ jobs:
           # Move all template binaries into the templates directory.
           mkdir templates
           # Move Linux templates.
-          mv artifacts/rebel.x11.opt.64 templates/linux_x11_64_release
-          mv artifacts/rebel.x11.opt.debug.64 templates/linux_x11_64_debug
-          mv artifacts/rebel.x11.opt.32 templates/linux_x11_32_release
-          mv artifacts/rebel.x11.opt.debug.32 templates/linux_x11_32_debug
+          mv artifacts/rebel.linux.opt.64 templates/linux_64_release
+          mv artifacts/rebel.linux.opt.debug.64 templates/linux_64_debug
+          mv artifacts/rebel.linux.opt.32 templates/linux_32_release
+          mv artifacts/rebel.linux.opt.debug.32 templates/linux_32_debug
           # Move Windows templates.
           mv artifacts/rebel.windows.opt.64.msvc.exe templates/windows_64_release.exe
           mv artifacts/rebel.windows.opt.debug.64.msvc.exe templates/windows_64_debug.exe
@@ -552,7 +552,7 @@ jobs:
         run: |
           # Rename editor applications with version.
           mkdir bin
-          mv artifacts/rebel.x11.opt.tools.64 bin/rebel-editor-$version-linux-x86-64
+          mv artifacts/rebel.linux.opt.tools.64 bin/rebel-editor-$version-linux-x86-64
           mv artifacts/rebel.windows.opt.tools.64.msvc.exe bin/rebel-editor-$version-windows-x86-64.exe
           chmod +x bin/rebel-editor-$version-linux-x86-64
 

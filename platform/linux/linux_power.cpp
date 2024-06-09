@@ -29,7 +29,7 @@ Adapted from corresponding SDL 2.0 code.
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include "power_x11.h"
+#include "linux_power.h"
 
 #include "core/error_macros.h"
 
@@ -47,7 +47,7 @@ static const char* proc_acpi_battery_path      = "/proc/acpi/battery";
 static const char* proc_acpi_ac_adapter_path   = "/proc/acpi/ac_adapter";
 static const char* sys_class_power_supply_path = "/sys/class/power_supply";
 
-FileAccessRef PowerX11::open_power_file(
+FileAccessRef LinuxPower::open_power_file(
     const char* base,
     const char* node,
     const char* key
@@ -58,7 +58,7 @@ FileAccessRef PowerX11::open_power_file(
     return f;
 }
 
-bool PowerX11::read_power_file(
+bool LinuxPower::read_power_file(
     const char* base,
     const char* node,
     const char* key,
@@ -75,7 +75,7 @@ bool PowerX11::read_power_file(
     return true;
 }
 
-bool PowerX11::make_proc_acpi_key_val(char** _ptr, char** _key, char** _val) {
+bool LinuxPower::make_proc_acpi_key_val(char** _ptr, char** _key, char** _val) {
     char* ptr = *_ptr;
 
     while (*ptr == ' ') {
@@ -120,7 +120,7 @@ bool PowerX11::make_proc_acpi_key_val(char** _ptr, char** _key, char** _val) {
     return true;
 }
 
-void PowerX11::check_proc_acpi_battery(
+void LinuxPower::check_proc_acpi_battery(
     const char* node,
     bool* have_battery,
     bool* charging
@@ -210,7 +210,7 @@ void PowerX11::check_proc_acpi_battery(
     }
 }
 
-void PowerX11::check_proc_acpi_ac_adapter(const char* node, bool* have_ac) {
+void LinuxPower::check_proc_acpi_ac_adapter(const char* node, bool* have_ac) {
     const char* base = proc_acpi_ac_adapter_path;
     char state[256];
     char* ptr = nullptr;
@@ -233,7 +233,7 @@ void PowerX11::check_proc_acpi_ac_adapter(const char* node, bool* have_ac) {
     }
 }
 
-bool PowerX11::GetPowerInfo_Linux_proc_acpi() {
+bool LinuxPower::GetPowerInfo_Linux_proc_acpi() {
     String node;
     DirAccess* dirp   = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     bool have_battery = false;
@@ -286,7 +286,7 @@ bool PowerX11::GetPowerInfo_Linux_proc_acpi() {
     return true; /* definitive answer. */
 }
 
-bool PowerX11::next_string(char** _ptr, char** _str) {
+bool LinuxPower::next_string(char** _ptr, char** _str) {
     char* ptr = *_ptr;
     char* str = *_str;
 
@@ -312,14 +312,14 @@ bool PowerX11::next_string(char** _ptr, char** _str) {
     return true;
 }
 
-bool PowerX11::int_string(char* str, int* val) {
+bool LinuxPower::int_string(char* str, int* val) {
     String sval = str;
     *val        = sval.to_int();
     return (*str != '\0');
 }
 
 /* http://lxr.linux.no/linux+v2.6.29/drivers/char/apm-emulation.c */
-bool PowerX11::GetPowerInfo_Linux_proc_apm() {
+bool LinuxPower::GetPowerInfo_Linux_proc_apm() {
     bool need_details   = false;
     int ac_status       = 0;
     int battery_status  = 0;
@@ -424,7 +424,7 @@ bool PowerX11::GetPowerInfo_Linux_proc_apm() {
 
 /* !!! FIXME: implement d-bus queries to org.freedesktop.UPower. */
 
-bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(
+bool LinuxPower::GetPowerInfo_Linux_sys_class_power_supply(
     /*PowerState *state, int *seconds, int *percent*/
 ) {
     const char* base = sys_class_power_supply_path;
@@ -555,7 +555,7 @@ bool PowerX11::GetPowerInfo_Linux_sys_class_power_supply(
     return true; /* don't look any further*/
 }
 
-bool PowerX11::UpdatePowerInfo() {
+bool LinuxPower::UpdatePowerInfo() {
     if (GetPowerInfo_Linux_sys_class_power_supply()) { // try method 1
         return true;
     }
@@ -568,14 +568,14 @@ bool PowerX11::UpdatePowerInfo() {
     return false;
 }
 
-PowerX11::PowerX11() :
+LinuxPower::LinuxPower() :
     nsecs_left(-1),
     percent_left(-1),
     power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerX11::~PowerX11() {}
+LinuxPower::~LinuxPower() {}
 
-OS::PowerState PowerX11::get_power_state() {
+OS::PowerState LinuxPower::get_power_state() {
     if (UpdatePowerInfo()) {
         return power_state;
     } else {
@@ -583,7 +583,7 @@ OS::PowerState PowerX11::get_power_state() {
     }
 }
 
-int PowerX11::get_power_seconds_left() {
+int LinuxPower::get_power_seconds_left() {
     if (UpdatePowerInfo()) {
         return nsecs_left;
     } else {
@@ -591,7 +591,7 @@ int PowerX11::get_power_seconds_left() {
     }
 }
 
-int PowerX11::get_power_percent_left() {
+int LinuxPower::get_power_percent_left() {
     if (UpdatePowerInfo()) {
         return percent_left;
     } else {

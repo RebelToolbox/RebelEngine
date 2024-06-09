@@ -1,6 +1,6 @@
-# Linux/X11 platform port
+# Linux platform port
 
-This folder contains the C++ code for the Linux/X11 (and *BSD/X11) platform port.
+This folder contains the C++ code for the Linux platform port.
 
 ## Artwork license
 

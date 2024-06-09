@@ -66,7 +66,7 @@ Error OS_Server::initialize(
 #ifdef __APPLE__
     power_manager = memnew(MacOSPower);
 #else
-    power_manager = memnew(PowerX11);
+    power_manager = memnew(LinuxPower);
 #endif
 
     resource_loader_dummy.instance();

@@ -456,7 +456,7 @@ namespace GodotTools.Export
                 case OS.Platforms.UWP:
                     return "net_4_x_win";
                 case OS.Platforms.MacOS:
-                case OS.Platforms.X11:
+                case OS.Platforms.Linux:
                 case OS.Platforms.Server:
                     return "net_4_x";
                 case OS.Platforms.Android:

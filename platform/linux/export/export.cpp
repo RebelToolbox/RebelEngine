@@ -8,7 +8,7 @@
 
 #include "core/os/file_access.h"
 #include "editor/editor_export.h"
-#include "platform/x11/logo.gen.h"
+#include "platform/linux/logo.gen.h"
 #include "scene/resources/texture.h"
 
 static Error fixup_embedded_pck(
@@ -17,23 +17,23 @@ static Error fixup_embedded_pck(
     int64_t p_embedded_size
 );
 
-void register_x11_exporter() {
+void register_linux_exporter() {
     Ref<EditorExportPlatformPC> platform;
     platform.instance();
 
-    Ref<Image> img = memnew(Image(_x11_logo));
+    Ref<Image> img = memnew(Image(_linux_logo));
     Ref<ImageTexture> logo;
     logo.instance();
     logo->create_from_image(img);
     platform->set_logo(logo);
-    platform->set_name("Linux/X11");
+    platform->set_name("Linux");
     platform->set_extension("x86");
     platform->set_extension("x86_64", "binary_format/64_bits");
-    platform->set_release_32("linux_x11_32_release");
-    platform->set_debug_32("linux_x11_32_debug");
-    platform->set_release_64("linux_x11_64_release");
-    platform->set_debug_64("linux_x11_64_debug");
-    platform->set_os_name("X11");
+    platform->set_release_32("linux_32_release");
+    platform->set_debug_32("linux_32_debug");
+    platform->set_release_64("linux_64_release");
+    platform->set_debug_64("linux_64_debug");
+    platform->set_os_name("Linux");
     platform->set_chmod_flags(0755);
     platform->set_fixup_embedded_pck_func(&fixup_embedded_pck);
 

@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+#include "linux_os.h"
 #include "main/main.h"
-#include "os_x11.h"
 
 #include <limits.h>
 #include <locale.h>
@@ -13,7 +13,7 @@
 #include <unistd.h>
 
 int main(int argc, char* argv[]) {
-    OS_X11 os;
+    LinuxOS os;
 
     setlocale(LC_CTYPE, "");
 

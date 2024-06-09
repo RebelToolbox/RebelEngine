@@ -274,7 +274,7 @@ else:
         or sys.platform.startswith("netbsd")
         or sys.platform.startswith("openbsd")
     ):
-        selected_platform = "x11"
+        selected_platform = "linux"
     elif sys.platform == "darwin":
         selected_platform = "macos"
     elif sys.platform == "win32":
@@ -287,9 +287,6 @@ else:
 
     if selected_platform != "":
         print("Automatically detected platform: " + selected_platform)
-
-if selected_platform in ["linux", "bsd", "linuxbsd"]:
-    selected_platform = "x11"
 
 # Make sure to update this to the found, valid platform as it's used through the buildsystem as the reference.
 # It should always be re-set after calling `opts.Update()` otherwise it uses the original input value.

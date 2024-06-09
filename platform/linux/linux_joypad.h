@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: MIT
 
 // author: Andreas Haas <hondres,  liugam3@gmail.com>
-#ifndef JOYPAD_LINUX_H
-#define JOYPAD_LINUX_H
+#ifndef LINUX_JOYPAD_H
+#define LINUX_JOYPAD_H
 
 #ifdef JOYDEV_ENABLED
 #include "core/os/mutex.h"
@@ -15,10 +15,10 @@
 
 struct input_absinfo;
 
-class JoypadLinux {
+class LinuxJoypad {
 public:
-    JoypadLinux(InputDefault* in);
-    ~JoypadLinux();
+    LinuxJoypad(InputDefault* in);
+    ~LinuxJoypad();
     void process_joypads();
 
 private:
@@ -85,4 +85,4 @@ private:
 };
 
 #endif
-#endif // JOYPAD_LINUX_H
+#endif // LINUX_JOYPAD_H

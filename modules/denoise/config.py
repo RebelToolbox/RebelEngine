@@ -5,7 +5,7 @@ def can_build(env, platform):
     # as doing lightmap generation and denoising on Android or Web platforms
     # would be a bit far-fetched.
     # Note: oneDNN doesn't support ARM64, OIDN needs updating to the latest version
-    supported_platform = platform in ["x11", "macos", "windows", "server"]
+    supported_platform = platform in ["linux", "macos", "windows", "server"]
     supported_bits = env["bits"] == "64"
     supported_arch = env["arch"] != "arm64" and not env["arch"].startswith("rv")
 
@@ -14,7 +14,7 @@ def can_build(env, platform):
     # bits-handling code.
     from platform import machine
 
-    if platform == "x11" and machine() != "x86_64":
+    if platform == "linux" and machine() != "x86_64":
         supported_arch = False
 
     return env["tools"] and supported_platform and supported_bits and supported_arch

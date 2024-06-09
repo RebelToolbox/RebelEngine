@@ -4,20 +4,20 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_X11_H
-#define OS_X11_H
+#ifndef LINUX_OS_H
+#define LINUX_OS_H
 
-#include "context_gl_x11.h"
 #include "core/local_vector.h"
 #include "core/os/input.h"
-#include "crash_handler_x11.h"
 #include "drivers/alsa/audio_driver_alsa.h"
 #include "drivers/alsamidi/midi_driver_alsamidi.h"
 #include "drivers/pulseaudio/audio_driver_pulseaudio.h"
 #include "drivers/unix/os_unix.h"
-#include "joypad_linux.h"
+#include "linux_crash_handler.h"
+#include "linux_gl_context.h"
+#include "linux_joypad.h"
+#include "linux_power.h"
 #include "main/input_default.h"
-#include "power_x11.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
 #include "servers/visual_server.h"
@@ -53,7 +53,7 @@ typedef struct _xrr_monitor_info {
 
 #undef CursorShape
 
-class OS_X11 : public OS_Unix {
+class LinuxOS : public OS_Unix {
     Atom wm_delete;
     Atom xdnd_enter;
     Atom xdnd_position;
@@ -67,7 +67,7 @@ class OS_X11 : public OS_Unix {
     int xdnd_version;
 
 #if defined(OPENGL_ENABLED)
-    ContextGL_X11* context_gl;
+    LinuxGLContext* gl_context;
 #endif
     // Rasterizer *rasterizer;
     VisualServer* visual_server;
@@ -208,7 +208,7 @@ class OS_X11 : public OS_Unix {
     InputDefault* input;
 
 #ifdef JOYDEV_ENABLED
-    JoypadLinux* joypad;
+    LinuxJoypad* joypad;
 #endif
 
 #ifdef ALSA_ENABLED
@@ -223,7 +223,7 @@ class OS_X11 : public OS_Unix {
     AudioDriverPulseAudio driver_pulseaudio;
 #endif
 
-    PowerX11* power_manager;
+    LinuxPower* power_manager;
 
     bool layered_window;
 
@@ -392,7 +392,7 @@ public:
     virtual String keyboard_get_layout_name(int p_index) const;
 
     void update_real_mouse_position();
-    OS_X11();
+    LinuxOS();
 };
 
-#endif
+#endif // LINUX_OS_H

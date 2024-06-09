@@ -803,7 +803,7 @@ MONO_AOT_MODE_LAST = 1000,
                     string arch = "x86_64";
                     return $"{platform}-{arch}";
                 }
-                case OS.Platforms.X11:
+                case OS.Platforms.Linux:
                 case OS.Platforms.Server:
                 {
                     string arch = bits == "64" ? "x86_64" : "i686";

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "key_mapping_x11.h"
+#include "linux_key_mapping.h"
 
 /***** SCAN CODE CONVERSION ******/
 
@@ -274,7 +274,7 @@ static _TranslatePair _scancode_to_keycode[] = {
     {KEY_UNKNOWN,     0   }
 };
 
-unsigned int KeyMappingX11::get_scancode(unsigned int p_code) {
+unsigned int LinuxKeyMapping::get_scancode(unsigned int p_code) {
     unsigned int keycode = KEY_UNKNOWN;
     for (int i = 0; _scancode_to_keycode[i].keysym != KEY_UNKNOWN; i++) {
         if (_scancode_to_keycode[i].keycode == p_code) {
@@ -286,7 +286,7 @@ unsigned int KeyMappingX11::get_scancode(unsigned int p_code) {
     return keycode;
 }
 
-unsigned int KeyMappingX11::get_keycode(KeySym p_keysym) {
+unsigned int LinuxKeyMapping::get_keycode(KeySym p_keysym) {
     // kinda bruteforce.. could optimize.
 
     if (p_keysym < 0x100) { // Latin 1, maps 1-1
@@ -303,7 +303,7 @@ unsigned int KeyMappingX11::get_keycode(KeySym p_keysym) {
     return 0;
 }
 
-KeySym KeyMappingX11::get_keysym(unsigned int p_code) {
+KeySym LinuxKeyMapping::get_keysym(unsigned int p_code) {
     // kinda bruteforce.. could optimize.
 
     if (p_code < 0x100) { // Latin 1, maps 1-1
@@ -1094,7 +1094,7 @@ static _XTranslateUnicodePair _xkeysym_to_unicode[_KEYSYM_MAX] = {
     {0x20AC, 0x20AC},
 };
 
-unsigned int KeyMappingX11::get_unicode_from_keysym(KeySym p_keysym) {
+unsigned int LinuxKeyMapping::get_unicode_from_keysym(KeySym p_keysym) {
     /* Latin-1 */
     if (p_keysym >= 0x20 && p_keysym <= 0x7e) {
         return p_keysym;
@@ -1891,7 +1891,7 @@ static _XTranslateUnicodePairReverse _unicode_to_xkeysym[_UNICODE_MAX] = {
     {0x0EF7, 0x318E}
 };
 
-KeySym KeyMappingX11::get_keysym_from_unicode(unsigned int p_unicode) {
+KeySym LinuxKeyMapping::get_keysym_from_unicode(unsigned int p_unicode) {
     /* Latin 1 */
 
     if (p_unicode >= 0x20 && p_unicode <= 0x7e) {

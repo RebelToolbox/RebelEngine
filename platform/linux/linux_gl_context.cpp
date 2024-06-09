@@ -4,11 +4,11 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "context_gl_x11.h"
+#include "linux_gl_context.h"
 
 #include "core/version.h"
 
-#ifdef X11_ENABLED
+#ifdef LINUX_ENABLED
 #if defined(OPENGL_ENABLED)
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,19 +23,19 @@
 
 typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
 
-struct ContextGL_X11_Private {
+struct LinuxPrivateGLContext {
     ::GLXContext glx_context;
 };
 
-void ContextGL_X11::release_current() {
+void LinuxGLContext::release_current() {
     glXMakeCurrent(x11_display, None, nullptr);
 }
 
-void ContextGL_X11::make_current() {
+void LinuxGLContext::make_current() {
     glXMakeCurrent(x11_display, x11_window, p->glx_context);
 }
 
-void ContextGL_X11::swap_buffers() {
+void LinuxGLContext::swap_buffers() {
     glXSwapBuffers(x11_display, x11_window);
 }
 
@@ -59,7 +59,7 @@ static void set_class_hint(Display* p_display, Window p_window) {
     XFree(classHint);
 }
 
-Error ContextGL_X11::initialize() {
+Error LinuxGLContext::initialize() {
     // const char *extensions = glXQueryExtensionsString(x11_display,
     // DefaultScreen(x11_display));
 
@@ -253,21 +253,21 @@ Error ContextGL_X11::initialize() {
     return OK;
 }
 
-int ContextGL_X11::get_window_width() {
+int LinuxGLContext::get_window_width() {
     XWindowAttributes xwa;
     XGetWindowAttributes(x11_display, x11_window, &xwa);
 
     return xwa.width;
 }
 
-int ContextGL_X11::get_window_height() {
+int LinuxGLContext::get_window_height() {
     XWindowAttributes xwa;
     XGetWindowAttributes(x11_display, x11_window, &xwa);
 
     return xwa.height;
 }
 
-void* ContextGL_X11::get_glx_context() {
+void* LinuxGLContext::get_glx_context() {
     if (p != nullptr) {
         return p->glx_context;
     } else {
@@ -275,7 +275,7 @@ void* ContextGL_X11::get_glx_context() {
     }
 }
 
-void ContextGL_X11::set_use_vsync(bool p_use) {
+void LinuxGLContext::set_use_vsync(bool p_use) {
     static bool setup                                    = false;
     static PFNGLXSWAPINTERVALEXTPROC glXSwapIntervalEXT  = nullptr;
     static PFNGLXSWAPINTERVALSGIPROC glXSwapIntervalMESA = nullptr;
@@ -312,11 +312,11 @@ void ContextGL_X11::set_use_vsync(bool p_use) {
     use_vsync = p_use;
 }
 
-bool ContextGL_X11::is_using_vsync() const {
+bool LinuxGLContext::is_using_vsync() const {
     return use_vsync;
 }
 
-ContextGL_X11::ContextGL_X11(
+LinuxGLContext::LinuxGLContext(
     ::Display* p_x11_display,
     ::Window& p_x11_window,
     const OS::VideoMode& p_default_video_mode,
@@ -331,12 +331,12 @@ ContextGL_X11::ContextGL_X11(
     double_buffer = false;
     direct_render = false;
     glx_minor = glx_major = 0;
-    p                     = memnew(ContextGL_X11_Private);
+    p                     = memnew(LinuxPrivateGLContext);
     p->glx_context        = nullptr;
     use_vsync             = false;
 }
 
-ContextGL_X11::~ContextGL_X11() {
+LinuxGLContext::~LinuxGLContext() {
     release_current();
     glXDestroyContext(x11_display, p->glx_context);
     memdelete(p);

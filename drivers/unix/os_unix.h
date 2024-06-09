@@ -14,8 +14,8 @@
 
 class OS_Unix : public OS {
 protected:
-    // UNIX only handles the core functions.
-    // inheriting platforms under unix (eg. X11) should handle the rest
+    // Unix only handles the core functions.
+    // Platforms the inherit Unix should handle the rest.
 
     virtual void initialize_core();
     virtual int unix_initialize_audio(int p_audio_driver);

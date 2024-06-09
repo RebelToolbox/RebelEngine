@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef X11_ENABLED
+#ifdef LINUX_ENABLED
 #if defined(OPENGL_ENABLED)
 
 #include "detect_prime.h"

@@ -4,14 +4,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef POWER_X11_H
-#define POWER_X11_H
+#ifndef LINUX_POWER_H
+#define LINUX_POWER_H
 
 #include "core/os/dir_access.h"
 #include "core/os/file_access.h"
 #include "core/os/os.h"
 
-class PowerX11 {
+class LinuxPower {
 private:
     int nsecs_left;
     int percent_left;
@@ -44,12 +44,12 @@ private:
     bool UpdatePowerInfo();
 
 public:
-    PowerX11();
-    virtual ~PowerX11();
+    LinuxPower();
+    virtual ~LinuxPower();
 
     OS::PowerState get_power_state();
     int get_power_seconds_left();
     int get_power_percent_left();
 };
 
-#endif // POWER_X11_H
+#endif // LINUX_POWER_H

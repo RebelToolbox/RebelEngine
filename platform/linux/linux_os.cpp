@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "os_x11.h"
+#include "linux_os.h"
 
 #include "core/os/dir_access.h"
 #include "core/print_string.h"
@@ -12,7 +12,7 @@
 #include "detect_prime.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
-#include "key_mapping_x11.h"
+#include "linux_key_mapping.h"
 #include "main/main.h"
 #include "servers/visual/visual_server_raster.h"
 #include "servers/visual/visual_server_wrap_mt.h"
@@ -67,17 +67,17 @@
 static const double abs_resolution_mult       = 10000.0;
 static const double abs_resolution_range_mult = 10.0;
 
-void OS_X11::initialize_core() {
+void LinuxOS::initialize_core() {
     crash_handler.initialize();
 
     OS_Unix::initialize_core();
 }
 
-int OS_X11::get_current_video_driver() const {
+int LinuxOS::get_current_video_driver() const {
     return video_driver_index;
 }
 
-Error OS_X11::initialize(
+Error LinuxOS::initialize(
     const VideoMode& p_desired,
     int p_video_driver,
     int p_audio_driver
@@ -272,28 +272,28 @@ Error OS_X11::initialize(
         }
     }
 
-    ContextGL_X11::ContextType opengl_api_type =
-        ContextGL_X11::GLES_3_0_COMPATIBLE;
+    LinuxGLContext::ContextType opengl_api_type =
+        LinuxGLContext::GLES_3_0_COMPATIBLE;
 
     if (p_video_driver == VIDEO_DRIVER_GLES2) {
-        opengl_api_type = ContextGL_X11::GLES_2_0_COMPATIBLE;
+        opengl_api_type = LinuxGLContext::GLES_2_0_COMPATIBLE;
     }
 
     bool editor                  = Engine::get_singleton()->is_editor_hint();
     bool gl_initialization_error = false;
 
-    context_gl = nullptr;
-    while (!context_gl) {
-        context_gl = memnew(ContextGL_X11(
+    gl_context = nullptr;
+    while (!gl_context) {
+        gl_context = memnew(LinuxGLContext(
             x11_display,
             x11_window,
             current_videomode,
             opengl_api_type
         ));
 
-        if (context_gl->initialize() != OK) {
-            memdelete(context_gl);
-            context_gl = nullptr;
+        if (gl_context->initialize() != OK) {
+            memdelete(gl_context);
+            gl_context = nullptr;
 
             if (GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")
                 || editor) {
@@ -303,7 +303,7 @@ Error OS_X11::initialize(
                 }
 
                 p_video_driver  = VIDEO_DRIVER_GLES2;
-                opengl_api_type = ContextGL_X11::GLES_2_0_COMPATIBLE;
+                opengl_api_type = LinuxGLContext::GLES_2_0_COMPATIBLE;
             } else {
                 gl_initialization_error = true;
                 break;
@@ -312,7 +312,7 @@ Error OS_X11::initialize(
     }
 
     while (true) {
-        if (opengl_api_type == ContextGL_X11::GLES_3_0_COMPATIBLE) {
+        if (opengl_api_type == LinuxGLContext::GLES_3_0_COMPATIBLE) {
             if (RasterizerGLES3::is_viable() == OK) {
                 RasterizerGLES3::register_config();
                 RasterizerGLES3::make_current();
@@ -321,7 +321,7 @@ Error OS_X11::initialize(
                 if (GLOBAL_GET("rendering/quality/driver/fallback_to_gles2")
                     || editor) {
                     p_video_driver  = VIDEO_DRIVER_GLES2;
-                    opengl_api_type = ContextGL_X11::GLES_2_0_COMPATIBLE;
+                    opengl_api_type = LinuxGLContext::GLES_2_0_COMPATIBLE;
                     continue;
                 } else {
                     gl_initialization_error = true;
@@ -330,7 +330,7 @@ Error OS_X11::initialize(
             }
         }
 
-        if (opengl_api_type == ContextGL_X11::GLES_2_0_COMPATIBLE) {
+        if (opengl_api_type == LinuxGLContext::GLES_2_0_COMPATIBLE) {
             if (RasterizerGLES2::is_viable() == OK) {
                 RasterizerGLES2::register_config();
                 RasterizerGLES2::make_current();
@@ -360,7 +360,7 @@ Error OS_X11::initialize(
 
     video_driver_index = p_video_driver;
 
-    context_gl->set_use_vsync(current_videomode.use_vsync);
+    gl_context->set_use_vsync(current_videomode.use_vsync);
 
 #endif
 
@@ -654,10 +654,10 @@ Error OS_X11::initialize(
 
     window_has_focus = true; // Set focus to true at init
 #ifdef JOYDEV_ENABLED
-    joypad = memnew(JoypadLinux(input));
+    joypad = memnew(LinuxJoypad(input));
 #endif
 
-    power_manager = memnew(PowerX11);
+    power_manager = memnew(LinuxPower);
 
     if (p_desired.layered) {
         set_window_per_pixel_transparency_enabled(true);
@@ -678,7 +678,7 @@ Error OS_X11::initialize(
     return OK;
 }
 
-bool OS_X11::refresh_device_info() {
+bool LinuxOS::refresh_device_info() {
     int event_base, error_base;
 
     print_verbose("XInput: Refreshing devices.");
@@ -827,18 +827,18 @@ bool OS_X11::refresh_device_info() {
     return true;
 }
 
-void OS_X11::xim_destroy_callback(
+void LinuxOS::xim_destroy_callback(
     ::XIM im,
     ::XPointer client_data,
     ::XPointer call_data
 ) {
     WARN_PRINT("Input method stopped");
-    OS_X11* os = reinterpret_cast<OS_X11*>(client_data);
-    os->xim    = nullptr;
-    os->xic    = nullptr;
+    LinuxOS* os = reinterpret_cast<LinuxOS*>(client_data);
+    os->xim     = nullptr;
+    os->xic     = nullptr;
 }
 
-void OS_X11::set_ime_active(const bool p_active) {
+void LinuxOS::set_ime_active(const bool p_active) {
     im_active = p_active;
 
     if (!xic) {
@@ -859,7 +859,7 @@ void OS_X11::set_ime_active(const bool p_active) {
     }
 }
 
-void OS_X11::set_ime_position(const Point2& p_pos) {
+void LinuxOS::set_ime_position(const Point2& p_pos) {
     im_position = p_pos;
 
     if (!xic) {
@@ -882,7 +882,7 @@ void OS_X11::set_ime_position(const Point2& p_pos) {
     XFree(preedit_attr);
 }
 
-String OS_X11::get_unique_id() const {
+String LinuxOS::get_unique_id() const {
     static String machine_id;
     if (machine_id.empty()) {
         if (FileAccess* f =
@@ -897,7 +897,7 @@ String OS_X11::get_unique_id() const {
     return machine_id;
 }
 
-void OS_X11::finalize() {
+void LinuxOS::finalize() {
     events_thread_done = true;
     events_thread.wait_to_finish();
 
@@ -941,7 +941,7 @@ void OS_X11::finalize() {
     XDestroyWindow(x11_display, x11_window);
 
 #if defined(OPENGL_ENABLED)
-    memdelete(context_gl);
+    memdelete(gl_context);
 #endif
     for (int i = 0; i < CURSOR_MAX; i++) {
         if (cursors[i] != None) {
@@ -967,7 +967,7 @@ void OS_X11::finalize() {
     args.clear();
 }
 
-void OS_X11::set_mouse_mode(MouseMode p_mode) {
+void LinuxOS::set_mouse_mode(MouseMode p_mode) {
     if (p_mode == mouse_mode) {
         return;
     }
@@ -1038,7 +1038,7 @@ void OS_X11::set_mouse_mode(MouseMode p_mode) {
     XFlush(x11_display);
 }
 
-void OS_X11::warp_mouse_position(const Point2& p_to) {
+void LinuxOS::warp_mouse_position(const Point2& p_to) {
     if (mouse_mode == MOUSE_MODE_CAPTURED) {
         last_mouse_pos = p_to;
     } else {
@@ -1060,7 +1060,7 @@ void OS_X11::warp_mouse_position(const Point2& p_to) {
     }
 }
 
-void OS_X11::flush_mouse_motion() {
+void LinuxOS::flush_mouse_motion() {
     // Block events polling while flushing motion events.
     MutexLock mutex_lock(events_mutex);
 
@@ -1085,26 +1085,26 @@ void OS_X11::flush_mouse_motion() {
     xi.relative_motion.y = 0;
 }
 
-OS::MouseMode OS_X11::get_mouse_mode() const {
+OS::MouseMode LinuxOS::get_mouse_mode() const {
     return mouse_mode;
 }
 
-int OS_X11::get_mouse_button_state() const {
+int LinuxOS::get_mouse_button_state() const {
     return last_button_state;
 }
 
-Point2 OS_X11::get_mouse_position() const {
+Point2 LinuxOS::get_mouse_position() const {
     return last_mouse_pos;
 }
 
-bool OS_X11::get_window_per_pixel_transparency_enabled() const {
+bool LinuxOS::get_window_per_pixel_transparency_enabled() const {
     if (!is_layered_allowed()) {
         return false;
     }
     return layered_window;
 }
 
-void OS_X11::set_window_per_pixel_transparency_enabled(bool p_enabled) {
+void LinuxOS::set_window_per_pixel_transparency_enabled(bool p_enabled) {
     if (!is_layered_allowed()) {
         return;
     }
@@ -1117,7 +1117,7 @@ void OS_X11::set_window_per_pixel_transparency_enabled(bool p_enabled) {
     }
 }
 
-void OS_X11::set_window_title(const String& p_title) {
+void LinuxOS::set_window_title(const String& p_title) {
     XStoreName(x11_display, x11_window, p_title.utf8().get_data());
 
     Atom _net_wm_name = XInternAtom(x11_display, "_NET_WM_NAME", false);
@@ -1136,7 +1136,7 @@ void OS_X11::set_window_title(const String& p_title) {
     }
 }
 
-void OS_X11::set_window_mouse_passthrough(const PoolVector2Array& p_region) {
+void LinuxOS::set_window_mouse_passthrough(const PoolVector2Array& p_region) {
     int event_base, error_base;
     const Bool ext_okay =
         XShapeQueryExtension(x11_display, &event_base, &error_base);
@@ -1173,16 +1173,16 @@ void OS_X11::set_window_mouse_passthrough(const PoolVector2Array& p_region) {
     }
 }
 
-void OS_X11::set_video_mode(const VideoMode& p_video_mode, int p_screen) {}
+void LinuxOS::set_video_mode(const VideoMode& p_video_mode, int p_screen) {}
 
-OS::VideoMode OS_X11::get_video_mode(int p_screen) const {
+OS::VideoMode LinuxOS::get_video_mode(int p_screen) const {
     return current_videomode;
 }
 
-void OS_X11::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
+void LinuxOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
     const {}
 
-void OS_X11::set_wm_fullscreen(bool p_enabled) {
+void LinuxOS::set_wm_fullscreen(bool p_enabled) {
     if (p_enabled && !get_borderless_window()) {
         // remove decorations if the window is not already borderless
         Hints hints;
@@ -1307,7 +1307,7 @@ void OS_X11::set_wm_fullscreen(bool p_enabled) {
     }
 }
 
-void OS_X11::set_wm_above(bool p_enabled) {
+void LinuxOS::set_wm_above(bool p_enabled) {
     Atom wm_state = XInternAtom(x11_display, "_NET_WM_STATE", False);
     Atom wm_above = XInternAtom(x11_display, "_NET_WM_STATE_ABOVE", False);
 
@@ -1329,7 +1329,7 @@ void OS_X11::set_wm_above(bool p_enabled) {
     );
 }
 
-int OS_X11::get_screen_count() const {
+int LinuxOS::get_screen_count() const {
     // Using Xinerama Extension
     int event_base, error_base;
     const Bool ext_okay =
@@ -1344,7 +1344,7 @@ int OS_X11::get_screen_count() const {
     return count;
 }
 
-int OS_X11::get_current_screen() const {
+int LinuxOS::get_current_screen() const {
     int x, y;
     Window child;
     XTranslateCoordinates(
@@ -1370,7 +1370,7 @@ int OS_X11::get_current_screen() const {
     return 0;
 }
 
-void OS_X11::set_current_screen(int p_screen) {
+void LinuxOS::set_current_screen(int p_screen) {
     if (p_screen == -1) {
         p_screen = get_current_screen();
     }
@@ -1398,7 +1398,7 @@ void OS_X11::set_current_screen(int p_screen) {
     }
 }
 
-Point2 OS_X11::get_screen_position(int p_screen) const {
+Point2 LinuxOS::get_screen_position(int p_screen) const {
     if (p_screen == -1) {
         p_screen = get_current_screen();
     }
@@ -1424,7 +1424,7 @@ Point2 OS_X11::get_screen_position(int p_screen) const {
     return position;
 }
 
-Size2 OS_X11::get_screen_size(int p_screen) const {
+Size2 LinuxOS::get_screen_size(int p_screen) const {
     if (p_screen == -1) {
         p_screen = get_current_screen();
     }
@@ -1448,7 +1448,7 @@ Size2 OS_X11::get_screen_size(int p_screen) const {
     return size;
 }
 
-int OS_X11::get_screen_dpi(int p_screen) const {
+int LinuxOS::get_screen_dpi(int p_screen) const {
     if (p_screen == -1) {
         p_screen = get_current_screen();
     }
@@ -1494,7 +1494,7 @@ int OS_X11::get_screen_dpi(int p_screen) const {
     return 96;
 }
 
-Point2 OS_X11::get_window_position() const {
+Point2 LinuxOS::get_window_position() const {
     int x, y;
     Window child;
     XTranslateCoordinates(
@@ -1510,7 +1510,7 @@ Point2 OS_X11::get_window_position() const {
     return Point2i(x, y);
 }
 
-void OS_X11::set_window_position(const Point2& p_position) {
+void LinuxOS::set_window_position(const Point2& p_position) {
     int x = 0;
     int y = 0;
     if (!get_borderless_window()) {
@@ -1551,13 +1551,13 @@ void OS_X11::set_window_position(const Point2& p_position) {
     update_real_mouse_position();
 }
 
-Size2 OS_X11::get_window_size() const {
+Size2 LinuxOS::get_window_size() const {
     // Use current_videomode width and height instead of XGetWindowAttributes
     // since right after a XResizeWindow the attributes may not be updated yet
     return Size2i(current_videomode.width, current_videomode.height);
 }
 
-Size2 OS_X11::get_real_window_size() const {
+Size2 LinuxOS::get_real_window_size() const {
     XWindowAttributes xwa;
     XSync(x11_display, False);
     XGetWindowAttributes(x11_display, x11_window, &xwa);
@@ -1596,15 +1596,15 @@ Size2 OS_X11::get_real_window_size() const {
     return Size2(w, h);
 }
 
-Size2 OS_X11::get_max_window_size() const {
+Size2 LinuxOS::get_max_window_size() const {
     return max_size;
 }
 
-Size2 OS_X11::get_min_window_size() const {
+Size2 LinuxOS::get_min_window_size() const {
     return min_size;
 }
 
-void OS_X11::set_min_window_size(const Size2 p_size) {
+void LinuxOS::set_min_window_size(const Size2 p_size) {
     if ((p_size != Size2()) && (max_size != Size2())
         && ((p_size.x > max_size.x) || (p_size.y > max_size.y))) {
         ERR_PRINT(
@@ -1635,7 +1635,7 @@ void OS_X11::set_min_window_size(const Size2 p_size) {
     }
 }
 
-void OS_X11::set_max_window_size(const Size2 p_size) {
+void LinuxOS::set_max_window_size(const Size2 p_size) {
     if ((p_size != Size2())
         && ((p_size.x < min_size.x) || (p_size.y < min_size.y))) {
         ERR_PRINT(
@@ -1666,7 +1666,7 @@ void OS_X11::set_max_window_size(const Size2 p_size) {
     }
 }
 
-void OS_X11::set_window_size(const Size2 p_size) {
+void LinuxOS::set_window_size(const Size2 p_size) {
     if (current_videomode.width == p_size.width
         && current_videomode.height == p_size.height) {
         return;
@@ -1728,7 +1728,7 @@ void OS_X11::set_window_size(const Size2 p_size) {
     }
 }
 
-void OS_X11::set_window_fullscreen(bool p_enabled) {
+void LinuxOS::set_window_fullscreen(bool p_enabled) {
     if (current_videomode.fullscreen == p_enabled) {
         return;
     }
@@ -1755,11 +1755,11 @@ void OS_X11::set_window_fullscreen(bool p_enabled) {
     current_videomode.fullscreen = p_enabled;
 }
 
-bool OS_X11::is_window_fullscreen() const {
+bool LinuxOS::is_window_fullscreen() const {
     return current_videomode.fullscreen;
 }
 
-void OS_X11::set_window_resizable(bool p_enabled) {
+void LinuxOS::set_window_resizable(bool p_enabled) {
     XSizeHints* xsh;
     xsh = XAllocSizeHints();
     if (!p_enabled) {
@@ -1792,11 +1792,11 @@ void OS_X11::set_window_resizable(bool p_enabled) {
     XFlush(x11_display);
 }
 
-bool OS_X11::is_window_resizable() const {
+bool LinuxOS::is_window_resizable() const {
     return current_videomode.resizable;
 }
 
-void OS_X11::set_window_minimized(bool p_enabled) {
+void LinuxOS::set_window_minimized(bool p_enabled) {
     if (is_no_window_mode_enabled()) {
         return;
     }
@@ -1839,7 +1839,7 @@ void OS_X11::set_window_minimized(bool p_enabled) {
     );
 }
 
-bool OS_X11::is_window_minimized() const {
+bool LinuxOS::is_window_minimized() const {
     // Using ICCCM -- Inter-Client Communication Conventions Manual
     Atom property = XInternAtom(x11_display, "WM_STATE", True);
     if (property == None) {
@@ -1878,7 +1878,7 @@ bool OS_X11::is_window_minimized() const {
     return retval;
 }
 
-void OS_X11::set_window_maximized(bool p_enabled) {
+void LinuxOS::set_window_maximized(bool p_enabled) {
     if (is_no_window_mode_enabled()) {
         return;
     }
@@ -1927,7 +1927,7 @@ void OS_X11::set_window_maximized(bool p_enabled) {
 
 // Just a helper to reduce code duplication in `is_window_maximize_allowed`
 // and `is_window_maximized`.
-bool OS_X11::window_maximize_check(const char* p_atom_name) const {
+bool LinuxOS::window_maximize_check(const char* p_atom_name) const {
     Atom property = XInternAtom(x11_display, p_atom_name, False);
     Atom type;
     int format;
@@ -1993,7 +1993,7 @@ bool OS_X11::window_maximize_check(const char* p_atom_name) const {
     return retval;
 }
 
-bool OS_X11::window_fullscreen_check() const {
+bool LinuxOS::window_fullscreen_check() const {
     // Using EWMH -- Extended Window Manager Hints
     Atom property = XInternAtom(x11_display, "_NET_WM_STATE", False);
     Atom type;
@@ -2038,16 +2038,16 @@ bool OS_X11::window_fullscreen_check() const {
     return retval;
 }
 
-bool OS_X11::is_window_maximize_allowed() const {
+bool LinuxOS::is_window_maximize_allowed() const {
     return window_maximize_check("_NET_WM_ALLOWED_ACTIONS");
 }
 
-bool OS_X11::is_window_maximized() const {
+bool LinuxOS::is_window_maximized() const {
     // Using EWMH -- Extended Window Manager Hints
     return window_maximize_check("_NET_WM_STATE");
 }
 
-void OS_X11::set_window_always_on_top(bool p_enabled) {
+void LinuxOS::set_window_always_on_top(bool p_enabled) {
     if (is_window_always_on_top() == p_enabled) {
         return;
     }
@@ -2066,15 +2066,15 @@ void OS_X11::set_window_always_on_top(bool p_enabled) {
     current_videomode.always_on_top = p_enabled;
 }
 
-bool OS_X11::is_window_always_on_top() const {
+bool LinuxOS::is_window_always_on_top() const {
     return current_videomode.always_on_top;
 }
 
-bool OS_X11::is_window_focused() const {
+bool LinuxOS::is_window_focused() const {
     return window_focused;
 }
 
-void OS_X11::set_borderless_window(bool p_borderless) {
+void LinuxOS::set_borderless_window(bool p_borderless) {
     if (get_borderless_window() == p_borderless) {
         return;
     }
@@ -2103,7 +2103,7 @@ void OS_X11::set_borderless_window(bool p_borderless) {
     set_window_size(Size2(current_videomode.width, current_videomode.height));
 }
 
-bool OS_X11::get_borderless_window() {
+bool LinuxOS::get_borderless_window() {
     bool borderless = current_videomode.borderless_window;
     Atom prop       = XInternAtom(x11_display, "_MOTIF_WM_HINTS", True);
     if (prop != None) {
@@ -2136,7 +2136,7 @@ bool OS_X11::get_borderless_window() {
     return borderless;
 }
 
-void OS_X11::request_attention() {
+void LinuxOS::request_attention() {
     // Using EWMH -- Extended Window Manager Hints
     //
     // Sets the _NET_WM_STATE_DEMANDS_ATTENTION atom for WM_STATE
@@ -2166,7 +2166,7 @@ void OS_X11::request_attention() {
     XFlush(x11_display);
 }
 
-void* OS_X11::get_native_handle(int p_handle_type) {
+void* LinuxOS::get_native_handle(int p_handle_type) {
     switch (p_handle_type) {
         case APPLICATION_HANDLE:
             return nullptr; // Do we have a value to return here?
@@ -2177,13 +2177,13 @@ void* OS_X11::get_native_handle(int p_handle_type) {
         case WINDOW_VIEW:
             return nullptr; // Do we have a value to return here?
         case OPENGL_CONTEXT:
-            return context_gl->get_glx_context();
+            return gl_context->get_glx_context();
         default:
             return nullptr;
     }
 }
 
-void OS_X11::get_key_modifier_state(
+void LinuxOS::get_key_modifier_state(
     unsigned int p_x11_state,
     Ref<InputEventWithModifiers> state
 ) {
@@ -2194,7 +2194,7 @@ void OS_X11::get_key_modifier_state(
     state->set_metakey((p_x11_state & Mod4Mask));
 }
 
-unsigned int OS_X11::get_mouse_button_state(
+unsigned int LinuxOS::get_mouse_button_state(
     unsigned int p_x11_button,
     int p_x11_type
 ) {
@@ -2209,7 +2209,7 @@ unsigned int OS_X11::get_mouse_button_state(
     return last_button_state;
 }
 
-void OS_X11::_handle_key_event(
+void LinuxOS::_handle_key_event(
     XKeyEvent* p_event,
     LocalVector<XEvent>& p_events,
     uint32_t& p_event_index,
@@ -2285,9 +2285,9 @@ void OS_X11::_handle_key_event(
 
         if (status == XLookupChars) {
             bool keypress        = xkeyevent->type == KeyPress;
-            unsigned int keycode = KeyMappingX11::get_keycode(keysym_keycode);
+            unsigned int keycode = LinuxKeyMapping::get_keycode(keysym_keycode);
             unsigned int physical_keycode =
-                KeyMappingX11::get_scancode(xkeyevent->keycode);
+                LinuxKeyMapping::get_scancode(xkeyevent->keycode);
             if (keycode >= 'a' && keycode <= 'z') {
                 keycode -= 'a' - 'A';
             }
@@ -2351,21 +2351,21 @@ void OS_X11::_handle_key_event(
 
     /* Phase 2, obtain a pigui keycode from the keysym */
 
-    // KeyMappingX11 just translated the X11 keysym to a PIGUI
+    // LinuxKeyMapping just translated the X11 keysym to a PIGUI
     // keysym, so it works in all platforms the same.
 
-    unsigned int keycode = KeyMappingX11::get_keycode(keysym_keycode);
+    unsigned int keycode = LinuxKeyMapping::get_keycode(keysym_keycode);
     unsigned int physical_keycode =
-        KeyMappingX11::get_scancode(xkeyevent->keycode);
+        LinuxKeyMapping::get_scancode(xkeyevent->keycode);
 
     /* Phase 3, obtain a unicode character from the keysym */
 
-    // KeyMappingX11 also translates keysym to unicode.
+    // LinuxKeyMapping also translates keysym to unicode.
     // It does a binary search on a table to translate
     // most properly.
     unsigned int unicode =
         keysym_unicode > 0
-            ? KeyMappingX11::get_unicode_from_keysym(keysym_unicode)
+            ? LinuxKeyMapping::get_unicode_from_keysym(keysym_unicode)
             : 0;
 
     /* Phase 4, determine if event must be filtered */
@@ -2491,7 +2491,7 @@ void OS_X11::_handle_key_event(
     input->parse_input_event(k);
 }
 
-Atom OS_X11::_process_selection_request_target(
+Atom LinuxOS::_process_selection_request_target(
     Atom p_target,
     Window p_requestor,
     Atom p_property
@@ -2564,7 +2564,7 @@ Atom OS_X11::_process_selection_request_target(
     }
 }
 
-void OS_X11::_handle_selection_request_event(XSelectionRequestEvent* p_event
+void LinuxOS::_handle_selection_request_event(XSelectionRequestEvent* p_event
 ) const {
     XEvent respond;
     if (p_event->target == XInternAtom(x11_display, "MULTIPLE", 0)) {
@@ -2731,7 +2731,7 @@ static Atom pick_target_from_atoms(
     return None;
 }
 
-void OS_X11::_window_changed(XEvent* event) {
+void LinuxOS::_window_changed(XEvent* event) {
     if (xic) {
         // Not portable.
         set_ime_position(Point2(0, 1));
@@ -2745,12 +2745,12 @@ void OS_X11::_window_changed(XEvent* event) {
     current_videomode.height = event->xconfigure.height;
 }
 
-void OS_X11::_poll_events_thread(void* ud) {
-    OS_X11* os = (OS_X11*)ud;
+void LinuxOS::_poll_events_thread(void* ud) {
+    LinuxOS* os = (LinuxOS*)ud;
     os->_poll_events();
 }
 
-Bool OS_X11::_predicate_all_events(
+Bool LinuxOS::_predicate_all_events(
     Display* display,
     XEvent* event,
     XPointer arg
@@ -2759,7 +2759,7 @@ Bool OS_X11::_predicate_all_events(
     return True;
 }
 
-bool OS_X11::_wait_for_events() const {
+bool LinuxOS::_wait_for_events() const {
     int x11_fd = ConnectionNumber(x11_display);
     fd_set in_fds;
 
@@ -2787,7 +2787,7 @@ bool OS_X11::_wait_for_events() const {
     }
 }
 
-void OS_X11::_poll_events() {
+void LinuxOS::_poll_events() {
     while (!events_thread_done) {
         _wait_for_events();
 
@@ -2800,7 +2800,7 @@ void OS_X11::_poll_events() {
     }
 }
 
-void OS_X11::_check_pending_events(LocalVector<XEvent>& r_events) {
+void LinuxOS::_check_pending_events(LocalVector<XEvent>& r_events) {
     // Flush to make sure to gather all pending events.
     XFlush(x11_display);
 
@@ -2827,7 +2827,7 @@ void OS_X11::_check_pending_events(LocalVector<XEvent>& r_events) {
     }
 }
 
-void OS_X11::process_xevents() {
+void LinuxOS::process_xevents() {
     // printf("checking events %i\n", XPending(x11_display));
 
     do_mouse_warp = false;
@@ -3551,11 +3551,11 @@ void OS_X11::process_xevents() {
     input->flush_buffered_events();
 }
 
-MainLoop* OS_X11::get_main_loop() const {
+MainLoop* LinuxOS::get_main_loop() const {
     return main_loop;
 }
 
-void OS_X11::delete_main_loop() {
+void LinuxOS::delete_main_loop() {
     // Send owned clipboard data to clipboard manager before exit.
     // This has to be done here because the clipboard data is cleared before
     // finalize().
@@ -3571,16 +3571,16 @@ void OS_X11::delete_main_loop() {
     main_loop = nullptr;
 }
 
-void OS_X11::set_main_loop(MainLoop* p_main_loop) {
+void LinuxOS::set_main_loop(MainLoop* p_main_loop) {
     main_loop = p_main_loop;
     input->set_main_loop(p_main_loop);
 }
 
-bool OS_X11::can_draw() const {
+bool LinuxOS::can_draw() const {
     return !minimized;
 };
 
-void OS_X11::set_clipboard(const String& p_text) {
+void LinuxOS::set_clipboard(const String& p_text) {
     {
         // The clipboard content can be accessed while polling for events.
         MutexLock mutex_lock(events_mutex);
@@ -3596,7 +3596,7 @@ void OS_X11::set_clipboard(const String& p_text) {
     );
 };
 
-Bool OS_X11::_predicate_clipboard_selection(
+Bool LinuxOS::_predicate_clipboard_selection(
     Display* display,
     XEvent* event,
     XPointer arg
@@ -3609,7 +3609,7 @@ Bool OS_X11::_predicate_clipboard_selection(
     }
 }
 
-Bool OS_X11::_predicate_clipboard_incr(
+Bool LinuxOS::_predicate_clipboard_incr(
     Display* display,
     XEvent* event,
     XPointer arg
@@ -3622,7 +3622,7 @@ Bool OS_X11::_predicate_clipboard_incr(
     }
 }
 
-String OS_X11::_get_clipboard_impl(
+String LinuxOS::_get_clipboard_impl(
     Atom p_source,
     Window x11_window,
     Atom target
@@ -3795,7 +3795,7 @@ String OS_X11::_get_clipboard_impl(
     return ret;
 }
 
-String OS_X11::_get_clipboard(Atom p_source, Window x11_window) const {
+String LinuxOS::_get_clipboard(Atom p_source, Window x11_window) const {
     String ret;
     Atom utf8_atom = XInternAtom(x11_display, "UTF8_STRING", True);
     if (utf8_atom != None) {
@@ -3807,7 +3807,7 @@ String OS_X11::_get_clipboard(Atom p_source, Window x11_window) const {
     return ret;
 }
 
-String OS_X11::get_clipboard() const {
+String LinuxOS::get_clipboard() const {
     String ret;
     ret = _get_clipboard(XInternAtom(x11_display, "CLIPBOARD", 0), x11_window);
 
@@ -3818,7 +3818,7 @@ String OS_X11::get_clipboard() const {
     return ret;
 }
 
-Bool OS_X11::_predicate_clipboard_save_targets(
+Bool LinuxOS::_predicate_clipboard_save_targets(
     Display* display,
     XEvent* event,
     XPointer arg
@@ -3831,7 +3831,7 @@ Bool OS_X11::_predicate_clipboard_save_targets(
     }
 }
 
-void OS_X11::_clipboard_transfer_ownership(Atom p_source, Window x11_window)
+void LinuxOS::_clipboard_transfer_ownership(Atom p_source, Window x11_window)
     const {
     Window selection_owner = XGetSelectionOwner(x11_display, p_source);
 
@@ -3888,11 +3888,11 @@ void OS_X11::_clipboard_transfer_ownership(Atom p_source, Window x11_window)
     }
 }
 
-String OS_X11::get_name() const {
-    return "X11";
+String LinuxOS::get_name() const {
+    return "Linux";
 }
 
-Error OS_X11::shell_open(String p_uri) {
+Error LinuxOS::shell_open(String p_uri) {
     Error ok;
     int err_code;
     List<String> args;
@@ -3930,11 +3930,11 @@ Error OS_X11::shell_open(String p_uri) {
     return !err_code ? ok : FAILED;
 }
 
-bool OS_X11::_check_internal_feature_support(const String& p_feature) {
+bool LinuxOS::_check_internal_feature_support(const String& p_feature) {
     return p_feature == "pc";
 }
 
-String OS_X11::get_config_path() const {
+String LinuxOS::get_config_path() const {
     if (has_environment("XDG_CONFIG_HOME")) {
         if (get_environment("XDG_CONFIG_HOME").is_abs_path()) {
             return get_environment("XDG_CONFIG_HOME");
@@ -3952,7 +3952,7 @@ String OS_X11::get_config_path() const {
     return ".";
 }
 
-String OS_X11::get_data_path() const {
+String LinuxOS::get_data_path() const {
     if (has_environment("XDG_DATA_HOME")) {
         if (get_environment("XDG_DATA_HOME").is_abs_path()) {
             return get_environment("XDG_DATA_HOME");
@@ -3970,7 +3970,7 @@ String OS_X11::get_data_path() const {
     return get_config_path();
 }
 
-String OS_X11::get_cache_path() const {
+String LinuxOS::get_cache_path() const {
     if (has_environment("XDG_CACHE_HOME")) {
         if (get_environment("XDG_CACHE_HOME").is_abs_path()) {
             return get_environment("XDG_CACHE_HOME");
@@ -3988,7 +3988,7 @@ String OS_X11::get_cache_path() const {
     return get_config_path();
 }
 
-String OS_X11::get_system_dir(SystemDir p_dir, bool p_shared_storage) const {
+String LinuxOS::get_system_dir(SystemDir p_dir, bool p_shared_storage) const {
     String xdgparam;
 
     switch (p_dir) {
@@ -4028,7 +4028,7 @@ String OS_X11::get_system_dir(SystemDir p_dir, bool p_shared_storage) const {
     String pipe;
     List<String> arg;
     arg.push_back(xdgparam);
-    Error err = const_cast<OS_X11*>(this)
+    Error err = const_cast<LinuxOS*>(this)
                     ->execute("xdg-user-dir", arg, true, nullptr, &pipe);
     if (err != OK) {
         return ".";
@@ -4036,7 +4036,7 @@ String OS_X11::get_system_dir(SystemDir p_dir, bool p_shared_storage) const {
     return pipe.strip_edges();
 }
 
-void OS_X11::move_window_to_foreground() {
+void LinuxOS::move_window_to_foreground() {
     XEvent xev;
     Atom net_active_window =
         XInternAtom(x11_display, "_NET_ACTIVE_WINDOW", False);
@@ -4059,7 +4059,7 @@ void OS_X11::move_window_to_foreground() {
     XFlush(x11_display);
 }
 
-void OS_X11::set_cursor_shape(CursorShape p_shape) {
+void LinuxOS::set_cursor_shape(CursorShape p_shape) {
     ERR_FAIL_INDEX(p_shape, CURSOR_MAX);
 
     if (p_shape == current_cursor) {
@@ -4077,11 +4077,11 @@ void OS_X11::set_cursor_shape(CursorShape p_shape) {
     current_cursor = p_shape;
 }
 
-OS::CursorShape OS_X11::get_cursor_shape() const {
+OS::CursorShape LinuxOS::get_cursor_shape() const {
     return current_cursor;
 }
 
-void OS_X11::set_custom_mouse_cursor(
+void LinuxOS::set_custom_mouse_cursor(
     const RES& p_cursor,
     CursorShape p_shape,
     const Vector2& p_hotspot
@@ -4204,25 +4204,25 @@ void OS_X11::set_custom_mouse_cursor(
     }
 }
 
-void OS_X11::release_rendering_thread() {
+void LinuxOS::release_rendering_thread() {
 #if defined(OPENGL_ENABLED)
-    context_gl->release_current();
+    gl_context->release_current();
 #endif
 }
 
-void OS_X11::make_rendering_thread() {
+void LinuxOS::make_rendering_thread() {
 #if defined(OPENGL_ENABLED)
-    context_gl->make_current();
+    gl_context->make_current();
 #endif
 }
 
-void OS_X11::swap_buffers() {
+void LinuxOS::swap_buffers() {
 #if defined(OPENGL_ENABLED)
-    context_gl->swap_buffers();
+    gl_context->swap_buffers();
 #endif
 }
 
-void OS_X11::alert(const String& p_alert, const String& p_title) {
+void LinuxOS::alert(const String& p_alert, const String& p_title) {
     if (is_no_window_mode_enabled()) {
         print_line("ALERT: " + p_title + ": " + p_alert);
         return;
@@ -4300,7 +4300,7 @@ int set_icon_errorhandler(Display* dpy, XErrorEvent* ev) {
     return 0;
 }
 
-void OS_X11::set_icon(const Ref<Image>& p_icon) {
+void LinuxOS::set_icon(const Ref<Image>& p_icon) {
     int (*oldHandler)(Display*, XErrorEvent*) =
         XSetErrorHandler(&set_icon_errorhandler);
 
@@ -4386,14 +4386,14 @@ void OS_X11::set_icon(const Ref<Image>& p_icon) {
     XSetErrorHandler(oldHandler);
 }
 
-void OS_X11::force_process_input() {
+void LinuxOS::force_process_input() {
     process_xevents(); // get rid of pending events
 #ifdef JOYDEV_ENABLED
     joypad->process_joypads();
 #endif
 }
 
-void OS_X11::run() {
+void LinuxOS::run() {
     force_quit = false;
 
     if (!main_loop) {
@@ -4420,32 +4420,32 @@ void OS_X11::run() {
     main_loop->finish();
 }
 
-bool OS_X11::is_joy_known(int p_device) {
+bool LinuxOS::is_joy_known(int p_device) {
     return input->is_joy_mapped(p_device);
 }
 
-String OS_X11::get_joy_guid(int p_device) const {
+String LinuxOS::get_joy_guid(int p_device) const {
     return input->get_joy_guid_remapped(p_device);
 }
 
-void OS_X11::_set_use_vsync(bool p_enable) {
+void LinuxOS::_set_use_vsync(bool p_enable) {
 #if defined(OPENGL_ENABLED)
-    if (context_gl) {
-        context_gl->set_use_vsync(p_enable);
+    if (gl_context) {
+        gl_context->set_use_vsync(p_enable);
     }
 #endif
 }
 
 /*
-bool OS_X11::is_vsync_enabled() const {
+bool LinuxOS::is_vsync_enabled() const {
 
-    if (context_gl)
-        return context_gl->is_using_vsync();
+    if (gl_context)
+        return gl_context->is_using_vsync();
 
     return true;
 }
 */
-void OS_X11::set_context(int p_context) {
+void LinuxOS::set_context(int p_context) {
     XClassHint* classHint = XAllocClassHint();
 
     if (classHint) {
@@ -4482,23 +4482,23 @@ void OS_X11::set_context(int p_context) {
     }
 }
 
-OS::PowerState OS_X11::get_power_state() {
+OS::PowerState LinuxOS::get_power_state() {
     return power_manager->get_power_state();
 }
 
-int OS_X11::get_power_seconds_left() {
+int LinuxOS::get_power_seconds_left() {
     return power_manager->get_power_seconds_left();
 }
 
-int OS_X11::get_power_percent_left() {
+int LinuxOS::get_power_percent_left() {
     return power_manager->get_power_percent_left();
 }
 
-void OS_X11::disable_crash_handler() {
+void LinuxOS::disable_crash_handler() {
     crash_handler.disable();
 }
 
-bool OS_X11::is_disable_crash_handler() const {
+bool LinuxOS::is_disable_crash_handler() const {
     return crash_handler.is_disabled();
 }
 
@@ -4530,7 +4530,7 @@ static String get_mountpoint(const String& p_path) {
     return "";
 }
 
-Error OS_X11::move_to_trash(const String& p_path) {
+Error LinuxOS::move_to_trash(const String& p_path) {
     String path = p_path.rstrip("/"
     ); // Strip trailing slash when path points to a directory
 
@@ -4766,7 +4766,7 @@ Error OS_X11::move_to_trash(const String& p_path) {
     return OK;
 }
 
-OS::LatinKeyboardVariant OS_X11::get_latin_keyboard_variant() const {
+OS::LatinKeyboardVariant LinuxOS::get_latin_keyboard_variant() const {
     XkbDescRec* xkbdesc = XkbAllocKeyboard();
     ERR_FAIL_COND_V(!xkbdesc, LATIN_KEYBOARD_QWERTY);
 
@@ -4797,7 +4797,7 @@ OS::LatinKeyboardVariant OS_X11::get_latin_keyboard_variant() const {
     return LATIN_KEYBOARD_QWERTY;
 }
 
-int OS_X11::keyboard_get_layout_count() const {
+int LinuxOS::keyboard_get_layout_count() const {
     int _group_count = 0;
     XkbDescRec* kbd  = XkbAllocKeyboard();
     if (kbd) {
@@ -4819,18 +4819,18 @@ int OS_X11::keyboard_get_layout_count() const {
     return _group_count;
 }
 
-int OS_X11::keyboard_get_current_layout() const {
+int LinuxOS::keyboard_get_current_layout() const {
     XkbStateRec state;
     XkbGetState(x11_display, XkbUseCoreKbd, &state);
     return state.group;
 }
 
-void OS_X11::keyboard_set_current_layout(int p_index) {
+void LinuxOS::keyboard_set_current_layout(int p_index) {
     ERR_FAIL_INDEX(p_index, keyboard_get_layout_count());
     XkbLockGroup(x11_display, XkbUseCoreKbd, p_index);
 }
 
-String OS_X11::keyboard_get_layout_language(int p_index) const {
+String LinuxOS::keyboard_get_layout_language(int p_index) const {
     String ret;
     XkbDescRec* kbd = XkbAllocKeyboard();
     if (kbd) {
@@ -4875,7 +4875,7 @@ String OS_X11::keyboard_get_layout_language(int p_index) const {
     return ret.substr(0, 2);
 }
 
-String OS_X11::keyboard_get_layout_name(int p_index) const {
+String LinuxOS::keyboard_get_layout_name(int p_index) const {
     String ret;
     XkbDescRec* kbd = XkbAllocKeyboard();
     if (kbd) {
@@ -4910,7 +4910,7 @@ String OS_X11::keyboard_get_layout_name(int p_index) const {
     return ret;
 }
 
-void OS_X11::update_real_mouse_position() {
+void LinuxOS::update_real_mouse_position() {
     Window root_return, child_return;
     int root_x, root_y, win_x, win_y;
     unsigned int mask_return;
@@ -4938,7 +4938,7 @@ void OS_X11::update_real_mouse_position() {
     }
 }
 
-OS_X11::OS_X11() {
+LinuxOS::LinuxOS() {
 #ifdef PULSEAUDIO_ENABLED
     AudioDriverManager::add_driver(&driver_pulseaudio);
 #endif

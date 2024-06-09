@@ -12,7 +12,7 @@ if sys.platform == "darwin":
     common_server.append("#platform/macos/macos_crash_handler.mm")
     common_server.append("#platform/macos/macos_power.cpp")
 else:
-    common_server.append("#platform/x11/crash_handler_x11.cpp")
-    common_server.append("#platform/x11/power_x11.cpp")
+    common_server.append("#platform/linux/linux_crash_handler.cpp")
+    common_server.append("#platform/linux/linux_power.cpp")
 
 prog = env.add_program("#bin/rebel_server", ["server_main.cpp"] + common_server)
