@@ -4,7 +4,6 @@ supported_platforms = [
     "x11",
     "server",
     "android",
-    "haiku",
     "javascript",
     "iphone",
 ]

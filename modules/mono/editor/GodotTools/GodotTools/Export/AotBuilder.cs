@@ -809,11 +809,6 @@ MONO_AOT_MODE_LAST = 1000,
                     string arch = bits == "64" ? "x86_64" : "i686";
                     return $"linux-{arch}";
                 }
-                case OS.Platforms.Haiku:
-                {
-                    string arch = bits == "64" ? "x86_64" : "i686";
-                    return $"{platform}-{arch}";
-                }
                 default:
                     throw new NotSupportedException($"Platform not supported: {platform}");
             }

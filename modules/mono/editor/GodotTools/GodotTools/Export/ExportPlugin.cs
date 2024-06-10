@@ -458,7 +458,6 @@ namespace GodotTools.Export
                 case OS.Platforms.OSX:
                 case OS.Platforms.X11:
                 case OS.Platforms.Server:
-                case OS.Platforms.Haiku:
                     return "net_4_x";
                 case OS.Platforms.Android:
                     return "monodroid";

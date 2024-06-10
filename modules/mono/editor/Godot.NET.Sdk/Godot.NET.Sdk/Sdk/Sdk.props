@@ -75,7 +75,6 @@
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'osx' ">GODOT_OSX;GODOT_MACOS;GODOT_PC</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'server' ">GODOT_SERVER;GODOT_PC</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'uwp' ">GODOT_UWP;GODOT_PC</GodotPlatformConstants>
-    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'haiku' ">GODOT_HAIKU;GODOT_PC</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'android' ">GODOT_ANDROID;GODOT_MOBILE</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'iphone' ">GODOT_IPHONE;GODOT_IOS;GODOT_MOBILE</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'javascript' ">GODOT_JAVASCRIPT;GODOT_HTML5;GODOT_WASM;GODOT_WEB</GodotPlatformConstants>

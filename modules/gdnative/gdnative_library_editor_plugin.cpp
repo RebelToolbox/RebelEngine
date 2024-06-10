@@ -371,13 +371,6 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
             "*.framework; Framework, *.dylib; Dynamic Library";
         platforms["OSX"] = platform_osx;
 
-        NativePlatformConfig platform_haiku;
-        platform_haiku.name = "Haiku";
-        platform_haiku.entries.push_back("64");
-        platform_haiku.entries.push_back("32");
-        platform_haiku.library_extension = "*.so";
-        platforms["Haiku"]               = platform_haiku;
-
         NativePlatformConfig platform_uwp;
         platform_uwp.name = "UWP";
         platform_uwp.entries.push_back("arm");
