@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "android_keys_utils.h"
+#include "android_key_mapping.h"
 
 unsigned int android_get_keysym(unsigned int p_code) {
     for (int i = 0; _ak_to_keycode[i].keysym != KEY_UNKNOWN; i++) {

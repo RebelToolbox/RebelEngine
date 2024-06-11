@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "jni_utils.h"
+#include "android_jni_utils.h"
 
 jvalret _variant_to_jvalue(
     JNIEnv* env,

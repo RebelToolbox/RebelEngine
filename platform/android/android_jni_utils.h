@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JNI_UTILS_H
-#define JNI_UTILS_H
+#ifndef ANDROID_JNI_UTILS_H
+#define ANDROID_JNI_UTILS_H
 
 #include "core/engine.h"
 #include "core/variant.h"
@@ -38,4 +38,4 @@ const char* get_jni_sig(const String& p_type);
 
 String string_from_jstring(JNIEnv* env, jstring string);
 
-#endif // JNI_UTILS_H
+#endif // ANDROID_JNI_UTILS_H

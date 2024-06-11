@@ -4,10 +4,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "api/java_class_wrapper.h"
+#include "android_java_class.h"
 
-#include "jni_utils.h"
-#include "thread_jandroid.h"
+#include "android_jni_thread.h"
+#include "android_jni_utils.h"
 
 bool JavaClass::_call_method(
     JavaObject* p_instance,

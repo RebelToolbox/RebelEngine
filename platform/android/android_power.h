@@ -11,7 +11,7 @@
 
 #include <android/native_window_jni.h>
 
-class PowerAndroid {
+class AndroidPower {
     struct LocalReferenceHolder {
         JNIEnv* m_env;
         const char* m_func;
@@ -41,8 +41,8 @@ private:
 public:
     static int s_active;
 
-    PowerAndroid();
-    virtual ~PowerAndroid();
+    AndroidPower();
+    virtual ~AndroidPower();
     static bool LocalReferenceHolder_Init(
         struct LocalReferenceHolder* refholder,
         JNIEnv* env

@@ -29,7 +29,7 @@ Adapted from corresponding SDL 2.0 code.
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include "power_android.h"
+#include "android_power.h"
 
 #include "core/error_macros.h"
 
@@ -210,7 +210,7 @@ int Android_JNI_GetPowerInfo(
     return 0;
 }
 
-bool PowerAndroid::GetPowerInfo_Android() {
+bool AndroidPower::GetPowerInfo_Android() {
     int battery;
     int plugged;
     int charged;
@@ -245,7 +245,7 @@ bool PowerAndroid::GetPowerInfo_Android() {
     return true;
 }
 
-OS::PowerState PowerAndroid::get_power_state() {
+OS::PowerState AndroidPower::get_power_state() {
     if (GetPowerInfo_Android()) {
         return power_state;
     } else {
@@ -257,7 +257,7 @@ OS::PowerState PowerAndroid::get_power_state() {
     }
 }
 
-int PowerAndroid::get_power_seconds_left() {
+int AndroidPower::get_power_seconds_left() {
     if (GetPowerInfo_Android()) {
         return nsecs_left;
     } else {
@@ -269,7 +269,7 @@ int PowerAndroid::get_power_seconds_left() {
     }
 }
 
-int PowerAndroid::get_power_percent_left() {
+int AndroidPower::get_power_percent_left() {
     if (GetPowerInfo_Android()) {
         return percent_left;
     } else {
@@ -281,9 +281,9 @@ int PowerAndroid::get_power_percent_left() {
     }
 }
 
-PowerAndroid::PowerAndroid() :
+AndroidPower::AndroidPower() :
     nsecs_left(-1),
     percent_left(-1),
     power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerAndroid::~PowerAndroid() {}
+AndroidPower::~AndroidPower() {}

@@ -7,7 +7,7 @@
 #include "api.h"
 
 #include "core/engine.h"
-#include "java_class_wrapper.h"
+#include "java_class.h"
 #include "jni_singleton.h"
 
 #if !defined(ANDROID_ENABLED)

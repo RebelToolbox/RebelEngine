@@ -4,16 +4,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "net_socket_android.h"
+#include "android_net_socket.h"
 
-#include "thread_jandroid.h"
+#include "android_jni_thread.h"
 
-jobject NetSocketAndroid::wifi_multicast_lock       = 0;
-jclass NetSocketAndroid::wifi_multicast_lock_class  = 0;
-jmethodID NetSocketAndroid::_multicast_lock_acquire = 0;
-jmethodID NetSocketAndroid::_multicast_lock_release = 0;
+jobject AndroidNetSocket::wifi_multicast_lock       = 0;
+jclass AndroidNetSocket::wifi_multicast_lock_class  = 0;
+jmethodID AndroidNetSocket::_multicast_lock_acquire = 0;
+jmethodID AndroidNetSocket::_multicast_lock_release = 0;
 
-void NetSocketAndroid::setup(jobject p_wifi_multicast_lock) {
+void AndroidNetSocket::setup(jobject p_wifi_multicast_lock) {
     JNIEnv* env = get_jni_env();
 
     wifi_multicast_lock       = env->NewGlobalRef(p_wifi_multicast_lock);
@@ -31,37 +31,37 @@ void NetSocketAndroid::setup(jobject p_wifi_multicast_lock) {
     );
 }
 
-void NetSocketAndroid::multicast_lock_acquire() {
+void AndroidNetSocket::multicast_lock_acquire() {
     if (_multicast_lock_acquire) {
         JNIEnv* env = get_jni_env();
         env->CallVoidMethod(wifi_multicast_lock, _multicast_lock_acquire);
     }
 }
 
-void NetSocketAndroid::multicast_lock_release() {
+void AndroidNetSocket::multicast_lock_release() {
     if (_multicast_lock_release) {
         JNIEnv* env = get_jni_env();
         env->CallVoidMethod(wifi_multicast_lock, _multicast_lock_release);
     }
 }
 
-NetSocket* NetSocketAndroid::_create_func() {
-    return memnew(NetSocketAndroid);
+NetSocket* AndroidNetSocket::_create_func() {
+    return memnew(AndroidNetSocket);
 }
 
-void NetSocketAndroid::make_default() {
+void AndroidNetSocket::make_default() {
     _create = _create_func;
 }
 
-NetSocketAndroid::NetSocketAndroid() :
+AndroidNetSocket::AndroidNetSocket() :
     wants_broadcast(false),
     multicast_groups(0) {}
 
-NetSocketAndroid::~NetSocketAndroid() {
+AndroidNetSocket::~AndroidNetSocket() {
     close();
 }
 
-void NetSocketAndroid::close() {
+void AndroidNetSocket::close() {
     NetSocketPosix::close();
     if (wants_broadcast) {
         multicast_lock_release();
@@ -73,7 +73,7 @@ void NetSocketAndroid::close() {
     multicast_groups = 0;
 }
 
-Error NetSocketAndroid::set_broadcasting_enabled(bool p_enabled) {
+Error AndroidNetSocket::set_broadcasting_enabled(bool p_enabled) {
     Error err = NetSocketPosix::set_broadcasting_enabled(p_enabled);
     if (err != OK) {
         return err;
@@ -92,7 +92,7 @@ Error NetSocketAndroid::set_broadcasting_enabled(bool p_enabled) {
     return OK;
 }
 
-Error NetSocketAndroid::join_multicast_group(
+Error AndroidNetSocket::join_multicast_group(
     const IP_Address& p_multi_address,
     String p_if_name
 ) {
@@ -110,7 +110,7 @@ Error NetSocketAndroid::join_multicast_group(
     return OK;
 }
 
-Error NetSocketAndroid::leave_multicast_group(
+Error AndroidNetSocket::leave_multicast_group(
     const IP_Address& p_multi_address,
     String p_if_name
 ) {

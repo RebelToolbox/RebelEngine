@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef NET_SOCKET_ANDROID_H
-#define NET_SOCKET_ANDROID_H
+#ifndef ANDROID_NET_SOCKET_H
+#define ANDROID_NET_SOCKET_H
 
 #include "drivers/unix/net_socket_posix.h"
 
@@ -20,7 +20,7 @@
  * the lock when broadcasting is enabled/disabled on a socket, or that socket
  * joins/leaves a multicast group.
  */
-class NetSocketAndroid : public NetSocketPosix {
+class AndroidNetSocket : public NetSocketPosix {
 private:
     static jobject wifi_multicast_lock;
     static jclass wifi_multicast_lock_class;
@@ -52,8 +52,8 @@ public:
         String p_if_name
     );
 
-    NetSocketAndroid();
-    ~NetSocketAndroid();
+    AndroidNetSocket();
+    ~AndroidNetSocket();
 };
 
-#endif
+#endif // ANDROID_NET_SOCKET_H

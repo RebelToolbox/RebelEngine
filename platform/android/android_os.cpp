@@ -4,20 +4,20 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "os_android.h"
+#include "android_os.h"
 
+#include "android_file_access.h"
 #include "android_jni_dir_access.h"
 #include "android_jni_io.h"
 #include "android_jni_os.h"
+#include "android_net_socket.h"
 #include "core/os/keyboard.h"
 #include "core/project_settings.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
 #include "drivers/unix/dir_access_unix.h"
 #include "drivers/unix/file_access_unix.h"
-#include "file_access_android.h"
 #include "main/main.h"
-#include "net_socket_android.h"
 #include "servers/visual/visual_server_raster.h"
 #include "servers/visual/visual_server_wrap_mt.h"
 
@@ -56,11 +56,11 @@ public:
     virtual ~AndroidLogger() {}
 };
 
-int OS_Android::get_video_driver_count() const {
+int AndroidOS::get_video_driver_count() const {
     return 2;
 }
 
-const char* OS_Android::get_video_driver_name(int p_driver) const {
+const char* AndroidOS::get_video_driver_name(int p_driver) const {
     switch (p_driver) {
         case VIDEO_DRIVER_GLES3:
             return "GLES3";
@@ -70,21 +70,21 @@ const char* OS_Android::get_video_driver_name(int p_driver) const {
     ERR_FAIL_V_MSG(NULL, "Invalid video driver index: " + itos(p_driver) + ".");
 }
 
-int OS_Android::get_audio_driver_count() const {
+int AndroidOS::get_audio_driver_count() const {
     return 1;
 }
 
-const char* OS_Android::get_audio_driver_name(int p_driver) const {
+const char* AndroidOS::get_audio_driver_name(int p_driver) const {
     return "Android";
 }
 
-void OS_Android::initialize_core() {
+void AndroidOS::initialize_core() {
     OS_Unix::initialize_core();
 
     if (use_apk_expansion) {
         FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_RESOURCES);
     } else {
-        FileAccess::make_default<FileAccessAndroid>(FileAccess::ACCESS_RESOURCES
+        FileAccess::make_default<AndroidFileAccess>(FileAccess::ACCESS_RESOURCES
         );
     }
     FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_USERDATA);
@@ -98,19 +98,19 @@ void OS_Android::initialize_core() {
     DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_USERDATA);
     DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_FILESYSTEM);
 
-    NetSocketAndroid::make_default();
+    AndroidNetSocket::make_default();
 }
 
-void OS_Android::set_opengl_extensions(const char* p_gl_extensions) {
+void AndroidOS::set_opengl_extensions(const char* p_gl_extensions) {
     ERR_FAIL_COND(!p_gl_extensions);
     gl_extensions = p_gl_extensions;
 }
 
-int OS_Android::get_current_video_driver() const {
+int AndroidOS::get_current_video_driver() const {
     return video_driver_index;
 }
 
-Error OS_Android::initialize(
+Error AndroidOS::initialize(
     const VideoMode& p_desired,
     int p_video_driver,
     int p_audio_driver
@@ -183,45 +183,45 @@ Error OS_Android::initialize(
     return OK;
 }
 
-void OS_Android::set_main_loop(MainLoop* p_main_loop) {
+void AndroidOS::set_main_loop(MainLoop* p_main_loop) {
     main_loop = p_main_loop;
     input->set_main_loop(p_main_loop);
 }
 
-void OS_Android::delete_main_loop() {
+void AndroidOS::delete_main_loop() {
     memdelete(main_loop);
 }
 
-void OS_Android::finalize() {
+void AndroidOS::finalize() {
     memdelete(input);
 }
 
-AndroidJNIOS* OS_Android::get_android_jni_os() {
+AndroidJNIOS* AndroidOS::get_android_jni_os() {
     return android_jni_os;
 }
 
-AndroidJNIIO* OS_Android::get_android_jni_io() {
+AndroidJNIIO* AndroidOS::get_android_jni_io() {
     return android_jni_io;
 }
 
-void OS_Android::alert(const String& p_alert, const String& p_title) {
+void AndroidOS::alert(const String& p_alert, const String& p_title) {
     // print("ALERT: %s\n", p_alert.utf8().get_data());
     android_jni_os->alert(p_alert, p_title);
 }
 
-bool OS_Android::request_permission(const String& p_name) {
+bool AndroidOS::request_permission(const String& p_name) {
     return android_jni_os->request_permission(p_name);
 }
 
-bool OS_Android::request_permissions() {
+bool AndroidOS::request_permissions() {
     return android_jni_os->request_permissions();
 }
 
-Vector<String> OS_Android::get_granted_permissions() const {
+Vector<String> AndroidOS::get_granted_permissions() const {
     return android_jni_os->get_granted_permissions();
 }
 
-Error OS_Android::open_dynamic_library(
+Error AndroidOS::open_dynamic_library(
     const String p_path,
     void*& p_library_handle,
     bool p_also_set_library_path
@@ -235,138 +235,138 @@ Error OS_Android::open_dynamic_library(
     return OK;
 }
 
-void OS_Android::set_mouse_show(bool p_show) {
+void AndroidOS::set_mouse_show(bool p_show) {
     // android has no mouse...
 }
 
-void OS_Android::set_mouse_grab(bool p_grab) {
+void AndroidOS::set_mouse_grab(bool p_grab) {
     // it really has no mouse...!
 }
 
-bool OS_Android::is_mouse_grab_enabled() const {
+bool AndroidOS::is_mouse_grab_enabled() const {
     //*sigh* technology has evolved so much since i was a kid..
     return false;
 }
 
-Point2 OS_Android::get_mouse_position() const {
+Point2 AndroidOS::get_mouse_position() const {
     return input->get_mouse_position();
 }
 
-int OS_Android::get_mouse_button_state() const {
+int AndroidOS::get_mouse_button_state() const {
     return input->get_mouse_button_mask();
 }
 
-void OS_Android::set_window_title(const String& p_title) {
+void AndroidOS::set_window_title(const String& p_title) {
     // This queries/updates the currently connected devices/joypads
     // Set_window_title is called when initializing the main loop (main.cpp)
     // therefore this place is found to be suitable (I found no better).
     android_jni_os->init_input_devices();
 }
 
-void OS_Android::set_video_mode(const VideoMode& p_video_mode, int p_screen) {}
+void AndroidOS::set_video_mode(const VideoMode& p_video_mode, int p_screen) {}
 
-OS::VideoMode OS_Android::get_video_mode(int p_screen) const {
+OS::VideoMode AndroidOS::get_video_mode(int p_screen) const {
     return default_videomode;
 }
 
-void OS_Android::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
+void AndroidOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
     const {
     p_list->push_back(default_videomode);
 }
 
-void OS_Android::set_keep_screen_on(bool p_enabled) {
+void AndroidOS::set_keep_screen_on(bool p_enabled) {
     OS::set_keep_screen_on(p_enabled);
 
     android_jni_os->set_keep_screen_on(p_enabled);
 }
 
-Size2 OS_Android::get_window_size() const {
+Size2 AndroidOS::get_window_size() const {
     return Vector2(default_videomode.width, default_videomode.height);
 }
 
-Rect2 OS_Android::get_window_safe_area() const {
+Rect2 AndroidOS::get_window_safe_area() const {
     int xywh[4];
     android_jni_io->get_window_safe_area(xywh);
     return Rect2(xywh[0], xywh[1], xywh[2], xywh[3]);
 }
 
-String OS_Android::get_name() const {
+String AndroidOS::get_name() const {
     return "Android";
 }
 
-MainLoop* OS_Android::get_main_loop() const {
+MainLoop* AndroidOS::get_main_loop() const {
     return main_loop;
 }
 
-bool OS_Android::can_draw() const {
+bool AndroidOS::can_draw() const {
     return true; // always?
 }
 
-void OS_Android::main_loop_begin() {
+void AndroidOS::main_loop_begin() {
     if (main_loop) {
         main_loop->init();
     }
 }
 
-bool OS_Android::main_loop_iterate() {
+bool AndroidOS::main_loop_iterate() {
     if (!main_loop) {
         return false;
     }
     return Main::iteration();
 }
 
-void OS_Android::main_loop_end() {
+void AndroidOS::main_loop_end() {
     if (main_loop) {
         main_loop->finish();
     }
 }
 
-void OS_Android::main_loop_focusout() {
+void AndroidOS::main_loop_focusout() {
     if (main_loop) {
         main_loop->notification(MainLoop::NOTIFICATION_WM_FOCUS_OUT);
     }
-    audio_driver_android.set_pause(true);
+    android_audio_driver.set_pause(true);
 }
 
-void OS_Android::main_loop_focusin() {
+void AndroidOS::main_loop_focusin() {
     if (main_loop) {
         main_loop->notification(MainLoop::NOTIFICATION_WM_FOCUS_IN);
     }
-    audio_driver_android.set_pause(false);
+    android_audio_driver.set_pause(false);
 }
 
-void OS_Android::process_accelerometer(const Vector3& p_accelerometer) {
+void AndroidOS::process_accelerometer(const Vector3& p_accelerometer) {
     input->set_accelerometer(p_accelerometer);
 }
 
-void OS_Android::process_gravity(const Vector3& p_gravity) {
+void AndroidOS::process_gravity(const Vector3& p_gravity) {
     input->set_gravity(p_gravity);
 }
 
-void OS_Android::process_magnetometer(const Vector3& p_magnetometer) {
+void AndroidOS::process_magnetometer(const Vector3& p_magnetometer) {
     input->set_magnetometer(p_magnetometer);
 }
 
-void OS_Android::process_gyroscope(const Vector3& p_gyroscope) {
+void AndroidOS::process_gyroscope(const Vector3& p_gyroscope) {
     input->set_gyroscope(p_gyroscope);
 }
 
-bool OS_Android::has_touchscreen_ui_hint() const {
+bool AndroidOS::has_touchscreen_ui_hint() const {
     return true;
 }
 
-bool OS_Android::has_virtual_keyboard() const {
+bool AndroidOS::has_virtual_keyboard() const {
     return true;
 }
 
-int OS_Android::get_virtual_keyboard_height() const {
+int AndroidOS::get_virtual_keyboard_height() const {
     return android_jni_io->get_vk_height();
 
     // ERR_PRINT("Cannot obtain virtual keyboard height.");
     // return 0;
 }
 
-void OS_Android::show_virtual_keyboard(
+void AndroidOS::show_virtual_keyboard(
     const String& p_existing_text,
     const Rect2& p_screen_rect,
     bool p_multiline,
@@ -387,7 +387,7 @@ void OS_Android::show_virtual_keyboard(
     };
 }
 
-void OS_Android::hide_virtual_keyboard() {
+void AndroidOS::hide_virtual_keyboard() {
     if (android_jni_io->has_vk()) {
         android_jni_io->hide_vk();
     } else {
@@ -395,27 +395,27 @@ void OS_Android::hide_virtual_keyboard() {
     };
 }
 
-void OS_Android::init_video_mode(int p_video_width, int p_video_height) {
+void AndroidOS::init_video_mode(int p_video_width, int p_video_height) {
     default_videomode.width      = p_video_width;
     default_videomode.height     = p_video_height;
     default_videomode.fullscreen = true;
     default_videomode.resizable  = false;
 }
 
-void OS_Android::set_display_size(Size2 p_size) {
+void AndroidOS::set_display_size(Size2 p_size) {
     default_videomode.width  = p_size.x;
     default_videomode.height = p_size.y;
 }
 
-Error OS_Android::shell_open(String p_uri) {
+Error AndroidOS::shell_open(String p_uri) {
     return android_jni_io->open_uri(p_uri);
 }
 
-String OS_Android::get_resource_dir() const {
+String AndroidOS::get_resource_dir() const {
     return "/"; // android has its own filesystem for resources inside the APK
 }
 
-String OS_Android::get_locale() const {
+String AndroidOS::get_locale() const {
     String locale = android_jni_io->get_locale();
     if (locale != "") {
         return locale;
@@ -424,7 +424,7 @@ String OS_Android::get_locale() const {
     return OS_Unix::get_locale();
 }
 
-void OS_Android::set_clipboard(const String& p_text) {
+void AndroidOS::set_clipboard(const String& p_text) {
     // DO we really need the fallback to OS_Unix here?!
     if (android_jni_os->has_set_clipboard()) {
         android_jni_os->set_clipboard(p_text);
@@ -433,7 +433,7 @@ void OS_Android::set_clipboard(const String& p_text) {
     }
 }
 
-String OS_Android::get_clipboard() const {
+String AndroidOS::get_clipboard() const {
     // DO we really need the fallback to OS_Unix here?!
     if (android_jni_os->has_get_clipboard()) {
         return android_jni_os->get_clipboard();
@@ -442,7 +442,7 @@ String OS_Android::get_clipboard() const {
     return OS_Unix::get_clipboard();
 }
 
-String OS_Android::get_model_name() const {
+String AndroidOS::get_model_name() const {
     String model = android_jni_io->get_model();
     if (model != "") {
         return model;
@@ -451,15 +451,15 @@ String OS_Android::get_model_name() const {
     return OS_Unix::get_model_name();
 }
 
-int OS_Android::get_screen_dpi(int p_screen) const {
+int AndroidOS::get_screen_dpi(int p_screen) const {
     return android_jni_io->get_screen_dpi();
 }
 
-String OS_Android::get_data_path() const {
+String AndroidOS::get_data_path() const {
     return get_user_data_dir();
 }
 
-String OS_Android::get_user_data_dir() const {
+String AndroidOS::get_user_data_dir() const {
     if (data_dir_cache != String()) {
         return data_dir_cache;
     }
@@ -472,7 +472,7 @@ String OS_Android::get_user_data_dir() const {
     return ".";
 }
 
-String OS_Android::get_cache_path() const {
+String AndroidOS::get_cache_path() const {
     String cache_dir = android_jni_io->get_cache_dir();
     if (cache_dir != "") {
         cache_dir = _remove_symlink(cache_dir);
@@ -481,11 +481,11 @@ String OS_Android::get_cache_path() const {
     return ".";
 }
 
-void OS_Android::set_screen_orientation(ScreenOrientation p_orientation) {
+void AndroidOS::set_screen_orientation(ScreenOrientation p_orientation) {
     android_jni_io->set_screen_orientation(p_orientation);
 }
 
-OS::ScreenOrientation OS_Android::get_screen_orientation() const {
+OS::ScreenOrientation AndroidOS::get_screen_orientation() const {
     const int orientation = android_jni_io->get_screen_orientation();
     ERR_FAIL_INDEX_V_MSG(
         orientation,
@@ -496,7 +496,7 @@ OS::ScreenOrientation OS_Android::get_screen_orientation() const {
     return OS::ScreenOrientation(orientation);
 }
 
-String OS_Android::get_unique_id() const {
+String AndroidOS::get_unique_id() const {
     String unique_id = android_jni_io->get_unique_id();
     if (unique_id != "") {
         return unique_id;
@@ -505,30 +505,29 @@ String OS_Android::get_unique_id() const {
     return OS::get_unique_id();
 }
 
-String OS_Android::get_system_dir(SystemDir p_dir, bool p_shared_storage)
-    const {
+String AndroidOS::get_system_dir(SystemDir p_dir, bool p_shared_storage) const {
     return android_jni_io->get_system_dir(p_dir, p_shared_storage);
 }
 
-void OS_Android::set_context_is_16_bits(bool p_is_16) {
+void AndroidOS::set_context_is_16_bits(bool p_is_16) {
     // use_16bits_fbo = p_is_16;
     // if (rasterizer)
     //	rasterizer->set_force_16_bits_fbo(p_is_16);
 }
 
-bool OS_Android::is_joy_known(int p_device) {
+bool AndroidOS::is_joy_known(int p_device) {
     return input->is_joy_mapped(p_device);
 }
 
-String OS_Android::get_joy_guid(int p_device) const {
+String AndroidOS::get_joy_guid(int p_device) const {
     return input->get_joy_guid_remapped(p_device);
 }
 
-void OS_Android::vibrate_handheld(int p_duration_ms) {
+void AndroidOS::vibrate_handheld(int p_duration_ms) {
     android_jni_os->vibrate(p_duration_ms);
 }
 
-bool OS_Android::_check_internal_feature_support(const String& p_feature) {
+bool AndroidOS::_check_internal_feature_support(const String& p_feature) {
     if (p_feature == "mobile") {
         // TODO support etc2 only if GLES3 driver is selected
         return true;
@@ -549,7 +548,7 @@ bool OS_Android::_check_internal_feature_support(const String& p_feature) {
     return false;
 }
 
-OS_Android::OS_Android(
+AndroidOS::AndroidOS(
     AndroidJNIOS* p_android_jni_os,
     AndroidJNIIO* p_android_jni_io,
     bool p_use_apk_expansion
@@ -572,7 +571,7 @@ OS_Android::OS_Android(
     loggers.push_back(memnew(AndroidLogger));
     _set_logger(memnew(CompositeLogger(loggers)));
 
-    AudioDriverManager::add_driver(&audio_driver_android);
+    AudioDriverManager::add_driver(&android_audio_driver);
 }
 
-OS_Android::~OS_Android() {}
+AndroidOS::~AndroidOS() {}

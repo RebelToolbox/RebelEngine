@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "thread_jandroid.h"
+#include "android_jni_thread.h"
 
 #include "core/os/thread.h"
 
@@ -35,7 +35,7 @@ static void term_thread() {
     env = nullptr;
 }
 
-void init_thread_jandroid(JavaVM* p_jvm, JNIEnv* p_env) {
+void initialize_android_jni_thread(JavaVM* p_jvm, JNIEnv* p_env) {
     java_vm = p_jvm;
     env     = p_env;
     Thread::_set_platform_funcs(nullptr, nullptr, &init_thread, &term_thread);

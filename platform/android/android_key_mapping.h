@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef ANDROID_KEYS_UTILS_H
-#define ANDROID_KEYS_UTILS_H
+#ifndef ANDROID_KEY_MAPPING_H
+#define ANDROID_KEY_MAPPING_H
 
 #include "core/os/keyboard.h"
 
@@ -136,4 +136,4 @@ TODO: map these android key:
 
 unsigned int android_get_keysym(unsigned int p_code);
 
-#endif // ANDROID_KEYS_UTILS_H
+#endif // ANDROID_KEY_MAPPING_H

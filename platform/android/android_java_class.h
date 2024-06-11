@@ -4,23 +4,18 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVA_CLASS_WRAPPER_H
-#define JAVA_CLASS_WRAPPER_H
+#ifndef ANDROID_JAVA_CLASS_H
+#define ANDROID_JAVA_CLASS_H
 
 #include "core/reference.h"
 
-#ifdef ANDROID_ENABLED
 #include <jni.h>
-#endif
 
-#ifdef ANDROID_ENABLED
 class JavaObject;
-#endif
 
 class JavaClass : public Reference {
     GDCLASS(JavaClass, Reference);
 
-#ifdef ANDROID_ENABLED
     enum ArgumentType {
         ARG_TYPE_VOID,
         ARG_TYPE_BOOLEAN,
@@ -167,7 +162,6 @@ class JavaClass : public Reference {
     friend class JavaClassWrapper;
     Map<StringName, List<MethodInfo>> methods;
     jclass _class;
-#endif
 
 public:
     virtual Variant call(
@@ -176,40 +170,32 @@ public:
         int p_argcount,
         Variant::CallError& r_error
     );
-
     JavaClass();
 };
 
 class JavaObject : public Reference {
     GDCLASS(JavaObject, Reference);
 
-#ifdef ANDROID_ENABLED
+public:
     Ref<JavaClass> base_class;
     friend class JavaClass;
-
     jobject instance;
-#endif
 
-public:
     virtual Variant call(
         const StringName& p_method,
         const Variant** p_args,
         int p_argcount,
         Variant::CallError& r_error
     );
-
-#ifdef ANDROID_ENABLED
     JavaObject(const Ref<JavaClass>& p_base, jobject* p_instance);
     ~JavaObject();
-#endif
 };
 
 class JavaClassWrapper : public Object {
     GDCLASS(JavaClassWrapper, Object);
-
-#ifdef ANDROID_ENABLED
     Map<String, Ref<JavaClass>> class_cache;
     friend class JavaClass;
+
     jclass activityClass;
     jmethodID findClass;
     jmethodID getDeclaredMethods;
@@ -233,7 +219,6 @@ class JavaClassWrapper : public Object {
     jobject classLoader;
 
     bool _get_type_sig(JNIEnv* env, jobject obj, uint32_t& sig, String& strsig);
-#endif
 
     static JavaClassWrapper* singleton;
 
@@ -246,12 +231,7 @@ public:
     }
 
     Ref<JavaClass> wrap(const String& p_class);
-
-#ifdef ANDROID_ENABLED
     JavaClassWrapper(jobject p_activity = NULL);
-#else
-    JavaClassWrapper();
-#endif
 };
 
-#endif // JAVA_CLASS_WRAPPER_H
+#endif // ANDROID_JAVA_CLASS_H

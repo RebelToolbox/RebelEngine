@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef AUDIO_DRIVER_OPENSL_H
-#define AUDIO_DRIVER_OPENSL_H
+#ifndef OPENSL_AUDIO_DRIVER_H
+#define OPENSL_AUDIO_DRIVER_H
 
 #include "core/os/mutex.h"
 #include "servers/audio_server.h"
@@ -13,7 +13,7 @@
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 
-class AudioDriverOpenSL : public AudioDriver {
+class AndroidAudioDriver : public AudioDriver {
     bool active;
     Mutex mutex;
 
@@ -45,8 +45,6 @@ class AudioDriverOpenSL : public AudioDriver {
     SLDataSink audioSink;
     SLDataLocator_OutputMix locator_outputmix;
     SLBufferQueueState state;
-
-    static AudioDriverOpenSL* s_ad;
 
     void _buffer_callback(SLAndroidSimpleBufferQueueItf queueItf);
 
@@ -82,7 +80,7 @@ public:
     virtual Error capture_start();
     virtual Error capture_stop();
 
-    AudioDriverOpenSL();
+    AndroidAudioDriver();
 };
 
-#endif // AUDIO_DRIVER_ANDROID_H
+#endif // OPENSL_AUDIO_DRIVER_H

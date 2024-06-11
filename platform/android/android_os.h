@@ -4,10 +4,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_ANDROID_H
-#define OS_ANDROID_H
+#ifndef ANDROID_OS_H
+#define ANDROID_OS_H
 
-#include "audio_driver_opensl.h"
+#include "android_audio_driver.h"
 #include "core/os/main_loop.h"
 #include "drivers/unix/os_unix.h"
 #include "main/input_default.h"
@@ -17,7 +17,7 @@
 class AndroidJNIOS;
 class AndroidJNIIO;
 
-class OS_Android : public OS_Unix {
+class AndroidOS : public OS_Unix {
     bool use_gl2;
     bool use_apk_expansion;
 
@@ -27,7 +27,7 @@ class OS_Android : public OS_Unix {
 
     mutable String data_dir_cache;
 
-    AudioDriverOpenSL audio_driver_android;
+    AndroidAudioDriver android_audio_driver;
 
     const char* gl_extensions;
 
@@ -176,12 +176,12 @@ public:
     void vibrate_handheld(int p_duration_ms);
 
     virtual bool _check_internal_feature_support(const String& p_feature);
-    OS_Android(
+    AndroidOS(
         AndroidJNIOS* p_android_jni_os,
         AndroidJNIIO* p_android_jni_io,
         bool p_use_apk_expansion
     );
-    ~OS_Android();
+    ~AndroidOS();
 };
 
-#endif
+#endif // ANDROID_OS_H

@@ -87,7 +87,7 @@ Comment: The Android Open Source Project
 Copyright: 2002, Google Inc.
 License: Apache-2.0
 
-Files: ./platform/android/power_android.cpp
+Files: ./platform/android/android_power.cpp
  ./platform/macos/macos_power.cpp
  ./platform/windows/power_windows.cpp
  ./platform/linux/linux_power.cpp

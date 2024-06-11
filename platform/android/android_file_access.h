@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef FILE_ACCESS_ANDROID_H
-#define FILE_ACCESS_ANDROID_H
+#ifndef ANDROID_FILE_ACCESS_H
+#define ANDROID_FILE_ACCESS_H
 
 #include "core/os/file_access.h"
 
@@ -14,7 +14,7 @@
 
 // #include <android_native_app_glue.h>
 
-class FileAccessAndroid : public FileAccess {
+class AndroidFileAccess : public FileAccess {
     static FileAccess* create_android();
     mutable AAsset* a;
     mutable uint64_t len;
@@ -68,8 +68,8 @@ public:
 
     // static void make_default();
 
-    FileAccessAndroid();
-    ~FileAccessAndroid();
+    AndroidFileAccess();
+    ~AndroidFileAccess();
 };
 
-#endif // FILE_ACCESS_ANDROID_H
+#endif // ANDROID_FILE_ACCESS_H

@@ -6,10 +6,10 @@
 
 #include "android_jni_dir_access.h"
 
+#include "android_file_access.h"
+#include "android_jni_thread.h"
+#include "android_jni_utils.h"
 #include "core/print_string.h"
-#include "file_access_android.h"
-#include "jni_utils.h"
-#include "thread_jandroid.h"
 
 jobject AndroidJNIDirAccess::io            = NULL;
 jclass AndroidJNIDirAccess::cls            = NULL;
@@ -131,7 +131,7 @@ bool AndroidJNIDirAccess::file_exists(String p_file) {
         sd = current_dir.plus_file(p_file);
     }
 
-    FileAccessAndroid* f = memnew(FileAccessAndroid);
+    AndroidFileAccess* f = memnew(AndroidFileAccess);
     bool exists          = f->file_exists(sd);
     memdelete(f);
 

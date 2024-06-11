@@ -6,7 +6,7 @@
 
 #include "android_input_handler.h"
 
-#include "android_keys_utils.h"
+#include "android_key_mapping.h"
 #include "core/os/os.h"
 
 void AndroidInputHandler::process_key_event(

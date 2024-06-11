@@ -4,14 +4,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef THREAD_JANDROID_H
-#define THREAD_JANDROID_H
+#ifndef ANDROID_JNI_THREAD_H
+#define ANDROID_JNI_THREAD_H
 
 #include <jni.h>
 
-void init_thread_jandroid(JavaVM* p_jvm, JNIEnv* p_env);
+void initialize_android_jni_thread(JavaVM* p_jvm, JNIEnv* p_env);
 
 void setup_android_thread();
 JNIEnv* get_jni_env();
 
-#endif
+#endif // ANDROID_JNI_THREAD_H

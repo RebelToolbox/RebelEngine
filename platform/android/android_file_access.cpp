@@ -4,22 +4,22 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "file_access_android.h"
+#include "android_file_access.h"
 
 #include "core/print_string.h"
 
-AAssetManager* FileAccessAndroid::asset_manager = NULL;
+AAssetManager* AndroidFileAccess::asset_manager = NULL;
 
-/*void FileAccessAndroid::make_default() {
+/*void AndroidFileAccess::make_default() {
 
     create_func=create_android;
 }*/
 
-FileAccess* FileAccessAndroid::create_android() {
-    return memnew(FileAccessAndroid);
+FileAccess* AndroidFileAccess::create_android() {
+    return memnew(AndroidFileAccess);
 }
 
-Error FileAccessAndroid::_open(const String& p_path, int p_mode_flags) {
+Error AndroidFileAccess::_open(const String& p_path, int p_mode_flags) {
     String path = fix_path(p_path).simplify_path();
     if (path.begins_with("/")) {
         path = path.substr(1, path.length());
@@ -47,7 +47,7 @@ Error FileAccessAndroid::_open(const String& p_path, int p_mode_flags) {
     return OK;
 }
 
-void FileAccessAndroid::close() {
+void AndroidFileAccess::close() {
     if (!a) {
         return;
     }
@@ -55,11 +55,11 @@ void FileAccessAndroid::close() {
     a = NULL;
 }
 
-bool FileAccessAndroid::is_open() const {
+bool AndroidFileAccess::is_open() const {
     return a != NULL;
 }
 
-void FileAccessAndroid::seek(uint64_t p_position) {
+void AndroidFileAccess::seek(uint64_t p_position) {
     ERR_FAIL_COND(!a);
 
     AAsset_seek(a, p_position, SEEK_SET);
@@ -72,25 +72,25 @@ void FileAccessAndroid::seek(uint64_t p_position) {
     }
 }
 
-void FileAccessAndroid::seek_end(int64_t p_position) {
+void AndroidFileAccess::seek_end(int64_t p_position) {
     ERR_FAIL_COND(!a);
     AAsset_seek(a, p_position, SEEK_END);
     pos = len + p_position;
 }
 
-uint64_t FileAccessAndroid::get_position() const {
+uint64_t AndroidFileAccess::get_position() const {
     return pos;
 }
 
-uint64_t FileAccessAndroid::get_len() const {
+uint64_t AndroidFileAccess::get_len() const {
     return len;
 }
 
-bool FileAccessAndroid::eof_reached() const {
+bool AndroidFileAccess::eof_reached() const {
     return eof;
 }
 
-uint8_t FileAccessAndroid::get_8() const {
+uint8_t AndroidFileAccess::get_8() const {
     if (pos >= len) {
         eof = true;
         return 0;
@@ -102,7 +102,7 @@ uint8_t FileAccessAndroid::get_8() const {
     return byte;
 }
 
-uint64_t FileAccessAndroid::get_buffer(uint8_t* p_dst, uint64_t p_length)
+uint64_t AndroidFileAccess::get_buffer(uint8_t* p_dst, uint64_t p_length)
     const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
 
@@ -121,19 +121,19 @@ uint64_t FileAccessAndroid::get_buffer(uint8_t* p_dst, uint64_t p_length)
     return r;
 }
 
-Error FileAccessAndroid::get_error() const {
+Error AndroidFileAccess::get_error() const {
     return eof ? ERR_FILE_EOF : OK; // not sure what else it may happen
 }
 
-void FileAccessAndroid::flush() {
+void AndroidFileAccess::flush() {
     ERR_FAIL();
 }
 
-void FileAccessAndroid::store_8(uint8_t p_dest) {
+void AndroidFileAccess::store_8(uint8_t p_dest) {
     ERR_FAIL();
 }
 
-bool FileAccessAndroid::file_exists(const String& p_path) {
+bool AndroidFileAccess::file_exists(const String& p_path) {
     String path = fix_path(p_path).simplify_path();
     if (path.begins_with("/")) {
         path = path.substr(1, path.length());
@@ -155,11 +155,11 @@ bool FileAccessAndroid::file_exists(const String& p_path) {
     return true;
 }
 
-FileAccessAndroid::FileAccessAndroid() {
+AndroidFileAccess::AndroidFileAccess() {
     a   = NULL;
     eof = false;
 }
 
-FileAccessAndroid::~FileAccessAndroid() {
+AndroidFileAccess::~AndroidFileAccess() {
     close();
 }

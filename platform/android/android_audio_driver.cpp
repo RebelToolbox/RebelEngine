@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "audio_driver_opensl.h"
+#include "android_audio_driver.h"
 
 #include <string.h>
 
@@ -13,7 +13,7 @@
 
 /* Structure for passing information to callback function */
 
-void AudioDriverOpenSL::_buffer_callback(SLAndroidSimpleBufferQueueItf queueItf
+void AndroidAudioDriver::_buffer_callback(SLAndroidSimpleBufferQueueItf queueItf
 ) {
     bool mix = true;
 
@@ -48,22 +48,20 @@ void AudioDriverOpenSL::_buffer_callback(SLAndroidSimpleBufferQueueItf queueItf
     (*queueItf)->Enqueue(queueItf, ptr, 4 * buffer_size);
 }
 
-void AudioDriverOpenSL::_buffer_callbacks(
+void AndroidAudioDriver::_buffer_callbacks(
     SLAndroidSimpleBufferQueueItf queueItf,
     void* pContext
 ) {
-    AudioDriverOpenSL* ad = (AudioDriverOpenSL*)pContext;
+    AndroidAudioDriver* ad = (AndroidAudioDriver*)pContext;
 
     ad->_buffer_callback(queueItf);
 }
 
-AudioDriverOpenSL* AudioDriverOpenSL::s_ad = NULL;
-
-const char* AudioDriverOpenSL::get_name() const {
+const char* AndroidAudioDriver::get_name() const {
     return "Android";
 }
 
-Error AudioDriverOpenSL::init() {
+Error AndroidAudioDriver::init() {
     SLresult res;
     SLEngineOption EngineOption[] = {
         {(SLuint32)SL_ENGINEOPTION_THREADSAFE, (SLuint32)SL_BOOLEAN_TRUE}
@@ -85,7 +83,7 @@ Error AudioDriverOpenSL::init() {
     return OK;
 }
 
-void AudioDriverOpenSL::start() {
+void AndroidAudioDriver::start() {
     active = false;
 
     SLresult res;
@@ -203,7 +201,7 @@ void AudioDriverOpenSL::start() {
     active = true;
 }
 
-void AudioDriverOpenSL::_record_buffer_callback(
+void AndroidAudioDriver::_record_buffer_callback(
     SLAndroidSimpleBufferQueueItf queueItf
 ) {
     for (int i = 0; i < rec_buffer.size(); i++) {
@@ -221,16 +219,16 @@ void AudioDriverOpenSL::_record_buffer_callback(
     ERR_FAIL_COND(res != SL_RESULT_SUCCESS);
 }
 
-void AudioDriverOpenSL::_record_buffer_callbacks(
+void AndroidAudioDriver::_record_buffer_callbacks(
     SLAndroidSimpleBufferQueueItf queueItf,
     void* pContext
 ) {
-    AudioDriverOpenSL* ad = (AudioDriverOpenSL*)pContext;
+    AndroidAudioDriver* ad = (AndroidAudioDriver*)pContext;
 
     ad->_record_buffer_callback(queueItf);
 }
 
-Error AudioDriverOpenSL::capture_init_device() {
+Error AndroidAudioDriver::capture_init_device() {
     SLDataLocator_IODevice loc_dev = {
         SL_DATALOCATOR_IODEVICE,
         SL_IODEVICE_AUDIOINPUT,
@@ -323,7 +321,7 @@ Error AudioDriverOpenSL::capture_init_device() {
     return OK;
 }
 
-Error AudioDriverOpenSL::capture_start() {
+Error AndroidAudioDriver::capture_start() {
     if (OS::get_singleton()->request_permission("RECORD_AUDIO")) {
         return capture_init_device();
     }
@@ -331,7 +329,7 @@ Error AudioDriverOpenSL::capture_start() {
     return OK;
 }
 
-Error AudioDriverOpenSL::capture_stop() {
+Error AndroidAudioDriver::capture_stop() {
     SLuint32 state;
     SLresult res = (*recordItf)->GetRecordState(recordItf, &state);
     ERR_FAIL_COND_V(res != SL_RESULT_SUCCESS, ERR_CANT_OPEN);
@@ -347,31 +345,31 @@ Error AudioDriverOpenSL::capture_stop() {
     return OK;
 }
 
-int AudioDriverOpenSL::get_mix_rate() const {
+int AndroidAudioDriver::get_mix_rate() const {
     return 44100; // hardcoded for Android, as selected by SL_SAMPLINGRATE_44_1
 }
 
-AudioDriver::SpeakerMode AudioDriverOpenSL::get_speaker_mode() const {
+AudioDriver::SpeakerMode AndroidAudioDriver::get_speaker_mode() const {
     return SPEAKER_MODE_STEREO;
 }
 
-void AudioDriverOpenSL::lock() {
+void AndroidAudioDriver::lock() {
     if (active) {
         mutex.lock();
     }
 }
 
-void AudioDriverOpenSL::unlock() {
+void AndroidAudioDriver::unlock() {
     if (active) {
         mutex.unlock();
     }
 }
 
-void AudioDriverOpenSL::finish() {
+void AndroidAudioDriver::finish() {
     (*sl)->Destroy(sl);
 }
 
-void AudioDriverOpenSL::set_pause(bool p_pause) {
+void AndroidAudioDriver::set_pause(bool p_pause) {
     pause = p_pause;
 
     if (active) {
@@ -383,8 +381,7 @@ void AudioDriverOpenSL::set_pause(bool p_pause) {
     }
 }
 
-AudioDriverOpenSL::AudioDriverOpenSL() {
-    s_ad   = this;
+AndroidAudioDriver::AndroidAudioDriver() {
     pause  = false;
     active = false;
 }
