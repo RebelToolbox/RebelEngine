@@ -4,9 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef WASAPI_ENABLED
-
-#include "audio_driver_wasapi.h"
+#include "windows_audio_driver.h"
 
 #include "core/os/os.h"
 #include "core/project_settings.h"
@@ -131,7 +129,7 @@ public:
 
 static CMMNotificationClient notif_client;
 
-Error AudioDriverWASAPI::audio_device_init(
+Error WindowsAudioDriver::audio_device_init(
     AudioDeviceWASAPI* p_device,
     bool p_capture,
     bool reinit
@@ -367,7 +365,7 @@ Error AudioDriverWASAPI::audio_device_init(
     return OK;
 }
 
-Error AudioDriverWASAPI::init_render_device(bool reinit) {
+Error WindowsAudioDriver::init_render_device(bool reinit) {
     Error err = audio_device_init(&audio_output, false, reinit);
     if (err != OK) {
         return err;
@@ -413,7 +411,7 @@ Error AudioDriverWASAPI::init_render_device(bool reinit) {
     return OK;
 }
 
-Error AudioDriverWASAPI::init_capture_device(bool reinit) {
+Error WindowsAudioDriver::init_capture_device(bool reinit) {
     Error err = audio_device_init(&audio_input, true, reinit);
     if (err != OK) {
         return err;
@@ -429,7 +427,7 @@ Error AudioDriverWASAPI::init_capture_device(bool reinit) {
     return OK;
 }
 
-Error AudioDriverWASAPI::audio_device_finish(AudioDeviceWASAPI* p_device) {
+Error WindowsAudioDriver::audio_device_finish(AudioDeviceWASAPI* p_device) {
     if (p_device->active) {
         if (p_device->audio_client) {
             p_device->audio_client->Stop();
@@ -445,15 +443,15 @@ Error AudioDriverWASAPI::audio_device_finish(AudioDeviceWASAPI* p_device) {
     return OK;
 }
 
-Error AudioDriverWASAPI::finish_render_device() {
+Error WindowsAudioDriver::finish_render_device() {
     return audio_device_finish(&audio_output);
 }
 
-Error AudioDriverWASAPI::finish_capture_device() {
+Error WindowsAudioDriver::finish_capture_device() {
     return audio_device_finish(&audio_input);
 }
 
-Error AudioDriverWASAPI::init() {
+Error WindowsAudioDriver::init() {
     mix_rate = GLOBAL_GET("audio/mix_rate");
 
     Error err = init_render_device();
@@ -469,15 +467,15 @@ Error AudioDriverWASAPI::init() {
     return OK;
 }
 
-int AudioDriverWASAPI::get_mix_rate() const {
+int WindowsAudioDriver::get_mix_rate() const {
     return mix_rate;
 }
 
-AudioDriver::SpeakerMode AudioDriverWASAPI::get_speaker_mode() const {
+AudioDriver::SpeakerMode WindowsAudioDriver::get_speaker_mode() const {
     return get_speaker_mode_by_total_channels(channels);
 }
 
-Array AudioDriverWASAPI::audio_device_get_list(bool p_capture) {
+Array WindowsAudioDriver::audio_device_get_list(bool p_capture) {
     Array list;
     IMMDeviceCollection* devices    = NULL;
     IMMDeviceEnumerator* enumerator = NULL;
@@ -534,11 +532,11 @@ Array AudioDriverWASAPI::audio_device_get_list(bool p_capture) {
     return list;
 }
 
-Array AudioDriverWASAPI::get_device_list() {
+Array WindowsAudioDriver::get_device_list() {
     return audio_device_get_list(false);
 }
 
-String AudioDriverWASAPI::get_device() {
+String WindowsAudioDriver::get_device() {
     lock();
     String name = audio_output.device_name;
     unlock();
@@ -546,13 +544,13 @@ String AudioDriverWASAPI::get_device() {
     return name;
 }
 
-void AudioDriverWASAPI::set_device(String device) {
+void WindowsAudioDriver::set_device(String device) {
     lock();
     audio_output.new_device = device;
     unlock();
 }
 
-int32_t AudioDriverWASAPI::read_sample(
+int32_t WindowsAudioDriver::read_sample(
     WORD format_tag,
     int bits_per_sample,
     BYTE* buffer,
@@ -590,7 +588,7 @@ int32_t AudioDriverWASAPI::read_sample(
     return 0;
 }
 
-void AudioDriverWASAPI::write_sample(
+void WindowsAudioDriver::write_sample(
     WORD format_tag,
     int bits_per_sample,
     BYTE* buffer,
@@ -624,10 +622,10 @@ void AudioDriverWASAPI::write_sample(
     }
 }
 
-void AudioDriverWASAPI::thread_func(void* p_udata) {
-    AudioDriverWASAPI* ad = (AudioDriverWASAPI*)p_udata;
-    uint32_t avail_frames = 0;
-    uint32_t write_ofs    = 0;
+void WindowsAudioDriver::thread_func(void* p_udata) {
+    WindowsAudioDriver* ad = (WindowsAudioDriver*)p_udata;
+    uint32_t avail_frames  = 0;
+    uint32_t write_ofs     = 0;
 
     while (!ad->exit_thread) {
         uint32_t read_frames    = 0;
@@ -912,7 +910,7 @@ void AudioDriverWASAPI::thread_func(void* p_udata) {
     ad->thread_exited = true;
 }
 
-void AudioDriverWASAPI::start() {
+void WindowsAudioDriver::start() {
     if (audio_output.audio_client) {
         HRESULT hr = audio_output.audio_client->Start();
         if (hr != S_OK) {
@@ -923,15 +921,15 @@ void AudioDriverWASAPI::start() {
     }
 }
 
-void AudioDriverWASAPI::lock() {
+void WindowsAudioDriver::lock() {
     mutex.lock();
 }
 
-void AudioDriverWASAPI::unlock() {
+void WindowsAudioDriver::unlock() {
     mutex.unlock();
 }
 
-void AudioDriverWASAPI::finish() {
+void WindowsAudioDriver::finish() {
     exit_thread = true;
     thread.wait_to_finish();
 
@@ -939,7 +937,7 @@ void AudioDriverWASAPI::finish() {
     finish_render_device();
 }
 
-Error AudioDriverWASAPI::capture_start() {
+Error WindowsAudioDriver::capture_start() {
     Error err = init_capture_device();
     if (err != OK) {
         ERR_PRINT("WASAPI: init_capture_device error");
@@ -955,7 +953,7 @@ Error AudioDriverWASAPI::capture_start() {
     return OK;
 }
 
-Error AudioDriverWASAPI::capture_stop() {
+Error WindowsAudioDriver::capture_stop() {
     if (audio_input.active) {
         audio_input.audio_client->Stop();
         audio_input.active = false;
@@ -966,17 +964,17 @@ Error AudioDriverWASAPI::capture_stop() {
     return FAILED;
 }
 
-void AudioDriverWASAPI::capture_set_device(const String& p_name) {
+void WindowsAudioDriver::capture_set_device(const String& p_name) {
     lock();
     audio_input.new_device = p_name;
     unlock();
 }
 
-Array AudioDriverWASAPI::capture_get_device_list() {
+Array WindowsAudioDriver::capture_get_device_list() {
     return audio_device_get_list(true);
 }
 
-String AudioDriverWASAPI::capture_get_device() {
+String WindowsAudioDriver::capture_get_device() {
     lock();
     String name = audio_input.device_name;
     unlock();
@@ -984,7 +982,7 @@ String AudioDriverWASAPI::capture_get_device() {
     return name;
 }
 
-AudioDriverWASAPI::AudioDriverWASAPI() {
+WindowsAudioDriver::WindowsAudioDriver() {
     samples_in.clear();
 
     channels      = 0;
@@ -994,5 +992,3 @@ AudioDriverWASAPI::AudioDriverWASAPI() {
     thread_exited = false;
     exit_thread   = false;
 }
-
-#endif // WASAPI_ENABLED

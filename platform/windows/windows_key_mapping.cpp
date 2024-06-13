@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "key_mapping_windows.h"
+#include "windows_key_mapping.h"
 
 #include <stdio.h>
 
@@ -269,7 +269,7 @@ static _WinTranslatePair _scancode_to_keycode[] = {
     {KEY_UNKNOWN,     0   }
 };
 
-unsigned int KeyMappingWindows::get_keysym(unsigned int p_code) {
+unsigned int WindowsKeyMapping::get_keysym(unsigned int p_code) {
     for (int i = 0; _vk_to_keycode[i].keysym != KEY_UNKNOWN; i++) {
         if (_vk_to_keycode[i].keycode == p_code) {
             // printf("outcode: %x\n",_vk_to_keycode[i].keysym);
@@ -281,7 +281,7 @@ unsigned int KeyMappingWindows::get_keysym(unsigned int p_code) {
     return KEY_UNKNOWN;
 }
 
-unsigned int KeyMappingWindows::get_scansym(
+unsigned int WindowsKeyMapping::get_scansym(
     unsigned int p_code,
     bool p_extended
 ) {
@@ -349,7 +349,7 @@ unsigned int KeyMappingWindows::get_scansym(
     return keycode;
 }
 
-bool KeyMappingWindows::is_extended_key(unsigned int p_code) {
+bool WindowsKeyMapping::is_extended_key(unsigned int p_code) {
     return p_code == VK_INSERT || p_code == VK_DELETE || p_code == VK_HOME
         || p_code == VK_END || p_code == VK_PRIOR || p_code == VK_NEXT
         || p_code == VK_LEFT || p_code == VK_UP || p_code == VK_RIGHT

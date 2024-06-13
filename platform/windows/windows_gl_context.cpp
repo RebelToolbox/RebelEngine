@@ -4,11 +4,9 @@
 //
 // SPDX-License-Identifier: MIT
 
+#include "windows_gl_context.h"
+
 #if defined(OPENGL_ENABLED) || defined(GLES_ENABLED)
-
-// Author: Juan Linietsky <reduzio@gmail.com>, (C) 2008
-
-#include "context_gl_windows.h"
 
 #include <dwmapi.h>
 
@@ -27,31 +25,31 @@
 typedef HGLRC(APIENTRY*
                   PFNWGLCREATECONTEXTATTRIBSARBPROC)(HDC, HGLRC, const int*);
 
-void ContextGL_Windows::release_current() {
+void WindowsGLContext::release_current() {
     wglMakeCurrent(hDC, NULL);
 }
 
-void ContextGL_Windows::make_current() {
+void WindowsGLContext::make_current() {
     wglMakeCurrent(hDC, hRC);
 }
 
-HDC ContextGL_Windows::get_hdc() {
+HDC WindowsGLContext::get_hdc() {
     return hDC;
 }
 
-HGLRC ContextGL_Windows::get_hglrc() {
+HGLRC WindowsGLContext::get_hglrc() {
     return hRC;
 }
 
-int ContextGL_Windows::get_window_width() {
+int WindowsGLContext::get_window_width() {
     return OS::get_singleton()->get_video_mode().width;
 }
 
-int ContextGL_Windows::get_window_height() {
+int WindowsGLContext::get_window_height() {
     return OS::get_singleton()->get_video_mode().height;
 }
 
-bool ContextGL_Windows::should_vsync_via_compositor() {
+bool WindowsGLContext::should_vsync_via_compositor() {
     if (OS::get_singleton()->is_window_fullscreen()
         || !OS::get_singleton()->is_vsync_via_compositor_enabled()) {
         return false;
@@ -68,7 +66,7 @@ bool ContextGL_Windows::should_vsync_via_compositor() {
     return false;
 }
 
-void ContextGL_Windows::swap_buffers() {
+void WindowsGLContext::swap_buffers() {
     SwapBuffers(hDC);
 
     if (use_vsync) {
@@ -87,7 +85,7 @@ void ContextGL_Windows::swap_buffers() {
     }
 }
 
-void ContextGL_Windows::set_use_vsync(bool p_use) {
+void WindowsGLContext::set_use_vsync(bool p_use) {
     vsync_via_compositor = p_use && should_vsync_via_compositor();
 
     if (wglSwapIntervalEXT) {
@@ -98,13 +96,13 @@ void ContextGL_Windows::set_use_vsync(bool p_use) {
     use_vsync = p_use;
 }
 
-bool ContextGL_Windows::is_using_vsync() const {
+bool WindowsGLContext::is_using_vsync() const {
     return use_vsync;
 }
 
 #define _WGL_CONTEXT_DEBUG_BIT_ARB 0x0001
 
-Error ContextGL_Windows::initialize() {
+Error WindowsGLContext::initialize() {
     static PIXELFORMATDESCRIPTOR pfd = {
         sizeof(PIXELFORMATDESCRIPTOR), // Size Of This Pixel Format Descriptor
         1,
@@ -214,13 +212,13 @@ Error ContextGL_Windows::initialize() {
     return OK;
 }
 
-ContextGL_Windows::ContextGL_Windows(HWND hwnd, bool p_opengl_3_context) {
+WindowsGLContext::WindowsGLContext(HWND hwnd, bool p_opengl_3_context) {
     opengl_3_context     = p_opengl_3_context;
     hWnd                 = hwnd;
     use_vsync            = false;
     vsync_via_compositor = false;
 }
 
-ContextGL_Windows::~ContextGL_Windows() {}
+WindowsGLContext::~WindowsGLContext() {}
 
 #endif

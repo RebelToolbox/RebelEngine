@@ -4,10 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef AUDIO_DRIVER_WASAPI_H
-#define AUDIO_DRIVER_WASAPI_H
-
-#ifdef WASAPI_ENABLED
+#ifndef WINDOWS_AUDIO_DRIVER_H
+#define WINDOWS_AUDIO_DRIVER_H
 
 #include "core/os/mutex.h"
 #include "core/os/thread.h"
@@ -19,7 +17,7 @@
 #include <audioclient.h>
 #include <mmdeviceapi.h>
 
-class AudioDriverWASAPI : public AudioDriver {
+class WindowsAudioDriver : public AudioDriver {
     class AudioDeviceWASAPI {
     public:
         IAudioClient* audio_client;
@@ -110,8 +108,7 @@ public:
     virtual void capture_set_device(const String& p_name);
     virtual String capture_get_device();
 
-    AudioDriverWASAPI();
+    WindowsAudioDriver();
 };
 
-#endif // AUDIO_DRIVER_WASAPI_H
-#endif
+#endif // WINDOWS_AUDIO_DRIVER_H

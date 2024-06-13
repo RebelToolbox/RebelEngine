@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef KEY_MAPPING_WINDOWS_H
-#define KEY_MAPPING_WINDOWS_H
+#ifndef WINDOWS_KEY_MAPPING_H
+#define WINDOWS_KEY_MAPPING_H
 
 #include "core/os/keyboard.h"
 
@@ -14,8 +14,8 @@
 // Windows system includes come after <windows.h>
 #include <winuser.h>
 
-class KeyMappingWindows {
-    KeyMappingWindows(){};
+class WindowsKeyMapping {
+    WindowsKeyMapping(){};
 
 public:
     static unsigned int get_keysym(unsigned int p_code);
@@ -23,4 +23,4 @@ public:
     static bool is_extended_key(unsigned int p_code);
 };
 
-#endif // KEY_MAPPING_WINDOWS_H
+#endif // WINDOWS_KEY_MAPPING_H

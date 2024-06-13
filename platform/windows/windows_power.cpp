@@ -29,11 +29,11 @@ Adapted from corresponding SDL 2.0 code.
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
-#include "power_windows.h"
+#include "windows_power.h"
 
 // CODE CHUNK IMPORTED FROM SDL 2.0
 
-bool PowerWindows::GetPowerInfo_Windows() {
+bool WindowsPower::GetPowerInfo_Windows() {
     SYSTEM_POWER_STATUS status;
     bool need_details = FALSE;
 
@@ -73,7 +73,7 @@ bool PowerWindows::GetPowerInfo_Windows() {
     return TRUE; /* always the definitive answer on Windows. */
 }
 
-OS::PowerState PowerWindows::get_power_state() {
+OS::PowerState WindowsPower::get_power_state() {
     if (GetPowerInfo_Windows()) {
         return power_state;
     } else {
@@ -81,7 +81,7 @@ OS::PowerState PowerWindows::get_power_state() {
     }
 }
 
-int PowerWindows::get_power_seconds_left() {
+int WindowsPower::get_power_seconds_left() {
     if (GetPowerInfo_Windows()) {
         return nsecs_left;
     } else {
@@ -89,7 +89,7 @@ int PowerWindows::get_power_seconds_left() {
     }
 }
 
-int PowerWindows::get_power_percent_left() {
+int WindowsPower::get_power_percent_left() {
     if (GetPowerInfo_Windows()) {
         return percent_left;
     } else {
@@ -97,9 +97,9 @@ int PowerWindows::get_power_percent_left() {
     }
 }
 
-PowerWindows::PowerWindows() :
+WindowsPower::WindowsPower() :
     nsecs_left(-1),
     percent_left(-1),
     power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerWindows::~PowerWindows() {}
+WindowsPower::~WindowsPower() {}

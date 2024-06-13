@@ -4,10 +4,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JOYPAD_WINDOWS_H
-#define JOYPAD_WINDOWS_H
+#ifndef WINDOWS_JOYPAD_H
+#define WINDOWS_JOYPAD_H
 
-#include "os_windows.h"
+#include "windows_os.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
@@ -25,11 +25,11 @@
 #define XUSER_MAX_COUNT 4
 #endif
 
-class JoypadWindows {
+class WindowsJoypad {
 public:
-    JoypadWindows();
-    JoypadWindows(InputDefault* _input, HWND* hwnd);
-    ~JoypadWindows();
+    WindowsJoypad();
+    WindowsJoypad(InputDefault* _input, HWND* hwnd);
+    ~WindowsJoypad();
 
     void probe_joypads();
     void process_joypads();
@@ -141,4 +141,4 @@ private:
     XInputSetState_t xinput_set_state;
 };
 
-#endif // JOYPAD_WINDOWS_H
+#endif // WINDOWS_JOYPAD_H

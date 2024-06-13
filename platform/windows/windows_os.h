@@ -4,23 +4,23 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_WINDOWS_H
-#define OS_WINDOWS_H
+#ifndef WINDOWS_OS_H
+#define WINDOWS_OS_H
 
-#include "context_gl_windows.h"
 #include "core/os/input.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
-#include "crash_handler_windows.h"
 #include "drivers/unix/ip_unix.h"
-#include "drivers/wasapi/audio_driver_wasapi.h"
 #include "drivers/winmidi/midi_driver_winmidi.h"
-#include "key_mapping_windows.h"
 #include "main/input_default.h"
-#include "power_windows.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
 #include "servers/visual_server.h"
+#include "windows_audio_driver.h"
+#include "windows_crash_handler.h"
+#include "windows_gl_context.h"
+#include "windows_key_mapping.h"
+#include "windows_power.h"
 #ifdef XAUDIO2_ENABLED
 #include "drivers/xaudio2/audio_driver_xaudio2.h"
 #endif
@@ -234,9 +234,9 @@ typedef struct {
     ICONDIRENTRY idEntries[1]; // An entry for each image (idCount of 'em)
 } ICONDIR, *LPICONDIR;
 
-class JoypadWindows;
+class WindowsJoypad;
 
-class OS_Windows : public OS {
+class WindowsOS : public OS {
     String tablet_driver;
     Vector<String> tablet_drivers;
 
@@ -290,7 +290,7 @@ class OS_Windows : public OS {
     int old_x, old_y;
     Point2i center;
 #if defined(OPENGL_ENABLED)
-    ContextGL_Windows* gl_context;
+    WindowsGLContext* gl_context;
 #endif
     VisualServer* visual_server;
     int pressrc;
@@ -339,15 +339,13 @@ class OS_Windows : public OS {
     Map<CursorShape, Vector<Variant>> cursors_cache;
 
     InputDefault* input;
-    JoypadWindows* joypad;
+    WindowsJoypad* joypad;
     Map<int, Vector2> touch_state;
 
-    PowerWindows* power_manager;
+    WindowsPower* power_manager;
 
     int video_driver_index;
-#ifdef WASAPI_ENABLED
-    AudioDriverWASAPI driver_wasapi;
-#endif
+    WindowsAudioDriver windows_audio_driver;
 #ifdef XAUDIO2_ENABLED
     AudioDriverXAudio2 driver_xaudio2;
 #endif
@@ -603,8 +601,8 @@ public:
 
     virtual void process_and_drop_events();
 
-    OS_Windows(HINSTANCE _hInstance);
-    ~OS_Windows();
+    WindowsOS(HINSTANCE _hInstance);
+    ~WindowsOS();
 };
 
-#endif
+#endif // WINDOWS_OS_H

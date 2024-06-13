@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "os_windows.h"
+#include "windows_os.h"
 
 #include "core/io/marshalls.h"
 #include "core/math/geometry.h"
@@ -12,14 +12,14 @@
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
 #include "drivers/unix/net_socket_posix.h"
-#include "drivers/windows/dir_access_windows.h"
-#include "drivers/windows/file_access_windows.h"
-#include "joypad_windows.h"
 #include "lang_table.h"
 #include "main/main.h"
 #include "servers/audio_server.h"
 #include "servers/visual/visual_server_raster.h"
 #include "servers/visual/visual_server_wrap_mt.h"
+#include "windows_dir_access.h"
+#include "windows_file_access.h"
+#include "windows_joypad.h"
 #include "windows_terminal_logger.h"
 
 #include <avrt.h>
@@ -182,23 +182,23 @@ BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType) {
 }
 
 // WinTab API
-bool OS_Windows::wintab_available       = false;
-WTOpenPtr OS_Windows::wintab_WTOpen     = nullptr;
-WTClosePtr OS_Windows::wintab_WTClose   = nullptr;
-WTInfoPtr OS_Windows::wintab_WTInfo     = nullptr;
-WTPacketPtr OS_Windows::wintab_WTPacket = nullptr;
-WTEnablePtr OS_Windows::wintab_WTEnable = nullptr;
+bool WindowsOS::wintab_available       = false;
+WTOpenPtr WindowsOS::wintab_WTOpen     = nullptr;
+WTClosePtr WindowsOS::wintab_WTClose   = nullptr;
+WTInfoPtr WindowsOS::wintab_WTInfo     = nullptr;
+WTPacketPtr WindowsOS::wintab_WTPacket = nullptr;
+WTEnablePtr WindowsOS::wintab_WTEnable = nullptr;
 
 // Windows Ink API
-bool OS_Windows::winink_available                        = false;
-GetPointerTypePtr OS_Windows::win8p_GetPointerType       = NULL;
-GetPointerPenInfoPtr OS_Windows::win8p_GetPointerPenInfo = NULL;
+bool WindowsOS::winink_available                        = false;
+GetPointerTypePtr WindowsOS::win8p_GetPointerType       = NULL;
+GetPointerPenInfoPtr WindowsOS::win8p_GetPointerPenInfo = NULL;
 
-void OS_Windows::initialize_debugging() {
+void WindowsOS::initialize_debugging() {
     SetConsoleCtrlHandler(HandlerRoutine, TRUE);
 }
 
-void OS_Windows::initialize_core() {
+void WindowsOS::initialize_core() {
     crash_handler.initialize();
 
     last_button_state    = 0;
@@ -209,12 +209,12 @@ void OS_Windows::initialize_core() {
     minimized  = false;
     borderless = false;
 
-    FileAccess::make_default<FileAccessWindows>(FileAccess::ACCESS_RESOURCES);
-    FileAccess::make_default<FileAccessWindows>(FileAccess::ACCESS_USERDATA);
-    FileAccess::make_default<FileAccessWindows>(FileAccess::ACCESS_FILESYSTEM);
-    DirAccess::make_default<DirAccessWindows>(DirAccess::ACCESS_RESOURCES);
-    DirAccess::make_default<DirAccessWindows>(DirAccess::ACCESS_USERDATA);
-    DirAccess::make_default<DirAccessWindows>(DirAccess::ACCESS_FILESYSTEM);
+    FileAccess::make_default<WindowsFileAccess>(FileAccess::ACCESS_RESOURCES);
+    FileAccess::make_default<WindowsFileAccess>(FileAccess::ACCESS_USERDATA);
+    FileAccess::make_default<WindowsFileAccess>(FileAccess::ACCESS_FILESYSTEM);
+    DirAccess::make_default<WindowsDirAccess>(DirAccess::ACCESS_RESOURCES);
+    DirAccess::make_default<WindowsDirAccess>(DirAccess::ACCESS_USERDATA);
+    DirAccess::make_default<WindowsDirAccess>(DirAccess::ACCESS_FILESYSTEM);
 
     NetSocketPosix::make_default();
 
@@ -247,7 +247,7 @@ void OS_Windows::initialize_core() {
     cursor_shape = CURSOR_ARROW;
 }
 
-bool OS_Windows::can_draw() const {
+bool WindowsOS::can_draw() const {
     return !minimized;
 };
 
@@ -259,7 +259,7 @@ bool OS_Windows::can_draw() const {
 // This one tells whether the event comes from touchscreen (and not from pen)
 #define IsTouchEvent(dw) (IsPenEvent(dw) && ((dw) & 0x80))
 
-void OS_Windows::_touch_event(bool p_pressed, float p_x, float p_y, int idx) {
+void WindowsOS::_touch_event(bool p_pressed, float p_x, float p_y, int idx) {
     // Defensive
     if (touch_state.has(idx) == p_pressed) {
         return;
@@ -282,7 +282,7 @@ void OS_Windows::_touch_event(bool p_pressed, float p_x, float p_y, int idx) {
     }
 };
 
-void OS_Windows::_drag_event(float p_x, float p_y, int idx) {
+void WindowsOS::_drag_event(float p_x, float p_y, int idx) {
     Map<int, Vector2>::Element* curr = touch_state.find(idx);
     // Defensive
     if (!curr) {
@@ -306,12 +306,7 @@ void OS_Windows::_drag_event(float p_x, float p_y, int idx) {
     curr->get() = Vector2(p_x, p_y);
 };
 
-LRESULT OS_Windows::WndProc(
-    HWND hWnd,
-    UINT uMsg,
-    WPARAM wParam,
-    LPARAM lParam
-) {
+LRESULT WindowsOS::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (drop_events) {
         if (user_proc) {
             return CallWindowProcW(user_proc, hWnd, uMsg, wParam, lParam);
@@ -1326,7 +1321,7 @@ LRESULT OS_Windows::WndProc(
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    OS_Windows* os_win = static_cast<OS_Windows*>(OS::get_singleton());
+    WindowsOS* os_win = static_cast<WindowsOS*>(OS::get_singleton());
     if (os_win) {
         return os_win->WndProc(hWnd, uMsg, wParam, lParam);
     } else {
@@ -1334,13 +1329,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     }
 }
 
-void OS_Windows::process_key_events() {
+void WindowsOS::process_key_events() {
     for (int i = 0; i < key_event_pos; i++) {
         KeyEvent& ke = key_event_buffer[i];
         switch (ke.uMsg) {
             case WM_CHAR: {
                 // extended keys should only be processed as WM_KEYDOWN message.
-                if (!KeyMappingWindows::is_extended_key(ke.wParam)
+                if (!WindowsKeyMapping::is_extended_key(ke.wParam)
                     && ((i == 0 && ke.uMsg == WM_CHAR)
                         || (i > 0 && key_event_buffer[i - 1].uMsg == WM_CHAR)
                     )) {
@@ -1352,8 +1347,8 @@ void OS_Windows::process_key_events() {
                     k->set_control(ke.control);
                     k->set_metakey(ke.meta);
                     k->set_pressed(true);
-                    k->set_scancode(KeyMappingWindows::get_keysym(ke.wParam));
-                    k->set_physical_scancode(KeyMappingWindows::get_scansym(
+                    k->set_scancode(WindowsKeyMapping::get_keysym(ke.wParam));
+                    k->set_physical_scancode(WindowsKeyMapping::get_scansym(
                         (ke.lParam >> 16) & 0xFF,
                         ke.lParam & (1 << 24)
                     ));
@@ -1388,10 +1383,10 @@ void OS_Windows::process_key_events() {
                     // Special case for Numpad Enter key
                     k->set_scancode(KEY_KP_ENTER);
                 } else {
-                    k->set_scancode(KeyMappingWindows::get_keysym(ke.wParam));
+                    k->set_scancode(WindowsKeyMapping::get_keysym(ke.wParam));
                 }
 
-                k->set_physical_scancode(KeyMappingWindows::get_scansym(
+                k->set_physical_scancode(WindowsKeyMapping::get_scansym(
                     (ke.lParam >> 16) & 0xFF,
                     ke.lParam & (1 << 24)
                 ));
@@ -1489,11 +1484,11 @@ typedef enum _SHC_PROCESS_DPI_AWARENESS {
     SHC_PROCESS_PER_MONITOR_DPI_AWARE = 2
 } SHC_PROCESS_DPI_AWARENESS;
 
-int OS_Windows::get_current_video_driver() const {
+int WindowsOS::get_current_video_driver() const {
     return video_driver_index;
 }
 
-Error OS_Windows::initialize(
+Error WindowsOS::initialize(
     const VideoMode& p_desired,
     int p_video_driver,
     int p_audio_driver
@@ -1760,7 +1755,7 @@ Error OS_Windows::initialize(
 
     gl_context = NULL;
     while (!gl_context) {
-        gl_context = memnew(ContextGL_Windows(hWnd, gles3_context));
+        gl_context = memnew(WindowsGLContext(hWnd, gles3_context));
 
         if (gl_context->initialize() != OK) {
             memdelete(gl_context);
@@ -1839,9 +1834,9 @@ Error OS_Windows::initialize(
     visual_server->init();
 
     input  = memnew(InputDefault);
-    joypad = memnew(JoypadWindows(input, &hWnd));
+    joypad = memnew(WindowsJoypad(input, &hWnd));
 
-    power_manager = memnew(PowerWindows);
+    power_manager = memnew(WindowsPower);
 
     AudioDriverManager::initialize(p_audio_driver);
 
@@ -1896,7 +1891,7 @@ Error OS_Windows::initialize(
     return OK;
 }
 
-void OS_Windows::set_clipboard(const String& p_text) {
+void WindowsOS::set_clipboard(const String& p_text) {
     // Convert LF line endings to CRLF in clipboard content
     // Otherwise, line endings won't be visible when pasted in other software
     String text =
@@ -1938,7 +1933,7 @@ void OS_Windows::set_clipboard(const String& p_text) {
     CloseClipboard();
 };
 
-String OS_Windows::get_clipboard() const {
+String WindowsOS::get_clipboard() const {
     String ret;
     if (!OpenClipboard(hWnd)) {
         ERR_FAIL_V_MSG("", "Unable to open clipboard.");
@@ -1970,19 +1965,19 @@ String OS_Windows::get_clipboard() const {
     return ret;
 };
 
-void OS_Windows::delete_main_loop() {
+void WindowsOS::delete_main_loop() {
     if (main_loop) {
         memdelete(main_loop);
     }
     main_loop = NULL;
 }
 
-void OS_Windows::set_main_loop(MainLoop* p_main_loop) {
+void WindowsOS::set_main_loop(MainLoop* p_main_loop) {
     input->set_main_loop(p_main_loop);
     main_loop = p_main_loop;
 }
 
-void OS_Windows::finalize() {
+void WindowsOS::finalize() {
 #ifdef WINMIDI_ENABLED
     driver_midi.close();
 #endif
@@ -2015,14 +2010,14 @@ void OS_Windows::finalize() {
     }
 }
 
-void OS_Windows::finalize_core() {
+void WindowsOS::finalize_core() {
     timeEndPeriod(1);
 
     memdelete(process_map);
     NetSocketPosix::cleanup();
 }
 
-void OS_Windows::alert(const String& p_alert, const String& p_title) {
+void WindowsOS::alert(const String& p_alert, const String& p_title) {
     if (is_no_window_mode_enabled()) {
         print_line("ALERT: " + p_title + ": " + p_alert);
         return;
@@ -2036,7 +2031,7 @@ void OS_Windows::alert(const String& p_alert, const String& p_title) {
     );
 }
 
-void OS_Windows::set_mouse_mode(MouseMode p_mode) {
+void WindowsOS::set_mouse_mode(MouseMode p_mode) {
     if (mouse_mode == p_mode) {
         return;
     }
@@ -2046,7 +2041,7 @@ void OS_Windows::set_mouse_mode(MouseMode p_mode) {
     _set_mouse_mode_impl(p_mode);
 }
 
-void OS_Windows::_set_mouse_mode_impl(MouseMode p_mode) {
+void WindowsOS::_set_mouse_mode_impl(MouseMode p_mode) {
     if (p_mode == MOUSE_MODE_CAPTURED || p_mode == MOUSE_MODE_CONFINED) {
         RECT clipRect;
         GetClientRect(hWnd, &clipRect);
@@ -2078,11 +2073,11 @@ void OS_Windows::_set_mouse_mode_impl(MouseMode p_mode) {
     }
 }
 
-OS_Windows::MouseMode OS_Windows::get_mouse_mode() const {
+WindowsOS::MouseMode WindowsOS::get_mouse_mode() const {
     return mouse_mode;
 }
 
-void OS_Windows::warp_mouse_position(const Point2& p_to) {
+void WindowsOS::warp_mouse_position(const Point2& p_to) {
     if (mouse_mode == MOUSE_MODE_CAPTURED) {
         old_x = p_to.x;
         old_y = p_to.y;
@@ -2096,11 +2091,11 @@ void OS_Windows::warp_mouse_position(const Point2& p_to) {
     }
 }
 
-Point2 OS_Windows::get_mouse_position() const {
+Point2 WindowsOS::get_mouse_position() const {
     return Point2(old_x, old_y);
 }
 
-void OS_Windows::update_real_mouse_position() {
+void WindowsOS::update_real_mouse_position() {
     POINT mouse_pos;
     if (GetCursorPos(&mouse_pos) && ScreenToClient(hWnd, &mouse_pos)) {
         if (mouse_pos.x > 0 && mouse_pos.y > 0
@@ -2114,16 +2109,15 @@ void OS_Windows::update_real_mouse_position() {
     }
 }
 
-int OS_Windows::get_mouse_button_state() const {
+int WindowsOS::get_mouse_button_state() const {
     return last_button_state;
 }
 
-void OS_Windows::set_window_title(const String& p_title) {
+void WindowsOS::set_window_title(const String& p_title) {
     SetWindowTextW(hWnd, p_title.c_str());
 }
 
-void OS_Windows::set_window_mouse_passthrough(const PoolVector2Array& p_region
-) {
+void WindowsOS::set_window_mouse_passthrough(const PoolVector2Array& p_region) {
     mpath.clear();
     for (int i = 0; i < p_region.size(); i++) {
         mpath.push_back(p_region[i]);
@@ -2131,7 +2125,7 @@ void OS_Windows::set_window_mouse_passthrough(const PoolVector2Array& p_region
     _update_window_mouse_passthrough();
 }
 
-void OS_Windows::_update_window_mouse_passthrough() {
+void WindowsOS::_update_window_mouse_passthrough() {
     if (mpath.size() == 0) {
         SetWindowRgn(hWnd, NULL, TRUE);
     } else {
@@ -2154,13 +2148,13 @@ void OS_Windows::_update_window_mouse_passthrough() {
     }
 }
 
-void OS_Windows::set_video_mode(const VideoMode& p_video_mode, int p_screen) {}
+void WindowsOS::set_video_mode(const VideoMode& p_video_mode, int p_screen) {}
 
-OS::VideoMode OS_Windows::get_video_mode(int p_screen) const {
+OS::VideoMode WindowsOS::get_video_mode(int p_screen) const {
     return video_mode;
 }
 
-void OS_Windows::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
+void WindowsOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
     const {}
 
 static BOOL CALLBACK _MonitorEnumProcCount(
@@ -2174,7 +2168,7 @@ static BOOL CALLBACK _MonitorEnumProcCount(
     return TRUE;
 }
 
-int OS_Windows::get_screen_count() const {
+int WindowsOS::get_screen_count() const {
     int data = 0;
     EnumDisplayMonitors(NULL, NULL, _MonitorEnumProcCount, (LPARAM)&data);
     return data;
@@ -2201,7 +2195,7 @@ static BOOL CALLBACK _MonitorEnumProcScreen(
     return TRUE;
 }
 
-int OS_Windows::get_current_screen() const {
+int WindowsOS::get_current_screen() const {
     EnumScreenData data = {
         0,
         0,
@@ -2211,7 +2205,7 @@ int OS_Windows::get_current_screen() const {
     return data.screen;
 }
 
-void OS_Windows::set_current_screen(int p_screen) {
+void WindowsOS::set_current_screen(int p_screen) {
     Vector2 ofs =
         get_window_position() - get_screen_position(get_current_screen());
     set_window_position(ofs + get_screen_position(p_screen));
@@ -2233,7 +2227,7 @@ static BOOL CALLBACK _MonitorEnumProcPos(
     return TRUE;
 }
 
-Point2 OS_Windows::get_screen_position(int p_screen) const {
+Point2 WindowsOS::get_screen_position(int p_screen) const {
     EnumPosData data = {
         0,
         p_screen == -1 ? get_current_screen() : p_screen,
@@ -2243,7 +2237,7 @@ Point2 OS_Windows::get_screen_position(int p_screen) const {
     return data.pos;
 }
 
-Size2 OS_Windows::get_screen_size(int p_screen) const {
+Size2 WindowsOS::get_screen_size(int p_screen) const {
     EnumSizeData data = {
         0,
         p_screen == -1 ? get_current_screen() : p_screen,
@@ -2274,7 +2268,7 @@ static BOOL CALLBACK _MonitorEnumProcDpi(
     return TRUE;
 }
 
-int OS_Windows::get_screen_dpi(int p_screen) const {
+int WindowsOS::get_screen_dpi(int p_screen) const {
     EnumDpiData data = {
         0,
         p_screen == -1 ? get_current_screen() : p_screen,
@@ -2284,7 +2278,7 @@ int OS_Windows::get_screen_dpi(int p_screen) const {
     return data.dpi;
 }
 
-Point2 OS_Windows::get_window_position() const {
+Point2 WindowsOS::get_window_position() const {
     if (minimized) {
         return last_pos;
     }
@@ -2294,7 +2288,7 @@ Point2 OS_Windows::get_window_position() const {
     return Point2(r.left, r.top);
 }
 
-void OS_Windows::set_window_position(const Point2& p_position) {
+void WindowsOS::set_window_position(const Point2& p_position) {
     if (video_mode.fullscreen) {
         return;
     }
@@ -2322,7 +2316,7 @@ void OS_Windows::set_window_position(const Point2& p_position) {
     update_real_mouse_position();
 }
 
-Size2 OS_Windows::get_window_size() const {
+Size2 WindowsOS::get_window_size() const {
     if (minimized) {
         return Size2(video_mode.width, video_mode.height);
     }
@@ -2334,15 +2328,15 @@ Size2 OS_Windows::get_window_size() const {
     return Size2();
 }
 
-Size2 OS_Windows::get_max_window_size() const {
+Size2 WindowsOS::get_max_window_size() const {
     return max_size;
 }
 
-Size2 OS_Windows::get_min_window_size() const {
+Size2 WindowsOS::get_min_window_size() const {
     return min_size;
 }
 
-void OS_Windows::set_min_window_size(const Size2 p_size) {
+void WindowsOS::set_min_window_size(const Size2 p_size) {
     if ((p_size != Size2()) && (max_size != Size2())
         && ((p_size.x > max_size.x) || (p_size.y > max_size.y))) {
         ERR_PRINT(
@@ -2353,7 +2347,7 @@ void OS_Windows::set_min_window_size(const Size2 p_size) {
     min_size = p_size;
 }
 
-void OS_Windows::set_max_window_size(const Size2 p_size) {
+void WindowsOS::set_max_window_size(const Size2 p_size) {
     if ((p_size != Size2())
         && ((p_size.x < min_size.x) || (p_size.y < min_size.y))) {
         ERR_PRINT(
@@ -2364,7 +2358,7 @@ void OS_Windows::set_max_window_size(const Size2 p_size) {
     max_size = p_size;
 }
 
-Size2 OS_Windows::get_real_window_size() const {
+Size2 WindowsOS::get_real_window_size() const {
     RECT r;
     if (GetWindowRect(hWnd, &r)) { // Includes area of the window border
         return Size2(r.right - r.left, r.bottom - r.top);
@@ -2372,7 +2366,7 @@ Size2 OS_Windows::get_real_window_size() const {
     return Size2();
 }
 
-void OS_Windows::set_window_size(const Size2 p_size) {
+void WindowsOS::set_window_size(const Size2 p_size) {
     int w = p_size.width;
     int h = p_size.height;
 
@@ -2407,7 +2401,7 @@ void OS_Windows::set_window_size(const Size2 p_size) {
     }
 }
 
-void OS_Windows::set_window_fullscreen(bool p_enabled) {
+void WindowsOS::set_window_fullscreen(bool p_enabled) {
     if (video_mode.fullscreen == p_enabled) {
         return;
     }
@@ -2475,11 +2469,11 @@ void OS_Windows::set_window_fullscreen(bool p_enabled) {
     }
 }
 
-bool OS_Windows::is_window_fullscreen() const {
+bool WindowsOS::is_window_fullscreen() const {
     return video_mode.fullscreen;
 }
 
-void OS_Windows::set_window_resizable(bool p_enabled) {
+void WindowsOS::set_window_resizable(bool p_enabled) {
     if (video_mode.resizable == p_enabled) {
         return;
     }
@@ -2489,11 +2483,11 @@ void OS_Windows::set_window_resizable(bool p_enabled) {
     _update_window_style();
 }
 
-bool OS_Windows::is_window_resizable() const {
+bool WindowsOS::is_window_resizable() const {
     return video_mode.resizable;
 }
 
-void OS_Windows::set_window_minimized(bool p_enabled) {
+void WindowsOS::set_window_minimized(bool p_enabled) {
     if (is_no_window_mode_enabled()) {
         return;
     }
@@ -2509,11 +2503,11 @@ void OS_Windows::set_window_minimized(bool p_enabled) {
     }
 }
 
-bool OS_Windows::is_window_minimized() const {
+bool WindowsOS::is_window_minimized() const {
     return minimized;
 }
 
-void OS_Windows::set_window_maximized(bool p_enabled) {
+void WindowsOS::set_window_maximized(bool p_enabled) {
     if (is_no_window_mode_enabled()) {
         return;
     }
@@ -2529,11 +2523,11 @@ void OS_Windows::set_window_maximized(bool p_enabled) {
     }
 }
 
-bool OS_Windows::is_window_maximized() const {
+bool WindowsOS::is_window_maximized() const {
     return maximized;
 }
 
-void OS_Windows::set_window_always_on_top(bool p_enabled) {
+void WindowsOS::set_window_always_on_top(bool p_enabled) {
     if (video_mode.always_on_top == p_enabled) {
         return;
     }
@@ -2543,15 +2537,15 @@ void OS_Windows::set_window_always_on_top(bool p_enabled) {
     _update_window_style();
 }
 
-bool OS_Windows::is_window_always_on_top() const {
+bool WindowsOS::is_window_always_on_top() const {
     return video_mode.always_on_top;
 }
 
-bool OS_Windows::is_window_focused() const {
+bool WindowsOS::is_window_focused() const {
     return window_focused;
 }
 
-void OS_Windows::set_console_visible(bool p_enabled) {
+void WindowsOS::set_console_visible(bool p_enabled) {
     if (console_visible == p_enabled) {
         return;
     }
@@ -2563,18 +2557,18 @@ void OS_Windows::set_console_visible(bool p_enabled) {
     }
 }
 
-bool OS_Windows::is_console_visible() const {
+bool WindowsOS::is_console_visible() const {
     return console_visible;
 }
 
-bool OS_Windows::get_window_per_pixel_transparency_enabled() const {
+bool WindowsOS::get_window_per_pixel_transparency_enabled() const {
     if (!is_layered_allowed()) {
         return false;
     }
     return layered_window;
 }
 
-void OS_Windows::set_window_per_pixel_transparency_enabled(bool p_enabled) {
+void WindowsOS::set_window_per_pixel_transparency_enabled(bool p_enabled) {
     if (!is_layered_allowed()) {
         return;
     }
@@ -2604,7 +2598,7 @@ void OS_Windows::set_window_per_pixel_transparency_enabled(bool p_enabled) {
     }
 }
 
-void OS_Windows::set_borderless_window(bool p_borderless) {
+void WindowsOS::set_borderless_window(bool p_borderless) {
     if (video_mode.borderless_window == p_borderless) {
         return;
     }
@@ -2616,11 +2610,11 @@ void OS_Windows::set_borderless_window(bool p_borderless) {
     _update_window_mouse_passthrough();
 }
 
-bool OS_Windows::get_borderless_window() {
+bool WindowsOS::get_borderless_window() {
     return video_mode.borderless_window;
 }
 
-void OS_Windows::_update_window_style(bool p_repaint, bool p_maximized) {
+void WindowsOS::_update_window_style(bool p_repaint, bool p_maximized) {
     if (video_mode.fullscreen || video_mode.borderless_window) {
         SetWindowLongPtr(
             hWnd,
@@ -2676,7 +2670,7 @@ void OS_Windows::_update_window_style(bool p_repaint, bool p_maximized) {
     }
 }
 
-Error OS_Windows::open_dynamic_library(
+Error WindowsOS::open_dynamic_library(
     const String p_path,
     void*& p_library_handle,
     bool p_also_set_library_path
@@ -2727,14 +2721,14 @@ Error OS_Windows::open_dynamic_library(
     return OK;
 }
 
-Error OS_Windows::close_dynamic_library(void* p_library_handle) {
+Error WindowsOS::close_dynamic_library(void* p_library_handle) {
     if (!FreeLibrary((HMODULE)p_library_handle)) {
         return FAILED;
     }
     return OK;
 }
 
-Error OS_Windows::get_dynamic_library_symbol_handle(
+Error WindowsOS::get_dynamic_library_symbol_handle(
     void* p_library_handle,
     const String p_name,
     void*& p_symbol_handle,
@@ -2756,7 +2750,7 @@ Error OS_Windows::get_dynamic_library_symbol_handle(
     return OK;
 }
 
-void OS_Windows::request_attention() {
+void WindowsOS::request_attention() {
     FLASHWINFO info;
     info.cbSize    = sizeof(FLASHWINFO);
     info.hwnd      = hWnd;
@@ -2766,7 +2760,7 @@ void OS_Windows::request_attention() {
     FlashWindowEx(&info);
 }
 
-void* OS_Windows::get_native_handle(int p_handle_type) {
+void* WindowsOS::get_native_handle(int p_handle_type) {
     switch (p_handle_type) {
         case APPLICATION_HANDLE:
             return hInstance;
@@ -2783,11 +2777,11 @@ void* OS_Windows::get_native_handle(int p_handle_type) {
     }
 }
 
-String OS_Windows::get_name() const {
+String WindowsOS::get_name() const {
     return "Windows";
 }
 
-OS::Date OS_Windows::get_date(bool utc) const {
+OS::Date WindowsOS::get_date(bool utc) const {
     SYSTEMTIME systemtime;
     if (utc) {
         GetSystemTime(&systemtime);
@@ -2811,7 +2805,7 @@ OS::Date OS_Windows::get_date(bool utc) const {
     return date;
 }
 
-OS::Time OS_Windows::get_time(bool utc) const {
+OS::Time WindowsOS::get_time(bool utc) const {
     SYSTEMTIME systemtime;
     if (utc) {
         GetSystemTime(&systemtime);
@@ -2826,7 +2820,7 @@ OS::Time OS_Windows::get_time(bool utc) const {
     return time;
 }
 
-OS::TimeZoneInfo OS_Windows::get_time_zone_info() const {
+OS::TimeZoneInfo WindowsOS::get_time_zone_info() const {
     TIME_ZONE_INFORMATION info;
     bool daylight = false;
     if (GetTimeZoneInformation(&info) == TIME_ZONE_ID_DAYLIGHT) {
@@ -2851,7 +2845,7 @@ OS::TimeZoneInfo OS_Windows::get_time_zone_info() const {
     return ret;
 }
 
-uint64_t OS_Windows::get_unix_time() const {
+uint64_t WindowsOS::get_unix_time() const {
     FILETIME ft;
     SYSTEMTIME st;
     GetSystemTime(&st);
@@ -2882,11 +2876,11 @@ uint64_t OS_Windows::get_unix_time() const {
     return (ft_punning.QuadPart - fep_punning.QuadPart) / 10000000;
 };
 
-uint64_t OS_Windows::get_system_time_secs() const {
+uint64_t WindowsOS::get_system_time_secs() const {
     return get_system_time_msecs() / 1000;
 }
 
-uint64_t OS_Windows::get_system_time_msecs() const {
+uint64_t WindowsOS::get_system_time_msecs() const {
     const uint64_t WINDOWS_TICK       = 10000;
     const uint64_t MSEC_TO_UNIX_EPOCH = 11644473600000LL;
 
@@ -2902,7 +2896,7 @@ uint64_t OS_Windows::get_system_time_msecs() const {
     return (uint64_t)(ret / WINDOWS_TICK - MSEC_TO_UNIX_EPOCH);
 }
 
-void OS_Windows::delay_usec(uint32_t p_usec) const {
+void WindowsOS::delay_usec(uint32_t p_usec) const {
     if (p_usec < 1000) {
         Sleep(1);
     } else {
@@ -2910,7 +2904,7 @@ void OS_Windows::delay_usec(uint32_t p_usec) const {
     }
 }
 
-uint64_t OS_Windows::get_ticks_usec() const {
+uint64_t WindowsOS::get_ticks_usec() const {
     uint64_t ticks;
 
     // This is the number of clock ticks since start
@@ -2942,7 +2936,7 @@ uint64_t OS_Windows::get_ticks_usec() const {
     return time;
 }
 
-void OS_Windows::process_events() {
+void WindowsOS::process_events() {
     MSG msg;
 
     if (!drop_events) {
@@ -2960,7 +2954,7 @@ void OS_Windows::process_events() {
     }
 }
 
-void OS_Windows::set_cursor_shape(CursorShape p_shape) {
+void WindowsOS::set_cursor_shape(CursorShape p_shape) {
     ERR_FAIL_INDEX(p_shape, CURSOR_MAX);
 
     if (cursor_shape == p_shape) {
@@ -3001,11 +2995,11 @@ void OS_Windows::set_cursor_shape(CursorShape p_shape) {
     cursor_shape = p_shape;
 }
 
-OS::CursorShape OS_Windows::get_cursor_shape() const {
+OS::CursorShape WindowsOS::get_cursor_shape() const {
     return cursor_shape;
 }
 
-void OS_Windows::set_custom_mouse_cursor(
+void WindowsOS::set_custom_mouse_cursor(
     const RES& p_cursor,
     CursorShape p_shape,
     const Vector2& p_hotspot
@@ -3156,7 +3150,7 @@ void OS_Windows::set_custom_mouse_cursor(
     }
 }
 
-void OS_Windows::GetMaskBitmaps(
+void WindowsOS::GetMaskBitmaps(
     HBITMAP hSourceBitmap,
     COLORREF clrTransparent,
     OUT HBITMAP& hAndMaskBitmap,
@@ -3225,7 +3219,7 @@ void OS_Windows::GetMaskBitmaps(
     DeleteDC(hMainDC);
 }
 
-String OS_Windows::_quote_command_line_argument(const String& p_text) const {
+String WindowsOS::_quote_command_line_argument(const String& p_text) const {
     for (int i = 0; i < p_text.size(); i++) {
         CharType c = p_text[i];
         if (c == ' ' || c == '&' || c == '(' || c == ')' || c == '[' || c == ']'
@@ -3238,7 +3232,7 @@ String OS_Windows::_quote_command_line_argument(const String& p_text) const {
     return p_text;
 }
 
-Error OS_Windows::execute(
+Error WindowsOS::execute(
     const String& p_path,
     const List<String>& p_arguments,
     bool p_blocking,
@@ -3340,7 +3334,7 @@ Error OS_Windows::execute(
     return OK;
 };
 
-Error OS_Windows::kill(const ProcessID& p_pid) {
+Error WindowsOS::kill(const ProcessID& p_pid) {
     ERR_FAIL_COND_V(!process_map->has(p_pid), FAILED);
 
     const PROCESS_INFORMATION pi = (*process_map)[p_pid].pi;
@@ -3354,11 +3348,11 @@ Error OS_Windows::kill(const ProcessID& p_pid) {
     return ret != 0 ? OK : FAILED;
 };
 
-int OS_Windows::get_process_id() const {
+int WindowsOS::get_process_id() const {
     return _getpid();
 }
 
-Error OS_Windows::set_cwd(const String& p_cwd) {
+Error WindowsOS::set_cwd(const String& p_cwd) {
     if (_wchdir(p_cwd.c_str()) != 0) {
         return ERR_CANT_OPEN;
     }
@@ -3366,14 +3360,14 @@ Error OS_Windows::set_cwd(const String& p_cwd) {
     return OK;
 }
 
-String OS_Windows::get_executable_path() const {
+String WindowsOS::get_executable_path() const {
     wchar_t bufname[4096];
     GetModuleFileNameW(NULL, bufname, 4096);
     String s = bufname;
     return s.replace("\\", "/");
 }
 
-void OS_Windows::set_native_icon(const String& p_filename) {
+void WindowsOS::set_native_icon(const String& p_filename) {
     FileAccess* f = FileAccess::open(p_filename, FileAccess::READ);
     ERR_FAIL_COND_MSG(!f, "Cannot open file with icon '" + p_filename + "'.");
 
@@ -3504,7 +3498,7 @@ void OS_Windows::set_native_icon(const String& p_filename) {
     memdelete(icon_dir);
 }
 
-void OS_Windows::set_icon(const Ref<Image>& p_icon) {
+void WindowsOS::set_icon(const Ref<Image>& p_icon) {
     ERR_FAIL_COND(!p_icon.is_valid());
     Ref<Image> icon = p_icon->duplicate();
     if (icon->get_format() != Image::FORMAT_RGBA8) {
@@ -3554,7 +3548,7 @@ void OS_Windows::set_icon(const Ref<Image>& p_icon) {
     SendMessage(hWnd, WM_SETICON, ICON_BIG, (LPARAM)hicon);
 }
 
-bool OS_Windows::has_environment(const String& p_var) const {
+bool WindowsOS::has_environment(const String& p_var) const {
 #ifdef MINGW_ENABLED
     return _wgetenv(p_var.c_str()) != NULL;
 #else
@@ -3567,7 +3561,7 @@ bool OS_Windows::has_environment(const String& p_var) const {
 #endif
 };
 
-String OS_Windows::get_environment(const String& p_var) const {
+String WindowsOS::get_environment(const String& p_var) const {
     wchar_t wval[0x7Fff]; // MSDN says 32767 char is the maximum
     int wlen = GetEnvironmentVariableW(p_var.c_str(), wval, 0x7Fff);
     if (wlen > 0) {
@@ -3576,12 +3570,12 @@ String OS_Windows::get_environment(const String& p_var) const {
     return "";
 }
 
-bool OS_Windows::set_environment(const String& p_var, const String& p_value)
+bool WindowsOS::set_environment(const String& p_var, const String& p_value)
     const {
     return (bool)SetEnvironmentVariableW(p_var.c_str(), p_value.c_str());
 }
 
-String OS_Windows::get_stdin_string(bool p_block) {
+String WindowsOS::get_stdin_string(bool p_block) {
     if (p_block) {
         char buff[1024];
         return fgets(buff, 1024, stdin);
@@ -3590,15 +3584,15 @@ String OS_Windows::get_stdin_string(bool p_block) {
     return String();
 }
 
-void OS_Windows::enable_for_stealing_focus(ProcessID pid) {
+void WindowsOS::enable_for_stealing_focus(ProcessID pid) {
     AllowSetForegroundWindow(pid);
 }
 
-void OS_Windows::move_window_to_foreground() {
+void WindowsOS::move_window_to_foreground() {
     SetForegroundWindow(hWnd);
 }
 
-Error OS_Windows::shell_open(String p_uri) {
+Error WindowsOS::shell_open(String p_uri) {
     INT_PTR ret = (INT_PTR)ShellExecuteW(
         nullptr,
         nullptr,
@@ -3629,7 +3623,7 @@ Error OS_Windows::shell_open(String p_uri) {
     }
 }
 
-String OS_Windows::get_locale() const {
+String WindowsOS::get_locale() const {
     const _WinLocale* wl = &_win_locales[0];
 
     LANGID langid = GetUserDefaultUILanguage();
@@ -3678,7 +3672,7 @@ BOOL is_wow64() {
     return wow64;
 }
 
-int OS_Windows::get_processor_count() const {
+int WindowsOS::get_processor_count() const {
     SYSTEM_INFO sysinfo;
     if (is_wow64()) {
         GetNativeSystemInfo(&sysinfo);
@@ -3689,7 +3683,7 @@ int OS_Windows::get_processor_count() const {
     return sysinfo.dwNumberOfProcessors;
 }
 
-OS::LatinKeyboardVariant OS_Windows::get_latin_keyboard_variant() const {
+OS::LatinKeyboardVariant WindowsOS::get_latin_keyboard_variant() const {
     unsigned long azerty[] = {
         0x00020401, // Arabic (102) AZERTY
         0x0001080c, // Belgian (Comma)
@@ -3756,11 +3750,11 @@ OS::LatinKeyboardVariant OS_Windows::get_latin_keyboard_variant() const {
     return LATIN_KEYBOARD_QWERTY;
 }
 
-int OS_Windows::keyboard_get_layout_count() const {
+int WindowsOS::keyboard_get_layout_count() const {
     return GetKeyboardLayoutList(0, NULL);
 }
 
-int OS_Windows::keyboard_get_current_layout() const {
+int WindowsOS::keyboard_get_current_layout() const {
     HKL cur_layout = GetKeyboardLayout(0);
 
     int layout_count = GetKeyboardLayoutList(0, NULL);
@@ -3777,7 +3771,7 @@ int OS_Windows::keyboard_get_current_layout() const {
     return -1;
 }
 
-void OS_Windows::keyboard_set_current_layout(int p_index) {
+void WindowsOS::keyboard_set_current_layout(int p_index) {
     int layout_count = GetKeyboardLayoutList(0, NULL);
 
     ERR_FAIL_INDEX(p_index, layout_count);
@@ -3788,7 +3782,7 @@ void OS_Windows::keyboard_set_current_layout(int p_index) {
     memfree(layouts);
 }
 
-String OS_Windows::keyboard_get_layout_language(int p_index) const {
+String WindowsOS::keyboard_get_layout_language(int p_index) const {
     int layout_count = GetKeyboardLayoutList(0, NULL);
 
     ERR_FAIL_INDEX_V(p_index, layout_count, "");
@@ -3847,7 +3841,7 @@ String _get_full_layout_name_from_registry(HKL p_layout) {
     return ret;
 }
 
-String OS_Windows::keyboard_get_layout_name(int p_index) const {
+String WindowsOS::keyboard_get_layout_name(int p_index) const {
     int layout_count = GetKeyboardLayoutList(0, NULL);
 
     ERR_FAIL_INDEX_V(p_index, layout_count, "");
@@ -3879,23 +3873,23 @@ String OS_Windows::keyboard_get_layout_name(int p_index) const {
     return ret;
 }
 
-void OS_Windows::release_rendering_thread() {
+void WindowsOS::release_rendering_thread() {
     gl_context->release_current();
 }
 
-void OS_Windows::make_rendering_thread() {
+void WindowsOS::make_rendering_thread() {
     gl_context->make_current();
 }
 
-void OS_Windows::swap_buffers() {
+void WindowsOS::swap_buffers() {
     gl_context->swap_buffers();
 }
 
-void OS_Windows::force_process_input() {
+void WindowsOS::force_process_input() {
     process_events(); // get rid of pending events
 }
 
-void OS_Windows::run() {
+void WindowsOS::run() {
     if (!main_loop) {
         return;
     }
@@ -3912,11 +3906,11 @@ void OS_Windows::run() {
     main_loop->finish();
 }
 
-MainLoop* OS_Windows::get_main_loop() const {
+MainLoop* WindowsOS::get_main_loop() const {
     return main_loop;
 }
 
-String OS_Windows::get_config_path() const {
+String WindowsOS::get_config_path() const {
     // The XDG Base Directory specification technically only applies on
     // Linux/*BSD, but it doesn't hurt to support it on Windows as well.
     if (has_environment("XDG_CONFIG_HOME")) {
@@ -3936,7 +3930,7 @@ String OS_Windows::get_config_path() const {
     return ".";
 }
 
-String OS_Windows::get_data_path() const {
+String WindowsOS::get_data_path() const {
     // The XDG Base Directory specification technically only applies on
     // Linux/*BSD, but it doesn't hurt to support it on Windows as well.
     if (has_environment("XDG_DATA_HOME")) {
@@ -3953,7 +3947,7 @@ String OS_Windows::get_data_path() const {
     return get_config_path();
 }
 
-String OS_Windows::get_cache_path() const {
+String WindowsOS::get_cache_path() const {
     // The XDG Base Directory specification technically only applies on
     // Linux/*BSD, but it doesn't hurt to support it on Windows as well.
     if (has_environment("XDG_CACHE_HOME")) {
@@ -3974,12 +3968,11 @@ String OS_Windows::get_cache_path() const {
 }
 
 // Get properly capitalized engine name for system paths
-String OS_Windows::get_rebel_dir_name() const {
+String WindowsOS::get_rebel_dir_name() const {
     return String(VERSION_SHORT_NAME).capitalize();
 }
 
-String OS_Windows::get_system_dir(SystemDir p_dir, bool p_shared_storage)
-    const {
+String WindowsOS::get_system_dir(SystemDir p_dir, bool p_shared_storage) const {
     KNOWNFOLDERID id;
 
     switch (p_dir) {
@@ -4017,7 +4010,7 @@ String OS_Windows::get_system_dir(SystemDir p_dir, bool p_shared_storage)
     return path;
 }
 
-String OS_Windows::get_user_data_dir() const {
+String WindowsOS::get_user_data_dir() const {
     String appname = get_safe_dir_name(
         ProjectSettings::get_singleton()->get("application/config/name")
     );
@@ -4048,13 +4041,13 @@ String OS_Windows::get_user_data_dir() const {
     return ProjectSettings::get_singleton()->get_resource_path();
 }
 
-String OS_Windows::get_unique_id() const {
+String WindowsOS::get_unique_id() const {
     HW_PROFILE_INFO HwProfInfo;
     ERR_FAIL_COND_V(!GetCurrentHwProfile(&HwProfInfo), "");
     return String(HwProfInfo.szHwProfileGuid);
 }
 
-void OS_Windows::set_ime_active(const bool p_active) {
+void WindowsOS::set_ime_active(const bool p_active) {
     if (p_active) {
         ImmAssociateContext(hWnd, im_himc);
 
@@ -4064,7 +4057,7 @@ void OS_Windows::set_ime_active(const bool p_active) {
     }
 }
 
-void OS_Windows::set_ime_position(const Point2& p_pos) {
+void WindowsOS::set_ime_position(const Point2& p_pos) {
     im_position = p_pos;
 
     HIMC himc = ImmGetContext(hWnd);
@@ -4080,22 +4073,22 @@ void OS_Windows::set_ime_position(const Point2& p_pos) {
     ImmReleaseContext(hWnd, himc);
 }
 
-bool OS_Windows::is_joy_known(int p_device) {
+bool WindowsOS::is_joy_known(int p_device) {
     return input->is_joy_mapped(p_device);
 }
 
-String OS_Windows::get_joy_guid(int p_device) const {
+String WindowsOS::get_joy_guid(int p_device) const {
     return input->get_joy_guid_remapped(p_device);
 }
 
-void OS_Windows::_set_use_vsync(bool p_enable) {
+void WindowsOS::_set_use_vsync(bool p_enable) {
     if (gl_context) {
         gl_context->set_use_vsync(p_enable);
     }
 }
 
 /*
-bool OS_Windows::is_vsync_enabled() const {
+bool WindowsOS::is_vsync_enabled() const {
 
     if (gl_context)
         return gl_context->is_using_vsync();
@@ -4103,37 +4096,37 @@ bool OS_Windows::is_vsync_enabled() const {
     return true;
 }*/
 
-OS::PowerState OS_Windows::get_power_state() {
+OS::PowerState WindowsOS::get_power_state() {
     return power_manager->get_power_state();
 }
 
-int OS_Windows::get_power_seconds_left() {
+int WindowsOS::get_power_seconds_left() {
     return power_manager->get_power_seconds_left();
 }
 
-int OS_Windows::get_power_percent_left() {
+int WindowsOS::get_power_percent_left() {
     return power_manager->get_power_percent_left();
 }
 
-bool OS_Windows::_check_internal_feature_support(const String& p_feature) {
+bool WindowsOS::_check_internal_feature_support(const String& p_feature) {
     return p_feature == "pc";
 }
 
-void OS_Windows::disable_crash_handler() {
+void WindowsOS::disable_crash_handler() {
     crash_handler.disable();
 }
 
-bool OS_Windows::is_disable_crash_handler() const {
+bool WindowsOS::is_disable_crash_handler() const {
     return crash_handler.is_disabled();
 }
 
-void OS_Windows::process_and_drop_events() {
+void WindowsOS::process_and_drop_events() {
     drop_events = true;
     process_events();
     drop_events = false;
 }
 
-Error OS_Windows::move_to_trash(const String& p_path) {
+Error WindowsOS::move_to_trash(const String& p_path) {
     SHFILEOPSTRUCTW sf;
     WCHAR* from = new WCHAR[p_path.length() + 2];
     wcscpy_s(from, p_path.length() + 1, p_path.c_str());
@@ -4159,11 +4152,11 @@ Error OS_Windows::move_to_trash(const String& p_path) {
     return OK;
 }
 
-int OS_Windows::get_tablet_driver_count() const {
+int WindowsOS::get_tablet_driver_count() const {
     return tablet_drivers.size();
 }
 
-String OS_Windows::get_tablet_driver_name(int p_driver) const {
+String WindowsOS::get_tablet_driver_name(int p_driver) const {
     if (p_driver < 0 || p_driver >= tablet_drivers.size()) {
         return "";
     } else {
@@ -4171,11 +4164,11 @@ String OS_Windows::get_tablet_driver_name(int p_driver) const {
     }
 }
 
-String OS_Windows::get_current_tablet_driver() const {
+String WindowsOS::get_current_tablet_driver() const {
     return tablet_driver;
 }
 
-void OS_Windows::set_current_tablet_driver(const String& p_driver) {
+void WindowsOS::set_current_tablet_driver(const String& p_driver) {
     if (get_tablet_driver_count() == 0) {
         return;
     }
@@ -4237,7 +4230,7 @@ void OS_Windows::set_current_tablet_driver(const String& p_driver) {
     }
 };
 
-OS_Windows::OS_Windows(HINSTANCE _hInstance) {
+WindowsOS::WindowsOS(HINSTANCE _hInstance) {
     drop_events     = false;
     key_event_pos   = 0;
     layered_window  = false;
@@ -4294,9 +4287,7 @@ OS_Windows::OS_Windows(HINSTANCE _hInstance) {
 #endif
     user_proc = NULL;
 
-#ifdef WASAPI_ENABLED
-    AudioDriverManager::add_driver(&driver_wasapi);
-#endif
+    AudioDriverManager::add_driver(&windows_audio_driver);
 #ifdef XAUDIO2_ENABLED
     AudioDriverManager::add_driver(&driver_xaudio2);
 #endif
@@ -4306,7 +4297,7 @@ OS_Windows::OS_Windows(HINSTANCE _hInstance) {
     _set_logger(memnew(CompositeLogger(loggers)));
 }
 
-OS_Windows::~OS_Windows() {
+WindowsOS::~WindowsOS() {
     if (wintab_available && wtctx) {
         wintab_WTClose(wtctx);
         wtctx = 0;

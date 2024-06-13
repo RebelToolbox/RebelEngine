@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "crash_handler_windows.h"
+#include "windows_crash_handler.h"
 
 #include "core/os/os.h"
 #include "core/project_settings.h"

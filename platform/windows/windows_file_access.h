@@ -4,17 +4,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef FILE_ACCESS_WINDOWS_H
-#define FILE_ACCESS_WINDOWS_H
-
-#ifdef WINDOWS_ENABLED
+#ifndef WINDOWS_FILE_ACCESS_H
+#define WINDOWS_FILE_ACCESS_H
 
 #include "core/os/file_access.h"
 #include "core/os/memory.h"
 
 #include <stdio.h>
 
-class FileAccessWindows : public FileAccess {
+class WindowsFileAccess : public FileAccess {
     FILE* f;
     int flags;
     void check_errors() const;
@@ -68,9 +66,8 @@ public:
         uint32_t p_permissions
     );
 
-    FileAccessWindows();
-    virtual ~FileAccessWindows();
+    WindowsFileAccess();
+    virtual ~WindowsFileAccess();
 };
 
-#endif
-#endif
+#endif // WINDOWS_FILE_ACCESS_H

@@ -3,7 +3,9 @@
 Import("env")
 
 files = [
-    "#platform/windows/key_mapping_windows.cpp",
+    "#platform/windows/windows_dir_access.cpp",
+    "#platform/windows/windows_file_access.cpp",
+    "#platform/windows/windows_key_mapping.cpp",
     "#platform/windows/windows_terminal_logger.cpp",
     "joypad_uwp.cpp",
     "power_uwp.cpp",

@@ -4,12 +4,10 @@
 //
 // SPDX-License-Identifier: MIT
 
+#ifndef WINDOWS_GL_CONTEXT_H
+#define WINDOWS_GL_CONTEXT_H
+
 #if defined(OPENGL_ENABLED) || defined(GLES_ENABLED)
-
-// Author: Juan Linietsky <reduzio@gmail.com>, (C) 2008
-
-#ifndef CONTEXT_GL_WIN_H
-#define CONTEXT_GL_WIN_H
 
 #include "core/error_list.h"
 #include "core/os/os.h"
@@ -20,7 +18,7 @@
 typedef bool(APIENTRY* PFNWGLSWAPINTERVALEXTPROC)(int interval);
 typedef int(APIENTRY* PFNWGLGETSWAPINTERVALEXTPROC)(void);
 
-class ContextGL_Windows {
+class WindowsGLContext {
     HDC hDC;
     HGLRC hRC;
     unsigned int pixel_format;
@@ -51,9 +49,10 @@ public:
     void set_use_vsync(bool p_use);
     bool is_using_vsync() const;
 
-    ContextGL_Windows(HWND hwnd, bool p_opengl_3_context);
-    ~ContextGL_Windows();
+    WindowsGLContext(HWND hwnd, bool p_opengl_3_context);
+    ~WindowsGLContext();
 };
 
 #endif
-#endif
+
+#endif // WINDOWS_GL_CONTEXT_H

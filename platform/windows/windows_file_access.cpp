@@ -4,9 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef WINDOWS_ENABLED
-
-#include "file_access_windows.h"
+#include "windows_file_access.h"
 
 #include "core/os/os.h"
 #include "core/print_string.h"
@@ -26,7 +24,7 @@
 #define S_ISREG(m) ((m) & _S_IFREG)
 #endif
 
-void FileAccessWindows::check_errors() const {
+void WindowsFileAccess::check_errors() const {
     ERR_FAIL_COND(!f);
 
     if (feof(f)) {
@@ -34,7 +32,7 @@ void FileAccessWindows::check_errors() const {
     }
 }
 
-Error FileAccessWindows::_open(const String& p_path, int p_mode_flags) {
+Error WindowsFileAccess::_open(const String& p_path, int p_mode_flags) {
     path_src = p_path;
     path     = fix_path(p_path);
     if (f) {
@@ -111,7 +109,7 @@ Error FileAccessWindows::_open(const String& p_path, int p_mode_flags) {
     }
 }
 
-void FileAccessWindows::close() {
+void WindowsFileAccess::close() {
     if (!f) {
         return;
     }
@@ -178,19 +176,19 @@ void FileAccessWindows::close() {
     }
 }
 
-String FileAccessWindows::get_path() const {
+String WindowsFileAccess::get_path() const {
     return path_src;
 }
 
-String FileAccessWindows::get_path_absolute() const {
+String WindowsFileAccess::get_path_absolute() const {
     return path;
 }
 
-bool FileAccessWindows::is_open() const {
+bool WindowsFileAccess::is_open() const {
     return (f != NULL);
 }
 
-void FileAccessWindows::seek(uint64_t p_position) {
+void WindowsFileAccess::seek(uint64_t p_position) {
     ERR_FAIL_COND(!f);
 
     last_error = OK;
@@ -200,7 +198,7 @@ void FileAccessWindows::seek(uint64_t p_position) {
     prev_op = 0;
 }
 
-void FileAccessWindows::seek_end(int64_t p_position) {
+void WindowsFileAccess::seek_end(int64_t p_position) {
     ERR_FAIL_COND(!f);
     if (_fseeki64(f, p_position, SEEK_END)) {
         check_errors();
@@ -208,7 +206,7 @@ void FileAccessWindows::seek_end(int64_t p_position) {
     prev_op = 0;
 }
 
-uint64_t FileAccessWindows::get_position() const {
+uint64_t WindowsFileAccess::get_position() const {
     int64_t aux_position = _ftelli64(f);
     if (aux_position < 0) {
         check_errors();
@@ -216,7 +214,7 @@ uint64_t FileAccessWindows::get_position() const {
     return aux_position;
 }
 
-uint64_t FileAccessWindows::get_len() const {
+uint64_t WindowsFileAccess::get_len() const {
     ERR_FAIL_COND_V(!f, 0);
 
     uint64_t pos = get_position();
@@ -227,12 +225,12 @@ uint64_t FileAccessWindows::get_len() const {
     return size;
 }
 
-bool FileAccessWindows::eof_reached() const {
+bool WindowsFileAccess::eof_reached() const {
     check_errors();
     return last_error == ERR_FILE_EOF;
 }
 
-uint8_t FileAccessWindows::get_8() const {
+uint8_t WindowsFileAccess::get_8() const {
     ERR_FAIL_COND_V(!f, 0);
     if (flags == READ_WRITE || flags == WRITE_READ) {
         if (prev_op == WRITE) {
@@ -249,7 +247,7 @@ uint8_t FileAccessWindows::get_8() const {
     return b;
 }
 
-uint64_t FileAccessWindows::get_buffer(uint8_t* p_dst, uint64_t p_length)
+uint64_t WindowsFileAccess::get_buffer(uint8_t* p_dst, uint64_t p_length)
     const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
     ERR_FAIL_COND_V(!f, -1);
@@ -265,11 +263,11 @@ uint64_t FileAccessWindows::get_buffer(uint8_t* p_dst, uint64_t p_length)
     return read;
 };
 
-Error FileAccessWindows::get_error() const {
+Error WindowsFileAccess::get_error() const {
     return last_error;
 }
 
-void FileAccessWindows::flush() {
+void WindowsFileAccess::flush() {
     ERR_FAIL_COND(!f);
     fflush(f);
     if (prev_op == WRITE) {
@@ -277,7 +275,7 @@ void FileAccessWindows::flush() {
     }
 }
 
-void FileAccessWindows::store_8(uint8_t p_dest) {
+void WindowsFileAccess::store_8(uint8_t p_dest) {
     ERR_FAIL_COND(!f);
     if (flags == READ_WRITE || flags == WRITE_READ) {
         if (prev_op == READ) {
@@ -290,7 +288,7 @@ void FileAccessWindows::store_8(uint8_t p_dest) {
     fwrite(&p_dest, 1, 1, f);
 }
 
-void FileAccessWindows::store_buffer(const uint8_t* p_src, uint64_t p_length) {
+void WindowsFileAccess::store_buffer(const uint8_t* p_src, uint64_t p_length) {
     ERR_FAIL_COND(!f);
     ERR_FAIL_COND(!p_src && p_length > 0);
     if (flags == READ_WRITE || flags == WRITE_READ) {
@@ -304,7 +302,7 @@ void FileAccessWindows::store_buffer(const uint8_t* p_src, uint64_t p_length) {
     ERR_FAIL_COND(fwrite(p_src, 1, p_length, f) != (size_t)p_length);
 }
 
-bool FileAccessWindows::file_exists(const String& p_name) {
+bool WindowsFileAccess::file_exists(const String& p_name) {
     String filename = fix_path(p_name);
     FILE* g         = _wfsopen((LPCWSTR)(filename.c_str()), L"rb", _SH_DENYNO);
     if (g == nullptr) {
@@ -315,7 +313,7 @@ bool FileAccessWindows::file_exists(const String& p_name) {
     }
 }
 
-uint64_t FileAccessWindows::_get_modified_time(const String& p_file) {
+uint64_t WindowsFileAccess::_get_modified_time(const String& p_file) {
     String file = fix_path(p_file);
     if (file.ends_with("/") && file != "/") {
         file = file.substr(0, file.length() - 1);
@@ -332,25 +330,23 @@ uint64_t FileAccessWindows::_get_modified_time(const String& p_file) {
     }
 }
 
-uint32_t FileAccessWindows::_get_unix_permissions(const String& p_file) {
+uint32_t WindowsFileAccess::_get_unix_permissions(const String& p_file) {
     return 0;
 }
 
-Error FileAccessWindows::_set_unix_permissions(
+Error WindowsFileAccess::_set_unix_permissions(
     const String& p_file,
     uint32_t p_permissions
 ) {
     return ERR_UNAVAILABLE;
 }
 
-FileAccessWindows::FileAccessWindows() :
+WindowsFileAccess::WindowsFileAccess() :
     f(NULL),
     flags(0),
     prev_op(0),
     last_error(OK) {}
 
-FileAccessWindows::~FileAccessWindows() {
+WindowsFileAccess::~WindowsFileAccess() {
     close();
 }
-
-#endif

@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 
 #include "main/main.h"
-#include "os_windows.h"
+#include "windows_os.h"
 
 #include <locale.h>
 #include <stdio.h>
@@ -108,7 +108,7 @@ char* wc_to_utf8(const wchar_t* wc) {
 }
 
 __declspec(dllexport) int widechar_main(int argc, wchar_t** argv) {
-    OS_Windows os(NULL);
+    WindowsOS os(NULL);
 
     setlocale(LC_CTYPE, "");
 

@@ -4,26 +4,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef DIR_ACCESS_WINDOWS_H
-#define DIR_ACCESS_WINDOWS_H
-
-#ifdef WINDOWS_ENABLED
+#ifndef WINDOWS_DIR_ACCESS_H
+#define WINDOWS_DIR_ACCESS_H
 
 #include "core/os/dir_access.h"
 
-/**
-    @author Juan Linietsky <reduz@gmail.com>
-*/
+struct WindowsPrivateDirAccess;
 
-struct DirAccessWindowsPrivate;
-
-class DirAccessWindows : public DirAccess {
+class WindowsDirAccess : public DirAccess {
     enum {
         MAX_DRIVES = 26
     };
 
-    DirAccessWindowsPrivate* p;
-    /* Windows stuff */
+    WindowsPrivateDirAccess* p;
 
     char drives[MAX_DRIVES]; // a-z:
     int drive_count;
@@ -72,10 +65,8 @@ public:
 
     virtual String get_filesystem_type() const;
 
-    DirAccessWindows();
-    ~DirAccessWindows();
+    WindowsDirAccess();
+    ~WindowsDirAccess();
 };
 
-#endif // WINDOWS_ENABLED
-
-#endif
+#endif // WINDOWS_DIR_ACCESS_H

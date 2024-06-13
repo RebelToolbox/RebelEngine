@@ -13,7 +13,7 @@
 #include "core/os/file_access.h"
 #include "core/os/keyboard.h"
 #include "main/main.h"
-#include "platform/windows/key_mapping_windows.h"
+#include "platform/windows/windows_key_mapping.h"
 
 #include <collection.h>
 
