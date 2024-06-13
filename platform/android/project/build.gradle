@@ -40,6 +40,7 @@ tasks.register('createDevelopmentAndroidTemplates') {
 tasks.register('cleanAndroidTemplates', Delete) {
     group "Rebel"
     description "Cleans and deletes all the Rebel Engine Android libraries and templates."
+    delete "app/libs"
     delete "app/src/debug"
     delete "app/src/release"
     delete "engine/src/main/jniLibs"
