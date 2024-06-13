@@ -276,6 +276,7 @@ jobs:
           # Copy Android libraries to project's jniLibs folders
           # For each library identify the correct build and architecture folder.
           project_src_dir=platform/android/project/engine/src
+          stl_lib_src_dir=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs
           for library in `ls -1 bin/librebel.android.*`; do
             case $library in
               *debug* )
@@ -302,12 +303,14 @@ jobs:
             # Copy $arch_id $build Rebel Engine library into $build jniLibs $arch folder
             target=$project_src_dir/$build/jniLibs/$arch
             mkdir -p $target
-            echo "Copying $library into $target
+            echo "Copying $library into $target"
+            cp $library $target
             # Copy $arch_id stl_lib into jniLibs $arch folder
-            stl_lib=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs/$arch/libc++_shared.so
+            stl_lib=$stl_lib_src_dir/$arch/libc++_shared.so
             target=$project_src_dir/main/jniLibs/$arch
             mkdir -p $target
-            echo "Copying $stl_lib into $target
+            echo "Copying $stl_lib into $target"
+            cp $stl_lib $target
           done
 
       - name: Create Android Templates
