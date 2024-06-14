@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_SERVER_H
-#define OS_SERVER_H
+#ifndef SERVER_OS_H
+#define SERVER_OS_H
 
 #include "drivers/dummy/texture_loader_dummy.h"
 #include "drivers/unix/os_unix.h"
@@ -23,7 +23,7 @@
 
 #undef CursorShape
 
-class OS_Server : public OS_Unix {
+class ServerOS : public OS_Unix {
     VisualServer* visual_server;
     VideoMode current_videomode;
     List<String> args;
@@ -111,7 +111,7 @@ public:
     void disable_crash_handler();
     bool is_disable_crash_handler() const;
 
-    OS_Server();
+    ServerOS();
 };
 
-#endif
+#endif // SERVER_OS_H
