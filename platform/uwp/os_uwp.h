@@ -21,10 +21,11 @@
 #include "servers/visual_server.h"
 
 #include <fcntl.h>
-#include <io.h>
 #include <stdio.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+// Windows system includes come after <windows.h>
+#include <io.h>
 
 class OS_UWP : public OS {
 public:

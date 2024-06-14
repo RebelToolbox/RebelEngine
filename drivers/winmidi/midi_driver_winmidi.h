@@ -15,11 +15,8 @@
 #include <stdio.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-
-#ifdef WIN32_LEAN_AND_MEAN
-// Manually include <mmsystem.h> after <windows.h> if using WIN32_LEAN_AND_MEAN
+// Windows system includes come after <windows.h>
 #include <mmsystem.h>
-#endif // WIN32_LEAN_AND_MEAN
 
 class MIDIDriverWinMidi : public MIDIDriver {
     Vector<HMIDIIN> connected_sources;

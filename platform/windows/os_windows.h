@@ -25,14 +25,16 @@
 #include "drivers/xaudio2/audio_driver_xaudio2.h"
 #endif
 
-#include <dwmapi.h>
 #include <fcntl.h>
-#include <io.h>
-#include <shellapi.h>
 #include <stdio.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+// Windows system includes come after <windows.h>
+#include <dwmapi.h>
+#include <io.h>
+#include <shellapi.h>
 #include <windowsx.h>
+
 // WinTab API
 #define WT_PACKET     0x7FF0
 #define WT_PROXIMITY  0x7FF5

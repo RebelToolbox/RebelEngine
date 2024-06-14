@@ -11,19 +11,21 @@
 #include "core/os/os.h"
 #include "core/project_settings.h"
 
+#include <stdlib.h>
+
 #ifdef WINDOWS_ENABLED
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-
-#define ENV_PATH_SEP ";"
-#else
+#else // ! WINDOWS_ENABLED
 #include <limits.h>
 #include <unistd.h>
+#endif // WINDOWS_ENABLED
 
+#ifdef WINDOWS_ENABLED
+#define ENV_PATH_SEP ";"
+#else // ! WINDOWS_ENABLED
 #define ENV_PATH_SEP ":"
-#endif
-
-#include <stdlib.h>
+#endif // WINDOWS_ENABLED
 
 namespace path
 {
