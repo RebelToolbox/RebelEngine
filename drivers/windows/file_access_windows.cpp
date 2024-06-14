@@ -11,15 +11,16 @@
 #include "core/os/os.h"
 #include "core/print_string.h"
 
-#include <share.h> // _SH_DENYNO
-#include <shlwapi.h>
-#define WIN32_LEAN_AND_MEAN
 #include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <tchar.h>
 #include <wchar.h>
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+// Windows system includes come after <windows.h>
+#include <share.h> // _SH_DENYNO
+#include <shlwapi.h>
+#include <tchar.h>
 
 #ifdef _MSC_VER
 #define S_ISREG(m) ((m) & _S_IFREG)

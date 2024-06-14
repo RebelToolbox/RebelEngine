@@ -14,30 +14,30 @@
 #include <stdio.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+// Windows system includes come after <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #ifndef UWP_ENABLED
 #include <iphlpapi.h>
-#endif
-#else // UNIX
-#include <netdb.h>
+#endif // UWP_ENABLED
+#else  // ! WINDOWS_ENABLED
 #ifdef ANDROID_ENABLED
 // We could drop this file once we up our API level to 24,
 // where the NDK's ifaddrs.h supports to needed getifaddrs.
 #include "thirdparty/misc/ifaddrs-android.h"
-#else
-#ifdef __FreeBSD__
-#include <sys/types.h>
-#endif
+#else // ! ANDROID_ENABLED
 #include <ifaddrs.h>
-#endif
+#endif // ! ANDROID_ENABLED
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <sys/socket.h>
 #ifdef __FreeBSD__
 #include <netinet/in.h>
-#endif
-#include <net/if.h> // Order is important on OpenBSD, leave as last
-#endif
+#include <sys/types.h>
+#endif // __FreeBSD__
+// Order is important on OpenBSD, leave as last
+#include <net/if.h>
+#endif // ! WINDOWS_ENABLED
 
 static IP_Address _sockaddr2ip(struct sockaddr* p_addr) {
     IP_Address ip;

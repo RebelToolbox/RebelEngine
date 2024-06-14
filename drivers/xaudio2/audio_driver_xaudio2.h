@@ -11,9 +11,10 @@
 #include "core/os/thread.h"
 #include "servers/audio_server.h"
 
-#include <mmsystem.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+// Windows system includes come after <windows.h>
+#include <mmsystem.h>
 #include <wrl/client.h>
 #include <xaudio2.h>
 

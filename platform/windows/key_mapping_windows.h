@@ -11,6 +11,7 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+// Windows system includes come after <windows.h>
 #include <winuser.h>
 
 class KeyMappingWindows {
