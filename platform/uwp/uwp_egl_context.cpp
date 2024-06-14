@@ -4,36 +4,36 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "context_egl_uwp.h"
+#include "uwp_egl_context.h"
 
 #include "EGL/eglext.h"
 
 using Platform::Exception;
 
-void ContextEGL_UWP::release_current() {
+void UwpGLContext::release_current() {
     eglMakeCurrent(mEglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, mEglContext);
 };
 
-void ContextEGL_UWP::make_current() {
+void UwpGLContext::make_current() {
     eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface, mEglContext);
 };
 
-int ContextEGL_UWP::get_window_width() {
+int UwpGLContext::get_window_width() {
     return width;
 };
 
-int ContextEGL_UWP::get_window_height() {
+int UwpGLContext::get_window_height() {
     return height;
 };
 
-void ContextEGL_UWP::reset() {
+void UwpGLContext::reset() {
     cleanup();
 
     window = CoreWindow::GetForCurrentThread();
     initialize();
 };
 
-void ContextEGL_UWP::swap_buffers() {
+void UwpGLContext::swap_buffers() {
     if (eglSwapBuffers(mEglDisplay, mEglSurface) != EGL_TRUE) {
         cleanup();
 
@@ -44,7 +44,7 @@ void ContextEGL_UWP::swap_buffers() {
     }
 };
 
-Error ContextEGL_UWP::initialize() {
+Error UwpGLContext::initialize() {
     EGLint configAttribList[] = {
         EGL_RED_SIZE,
         8,
@@ -207,7 +207,7 @@ Error ContextEGL_UWP::initialize() {
     return OK;
 };
 
-void ContextEGL_UWP::cleanup() {
+void UwpGLContext::cleanup() {
     if (mEglDisplay != EGL_NO_DISPLAY && mEglSurface != EGL_NO_SURFACE) {
         eglDestroySurface(mEglDisplay, mEglSurface);
         mEglSurface = EGL_NO_SURFACE;
@@ -224,13 +224,13 @@ void ContextEGL_UWP::cleanup() {
     }
 };
 
-ContextEGL_UWP::ContextEGL_UWP(CoreWindow ^ p_window, Driver p_driver) :
+UwpGLContext::UwpGLContext(CoreWindow ^ p_window, Driver p_driver) :
     mEglDisplay(EGL_NO_DISPLAY),
     mEglContext(EGL_NO_CONTEXT),
     mEglSurface(EGL_NO_SURFACE),
     driver(p_driver),
     window(p_window) {}
 
-ContextEGL_UWP::~ContextEGL_UWP() {
+UwpGLContext::~UwpGLContext() {
     cleanup();
 };

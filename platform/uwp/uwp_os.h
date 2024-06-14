@@ -4,21 +4,21 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_UWP_H
-#define OS_UWP_H
+#ifndef UWP_OS_H
+#define UWP_OS_H
 
-#include "context_egl_uwp.h"
 #include "core/math/transform_2d.h"
 #include "core/os/input.h"
 #include "core/os/os.h"
 #include "core/ustring.h"
 #include "drivers/xaudio2/audio_driver_xaudio2.h"
-#include "joypad_uwp.h"
 #include "main/input_default.h"
-#include "power_uwp.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
 #include "servers/visual_server.h"
+#include "uwp_egl_context.h"
+#include "uwp_joypad.h"
+#include "uwp_power.h"
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -27,7 +27,7 @@
 // Windows system includes come after <windows.h>
 #include <io.h>
 
-class OS_UWP : public OS {
+class UwpOS : public OS {
 public:
     struct KeyEvent {
         enum MessageType {
@@ -132,7 +132,7 @@ private:
         /* clang-format off */
 	internal:
 		ManagedType() { alert_close_handle = false; }
-		property OS_UWP* os;
+		property UwpOS* os;
         /* clang-format on */
     };
 
@@ -295,8 +295,8 @@ public:
 
     void queue_key_event(KeyEvent& p_event);
 
-    OS_UWP();
-    ~OS_UWP();
+    UwpOS();
+    ~UwpOS();
 };
 
-#endif
+#endif // UWP_OS_H

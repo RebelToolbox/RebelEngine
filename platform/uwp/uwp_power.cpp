@@ -4,16 +4,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "power_uwp.h"
+#include "uwp_power.h"
 
-PowerUWP::PowerUWP() :
+UwpPower::UwpPower() :
     nsecs_left(-1),
     percent_left(-1),
     power_state(OS::POWERSTATE_UNKNOWN) {}
 
-PowerUWP::~PowerUWP() {}
+UwpPower::~UwpPower() {}
 
-bool PowerUWP::UpdatePowerInfo() {
+bool UwpPower::UpdatePowerInfo() {
     // TODO, WinRT: Battery info is available on at least one WinRT platform
     // (Windows Phone 8).  Implement UpdatePowerInfo as appropriate. */
     /* Notes from SDL:
@@ -27,7 +27,7 @@ bool PowerUWP::UpdatePowerInfo() {
     return false;
 }
 
-OS::PowerState PowerUWP::get_power_state() {
+OS::PowerState UwpPower::get_power_state() {
     if (UpdatePowerInfo()) {
         return power_state;
     } else {
@@ -39,7 +39,7 @@ OS::PowerState PowerUWP::get_power_state() {
     }
 }
 
-int PowerUWP::get_power_seconds_left() {
+int UwpPower::get_power_seconds_left() {
     if (UpdatePowerInfo()) {
         return nsecs_left;
     } else {
@@ -51,7 +51,7 @@ int PowerUWP::get_power_seconds_left() {
     }
 }
 
-int PowerUWP::get_power_percent_left() {
+int UwpPower::get_power_percent_left() {
     if (UpdatePowerInfo()) {
         return percent_left;
     } else {

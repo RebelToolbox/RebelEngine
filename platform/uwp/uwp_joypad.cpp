@@ -4,21 +4,21 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "joypad_uwp.h"
+#include "uwp_joypad.h"
 
 #include "core/os/os.h"
 
 using namespace Windows::Gaming::Input;
 using namespace Windows::Foundation;
 
-void JoypadUWP::register_events() {
+void UwpJoypad::register_events() {
     Gamepad::GamepadAdded +=
-        ref new EventHandler<Gamepad ^>(this, &JoypadUWP::OnGamepadAdded);
+        ref new EventHandler<Gamepad ^>(this, &UwpJoypad::OnGamepadAdded);
     Gamepad::GamepadRemoved +=
-        ref new EventHandler<Gamepad ^>(this, &JoypadUWP::OnGamepadRemoved);
+        ref new EventHandler<Gamepad ^>(this, &UwpJoypad::OnGamepadRemoved);
 }
 
-void JoypadUWP::process_controllers() {
+void UwpJoypad::process_controllers() {
     for (int i = 0; i < MAX_CONTROLLERS; i++) {
         ControllerDevice& joy = controllers[i];
 
@@ -102,19 +102,19 @@ void JoypadUWP::process_controllers() {
     }
 }
 
-JoypadUWP::JoypadUWP() {
+UwpJoypad::UwpJoypad() {
     for (int i = 0; i < MAX_CONTROLLERS; i++) {
         controllers[i].id = i;
     }
 }
 
-JoypadUWP::JoypadUWP(InputDefault* p_input) {
+UwpJoypad::UwpJoypad(InputDefault* p_input) {
     input = p_input;
 
-    JoypadUWP();
+    UwpJoypad();
 }
 
-void JoypadUWP::OnGamepadAdded(
+void UwpJoypad::OnGamepadAdded(
     Platform::Object ^ sender,
     Windows::Gaming::Input::Gamepad ^ value
 ) {
@@ -142,7 +142,7 @@ void JoypadUWP::OnGamepadAdded(
     );
 }
 
-void JoypadUWP::OnGamepadRemoved(
+void UwpJoypad::OnGamepadRemoved(
     Platform::Object ^ sender,
     Windows::Gaming::Input::Gamepad ^ value
 ) {
@@ -162,7 +162,7 @@ void JoypadUWP::OnGamepadRemoved(
     input->joy_connection_changed(idx, false, "Xbox Controller");
 }
 
-InputDefault::JoyAxis JoypadUWP::axis_correct(
+InputDefault::JoyAxis UwpJoypad::axis_correct(
     double p_val,
     bool p_negate,
     bool p_trigger
@@ -175,7 +175,7 @@ InputDefault::JoyAxis JoypadUWP::axis_correct(
     return jx;
 }
 
-void JoypadUWP::joypad_vibration_start(
+void UwpJoypad::joypad_vibration_start(
     int p_device,
     float p_weak_magnitude,
     float p_strong_magnitude,
@@ -197,7 +197,7 @@ void JoypadUWP::joypad_vibration_start(
     }
 }
 
-void JoypadUWP::joypad_vibration_stop(int p_device, uint64_t p_timestamp) {
+void UwpJoypad::joypad_vibration_stop(int p_device, uint64_t p_timestamp) {
     ControllerDevice& joy = controllers[p_device];
     if (joy.connected) {
         GamepadVibration vibration;

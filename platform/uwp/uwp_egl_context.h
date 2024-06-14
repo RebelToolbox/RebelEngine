@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef CONTEXT_EGL_UWP_H
-#define CONTEXT_EGL_UWP_H
+#ifndef UWP_EGL_CONTEXT_H
+#define UWP_EGL_CONTEXT_H
 
 #include "core/error_list.h"
 #include "core/os/os.h"
@@ -15,7 +15,7 @@
 
 using namespace Windows::UI::Core;
 
-class ContextEGL_UWP {
+class UwpGLContext {
 public:
     enum Driver {
         GLES_2_0,
@@ -58,8 +58,8 @@ public:
 
     void cleanup();
 
-    ContextEGL_UWP(CoreWindow ^ p_window, Driver p_driver);
-    ~ContextEGL_UWP();
+    UwpGLContext(CoreWindow ^ p_window, Driver p_driver);
+    ~UwpGLContext();
 };
 
-#endif // CONTEXT_EGL_UWP_H
+#endif // UWP_EGL_CONTEXT_H

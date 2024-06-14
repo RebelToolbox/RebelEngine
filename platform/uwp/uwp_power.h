@@ -4,14 +4,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef POWER_UWP_H
-#define POWER_UWP_H
+#ifndef UWP_POWER_H
+#define UWP_POWER_H
 
 #include "core/os/dir_access.h"
 #include "core/os/file_access.h"
 #include "core/os/os.h"
 
-class PowerUWP {
+class UwpPower {
 private:
     int nsecs_left;
     int percent_left;
@@ -20,12 +20,12 @@ private:
     bool UpdatePowerInfo();
 
 public:
-    PowerUWP();
-    virtual ~PowerUWP();
+    UwpPower();
+    virtual ~UwpPower();
 
     OS::PowerState get_power_state();
     int get_power_seconds_left();
     int get_power_percent_left();
 };
 
-#endif // POWER_UWP_H
+#endif // UWP_POWER_H

@@ -4,12 +4,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JOYPAD_UWP_H
-#define JOYPAD_UWP_H
+#ifndef UWP_JOYPAD_H
+#define UWP_JOYPAD_H
 
 #include "main/input_default.h"
 
-ref class JoypadUWP sealed {
+ref class UwpJoypad sealed {
     /** clang-format breaks this, it does not understand this token. */
     /* clang-format off */
 internal:
@@ -17,8 +17,8 @@ internal:
 	void process_controllers();
     /* clang-format on */
 
-    JoypadUWP();
-    JoypadUWP(InputDefault* p_input);
+    UwpJoypad();
+    UwpJoypad(InputDefault* p_input);
 
 private:
     enum {
@@ -79,4 +79,4 @@ private:
     void joypad_vibration_stop(int p_device, uint64_t p_timestamp);
 };
 
-#endif
+#endif // UWP_JOYPAD_H
