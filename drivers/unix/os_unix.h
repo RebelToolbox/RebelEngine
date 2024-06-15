@@ -10,7 +10,7 @@
 #ifdef UNIX_ENABLED
 
 #include "core/os/os.h"
-#include "drivers/unix/ip_unix.h"
+#include "drivers/network/default_ip.h"
 
 class OS_Unix : public OS {
 protected:

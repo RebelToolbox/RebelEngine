@@ -9,9 +9,9 @@
 #ifdef UNIX_ENABLED
 
 #include "core/project_settings.h"
+#include "drivers/network/default_net_socket.h"
 #include "drivers/unix/dir_access_unix.h"
 #include "drivers/unix/file_access_unix.h"
-#include "drivers/unix/net_socket_posix.h"
 #include "drivers/unix/thread_posix.h"
 #include "servers/visual_server.h"
 
@@ -108,15 +108,15 @@ void OS_Unix::initialize_core() {
     DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_FILESYSTEM);
 
 #ifndef NO_NETWORK
-    NetSocketPosix::make_default();
-    IP_Unix::make_default();
+    DefaultNetSocket::make_default();
+    DefaultIP::make_default();
 #endif
 
     _setup_clock();
 }
 
 void OS_Unix::finalize_core() {
-    NetSocketPosix::cleanup();
+    DefaultNetSocket::cleanup();
 }
 
 void OS_Unix::alert(const String& p_alert, const String& p_title) {

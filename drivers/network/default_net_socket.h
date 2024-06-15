@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef NET_SOCKET_UNIX_H
-#define NET_SOCKET_UNIX_H
+#ifndef DEFAULT_NET_SOCKET_H
+#define DEFAULT_NET_SOCKET_H
 
 #include "core/io/net_socket.h"
 
@@ -20,7 +20,7 @@
 
 #endif
 
-class NetSocketPosix : public NetSocket {
+class DefaultNetSocket : public NetSocket {
 private:
     SOCKET_TYPE _sock;
     IP::Type _ip_type;
@@ -102,8 +102,8 @@ public:
         String p_if_name
     );
 
-    NetSocketPosix();
-    ~NetSocketPosix();
+    DefaultNetSocket();
+    ~DefaultNetSocket();
 };
 
 #endif

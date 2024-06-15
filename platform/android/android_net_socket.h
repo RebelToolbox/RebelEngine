@@ -7,7 +7,7 @@
 #ifndef ANDROID_NET_SOCKET_H
 #define ANDROID_NET_SOCKET_H
 
-#include "drivers/unix/net_socket_posix.h"
+#include "drivers/network/default_net_socket.h"
 
 #include <jni.h>
 
@@ -20,7 +20,7 @@
  * the lock when broadcasting is enabled/disabled on a socket, or that socket
  * joins/leaves a multicast group.
  */
-class AndroidNetSocket : public NetSocketPosix {
+class AndroidNetSocket : public DefaultNetSocket {
 private:
     static jobject wifi_multicast_lock;
     static jclass wifi_multicast_lock_class;

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "net_socket_posix.h"
+#include "default_net_socket.h"
 
 #ifndef UNIX_SOCKET_UNAVAILABLE
 #if defined(UNIX_ENABLED)
@@ -71,7 +71,7 @@
 
 #endif
 
-size_t NetSocketPosix::_set_addr_storage(
+size_t DefaultNetSocket::_set_addr_storage(
     struct sockaddr_storage* p_addr,
     const IP_Address& p_ip,
     uint16_t p_port,
@@ -115,7 +115,7 @@ size_t NetSocketPosix::_set_addr_storage(
     }
 }
 
-void NetSocketPosix::_set_ip_port(
+void DefaultNetSocket::_set_ip_port(
     struct sockaddr_storage* p_addr,
     IP_Address& r_ip,
     uint16_t& r_port
@@ -134,11 +134,11 @@ void NetSocketPosix::_set_ip_port(
     };
 }
 
-NetSocket* NetSocketPosix::_create_func() {
-    return memnew(NetSocketPosix);
+NetSocket* DefaultNetSocket::_create_func() {
+    return memnew(DefaultNetSocket);
 }
 
-void NetSocketPosix::make_default() {
+void DefaultNetSocket::make_default() {
 #if defined(WINDOWS_ENABLED)
     if (_create == NULL) {
         WSADATA data;
@@ -148,7 +148,7 @@ void NetSocketPosix::make_default() {
     _create = _create_func;
 }
 
-void NetSocketPosix::cleanup() {
+void DefaultNetSocket::cleanup() {
 #if defined(WINDOWS_ENABLED)
     if (_create != NULL) {
         WSACleanup();
@@ -157,12 +157,12 @@ void NetSocketPosix::cleanup() {
 #endif
 }
 
-NetSocketPosix::NetSocketPosix() :
+DefaultNetSocket::DefaultNetSocket() :
     _sock(SOCK_EMPTY),
     _ip_type(IP::TYPE_NONE),
     _is_stream(false) {}
 
-NetSocketPosix::~NetSocketPosix() {
+DefaultNetSocket::~DefaultNetSocket() {
     close();
 }
 
@@ -173,7 +173,7 @@ NetSocketPosix::~NetSocketPosix() {
 #pragma GCC diagnostic ignored "-Wlogical-op"
 #endif
 
-NetSocketPosix::NetError NetSocketPosix::_get_socket_error() const {
+DefaultNetSocket::NetError DefaultNetSocket::_get_socket_error() const {
 #if defined(WINDOWS_ENABLED)
     int err = WSAGetLastError();
 
@@ -207,8 +207,10 @@ NetSocketPosix::NetError NetSocketPosix::_get_socket_error() const {
 #pragma GCC diagnostic pop
 #endif
 
-bool NetSocketPosix::_can_use_ip(const IP_Address& p_ip, const bool p_for_bind)
-    const {
+bool DefaultNetSocket::_can_use_ip(
+    const IP_Address& p_ip,
+    const bool p_for_bind
+) const {
     if (p_for_bind && !(p_ip.is_valid() || p_ip.is_wildcard())) {
         return false;
     } else if (!p_for_bind && !p_ip.is_valid()) {
@@ -221,7 +223,7 @@ bool NetSocketPosix::_can_use_ip(const IP_Address& p_ip, const bool p_for_bind)
     );
 }
 
-_FORCE_INLINE_ Error NetSocketPosix::_change_multicast_group(
+_FORCE_INLINE_ Error DefaultNetSocket::_change_multicast_group(
     IP_Address p_ip,
     String p_if_name,
     bool p_add
@@ -296,7 +298,7 @@ _FORCE_INLINE_ Error NetSocketPosix::_change_multicast_group(
     return OK;
 }
 
-void NetSocketPosix::_set_socket(
+void DefaultNetSocket::_set_socket(
     SOCKET_TYPE p_sock,
     IP::Type p_ip_type,
     bool p_is_stream
@@ -308,7 +310,7 @@ void NetSocketPosix::_set_socket(
     _set_close_exec_enabled(true);
 }
 
-void NetSocketPosix::_set_close_exec_enabled(bool p_enabled) {
+void DefaultNetSocket::_set_close_exec_enabled(bool p_enabled) {
 #ifndef WINDOWS_ENABLED
     // Enable close on exec to avoid sharing with subprocesses. Off by default
     // on Windows.
@@ -322,7 +324,7 @@ void NetSocketPosix::_set_close_exec_enabled(bool p_enabled) {
 #endif
 }
 
-Error NetSocketPosix::open(Type p_sock_type, IP::Type& ip_type) {
+Error DefaultNetSocket::open(Type p_sock_type, IP::Type& ip_type) {
     ERR_FAIL_COND_V(is_open(), ERR_ALREADY_IN_USE);
     ERR_FAIL_COND_V(
         ip_type > IP::TYPE_ANY || ip_type < IP::TYPE_NONE,
@@ -407,7 +409,7 @@ Error NetSocketPosix::open(Type p_sock_type, IP::Type& ip_type) {
     return OK;
 }
 
-void NetSocketPosix::close() {
+void DefaultNetSocket::close() {
     if (_sock != SOCK_EMPTY) {
         SOCK_CLOSE(_sock);
     }
@@ -417,7 +419,7 @@ void NetSocketPosix::close() {
     _is_stream = false;
 }
 
-Error NetSocketPosix::bind(IP_Address p_addr, uint16_t p_port) {
+Error DefaultNetSocket::bind(IP_Address p_addr, uint16_t p_port) {
     ERR_FAIL_COND_V(!is_open(), ERR_UNCONFIGURED);
     ERR_FAIL_COND_V(!_can_use_ip(p_addr, true), ERR_INVALID_PARAMETER);
 
@@ -434,7 +436,7 @@ Error NetSocketPosix::bind(IP_Address p_addr, uint16_t p_port) {
     return OK;
 }
 
-Error NetSocketPosix::listen(int p_max_pending) {
+Error DefaultNetSocket::listen(int p_max_pending) {
     ERR_FAIL_COND_V(!is_open(), ERR_UNCONFIGURED);
 
     if (::listen(_sock, p_max_pending) != 0) {
@@ -447,7 +449,7 @@ Error NetSocketPosix::listen(int p_max_pending) {
     return OK;
 }
 
-Error NetSocketPosix::connect_to_host(IP_Address p_host, uint16_t p_port) {
+Error DefaultNetSocket::connect_to_host(IP_Address p_host, uint16_t p_port) {
     ERR_FAIL_COND_V(!is_open(), ERR_UNCONFIGURED);
     ERR_FAIL_COND_V(!_can_use_ip(p_host, false), ERR_INVALID_PARAMETER);
 
@@ -475,7 +477,7 @@ Error NetSocketPosix::connect_to_host(IP_Address p_host, uint16_t p_port) {
     return OK;
 }
 
-Error NetSocketPosix::poll(PollType p_type, int p_timeout) const {
+Error DefaultNetSocket::poll(PollType p_type, int p_timeout) const {
     ERR_FAIL_COND_V(!is_open(), ERR_UNCONFIGURED);
 
 #if defined(WINDOWS_ENABLED)
@@ -567,7 +569,7 @@ Error NetSocketPosix::poll(PollType p_type, int p_timeout) const {
 #endif
 }
 
-Error NetSocketPosix::recv(uint8_t* p_buffer, int p_len, int& r_read) {
+Error DefaultNetSocket::recv(uint8_t* p_buffer, int p_len, int& r_read) {
     ERR_FAIL_COND_V(!is_open(), ERR_UNCONFIGURED);
 
     r_read = ::recv(_sock, SOCK_BUF(p_buffer), p_len, 0);
@@ -584,7 +586,7 @@ Error NetSocketPosix::recv(uint8_t* p_buffer, int p_len, int& r_read) {
     return OK;
 }
 
-Error NetSocketPosix::recvfrom(
+Error DefaultNetSocket::recvfrom(
     uint8_t* p_buffer,
     int p_len,
     int& r_read,
@@ -632,7 +634,7 @@ Error NetSocketPosix::recvfrom(
     return OK;
 }
 
-Error NetSocketPosix::send(const uint8_t* p_buffer, int p_len, int& r_sent) {
+Error DefaultNetSocket::send(const uint8_t* p_buffer, int p_len, int& r_sent) {
     ERR_FAIL_COND_V(!is_open(), ERR_UNCONFIGURED);
 
     int flags = 0;
@@ -655,7 +657,7 @@ Error NetSocketPosix::send(const uint8_t* p_buffer, int p_len, int& r_sent) {
     return OK;
 }
 
-Error NetSocketPosix::sendto(
+Error DefaultNetSocket::sendto(
     const uint8_t* p_buffer,
     int p_len,
     int& r_sent,
@@ -687,7 +689,7 @@ Error NetSocketPosix::sendto(
     return OK;
 }
 
-Error NetSocketPosix::set_broadcasting_enabled(bool p_enabled) {
+Error DefaultNetSocket::set_broadcasting_enabled(bool p_enabled) {
     ERR_FAIL_COND_V(!is_open(), ERR_UNCONFIGURED);
     // IPv6 has no broadcast support.
     if (_ip_type == IP::TYPE_IPV6) {
@@ -709,7 +711,7 @@ Error NetSocketPosix::set_broadcasting_enabled(bool p_enabled) {
     return OK;
 }
 
-void NetSocketPosix::set_blocking_enabled(bool p_enabled) {
+void DefaultNetSocket::set_blocking_enabled(bool p_enabled) {
     ERR_FAIL_COND(!is_open());
 
     int ret = 0;
@@ -730,7 +732,7 @@ void NetSocketPosix::set_blocking_enabled(bool p_enabled) {
     }
 }
 
-void NetSocketPosix::set_ipv6_only_enabled(bool p_enabled) {
+void DefaultNetSocket::set_ipv6_only_enabled(bool p_enabled) {
     ERR_FAIL_COND(!is_open());
     // This option is only available in IPv6 sockets.
     ERR_FAIL_COND(_ip_type == IP::TYPE_IPV4);
@@ -748,7 +750,7 @@ void NetSocketPosix::set_ipv6_only_enabled(bool p_enabled) {
     }
 }
 
-void NetSocketPosix::set_tcp_no_delay_enabled(bool p_enabled) {
+void DefaultNetSocket::set_tcp_no_delay_enabled(bool p_enabled) {
     ERR_FAIL_COND(!is_open());
     ERR_FAIL_COND(!_is_stream); // Not TCP
 
@@ -765,7 +767,7 @@ void NetSocketPosix::set_tcp_no_delay_enabled(bool p_enabled) {
     }
 }
 
-void NetSocketPosix::set_reuse_address_enabled(bool p_enabled) {
+void DefaultNetSocket::set_reuse_address_enabled(bool p_enabled) {
     ERR_FAIL_COND(!is_open());
 
 // On Windows, enabling SO_REUSEADDR actually would also enable reuse port, very
@@ -786,7 +788,7 @@ void NetSocketPosix::set_reuse_address_enabled(bool p_enabled) {
 #endif
 }
 
-void NetSocketPosix::set_reuse_port_enabled(bool p_enabled) {
+void DefaultNetSocket::set_reuse_port_enabled(bool p_enabled) {
     ERR_FAIL_COND(!is_open());
 
 // See comment above...
@@ -806,11 +808,11 @@ void NetSocketPosix::set_reuse_port_enabled(bool p_enabled) {
     }
 }
 
-bool NetSocketPosix::is_open() const {
+bool DefaultNetSocket::is_open() const {
     return _sock != SOCK_EMPTY;
 }
 
-int NetSocketPosix::get_available_bytes() const {
+int DefaultNetSocket::get_available_bytes() const {
     ERR_FAIL_COND_V(!is_open(), -1);
 
     unsigned long len;
@@ -823,7 +825,7 @@ int NetSocketPosix::get_available_bytes() const {
     return len;
 }
 
-Ref<NetSocket> NetSocketPosix::accept(IP_Address& r_ip, uint16_t& r_port) {
+Ref<NetSocket> DefaultNetSocket::accept(IP_Address& r_ip, uint16_t& r_port) {
     Ref<NetSocket> out;
     ERR_FAIL_COND_V(!is_open(), out);
 
@@ -838,20 +840,20 @@ Ref<NetSocket> NetSocketPosix::accept(IP_Address& r_ip, uint16_t& r_port) {
 
     _set_ip_port(&their_addr, r_ip, r_port);
 
-    NetSocketPosix* ns = memnew(NetSocketPosix);
+    DefaultNetSocket* ns = memnew(DefaultNetSocket);
     ns->_set_socket(fd, _ip_type, _is_stream);
     ns->set_blocking_enabled(false);
     return Ref<NetSocket>(ns);
 }
 
-Error NetSocketPosix::join_multicast_group(
+Error DefaultNetSocket::join_multicast_group(
     const IP_Address& p_multi_address,
     String p_if_name
 ) {
     return _change_multicast_group(p_multi_address, p_if_name, true);
 }
 
-Error NetSocketPosix::leave_multicast_group(
+Error DefaultNetSocket::leave_multicast_group(
     const IP_Address& p_multi_address,
     String p_if_name
 ) {

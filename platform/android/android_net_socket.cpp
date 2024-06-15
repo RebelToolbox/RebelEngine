@@ -62,7 +62,7 @@ AndroidNetSocket::~AndroidNetSocket() {
 }
 
 void AndroidNetSocket::close() {
-    NetSocketPosix::close();
+    DefaultNetSocket::close();
     if (wants_broadcast) {
         multicast_lock_release();
     }
@@ -74,7 +74,7 @@ void AndroidNetSocket::close() {
 }
 
 Error AndroidNetSocket::set_broadcasting_enabled(bool p_enabled) {
-    Error err = NetSocketPosix::set_broadcasting_enabled(p_enabled);
+    Error err = DefaultNetSocket::set_broadcasting_enabled(p_enabled);
     if (err != OK) {
         return err;
     }
@@ -97,7 +97,7 @@ Error AndroidNetSocket::join_multicast_group(
     String p_if_name
 ) {
     Error err =
-        NetSocketPosix::join_multicast_group(p_multi_address, p_if_name);
+        DefaultNetSocket::join_multicast_group(p_multi_address, p_if_name);
     if (err != OK) {
         return err;
     }
@@ -115,7 +115,7 @@ Error AndroidNetSocket::leave_multicast_group(
     String p_if_name
 ) {
     Error err =
-        NetSocketPosix::leave_multicast_group(p_multi_address, p_if_name);
+        DefaultNetSocket::leave_multicast_group(p_multi_address, p_if_name);
     if (err != OK) {
         return err;
     }

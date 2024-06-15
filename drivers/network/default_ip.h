@@ -4,15 +4,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef IP_UNIX_H
-#define IP_UNIX_H
+#ifndef DEFAULT_IP_H
+#define DEFAULT_IP_H
 
 #include "core/io/ip.h"
 
-#if defined(UNIX_ENABLED) || defined(WINDOWS_ENABLED)
-
-class IP_Unix : public IP {
-    GDCLASS(IP_Unix, IP);
+class DefaultIP : public IP {
+    GDCLASS(DefaultIP, IP);
 
     virtual void _resolve_hostname(
         List<IP_Address>& r_addresses,
@@ -20,15 +18,14 @@ class IP_Unix : public IP {
         Type p_type = TYPE_ANY
     ) const;
 
-    static IP* _create_unix();
+    static IP* _create_default();
 
 public:
     virtual void get_local_interfaces(Map<String, Interface_Info>* r_interfaces
     ) const;
 
     static void make_default();
-    IP_Unix();
+    DefaultIP();
 };
 
-#endif
-#endif // IP_UNIX_H
+#endif // DEFAULT_IP_H

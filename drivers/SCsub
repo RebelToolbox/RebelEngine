@@ -5,6 +5,7 @@ Import("env")
 env.drivers_sources = []
 
 # OS drivers
+SConscript("network/SCsub")
 SConscript("unix/SCsub")
 
 # Sounds drivers

@@ -10,8 +10,8 @@
 #include "core/project_settings.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
-#include "drivers/unix/ip_unix.h"
-#include "drivers/unix/net_socket_posix.h"
+#include "drivers/network/default_ip.h"
+#include "drivers/network/default_net_socket.h"
 #include "main/main.h"
 #include "platform/windows/windows_dir_access.h"
 #include "platform/windows/windows_file_access.h"
@@ -113,7 +113,7 @@ void UwpOS::initialize_core() {
     DirAccess::make_default<DirAccessWindows>(DirAccess::ACCESS_USERDATA);
     DirAccess::make_default<DirAccessWindows>(DirAccess::ACCESS_FILESYSTEM);
 
-    NetSocketPosix::make_default();
+    DefaultNetSocket::make_default();
 
     // We need to know how often the clock is updated
     if (!QueryPerformanceFrequency((LARGE_INTEGER*)&ticks_per_second)) {
@@ -124,7 +124,7 @@ void UwpOS::initialize_core() {
     ticks_start = 0;
     ticks_start = get_ticks_usec();
 
-    IP_Unix::make_default();
+    DefaultIP::make_default();
 
     cursor_shape = CURSOR_ARROW;
 }
@@ -384,7 +384,7 @@ void UwpOS::finalize() {
 }
 
 void UwpOS::finalize_core() {
-    NetSocketPosix::cleanup();
+    DefaultNetSocket::cleanup();
 }
 
 void UwpOS::alert(const String& p_alert, const String& p_title) {

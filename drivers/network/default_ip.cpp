@@ -4,9 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "ip_unix.h"
-
-#if defined(UNIX_ENABLED) || defined(WINDOWS_ENABLED)
+#include "default_ip.h"
 
 #include <string.h>
 
@@ -53,7 +51,7 @@ static IP_Address _sockaddr2ip(struct sockaddr* p_addr) {
     return ip;
 };
 
-void IP_Unix::_resolve_hostname(
+void DefaultIP::_resolve_hostname(
     List<IP_Address>& r_addresses,
     const String& p_hostname,
     Type p_type
@@ -108,7 +106,7 @@ void IP_Unix::_resolve_hostname(
 
 #if defined(UWP_ENABLED)
 
-void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 ) const {
     using namespace Windows::Networking;
     using namespace Windows::Networking::Connectivity;
@@ -144,7 +142,7 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 
 #else
 
-void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 ) const {
     ULONG buf_size = 1024;
     IP_ADAPTER_ADDRESSES* addrs;
@@ -205,7 +203,7 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 
 #else // UNIX
 
-void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 ) const {
     struct ifaddrs* ifAddrStruct = nullptr;
     struct ifaddrs* ifa          = nullptr;
@@ -245,14 +243,12 @@ void IP_Unix::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 }
 #endif
 
-void IP_Unix::make_default() {
-    _create = _create_unix;
+void DefaultIP::make_default() {
+    _create = _create_default;
 }
 
-IP* IP_Unix::_create_unix() {
-    return memnew(IP_Unix);
+IP* DefaultIP::_create_default() {
+    return memnew(DefaultIP);
 }
 
-IP_Unix::IP_Unix() {}
-
-#endif
+DefaultIP::DefaultIP() {}

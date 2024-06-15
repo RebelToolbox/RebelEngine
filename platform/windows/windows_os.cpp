@@ -11,7 +11,7 @@
 #include "core/version_generated.gen.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
-#include "drivers/unix/net_socket_posix.h"
+#include "drivers/network/default_net_socket.h"
 #include "lang_table.h"
 #include "main/main.h"
 #include "servers/audio_server.h"
@@ -216,7 +216,7 @@ void WindowsOS::initialize_core() {
     DirAccess::make_default<WindowsDirAccess>(DirAccess::ACCESS_USERDATA);
     DirAccess::make_default<WindowsDirAccess>(DirAccess::ACCESS_FILESYSTEM);
 
-    NetSocketPosix::make_default();
+    DefaultNetSocket::make_default();
 
     // We need to know how often the clock is updated
     if (!QueryPerformanceFrequency((LARGE_INTEGER*)&ticks_per_second)) {
@@ -242,7 +242,7 @@ void WindowsOS::initialize_core() {
     current_pi.pi.hProcess            = GetCurrentProcess();
     process_map->insert(GetCurrentProcessId(), current_pi);
 
-    IP_Unix::make_default();
+    DefaultIP::make_default();
 
     cursor_shape = CURSOR_ARROW;
 }
@@ -2014,7 +2014,7 @@ void WindowsOS::finalize_core() {
     timeEndPeriod(1);
 
     memdelete(process_map);
-    NetSocketPosix::cleanup();
+    DefaultNetSocket::cleanup();
 }
 
 void WindowsOS::alert(const String& p_alert, const String& p_title) {
