@@ -4,16 +4,16 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "os_unix.h"
+#include "unix_os.h"
 
 #ifdef UNIX_ENABLED
 
 #include "core/project_settings.h"
 #include "drivers/network/default_net_socket.h"
-#include "drivers/unix/dir_access_unix.h"
-#include "drivers/unix/file_access_unix.h"
-#include "drivers/unix/thread_posix.h"
+#include "posix_thread.h"
 #include "servers/visual_server.h"
+#include "unix_dir_access.h"
+#include "unix_file_access.h"
 
 #ifdef __APPLE__
 #include <mach-o/dyld.h>
@@ -69,7 +69,7 @@ static void _setup_clock() {
 }
 #endif
 
-void OS_Unix::debug_break() {
+void UnixOS::debug_break() {
     assert(false);
 };
 
@@ -82,7 +82,7 @@ static void handle_interrupt(int sig) {
     ScriptDebugger::get_singleton()->set_lines_left(1);
 }
 
-void OS_Unix::initialize_debugging() {
+void UnixOS::initialize_debugging() {
     if (ScriptDebugger::get_singleton() != nullptr) {
         struct sigaction action;
         memset(&action, 0, sizeof(action));
@@ -91,21 +91,21 @@ void OS_Unix::initialize_debugging() {
     }
 }
 
-int OS_Unix::unix_initialize_audio(int p_audio_driver) {
+int UnixOS::unix_initialize_audio(int p_audio_driver) {
     return 0;
 }
 
-void OS_Unix::initialize_core() {
+void UnixOS::initialize_core() {
 #if !defined(NO_THREADS)
     init_thread_posix();
 #endif
 
-    FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_RESOURCES);
-    FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_USERDATA);
-    FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_FILESYSTEM);
-    DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_RESOURCES);
-    DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_USERDATA);
-    DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_FILESYSTEM);
+    FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_RESOURCES);
+    FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_USERDATA);
+    FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_FILESYSTEM);
+    DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_RESOURCES);
+    DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_USERDATA);
+    DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_FILESYSTEM);
 
 #ifndef NO_NETWORK
     DefaultNetSocket::make_default();
@@ -115,11 +115,11 @@ void OS_Unix::initialize_core() {
     _setup_clock();
 }
 
-void OS_Unix::finalize_core() {
+void UnixOS::finalize_core() {
     DefaultNetSocket::cleanup();
 }
 
-void OS_Unix::alert(const String& p_alert, const String& p_title) {
+void UnixOS::alert(const String& p_alert, const String& p_title) {
     fprintf(
         stderr,
         "ALERT: %s: %s\n",
@@ -128,7 +128,7 @@ void OS_Unix::alert(const String& p_alert, const String& p_title) {
     );
 }
 
-String OS_Unix::get_stdin_string(bool p_block) {
+String UnixOS::get_stdin_string(bool p_block) {
     if (p_block) {
         char buff[1024];
         String ret = stdin_buf + fgets(buff, 1024, stdin);
@@ -139,27 +139,27 @@ String OS_Unix::get_stdin_string(bool p_block) {
     return "";
 }
 
-String OS_Unix::get_name() const {
+String UnixOS::get_name() const {
     return "Unix";
 }
 
-uint64_t OS_Unix::get_unix_time() const {
+uint64_t UnixOS::get_unix_time() const {
     return time(nullptr);
 };
 
-uint64_t OS_Unix::get_system_time_secs() const {
+uint64_t UnixOS::get_system_time_secs() const {
     struct timeval tv_now;
     gettimeofday(&tv_now, nullptr);
     return uint64_t(tv_now.tv_sec);
 }
 
-uint64_t OS_Unix::get_system_time_msecs() const {
+uint64_t UnixOS::get_system_time_msecs() const {
     struct timeval tv_now;
     gettimeofday(&tv_now, nullptr);
     return uint64_t(tv_now.tv_sec) * 1000 + uint64_t(tv_now.tv_usec) / 1000;
 }
 
-OS::Date OS_Unix::get_date(bool utc) const {
+OS::Date UnixOS::get_date(bool utc) const {
     time_t t = time(nullptr);
     struct tm lt;
     if (utc) {
@@ -169,7 +169,7 @@ OS::Date OS_Unix::get_date(bool utc) const {
     }
     Date ret;
     ret.year    = 1900 + lt.tm_year;
-    // Index starting at 1 to match OS_Unix::get_date
+    // Index starting at 1 to match UnixOS::get_date
     //   and Windows SYSTEMTIME and tm_mon follows the typical structure
     //   of 0-11, noted here: http://www.cplusplus.com/reference/ctime/tm/
     ret.month   = (Month)(lt.tm_mon + 1);
@@ -180,7 +180,7 @@ OS::Date OS_Unix::get_date(bool utc) const {
     return ret;
 }
 
-OS::Time OS_Unix::get_time(bool utc) const {
+OS::Time UnixOS::get_time(bool utc) const {
     time_t t = time(nullptr);
     struct tm lt;
     if (utc) {
@@ -196,7 +196,7 @@ OS::Time OS_Unix::get_time(bool utc) const {
     return ret;
 }
 
-OS::TimeZoneInfo OS_Unix::get_time_zone_info() const {
+OS::TimeZoneInfo UnixOS::get_time_zone_info() const {
     time_t t = time(nullptr);
     struct tm lt;
     localtime_r(&t, &lt);
@@ -224,7 +224,7 @@ OS::TimeZoneInfo OS_Unix::get_time_zone_info() const {
     return ret;
 }
 
-void OS_Unix::delay_usec(uint32_t p_usec) const {
+void UnixOS::delay_usec(uint32_t p_usec) const {
     struct timespec requested = {
         static_cast<time_t>(p_usec / 1000000),
         (static_cast<long>(p_usec) % 1000000) * 1000
@@ -236,7 +236,7 @@ void OS_Unix::delay_usec(uint32_t p_usec) const {
     }
 }
 
-uint64_t OS_Unix::get_ticks_usec() const {
+uint64_t UnixOS::get_ticks_usec() const {
 #if defined(__APPLE__)
     uint64_t longtime = mach_absolute_time() * _clock_scale;
 #else
@@ -252,7 +252,7 @@ uint64_t OS_Unix::get_ticks_usec() const {
     return longtime;
 }
 
-Error OS_Unix::execute(
+Error UnixOS::execute(
     const String& p_path,
     const List<String>& p_arguments,
     bool p_blocking,
@@ -336,7 +336,7 @@ Error OS_Unix::execute(
         // still alive? something failed..
         fprintf(
             stderr,
-            "**ERROR** OS_Unix::execute - Could not create child process while "
+            "**ERROR** UnixOS::execute - Could not create child process while "
             "executing: %s\n",
             p_path.utf8().get_data()
         );
@@ -360,7 +360,7 @@ Error OS_Unix::execute(
 #endif
 }
 
-Error OS_Unix::kill(const ProcessID& p_pid) {
+Error UnixOS::kill(const ProcessID& p_pid) {
     int ret = ::kill(p_pid, SIGKILL);
     if (!ret) {
         // avoid zombie process
@@ -370,15 +370,15 @@ Error OS_Unix::kill(const ProcessID& p_pid) {
     return ret ? ERR_INVALID_PARAMETER : OK;
 }
 
-int OS_Unix::get_process_id() const {
+int UnixOS::get_process_id() const {
     return getpid();
 };
 
-bool OS_Unix::has_environment(const String& p_var) const {
+bool UnixOS::has_environment(const String& p_var) const {
     return getenv(p_var.utf8().get_data()) != nullptr;
 }
 
-String OS_Unix::get_locale() const {
+String UnixOS::get_locale() const {
     if (!has_environment("LANG")) {
         return "en";
     }
@@ -391,7 +391,7 @@ String OS_Unix::get_locale() const {
     return locale;
 }
 
-Error OS_Unix::open_dynamic_library(
+Error UnixOS::open_dynamic_library(
     const String p_path,
     void*& p_library_handle,
     bool p_also_set_library_path
@@ -431,14 +431,14 @@ Error OS_Unix::open_dynamic_library(
     return OK;
 }
 
-Error OS_Unix::close_dynamic_library(void* p_library_handle) {
+Error UnixOS::close_dynamic_library(void* p_library_handle) {
     if (dlclose(p_library_handle)) {
         return FAILED;
     }
     return OK;
 }
 
-Error OS_Unix::get_dynamic_library_symbol_handle(
+Error UnixOS::get_dynamic_library_symbol_handle(
     void* p_library_handle,
     const String p_name,
     void*& p_symbol_handle,
@@ -462,7 +462,7 @@ Error OS_Unix::get_dynamic_library_symbol_handle(
     return OK;
 }
 
-Error OS_Unix::set_cwd(const String& p_cwd) {
+Error UnixOS::set_cwd(const String& p_cwd) {
     if (chdir(p_cwd.utf8().get_data()) != 0) {
         return ERR_CANT_OPEN;
     }
@@ -470,15 +470,14 @@ Error OS_Unix::set_cwd(const String& p_cwd) {
     return OK;
 }
 
-String OS_Unix::get_environment(const String& p_var) const {
+String UnixOS::get_environment(const String& p_var) const {
     if (getenv(p_var.utf8().get_data())) {
         return getenv(p_var.utf8().get_data());
     }
     return "";
 }
 
-bool OS_Unix::set_environment(const String& p_var, const String& p_value)
-    const {
+bool UnixOS::set_environment(const String& p_var, const String& p_value) const {
     return setenv(
                p_var.utf8().get_data(),
                p_value.utf8().get_data(),
@@ -487,11 +486,11 @@ bool OS_Unix::set_environment(const String& p_var, const String& p_value)
         == 0;
 }
 
-int OS_Unix::get_processor_count() const {
+int UnixOS::get_processor_count() const {
     return sysconf(_SC_NPROCESSORS_CONF);
 }
 
-String OS_Unix::get_user_data_dir() const {
+String UnixOS::get_user_data_dir() const {
     String appname = get_safe_dir_name(
         ProjectSettings::get_singleton()->get("application/config/name")
     );
@@ -521,7 +520,7 @@ String OS_Unix::get_user_data_dir() const {
     return ProjectSettings::get_singleton()->get_resource_path();
 }
 
-String OS_Unix::get_executable_path() const {
+String UnixOS::get_executable_path() const {
 #ifdef __linux__
     // fix for running from a symlink
     char buf[256];
@@ -669,10 +668,10 @@ void UnixTerminalLogger::log_error(
 
 UnixTerminalLogger::~UnixTerminalLogger() {}
 
-OS_Unix::OS_Unix() {
+UnixOS::UnixOS() {
     Vector<Logger*> loggers;
     loggers.push_back(memnew(UnixTerminalLogger));
     _set_logger(memnew(CompositeLogger(loggers)));
 }
 
-#endif
+#endif // UNIX_ENABLED

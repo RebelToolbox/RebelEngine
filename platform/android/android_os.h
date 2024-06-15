@@ -9,7 +9,7 @@
 
 #include "android_audio_driver.h"
 #include "core/os/main_loop.h"
-#include "drivers/unix/os_unix.h"
+#include "drivers/unix/unix_os.h"
 #include "main/input_default.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
@@ -17,7 +17,7 @@
 class AndroidJNIOS;
 class AndroidJNIIO;
 
-class AndroidOS : public OS_Unix {
+class AndroidOS : public UnixOS {
     bool use_gl2;
     bool use_apk_expansion;
 

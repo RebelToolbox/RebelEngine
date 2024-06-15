@@ -12,7 +12,7 @@
 #include "drivers/alsa/audio_driver_alsa.h"
 #include "drivers/alsamidi/midi_driver_alsamidi.h"
 #include "drivers/pulseaudio/audio_driver_pulseaudio.h"
-#include "drivers/unix/os_unix.h"
+#include "drivers/unix/unix_os.h"
 #include "linux_crash_handler.h"
 #include "linux_gl_context.h"
 #include "linux_joypad.h"
@@ -53,7 +53,7 @@ typedef struct _xrr_monitor_info {
 
 #undef CursorShape
 
-class LinuxOS : public OS_Unix {
+class LinuxOS : public UnixOS {
     Atom wm_delete;
     Atom xdnd_enter;
     Atom xdnd_position;

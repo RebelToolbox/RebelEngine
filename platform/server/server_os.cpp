@@ -39,7 +39,7 @@ int ServerOS::get_current_video_driver() const {
 void ServerOS::initialize_core() {
     crash_handler.initialize();
 
-    OS_Unix::initialize_core();
+    UnixOS::initialize_core();
 }
 
 Error ServerOS::initialize(

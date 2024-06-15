@@ -4,11 +4,11 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef THREAD_POSIX_H
-#define THREAD_POSIX_H
+#ifndef POSIX_THREAD_H
+#define POSIX_THREAD_H
 
 #if !defined(NO_THREADS)
 void init_thread_posix();
 #endif
 
-#endif
+#endif // POSIX_THREAD_H

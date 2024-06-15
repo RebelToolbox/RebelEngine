@@ -16,7 +16,7 @@
 #import "device_metrics.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
-#include "drivers/unix/syslog_logger.h"
+#include "drivers/unix/unix_syslog_logger.h"
 #import "keyboard_input_view.h"
 #include "main/main.h"
 #import "native_video_view.h"
@@ -77,7 +77,7 @@ String IosOS::get_unique_id() const {
 };
 
 void IosOS::initialize_core() {
-    OS_Unix::initialize_core();
+    UnixOS::initialize_core();
 
     set_data_dir(data_dir);
 };
@@ -405,7 +405,7 @@ Error IosOS::open_dynamic_library(
         p_library_handle = RTLD_SELF;
         return OK;
     }
-    return OS_Unix::open_dynamic_library(
+    return UnixOS::open_dynamic_library(
         p_path,
         p_library_handle,
         p_also_set_library_path
@@ -416,7 +416,7 @@ Error IosOS::close_dynamic_library(void* p_library_handle) {
     if (p_library_handle == RTLD_SELF) {
         return OK;
     }
-    return OS_Unix::close_dynamic_library(p_library_handle);
+    return UnixOS::close_dynamic_library(p_library_handle);
 }
 
 void register_dynamic_symbol(char* name, void* address) {
@@ -436,7 +436,7 @@ Error IosOS::get_dynamic_library_symbol_handle(
             return OK;
         }
     }
-    return OS_Unix::get_dynamic_library_symbol_handle(
+    return UnixOS::get_dynamic_library_symbol_handle(
         p_library_handle,
         p_name,
         p_symbol_handle,
@@ -553,7 +553,7 @@ String IosOS::get_model_name() const {
         return model;
     }
 
-    return OS_Unix::get_model_name();
+    return UnixOS::get_model_name();
 }
 
 Size2 IosOS::get_window_size() const {
@@ -755,7 +755,7 @@ IosOS::IosOS(String p_data_dir) {
     data_dir = p_data_dir;
 
     Vector<Logger*> loggers;
-    loggers.push_back(memnew(SyslogLogger));
+    loggers.push_back(memnew(UnixSyslogLogger));
 #ifdef DEBUG_ENABLED
     // it seems iOS app's stdout/stderr is only obtainable if you launch it from
     // Xcode

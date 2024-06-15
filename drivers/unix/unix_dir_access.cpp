@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "dir_access_unix.h"
+#include "unix_dir_access.h"
 
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
@@ -25,11 +25,11 @@
 #include <mntent.h>
 #endif
 
-DirAccess* DirAccessUnix::create_fs() {
-    return memnew(DirAccessUnix);
+DirAccess* UnixDirAccess::create_fs() {
+    return memnew(UnixDirAccess);
 }
 
-Error DirAccessUnix::list_dir_begin() {
+Error UnixDirAccess::list_dir_begin() {
     list_dir_end(); // close any previous dir opening!
 
     // char real_current_dir_name[2048]; //is this enough?!
@@ -44,7 +44,7 @@ Error DirAccessUnix::list_dir_begin() {
     return OK;
 }
 
-bool DirAccessUnix::file_exists(String p_file) {
+bool UnixDirAccess::file_exists(String p_file) {
     GLOBAL_LOCK_FUNCTION
 
     if (p_file.is_rel_path()) {
@@ -63,7 +63,7 @@ bool DirAccessUnix::file_exists(String p_file) {
     return success;
 }
 
-bool DirAccessUnix::dir_exists(String p_dir) {
+bool UnixDirAccess::dir_exists(String p_dir) {
     GLOBAL_LOCK_FUNCTION
 
     if (p_dir.is_rel_path()) {
@@ -78,7 +78,7 @@ bool DirAccessUnix::dir_exists(String p_dir) {
     return (success && S_ISDIR(flags.st_mode));
 }
 
-uint64_t DirAccessUnix::get_modified_time(String p_file) {
+uint64_t UnixDirAccess::get_modified_time(String p_file) {
     if (p_file.is_rel_path()) {
         p_file = current_dir.plus_file(p_file);
     }
@@ -96,7 +96,7 @@ uint64_t DirAccessUnix::get_modified_time(String p_file) {
     return 0;
 };
 
-String DirAccessUnix::get_next() {
+String UnixDirAccess::get_next() {
     if (!dir_stream) {
         return "";
     }
@@ -133,15 +133,15 @@ String DirAccessUnix::get_next() {
     return fname;
 }
 
-bool DirAccessUnix::current_is_dir() const {
+bool UnixDirAccess::current_is_dir() const {
     return _cisdir;
 }
 
-bool DirAccessUnix::current_is_hidden() const {
+bool UnixDirAccess::current_is_hidden() const {
     return _cishidden;
 }
 
-void DirAccessUnix::list_dir_end() {
+void UnixDirAccess::list_dir_end() {
     if (dir_stream) {
         closedir(dir_stream);
     }
@@ -226,14 +226,14 @@ static void _get_drives(List<String>* list) {
     list->sort();
 }
 
-int DirAccessUnix::get_drive_count() {
+int UnixDirAccess::get_drive_count() {
     List<String> list;
     _get_drives(&list);
 
     return list.size();
 }
 
-String DirAccessUnix::get_drive(int p_drive) {
+String UnixDirAccess::get_drive(int p_drive) {
     List<String> list;
     _get_drives(&list);
 
@@ -242,11 +242,11 @@ String DirAccessUnix::get_drive(int p_drive) {
     return list[p_drive];
 }
 
-bool DirAccessUnix::drives_are_shortcuts() {
+bool UnixDirAccess::drives_are_shortcuts() {
     return true;
 }
 
-Error DirAccessUnix::make_dir(String p_dir) {
+Error UnixDirAccess::make_dir(String p_dir) {
     GLOBAL_LOCK_FUNCTION
 
     if (p_dir.is_rel_path()) {
@@ -271,7 +271,7 @@ Error DirAccessUnix::make_dir(String p_dir) {
     return ERR_CANT_CREATE;
 }
 
-Error DirAccessUnix::change_dir(String p_dir) {
+Error UnixDirAccess::change_dir(String p_dir) {
     GLOBAL_LOCK_FUNCTION
 
     p_dir = fix_path(p_dir);
@@ -320,7 +320,7 @@ Error DirAccessUnix::change_dir(String p_dir) {
     return OK;
 }
 
-String DirAccessUnix::get_current_dir() {
+String UnixDirAccess::get_current_dir() {
     String base = _get_root_path();
     if (base != "") {
         String bd = current_dir.replace_first(base, "");
@@ -333,7 +333,7 @@ String DirAccessUnix::get_current_dir() {
     return current_dir;
 }
 
-Error DirAccessUnix::rename(String p_path, String p_new_path) {
+Error UnixDirAccess::rename(String p_path, String p_new_path) {
     if (p_path.is_rel_path()) {
         p_path = get_current_dir().plus_file(p_path);
     }
@@ -351,7 +351,7 @@ Error DirAccessUnix::rename(String p_path, String p_new_path) {
              : FAILED;
 }
 
-Error DirAccessUnix::remove(String p_path) {
+Error UnixDirAccess::remove(String p_path) {
     if (p_path.is_rel_path()) {
         p_path = get_current_dir().plus_file(p_path);
     }
@@ -370,7 +370,7 @@ Error DirAccessUnix::remove(String p_path) {
     }
 }
 
-bool DirAccessUnix::is_link(String p_file) {
+bool UnixDirAccess::is_link(String p_file) {
     if (p_file.is_rel_path()) {
         p_file = get_current_dir().plus_file(p_file);
     }
@@ -385,7 +385,7 @@ bool DirAccessUnix::is_link(String p_file) {
     return S_ISLNK(flags.st_mode);
 }
 
-String DirAccessUnix::read_link(String p_file) {
+String UnixDirAccess::read_link(String p_file) {
     if (p_file.is_rel_path()) {
         p_file = get_current_dir().plus_file(p_file);
     }
@@ -402,7 +402,7 @@ String DirAccessUnix::read_link(String p_file) {
     return link;
 }
 
-Error DirAccessUnix::create_link(String p_source, String p_target) {
+Error UnixDirAccess::create_link(String p_source, String p_target) {
     if (p_target.is_rel_path()) {
         p_target = get_current_dir().plus_file(p_target);
     }
@@ -417,7 +417,7 @@ Error DirAccessUnix::create_link(String p_source, String p_target) {
     }
 }
 
-uint64_t DirAccessUnix::get_space_left() {
+uint64_t UnixDirAccess::get_space_left() {
 #ifndef NO_STATVFS
     struct statvfs vfs;
     if (statvfs(current_dir.utf8().get_data(), &vfs) != 0) {
@@ -431,15 +431,15 @@ uint64_t DirAccessUnix::get_space_left() {
 #endif
 };
 
-String DirAccessUnix::get_filesystem_type() const {
+String UnixDirAccess::get_filesystem_type() const {
     return ""; // TODO this should be implemented
 }
 
-bool DirAccessUnix::is_hidden(const String& p_name) {
+bool UnixDirAccess::is_hidden(const String& p_name) {
     return p_name != "." && p_name != ".." && p_name.begins_with(".");
 }
 
-DirAccessUnix::DirAccessUnix() {
+UnixDirAccess::UnixDirAccess() {
     dir_stream = nullptr;
     _cisdir    = false;
 
@@ -455,8 +455,8 @@ DirAccessUnix::DirAccessUnix() {
     change_dir(current_dir);
 }
 
-DirAccessUnix::~DirAccessUnix() {
+UnixDirAccess::~UnixDirAccess() {
     list_dir_end();
 }
 
-#endif // posix_enabled
+#endif // UNIX_ENABLED

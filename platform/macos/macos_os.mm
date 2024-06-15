@@ -1630,7 +1630,7 @@ void MacOSOS::set_ime_position(const Point2& p_pos) {
 void MacOSOS::initialize_core() {
     crash_handler.initialize();
 
-    OS_Unix::initialize_core();
+    UnixOS::initialize_core();
 
     DirAccess::make_default<MacOSDirAccess>(DirAccess::ACCESS_RESOURCES);
     DirAccess::make_default<MacOSDirAccess>(DirAccess::ACCESS_USERDATA);
@@ -3376,7 +3376,7 @@ Error MacOSOS::execute(
 
             return err;
         } else {
-            return OS_Unix::execute(
+            return UnixOS::execute(
                 p_path,
                 p_arguments,
                 p_blocking,
@@ -3388,7 +3388,7 @@ Error MacOSOS::execute(
             );
         }
     } else {
-        return OS_Unix::execute(
+        return UnixOS::execute(
             p_path,
             p_arguments,
             p_blocking,

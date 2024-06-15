@@ -12,7 +12,7 @@
 #include "core/os/input.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
 #include "drivers/coremidi/midi_driver_coremidi.h"
-#include "drivers/unix/os_unix.h"
+#include "drivers/unix/unix_os.h"
 #include "macos_crash_handler.h"
 #include "macos_joypad.h"
 #include "macos_power.h"
@@ -30,7 +30,7 @@
 #undef BitMap
 #undef CursorShape
 
-class MacOSOS : public OS_Unix {
+class MacOSOS : public UnixOS {
 public:
     struct KeyEvent {
         unsigned int macos_state;

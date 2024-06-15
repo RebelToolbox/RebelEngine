@@ -4,9 +4,9 @@
 //
 // SPDX-License-Identifier: MIT
 
-#if (defined(UNIX_ENABLED) || defined(PTHREAD_ENABLED)) && !defined(NO_THREADS)
+#include "posix_thread.h"
 
-#include "thread_posix.h"
+#if (defined(UNIX_ENABLED) || defined(PTHREAD_ENABLED)) && !defined(NO_THREADS)
 
 #include "core/os/thread.h"
 #include "core/ustring.h"
@@ -53,4 +53,4 @@ void init_thread_posix() {
     Thread::_set_platform_funcs(&set_name, nullptr);
 }
 
-#endif
+#endif // ! NO_THREADS

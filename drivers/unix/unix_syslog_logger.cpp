@@ -4,15 +4,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef UNIX_ENABLED
+#include "unix_syslog_logger.h"
 
-#include "syslog_logger.h"
+#ifdef UNIX_ENABLED
 
 #include "core/print_string.h"
 
 #include <syslog.h>
 
-void SyslogLogger::logv(const char* p_format, va_list p_list, bool p_err) {
+void UnixSyslogLogger::logv(const char* p_format, va_list p_list, bool p_err) {
     if (!should_log(p_err)) {
         return;
     }
@@ -20,7 +20,7 @@ void SyslogLogger::logv(const char* p_format, va_list p_list, bool p_err) {
     vsyslog(p_err ? LOG_ERR : LOG_INFO, p_format, p_list);
 }
 
-void SyslogLogger::print_error(
+void UnixSyslogLogger::print_error(
     const char* p_function,
     const char* p_file,
     int p_line,
@@ -70,6 +70,6 @@ void SyslogLogger::print_error(
     );
 }
 
-SyslogLogger::~SyslogLogger() {}
+UnixSyslogLogger::~UnixSyslogLogger() {}
 
-#endif
+#endif // UNIX_ENABLED

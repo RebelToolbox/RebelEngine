@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "file_access_unix.h"
+#include "unix_file_access.h"
 
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
@@ -37,7 +37,7 @@
 #include <sys/ioctl.h>
 #endif
 
-void FileAccessUnix::check_errors() const {
+void UnixFileAccess::check_errors() const {
     ERR_FAIL_COND_MSG(!f, "File must be opened before use.");
 
     if (feof(f)) {
@@ -45,7 +45,7 @@ void FileAccessUnix::check_errors() const {
     }
 }
 
-Error FileAccessUnix::_open(const String& p_path, int p_mode_flags) {
+Error UnixFileAccess::_open(const String& p_path, int p_mode_flags) {
     if (f) {
         fclose(f);
     }
@@ -126,7 +126,7 @@ Error FileAccessUnix::_open(const String& p_path, int p_mode_flags) {
     return OK;
 }
 
-void FileAccessUnix::close() {
+void UnixFileAccess::close() {
     if (!f) {
         return;
     }
@@ -153,19 +153,19 @@ void FileAccessUnix::close() {
     }
 }
 
-bool FileAccessUnix::is_open() const {
+bool UnixFileAccess::is_open() const {
     return (f != nullptr);
 }
 
-String FileAccessUnix::get_path() const {
+String UnixFileAccess::get_path() const {
     return path_src;
 }
 
-String FileAccessUnix::get_path_absolute() const {
+String UnixFileAccess::get_path_absolute() const {
     return path;
 }
 
-void FileAccessUnix::seek(uint64_t p_position) {
+void UnixFileAccess::seek(uint64_t p_position) {
     ERR_FAIL_COND_MSG(!f, "File must be opened before use.");
 
     last_error = OK;
@@ -174,7 +174,7 @@ void FileAccessUnix::seek(uint64_t p_position) {
     }
 }
 
-void FileAccessUnix::seek_end(int64_t p_position) {
+void UnixFileAccess::seek_end(int64_t p_position) {
     ERR_FAIL_COND_MSG(!f, "File must be opened before use.");
 
     if (fseeko(f, p_position, SEEK_END)) {
@@ -182,7 +182,7 @@ void FileAccessUnix::seek_end(int64_t p_position) {
     }
 }
 
-uint64_t FileAccessUnix::get_position() const {
+uint64_t UnixFileAccess::get_position() const {
     ERR_FAIL_COND_V_MSG(!f, 0, "File must be opened before use.");
 
     int64_t pos = ftello(f);
@@ -193,7 +193,7 @@ uint64_t FileAccessUnix::get_position() const {
     return pos;
 }
 
-uint64_t FileAccessUnix::get_len() const {
+uint64_t UnixFileAccess::get_len() const {
     ERR_FAIL_COND_V_MSG(!f, 0, "File must be opened before use.");
 
     int64_t pos = ftello(f);
@@ -206,11 +206,11 @@ uint64_t FileAccessUnix::get_len() const {
     return size;
 }
 
-bool FileAccessUnix::eof_reached() const {
+bool UnixFileAccess::eof_reached() const {
     return last_error == ERR_FILE_EOF;
 }
 
-uint8_t FileAccessUnix::get_8() const {
+uint8_t UnixFileAccess::get_8() const {
     ERR_FAIL_COND_V_MSG(!f, 0, "File must be opened before use.");
     uint8_t b;
     if (fread(&b, 1, 1, f) == 0) {
@@ -220,7 +220,7 @@ uint8_t FileAccessUnix::get_8() const {
     return b;
 }
 
-uint64_t FileAccessUnix::get_buffer(uint8_t* p_dst, uint64_t p_length) const {
+uint64_t UnixFileAccess::get_buffer(uint8_t* p_dst, uint64_t p_length) const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
     ERR_FAIL_COND_V_MSG(!f, -1, "File must be opened before use.");
 
@@ -229,27 +229,27 @@ uint64_t FileAccessUnix::get_buffer(uint8_t* p_dst, uint64_t p_length) const {
     return read;
 };
 
-Error FileAccessUnix::get_error() const {
+Error UnixFileAccess::get_error() const {
     return last_error;
 }
 
-void FileAccessUnix::flush() {
+void UnixFileAccess::flush() {
     ERR_FAIL_COND_MSG(!f, "File must be opened before use.");
     fflush(f);
 }
 
-void FileAccessUnix::store_8(uint8_t p_dest) {
+void UnixFileAccess::store_8(uint8_t p_dest) {
     ERR_FAIL_COND_MSG(!f, "File must be opened before use.");
     ERR_FAIL_COND(fwrite(&p_dest, 1, 1, f) != 1);
 }
 
-void FileAccessUnix::store_buffer(const uint8_t* p_src, uint64_t p_length) {
+void UnixFileAccess::store_buffer(const uint8_t* p_src, uint64_t p_length) {
     ERR_FAIL_COND_MSG(!f, "File must be opened before use.");
     ERR_FAIL_COND(!p_src && p_length > 0);
     ERR_FAIL_COND(fwrite(p_src, 1, p_length, f) != p_length);
 }
 
-bool FileAccessUnix::file_exists(const String& p_path) {
+bool UnixFileAccess::file_exists(const String& p_path) {
     int err;
     struct stat st;
     String filename = fix_path(p_path);
@@ -281,7 +281,7 @@ bool FileAccessUnix::file_exists(const String& p_path) {
     }
 }
 
-uint64_t FileAccessUnix::_get_modified_time(const String& p_file) {
+uint64_t UnixFileAccess::_get_modified_time(const String& p_file) {
     String file = fix_path(p_file);
     struct stat flags;
     int err = stat(file.utf8().get_data(), &flags);
@@ -294,7 +294,7 @@ uint64_t FileAccessUnix::_get_modified_time(const String& p_file) {
     };
 }
 
-uint32_t FileAccessUnix::_get_unix_permissions(const String& p_file) {
+uint32_t UnixFileAccess::_get_unix_permissions(const String& p_file) {
     String file = fix_path(p_file);
     struct stat flags;
     int err = stat(file.utf8().get_data(), &flags);
@@ -309,7 +309,7 @@ uint32_t FileAccessUnix::_get_unix_permissions(const String& p_file) {
     };
 }
 
-Error FileAccessUnix::_set_unix_permissions(
+Error UnixFileAccess::_set_unix_permissions(
     const String& p_file,
     uint32_t p_permissions
 ) {
@@ -323,16 +323,16 @@ Error FileAccessUnix::_set_unix_permissions(
     return FAILED;
 }
 
-FileAccess* FileAccessUnix::create_libc() {
-    return memnew(FileAccessUnix);
+FileAccess* UnixFileAccess::create_libc() {
+    return memnew(UnixFileAccess);
 }
 
-CloseNotificationFunc FileAccessUnix::close_notification_func = nullptr;
+CloseNotificationFunc UnixFileAccess::close_notification_func = nullptr;
 
-FileAccessUnix::FileAccessUnix() : f(nullptr), flags(0), last_error(OK) {}
+UnixFileAccess::UnixFileAccess() : f(nullptr), flags(0), last_error(OK) {}
 
-FileAccessUnix::~FileAccessUnix() {
+UnixFileAccess::~UnixFileAccess() {
     close();
 }
 
-#endif
+#endif // UNIX_ENABLED

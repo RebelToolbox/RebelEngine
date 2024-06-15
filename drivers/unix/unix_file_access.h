@@ -4,19 +4,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef FILE_ACCESS_UNIX_H
-#define FILE_ACCESS_UNIX_H
+#ifndef UNIX_FILE_ACCESS_H
+#define UNIX_FILE_ACCESS_H
+
+#if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
 #include "core/os/file_access.h"
 #include "core/os/memory.h"
 
 #include <stdio.h>
 
-#if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
-
 typedef void (*CloseNotificationFunc)(const String& p_file, int p_flags);
 
-class FileAccessUnix : public FileAccess {
+class UnixFileAccess : public FileAccess {
     FILE* f;
     int flags;
     void check_errors() const;
@@ -73,9 +73,10 @@ public:
         uint32_t p_permissions
     );
 
-    FileAccessUnix();
-    virtual ~FileAccessUnix();
+    UnixFileAccess();
+    virtual ~UnixFileAccess();
 };
 
-#endif
-#endif
+#endif // UNIX_ENABLED
+
+#endif // UNIX_FILE_ACCESS_H

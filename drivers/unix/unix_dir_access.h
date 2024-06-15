@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef DIR_ACCESS_UNIX_H
-#define DIR_ACCESS_UNIX_H
+#ifndef UNIX_DIR_ACCESS_H
+#define UNIX_DIR_ACCESS_H
 
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
@@ -16,7 +16,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-class DirAccessUnix : public DirAccess {
+class UnixDirAccess : public DirAccess {
     DIR* dir_stream;
 
     static DirAccess* create_fs();
@@ -65,9 +65,10 @@ public:
 
     virtual String get_filesystem_type() const;
 
-    DirAccessUnix();
-    ~DirAccessUnix();
+    UnixDirAccess();
+    ~UnixDirAccess();
 };
 
-#endif // UNIX ENABLED
-#endif
+#endif // UNIX_ENABLED
+
+#endif // UNIX_DIR_ACCESS_H

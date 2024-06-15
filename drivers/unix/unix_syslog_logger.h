@@ -4,14 +4,14 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef SYSLOG_LOGGER_H
-#define SYSLOG_LOGGER_H
+#ifndef UNIX_SYSLOG_LOGGER_H
+#define UNIX_SYSLOG_LOGGER_H
 
 #ifdef UNIX_ENABLED
 
 #include "core/io/logger.h"
 
-class SyslogLogger : public Logger {
+class UnixSyslogLogger : public Logger {
 public:
     virtual void logv(const char* p_format, va_list p_list, bool p_err)
         _PRINTF_FORMAT_ATTRIBUTE_2_0;
@@ -24,9 +24,9 @@ public:
         ErrorType p_type
     );
 
-    virtual ~SyslogLogger();
+    virtual ~UnixSyslogLogger();
 };
 
-#endif
+#endif // UNIX_ENABLED
 
-#endif
+#endif // UNIX_SYSLOG_LOGGER_H

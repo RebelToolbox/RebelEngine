@@ -7,7 +7,7 @@
 #ifndef WEB_OS_H
 #define WEB_OS_H
 
-#include "drivers/unix/os_unix.h"
+#include "drivers/unix/unix_os.h"
 #include "main/input_default.h"
 #include "servers/audio_server.h"
 #include "servers/visual/rasterizer.h"
@@ -15,7 +15,7 @@
 
 #include <emscripten/html5.h>
 
-class WebOS : public OS_Unix {
+class WebOS : public UnixOS {
 private:
     struct JSTouchEvent {
         uint32_t identifier[32] = {0};

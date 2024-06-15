@@ -11,7 +11,7 @@
 
 #include "core/os/input.h"
 #include "drivers/coreaudio/audio_driver_coreaudio.h"
-#include "drivers/unix/os_unix.h"
+#include "drivers/unix/unix_os.h"
 #include "ios.h"
 #include "ios_joypad.h"
 #include "main/input_default.h"
@@ -19,7 +19,7 @@
 #include "servers/visual/rasterizer.h"
 #include "servers/visual_server.h"
 
-class IosOS : public OS_Unix {
+class IosOS : public UnixOS {
 private:
     static HashMap<String, void*> dynamic_symbol_lookup_table;
     friend void register_dynamic_symbol(char* name, void* address);

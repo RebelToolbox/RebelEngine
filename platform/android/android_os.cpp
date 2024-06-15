@@ -15,8 +15,8 @@
 #include "core/project_settings.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
-#include "drivers/unix/dir_access_unix.h"
-#include "drivers/unix/file_access_unix.h"
+#include "drivers/unix/unix_dir_access.h"
+#include "drivers/unix/unix_file_access.h"
 #include "main/main.h"
 #include "servers/visual/visual_server_raster.h"
 #include "servers/visual/visual_server_wrap_mt.h"
@@ -79,24 +79,24 @@ const char* AndroidOS::get_audio_driver_name(int p_driver) const {
 }
 
 void AndroidOS::initialize_core() {
-    OS_Unix::initialize_core();
+    UnixOS::initialize_core();
 
     if (use_apk_expansion) {
-        FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_RESOURCES);
+        FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_RESOURCES);
     } else {
         FileAccess::make_default<AndroidFileAccess>(FileAccess::ACCESS_RESOURCES
         );
     }
-    FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_USERDATA);
-    FileAccess::make_default<FileAccessUnix>(FileAccess::ACCESS_FILESYSTEM);
+    FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_USERDATA);
+    FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_FILESYSTEM);
     if (use_apk_expansion) {
-        DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_RESOURCES);
+        DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_RESOURCES);
     } else {
         DirAccess::make_default<AndroidJNIDirAccess>(DirAccess::ACCESS_RESOURCES
         );
     }
-    DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_USERDATA);
-    DirAccess::make_default<DirAccessUnix>(DirAccess::ACCESS_FILESYSTEM);
+    DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_USERDATA);
+    DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_FILESYSTEM);
 
     AndroidNetSocket::make_default();
 }
@@ -421,25 +421,25 @@ String AndroidOS::get_locale() const {
         return locale;
     }
 
-    return OS_Unix::get_locale();
+    return UnixOS::get_locale();
 }
 
 void AndroidOS::set_clipboard(const String& p_text) {
-    // DO we really need the fallback to OS_Unix here?!
+    // DO we really need the fallback to UnixOS here?!
     if (android_jni_os->has_set_clipboard()) {
         android_jni_os->set_clipboard(p_text);
     } else {
-        OS_Unix::set_clipboard(p_text);
+        UnixOS::set_clipboard(p_text);
     }
 }
 
 String AndroidOS::get_clipboard() const {
-    // DO we really need the fallback to OS_Unix here?!
+    // DO we really need the fallback to UnixOS here?!
     if (android_jni_os->has_get_clipboard()) {
         return android_jni_os->get_clipboard();
     }
 
-    return OS_Unix::get_clipboard();
+    return UnixOS::get_clipboard();
 }
 
 String AndroidOS::get_model_name() const {
@@ -448,7 +448,7 @@ String AndroidOS::get_model_name() const {
         return model;
     }
 
-    return OS_Unix::get_model_name();
+    return UnixOS::get_model_name();
 }
 
 int AndroidOS::get_screen_dpi(int p_screen) const {

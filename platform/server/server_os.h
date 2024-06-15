@@ -8,7 +8,7 @@
 #define SERVER_OS_H
 
 #include "drivers/dummy/texture_loader_dummy.h"
-#include "drivers/unix/os_unix.h"
+#include "drivers/unix/unix_os.h"
 #include "main/input_default.h"
 #ifdef __APPLE__
 #include "platform/macos/macos_crash_handler.h"
@@ -23,7 +23,7 @@
 
 #undef CursorShape
 
-class ServerOS : public OS_Unix {
+class ServerOS : public UnixOS {
     VisualServer* visual_server;
     VideoMode current_videomode;
     List<String> args;

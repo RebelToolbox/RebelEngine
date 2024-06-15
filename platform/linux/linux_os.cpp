@@ -70,7 +70,7 @@ static const double abs_resolution_range_mult = 10.0;
 void LinuxOS::initialize_core() {
     crash_handler.initialize();
 
-    OS_Unix::initialize_core();
+    UnixOS::initialize_core();
 }
 
 int LinuxOS::get_current_video_driver() const {

@@ -4,15 +4,15 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OS_UNIX_H
-#define OS_UNIX_H
+#ifndef UNIX_OS_H
+#define UNIX_OS_H
 
 #ifdef UNIX_ENABLED
 
 #include "core/os/os.h"
 #include "drivers/network/default_ip.h"
 
-class OS_Unix : public OS {
+class UnixOS : public OS {
 protected:
     // Unix only handles the core functions.
     // Platforms the inherit Unix should handle the rest.
@@ -26,7 +26,7 @@ protected:
     String stdin_buf;
 
 public:
-    OS_Unix();
+    UnixOS();
 
     virtual void alert(const String& p_alert, const String& p_title = "ALERT!");
     virtual String get_stdin_string(bool p_block);
@@ -110,6 +110,6 @@ public:
     virtual ~UnixTerminalLogger();
 };
 
-#endif
+#endif // UNIX_ENABLED
 
-#endif
+#endif // UNIX_OS_H

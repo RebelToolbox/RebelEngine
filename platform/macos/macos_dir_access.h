@@ -10,14 +10,14 @@
 #if defined(UNIX_ENABLED) || defined(LIBC_FILEIO_ENABLED)
 
 #include "core/os/dir_access.h"
-#include "drivers/unix/dir_access_unix.h"
+#include "drivers/unix/unix_dir_access.h"
 
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-class MacOSDirAccess : public DirAccessUnix {
+class MacOSDirAccess : public UnixDirAccess {
 protected:
     virtual String fix_unicode_name(const char* p_name) const;
 

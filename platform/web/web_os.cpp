@@ -9,8 +9,8 @@
 #include "core/io/json.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
-#include "drivers/unix/dir_access_unix.h"
-#include "drivers/unix/file_access_unix.h"
+#include "drivers/unix/unix_dir_access.h"
+#include "drivers/unix/unix_file_access.h"
 #include "main/main.h"
 #include "servers/visual/visual_server_raster.h"
 #ifndef NO_THREADS
@@ -740,7 +740,7 @@ int WebOS::get_current_video_driver() const {
 }
 
 void WebOS::initialize_core() {
-    OS_Unix::initialize_core();
+    UnixOS::initialize_core();
 }
 
 Error WebOS::initialize(
@@ -1242,5 +1242,5 @@ WebOS::WebOS() {
     loggers.push_back(memnew(StdLogger));
     _set_logger(memnew(CompositeLogger(loggers)));
 
-    FileAccessUnix::close_notification_func = file_access_close_callback;
+    UnixFileAccess::close_notification_func = file_access_close_callback;
 }

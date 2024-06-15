@@ -57,7 +57,7 @@ bool MacOSDirAccess::is_hidden(const String& p_name) {
     NSURL* url       = [NSURL fileURLWithPath:@(f.utf8().get_data())];
     NSNumber* hidden = nil;
     if (![url getResourceValue:&hidden forKey:NSURLIsHiddenKey error:nil]) {
-        return DirAccessUnix::is_hidden(p_name);
+        return UnixDirAccess::is_hidden(p_name);
     }
     return [hidden boolValue];
 }
