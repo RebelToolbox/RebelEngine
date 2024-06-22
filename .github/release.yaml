@@ -1,0 +1,23 @@
+changelog:
+  exclude:
+    authors:
+      - github-actions
+  categories:
+    - title: Exciting New Features ✨
+      labels:
+        - "PR Type: New Feature"
+    - title: Bug Fixes 🐛
+      labels:
+        - "PR Type: Bug Fix"
+    - title: Enhancements 🚀
+      labels:
+        - "PR Type: Enhancement"
+    - title: Maintenance Updates 🔧
+      labels:
+        - "PR Type: Maintenance"
+    - title: Breaking Changes ⚠️
+      labels:
+        - "PR Type: Breaking Change"
+    - title: Other Changes
+      labels:
+        - "*"
