@@ -23,7 +23,7 @@ jobs:
             os: ubuntu-latest
             artifact: linux-editor
             build-options: production=yes target=release_debug
-            rebel-executable: rebel.x11.opt.tools.64
+            rebel-executable: rebel.linux.opt.tools.64
 
           - name: Windows Editor
             os: windows-latest
@@ -35,38 +35,38 @@ jobs:
             os: macos-latest
             artifact: macos-editor-x86-64
             build-options: production=yes target=release_debug
-            rebel-executable: rebel.osx.opt.tools.64
+            rebel-executable: rebel.macos.opt.tools.64
 
           - name: macOS Editor armv8 64 bit
             os: macos-latest
             artifact: macos-editor-arm64
             build-options: production=yes target=release_debug arch=arm64
-            rebel-executable: rebel.osx.opt.tools.arm64
+            rebel-executable: rebel.macos.opt.tools.arm64
 
           # Rebel Engine Linux builds
           - name: Linux Engine 64 bit
             os: ubuntu-latest
             artifact: linux-engine-x86-64
             build-options: production=yes tools=no target=release
-            rebel-executable: rebel.x11.opt.64
+            rebel-executable: rebel.linux.opt.64
 
           - name: Linux Engine 64 bit Debug
             os: ubuntu-latest
             artifact: linux-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
-            rebel-executable: rebel.x11.opt.debug.64
+            rebel-executable: rebel.linux.opt.debug.64
 
           - name: Linux Engine 32 bit
             os: ubuntu-latest
             artifact: linux-engine-x86-32
             build-options: production=yes tools=no target=release bits=32
-            rebel-executable: rebel.x11.opt.32
+            rebel-executable: rebel.linux.opt.32
 
           - name: Linux Engine 32 bit Debug
             os: ubuntu-latest
             artifact: linux-engine-x86-32-debug
             build-options: production=yes tools=no target=release_debug bits=32
-            rebel-executable: rebel.x11.opt.debug.32
+            rebel-executable: rebel.linux.opt.debug.32
 
           # Rebel Engine Windows builds
           - name: Windows Engine 64 bit
@@ -98,25 +98,25 @@ jobs:
             os: macos-latest
             artifact: macos-engine-x86-64
             build-options: production=yes tools=no target=release
-            rebel-executable: rebel.osx.opt.64
+            rebel-executable: rebel.macos.opt.64
 
           - name: macOS Engine x86 64 bit Debug
             os: macos-latest
             artifact: macos-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
-            rebel-executable: rebel.osx.opt.debug.64
+            rebel-executable: rebel.macos.opt.debug.64
 
           - name: macOS Engine armv8 64 bit
             os: macos-latest
             artifact: macos-engine-arm64
             build-options: production=yes tools=no target=release arch=arm64
-            rebel-executable: rebel.osx.opt.arm64
+            rebel-executable: rebel.macos.opt.arm64
 
           - name: macOS Engine armv8 64 bit Debug
             os: macos-latest
             artifact: macos-engine-arm64-debug
             build-options: production=yes tools=no target=release_debug arch=arm64
-            rebel-executable: rebel.osx.opt.debug.arm64
+            rebel-executable: rebel.macos.opt.debug.arm64
 
           # Rebel Engine Android Library builds
           - name: Android Engine Library armv8 64 bit
@@ -171,63 +171,63 @@ jobs:
           - name: iOS Engine Library arm 64 bit
             os: macos-latest
             artifact: ios-engine-library-arm64
-            build-options: platform=iphone production=yes tools=no target=release
-            rebel-executable: librebel.iphone.opt.arm64.a
+            build-options: platform=ios production=yes tools=no target=release
+            rebel-executable: librebel.ios.opt.arm64.a
 
           - name: iOS Engine Library arm 64 bit Debug
             os: macos-latest
             artifact: ios-engine-library-arm64-debug
-            build-options: platform=iphone production=yes tools=no target=release_debug
-            rebel-executable: librebel.iphone.opt.debug.arm64.a
+            build-options: platform=ios production=yes tools=no target=release_debug
+            rebel-executable: librebel.ios.opt.debug.arm64.a
 
           - name: iOS Engine Library x86 64 bit Simulator
             os: macos-latest
             artifact: ios-engine-library-x86-64
-            build-options: platform=iphone production=yes tools=no ios_simulator=yes target=release arch=x86_64
-            rebel-executable: librebel.iphone.opt.x86_64.simulator.a
+            build-options: platform=ios production=yes tools=no ios_simulator=yes target=release arch=x86_64
+            rebel-executable: librebel.ios.opt.x86_64.simulator.a
 
           - name: iOS Engine Library x86 64 bit Simulator Debug
             os: macos-latest
             artifact: ios-engine-library-x86-64-debug
-            build-options: platform=iphone production=yes tools=no ios_simulator=yes target=release_debug arch=x86_64
-            rebel-executable: librebel.iphone.opt.debug.x86_64.simulator.a
+            build-options: platform=ios production=yes tools=no ios_simulator=yes target=release_debug arch=x86_64
+            rebel-executable: librebel.ios.opt.debug.x86_64.simulator.a
 
           # Rebel Engine Web builds
           - name: Web Engine
             os: ubuntu-latest
             artifact: web-engine
-            build-options: platform=javascript production=yes tools=no target=release
-            rebel-executable: rebel.javascript.opt.zip
+            build-options: platform=web production=yes tools=no target=release
+            rebel-executable: rebel.web.opt.zip
 
           - name: Web Engine Debug
             os: ubuntu-latest
             artifact: web-engine-debug
-            build-options: platform=javascript production=yes tools=no target=release_debug
-            rebel-executable: rebel.javascript.opt.debug.zip
+            build-options: platform=web production=yes tools=no target=release_debug
+            rebel-executable: rebel.web.opt.debug.zip
 
           - name: Web Engine Threads
             os: ubuntu-latest
             artifact: web-engine-threads
-            build-options: platform=javascript production=yes tools=no threads_enabled=yes target=release
-            rebel-executable: rebel.javascript.opt.threads.zip
+            build-options: platform=web production=yes tools=no threads_enabled=yes target=release
+            rebel-executable: rebel.web.opt.threads.zip
 
           - name: Web Engine Threads Debug
             os: ubuntu-latest
             artifact: web-engine-threads-debug
-            build-options: platform=javascript production=yes tools=no threads_enabled=yes target=release_debug
-            rebel-executable: rebel.javascript.opt.debug.threads.zip
+            build-options: platform=web production=yes tools=no threads_enabled=yes target=release_debug
+            rebel-executable: rebel.web.opt.debug.threads.zip
 
           - name: Web Engine GDNative
             os: ubuntu-latest
             artifact: web-engine-gdnative
-            build-options: platform=javascript production=yes tools=no gdnative_enabled=yes target=release
-            rebel-executable: rebel.javascript.opt.gdnative.zip
+            build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release
+            rebel-executable: rebel.web.opt.gdnative.zip
 
           - name: Web Engine GDNative Debug
             os: ubuntu-latest
             artifact: web-engine-gdnative-debug
-            build-options: platform=javascript production=yes tools=no gdnative_enabled=yes target=release_debug
-            rebel-executable: rebel.javascript.opt.debug.gdnative.zip
+            build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release_debug
+            rebel-executable: rebel.web.opt.debug.gdnative.zip
 
     steps:
       - name: Build Rebel
@@ -359,10 +359,10 @@ jobs:
       - name: Create Universal binaries
         run: |
           # For each application and build type, run lipo to create a universal binary.
-          for build in          \
-            rebel.osx.opt.tools \
-            rebel.osx.opt       \
-            rebel.osx.opt.debug
+          for build in            \
+            rebel.macos.opt.tools \
+            rebel.macos.opt       \
+            rebel.macos.opt.debug
           do
             lipo -create         \
             bin/$build.64        \
@@ -374,10 +374,10 @@ jobs:
       - name: Create macOS Editor App
         run: |
           # Add universal binary to macOS Editor App template.
-          cp -r tools/dist/osx_tools.app RebelEditor.app
+          cp -r tools/dist/macos_tools.app RebelEditor.app
           bin_folder=RebelEditor.app/Contents/MacOS
           mkdir $bin_folder
-          cp bin/rebel.osx.opt.tools.universal $bin_folder/Rebel
+          cp bin/rebel.macos.opt.tools.universal $bin_folder/Rebel
           echo "::group::Zip macOS Editor App."
           zip -r rebel-editor-macos-universal.zip RebelEditor.app
           echo "::endgroup::"
@@ -385,11 +385,11 @@ jobs:
       - name: Create macOS Engine App
         run: |
           # Add universal binaries to macOS Engine App template.
-          cp -r tools/dist/osx_template.app RebelEngine.app
+          cp -r tools/dist/macos_template.app RebelEngine.app
           bin_folder=RebelEngine.app/Contents/MacOS
           mkdir $bin_folder
-          cp bin/rebel.osx.opt.universal $bin_folder/rebel_release.universal
-          cp bin/rebel.osx.opt.debug.universal $bin_folder/rebel_debug.universal
+          cp bin/rebel.macos.opt.universal $bin_folder/rebel_release.universal
+          cp bin/rebel.macos.opt.debug.universal $bin_folder/rebel_debug.universal
           echo "::group::Zip macOS Engine App."
           zip -r rebel-engine-macos-universal.zip RebelEngine.app
           echo "::endgroup::"
@@ -427,14 +427,14 @@ jobs:
         run: |
           # Add universal binaries to iOS Tempate.
           cp -r tools/dist/ios_xcode .
-          cp bin/librebel.iphone.opt.arm64.a                                                  \
-          ios_xcode/libgodot.iphone.release.xcframework/ios-arm64/librebel.a
-          cp bin/librebel.iphone.opt.debug.arm64.a                                            \
-          ios_xcode/libgodot.iphone.debug.xcframework/ios-arm64/librebel.a
-          cp bin/librebel.iphone.opt.x86_64.simulator.a                                       \
-          ios_xcode/libgodot.iphone.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
-          cp bin/librebel.iphone.opt.debug.x86_64.simulator.a                                 \
-          ios_xcode/libgodot.iphone.debug.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          cp bin/librebel.ios.opt.arm64.a                                                  \
+          ios_xcode/libgodot.ios.release.xcframework/ios-arm64/librebel.a
+          cp bin/librebel.ios.opt.debug.arm64.a                                            \
+          ios_xcode/libgodot.ios.debug.xcframework/ios-arm64/librebel.a
+          cp bin/librebel.ios.opt.x86_64.simulator.a                                       \
+          ios_xcode/libgodot.ios.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          cp bin/librebel.ios.opt.debug.x86_64.simulator.a                                 \
+          ios_xcode/libgodot.ios.debug.xcframework/ios-arm64_x86_64-simulator/librebel.a
           cd ios_xcode/
           echo "::group::Zip iOS Template."
           zip -r ../ios-template.zip .
@@ -485,30 +485,30 @@ jobs:
           # Move all template binaries into the templates directory.
           mkdir templates
           # Move Linux templates.
-          mv artifacts/rebel.x11.opt.64 templates/linux_x11_64_release
-          mv artifacts/rebel.x11.opt.debug.64 templates/linux_x11_64_debug
-          mv artifacts/rebel.x11.opt.32 templates/linux_x11_32_release
-          mv artifacts/rebel.x11.opt.debug.32 templates/linux_x11_32_debug
+          mv artifacts/rebel.linux.opt.64 templates/linux_64_release
+          mv artifacts/rebel.linux.opt.debug.64 templates/linux_64_debug
+          mv artifacts/rebel.linux.opt.32 templates/linux_32_release
+          mv artifacts/rebel.linux.opt.debug.32 templates/linux_32_debug
           # Move Windows templates.
           mv artifacts/rebel.windows.opt.64.msvc.exe templates/windows_64_release.exe
           mv artifacts/rebel.windows.opt.debug.64.msvc.exe templates/windows_64_debug.exe
           mv artifacts/rebel.windows.opt.32.msvc.exe templates/windows_32_release.exe
           mv artifacts/rebel.windows.opt.debug.32.msvc.exe templates/windows_32_debug.exe
           # Move macOS templates.
-          mv artifacts/rebel-engine-macos-universal.zip templates/osx.zip
+          mv artifacts/rebel-engine-macos-universal.zip templates/macos.zip
           # Move iOS template.
-          mv artifacts/ios-template.zip templates/iphone.zip
+          mv artifacts/ios-template.zip templates/ios.zip
           # Move Android templates.
           mv artifacts/android_release.apk templates/android_release.apk
           mv artifacts/android_debug.apk templates/android_debug.apk
           mv artifacts/android_template.zip templates/android_template.zip
           # Move Web templates.
-          mv artifacts/rebel.javascript.opt.zip templates/webassembly_release.zip
-          mv artifacts/rebel.javascript.opt.debug.zip templates/webassembly_debug.zip
-          mv artifacts/rebel.javascript.opt.threads.zip templates/webassembly_threads_release.zip
-          mv artifacts/rebel.javascript.opt.debug.threads.zip templates/webassembly_threads_debug.zip
-          mv artifacts/rebel.javascript.opt.gdnative.zip templates/webassembly_gdnative_release.zip
-          mv artifacts/rebel.javascript.opt.debug.gdnative.zip templates/webassembly_gdnative_debug.zip
+          mv artifacts/rebel.web.opt.zip templates/webassembly_release.zip
+          mv artifacts/rebel.web.opt.debug.zip templates/webassembly_debug.zip
+          mv artifacts/rebel.web.opt.threads.zip templates/webassembly_threads_release.zip
+          mv artifacts/rebel.web.opt.debug.threads.zip templates/webassembly_threads_debug.zip
+          mv artifacts/rebel.web.opt.gdnative.zip templates/webassembly_gdnative_release.zip
+          mv artifacts/rebel.web.opt.debug.gdnative.zip templates/webassembly_gdnative_debug.zip
           # Move version.txt file.
           mv version.txt templates/
           # Zip
@@ -552,7 +552,7 @@ jobs:
         run: |
           # Rename editor applications with version.
           mkdir bin
-          mv artifacts/rebel.x11.opt.tools.64 bin/rebel-editor-$version-linux-x86-64
+          mv artifacts/rebel.linux.opt.tools.64 bin/rebel-editor-$version-linux-x86-64
           mv artifacts/rebel.windows.opt.tools.64.msvc.exe bin/rebel-editor-$version-windows-x86-64.exe
           chmod +x bin/rebel-editor-$version-linux-x86-64
 

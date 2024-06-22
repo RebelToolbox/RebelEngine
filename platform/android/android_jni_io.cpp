@@ -6,9 +6,9 @@
 
 #include "android_jni_io.h"
 
+#include "android_jni_thread.h"
+#include "android_jni_utils.h"
 #include "core/error_list.h"
-#include "jni_utils.h"
-#include "thread_jandroid.h"
 
 // JNIEnv is only valid within the thread it belongs to, in a multi threading
 // environment we can't cache it. For IO we call all access methods from our

@@ -9,6 +9,8 @@
 
 #include "core/os/input.h"
 
+#undef CursorShape
+
 class InputDefault : public Input {
     GDCLASS(InputDefault, Input);
     _THREAD_SAFE_CLASS_

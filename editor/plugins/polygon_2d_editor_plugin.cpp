@@ -1740,7 +1740,7 @@ Polygon2DEditor::Polygon2DEditor(EditorNode* p_editor) :
     ));
     uv_button[UV_MODE_REMOVE_INTERNAL]->set_tooltip(TTR("Remove Internal Vertex"
     ));
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     uv_button[UV_MODE_EDIT_POINT]->set_tooltip(
         TTR("Move Points") + "\n" + TTR("Command: Rotate") + "\n"
         + TTR("Shift: Move All") + "\n" + TTR("Shift+Command: Scale")

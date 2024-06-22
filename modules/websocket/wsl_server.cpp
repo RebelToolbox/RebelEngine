@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
 
 #include "wsl_server.h"
 
@@ -388,4 +388,4 @@ WSLServer::~WSLServer() {
     stop();
 }
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED

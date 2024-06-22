@@ -619,7 +619,7 @@ Error Main::setup(
 
     I = args.front();
     while (I) {
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
         // Ignore the process serial number argument passed by macOS Gatekeeper.
         // Otherwise, Godot would try to open a non-existent project on the
         // first start and abort.
@@ -1831,7 +1831,7 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 
     MAIN_PRINT("Main: Setup Logo");
 
-#if defined(JAVASCRIPT_ENABLED) || defined(ANDROID_ENABLED)
+#if defined(WEB_ENABLED) || defined(ANDROID_ENABLED)
     bool show_logo = false;
 #else
     bool show_logo = true;
@@ -2766,7 +2766,7 @@ bool Main::start() {
                 );
                 sml->add_current_scene(scene);
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
                 String mac_iconpath = GLOBAL_DEF(
                     "application/config/macos_native_icon",
                     "Variant()"

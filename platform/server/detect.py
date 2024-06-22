@@ -2,7 +2,7 @@ import os
 import platform
 import sys
 
-# This file is mostly based on platform/x11/detect.py.
+# This file is mostly based on platform/linux/detect.py.
 # If editing this file, make sure to apply relevant changes here too.
 
 
@@ -16,8 +16,8 @@ def get_name():
 
 def get_program_suffix():
     if sys.platform == "darwin":
-        return "osx"
-    return "x11"
+        return "macos"
+    return "linux"
 
 
 def can_build():

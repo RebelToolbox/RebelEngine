@@ -5,10 +5,10 @@
 // SPDX-License-Identifier: MIT
 
 #include "main/main.h"
-#include "os_server.h"
+#include "server_os.h"
 
 int main(int argc, char* argv[]) {
-    OS_Server os;
+    ServerOS os;
 
     Error err = Main::setup(argv[0], argc - 1, &argv[1]);
     if (err != OK) {

@@ -119,7 +119,7 @@ private:
             res_temp_assemblies_base_dir.plus_file(_get_expected_build_config()
             );
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
         mono_user_dir = "user://";
 #else
         mono_user_dir = _get_mono_user_dir();
@@ -166,7 +166,7 @@ private:
         data_mono_bin_dir = data_mono_root_dir.plus_file("bin");
 #endif
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
         if (!DirAccess::exists(data_editor_tools_dir)) {
             data_editor_tools_dir =
                 exe_dir.plus_file("../Resources/GodotSharp/Tools");
@@ -209,7 +209,7 @@ private:
         data_mono_bin_dir = data_mono_root_dir.plus_file("bin");
 #endif
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
         if (!DirAccess::exists(data_mono_root_dir)) {
             data_mono_etc_dir =
                 exe_dir.plus_file("../Resources/GodotSharp/Mono/etc");

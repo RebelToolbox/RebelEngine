@@ -26,8 +26,8 @@
 #include "core/os/os.h"
 #include "core/ustring.h"
 #include "platform/android/android_jni_os.h"
-#include "platform/android/os_android.h"
-#include "platform/android/thread_jandroid.h"
+#include "platform/android/android_jni_thread.h"
+#include "platform/android/android_os.h"
 
 // Warning: JNI boilerplate ahead... continue at your own risk
 
@@ -103,7 +103,7 @@ String determine_app_native_lib_dir() {
     JNIEnv* env = get_jni_env();
 
     AndroidJNIOS* android_jni_os =
-        static_cast<OS_Android*>(OS::get_singleton())->get_android_jni_os();
+        static_cast<AndroidOS*>(OS::get_singleton())->get_android_jni_os();
     jobject activity = android_jni_os->get_activity();
 
     ScopedLocalRef<jclass> contextClass(
@@ -708,7 +708,7 @@ static void interop_get_active_network_dns_servers(
     JNIEnv* env = get_jni_env();
 
     AndroidJNIOS* android_jni_os =
-        ((OS_Android*)OS::get_singleton())->get_android_jni_os();
+        ((AndroidOS*)OS::get_singleton())->get_android_jni_os();
     jobject activity = android_jni_os->get_activity();
 
     ScopedLocalRef<jclass> activityClass(env, env->GetObjectClass(activity));

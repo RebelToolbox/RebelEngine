@@ -62,7 +62,7 @@ use_mingw = ARGUMENTS.get("use_mingw", False)
 
 if platform_arg == "android":
     custom_tools = ["clang", "clang++", "as", "ar", "link"]
-elif platform_arg == "javascript":
+elif platform_arg == "web":
     # Use generic POSIX build toolchain for Emscripten.
     custom_tools = ["cc", "c++", "ar", "link", "textfile", "zip"]
 elif use_mingw or (os.name == "posix" and platform_arg == "windows"):
@@ -274,9 +274,9 @@ else:
         or sys.platform.startswith("netbsd")
         or sys.platform.startswith("openbsd")
     ):
-        selected_platform = "x11"
+        selected_platform = "linux"
     elif sys.platform == "darwin":
-        selected_platform = "osx"
+        selected_platform = "macos"
     elif sys.platform == "win32":
         selected_platform = "windows"
     else:
@@ -287,9 +287,6 @@ else:
 
     if selected_platform != "":
         print("Automatically detected platform: " + selected_platform)
-
-if selected_platform in ["linux", "bsd", "linuxbsd"]:
-    selected_platform = "x11"
 
 # Make sure to update this to the found, valid platform as it's used through the buildsystem as the reference.
 # It should always be re-set after calling `opts.Update()` otherwise it uses the original input value.

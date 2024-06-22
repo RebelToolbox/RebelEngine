@@ -70,7 +70,7 @@ GLuint RasterizerStorageGLES2::system_fbo = 0;
 #include <dlfcn.h> // needed to load extensions
 #endif
 
-#ifdef IPHONE_ENABLED
+#ifdef IOS_ENABLED
 
 #include <OpenGLES/ES2/glext.h>
 // void *glRenderbufferStorageMultisampleAPPLE;
@@ -6495,7 +6495,7 @@ void RasterizerStorageGLES2::_render_target_allocate(RenderTarget* rt) {
     /* BACK FBO */
     /* For MSAA */
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
     if (rt->msaa >= VS::VIEWPORT_MSAA_2X && rt->msaa <= VS::VIEWPORT_MSAA_16X
         && config.multisample_supported) {
         rt->multisample_active = true;
@@ -6535,7 +6535,7 @@ void RasterizerStorageGLES2::_render_target_allocate(RenderTarget* rt) {
             rt->multisample_depth
         );
 
-#if defined(GLES_OVER_GL) || defined(IPHONE_ENABLED)
+#if defined(GLES_OVER_GL) || defined(IOS_ENABLED)
 
         glGenRenderbuffers(1, &rt->multisample_color);
         glBindRenderbuffer(GL_RENDERBUFFER, rt->multisample_color);
@@ -6613,7 +6613,7 @@ void RasterizerStorageGLES2::_render_target_allocate(RenderTarget* rt) {
 #endif
 
     } else
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED
     {
         rt->multisample_active = false;
     }
@@ -8017,11 +8017,11 @@ void RasterizerStorageGLES2::initialize() {
     // textures, as they are not exported in the APK. This is a simple way to
     // prevent Android devices trying to load S3TC, by faking lack of hardware
     // support.
-#if defined(ANDROID_ENABLED) || defined(IPHONE_ENABLED)
+#if defined(ANDROID_ENABLED) || defined(IOS_ENABLED)
     config.s3tc_supported = false;
 #endif
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
     // RenderBuffer internal format must be 16 bits in WebGL,
     // but depth_texture should default to 32 always
     // if the implementation doesn't support 32, it should just quietly use 16
@@ -8042,18 +8042,8 @@ void RasterizerStorageGLES2::initialize() {
 #endif
 
 #ifndef GLES_OVER_GL
-    // Manually load extensions for android and ios
-
-#ifdef IPHONE_ENABLED
-    // appears that IPhone doesn't need to dlopen TODO: test this rigorously
-    // before removing
-    // void *gles2_lib = dlopen(NULL, RTLD_LAZY);
-    // glRenderbufferStorageMultisampleAPPLE = dlsym(gles2_lib,
-    // "glRenderbufferStorageMultisampleAPPLE");
-    // glResolveMultisampleFramebufferAPPLE = dlsym(gles2_lib,
-    // "glResolveMultisampleFramebufferAPPLE");
-#elif ANDROID_ENABLED
-
+    // Manually load extensions for android
+#if ANDROID_ENABLED
     void* gles2_lib = dlopen("libGLESv2.so", RTLD_LAZY);
     glRenderbufferStorageMultisampleEXT =
         (PFNGLRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC
@@ -8061,8 +8051,8 @@ void RasterizerStorageGLES2::initialize() {
     glFramebufferTexture2DMultisampleEXT =
         (PFNGLFRAMEBUFFERTEXTURE2DMULTISAMPLEEXTPROC
         )dlsym(gles2_lib, "glFramebufferTexture2DMultisampleEXT");
-#endif
-#endif
+#endif // ANDROID_ENABLED
+#endif // GLES_OVER_GL
 
     // Check for multisample support
     config.multisample_supported =
@@ -8107,7 +8097,7 @@ void RasterizerStorageGLES2::initialize() {
 
 #ifdef GLES_OVER_GL
     config.support_write_depth = true;
-#elif defined(JAVASCRIPT_ENABLED)
+#elif defined(WEB_ENABLED)
     config.support_write_depth = false;
 #else
     config.support_write_depth = config.extensions.has("GL_EXT_frag_depth");
@@ -8116,7 +8106,7 @@ void RasterizerStorageGLES2::initialize() {
     config.support_half_float_vertices = true;
 // every platform should support this except web, iOS has issues with their
 // support, so add option to disable
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
     config.support_half_float_vertices = false;
 #endif
     bool disable_half_float =
@@ -8193,7 +8183,7 @@ void RasterizerStorageGLES2::initialize() {
 
         if (status != GL_FRAMEBUFFER_COMPLETE) {
             // If it fails, test to see if it supports a framebuffer texture
-            // using UNSIGNED_SHORT This is needed because many OSX devices
+            // using UNSIGNED_SHORT. This is needed because many macOS devices
             // don't support either UNSIGNED_INT or UNSIGNED_SHORT
 #ifdef GLES_OVER_GL
             config.depth_internalformat = GL_DEPTH_COMPONENT16;

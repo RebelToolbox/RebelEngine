@@ -7,7 +7,7 @@
 #ifndef IOS_SUPPORT_H
 #define IOS_SUPPORT_H
 
-#if defined(IPHONE_ENABLED)
+#if defined(IOS_ENABLED)
 
 #include "core/ustring.h"
 
@@ -25,6 +25,6 @@ void cleanup();
 } // namespace ios
 } // namespace gdmono
 
-#endif // IPHONE_ENABLED
+#endif // IOS_ENABLED
 
 #endif // IOS_SUPPORT_H

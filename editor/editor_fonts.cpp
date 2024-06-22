@@ -97,7 +97,7 @@ void editor_register_fonts(Ref<Theme> p_theme) {
             // "Normal" hinting.
             // - Linux has configurable font hinting, but most distributions
             // including Ubuntu default to "Light".
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
             font_hinting = DynamicFontData::HINTING_NONE;
 #else
             font_hinting = DynamicFontData::HINTING_LIGHT;

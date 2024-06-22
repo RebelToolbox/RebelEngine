@@ -6,7 +6,7 @@
 
 #include "gd_mono_wasm_m2n.h"
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "core/oa_hash_map.h"
 

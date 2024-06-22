@@ -13,7 +13,7 @@
 #include "gd_mono_header.h"
 
 #include <mono/metadata/threads.h>
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 #include "gd_mono_wasm_m2n.h"
 #endif
 
@@ -182,7 +182,7 @@ private:
 
 template <typename... P>
 void add_internal_call(const char* p_name, void (*p_func)(P...)) {
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
     GDMonoWasmM2n::ICallTrampolines<P...>::add();
 #endif
     mono_add_internal_call(p_name, (void*)p_func);
@@ -190,7 +190,7 @@ void add_internal_call(const char* p_name, void (*p_func)(P...)) {
 
 template <typename R, typename... P>
 void add_internal_call(const char* p_name, R (*p_func)(P...)) {
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
     GDMonoWasmM2n::ICallTrampolinesR<R, P...>::add();
 #endif
     mono_add_internal_call(p_name, (void*)p_func);

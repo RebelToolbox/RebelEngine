@@ -291,16 +291,16 @@ namespace GodotTools
 
                     var args = new List<string>();
 
-                    bool osxAppBundleInstalled = false;
+                    bool macosAppBundleInstalled = false;
 
-                    if (OS.IsOSX)
+                    if (OS.IsMacOS)
                     {
                         // The package path is '/Applications/Visual Studio Code.app'
                         const string vscodeBundleId = "com.microsoft.VSCode";
 
-                        osxAppBundleInstalled = Internal.IsOsxAppBundleInstalled(vscodeBundleId);
+                        macosAppBundleInstalled = Internal.IsOsxAppBundleInstalled(vscodeBundleId);
 
-                        if (osxAppBundleInstalled)
+                        if (macosAppBundleInstalled)
                         {
                             args.Add("-b");
                             args.Add(vscodeBundleId);
@@ -333,15 +333,15 @@ namespace GodotTools
 
                     string command;
 
-                    if (OS.IsOSX)
+                    if (OS.IsMacOS)
                     {
-                        if (!osxAppBundleInstalled && string.IsNullOrEmpty(_vsCodePath))
+                        if (!macosAppBundleInstalled && string.IsNullOrEmpty(_vsCodePath))
                         {
                             GD.PushError("Cannot find code editor: VSCode");
                             return Error.FileNotFound;
                         }
 
-                        command = osxAppBundleInstalled ? "/usr/bin/open" : _vsCodePath;
+                        command = macosAppBundleInstalled ? "/usr/bin/open" : _vsCodePath;
                     }
                     else
                     {
@@ -485,7 +485,7 @@ namespace GodotTools
                                    $",Visual Studio Code:{(int)ExternalEditorId.VsCode}" +
                                    $",JetBrains Rider:{(int)ExternalEditorId.Rider}";
             }
-            else if (OS.IsOSX)
+            else if (OS.IsMacOS)
             {
                 settingsHintStr += $",Visual Studio:{(int)ExternalEditorId.VisualStudioForMac}" +
                                    $",MonoDevelop:{(int)ExternalEditorId.MonoDevelop}" +

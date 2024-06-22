@@ -426,7 +426,7 @@ Error ProjectSettings::_setup(
         // binaries are optional (so both 'mygame.bin' and 'mygame' should be
         // able to find 'mygame.pck').
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
         if (!found) {
             // Attempt to load PCK from macOS .app bundle resources.
             found = _load_resource_pack(OS::get_singleton()

@@ -230,4 +230,4 @@ GDMonoLog::~GDMonoLog() {
     singleton = NULL;
 }
 
-#endif // !defined(JAVASCRIPT_ENABLED)
+#endif // !defined(WEB_ENABLED)

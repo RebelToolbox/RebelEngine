@@ -834,62 +834,38 @@ def CommandNoCache(env, target, sources, command, **args):
 
 def get_darwin_sdk_version(platform):
     sdk_name = ""
-    if platform == "osx":
+    if platform == "macos":
         sdk_name = "macosx"
-    elif platform == "iphone":
+    elif platform == "ios":
         sdk_name = "iphoneos"
-    elif platform == "iphonesimulator":
+    elif platform == "ios_simulator":
         sdk_name = "iphonesimulator"
     else:
         raise Exception("Invalid platform argument passed to get_darwin_sdk_version")
 
-    try:
-        return float(
-            decode_utf8(
-                subprocess.check_output(
-                    ["xcrun", "--sdk", sdk_name, "--show-sdk-version"]
-                ).strip()
-            )
+    return float(
+        decode_utf8(
+            subprocess.check_output(
+                ["xcrun", "--sdk", sdk_name, "--show-sdk-version"]
+            ).strip()
         )
-    except (subprocess.CalledProcessError, OSError):
-        print(
-            "Failed to find SDK version while running xcrun --sdk {} --show-sdk-version.".format(
-                sdk_name
-            )
-        )
-        return 0.0
+    )
 
 
-def detect_darwin_sdk_path(platform, env):
+def get_darwin_sdk_path(platform):
     sdk_name = ""
-    if platform == "osx":
+    if platform == "macos":
         sdk_name = "macosx"
-        var_name = "MACOS_SDK_PATH"
-    elif platform == "iphone":
+    elif platform == "ios":
         sdk_name = "iphoneos"
-        var_name = "IPHONESDK"
-    elif platform == "iphonesimulator":
+    elif platform == "ios_simulator":
         sdk_name = "iphonesimulator"
-        var_name = "IPHONESDK"
     else:
         raise Exception("Invalid platform argument passed to detect_darwin_sdk_path")
 
-    if not env[var_name]:
-        try:
-            sdk_path = decode_utf8(
-                subprocess.check_output(
-                    ["xcrun", "--sdk", sdk_name, "--show-sdk-path"]
-                ).strip()
-            )
-            if sdk_path:
-                env[var_name] = sdk_path
-        except (subprocess.CalledProcessError, OSError):
-            print(
-                "Failed to find SDK path while running xcrun --sdk {} --show-sdk-path.".format(
-                    sdk_name
-                )
-            )
-            raise
+    return decode_utf8(
+        subprocess.check_output(["xcrun", "--sdk", sdk_name, "--show-sdk-path"]).strip()
+    )
 
 
 def get_compiler_version(env):

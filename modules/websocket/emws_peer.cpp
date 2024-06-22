@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "emws_peer.h"
 
@@ -105,15 +105,15 @@ void EMWSPeer::close(int p_code, String p_reason) {
 };
 
 IP_Address EMWSPeer::get_connected_host() const {
-    ERR_FAIL_V_MSG(IP_Address(), "Not supported in HTML5 export.");
+    ERR_FAIL_V_MSG(IP_Address(), "Not supported in Web exports.");
 };
 
 uint16_t EMWSPeer::get_connected_port() const {
-    ERR_FAIL_V_MSG(0, "Not supported in HTML5 export.");
+    ERR_FAIL_V_MSG(0, "Not supported in Web exports.");
 };
 
 void EMWSPeer::set_no_delay(bool p_enabled) {
-    ERR_FAIL_MSG("'set_no_delay' is not supported in HTML5 export.");
+    ERR_FAIL_MSG("'set_no_delay' is not supported in Web exports.");
 }
 
 EMWSPeer::EMWSPeer() {
@@ -127,4 +127,4 @@ EMWSPeer::~EMWSPeer() {
     close();
 };
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED

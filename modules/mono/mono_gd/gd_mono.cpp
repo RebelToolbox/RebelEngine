@@ -33,7 +33,7 @@
 #ifdef ANDROID_ENABLED
 #include "android_mono_config.h"
 #include "support/android_support.h"
-#elif defined(IPHONE_ENABLED)
+#elif defined(IOS_ENABLED)
 #include "support/ios_support.h"
 #endif
 
@@ -57,13 +57,13 @@ GDMono* GDMono::singleton = NULL;
 namespace
 {
 
-#if defined(JAVASCRIPT_ENABLED)
+#if defined(WEB_ENABLED)
 extern "C" {
 void mono_wasm_load_runtime(const char* managed_path, int enable_debugging);
 }
 #endif
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
 
 void gd_mono_setup_runtime_main_args() {
     CharString execpath = OS::get_singleton()->get_executable_path().utf8();
@@ -193,9 +193,9 @@ void gd_mono_debug_init() {
     mono_jit_parse_options(2, (char**)options);
 }
 
-#endif // !defined(JAVASCRIPT_ENABLED)
+#endif // !defined(WEB_ENABLED)
 
-#if defined(JAVASCRIPT_ENABLED)
+#if defined(WEB_ENABLED)
 MonoDomain* gd_initialize_mono_runtime() {
     const char* vfs_prefix = "managed";
     int enable_debugging   = 0;
@@ -213,7 +213,7 @@ MonoDomain* gd_initialize_mono_runtime() {
 MonoDomain* gd_initialize_mono_runtime() {
     gd_mono_debug_init();
 
-#if defined(IPHONE_ENABLED) || defined(ANDROID_ENABLED)
+#if defined(IOS_ENABLED) || defined(ANDROID_ENABLED)
     // I don't know whether this actually matters or not
     const char* runtime_version = "mobile";
 #else
@@ -297,7 +297,7 @@ void GDMono::determine_mono_dirs(
         && DirAccess::exists(mono_reg_info.config_dir)) {
         r_config_dir = mono_reg_info.config_dir;
     }
-#elif defined(OSX_ENABLED)
+#elif defined(MACOS_ENABLED)
     const char* c_assembly_rootdir = mono_assembly_getrootdir();
     const char* c_config_dir       = mono_get_config_dir();
 
@@ -371,7 +371,7 @@ void GDMono::initialize() {
 
     GDMonoLog::get_singleton()->initialize();
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
     String assembly_rootdir;
     String config_dir;
     determine_mono_dirs(assembly_rootdir, config_dir);
@@ -393,13 +393,13 @@ void GDMono::initialize() {
 
 #if defined(ANDROID_ENABLED)
     gdmono::android::support::initialize();
-#elif defined(IPHONE_ENABLED)
+#elif defined(IOS_ENABLED)
     gdmono::ios::support::initialize();
 #endif
 
     GDMonoAssembly::initialize();
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
     gd_mono_profiler_init();
 #endif
 
@@ -438,7 +438,7 @@ void GDMono::initialize() {
 
     GDMonoUtils::set_main_thread(GDMonoUtils::get_current_thread());
 
-#if !defined(JAVASCRIPT_ENABLED)
+#if !defined(WEB_ENABLED)
     gd_mono_setup_runtime_main_args(
     ); // Required for System.Environment.GetCommandLineArgs
 #endif

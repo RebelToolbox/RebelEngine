@@ -1,12 +1,11 @@
 supported_platforms = [
     "windows",
-    "osx",
-    "x11",
+    "macos",
+    "linux",
     "server",
     "android",
-    "haiku",
-    "javascript",
-    "iphone",
+    "web",
+    "ios",
 ]
 
 
@@ -27,8 +26,8 @@ def configure(env):
 
     from SCons.Script import BoolVariable, PathVariable, Variables, Help
 
-    default_mono_static = platform in ["iphone", "javascript"]
-    default_mono_bundles_zlib = platform in ["javascript"]
+    default_mono_static = platform in ["ios", "web"]
+    default_mono_bundles_zlib = platform in ["web"]
 
     envvars = Variables()
     envvars.Add(

@@ -7,7 +7,7 @@
 #ifndef EMWSCLIENT_H
 #define EMWSCLIENT_H
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "core/error_list.h"
 #include "emws_peer.h"
@@ -64,6 +64,6 @@ public:
     ~EMWSClient();
 };
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED
 
 #endif // EMWSCLIENT_H

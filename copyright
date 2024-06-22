@@ -87,10 +87,10 @@ Comment: The Android Open Source Project
 Copyright: 2002, Google Inc.
 License: Apache-2.0
 
-Files: ./platform/android/power_android.cpp
- ./platform/osx/power_osx.cpp
- ./platform/windows/power_windows.cpp
- ./platform/x11/power_x11.cpp
+Files: ./platform/android/android_power.cpp
+ ./platform/macos/macos_power.cpp
+ ./platform/windows/windows_power.cpp
+ ./platform/linux/linux_power.cpp
 Comment: Simple DirectMedia Layer
 Copyright: 2022-Present, Rebel Engine contributors
  2017-2022, Godot Engine contributors

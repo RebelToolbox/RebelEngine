@@ -12,7 +12,7 @@
 #include "servers/audio_server.h"
 
 #include <AudioUnit/AudioUnit.h>
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
 #include <CoreAudio/AudioHardware.h>
 #endif
 
@@ -34,7 +34,7 @@ class AudioDriverCoreAudio : public AudioDriver {
     Vector<int32_t> samples_in;
     Vector<int16_t> input_buf;
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     Array _get_device_list(bool capture = false);
     void _set_device(const String& device, bool capture = false);
 
@@ -94,7 +94,7 @@ public:
     bool try_lock();
     void stop();
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     virtual Array get_device_list();
     virtual String get_device();
     virtual void set_device(String device);

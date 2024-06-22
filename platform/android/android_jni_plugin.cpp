@@ -6,11 +6,11 @@
 
 #include "android_jni_plugin.h"
 
-#include "api/jni_singleton.h"
+#include "android_jni_singleton.h"
+#include "android_jni_utils.h"
 #include "core/engine.h"
 #include "core/error_macros.h"
 #include "core/project_settings.h"
-#include "jni_utils.h"
 
 static HashMap<String, JNISingleton*> jni_singletons;
 

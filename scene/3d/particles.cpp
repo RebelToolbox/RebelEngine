@@ -245,7 +245,7 @@ String Particles::get_configuration_warning() const {
         return warnings;
     }
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     if (warnings != String()) {
         warnings += "\n\n";
     }

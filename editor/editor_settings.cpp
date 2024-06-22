@@ -344,7 +344,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
     );
     _initial_set("interface/editor/font_antialiased", true);
     _initial_set("interface/editor/font_hinting", 0);
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     hints["interface/editor/font_hinting"] = PropertyInfo(
         Variant::INT,
         "interface/editor/font_hinting",
@@ -2074,7 +2074,7 @@ String EditorSettings::get_editor_layouts_config() const {
 }
 
 float EditorSettings::get_auto_display_scale() const {
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     return OS::get_singleton()->get_screen_max_scale();
 #else
     const int screen = OS::get_singleton()->get_current_screen();
@@ -2162,7 +2162,7 @@ Ref<ShortCut> ED_SHORTCUT(
     const String& p_name,
     uint32_t p_keycode
 ) {
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
     // Use Cmd+Backspace as a general replacement for Delete shortcuts on macOS
     if (p_keycode == KEY_DELETE) {
         p_keycode = KEY_MASK_CMD | KEY_BACKSPACE;

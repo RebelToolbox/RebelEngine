@@ -185,7 +185,7 @@ namespace GodotTools.Export
 
                 assemblies["Mono.Android"] = monoAndroidAssemblyPath;
             }
-            else if (platform == OS.Platforms.HTML5)
+            else if (platform == OS.Platforms.Web)
             {
                 // Ideally these would be added automatically since they're referenced by the wasm BCL assemblies.
                 // However, at least in the case of 'WebAssembly.Net.Http' for some reason the BCL assemblies
@@ -383,8 +383,8 @@ namespace GodotTools.Export
 
         private static bool PlatformHasTemplateDir(string platform)
         {
-            // OSX export templates are contained in a zip, so we place our custom template inside it and let Godot do the rest.
-            return !new[] { OS.Platforms.OSX, OS.Platforms.Android, OS.Platforms.iOS, OS.Platforms.HTML5 }.Contains(platform);
+            // MacOS export templates are contained in a zip, so we place our custom template inside it and let Godot do the rest.
+            return !new[] { OS.Platforms.MacOS, OS.Platforms.Android, OS.Platforms.iOS, OS.Platforms.Web }.Contains(platform);
         }
 
         private static bool DeterminePlatformFromFeatures(IEnumerable<string> features, out string platform)
@@ -433,7 +433,7 @@ namespace GodotTools.Export
         /// </summary>
         private static bool PlatformRequiresCustomBcl(string platform)
         {
-            if (new[] { OS.Platforms.Android, OS.Platforms.iOS, OS.Platforms.HTML5 }.Contains(platform))
+            if (new[] { OS.Platforms.Android, OS.Platforms.iOS, OS.Platforms.Web }.Contains(platform))
                 return true;
 
             // The 'net_4_x' BCL is not compatible between Windows and the other platforms.
@@ -455,16 +455,15 @@ namespace GodotTools.Export
                 case OS.Platforms.Windows:
                 case OS.Platforms.UWP:
                     return "net_4_x_win";
-                case OS.Platforms.OSX:
-                case OS.Platforms.X11:
+                case OS.Platforms.MacOS:
+                case OS.Platforms.Linux:
                 case OS.Platforms.Server:
-                case OS.Platforms.Haiku:
                     return "net_4_x";
                 case OS.Platforms.Android:
                     return "monodroid";
                 case OS.Platforms.iOS:
                     return "monotouch";
-                case OS.Platforms.HTML5:
+                case OS.Platforms.Web:
                     return "wasm";
                 default:
                     throw new NotSupportedException($"Platform not supported: {platform}");

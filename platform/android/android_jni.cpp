@@ -6,28 +6,28 @@
 
 #include "android_jni.h"
 
+#include "android_file_access.h"
 #include "android_input_handler.h"
+#include "android_java_class.h"
 #include "android_jni_dir_access.h"
 #include "android_jni_io.h"
 #include "android_jni_os.h"
-#include "api/java_class_wrapper.h"
-#include "api/jni_singleton.h"
+#include "android_jni_singleton.h"
+#include "android_jni_thread.h"
+#include "android_jni_utils.h"
+#include "android_net_socket.h"
+#include "android_os.h"
 #include "core/engine.h"
 #include "core/project_settings.h"
-#include "file_access_android.h"
-#include "jni_utils.h"
 #include "main/input_default.h"
 #include "main/main.h"
-#include "net_socket_android.h"
-#include "os_android.h"
-#include "thread_jandroid.h"
 
 #include <android/asset_manager_jni.h>
 #include <android/input.h>
 #include <unistd.h>
 
 static JavaClassWrapper* java_class_wrapper = NULL;
-static OS_Android* os_android               = NULL;
+static AndroidOS* android_os                = NULL;
 static AndroidInputHandler* input_handler   = NULL;
 static AndroidJNIOS* android_jni_os         = NULL;
 static AndroidJNIIO* android_jni_io         = NULL;
@@ -139,21 +139,21 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_initialize(
         )
     );
 
-    init_thread_jandroid(jvm, env);
+    initialize_android_jni_thread(jvm, env);
 
     jobject amgr = env->NewGlobalRef(p_asset_manager);
 
-    FileAccessAndroid::asset_manager = AAssetManager_fromJava(env, amgr);
+    AndroidFileAccess::asset_manager = AAssetManager_fromJava(env, amgr);
 
     AndroidJNIDirAccess::setup(android_jni_io->get_instance());
-    NetSocketAndroid::setup(android_jni_os->get_member_object(
+    AndroidNetSocket::setup(android_jni_os->get_member_object(
         "wifiMulticastLock",
         "Lcom/rebeltoolbox/rebelengine/utils/WifiMulticastLock;",
         env
     ));
 
-    os_android =
-        new OS_Android(android_jni_os, android_jni_io, p_use_apk_expansion);
+    android_os =
+        new AndroidOS(android_jni_os, android_jni_io, p_use_apk_expansion);
 
     char wd[500];
     getcwd(wd, 500);
@@ -174,8 +174,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_ondestroy(
     if (input_handler) {
         delete input_handler;
     }
-    if (os_android) {
-        delete os_android;
+    if (android_os) {
+        delete android_os;
     }
 }
 
@@ -237,8 +237,8 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_resize(
     jint width,
     jint height
 ) {
-    if (os_android) {
-        os_android->set_display_size(Size2(width, height));
+    if (android_os) {
+        android_os->set_display_size(Size2(width, height));
     }
 }
 
@@ -247,16 +247,16 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_newcontext(
     jclass clazz,
     jboolean p_32_bits
 ) {
-    if (os_android) {
+    if (android_os) {
         if (step.get() == 0) {
             // During startup
-            os_android->set_context_is_16_bits(!p_32_bits);
+            android_os->set_context_is_16_bits(!p_32_bits);
         } else {
             // GL context recreated because it was lost; restart app to let it
             // reload everything
             step.set(-1); // Ensure no further steps are attempted and no
                           // further events are sent
-            os_android->main_loop_end();
+            android_os->main_loop_end();
             android_jni_os->restart(env);
         }
     }
@@ -268,8 +268,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_back(JNIEnv* env, jclass clazz) {
         return;
     }
 
-    if (os_android->get_main_loop()) {
-        os_android->get_main_loop()->notification(
+    if (android_os->get_main_loop()) {
+        android_os->get_main_loop()->notification(
             MainLoop::NOTIFICATION_WM_GO_BACK_REQUEST
         );
     }
@@ -297,17 +297,17 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_step(JNIEnv* env, jclass clazz) {
         }
 
         android_jni_os->on_setup_completed(env);
-        os_android->main_loop_begin();
+        android_os->main_loop_begin();
         android_jni_os->on_main_loop_started(env);
         step.increment();
     }
 
-    os_android->process_accelerometer(accelerometer);
-    os_android->process_gravity(gravity);
-    os_android->process_magnetometer(magnetometer);
-    os_android->process_gyroscope(gyroscope);
+    android_os->process_accelerometer(accelerometer);
+    android_os->process_gravity(gravity);
+    android_os->process_magnetometer(magnetometer);
+    android_os->process_gyroscope(gyroscope);
 
-    if (os_android->main_loop_iterate()) {
+    if (android_os->main_loop_iterate()) {
         android_jni_os->force_quit(env);
     }
 }
@@ -629,7 +629,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_focusin(
         return;
     }
 
-    os_android->main_loop_focusin();
+    android_os->main_loop_focusin();
 }
 
 JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_focusout(
@@ -640,7 +640,7 @@ JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_focusout(
         return;
     }
 
-    os_android->main_loop_focusout();
+    android_os->main_loop_focusout();
 }
 
 JNIEXPORT jstring JNICALL
@@ -737,8 +737,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_requestPermissionResult(
         AudioDriver::get_singleton()->capture_start();
     }
 
-    if (os_android->get_main_loop()) {
-        os_android->get_main_loop()->emit_signal(
+    if (android_os->get_main_loop()) {
+        android_os->get_main_loop()->emit_signal(
             "on_request_permissions_result",
             permission,
             p_result == JNI_TRUE
@@ -755,8 +755,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_onRendererResumed(
         return;
     }
 
-    if (os_android->get_main_loop()) {
-        os_android->get_main_loop()->notification(
+    if (android_os->get_main_loop()) {
+        android_os->get_main_loop()->notification(
             MainLoop::NOTIFICATION_APP_RESUMED
         );
     }
@@ -771,8 +771,8 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_onRendererPaused(
         return;
     }
 
-    if (os_android->get_main_loop()) {
-        os_android->get_main_loop()->notification(
+    if (android_os->get_main_loop()) {
+        android_os->get_main_loop()->notification(
             MainLoop::NOTIFICATION_APP_PAUSED
         );
     }

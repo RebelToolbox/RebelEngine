@@ -3,20 +3,20 @@
 Import("env")
 
 android_files = [
-    "os_android.cpp",
+    "android_audio_driver.cpp",
+    "android_file_access.cpp",
     "android_input_handler.cpp",
-    "file_access_android.cpp",
-    "audio_driver_opensl.cpp",
-    "android_jni_dir_access.cpp",
-    "thread_jandroid.cpp",
-    "net_socket_android.cpp",
+    "android_key_mapping.cpp",
+    "android_java_class.cpp",
     "android_jni.cpp",
-    "java_class_wrapper.cpp",
-    "android_jni_os.cpp",
+    "android_jni_dir_access.cpp",
     "android_jni_io.cpp",
-    "jni_utils.cpp",
-    "android_keys_utils.cpp",
+    "android_jni_os.cpp",
     "android_jni_plugin.cpp",
+    "android_jni_thread.cpp",
+    "android_jni_utils.cpp",
+    "android_os.cpp",
+    "android_net_socket.cpp",
 ]
 
 env_android = env.Clone()

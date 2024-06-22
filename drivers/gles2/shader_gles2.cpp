@@ -155,7 +155,7 @@ ShaderGLES2::Version* ShaderGLES2::get_current_version() {
 #else
     strings.push_back("#version 100\n");
 // angle does not like
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
     strings.push_back("#define USE_HIGHP_PRECISION\n");
 #endif
 

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef JAVASCRIPT_ENABLED
+#ifndef WEB_ENABLED
 
 #include "wsl_client.h"
 
@@ -410,4 +410,4 @@ WSLClient::~WSLClient() {
     disconnect_from_host();
 }
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED

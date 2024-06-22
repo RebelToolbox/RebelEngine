@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
 
 #include "emws_server.h"
 
@@ -67,4 +67,4 @@ EMWSServer::EMWSServer() {}
 
 EMWSServer::~EMWSServer() {}
 
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED

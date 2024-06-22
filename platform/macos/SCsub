@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+Import("env")
+
+from platform_methods import run_in_subprocess
+import macos_builders
+
+macos_files = [
+    "macos_crash_handler.mm",
+    "macos_dir_access.mm",
+    "macos_joypad.cpp",
+    "macos_main.mm",
+    "macos_os.mm",
+    "macos_power.cpp",
+]
+
+prog = env.add_program("#bin/rebel", macos_files)
+
+if env["debug_symbols"] and env["separate_debug_symbols"]:
+    env.AddPostAction(prog, run_in_subprocess(macos_builders.make_macos_debug))

@@ -3823,7 +3823,7 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
     if (k.is_valid()) {
         k = k->duplicate(); // It will be modified later on.
 
-#ifdef OSX_ENABLED
+#ifdef MACOS_ENABLED
         if (k->get_scancode() == KEY_META) {
 #else
         if (k->get_scancode() == KEY_CONTROL) {
@@ -5156,10 +5156,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
 
             } break;
             case KEY_SPACE: {
-#ifdef OSX_ENABLED
-                if (completion_enabled
-                    && k->get_metakey(
-                    )) { // cmd-space is spotlight shortcut in OSX
+#ifdef MACOS_ENABLED
+                if (completion_enabled && k->get_metakey()) {
 #else
                 if (completion_enabled && k->get_command()) {
 #endif

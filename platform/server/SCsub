@@ -4,15 +4,15 @@ import sys
 
 Import("env")
 
-common_server = [
-    "os_server.cpp",
+server_files = [
+    "server_os.cpp",
 ]
 
 if sys.platform == "darwin":
-    common_server.append("#platform/osx/crash_handler_osx.mm")
-    common_server.append("#platform/osx/power_osx.cpp")
+    server_files.append("#platform/macos/macos_crash_handler.mm")
+    server_files.append("#platform/macos/macos_power.cpp")
 else:
-    common_server.append("#platform/x11/crash_handler_x11.cpp")
-    common_server.append("#platform/x11/power_x11.cpp")
+    server_files.append("#platform/linux/linux_crash_handler.cpp")
+    server_files.append("#platform/linux/linux_power.cpp")
 
-prog = env.add_program("#bin/rebel_server", ["server_main.cpp"] + common_server)
+prog = env.add_program("#bin/rebel_server", ["server_main.cpp"] + server_files)

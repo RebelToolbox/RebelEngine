@@ -673,7 +673,7 @@ void RasterizerStorageGLES3::texture_allocate(
 
     if (p_type != VS::TEXTURE_TYPE_EXTERNAL) {
         texture->is_npot_repeat_mipmap = false;
-#ifdef JAVASCRIPT_ENABLED
+#ifdef WEB_ENABLED
         // WebGL 2.0 on browsers does not seem to properly support compressed
         // non power-of-two (NPOT) textures with repeat/mipmaps, even though
         // NPOT textures should be supported as per the spec. Force
@@ -688,7 +688,7 @@ void RasterizerStorageGLES3::texture_allocate(
                 || p_flags & VS::TEXTURE_FLAG_MIPMAPS)) {
             texture->is_npot_repeat_mipmap = true;
         }
-#endif // JAVASCRIPT_ENABLED
+#endif // WEB_ENABLED
 
         Image::Format real_format;
         _get_gl_image_and_format(
@@ -10616,7 +10616,7 @@ void RasterizerStorageGLES3::initialize() {
     // textures, as they are not exported in the APK. This is a simple way to
     // prevent Android devices trying to load S3TC, by faking lack of hardware
     // support.
-#if defined(ANDROID_ENABLED) || defined(IPHONE_ENABLED)
+#if defined(ANDROID_ENABLED) || defined(IOS_ENABLED)
     config.s3tc_supported = false;
 #endif
 #endif

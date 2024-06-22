@@ -5,15 +5,13 @@ Import("env")
 env.drivers_sources = []
 
 # OS drivers
+SConscript("network/SCsub")
 SConscript("unix/SCsub")
-SConscript("windows/SCsub")
 
 # Sounds drivers
 SConscript("alsa/SCsub")
 SConscript("coreaudio/SCsub")
 SConscript("pulseaudio/SCsub")
-if env["platform"] == "windows":
-    SConscript("wasapi/SCsub")
 if env["xaudio2"]:
     SConscript("xaudio2/SCsub")
 

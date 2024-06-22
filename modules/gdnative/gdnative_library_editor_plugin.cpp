@@ -358,25 +358,18 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platforms["Windows"]               = platform_windows;
 
         NativePlatformConfig platform_linux;
-        platform_linux.name = "Linux/X11";
+        platform_linux.name = "Linux";
         platform_linux.entries.push_back("64");
         platform_linux.entries.push_back("32");
         platform_linux.library_extension = "*.so";
-        platforms["X11"]                 = platform_linux;
+        platforms["Linux"]               = platform_linux;
 
-        NativePlatformConfig platform_osx;
-        platform_osx.name = "macOS";
-        platform_osx.entries.push_back("64");
-        platform_osx.library_extension =
+        NativePlatformConfig platform_macos;
+        platform_macos.name = "macOS";
+        platform_macos.entries.push_back("64");
+        platform_macos.library_extension =
             "*.framework; Framework, *.dylib; Dynamic Library";
-        platforms["OSX"] = platform_osx;
-
-        NativePlatformConfig platform_haiku;
-        platform_haiku.name = "Haiku";
-        platform_haiku.entries.push_back("64");
-        platform_haiku.entries.push_back("32");
-        platform_haiku.library_extension = "*.so";
-        platforms["Haiku"]               = platform_haiku;
+        platforms["MacOS"] = platform_macos;
 
         NativePlatformConfig platform_uwp;
         platform_uwp.name = "UWP";
@@ -395,11 +388,11 @@ GDNativeLibraryEditor::GDNativeLibraryEditor() {
         platform_android.library_extension = "*.so";
         platforms["Android"]               = platform_android;
 
-        NativePlatformConfig platform_html5;
-        platform_html5.name = "HTML5";
-        platform_html5.entries.push_back("wasm32");
-        platform_html5.library_extension = "*.wasm";
-        platforms["HTML5"]               = platform_html5;
+        NativePlatformConfig platform_web;
+        platform_web.name = "Web";
+        platform_web.entries.push_back("wasm32");
+        platform_web.library_extension = "*.wasm";
+        platforms["Web"]               = platform_web;
 
         NativePlatformConfig platform_ios;
         platform_ios.name = "iOS";

@@ -2098,7 +2098,7 @@ void ProjectManager::_unhandled_input(const Ref<InputEvent>& p_ev) {
         // Pressing Command + Q quits the Project Manager
         // This is handled by the platform implementation on macOS,
         // so only define the shortcut on other platforms
-#ifndef OSX_ENABLED
+#ifndef MACOS_ENABLED
         if (k->get_scancode_with_modifiers() == (KEY_MASK_CMD | KEY_Q)) {
             _dim_window();
             get_tree()->quit();
@@ -2242,7 +2242,7 @@ void ProjectManager::_global_menu_action(
 
 void ProjectManager::_open_selected_projects() {
     // Show loading text to tell the user that the project manager is busy
-    // loading. This is especially important for the HTML5 project manager.
+    // loading. This is especially important for the Web project manager.
     loading_label->set_modulate(Color(1, 1, 1));
 
     const Set<String>& selected_list =

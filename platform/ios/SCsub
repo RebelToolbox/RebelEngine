@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+Import("env")
+
+ios_lib = [
+    "app_delegate.mm",
+    "device_metrics.m",
+    "display_layer.mm",
+    "keyboard_input_view.mm",
+    "ios.mm",
+    "ios_joypad.mm",
+    "ios_main.mm",
+    "ios_os.mm",
+    "main.m",
+    "native_video_view.m",
+    "rebel_app_delegate.m",
+    "rebel_view.mm",
+    "rebel_view_gesture_recognizer.mm",
+    "rebel_view_renderer.mm",
+    "view_controller.mm",
+]
+
+env_ios = env.Clone()
+ios_lib = env_ios.add_library("ios", ios_lib)
+
+# (iOS) Enable module support
+env_ios.Append(CCFLAGS=["-fmodules", "-fcxx-modules"])
+
+
+def combine_libs(target=None, source=None, env=None):
+    lib_path = target[0].srcnode().abspath
+    if "osxcross" in env:
+        libtool = "$xctoolchain/usr/bin/${ios_triple}libtool"
+    else:
+        libtool = "$xctoolchain/usr/bin/libtool"
+    env.Execute(
+        libtool
+        + ' -static -o "'
+        + lib_path
+        + '" '
+        + " ".join([('"' + lib.srcnode().abspath + '"') for lib in source])
+    )
+
+
+combine_command = env_ios.Command(
+    "#bin/librebel" + env_ios["LIBSUFFIX"], [ios_lib] + env_ios["LIBS"], combine_libs
+)

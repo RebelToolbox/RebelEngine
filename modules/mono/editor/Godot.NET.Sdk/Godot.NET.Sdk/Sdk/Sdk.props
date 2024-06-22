@@ -51,9 +51,9 @@
 
   <!-- Auto-detect the target Godot platform if it was not specified. -->
   <PropertyGroup Condition=" '$(GodotTargetPlatform)' == '' ">
-    <GodotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(Linux))' ">x11</GodotTargetPlatform>
-    <GodotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(FreeBSD))' ">x11</GodotTargetPlatform>
-    <GodotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(OSX))' ">osx</GodotTargetPlatform>
+    <GodotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(Linux))' ">linux</GodotTargetPlatform>
+    <GodotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(FreeBSD))' ">linux</GodotTargetPlatform>
+    <GodotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(MacOS))' ">macos</GodotTargetPlatform>
     <GodotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(Windows))' ">windows</GodotTargetPlatform>
   </PropertyGroup>
 
@@ -71,14 +71,13 @@
     recognized platform names and the platform category (PC, MOBILE or WEB).
     -->
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'windows' ">GODOT_WINDOWS;GODOT_PC</GodotPlatformConstants>
-    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'x11' ">GODOT_X11;GODOT_PC</GodotPlatformConstants>
-    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'osx' ">GODOT_OSX;GODOT_MACOS;GODOT_PC</GodotPlatformConstants>
+    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'linux' ">GODOT_LINUX;GODOT_PC</GodotPlatformConstants>
+    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'macos' ">GODOT_MACOS;GODOT_PC</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'server' ">GODOT_SERVER;GODOT_PC</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'uwp' ">GODOT_UWP;GODOT_PC</GodotPlatformConstants>
-    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'haiku' ">GODOT_HAIKU;GODOT_PC</GodotPlatformConstants>
     <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'android' ">GODOT_ANDROID;GODOT_MOBILE</GodotPlatformConstants>
-    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'iphone' ">GODOT_IPHONE;GODOT_IOS;GODOT_MOBILE</GodotPlatformConstants>
-    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'javascript' ">GODOT_JAVASCRIPT;GODOT_HTML5;GODOT_WASM;GODOT_WEB</GodotPlatformConstants>
+    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'ios' ">GODOT_IPHONE;GODOT_IOS;GODOT_MOBILE</GodotPlatformConstants>
+    <GodotPlatformConstants Condition=" '$(GodotTargetPlatform)' == 'web' ">GODOT_WASM;GODOT_WEB</GodotPlatformConstants>
 
     <GodotDefineConstants>$(GodotDefineConstants);$(GodotPlatformConstants)</GodotDefineConstants>
   </PropertyGroup>

@@ -23,7 +23,7 @@ jobs:
             target: release_debug
             tools: true
             sconsflags: module_mono_enabled=yes mono_static=yes mono_glue=no
-            bin: "./bin/rebel.x11.opt.tools.64.mono"
+            bin: "./bin/rebel.linux.opt.tools.64.mono"
             build-mono: true
             artifact: true
 
@@ -33,7 +33,7 @@ jobs:
             tools: true
             sconsflags: use_asan=yes use_ubsan=yes
             test: true
-            bin: "./bin/rebel.x11.tools.64s"
+            bin: "./bin/rebel.linux.tools.64s"
             build-mono: false
             # Skip 2GiB artifact speeding up action.
             artifact: false
@@ -74,7 +74,7 @@ jobs:
         uses: ./.github/actions/build
         with:
           sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }}
-          platform: linuxbsd
+          platform: linux
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
 
@@ -90,7 +90,7 @@ jobs:
         if: ${{ matrix.build-mono }}
         with:
           sconsflags: ${{ env.SCONSFLAGS }} ${{ matrix.sconsflags }} mono_glue=yes
-          platform: linuxbsd
+          platform: linux
           target: ${{ matrix.target }}
           tools: ${{ matrix.tools }}
 

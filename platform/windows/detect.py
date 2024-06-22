@@ -275,7 +275,6 @@ def configure_msvc(env, manual_msvc_config):
         CPPDEFINES=[
             "WINDOWS_ENABLED",
             "OPENGL_ENABLED",
-            "WASAPI_ENABLED",
             "WINMIDI_ENABLED",
             "TYPED_METHOD_BIND",
             "WIN32",
@@ -430,7 +429,6 @@ def configure_mingw(env):
         CPPDEFINES=[
             "WINDOWS_ENABLED",
             "OPENGL_ENABLED",
-            "WASAPI_ENABLED",
             "WINMIDI_ENABLED",
         ]
     )

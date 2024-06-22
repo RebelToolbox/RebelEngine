@@ -127,7 +127,7 @@ namespace GodotTools.Export
                 string assemblyPath = assembly.Value;
 
                 string outputFileExtension = platform == OS.Platforms.Windows ? ".dll" :
-                    platform == OS.Platforms.OSX ? ".dylib" :
+                    platform == OS.Platforms.MacOS ? ".dylib" :
                     ".so";
 
                 string outputFileName = assemblyName + ".dll" + outputFileExtension;
@@ -139,7 +139,7 @@ namespace GodotTools.Export
 
                 ExecuteCompiler(FindCrossCompiler(compilerDirPath), compilerArgs, bclDir);
 
-                if (platform == OS.Platforms.OSX)
+                if (platform == OS.Platforms.MacOS)
                 {
                     exporter.AddSharedObject(tempOutputFilePath, tags: null);
                 }
@@ -468,15 +468,15 @@ MONO_AOT_MODE_LAST = 1000,
 
             // Add the required Mono libraries to the Xcode project
 
-            string MonoLibFile(string libFileName) => libFileName + ".iphone.fat.a";
+            string MonoLibFile(string libFileName) => libFileName + ".ios.fat.a";
 
             string MonoLibFromTemplate(string libFileName) =>
-                Path.Combine(Internal.FullTemplatesDir, "iphone-mono-libs", MonoLibFile(libFileName));
+                Path.Combine(Internal.FullTemplatesDir, "ios-mono-libs", MonoLibFile(libFileName));
 
             string MonoFrameworkFile(string frameworkFileName) => frameworkFileName + ".xcframework";
 
             string MonoFrameworkFromTemplate(string frameworkFileName) =>
-                Path.Combine(Internal.FullTemplatesDir, "iphone-mono-libs", MonoFrameworkFile(frameworkFileName));
+                Path.Combine(Internal.FullTemplatesDir, "ios-mono-libs", MonoFrameworkFile(frameworkFileName));
 
             exporter.AddIosProjectStaticLib(MonoFrameworkFromTemplate("libmonosgen-2.0"));
 
@@ -797,22 +797,17 @@ MONO_AOT_MODE_LAST = 1000,
                     string arch = bits == "64" ? "x86_64" : "i686";
                     return $"windows-{arch}";
                 }
-                case OS.Platforms.OSX:
+                case OS.Platforms.MacOS:
                 {
                     Debug.Assert(bits == null || bits == "64");
                     string arch = "x86_64";
                     return $"{platform}-{arch}";
                 }
-                case OS.Platforms.X11:
+                case OS.Platforms.Linux:
                 case OS.Platforms.Server:
                 {
                     string arch = bits == "64" ? "x86_64" : "i686";
                     return $"linux-{arch}";
-                }
-                case OS.Platforms.Haiku:
-                {
-                    string arch = bits == "64" ? "x86_64" : "i686";
-                    return $"{platform}-{arch}";
                 }
                 default:
                     throw new NotSupportedException($"Platform not supported: {platform}");
