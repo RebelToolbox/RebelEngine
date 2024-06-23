@@ -1793,20 +1793,20 @@ msgstr ""
 "Управљача Омогућен'."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 #, fuzzy
 msgid "Custom debug template not found."
 msgstr "Шаблонска датотека није пронађена:\n"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 #, fuzzy
 msgid "Custom release template not found."
 msgstr "Прилагођени образци објаве нису пронађени."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 #, fuzzy
 msgid "Template file not found:"
 msgstr "Шаблонска датотека није пронађена:\n"
@@ -15189,100 +15189,50 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 #, fuzzy
 msgid "Identifier is missing."
 msgstr "Идентификатор недостаје."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 #, fuzzy
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Карактер '%s' није дозвољен као идентификатор."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 #, fuzzy
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 "Тимски ИД Продавнице Апликација није наведен - неуспешно подешавање пројекта."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 #, fuzzy
 msgid "Invalid Identifier:"
 msgstr "Неважећи идентификатор:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 #, fuzzy
 msgid "Required icon is not specified in the preset."
 msgstr "Неопходна иконица није наведена у подешавању."
 
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Stop HTTP Server"
-msgstr "Заустави HTTP Сервер"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Run in Browser"
-msgstr "Покрени у Претраживачу"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Run exported HTML in the system's default browser."
-msgstr "Покрени извезени HTML у уобичајеном претраживачу система."
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not open template for export:"
-msgstr "Неуспешно отварање нацрта за извоз:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Invalid export template:"
-msgstr "Неважећи извозни нацрт:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not write file:"
-msgstr "Неуспело уписивање фајла:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "Неуспело уписивање фајла:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "Неуспешно читаље произвољне  HTML шкољке:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "Неуспех при прављењу директоријума."
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "Грешка памћена сцена."
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "Неважећи идентификатор:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -15350,6 +15300,56 @@ msgstr "Неважеће димензије слике за широки лог�
 #, fuzzy
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Неважеће димензије слике за уводни екран (треба да буде 620*300)."
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Stop HTTP Server"
+msgstr "Заустави HTTP Сервер"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Run in Browser"
+msgstr "Покрени у Претраживачу"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Run exported HTML in the system's default browser."
+msgstr "Покрени извезени HTML у уобичајеном претраживачу система."
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not open template for export:"
+msgstr "Неуспешно отварање нацрта за извоз:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Invalid export template:"
+msgstr "Неважећи извозни нацрт:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not write file:"
+msgstr "Неуспело уписивање фајла:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "Неуспело уписивање фајла:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "Неуспешно читаље произвољне  HTML шкољке:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "Неуспех при прављењу директоријума."
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "Грешка памћена сцена."
 
 #: scene/2d/animated_sprite.cpp
 #, fuzzy

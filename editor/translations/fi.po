@@ -1657,18 +1657,18 @@ msgstr ""
 "Fallback Enabled' asetus."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Mukautettua debug-vientimallia ei löytynyt."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Mukautettua release-vientimallia ei löytynyt."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Mallitiedostoa ei löytynyt:"
 
@@ -13564,83 +13564,43 @@ msgstr "Tasataan APK:ta..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr "Ei voitu purkaa väliaikaista unaligned APK:ta."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Tunniste puuttuu."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Merkki '%s' ei ole sallittu Identifier osiossa."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store Team ID ei ole määritetty - ei voida konfiguroida projektia."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Virheellinen Identifier osio:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "Vaadittavaa ikonia ei ole määritetty esiasetuksissa."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Pysäytä HTTP-palvelin"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Suorita selaimessa"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Suorita viety HTML järjestelmän oletusselaimessa."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Mallin avaus vientiin epäonnistui:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Virheellinen vientimalli:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Ei voitu kirjoittaa tiedostoa:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "Ei voitu lukea tiedostoa:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr "Ei voitu lukea HTML tulkkia:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "Ei voitu luoda HTTP-palvelimen hakemistoa:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "Virhe käynnistettäessä HTTP-palvelinta:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "Virheellinen bundle-tunniste:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "Notarisointi: koodin allekirjoitus tarvitaan."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "Notarisointi: hardened runtime tarvitaan."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "Notarointi: Apple ID nimeä ei ole määritetty."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "Notarointi: Apple ID salasanaa ei ole määritetty."
 
@@ -13697,6 +13657,46 @@ msgstr "Virheellinen leveän 310x150 logon kuvakoko (pitäisi olla 310x150)."
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Virheellinen käynnistyskuvan kuvakoko (pitäisi olla 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Pysäytä HTTP-palvelin"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Suorita selaimessa"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Suorita viety HTML järjestelmän oletusselaimessa."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Mallin avaus vientiin epäonnistui:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Virheellinen vientimalli:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Ei voitu kirjoittaa tiedostoa:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "Ei voitu lukea tiedostoa:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr "Ei voitu lukea HTML tulkkia:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "Ei voitu luoda HTTP-palvelimen hakemistoa:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "Virhe käynnistettäessä HTTP-palvelinta:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

@@ -1651,18 +1651,18 @@ msgstr ""
 "הפעל את 'יבוא Pvrtc' בהגדרות הפרויקט, או השבת את 'הפעל נסיגת דרייבר'."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "תבנית ניפוי שגיאות מותאמת אישית לא נמצאה."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "תבנית שחרור מותאמת-אישית לא נמצאה."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "קובץ התבנית לא נמצא:"
 
@@ -13658,88 +13658,44 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "מזהה חסר."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "התו '%s' אינו מותר במזהה."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "לא צוין App Store Team ID - לא ניתן להגדיר את המיזם."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "מזהה לא חוקי:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "סמליל נדרש אינו מוגדר בהגדרות יצוא."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "עצירת שרת HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "הפעלה בדפדפן"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "הפעלת ה־HTML המיוצא בדפדפן בררת המחדל של המערכת."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "לא ניתן לפתוח תבנית לייצוא:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "תבנית יצוא שגויה:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "לא ניתן לכתוב קובץ:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "לא ניתן לכתוב קובץ:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "לא ניתן לקרוא מעטפת HTML מותאמת:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "לא ניתן ליצור תיקייה."
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "שגיאה בשמירת הסצנה."
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "מזהה לא חוקי:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -13796,6 +13752,50 @@ msgstr "מידות תמונת לוגו רחבה 310x150 לא חוקיות (צר�
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "מידות תמונת פתיח לא חוקיות (צריכות להיות 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "עצירת שרת HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "הפעלה בדפדפן"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "הפעלת ה־HTML המיוצא בדפדפן בררת המחדל של המערכת."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "לא ניתן לפתוח תבנית לייצוא:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "תבנית יצוא שגויה:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "לא ניתן לכתוב קובץ:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "לא ניתן לכתוב קובץ:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "לא ניתן לקרוא מעטפת HTML מותאמת:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "לא ניתן ליצור תיקייה."
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "שגיאה בשמירת הסצנה."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

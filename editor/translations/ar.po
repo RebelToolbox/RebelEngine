@@ -1697,18 +1697,18 @@ msgstr ""
 "Driver Fallback Enabled'."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "نمودج تصحيح الأخطاء غير موجود."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "قالب الإصدار المخصص ليس موجود."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "ملف النموذج غير موجود:"
 
@@ -13784,90 +13784,46 @@ msgstr "محاذاة ملف APK..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr "تعذر إزالة ضغط ملف APK المؤقت غير المصفوف unaligned."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "المُحدد مفقود."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "إن الحرف '%s' غير مسموح في المُحدد Identifier."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 "لم يتم تحديد ID الفُرق الخاص بمتجر التطبيقات - لا يمكن تهيئة configure "
 "المشروع."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "مُحدد غير صالح:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "الأيقونة المطلوبة لم تُحدد في الإعدادات المُسبقة."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "إيقاف مُخدم HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "تشغيل في المتصفح"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "شغل ملف HTML المُصدر في المتصفح الإفتراضي للنظام."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "لا يمكن فتح القالب من أجل التصدير:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "إدارة قوالب التصدير:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "لا يمكن كتابة الملف:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "لا يمكن كتابة الملف:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "لا يمكن قراءة ملف HTML مخصص:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "لا يمكن إنشاء المجلد."
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "خطأ في حفظ المشهد."
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "مُحدد غير صالح:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "التوثيق: إن توقيع الشفرة البرمجية مطلوب."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "التوثيق: إن تمكين وقت التشغيل hardened runtime مطلوب."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "التوثيق: لم يتم تحديد اسم معرف Apple ID."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "التوثيق: لم يتم تحديد كلمة مرور Apple ID."
 
@@ -13922,6 +13878,50 @@ msgstr "أبعاد صورة الشعار المربع 310x150 غير صالحة 
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "أبعاد شاشة البداية غير صالحة (ينبغي أن تكون 620×300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "إيقاف مُخدم HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "تشغيل في المتصفح"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "شغل ملف HTML المُصدر في المتصفح الإفتراضي للنظام."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "لا يمكن فتح القالب من أجل التصدير:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "إدارة قوالب التصدير:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "لا يمكن كتابة الملف:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "لا يمكن كتابة الملف:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "لا يمكن قراءة ملف HTML مخصص:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "لا يمكن إنشاء المجلد."
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "خطأ في حفظ المشهد."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

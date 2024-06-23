@@ -1655,18 +1655,18 @@ msgstr ""
 "請在專案設定中啟用「Import Pvrtc」或是禁用「Driver Fallback Enabled」。"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "找不到自定義偵錯樣板。"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "找不到自定義發行樣板。"
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "找不到樣板檔案："
 
@@ -13291,83 +13291,43 @@ msgstr "正在對齊 APK…"
 msgid "Could not unzip temporary unaligned APK."
 msgstr "無法解壓縮暫時非對齊APK。"
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "缺少識別符。"
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "字元「%s」不可用於識別符中。"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "尚未設定 App Store Team ID - 無法設定專案。"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "無效的識別符："
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "必須在預設設定中指定必填圖示。"
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "停止 HTTP 伺服器"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "在瀏覽器中執行"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "在系統的預設瀏覽器中執行已匯出的 HTML。"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "無法開啟樣板以輸出："
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "無效的輸出樣板："
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "無法寫入檔案："
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "無法讀取檔案："
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr "無法讀取HTML殼層："
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "無法建立HTTP伺服器目錄："
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "啟動HTTP伺服器時發生錯誤："
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "無效的捆綁識別符："
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "公證：需要程式碼簽署。"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "公證：需要強化執行階段（Hardened Runtime）。"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "公證：未指定Apple ID名稱。"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "公證：未指定Apple ID密碼。"
 
@@ -13422,6 +13382,46 @@ msgstr "無效的寬 310x150 LOGO 圖片尺寸（需為 310x150）。"
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "無效的啟動畫面圖片尺寸（應為 620x300）。"
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "停止 HTTP 伺服器"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "在瀏覽器中執行"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "在系統的預設瀏覽器中執行已匯出的 HTML。"
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "無法開啟樣板以輸出："
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "無效的輸出樣板："
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "無法寫入檔案："
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "無法讀取檔案："
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr "無法讀取HTML殼層："
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "無法建立HTTP伺服器目錄："
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "啟動HTTP伺服器時發生錯誤："
 
 #: scene/2d/animated_sprite.cpp
 msgid ""
