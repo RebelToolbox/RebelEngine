@@ -1694,20 +1694,20 @@ msgid ""
 msgstr ""
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 #, fuzzy
 msgid "Custom debug template not found."
 msgstr "স্বনির্মিত ডিবাগ (debug) প্যাকেজ খুঁজে পাওয়া যায়নি।"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 #, fuzzy
 msgid "Custom release template not found."
 msgstr "স্বনির্মিত রিলিস (release) প্যাকেজ খুঁজে পাওয়া যায়নি।"
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 #, fuzzy
 msgid "Template file not found:"
 msgstr "টেমপ্লেট ফাইল পাওয়া যায়নি:\n"
@@ -14404,94 +14404,46 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 #, fuzzy
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "নামটি কার্যকর সনাক্তকারী নয়:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 #, fuzzy
 msgid "Invalid Identifier:"
 msgstr "নামটি কার্যকর সনাক্তকারী নয়:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr ""
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Run in Browser"
-msgstr "ব্রাউস"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not open template for export:"
-msgstr "ফোল্ডার তৈরী করা সম্ভব হয়নি।"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Invalid export template:"
-msgstr "এক্সপোর্টের টেমপ্লেটসমূহ ইন্সটল করুন"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not write file:"
-msgstr "টাইলটি খুঁজে পাওয়া যায়নি:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "টাইলটি খুঁজে পাওয়া যায়নি:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "টাইলটি খুঁজে পাওয়া যায়নি:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "ফোল্ডার তৈরী করা সম্ভব হয়নি।"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "দৃশ্য সংরক্ষণে সমস্যা হয়েছে।"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "নামটি কার্যকর সনাক্তকারী নয়:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -14549,6 +14501,54 @@ msgstr "৩১০x১৫০ প্রশস্ত লোগোর (logo) ছব�
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "স্প্ল্যাশ পর্দার (splash screen) ছবির অগ্রহনযোগ্য মাত্রা (৬২০x৩০০ হতে হবে)।"
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr ""
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Run in Browser"
+msgstr "ব্রাউস"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr ""
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not open template for export:"
+msgstr "ফোল্ডার তৈরী করা সম্ভব হয়নি।"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Invalid export template:"
+msgstr "এক্সপোর্টের টেমপ্লেটসমূহ ইন্সটল করুন"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not write file:"
+msgstr "টাইলটি খুঁজে পাওয়া যায়নি:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "টাইলটি খুঁজে পাওয়া যায়নি:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "টাইলটি খুঁজে পাওয়া যায়নি:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "ফোল্ডার তৈরী করা সম্ভব হয়নি।"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "দৃশ্য সংরক্ষণে সমস্যা হয়েছে।"
 
 #: scene/2d/animated_sprite.cpp
 #, fuzzy

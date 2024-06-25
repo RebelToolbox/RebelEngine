@@ -1699,18 +1699,18 @@ msgstr ""
 "Enabled\"."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Nie znaleziono własnego szablonu debugowania."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Nie znaleziono własnego szablonu wydania."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Nie znaleziono pliku szablonu:"
 
@@ -13586,83 +13586,43 @@ msgstr "Uzgadnianie APK..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr "Nie udało się rozpakować tymczasowego niewyrównanego APK."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Brakuje identyfikatora."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Znak \"%s\" nie jest dozwolony w identyfikatorze."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store Team ID nie podany - nie można skonfigurować projektu."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Niepoprawny identyfikator:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "Wymagana ikona nie jest podana w profilu eksportu."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Zatrzymaj serwer HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Uruchom w przeglądarce"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Uruchom wyeksportowany dokument HTML w domyślnej przeglądarce."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Nie można otworzyć szablonu dla eksportu:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Szablon eksportu nieprawidłowy:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Nie można zapisać pliku:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "Nie udało się odczytać pliku:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr "Nie udało się odczytać powłoki HTML:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "Nie udało się utworzyć folderu serwera HTTP:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "Błąd uruchamiania serwera HTTP:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "Nieprawidłowy identyfikator paczki:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "Poświadczenie: wymagane podpisanie kodu."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "Poświadczenie: wymagane wzmocnione środowisko wykonawcze."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "Poświadczenie: Nazwa Apple ID nie podana."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "Poświadczenie: Hasło Apple ID nie podane."
 
@@ -13725,6 +13685,46 @@ msgstr ""
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr ""
 "Nieprawidłowe wymiary obrazka ekranu powitalnego (powinno być 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Zatrzymaj serwer HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Uruchom w przeglądarce"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Uruchom wyeksportowany dokument HTML w domyślnej przeglądarce."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Nie można otworzyć szablonu dla eksportu:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Szablon eksportu nieprawidłowy:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Nie można zapisać pliku:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "Nie udało się odczytać pliku:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr "Nie udało się odczytać powłoki HTML:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "Nie udało się utworzyć folderu serwera HTTP:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "Błąd uruchamiania serwera HTTP:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

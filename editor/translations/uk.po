@@ -1672,18 +1672,18 @@ msgstr ""
 "«Увімкнено резервні драйвери»."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Нетипового шаблону діагностики не знайдено."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Нетипового шаблону випуску не знайдено."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Файл шаблону не знайдено:"
 
@@ -13620,84 +13620,44 @@ msgstr "Вирівнюємо APK..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr "Не вдалося розпакувати тимчасовий невирівняний APK."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Не вказано ідентифікатор."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "У назві ідентифікатора не можна використовувати символи «%s»."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 "Не вказано ідентифікатор команди App Store — проєкт неможливо налаштувати."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Некоректний ідентифікатор:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "У шаблоні не вказано потрібної піктограми."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Зупинити HTTP-сервер"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Запустити в браузері"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Виконати експортований HTML у браузері за умовчанням системи."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Не вдалося відкрити шаблон для експорту:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Неправильний шаблон експорту:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Не вдалося записати файл:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "Не вдалося прочитати файл:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr "Не вдалося прочитати оболонку HTML:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "Не вдалося створити каталог на сервері HTTP:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "Помилка під час спроби запуску сервера HTTP:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "Некоректний ідентифікатор пакунка:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "Засвідчення: потрібен код підписування."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "Засвідчення: потрібне стійке середовище запуску."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "Засвідчення: не вказано назву ідентифікатора Apple."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "Засвідчення: не вказано пароль до ідентифікатора Apple."
 
@@ -13762,6 +13722,46 @@ msgstr ""
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Некоректні розмірності зображення вікна вітання (мають бути 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Зупинити HTTP-сервер"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Запустити в браузері"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Виконати експортований HTML у браузері за умовчанням системи."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Не вдалося відкрити шаблон для експорту:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Неправильний шаблон експорту:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Не вдалося записати файл:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "Не вдалося прочитати файл:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr "Не вдалося прочитати оболонку HTML:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "Не вдалося створити каталог на сервері HTTP:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "Помилка під час спроби запуску сервера HTTP:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

@@ -1677,18 +1677,18 @@ msgstr ""
 "Enabled'."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Vlastní ladící šablona nebyla nalezena."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Vlastní šablona k uveřejnění nebyla nalezena."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Soubor šablony nenalezen:"
 
@@ -13546,85 +13546,44 @@ msgstr "Zarovnávání APK..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Chybí identifikátor."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Znak '%s' není dovolen v identifikátoru."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store Team ID nebyla poskytnuta - projekt nelze konfigurovat."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Neplatný identifikátor:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "V profilu není nastavena požadovaná ikona."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Zastavit HTTP Server"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Spustit v prohlížeči"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Spustit vyexportované HTML ve výchozím prohlížeči."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Nelze otevřít šablonu pro export:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Neplatná šablona pro export:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Nelze zapsat soubor:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "Nelze přečíst soubor:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "Nebylo možné přečíst HTML shell:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "Nepodařilo se vytvořit adresář serveru HTTP:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "Chyba při spuštění serveru HTTP:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "Neplatný identifikátor:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -13679,6 +13638,47 @@ msgstr "Neplatné rozměry Square 310x150 Logo obrázku (měly by být 310x150).
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Neplatné rozměry obrázku uvítací obrazovky (měly by být 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Zastavit HTTP Server"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Spustit v prohlížeči"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Spustit vyexportované HTML ve výchozím prohlížeči."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Nelze otevřít šablonu pro export:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Neplatná šablona pro export:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Nelze zapsat soubor:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "Nelze přečíst soubor:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "Nebylo možné přečíst HTML shell:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "Nepodařilo se vytvořit adresář serveru HTTP:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "Chyba při spuštění serveru HTTP:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

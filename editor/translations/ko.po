@@ -1672,18 +1672,18 @@ msgstr ""
 "Enabled' 설정을 비활성화하세요."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "커스텀 디버그 템플릿을 찾을 수 없습니다."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "커스텀 릴리스 템플릿을 찾을 수 없습니다."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "템플릿 파일을 찾을 수 없습니다:"
 
@@ -13470,83 +13470,43 @@ msgstr "APK를 정렬 중..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr "임시 정렬되지 않은 APK의 압축을 풀 수 없었습니다."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "식별자가 누락되어 있습니다."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "문자 '%s'은(는) 식별자에 쓸 수 없습니다."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store 팀 ID를 지정하지 않았습니다 - 프로젝트를 구성할 수 없습니다."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "잘못된 식별자:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "요구하는 아이콘을 프리셋에서 지정하지 않았습니다."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "HTTP 서버 멈추기"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "브라우저에서 실행"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "내보낸 HTML을 시스템의 기본 브라우저를 사용하여 실행합니다."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "내보내기 템플릿을 열 수 없음:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "잘못된 내보내기 템플릿:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "파일에 쓸 수 없음:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "파일을 읽을 수 없음:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr "HTML shell을 읽을 수 없음:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "HTTP 서버 디렉토리를 만들 수 없음:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "HTTP 서버를 시작하는 중 오류:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "잘못된 bundle 식별자:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "공증: 코드 서명이 필요합니다."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "공증: 강화된 런타임이 필요합니다."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "공증: Apple ID 이름이 지정되지 않았습니다."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "공증: Apple ID 비밀번호가 지정되지 않았습니다."
 
@@ -13601,6 +13561,46 @@ msgstr "잘못된 넓은 310x150 로고 이미지 크기 (310x150이어야 합�
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "잘못된 스플래시 스크린 이미지 크기 (620x300이어야 합니다)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "HTTP 서버 멈추기"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "브라우저에서 실행"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "내보낸 HTML을 시스템의 기본 브라우저를 사용하여 실행합니다."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "내보내기 템플릿을 열 수 없음:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "잘못된 내보내기 템플릿:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "파일에 쓸 수 없음:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "파일을 읽을 수 없음:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr "HTML shell을 읽을 수 없음:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "HTTP 서버 디렉토리를 만들 수 없음:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "HTTP 서버를 시작하는 중 오류:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

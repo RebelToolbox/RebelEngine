@@ -1663,18 +1663,18 @@ msgstr ""
 "เปิด 'Import Pvrtc' ในตั้งค่าโปรเจ็คหรือปิด 'Driver Fallback Enabled'"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "ไม่พบเทมเพลตการดีบักแบบกำหนดเอง"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "ไม่พบเทมเพลตการเผยแพร่ที่กำหนดเอง"
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "ไม่พบไฟล์เทมเพลต:"
 
@@ -13524,88 +13524,44 @@ msgstr "จัดเรียง APK..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "ไม่มีตัวระบุ"
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "ไม่อนุญาตให้ใช้อักขระ '% s' ในตัวระบุ"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store Team ID ยังไม่ได้ระบุ - ไม่สามารถกำหนดค่าให้โปรเจกต์ได้"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "ระบุไม่ถูกต้อง:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "ไอคอนที่จำเป็นไม่ได้ระบุไว้ในพรีเซ็ต"
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "หยุดเซิฟเวอร์ HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "รันในเบราเซอร์"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "รันไฟล์ HTML ที่ส่งออกในเบราเซอร์"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "เปิดเทมเพลตเพื่อส่งออกไม่ได้:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "เทมเพลตส่งออกไม่ถูกต้อง:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "เขียนไฟล์ไม่ได้:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "เขียนไฟล์ไม่ได้:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "ไม่สามารถอ่านโครงสร้าง HTML:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "ไม่สามารถสร้างโฟลเดอร์"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "ผิดพลาดขณะบันทึกฉาก"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "ระบุไม่ถูกต้อง:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -13660,6 +13616,50 @@ msgstr "ขนาดโลโก้กว้าง 310x150 ผิดพลาด
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "ขนาดรูปหน้าจอเริ่มโปรแกรมผิดพลาด (ต้องเป็น 620x300)"
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "หยุดเซิฟเวอร์ HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "รันในเบราเซอร์"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "รันไฟล์ HTML ที่ส่งออกในเบราเซอร์"
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "เปิดเทมเพลตเพื่อส่งออกไม่ได้:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "เทมเพลตส่งออกไม่ถูกต้อง:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "เขียนไฟล์ไม่ได้:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "เขียนไฟล์ไม่ได้:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "ไม่สามารถอ่านโครงสร้าง HTML:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "ไม่สามารถสร้างโฟลเดอร์"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "ผิดพลาดขณะบันทึกฉาก"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

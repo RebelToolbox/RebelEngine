@@ -1668,18 +1668,18 @@ msgstr ""
 "Tương thích Ngược'."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Không tìm thấy mẫu gỡ lỗi tuỳ chỉnh."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Không tìm thấy mẫu phát hành tùy chỉnh."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Không tìm thấy tệp tin mẫu:"
 
@@ -13605,88 +13605,44 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Thiếu định danh."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Không được phép có kí tự '%s' trong Định danh."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store Team ID không được chỉ định - không thể cấu hình dự án."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Định danh không hợp lệ:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr ""
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Dừng Máy chủ HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Chạy trong Trình duyệt web"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Chạy HTML được xuất với trình duyệt mặc định của máy."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Không thể mở bản mẫu để xuất:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Bản xuất mẫu không hợp lệ:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Không viết được file:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "Không viết được file:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "Không đọc được file hình khởi động:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "Không thể tạo folder."
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "Lỗi khi lưu scene."
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "Định danh không hợp lệ:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -13741,6 +13697,50 @@ msgstr "Kích thước ảnh logo 310x150 không hợp lệ (phải là 310x150)
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Ảnh mở màn có kích thước không hợp lệ (phải là 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Dừng Máy chủ HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Chạy trong Trình duyệt web"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Chạy HTML được xuất với trình duyệt mặc định của máy."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Không thể mở bản mẫu để xuất:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Bản xuất mẫu không hợp lệ:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Không viết được file:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "Không viết được file:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "Không đọc được file hình khởi động:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "Không thể tạo folder."
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "Lỗi khi lưu scene."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

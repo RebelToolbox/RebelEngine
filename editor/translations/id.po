@@ -1682,18 +1682,18 @@ msgstr ""
 "Enabled'."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Templat awakutu kustom tidak ditemukan."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Templat rilis kustom tidak ditemukan."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Templat berkas tidak ditemukan:"
 
@@ -13629,87 +13629,45 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Kurang identifier."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Karakter '%s' tidak diizinkan dalam Identifier."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 "App Store Team ID tidak ditetapkan - tidak dapat mengonfigurasi proyek."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Identifier tidak valid:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "Ikon yang dibutuhkan tidak ditentukan dalam preset."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Hentikan Server HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Jalankan di Peramban"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Jalankan HTML yang diekspor dalam peramban baku sistem."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Tidak dapat membuka templat untuk ekspor:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Templat ekspor tidak valid:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Tidak dapat menulis berkas:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "Tidak dapat menulis berkas:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "Tidak dapat membaca shell HTML kustom:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "Tidak dapat menciptakan direktori server HTTP:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "Kesalahan memulai server HTTP:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "Identifier tidak valid:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -13764,6 +13722,48 @@ msgstr "Dimensi gambar logo 310x150 lebarnya tidak valid (harus 310x150)."
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Dimensi gambar splash screen tidak valid (harus 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Hentikan Server HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Jalankan di Peramban"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Jalankan HTML yang diekspor dalam peramban baku sistem."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Tidak dapat membuka templat untuk ekspor:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Templat ekspor tidak valid:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Tidak dapat menulis berkas:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "Tidak dapat menulis berkas:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "Tidak dapat membaca shell HTML kustom:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "Tidak dapat menciptakan direktori server HTTP:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "Kesalahan memulai server HTTP:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

@@ -1684,18 +1684,18 @@ msgstr ""
 "'Ενεργοποίηση εναλλαγής οδηγού'."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Δεν βρέθηκε προσαρμοσμένο πακέτο αποσφαλμάτωσης."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Δεν βρέθηκε προσαρμοσμένο πακέτο διανομής."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Δεν βρέθηκε αρχείο προτύπου:"
 
@@ -13837,90 +13837,46 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Το αναγνωριστικό λείπει."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Ο χαρακτήρας «%s» είναι άκυρος σε αναγνωριστικό."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 "Δεν έχει καθοριστεί αναγνωριστικό ομάδας (Team ID) του App Store - αδυναμία "
 "διαμόρφωσης έργου."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Άκυρο Αναγνωριστικό:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "Το απαιτούμενο εικονίδιο δεν έχει καθοριστεί στην διαμόρφωση."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Τερματισμός Διακομιστή HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Εκτέλεση στον περιηγητή"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Εκτέλεση εξαγόμενης HTMP στον προεπιλεγμένο περιηγητή του συστήματος."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Σφάλμα κατά το άνοιγμα προτύπου για εξαγωγή:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Άκυρο προτύπο εξαγωγής:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Απέτυχε η εγγραφή σε αρχείο:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "Απέτυχε η εγγραφή σε αρχείο:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "Σφάλμα κατά την ανάγνωση προσαρμοσμένου κελύφους HTML:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "Αδύνατη η δημιουργία φακέλου."
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "Σφάλμα κατά την αποθήκευση σκηνής."
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "Άκυρο Αναγνωριστικό:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -13975,6 +13931,50 @@ msgstr "Άκυρη εικόνα ευρύ λογότυπου 310x150 (πρέπε�
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Άκυρες διαστάσεις εικόνας οθόνης εκκίνησης (πρέπει να είναι 620x300)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Τερματισμός Διακομιστή HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Εκτέλεση στον περιηγητή"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Εκτέλεση εξαγόμενης HTMP στον προεπιλεγμένο περιηγητή του συστήματος."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Σφάλμα κατά το άνοιγμα προτύπου για εξαγωγή:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Άκυρο προτύπο εξαγωγής:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Απέτυχε η εγγραφή σε αρχείο:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "Απέτυχε η εγγραφή σε αρχείο:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "Σφάλμα κατά την ανάγνωση προσαρμοσμένου κελύφους HTML:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "Αδύνατη η δημιουργία φακέλου."
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "Σφάλμα κατά την αποθήκευση σκηνής."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

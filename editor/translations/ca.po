@@ -1683,18 +1683,18 @@ msgstr ""
 "'Driver Fallback Enabled''."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "No s'ha trobat cap plantilla de depuració personalitzada."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "No s'ha trobat cap plantilla de publicació personalitzada."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "No s'ha trobat la Plantilla:"
 
@@ -13968,90 +13968,46 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Falta l'identificador."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "No es permet el caràcter '%s' en l'Identificador."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Identificador no vàlid:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 #, fuzzy
 msgid "Required icon is not specified in the preset."
 msgstr ""
 "La icona necessària no està especificada a la configuració preestablerta."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "Atura el servidor HTTP"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Executa-ho en el Navegador"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Executa l'HTML exportat en el navegador per defecte."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "No es pot obrir la plantilla per exportar:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Plantilla d'exportació no vàlida:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "No s'ha pogut escriure el fitxer:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read file:"
-msgstr "No s'ha pogut escriure el fitxer:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not read HTML shell:"
-msgstr "No es pot llegir l'intèrpret personalitzat d’ordres HTML:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Could not create HTTP server directory:"
-msgstr "No s'ha pogut crear el directori:"
-
-#: platform/javascript/export/export.cpp
-#, fuzzy
-msgid "Error starting HTTP server:"
-msgstr "Error en desar l'escena:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "Identificador no vàlid:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -14110,6 +14066,50 @@ msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr ""
 "Imatge de la pantalla de presentació no vàlida. La mida hauria de ser "
 "620x300."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "Atura el servidor HTTP"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Executa-ho en el Navegador"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Executa l'HTML exportat en el navegador per defecte."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "No es pot obrir la plantilla per exportar:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Plantilla d'exportació no vàlida:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "No s'ha pogut escriure el fitxer:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read file:"
+msgstr "No s'ha pogut escriure el fitxer:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not read HTML shell:"
+msgstr "No es pot llegir l'intèrpret personalitzat d’ordres HTML:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Could not create HTTP server directory:"
+msgstr "No s'ha pogut crear el directori:"
+
+#: platform/web/export/export.cpp
+#, fuzzy
+msgid "Error starting HTTP server:"
+msgstr "Error en desar l'escena:"
 
 #: scene/2d/animated_sprite.cpp
 #, fuzzy

@@ -1712,18 +1712,18 @@ msgstr ""
 "Fallback Enabled' seçeneğini devre dışı bırakın."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Özel hata ayıklama şablonu bulunmadı."
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Özel yayınlama şablonu bulunamadı."
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Şablon dosyası bulunamadı:"
 
@@ -13601,83 +13601,43 @@ msgstr "APK hizalanıyor ..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr "Geçici olarak hizalanmamış APK'nın sıkıştırması açılamadı."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Tanımlayıcı eksik."
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Tanımlayıcı'da '%s' karakterine izin verilmiyor."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store Ekip Kimliği belirtilmedi - proje yapılandırılamıyor."
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Geçersiz Tanımlayıcı:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "Ön ayarda gerekli simge belirtilmemiş."
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "HTTP sunucuyu durdur"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "Tarayıcıda Çalıştır"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "Dışa aktarılmış HTML'yi sistemin varsayılan tarayıcısında çalıştır."
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "Dışa aktarma için şablon açılamadı:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "Geçersiz Dışa Aktarım Şablonu:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "Dosya yazılamadı:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "Dosya okunamadı:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr "HTML kabuğu okunamadı:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "HTTP sunucu klasörü oluşturulamadı:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "HTTP sunucusu başlatılırken hata:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "Geçersiz paket tanımlayıcısı:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "Noter tasdiki: kod imzalama gerekli."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "Noter onayı: sertleştirilmiş çalışma zamanı gerekli."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "Noter tasdik: Apple Kimliği adı belirtilmedi."
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "Noter tasdik: Apple Kimliği parolası belirtilmedi."
 
@@ -13732,6 +13692,46 @@ msgstr "Geçersiz kare 310x150 belirtkenin bediz boyutları (310x150 olmalı)."
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Geçersiz açılış görüntülüğü bediz boyutları (620x300 olmalı)."
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "HTTP sunucuyu durdur"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "Tarayıcıda Çalıştır"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "Dışa aktarılmış HTML'yi sistemin varsayılan tarayıcısında çalıştır."
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "Dışa aktarma için şablon açılamadı:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "Geçersiz Dışa Aktarım Şablonu:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "Dosya yazılamadı:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "Dosya okunamadı:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr "HTML kabuğu okunamadı:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "HTTP sunucu klasörü oluşturulamadı:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "HTTP sunucusu başlatılırken hata:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

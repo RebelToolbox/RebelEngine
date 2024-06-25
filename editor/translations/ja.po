@@ -1681,18 +1681,18 @@ msgstr ""
 "Enabled' をオフにしてください。"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "カスタム デバッグテンプレートが見つかりません。"
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "カスタム リリーステンプレートが見つかりません。"
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "テンプレートファイルが見つかりません:"
 
@@ -13564,83 +13564,43 @@ msgstr "APKを最適化..."
 msgid "Could not unzip temporary unaligned APK."
 msgstr "temporary unaligned APKを展開できませんでした。"
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "識別子がありません。"
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "文字 '%s' は識別子に使用できません。"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store チームID が未指定 - プロジェクトを構成できません。"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "無効な識別子:"
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "必須アイコンがプリセットに指定されていません。"
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr "HTTPサーバーを止める"
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr "ブラウザで実行"
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr "エクスポートしたHTMLをシステム既定のブラウザで実行する。"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr "エクスポート用のテンプレートを開けませんでした:"
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr "無効なエクスポート テンプレート:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr "ファイルを書き込めませんでした:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr "ファイルを読み込めませんでした:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr "HTMLシェルを読み込めませんでした:"
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr "HTTPサーバーのディレクトリの作成に失敗:"
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr "HTTPサーバーの開始に失敗:"
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "無効なバンドルID:"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "Notarization: コード署名が必要です。"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "Notarization: hardened runtime が必要です。"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "Notarization: Apple ID 名が指定されていません。"
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "Notarization: Apple ID パスワードが指定されていません。"
 
@@ -13702,6 +13662,46 @@ msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr ""
 "スプラッシュスクリーンの画像サイズが無効です(縦横620x300でなければなりませ"
 "ん)。"
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr "HTTPサーバーを止める"
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr "ブラウザで実行"
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr "エクスポートしたHTMLをシステム既定のブラウザで実行する。"
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr "エクスポート用のテンプレートを開けませんでした:"
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr "無効なエクスポート テンプレート:"
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr "ファイルを書き込めませんでした:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr "ファイルを読み込めませんでした:"
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr "HTMLシェルを読み込めませんでした:"
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr "HTTPサーバーのディレクトリの作成に失敗:"
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
+msgstr "HTTPサーバーの開始に失敗:"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

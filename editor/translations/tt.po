@@ -1594,18 +1594,18 @@ msgid ""
 msgstr ""
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr ""
 
 #: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/iphone/export/export.cpp platform/javascript/export/export.cpp
-#: platform/osx/export/export.cpp platform/uwp/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platform/uwp/export/export.cpp platform/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr ""
 
-#: editor/editor_export.cpp platform/javascript/export/export.cpp
+#: editor/editor_export.cpp platform/web/export/export.cpp
 msgid "Template file not found:"
 msgstr ""
 
@@ -12927,83 +12927,43 @@ msgstr ""
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr ""
 
-#: platform/iphone/export/export.cpp platform/osx/export/export.cpp
+#: platform/ios/export/export.cpp platform/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr ""
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr ""
 
-#: platform/iphone/export/export.cpp
+#: platform/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr ""
 
-#: platform/javascript/export/export.cpp
-msgid "Stop HTTP Server"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Run in Browser"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Run exported HTML in the system's default browser."
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Could not open template for export:"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Invalid export template:"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Could not write file:"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read file:"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Could not read HTML shell:"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Could not create HTTP server directory:"
-msgstr ""
-
-#: platform/javascript/export/export.cpp
-msgid "Error starting HTTP server:"
-msgstr ""
-
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/osx/export/export.cpp
+#: platform/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
@@ -13057,6 +13017,46 @@ msgstr ""
 
 #: platform/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Stop HTTP Server"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Run in Browser"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Run exported HTML in the system's default browser."
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Could not open template for export:"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Invalid export template:"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Could not write file:"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Could not read file:"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Could not read HTML shell:"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Could not create HTTP server directory:"
+msgstr ""
+
+#: platform/web/export/export.cpp
+msgid "Error starting HTTP server:"
 msgstr ""
 
 #: scene/2d/animated_sprite.cpp
