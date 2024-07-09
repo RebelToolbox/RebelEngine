@@ -2,12 +2,12 @@ name: Update Translations
 on:
   workflow_dispatch:
   schedule:
-    # Check for documentation updates every day at midnight.
+    # Check for updates every day at midnight.
     - cron: '0 0 * * *'
 
 jobs:
-  update-translations:
-    name: Update Translations
+  update-translation-files:
+    name: Update Translation Files
     # Don't run on forks.
     if: github.repository == 'RebelToolbox/RebelEngine'
     runs-on: ubuntu-latest
@@ -32,17 +32,17 @@ jobs:
             git switch -c main origin/main
           fi
           echo "::endgroup::"
-          echo "::group::git switch -c update-translations"
-          if git ls-remote --exit-code                    \
-            --heads origin refs/heads/update-translations \
+          echo "::group::git switch -c update-translation-files"
+          if git ls-remote --exit-code                         \
+            --heads origin refs/heads/update-translation-files \
             >/dev/null
           then
             echo "Use existing branch"
-            git switch -c update-translations origin/update-translations
+            git switch -c update-translation-files origin/update-translation-files
             echo "existing_branch=yes" >> "$GITHUB_ENV"
           else
             echo "Create new branch"
-            git switch -c update-translations
+            git switch -c update-translation-files
           fi
           echo "::endgroup::"
 
@@ -65,20 +65,20 @@ jobs:
         if: env.recreate_branch == 'yes'
         run: |
           git switch main
-          git branch -D update-translations
-          git switch -c update-translations
-          git push -u -f origin update-translations
+          git branch -D update-translation-files
+          git switch -c update-translation-files
+          git push -u -f origin update-translation-files
 
-      - name: Update API Translations
+      - name: Update API Translation Files
         run: |
-          #Update API Translations
+          #Update API Translation Files
           cd translations
           make
           cd ..
 
-      - name: Update Editor Translations
+      - name: Update Editor Translation Files
         run: |
-          #Update API Translations
+          #Update API Translation Files
           cd editor/translations
           make
           cd ../..
@@ -102,9 +102,9 @@ jobs:
           echo "Adding files"
           git add .
           echo "Creating commit"
-          git commit -m "Update Translations"
+          git commit -m "Update Translation Files"
           echo "Pushing changes"
-          git push -u origin update-translations
+          git push -u origin update-translation-files
 
       - name: Create Pull Request
         if: env.has_changes == 'yes'
@@ -112,7 +112,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           #Create Pull Request
-          if gh pr list --state open --head update-translations \
+          if gh pr list --state open --head update-translation-files \
             --json state | grep state
           then
             echo "Existing Pull Request updated"
@@ -120,8 +120,63 @@ jobs:
           else
             gh pr create                                                                \
               --base main                                                               \
-              --head update-translations                                                \
-              --title "Update Translations"                                             \
+              --head update-translation-files                                           \
+              --title "Update Translation Files"                                        \
               --body "Updates the API and editor translations with the latest changes."
             echo "New Pull Request created"
           fi
+
+  update-translations:
+    name: Update Translations
+    # Don't run on forks.
+    if: github.repository == 'RebelToolbox/RebelEngine'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v4
+
+      - name: Pull updates from Weblate
+        run: |
+          #Pull updates from Weblate
+          git fetch origin
+          echo "::group::git switch main"
+          if ! git switch main 2>/dev/null ; then
+            git switch -c main origin/main
+          fi
+          echo "::endgroup::"
+          git remote add weblate https://hosted.weblate.org/git/rebel-toolbox/rebel-engine-api/
+          git fetch weblate
+          git switch -c weblate weblate/main
+          git push -f origin weblate
+
+      - name: Check for changes
+        run: |
+          #git diff
+          if git diff --exit-code main -- ; then
+            echo "No new translations."
+          else
+            echo "New translations available from Weblate!"
+            echo "weblate_has_updates=yes" >> "$GITHUB_ENV"
+          fi
+
+      - name: Create Pull Request
+        if: env.weblate_has_updates == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          #Create Pull Request
+          if gh pr list --state open --head weblate \
+            --json state | grep state
+          then
+            echo "Existing Pull Request updated"
+            echo "Please merge the Pull Request"
+          else
+            gh pr create                              \
+              --base main                             \
+              --head weblate                          \
+              --title "Update Translations"           \
+              --body "New translations from Weblate."
+            echo "New Pull Request created"
+          fi
+
