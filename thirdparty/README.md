@@ -180,6 +180,21 @@ Files extracted from upstream source:
 - `LICENSE`
 
 
+## libsquish
+
+- Upstream: https://sourceforge.net/projects/libsquish
+- Version: 1.15 (r104, 2017)
+- License: MIT
+
+Files extracted from upstream source:
+
+- all .cpp, .h and .inl files
+
+Important: Some files have Rebel changes.
+They are marked with `// -- REBEL start --` and `// -- REBEL end --` comments.
+A patch file is provided in the thirdparty/libsquish/ folder.
+
+
 ## libtheora
 
 - Upstream: https://www.theora.org
@@ -432,21 +447,6 @@ Files extracted from upstream source:
 
 - `Recast/` folder without `CMakeLists.txt`
 - License.txt
-
-
-## squish
-
-- Upstream: https://sourceforge.net/projects/libsquish
-- Version: 1.15 (r104, 2017)
-- License: MIT
-
-Files extracted from upstream source:
-
-- all .cpp, .h and .inl files
-
-Important: Some files have Godot-made changes.
-They are marked with `// -- GODOT start --` and `// -- GODOT end --`
-comments and a patch is provided in the squish/ folder.
 
 
 ## tinyexr

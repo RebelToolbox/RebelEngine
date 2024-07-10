@@ -23,10 +23,10 @@
 
    -------------------------------------------------------------------------- */
 
-#include "colourblock.h"
-// -- Godot start --
+// -- REBEL start --
 #include "alpha.h"
-// -- Godot end --
+// -- REBEL end --
+#include "colourblock.h"
 
 namespace squish {
 
@@ -214,7 +214,18 @@ void DecompressColour( u8* rgba, void const* block, bool isDxt1 )
     }
 }
 
-// -- Godot start --
+// -- REBEL start --
+void DecompressColourBc4( u8* rgba, void const* block)
+{
+    DecompressAlphaDxt5(rgba,block);
+    for ( int i = 0; i < 16; ++i ) {
+        rgba[i*4] = rgba[i*4 + 3];
+        rgba[i*4 + 1] = 0;
+        rgba[i*4 + 2] = 0;
+        rgba[i*4 + 3] = 255;
+    }
+}
+
 void DecompressColourBc5( u8* rgba, void const* block)
 {
     void const* rblock = block;
@@ -225,12 +236,11 @@ void DecompressColourBc5( u8* rgba, void const* block)
     }
     DecompressAlphaDxt5(rgba,gblock);
     for ( int i = 0; i < 16; ++i ) {
-        rgba[i*4+1] = rgba[i*4 + 3];
+        rgba[i*4 + 1] = rgba[i*4 + 3];
         rgba[i*4 + 2] = 0;
         rgba[i*4 + 3] = 255;
     }
 }
-// -- GODOT end --
-
+// -- REBEL end --
 
 } // namespace squish
