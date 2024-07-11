@@ -10,7 +10,7 @@ env_squish = env_modules.Clone()
 thirdparty_obj = []
 
 if env["builtin_squish"]:
-    thirdparty_dir = "#thirdparty/squish/"
+    thirdparty_dir = "#thirdparty/libsquish/"
     thirdparty_sources = [
         "alpha.cpp",
         "clusterfit.cpp",
