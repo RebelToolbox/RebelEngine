@@ -277,6 +277,7 @@ jobs:
           # For each library identify the correct build and architecture folder.
           project_src_dir=platform/android/project/engine/src
           stl_lib_src_dir=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs
+          rebel_lib_file=librebel_android.so
           for library in `ls -1 bin/librebel.android.*`; do
             case $library in
               *debug* )
@@ -300,12 +301,13 @@ jobs:
               x86_64 )
                 arch="x86_64" ;;
             esac
-            # Copy $arch_id $build Rebel Engine library into $build jniLibs $arch folder
+            # Copy $arch_id $build Rebel Engine library to $build/jniLibs/$arch/$rebel_lib_file
             target=$project_src_dir/$build/jniLibs/$arch
             mkdir -p $target
-            echo "Copying $library into $target"
+            target=$target/$rebel_lib_file
+            echo "Copying $library to $target"
             cp $library $target
-            # Copy $arch_id stl_lib into jniLibs $arch folder
+            # Copy $arch_id stl_lib into main/jniLibs/$arch folder
             stl_lib=$stl_lib_src_dir/$arch/libc++_shared.so
             target=$project_src_dir/main/jniLibs/$arch
             mkdir -p $target
