@@ -118,11 +118,12 @@ jobs:
             echo "Existing Pull Request updated"
             echo "Please merge the Pull Request"
           else
-            gh pr create                                                                \
-              --base main                                                               \
-              --head update-translation-files                                           \
-              --title "Update Translation Files"                                        \
-              --body "Updates the API and editor translations with the latest changes."
+            gh pr create                                                                     \
+              --base main                                                                    \
+              --head update-translation-files                                                \
+              --title "Update Translation Files"                                             \
+              --body "Updates the API and editor translation files with the latest changes." \
+              --label "PR Type: Maintenance"
             echo "New Pull Request created"
           fi
 
@@ -176,7 +177,8 @@ jobs:
               --base main                             \
               --head weblate                          \
               --title "Update Translations"           \
-              --body "New translations from Weblate."
+              --body "New translations from Weblate." \
+              --label "PR Type: Enhancement"
             echo "New Pull Request created"
           fi
 
