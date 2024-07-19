@@ -120,7 +120,7 @@ SPDX-License-Identifier: MIT
             <argument index="0" name="session_mode" type="String" />
             <description>
                 Checks if the given [code]session_mode[/code] is supported by the user's browser.
-                Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSessionMode]WebXR's XRSessionMode[/url], including: [code]"immersive-vr"[/code], [code]"immersive-ar"[/code], and [code]"inline"[/code].
+                Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession]WebXR's XRSessionMode[/url], including: [code]"immersive-vr"[/code], [code]"immersive-ar"[/code], and [code]"inline"[/code].
                 This method returns nothing, instead it emits the [signal session_supported] signal with the result.
             </description>
         </method>
@@ -135,32 +135,32 @@ SPDX-License-Identifier: MIT
             A comma-seperated list of optional features used by [method ARVRInterface.initialize] when setting up the WebXR session.
             If a user's browser or device doesn't support one of the given features, initialization will continue, but you won't be able to use the requested feature.
             This doesn't have any effect on the interface when already initialized.
-            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRReferenceSpaceType]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
+            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSession/requestReferenceSpace]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
         </member>
         <member name="reference_space_type" type="String" setter="" getter="get_reference_space_type">
             The reference space type (from the list of requested types set in the [member requested_reference_space_types] property), that was ultimately used by [method ARVRInterface.initialize] when setting up the WebXR session.
-            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRReferenceSpaceType]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
+            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSession/requestReferenceSpace]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
         </member>
         <member name="requested_reference_space_types" type="String" setter="set_requested_reference_space_types" getter="get_requested_reference_space_types">
             A comma-seperated list of reference space types used by [method ARVRInterface.initialize] when setting up the WebXR session.
             The reference space types are requested in order, and the first on supported by the users device or browser will be used. The [member reference_space_type] property contains the reference space type that was ultimately used.
             This doesn't have any effect on the interface when already initialized.
-            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRReferenceSpaceType]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
+            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSession/requestReferenceSpace]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
         </member>
         <member name="required_features" type="String" setter="set_required_features" getter="get_required_features">
             A comma-seperated list of required features used by [method ARVRInterface.initialize] when setting up the WebXR session.
             If a user's browser or device doesn't support one of the given features, initialization will fail and [signal session_failed] will be emitted.
             This doesn't have any effect on the interface when already initialized.
-            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRReferenceSpaceType]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
+            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSession/requestReferenceSpace]WebXR's XRReferenceSpaceType[/url]. If you want to use a particular reference space type, it must be listed in either [member required_features] or [member optional_features].
         </member>
         <member name="session_mode" type="String" setter="set_session_mode" getter="get_session_mode">
             The session mode used by [method ARVRInterface.initialize] when setting up the WebXR session.
             This doesn't have any effect on the interface when already initialized.
-            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSessionMode]WebXR's XRSessionMode[/url], including: [code]"immersive-vr"[/code], [code]"immersive-ar"[/code], and [code]"inline"[/code].
+            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession]WebXR's XRSessionMode[/url], including: [code]"immersive-vr"[/code], [code]"immersive-ar"[/code], and [code]"inline"[/code].
         </member>
         <member name="visibility_state" type="String" setter="" getter="get_visibility_state">
             Indicates if the WebXR session's imagery is visible to the user.
-            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRVisibilityState]WebXR's XRVisibilityState[/url], including [code]"hidden"[/code], [code]"visible"[/code], and [code]"visible-blurred"[/code].
+            Possible values come from [url=https://developer.mozilla.org/en-US/docs/Web/API/XRSession/visibilityState]WebXR's XRVisibilityState[/url], including [code]"hidden"[/code], [code]"visible"[/code], and [code]"visible-blurred"[/code].
         </member>
     </members>
     <signals>

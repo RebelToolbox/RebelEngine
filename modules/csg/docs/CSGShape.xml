@@ -15,7 +15,7 @@ SPDX-License-Identifier: MIT
         [b]Note:[/b] CSG nodes are intended to be used for level prototyping. Creating CSG nodes has a significant CPU cost compared to creating a [MeshInstance] with a [PrimitiveMesh]. Moving a CSG node within another CSG node also has a significant CPU cost, so it should be avoided during gameplay.
     </description>
     <tutorials>
-        <link title="Prototyping levels with CSG">$DOCS_URL/tutorials/3d/csg_tools.html</link>
+        <link title="Prototyping levels with CSG">https://docs.rebeltoolbox.com/en/latest/tutorials/3d/csg_tools.html</link>
     </tutorials>
     <methods>
         <method name="get_collision_layer_bit" qualifiers="const">

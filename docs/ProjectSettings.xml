@@ -1115,7 +1115,7 @@ SPDX-License-Identifier: MIT
         </member>
         <member name="physics/3d/physics_engine" type="String" setter="" getter="" default="&quot;DEFAULT&quot;">
             Sets which physics engine to use for 3D physics.
-            "DEFAULT" is currently the [url=https://bulletphysics.org]Bullet[/url] physics engine. The "Rebel Physics" engine is still supported as an alternative.
+            "DEFAULT" is currently the [url=https://pybullet.org/wordpress/]Bullet[/url] physics engine. The "Rebel Physics" engine is still supported as an alternative.
         </member>
         <member name="physics/common/enable_object_picking" type="bool" setter="" getter="" default="true">
             Enables [member Viewport.physics_object_picking] on the root viewport.
