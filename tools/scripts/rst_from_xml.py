@@ -369,8 +369,8 @@ def write_tutorials(rst_file, class_def):
     if not class_def.tutorials:
         return
     rst_file.write(rst_heading("Tutorials", "-"))
-    for url, title in class_def.tutorials:
-        rst_file.write("- " + rst_link_label(url, title))
+    for url, text in class_def.tutorials:
+        rst_file.write("- " + rst_link(url, text))
         rst_file.write("\n\n")
 
 
@@ -778,32 +778,39 @@ def rst_parameters(parameters, vararg=False):
     return "**(**" + parameter_string + "**)**"
 
 
-def rst_link_label(url, title):
-    # http(s)://docs.rebeltoolbox.com/<langcode>/<tag>/path/to/page.html(#fragment-tag)
+def rst_link(url, text):
+    # http(s)://docs.rebeltoolbox.com/<langcode>/<version>/path/to/page.html(#section)
     docs_rebeltoolbox_com = re.compile(
         r"^http(?:s)?://docs\.rebeltoolbox\.com/(?:[a-zA-Z0-9.\-_]*)/(?:[a-zA-Z0-9.\-_]*)/(.*)\.html(#.*)?$"
     )
     docs_match = docs_rebeltoolbox_com.search(url)
     if docs_match:
-        return rst_internal_link(docs_match)
+        page = docs_match.group(1)
+        section = docs_match.group(2)
+        return rst_internal_link(page, section, text)
     else:
-        return rst_external_link(url, title)
+        return rst_external_link(url, text)
 
 
-def rst_internal_link(docs_match):
-    doc = docs_match.group(1)
-    tag = docs_match.group(2)
-    if tag is not None:
-        return "`{1} <../{0}.html{1}>`_ in :doc:`../{0}`".format(doc, tag)
+def rst_internal_link(page, section, text):
+    if section is None:
+        if text:
+            return ":doc:`{1} </{0}>`".format(page, text)
+        else:
+            return ":doc:`/{0}`".format(page)
     else:
-        return ":doc:`../{}`".format(doc)
+        section = section[1:].replace("-", " ")
+        if text:
+            return ":ref:`{2} <{0}:{1}>`".format(page, section, text)
+        else:
+            return ":ref:`{0}:{1}`".format(page, section)
 
 
-def rst_external_link(url, title):
-    if title:
-        return "`" + title + " <" + url + ">`__"
+def rst_external_link(url, text):
+    if text:
+        return "`{1} <{0}>`__".format(url, text)
     else:
-        return "`" + url + " <" + url + ">`__"
+        return url
 
 
 def rst_type(type_def):
@@ -951,7 +958,7 @@ def rst_tag(tag):
         case "img":
             return rst_image(tag.contents, tag.value)
         case "url":
-            return rst_url(tag.value, rst_text(tag.contents))
+            return rst_link(tag.value, rst_text(tag.contents))
         case _:
             return rst_class_reference_link(tag.name)
 
@@ -1043,12 +1050,6 @@ def get_dimensions(value):
     if len(dimensions) == 1:
         return {"width": value}
     return {"width": dimensions[0], "height": dimensions[1]}
-
-
-def rst_url(link, label):
-    if not label:
-        label = link
-    return "`" + label + " <" + link + ">`__"
 
 
 class ClassDef:
