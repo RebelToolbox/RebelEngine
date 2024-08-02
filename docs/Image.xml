@@ -532,27 +532,27 @@ SPDX-License-Identifier: MIT
             [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC1]Ericsson Texture Compression format 1[/url], also referred to as "ETC1", and is part of the OpenGL ES graphics standard. This format cannot store an alpha channel.
         </constant>
         <constant name="FORMAT_ETC2_R11" value="30" enum="Format">
-            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2_and_EAC]Ericsson Texture Compression format 2[/url] ([code]R11_EAC[/code] variant), which provides one channel of unsigned data.
+            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#EAC]Ericsson Texture Compression format 2[/url] ([code]R11_EAC[/code] variant), which provides one channel of unsigned data.
         </constant>
         <constant name="FORMAT_ETC2_R11S" value="31" enum="Format">
-            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2_and_EAC]Ericsson Texture Compression format 2[/url] ([code]SIGNED_R11_EAC[/code] variant), which provides one channel of signed data.
+            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#EAC]Ericsson Texture Compression format 2[/url] ([code]SIGNED_R11_EAC[/code] variant), which provides one channel of signed data.
         </constant>
         <constant name="FORMAT_ETC2_RG11" value="32" enum="Format">
-            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2_and_EAC]Ericsson Texture Compression format 2[/url] ([code]RG11_EAC[/code] variant), which provides two channels of unsigned data.
+            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#EAC]Ericsson Texture Compression format 2[/url] ([code]RG11_EAC[/code] variant), which provides two channels of unsigned data.
         </constant>
         <constant name="FORMAT_ETC2_RG11S" value="33" enum="Format">
-            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2_and_EAC]Ericsson Texture Compression format 2[/url] ([code]SIGNED_RG11_EAC[/code] variant), which provides two channels of signed data.
+            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#EAC]Ericsson Texture Compression format 2[/url] ([code]SIGNED_RG11_EAC[/code] variant), which provides two channels of signed data.
         </constant>
         <constant name="FORMAT_ETC2_RGB8" value="34" enum="Format">
-            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2_and_EAC]Ericsson Texture Compression format 2[/url] ([code]RGB8[/code] variant), which is a follow-up of ETC1 and compresses RGB888 data.
+            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2]Ericsson Texture Compression format 2[/url] ([code]RGB8[/code] variant), which is a follow-up of ETC1 and compresses RGB888 data.
             [b]Note:[/b] When creating an [ImageTexture], an sRGB to linear color space conversion is performed.
         </constant>
         <constant name="FORMAT_ETC2_RGBA8" value="35" enum="Format">
-            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2_and_EAC]Ericsson Texture Compression format 2[/url] ([code]RGBA8[/code]variant), which compresses RGBA8888 data with full alpha support.
+            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2]Ericsson Texture Compression format 2[/url] ([code]RGBA8[/code]variant), which compresses RGBA8888 data with full alpha support.
             [b]Note:[/b] When creating an [ImageTexture], an sRGB to linear color space conversion is performed.
         </constant>
         <constant name="FORMAT_ETC2_RGB8A1" value="36" enum="Format">
-            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2_and_EAC]Ericsson Texture Compression format 2[/url] ([code]RGB8_PUNCHTHROUGH_ALPHA1[/code] variant), which compresses RGBA data to make alpha either fully transparent or fully opaque.
+            [url=https://en.wikipedia.org/wiki/Ericsson_Texture_Compression#ETC2]Ericsson Texture Compression format 2[/url] ([code]RGB8_PUNCHTHROUGH_ALPHA1[/code] variant), which compresses RGBA data to make alpha either fully transparent or fully opaque.
             [b]Note:[/b] When creating an [ImageTexture], an sRGB to linear color space conversion is performed.
         </constant>
         <constant name="FORMAT_MAX" value="37" enum="Format">
