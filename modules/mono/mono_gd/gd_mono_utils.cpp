@@ -469,7 +469,7 @@ void debug_send_unhandled_exception_error(MonoException* p_exc) {
     }
 
     String file      = si.size() ? si[0].file : __FILE__;
-    String func      = si.size() ? si[0].func : FUNCTION_STR;
+    String func      = si.size() ? si[0].func : __FUNCTION__;
     int line         = si.size() ? si[0].line : __LINE__;
     String error_msg = "Unhandled exception";
 
