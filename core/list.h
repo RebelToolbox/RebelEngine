@@ -438,15 +438,11 @@ public:
 
         Element* I = front();
         int c      = 0;
-        while (I) {
-            if (c == p_index) {
-                return I->get();
-            }
+        while (c < p_index) {
             I = I->next();
             c++;
         }
-
-        CRASH_NOW(); // bug!!
+        return I->get();
     }
 
     const T& operator[](int p_index) const {
@@ -454,15 +450,11 @@ public:
 
         const Element* I = front();
         int c            = 0;
-        while (I) {
-            if (c == p_index) {
-                return I->get();
-            }
+        while (c < p_index) {
             I = I->next();
             c++;
         }
-
-        CRASH_NOW(); // bug!!
+        return I->get();
     }
 
     void move_to_back(Element* p_I) {
