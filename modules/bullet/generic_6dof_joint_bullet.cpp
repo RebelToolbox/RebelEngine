@@ -12,10 +12,6 @@
 
 #include <BulletDynamics/ConstraintSolver/btGeneric6DofSpring2Constraint.h>
 
-/**
-    @author AndreaCatania
-*/
-
 Generic6DOFJointBullet::Generic6DOFJointBullet(
     RigidBodyBullet* rbA,
     RigidBodyBullet* rbB,
@@ -28,7 +24,7 @@ Generic6DOFJointBullet::Generic6DOFJointBullet(
     scaled_AFrame.basis.rotref_posscale_decomposition(scaled_AFrame.basis);
 
     btTransform btFrameA;
-    G_TO_B(scaled_AFrame, btFrameA);
+    R_TO_B(scaled_AFrame, btFrameA);
 
     if (rbB) {
         Transform scaled_BFrame(frameInB.scaled(rbB->get_body_scale()));
@@ -36,7 +32,7 @@ Generic6DOFJointBullet::Generic6DOFJointBullet(
         scaled_BFrame.basis.rotref_posscale_decomposition(scaled_BFrame.basis);
 
         btTransform btFrameB;
-        G_TO_B(scaled_BFrame, btFrameB);
+        R_TO_B(scaled_BFrame, btFrameB);
 
         sixDOFConstraint = bulletnew(btGeneric6DofSpring2Constraint(
             *rbA->get_bt_rigid_body(),
@@ -56,56 +52,56 @@ Generic6DOFJointBullet::Generic6DOFJointBullet(
 Transform Generic6DOFJointBullet::getFrameOffsetA() const {
     btTransform btTrs = sixDOFConstraint->getFrameOffsetA();
     Transform gTrs;
-    B_TO_G(btTrs, gTrs);
+    B_TO_R(btTrs, gTrs);
     return gTrs;
 }
 
 Transform Generic6DOFJointBullet::getFrameOffsetB() const {
     btTransform btTrs = sixDOFConstraint->getFrameOffsetB();
     Transform gTrs;
-    B_TO_G(btTrs, gTrs);
+    B_TO_R(btTrs, gTrs);
     return gTrs;
 }
 
 Transform Generic6DOFJointBullet::getFrameOffsetA() {
     btTransform btTrs = sixDOFConstraint->getFrameOffsetA();
     Transform gTrs;
-    B_TO_G(btTrs, gTrs);
+    B_TO_R(btTrs, gTrs);
     return gTrs;
 }
 
 Transform Generic6DOFJointBullet::getFrameOffsetB() {
     btTransform btTrs = sixDOFConstraint->getFrameOffsetB();
     Transform gTrs;
-    B_TO_G(btTrs, gTrs);
+    B_TO_R(btTrs, gTrs);
     return gTrs;
 }
 
 void Generic6DOFJointBullet::set_linear_lower_limit(const Vector3& linearLower
 ) {
     btVector3 btVec;
-    G_TO_B(linearLower, btVec);
+    R_TO_B(linearLower, btVec);
     sixDOFConstraint->setLinearLowerLimit(btVec);
 }
 
 void Generic6DOFJointBullet::set_linear_upper_limit(const Vector3& linearUpper
 ) {
     btVector3 btVec;
-    G_TO_B(linearUpper, btVec);
+    R_TO_B(linearUpper, btVec);
     sixDOFConstraint->setLinearUpperLimit(btVec);
 }
 
 void Generic6DOFJointBullet::set_angular_lower_limit(const Vector3& angularLower
 ) {
     btVector3 btVec;
-    G_TO_B(angularLower, btVec);
+    R_TO_B(angularLower, btVec);
     sixDOFConstraint->setAngularLowerLimit(btVec);
 }
 
 void Generic6DOFJointBullet::set_angular_upper_limit(const Vector3& angularUpper
 ) {
     btVector3 btVec;
-    G_TO_B(angularUpper, btVec);
+    R_TO_B(angularUpper, btVec);
     sixDOFConstraint->setAngularUpperLimit(btVec);
 }
 

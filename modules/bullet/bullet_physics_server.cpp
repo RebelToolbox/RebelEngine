@@ -20,10 +20,6 @@
 #include <LinearMath/btVector3.h>
 #include <assert.h>
 
-/**
-    @author AndreaCatania
-*/
-
 #define CreateThenReturnRID(owner, ridData)                                    \
     RID rid = owner.make_rid(ridData);                                         \
     ridData->set_self(rid);                                                    \
@@ -960,12 +956,12 @@ void BulletPhysicsServer::body_set_contacts_reported_depth_threshold(
     RID p_body,
     float p_threshold
 ) {
-    // Not supported by bullet and even Godot
+    // Not supported.
 }
 
 float BulletPhysicsServer::body_get_contacts_reported_depth_threshold(RID p_body
 ) const {
-    // Not supported by bullet and even Godot
+    // Not supported.
     return 0.;
 }
 
@@ -1953,8 +1949,8 @@ void BulletPhysicsServer::finish() {
 
 void BulletPhysicsServer::set_collision_iterations(int p_iterations) {
     WARN_PRINT(
-        "Changing the number of 3D physics collision iterations is only "
-        "supported when using GodotPhysics, not Bullet."
+        "Changing the number of 3D physics collision iterations is not "
+        "supported when using Bullet Physics."
     );
 }
 

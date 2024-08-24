@@ -15,10 +15,6 @@
 
 #include <LinearMath/btTransform.h>
 
-/**
-    @author AndreaCatania
-*/
-
 class AreaBullet;
 class ShapeBullet;
 class btCollisionObject;
@@ -28,7 +24,7 @@ class SpaceBullet;
 
 class CollisionObjectBullet : public RIDBullet {
 public:
-    enum GodotObjectFlags {
+    enum ObjectFlags {
         GOF_IS_MONITORING_AREA = 1 << 0
         // FLAG2 = 1 << 1,
         // FLAG3 = 1 << 2,
@@ -228,8 +224,8 @@ public:
     virtual void on_enter_area(AreaBullet* p_area) = 0;
     virtual void on_exit_area(AreaBullet* p_area);
 
-    void set_godot_object_flags(int flags);
-    int get_godot_object_flags() const;
+    void set_object_flags(int flags);
+    int get_object_flags() const;
 
     void set_transform(const Transform& p_global_transform);
     Transform get_transform() const;
@@ -303,4 +299,4 @@ private:
     );
 };
 
-#endif
+#endif // COLLISION_OBJECT_BULLET_H

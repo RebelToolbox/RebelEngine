@@ -12,10 +12,6 @@
 
 #include <BulletDynamics/ConstraintSolver/btSliderConstraint.h>
 
-/**
-    @author AndreaCatania
-*/
-
 SliderJointBullet::SliderJointBullet(
     RigidBodyBullet* rbA,
     RigidBodyBullet* rbB,
@@ -27,14 +23,14 @@ SliderJointBullet::SliderJointBullet(
     scaled_AFrame.basis.rotref_posscale_decomposition(scaled_AFrame.basis);
 
     btTransform btFrameA;
-    G_TO_B(scaled_AFrame, btFrameA);
+    R_TO_B(scaled_AFrame, btFrameA);
 
     if (rbB) {
         Transform scaled_BFrame(frameInB.scaled(rbB->get_body_scale()));
         scaled_BFrame.basis.rotref_posscale_decomposition(scaled_BFrame.basis);
 
         btTransform btFrameB;
-        G_TO_B(scaled_BFrame, btFrameB);
+        R_TO_B(scaled_BFrame, btFrameB);
         sliderConstraint = bulletnew(btSliderConstraint(
             *rbA->get_bt_rigid_body(),
             *rbB->get_bt_rigid_body(),
@@ -66,42 +62,42 @@ const RigidBodyBullet* SliderJointBullet::getRigidBodyB() const {
 const Transform SliderJointBullet::getCalculatedTransformA() const {
     btTransform btTransform = sliderConstraint->getCalculatedTransformA();
     Transform gTrans;
-    B_TO_G(btTransform, gTrans);
+    B_TO_R(btTransform, gTrans);
     return gTrans;
 }
 
 const Transform SliderJointBullet::getCalculatedTransformB() const {
     btTransform btTransform = sliderConstraint->getCalculatedTransformB();
     Transform gTrans;
-    B_TO_G(btTransform, gTrans);
+    B_TO_R(btTransform, gTrans);
     return gTrans;
 }
 
 const Transform SliderJointBullet::getFrameOffsetA() const {
     btTransform btTransform = sliderConstraint->getFrameOffsetA();
     Transform gTrans;
-    B_TO_G(btTransform, gTrans);
+    B_TO_R(btTransform, gTrans);
     return gTrans;
 }
 
 const Transform SliderJointBullet::getFrameOffsetB() const {
     btTransform btTransform = sliderConstraint->getFrameOffsetB();
     Transform gTrans;
-    B_TO_G(btTransform, gTrans);
+    B_TO_R(btTransform, gTrans);
     return gTrans;
 }
 
 Transform SliderJointBullet::getFrameOffsetA() {
     btTransform btTransform = sliderConstraint->getFrameOffsetA();
     Transform gTrans;
-    B_TO_G(btTransform, gTrans);
+    B_TO_R(btTransform, gTrans);
     return gTrans;
 }
 
 Transform SliderJointBullet::getFrameOffsetB() {
     btTransform btTransform = sliderConstraint->getFrameOffsetB();
     Transform gTrans;
-    B_TO_G(btTransform, gTrans);
+    B_TO_R(btTransform, gTrans);
     return gTrans;
 }
 

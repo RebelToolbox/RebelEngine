@@ -12,10 +12,6 @@
 
 #include <BulletDynamics/ConstraintSolver/btHingeConstraint.h>
 
-/**
-    @author AndreaCatania
-*/
-
 HingeJointBullet::HingeJointBullet(
     RigidBodyBullet* rbA,
     RigidBodyBullet* rbB,
@@ -27,14 +23,14 @@ HingeJointBullet::HingeJointBullet(
     scaled_AFrame.basis.rotref_posscale_decomposition(scaled_AFrame.basis);
 
     btTransform btFrameA;
-    G_TO_B(scaled_AFrame, btFrameA);
+    R_TO_B(scaled_AFrame, btFrameA);
 
     if (rbB) {
         Transform scaled_BFrame(frameB.scaled(rbB->get_body_scale()));
         scaled_BFrame.basis.rotref_posscale_decomposition(scaled_BFrame.basis);
 
         btTransform btFrameB;
-        G_TO_B(scaled_BFrame, btFrameB);
+        R_TO_B(scaled_BFrame, btFrameB);
 
         hingeConstraint = bulletnew(btHingeConstraint(
             *rbA->get_bt_rigid_body(),
@@ -61,14 +57,14 @@ HingeJointBullet::HingeJointBullet(
     JointBullet() {
     btVector3 btPivotA;
     btVector3 btAxisA;
-    G_TO_B(pivotInA * rbA->get_body_scale(), btPivotA);
-    G_TO_B(axisInA * rbA->get_body_scale(), btAxisA);
+    R_TO_B(pivotInA * rbA->get_body_scale(), btPivotA);
+    R_TO_B(axisInA * rbA->get_body_scale(), btAxisA);
 
     if (rbB) {
         btVector3 btPivotB;
         btVector3 btAxisB;
-        G_TO_B(pivotInB * rbB->get_body_scale(), btPivotB);
-        G_TO_B(axisInB * rbB->get_body_scale(), btAxisB);
+        R_TO_B(pivotInB * rbB->get_body_scale(), btPivotB);
+        R_TO_B(axisInB * rbB->get_body_scale(), btAxisB);
 
         hingeConstraint = bulletnew(btHingeConstraint(
             *rbA->get_bt_rigid_body(),

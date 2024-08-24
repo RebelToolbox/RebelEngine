@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "godot_result_callbacks.h"
+#include "result_callbacks.h"
 
 #include "area_bullet.h"
 #include "bullet_types_converter.h"
@@ -13,11 +13,7 @@
 
 #include <BulletCollision/CollisionDispatch/btInternalEdgeUtility.h>
 
-/**
-    @author AndreaCatania
-*/
-
-bool godotContactAddedCallback(
+bool contactAddedCallback(
     btManifoldPoint& cp,
     const btCollisionObjectWrapper* colObj0Wrap,
     int partId0,
@@ -38,7 +34,7 @@ bool godotContactAddedCallback(
     return true;
 }
 
-bool GodotFilterCallback::test_collision_filters(
+bool FilterCallback::test_collision_filters(
     uint32_t body0_collision_layer,
     uint32_t body0_collision_mask,
     uint32_t body1_collision_layer,
@@ -48,11 +44,11 @@ bool GodotFilterCallback::test_collision_filters(
         || body1_collision_layer & body0_collision_mask;
 }
 
-bool GodotFilterCallback::needBroadphaseCollision(
+bool FilterCallback::needBroadphaseCollision(
     btBroadphaseProxy* proxy0,
     btBroadphaseProxy* proxy1
 ) const {
-    return GodotFilterCallback::test_collision_filters(
+    return FilterCallback::test_collision_filters(
         proxy0->m_collisionFilterGroup,
         proxy0->m_collisionFilterMask,
         proxy1->m_collisionFilterGroup,
@@ -60,9 +56,8 @@ bool GodotFilterCallback::needBroadphaseCollision(
     );
 }
 
-bool GodotClosestRayResultCallback::needsCollision(btBroadphaseProxy* proxy0
-) const {
-    const bool needs = GodotFilterCallback::test_collision_filters(
+bool ClosestRayResultCallback::needsCollision(btBroadphaseProxy* proxy0) const {
+    const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
         m_collisionFilterMask,
         proxy0->m_collisionFilterGroup,
@@ -98,13 +93,12 @@ bool GodotClosestRayResultCallback::needsCollision(btBroadphaseProxy* proxy0
     }
 }
 
-bool GodotAllConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
-) const {
+bool AllConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0) const {
     if (count >= m_resultMax) {
         return false;
     }
 
-    const bool needs = GodotFilterCallback::test_collision_filters(
+    const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
         m_collisionFilterMask,
         proxy0->m_collisionFilterGroup,
@@ -125,7 +119,7 @@ bool GodotAllConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
     }
 }
 
-btScalar GodotAllConvexResultCallback::addSingleResult(
+btScalar AllConvexResultCallback::addSingleResult(
     btCollisionWorld::LocalConvexResult& convexResult,
     bool normalInWorldSpace
 ) {
@@ -152,10 +146,9 @@ btScalar GodotAllConvexResultCallback::addSingleResult(
     return 1; // not used by bullet
 }
 
-bool GodotKinClosestConvexResultCallback::needsCollision(
-    btBroadphaseProxy* proxy0
+bool KinClosestConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
 ) const {
-    const bool needs = GodotFilterCallback::test_collision_filters(
+    const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
         m_collisionFilterMask,
         proxy0->m_collisionFilterGroup,
@@ -194,9 +187,9 @@ bool GodotKinClosestConvexResultCallback::needsCollision(
     }
 }
 
-bool GodotClosestConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
+bool ClosestConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
 ) const {
-    const bool needs = GodotFilterCallback::test_collision_filters(
+    const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
         m_collisionFilterMask,
         proxy0->m_collisionFilterGroup,
@@ -227,7 +220,7 @@ bool GodotClosestConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
     }
 }
 
-btScalar GodotClosestConvexResultCallback::addSingleResult(
+btScalar ClosestConvexResultCallback::addSingleResult(
     btCollisionWorld::LocalConvexResult& convexResult,
     bool normalInWorldSpace
 ) {
@@ -244,13 +237,12 @@ btScalar GodotClosestConvexResultCallback::addSingleResult(
     );
 }
 
-bool GodotAllContactResultCallback::needsCollision(btBroadphaseProxy* proxy0
-) const {
+bool AllContactResultCallback::needsCollision(btBroadphaseProxy* proxy0) const {
     if (m_count >= m_resultMax) {
         return false;
     }
 
-    const bool needs = GodotFilterCallback::test_collision_filters(
+    const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
         m_collisionFilterMask,
         proxy0->m_collisionFilterGroup,
@@ -281,7 +273,7 @@ bool GodotAllContactResultCallback::needsCollision(btBroadphaseProxy* proxy0
     }
 }
 
-btScalar GodotAllContactResultCallback::addSingleResult(
+btScalar AllContactResultCallback::addSingleResult(
     btManifoldPoint& cp,
     const btCollisionObjectWrapper* colObj0Wrap,
     int partId0,
@@ -322,14 +314,13 @@ btScalar GodotAllContactResultCallback::addSingleResult(
     return cp.getDistance();
 }
 
-bool GodotContactPairContactResultCallback::needsCollision(
-    btBroadphaseProxy* proxy0
+bool ContactPairContactResultCallback::needsCollision(btBroadphaseProxy* proxy0
 ) const {
     if (m_count >= m_resultMax) {
         return false;
     }
 
-    const bool needs = GodotFilterCallback::test_collision_filters(
+    const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
         m_collisionFilterMask,
         proxy0->m_collisionFilterGroup,
@@ -360,7 +351,7 @@ bool GodotContactPairContactResultCallback::needsCollision(
     }
 }
 
-btScalar GodotContactPairContactResultCallback::addSingleResult(
+btScalar ContactPairContactResultCallback::addSingleResult(
     btManifoldPoint& cp,
     const btCollisionObjectWrapper* colObj0Wrap,
     int partId0,
@@ -374,11 +365,11 @@ btScalar GodotContactPairContactResultCallback::addSingleResult(
     }
 
     if (m_self_object == colObj0Wrap->getCollisionObject()) {
-        B_TO_G(cp.m_localPointA, m_results[m_count * 2 + 0]); // Local contact
-        B_TO_G(cp.m_localPointB, m_results[m_count * 2 + 1]);
+        B_TO_R(cp.m_localPointA, m_results[m_count * 2 + 0]); // Local contact
+        B_TO_R(cp.m_localPointB, m_results[m_count * 2 + 1]);
     } else {
-        B_TO_G(cp.m_localPointB, m_results[m_count * 2 + 0]); // Local contact
-        B_TO_G(cp.m_localPointA, m_results[m_count * 2 + 1]);
+        B_TO_R(cp.m_localPointB, m_results[m_count * 2 + 0]); // Local contact
+        B_TO_R(cp.m_localPointA, m_results[m_count * 2 + 1]);
     }
 
     ++m_count;
@@ -386,10 +377,9 @@ btScalar GodotContactPairContactResultCallback::addSingleResult(
     return 1; // Not used by bullet
 }
 
-bool GodotRestInfoContactResultCallback::needsCollision(
-    btBroadphaseProxy* proxy0
+bool RestInfoContactResultCallback::needsCollision(btBroadphaseProxy* proxy0
 ) const {
-    const bool needs = GodotFilterCallback::test_collision_filters(
+    const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
         m_collisionFilterMask,
         proxy0->m_collisionFilterGroup,
@@ -420,7 +410,7 @@ bool GodotRestInfoContactResultCallback::needsCollision(
     }
 }
 
-btScalar GodotRestInfoContactResultCallback::addSingleResult(
+btScalar RestInfoContactResultCallback::addSingleResult(
     btManifoldPoint& cp,
     const btCollisionObjectWrapper* colObj0Wrap,
     int partId0,
@@ -438,8 +428,8 @@ btScalar GodotRestInfoContactResultCallback::addSingleResult(
                 colObj1Wrap->getCollisionObject()->getUserPointer()
             );
             m_result->shape = cp.m_index1;
-            B_TO_G(cp.getPositionWorldOnB(), m_result->point);
-            B_TO_G(cp.m_normalWorldOnB, m_result->normal);
+            B_TO_R(cp.getPositionWorldOnB(), m_result->point);
+            B_TO_R(cp.m_normalWorldOnB, m_result->normal);
             m_rest_info_bt_point         = cp.getPositionWorldOnB();
             m_rest_info_collision_object = colObj1Wrap->getCollisionObject();
         } else {
@@ -447,7 +437,7 @@ btScalar GodotRestInfoContactResultCallback::addSingleResult(
                 colObj0Wrap->getCollisionObject()->getUserPointer()
             );
             m_result->shape = cp.m_index0;
-            B_TO_G(cp.m_normalWorldOnB * -1, m_result->normal);
+            B_TO_R(cp.m_normalWorldOnB * -1, m_result->normal);
             m_rest_info_bt_point         = cp.getPositionWorldOnA();
             m_rest_info_collision_object = colObj0Wrap->getCollisionObject();
         }
@@ -461,7 +451,7 @@ btScalar GodotRestInfoContactResultCallback::addSingleResult(
     return 1; // Not used by bullet
 }
 
-void GodotDeepPenetrationContactResultCallback::addContactPoint(
+void DeepPenetrationContactResultCallback::addContactPoint(
     const btVector3& normalOnBInWorld,
     const btVector3& pointInWorldOnB,
     btScalar depth

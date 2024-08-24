@@ -147,8 +147,8 @@ public:
     Transform get_hmd_transform();
 
     /*
-        Interfaces are objects that 'glue' Godot to an AR or VR SDK such as the
-       Oculus SDK, OpenVR, OpenHMD, etc.
+       Interfaces are objects that 'glue' Rebel Engine to an AR or VR SDK such
+       as the Oculus SDK, OpenVR, OpenHMD, etc.
     */
     void add_interface(const Ref<ARVRInterface>& p_interface);
     void remove_interface(const Ref<ARVRInterface>& p_interface);

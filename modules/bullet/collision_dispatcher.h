@@ -4,25 +4,21 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_COLLISION_DISPATCHER_H
-#define GODOT_COLLISION_DISPATCHER_H
+#ifndef COLLISION_DISPATCHER_H
+#define COLLISION_DISPATCHER_H
 
 #include "core/int_types.h"
 
 #include <btBulletDynamicsCommon.h>
 
-/**
-    @author AndreaCatania
-*/
-
-/// This class is required to implement custom collision behaviour in the
-/// narrowphase
-class GodotCollisionDispatcher : public btCollisionDispatcher {
+// This class is required to implement custom collision behaviour in the
+// narrowphase
+class CollisionDispatcher : public btCollisionDispatcher {
 private:
     static const int CASTED_TYPE_AREA;
 
 public:
-    GodotCollisionDispatcher(btCollisionConfiguration* collisionConfiguration);
+    CollisionDispatcher(btCollisionConfiguration* collisionConfiguration);
     virtual bool needsCollision(
         const btCollisionObject* body0,
         const btCollisionObject* body1
@@ -32,4 +28,5 @@ public:
         const btCollisionObject* body1
     );
 };
-#endif
+
+#endif // COLLISION_DISPATCHER_H

@@ -9,10 +9,6 @@
 
 #include "joint_bullet.h"
 
-/**
-    @author AndreaCatania
-*/
-
 class RigidBodyBullet;
 
 class Generic6DOFJointBullet : public JointBullet {
@@ -67,4 +63,4 @@ public:
     ) const;
 };
 
-#endif
+#endif // GENERIC_6DOF_JOINT_BULLET_H

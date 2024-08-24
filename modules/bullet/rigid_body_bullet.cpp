@@ -10,8 +10,8 @@
 #include "bullet_physics_server.h"
 #include "bullet_types_converter.h"
 #include "bullet_utilities.h"
-#include "godot_motion_state.h"
 #include "joint_bullet.h"
+#include "motion_state.h"
 
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <BulletCollision/CollisionShapes/btConvexPointCloudShape.h>
@@ -19,15 +19,11 @@
 #include <assert.h>
 #include <btBulletCollisionCommon.h>
 
-/**
-    @author AndreaCatania
-*/
-
 BulletPhysicsDirectBodyState* BulletPhysicsDirectBodyState::singleton = nullptr;
 
 Vector3 BulletPhysicsDirectBodyState::get_total_gravity() const {
     Vector3 gVec;
-    B_TO_G(body->btBody->getGravity(), gVec);
+    B_TO_R(body->btBody->getGravity(), gVec);
     return gVec;
 }
 
@@ -41,7 +37,7 @@ float BulletPhysicsDirectBodyState::get_total_linear_damp() const {
 
 Vector3 BulletPhysicsDirectBodyState::get_center_of_mass() const {
     Vector3 gVec;
-    B_TO_G(body->btBody->getCenterOfMassPosition(), gVec);
+    B_TO_R(body->btBody->getCenterOfMassPosition(), gVec);
     return gVec;
 }
 
@@ -55,13 +51,13 @@ float BulletPhysicsDirectBodyState::get_inverse_mass() const {
 
 Vector3 BulletPhysicsDirectBodyState::get_inverse_inertia() const {
     Vector3 gVec;
-    B_TO_G(body->btBody->getInvInertiaDiagLocal(), gVec);
+    B_TO_R(body->btBody->getInvInertiaDiagLocal(), gVec);
     return gVec;
 }
 
 Basis BulletPhysicsDirectBodyState::get_inverse_inertia_tensor() const {
     Basis gInertia;
-    B_TO_G(body->btBody->getInvInertiaTensorWorld(), gInertia);
+    B_TO_R(body->btBody->getInvInertiaTensorWorld(), gInertia);
     return gInertia;
 }
 
@@ -96,10 +92,10 @@ Vector3 BulletPhysicsDirectBodyState::get_velocity_at_local_position(
     const Vector3& p_position
 ) const {
     btVector3 local_position;
-    G_TO_B(p_position, local_position);
+    R_TO_B(p_position, local_position);
 
     Vector3 velocity;
-    B_TO_G(body->btBody->getVelocityInLocalPoint(local_position), velocity);
+    B_TO_R(body->btBody->getVelocityInLocalPoint(local_position), velocity);
 
     return velocity;
 }
@@ -198,10 +194,10 @@ Vector3 BulletPhysicsDirectBodyState::get_contact_collider_velocity_at_position(
         body->collisions.write[p_contact_idx];
 
     btVector3 hitLocation;
-    G_TO_B(colDat.hitLocalLocation, hitLocation);
+    R_TO_B(colDat.hitLocalLocation, hitLocation);
 
     Vector3 velocityAtPoint;
-    B_TO_G(
+    B_TO_R(
         colDat.otherObject->get_bt_rigid_body()->getVelocityInLocalPoint(
             hitLocation
         ),
@@ -299,12 +295,12 @@ RigidBodyBullet::RigidBodyBullet() :
     isScratchedSpaceOverrideModificator(false),
     previousActiveState(true),
     force_integration_callback(nullptr) {
-    godotMotionState = bulletnew(GodotMotionState(this));
+    motionState = bulletnew(MotionState(this));
 
     // Initial properties
     const btVector3 localInertia(0, 0, 0);
     btRigidBody::btRigidBodyConstructionInfo
-        cInfo(mass, godotMotionState, nullptr, localInertia);
+        cInfo(mass, motionState, nullptr, localInertia);
 
     btBody = bulletnew(btRigidBody(cInfo));
     reload_shapes();
@@ -324,7 +320,7 @@ RigidBodyBullet::RigidBodyBullet() :
 }
 
 RigidBodyBullet::~RigidBodyBullet() {
-    bulletdelete(godotMotionState);
+    bulletdelete(motionState);
 
     if (force_integration_callback) {
         memdelete(force_integration_callback);
@@ -690,7 +686,7 @@ Variant RigidBodyBullet::get_state(PhysicsServer::BodyState p_state) const {
 
 void RigidBodyBullet::apply_central_impulse(const Vector3& p_impulse) {
     btVector3 btImpu;
-    G_TO_B(p_impulse, btImpu);
+    R_TO_B(p_impulse, btImpu);
     if (Vector3() != p_impulse) {
         btBody->activate();
     }
@@ -703,8 +699,8 @@ void RigidBodyBullet::apply_impulse(
 ) {
     btVector3 btImpu;
     btVector3 btPos;
-    G_TO_B(p_impulse, btImpu);
-    G_TO_B(p_pos, btPos);
+    R_TO_B(p_impulse, btImpu);
+    R_TO_B(p_pos, btPos);
     if (Vector3() != p_impulse) {
         btBody->activate();
     }
@@ -713,7 +709,7 @@ void RigidBodyBullet::apply_impulse(
 
 void RigidBodyBullet::apply_torque_impulse(const Vector3& p_impulse) {
     btVector3 btImp;
-    G_TO_B(p_impulse, btImp);
+    R_TO_B(p_impulse, btImp);
     if (Vector3() != p_impulse) {
         btBody->activate();
     }
@@ -726,8 +722,8 @@ void RigidBodyBullet::apply_force(
 ) {
     btVector3 btForce;
     btVector3 btPos;
-    G_TO_B(p_force, btForce);
-    G_TO_B(p_pos, btPos);
+    R_TO_B(p_force, btForce);
+    R_TO_B(p_pos, btPos);
     if (Vector3() != p_force) {
         btBody->activate();
     }
@@ -736,7 +732,7 @@ void RigidBodyBullet::apply_force(
 
 void RigidBodyBullet::apply_central_force(const Vector3& p_force) {
     btVector3 btForce;
-    G_TO_B(p_force, btForce);
+    R_TO_B(p_force, btForce);
     if (Vector3() != p_force) {
         btBody->activate();
     }
@@ -745,7 +741,7 @@ void RigidBodyBullet::apply_central_force(const Vector3& p_force) {
 
 void RigidBodyBullet::apply_torque(const Vector3& p_torque) {
     btVector3 btTorq;
-    G_TO_B(p_torque, btTorq);
+    R_TO_B(p_torque, btTorq);
     if (Vector3() != p_torque) {
         btBody->activate();
     }
@@ -762,13 +758,13 @@ void RigidBodyBullet::set_applied_force(const Vector3& p_force) {
     btBody->clearForces();
     btBody->applyTorque(btVec);
 
-    G_TO_B(p_force, btVec);
+    R_TO_B(p_force, btVec);
     btBody->applyCentralForce(btVec);
 }
 
 Vector3 RigidBodyBullet::get_applied_force() const {
     Vector3 gTotForc;
-    B_TO_G(btBody->getTotalForce(), gTotForc);
+    B_TO_R(btBody->getTotalForce(), gTotForc);
     return gTotForc;
 }
 
@@ -782,13 +778,13 @@ void RigidBodyBullet::set_applied_torque(const Vector3& p_torque) {
     btBody->clearForces();
     btBody->applyCentralForce(btVec);
 
-    G_TO_B(p_torque, btVec);
+    R_TO_B(p_torque, btVec);
     btBody->applyTorque(btVec);
 }
 
 Vector3 RigidBodyBullet::get_applied_torque() const {
     Vector3 gTotTorq;
-    B_TO_G(btBody->getTotalTorque(), gTotTorq);
+    B_TO_R(btBody->getTotalTorque(), gTotTorq);
     return gTotTorq;
 }
 
@@ -852,7 +848,7 @@ bool RigidBodyBullet::is_continuous_collision_detection_enabled() const {
 
 void RigidBodyBullet::set_linear_velocity(const Vector3& p_velocity) {
     btVector3 btVec;
-    G_TO_B(p_velocity, btVec);
+    R_TO_B(p_velocity, btVec);
     if (Vector3() != p_velocity) {
         btBody->activate();
     }
@@ -861,13 +857,13 @@ void RigidBodyBullet::set_linear_velocity(const Vector3& p_velocity) {
 
 Vector3 RigidBodyBullet::get_linear_velocity() const {
     Vector3 gVec;
-    B_TO_G(btBody->getLinearVelocity(), gVec);
+    B_TO_R(btBody->getLinearVelocity(), gVec);
     return gVec;
 }
 
 void RigidBodyBullet::set_angular_velocity(const Vector3& p_velocity) {
     btVector3 btVec;
-    G_TO_B(p_velocity, btVec);
+    R_TO_B(p_velocity, btVec);
     if (Vector3() != p_velocity) {
         btBody->activate();
     }
@@ -876,7 +872,7 @@ void RigidBodyBullet::set_angular_velocity(const Vector3& p_velocity) {
 
 Vector3 RigidBodyBullet::get_angular_velocity() const {
     Vector3 gVec;
-    B_TO_G(btBody->getAngularVelocity(), gVec);
+    B_TO_R(btBody->getAngularVelocity(), gVec);
     return gVec;
 }
 
@@ -892,11 +888,11 @@ void RigidBodyBullet::set_transform__bullet(
             );
         }
         // The kinematic use MotionState class
-        godotMotionState->moveBody(p_global_transform);
+        motionState->moveBody(p_global_transform);
     } else {
         // Is necessary to avoid wrong location on the rendering side on the
         // next frame
-        godotMotionState->setWorldTransform(p_global_transform);
+        motionState->setWorldTransform(p_global_transform);
     }
     CollisionObjectBullet::set_transform__bullet(p_global_transform);
 }
@@ -905,7 +901,7 @@ const btTransform& RigidBodyBullet::get_transform__bullet() const {
     if (is_static()) {
         return RigidCollisionObjectBullet::get_transform__bullet();
     } else {
-        return godotMotionState->getCurrentWorldTransform();
+        return motionState->getCurrentWorldTransform();
     }
 }
 
@@ -1120,7 +1116,7 @@ void RigidBodyBullet::reload_space_override_modificator() {
     }
 
     btVector3 newBtGravity;
-    G_TO_B(newGravity * gravity_scale, newBtGravity);
+    R_TO_B(newGravity * gravity_scale, newBtGravity);
 
     btBody->setGravity(newBtGravity);
     btBody->setDamping(newLinearDamp, newAngularDamp);

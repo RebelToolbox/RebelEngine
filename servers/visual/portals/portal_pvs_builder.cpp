@@ -87,133 +87,6 @@ void PVSBuilder::create_secondary_pvs(
     }         // go through each room in the primary pvs
 }
 
-#ifdef GODOT_PVS_SUPPORT_SAVE_FILE
-
-bool PVSBuilder::load_pvs(String p_filename) {
-    if (p_filename == "") {
-        return false;
-    }
-
-    Error err;
-    FileAccess* file = FileAccess::open(p_filename, FileAccess::READ, &err);
-
-    if (err || !file) {
-        if (file) {
-            memdelete(file);
-        }
-        return false;
-    }
-
-    // goto needs vars declaring ahead of time
-    int32_t num_rooms;
-    int32_t pvs_size;
-
-    if (!((file->get_8() == 'p') && (file->get_8() == 'v')
-          && (file->get_8() == 's') && (file->get_8() == ' '))) {
-        goto failed;
-    }
-
-    num_rooms = file->get_32();
-    if (num_rooms != _portal_renderer->get_num_rooms()) {
-        goto failed;
-    }
-
-    for (int n = 0; n < num_rooms; n++) {
-        if (file->eof_reached()) {
-            goto failed;
-        }
-
-        VSRoom& room              = _portal_renderer->get_room(n);
-        room._pvs_first           = file->get_32();
-        room._pvs_size            = file->get_32();
-        room._secondary_pvs_first = file->get_32();
-        room._secondary_pvs_size  = file->get_32();
-    }
-
-    pvs_size = file->get_32();
-
-    for (int n = 0; n < pvs_size; n++) {
-        _pvs->add_to_pvs(file->get_16());
-    }
-
-    // secondary pvs
-    pvs_size = file->get_32();
-
-    for (int n = 0; n < pvs_size; n++) {
-        _pvs->add_to_secondary_pvs(file->get_16());
-    }
-
-    if (file) {
-        memdelete(file);
-    }
-
-    return true;
-
-failed:
-    if (file) {
-        memdelete(file);
-    }
-
-    return false;
-}
-
-void PVSBuilder::save_pvs(String p_filename) {
-    if (p_filename == "") {
-        p_filename = "res://test.pvs";
-    }
-
-    Error err;
-    FileAccess* file = FileAccess::open(p_filename, FileAccess::WRITE, &err);
-
-    if (err || !file) {
-        if (file) {
-            memdelete(file);
-        }
-        return;
-    }
-
-    file->store_8('p');
-    file->store_8('v');
-    file->store_8('s');
-    file->store_8(' ');
-
-    // hash? NYI
-
-    // first save the room indices into the pvs
-    int num_rooms = _portal_renderer->get_num_rooms();
-    file->store_32(num_rooms);
-
-    for (int n = 0; n < num_rooms; n++) {
-        VSRoom& room = _portal_renderer->get_room(n);
-        file->store_32(room._pvs_first);
-        file->store_32(room._pvs_size);
-        file->store_32(room._secondary_pvs_first);
-        file->store_32(room._secondary_pvs_size);
-    }
-
-    int32_t pvs_size = _pvs->get_pvs_size();
-    file->store_32(pvs_size);
-
-    for (int n = 0; n < pvs_size; n++) {
-        int16_t room_id = _pvs->get_pvs_room_id(n);
-        file->store_16(room_id);
-    }
-
-    pvs_size = _pvs->get_secondary_pvs_size();
-    file->store_32(pvs_size);
-
-    for (int n = 0; n < pvs_size; n++) {
-        int16_t room_id = _pvs->get_secondary_pvs_room_id(n);
-        file->store_16(room_id);
-    }
-
-    if (file) {
-        memdelete(file);
-    }
-}
-
-#endif
-
 void PVSBuilder::calculate_pvs(
     PortalRenderer& p_portal_renderer,
     String p_filename,
@@ -226,15 +99,6 @@ void PVSBuilder::calculate_pvs(
     _depth_limit     = p_depth_limit;
 
     _log_active = p_log_pvs_generation;
-
-    // attempt to load from file rather than create each time
-#ifdef GODOT_PVS_SUPPORT_SAVE_FILE
-    if (load_pvs(p_filename)) {
-        print_line("loaded pvs successfully from file " + p_filename);
-        _pvs->set_loaded(true);
-        return;
-    }
-#endif
 
     uint32_t time_before = OS::get_singleton()->get_ticks_msec();
 
@@ -308,10 +172,6 @@ void PVSBuilder::calculate_pvs(
     print_verbose(
         "calculated PVS in " + itos(time_after - time_before) + " ms."
     );
-
-#ifdef GODOT_PVS_SUPPORT_SAVE_FILE
-    save_pvs(p_filename);
-#endif
 }
 
 void PVSBuilder::logd(int p_depth, String p_string) {
@@ -518,21 +378,6 @@ void PVSBuilder::trace_rooms_recursive(
                 planes,
                 outgoing != 0
             );
-
-// #define GODOT_PVS_EXTRA_REJECT_TEST
-#ifdef GODOT_PVS_EXTRA_REJECT_TEST
-            // extra reject test for pvs - was the previous portal points
-            // outside the planes formed by the new portal? not fully tested and
-            // not yet found a situation where needed, but will leave in in case
-            // testers find such a situation.
-            if (p_previous_portal_id != -1) {
-                const VSPortal& prev_portal =
-                    _portal_renderer->get_portal(p_previous_portal_id);
-                if (prev_portal._pvs_is_outside_planes(planes)) {
-                    continue;
-                }
-            }
-#endif
         }
 
         // if portal is totally inside the planes, don't copy the old planes ..
@@ -692,20 +537,6 @@ void PVSBuilder::trace_rooms_recursive_simple(
                 planes,
                 outgoing != 0
             );
-
-#ifdef GODOT_PVS_EXTRA_REJECT_TEST
-            // extra reject test for pvs - was the previous portal points
-            // outside the planes formed by the new portal? not fully tested and
-            // not yet found a situation where needed, but will leave in in case
-            // testers find such a situation.
-            if (p_previous_portal_id != -1) {
-                const VSPortal& prev_portal =
-                    _portal_renderer->get_portal(p_previous_portal_id);
-                if (prev_portal._pvs_is_outside_planes(planes)) {
-                    continue;
-                }
-            }
-#endif
         }
 
         // if portal is totally inside the planes, don't copy the old planes ..

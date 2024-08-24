@@ -94,8 +94,8 @@ void SoftBodyBullet::update_visual_server(
     btVector3 size(aabb_max - aabb_min);
 
     AABB aabb;
-    B_TO_G(aabb_min, aabb.position);
-    B_TO_G(size, aabb.size);
+    B_TO_R(aabb_min, aabb.position);
+    B_TO_R(size, aabb.size);
 
     p_visual_server_handler->set_aabb(aabb);
 }
@@ -141,7 +141,7 @@ void SoftBodyBullet::move_all_nodes(const Transform& p_transform) {
         return;
     }
     btTransform bt_transf;
-    G_TO_B(p_transform, bt_transf);
+    R_TO_B(p_transform, bt_transf);
     bt_soft_body->transform(bt_transf);
 }
 
@@ -150,7 +150,7 @@ void SoftBodyBullet::set_node_position(
     const Vector3& p_global_position
 ) {
     btVector3 bt_pos;
-    G_TO_B(p_global_position, bt_pos);
+    R_TO_B(p_global_position, bt_pos);
     set_node_position(p_node_index, bt_pos);
 }
 
@@ -170,7 +170,7 @@ void SoftBodyBullet::get_node_position(int p_node_index, Vector3& r_position)
     const {
     if (bt_soft_body) {
         ERR_FAIL_INDEX(p_node_index, bt_soft_body->m_nodes.size());
-        B_TO_G(bt_soft_body->m_nodes[p_node_index].m_x, r_position);
+        B_TO_R(bt_soft_body->m_nodes[p_node_index].m_x, r_position);
     }
 }
 
@@ -192,7 +192,7 @@ void SoftBodyBullet::get_node_offset(int p_node_index, btVector3& r_offset)
     const {
     Vector3 off;
     get_node_offset(p_node_index, off);
-    G_TO_B(off, r_offset);
+    R_TO_B(off, r_offset);
 }
 
 void SoftBodyBullet::set_node_mass(int p_node_index, btScalar p_mass) {
@@ -236,7 +236,7 @@ void SoftBodyBullet::reset_all_node_positions() {
 
     for (int vertex_index = bt_soft_body->m_nodes.size() - 1; 0 <= vertex_index;
          --vertex_index) {
-        G_TO_B(
+        R_TO_B(
             vs_vertices_read[indices_table[vertex_index][0]],
             bt_soft_body->m_nodes[vertex_index].m_x
         );

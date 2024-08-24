@@ -68,11 +68,11 @@ static void _debugger_get_resource_usage(
 
 ShaderTypes* shader_types = nullptr;
 
-PhysicsServer* _createGodotPhysicsCallback() {
+PhysicsServer* _createRebelPhysicsCallback() {
     return memnew(PhysicsServerSW);
 }
 
-Physics2DServer* _createGodotPhysics2DCallback() {
+Physics2DServer* _createRebelPhysics2DCallback() {
     return Physics2DServerWrapMT::init_server<Physics2DServerSW>();
 }
 
@@ -181,10 +181,10 @@ void register_server_types() {
     );
 
     Physics2DServerManager::register_server(
-        "GodotPhysics",
-        &_createGodotPhysics2DCallback
+        "RebelPhysics",
+        &_createRebelPhysics2DCallback
     );
-    Physics2DServerManager::set_default_server("GodotPhysics");
+    Physics2DServerManager::set_default_server("RebelPhysics");
 
     // Physics 3D
     GLOBAL_DEF(PhysicsServerManager::setting_property_name, "DEFAULT");
@@ -199,10 +199,10 @@ void register_server_types() {
     );
 
     PhysicsServerManager::register_server(
-        "GodotPhysics",
-        &_createGodotPhysicsCallback
+        "RebelPhysics",
+        &_createRebelPhysicsCallback
     );
-    PhysicsServerManager::set_default_server("GodotPhysics");
+    PhysicsServerManager::set_default_server("RebelPhysics");
 }
 
 void unregister_server_types() {

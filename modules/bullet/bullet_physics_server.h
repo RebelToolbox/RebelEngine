@@ -16,10 +16,6 @@
 #include "soft_body_bullet.h"
 #include "space_bullet.h"
 
-/**
-    @author AndreaCatania
-*/
-
 class BulletPhysicsServer : public PhysicsServer {
     GDCLASS(BulletPhysicsServer, PhysicsServer);
 
@@ -105,10 +101,10 @@ public:
     /* AREA API */
 
     /// Bullet Physics Engine not support "Area", this must be handled by the
-    /// game developer in another way. Since godot Physics use the concept of
+    /// game developer in another way. Since Rebel uses the concept of
     /// area even to define the main world, the API area_set_param is used to
     /// set initial physics world information. The API area_set_param is a bit
-    /// hacky, and allow Godot to set some parameters on Bullet's world, a
+    /// hacky, and allow Rebel to set some parameters on Bullet's world, a
     /// different use print a warning to console. All other APIs returns a
     /// warning message if used
 
@@ -621,4 +617,4 @@ public:
 public:
 };
 
-#endif
+#endif // BULLET_PHYSICS_SERVER_H

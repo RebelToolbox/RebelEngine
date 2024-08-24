@@ -4,16 +4,12 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_MOTION_STATE_H
-#define GODOT_MOTION_STATE_H
+#ifndef MOTION_STATE_H
+#define MOTION_STATE_H
 
 #include "rigid_body_bullet.h"
 
 #include <LinearMath/btMotionState.h>
-
-/**
-    @author AndreaCatania
-*/
 
 class RigidBodyBullet;
 
@@ -21,7 +17,7 @@ class RigidBodyBullet;
 // and sincronize rendering engine with Bullet
 /// DOC:
 /// http://www.bulletphysics.org/mediawiki-1.5.8/index.php/MotionStates#What.27s_a_MotionState.3F
-class GodotMotionState : public btMotionState {
+class MotionState : public btMotionState {
     /// This data is used to store the new world position for kinematic body
     btTransform bodyKinematicWorldTransf;
     /// This data is used to store last world position
@@ -30,7 +26,7 @@ class GodotMotionState : public btMotionState {
     RigidBodyBullet* owner;
 
 public:
-    GodotMotionState(RigidBodyBullet* p_owner) :
+    MotionState(RigidBodyBullet* p_owner) :
         bodyKinematicWorldTransf(
             btMatrix3x3(1., 0., 0., 0., 1., 0., 0., 0., 1.),
             btVector3(0., 0., 0.)
@@ -43,7 +39,7 @@ public:
 
     /// IMPORTANT DON'T USE THIS FUNCTION TO KNOW THE CURRENT BODY TRANSFORM
     /// This class is used internally by Bullet
-    /// Use GodotMotionState::getCurrentWorldTransform to know current position
+    /// Use MotionState::getCurrentWorldTransform to know current position
     ///
     /// This function is used by Bullet to get the position of object in the
     /// world if the body is kinematic Bullet will move the object to this
@@ -57,10 +53,10 @@ public:
     /// RENDERING ENGINE
     ///
     /// This function is called each time by Bullet and set the current position
-    /// of body inside the physics world. Don't allow Godot rendering scene
+    /// of body inside the physics world. Don't allow Rebel rendering scene
     /// takes world transform from this object because the correct transform is
     /// set by Bullet only after the last step when there are sub steps This
-    /// function must update Godot transform rendering scene for this object.
+    /// function must update Rebel transform rendering scene for this object.
     virtual void setWorldTransform(const btTransform& worldTrans) {
         bodyCurrentWorldTransform = worldTrans;
 
@@ -79,4 +75,5 @@ public:
         return bodyCurrentWorldTransform;
     }
 };
-#endif
+
+#endif // MOTION_STATE_H

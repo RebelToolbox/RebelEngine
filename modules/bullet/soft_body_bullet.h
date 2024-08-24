@@ -13,10 +13,6 @@
 #include "scene/resources/mesh.h"
 #include "servers/physics_server.h"
 
-/**
-    @author AndreaCatania
-*/
-
 class SoftBodyBullet : public CollisionObjectBullet {
 private:
     btSoftBody* bt_soft_body;

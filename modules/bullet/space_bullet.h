@@ -9,7 +9,7 @@
 
 #include "core/variant.h"
 #include "core/vector.h"
-#include "godot_result_callbacks.h"
+#include "result_callbacks.h"
 #include "rid_bullet.h"
 #include "servers/physics_server.h"
 
@@ -18,10 +18,6 @@
 #include <LinearMath/btScalar.h>
 #include <LinearMath/btTransform.h>
 #include <LinearMath/btVector3.h>
-
-/**
-    @author AndreaCatania
-*/
 
 class AreaBullet;
 class btBroadphaseInterface;
@@ -137,7 +133,7 @@ class SpaceBullet : public RIDBullet {
     btDiscreteDynamicsWorld* dynamicsWorld;
     btSoftBodyWorldInfo* soft_body_world_info;
     btGhostPairCallback* ghostPairCallback;
-    GodotFilterCallback* godotFilterCallback;
+    FilterCallback* filterCallback;
 
     btGjkEpaPenetrationDepthSolver* gjk_epa_pen_solver;
     btVoronoiSimplexSolver* gjk_simplex_solver;
@@ -371,4 +367,5 @@ private:
         PhysicsServer::SeparationResult* r_results
     );
 };
-#endif
+
+#endif // SPACE_BULLET_H

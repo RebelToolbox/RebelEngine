@@ -9,10 +9,6 @@
 
 #include "rid_bullet.h"
 
-/**
-    @author AndreaCatania
-*/
-
 class ShapeBullet;
 class btCollisionShape;
 class CollisionObjectBullet;
@@ -28,4 +24,5 @@ public:
 
     virtual ~ShapeOwnerBullet() {}
 };
-#endif
+
+#endif // SHAPE_OWNER_BULLET_H
