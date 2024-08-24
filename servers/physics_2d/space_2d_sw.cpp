@@ -1478,7 +1478,8 @@ bool Space2DSW::test_body_motion(
 
             if (stuck) {
                 safe       = 0;
-                unsafe     = 0;
+                // Set unsafe to the minimum after eight steps = 1/2^8.
+                unsafe     = 1.0 / (1 << 8);
                 best_shape = body_shape_idx; // sadly it's the best
                 break;
             }
