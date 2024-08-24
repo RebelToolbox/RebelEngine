@@ -4,11 +4,6 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS // to disable build-time warning which suggested
-                                // to use strcpy_s instead strcpy
-#endif
-
 #include "ustring.h"
 
 #include "core/color.h"
@@ -120,15 +115,17 @@ void CharString::copy_from(const char* p_cstr) {
     }
 
     size_t len = strlen(p_cstr);
-
     if (len == 0) {
         resize(0);
         return;
     }
 
-    resize(len + 1); // include terminating null char
+    // Include terminating null char.
+    len++;
+    Error err = resize(len);
+    ERR_FAIL_COND_MSG(err != OK, "Failed to copy C-string.");
 
-    strcpy(ptrw(), p_cstr);
+    memcpy(ptrw(), p_cstr, len);
 }
 
 Error String::parse_url(
