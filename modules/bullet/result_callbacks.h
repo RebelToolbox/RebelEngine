@@ -4,23 +4,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_RESULT_CALLBACKS_H
-#define GODOT_RESULT_CALLBACKS_H
+#ifndef RESULT_CALLBACKS_H
+#define RESULT_CALLBACKS_H
 
 #include "servers/physics_server.h"
 
 #include <BulletCollision/BroadphaseCollision/btBroadphaseProxy.h>
 #include <btBulletDynamicsCommon.h>
 
-/**
-    @author AndreaCatania
-*/
-
 class RigidBodyBullet;
 
 /// This callback is injected inside bullet server and allow me to smooth
 /// contacts against trimesh
-bool godotContactAddedCallback(
+bool contactAddedCallback(
     btManifoldPoint& cp,
     const btCollisionObjectWrapper* colObj0Wrap,
     int partId0,
@@ -32,7 +28,7 @@ bool godotContactAddedCallback(
 
 /// This class is required to implement custom collision behaviour in the
 /// broadphase
-struct GodotFilterCallback : public btOverlapFilterCallback {
+struct FilterCallback : public btOverlapFilterCallback {
     static bool test_collision_filters(
         uint32_t body0_collision_layer,
         uint32_t body0_collision_mask,
@@ -48,7 +44,7 @@ struct GodotFilterCallback : public btOverlapFilterCallback {
 };
 
 /// It performs an additional check allow exclusions.
-struct GodotClosestRayResultCallback :
+struct ClosestRayResultCallback :
     public btCollisionWorld::ClosestRayResultCallback {
     const Set<RID>* m_exclude;
     bool m_pickRay;
@@ -58,7 +54,7 @@ struct GodotClosestRayResultCallback :
     bool collide_with_areas;
 
 public:
-    GodotClosestRayResultCallback(
+    ClosestRayResultCallback(
         const btVector3& rayFromWorld,
         const btVector3& rayToWorld,
         const Set<RID>* p_exclude,
@@ -94,15 +90,14 @@ public:
 };
 
 // store all colliding object
-struct GodotAllConvexResultCallback :
-    public btCollisionWorld::ConvexResultCallback {
+struct AllConvexResultCallback : public btCollisionWorld::ConvexResultCallback {
 public:
     PhysicsDirectSpaceState::ShapeResult* m_results;
     int m_resultMax;
     const Set<RID>* m_exclude;
     int count;
 
-    GodotAllConvexResultCallback(
+    AllConvexResultCallback(
         PhysicsDirectSpaceState::ShapeResult* p_results,
         int p_resultMax,
         const Set<RID>* p_exclude
@@ -120,14 +115,14 @@ public:
     );
 };
 
-struct GodotKinClosestConvexResultCallback :
+struct KinClosestConvexResultCallback :
     public btCollisionWorld::ClosestConvexResultCallback {
 public:
     const RigidBodyBullet* m_self_object;
     const Set<RID>* m_exclude;
     const bool m_infinite_inertia;
 
-    GodotKinClosestConvexResultCallback(
+    KinClosestConvexResultCallback(
         const btVector3& convexFromWorld,
         const btVector3& convexToWorld,
         const RigidBodyBullet* p_self_object,
@@ -145,7 +140,7 @@ public:
     virtual bool needsCollision(btBroadphaseProxy* proxy0) const;
 };
 
-struct GodotClosestConvexResultCallback :
+struct ClosestConvexResultCallback :
     public btCollisionWorld::ClosestConvexResultCallback {
 public:
     const Set<RID>* m_exclude;
@@ -154,7 +149,7 @@ public:
     bool collide_with_bodies;
     bool collide_with_areas;
 
-    GodotClosestConvexResultCallback(
+    ClosestConvexResultCallback(
         const btVector3& convexFromWorld,
         const btVector3& convexToWorld,
         const Set<RID>* p_exclude,
@@ -178,7 +173,7 @@ public:
     );
 };
 
-struct GodotAllContactResultCallback :
+struct AllContactResultCallback :
     public btCollisionWorld::ContactResultCallback {
 public:
     const btCollisionObject* m_self_object;
@@ -190,7 +185,7 @@ public:
     bool collide_with_bodies;
     bool collide_with_areas;
 
-    GodotAllContactResultCallback(
+    AllContactResultCallback(
         btCollisionObject* p_self_object,
         PhysicsDirectSpaceState::ShapeResult* p_results,
         int p_resultMax,
@@ -221,7 +216,7 @@ public:
 
 /// Returns the list of contacts pairs in this order: Local contact, other body
 /// contact
-struct GodotContactPairContactResultCallback :
+struct ContactPairContactResultCallback :
     public btCollisionWorld::ContactResultCallback {
 public:
     const btCollisionObject* m_self_object;
@@ -233,7 +228,7 @@ public:
     bool collide_with_bodies;
     bool collide_with_areas;
 
-    GodotContactPairContactResultCallback(
+    ContactPairContactResultCallback(
         btCollisionObject* p_self_object,
         Vector3* p_results,
         int p_resultMax,
@@ -262,7 +257,7 @@ public:
     );
 };
 
-struct GodotRestInfoContactResultCallback :
+struct RestInfoContactResultCallback :
     public btCollisionWorld::ContactResultCallback {
 public:
     const btCollisionObject* m_self_object;
@@ -275,7 +270,7 @@ public:
     bool collide_with_bodies;
     bool collide_with_areas;
 
-    GodotRestInfoContactResultCallback(
+    RestInfoContactResultCallback(
         btCollisionObject* p_self_object,
         PhysicsDirectSpaceState::ShapeRestInfo* p_result,
         const Set<RID>* p_exclude,
@@ -303,13 +298,13 @@ public:
     );
 };
 
-struct GodotDeepPenetrationContactResultCallback : public btManifoldResult {
+struct DeepPenetrationContactResultCallback : public btManifoldResult {
     btVector3 m_pointNormalWorld;
     btVector3 m_pointWorld;
     btScalar m_penetration_distance;
     int m_other_compound_shape_index;
 
-    GodotDeepPenetrationContactResultCallback(
+    DeepPenetrationContactResultCallback(
         const btCollisionObjectWrapper* body0Wrap,
         const btCollisionObjectWrapper* body1Wrap
     ) :
@@ -331,4 +326,5 @@ struct GodotDeepPenetrationContactResultCallback : public btManifoldResult {
         btScalar depth
     );
 };
-#endif // GODOT_RESULT_CALLBACKS_H
+
+#endif // RESULT_CALLBACKS_H

@@ -1105,17 +1105,17 @@ SPDX-License-Identifier: MIT
             The default linear damp in 3D.
             [b]Note:[/b] Good values are in the range [code]0[/code] to [code]1[/code]. At value [code]0[/code] objects will keep moving with the same velocity. Values greater than [code]1[/code] will aim to reduce the velocity to [code]0[/code] in less than a second e.g. a value of [code]2[/code] will aim to reduce the velocity to [code]0[/code] in half a second. A value equal to or greater than the physics frame rate ([member ProjectSettings.physics/common/physics_fps], [code]60[/code] by default) will bring the object to a stop in one iteration.
         </member>
-        <member name="physics/3d/godot_physics/bvh_collision_margin" type="float" setter="" getter="" default="0.1">
-            Additional expansion applied to object bounds in the 3D physics bounding volume hierarchy. This can reduce BVH processing at the cost of a slightly coarser broadphase, which can stress the physics more in some situations.
-            The default value will work well in most situations. A value of 0.0 will turn this optimization off, and larger values may work better for larger, faster moving objects.
-            [b]Note:[/b] Used only if [member ProjectSettings.physics/3d/godot_physics/use_bvh] is enabled.
-        </member>
-        <member name="physics/3d/godot_physics/use_bvh" type="bool" setter="" getter="" default="true">
-            Enables the use of bounding volume hierarchy instead of octree for 3D physics spatial partitioning. This may give better performance.
-        </member>
         <member name="physics/3d/physics_engine" type="String" setter="" getter="" default="&quot;DEFAULT&quot;">
             Sets which physics engine to use for 3D physics.
             "DEFAULT" is currently the [url=https://pybullet.org/wordpress/]Bullet[/url] physics engine. The "Rebel Physics" engine is still supported as an alternative.
+        </member>
+        <member name="physics/3d/rebel_physics/bvh_collision_margin" type="float" setter="" getter="" default="0.1">
+            Additional expansion applied to object bounds in the 3D physics bounding volume hierarchy. This can reduce BVH processing at the cost of a slightly coarser broadphase, which can stress the physics more in some situations.
+            The default value will work well in most situations. A value of 0.0 will turn this optimization off, and larger values may work better for larger, faster moving objects.
+            [b]Note:[/b] Used only if [member ProjectSettings.physics/3d/rebel_physics/use_bvh] is enabled.
+        </member>
+        <member name="physics/3d/rebel_physics/use_bvh" type="bool" setter="" getter="" default="true">
+            Enables the use of bounding volume hierarchy instead of octree for 3D physics spatial partitioning. This may give better performance.
         </member>
         <member name="physics/common/enable_object_picking" type="bool" setter="" getter="" default="true">
             Enables [member Viewport.physics_object_picking] on the root viewport.

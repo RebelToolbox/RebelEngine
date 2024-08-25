@@ -18,10 +18,6 @@
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include <btBulletCollisionCommon.h>
 
-/**
-    @author AndreaCatania
-*/
-
 ShapeBullet::ShapeBullet() : margin(0.04) {}
 
 ShapeBullet::~ShapeBullet() {}
@@ -31,7 +27,7 @@ btCollisionShape* ShapeBullet::create_bt_shape(
     real_t p_extra_edge
 ) {
     btVector3 s;
-    G_TO_B(p_implicit_scale, s);
+    R_TO_B(p_implicit_scale, s);
     return create_bt_shape(s, p_extra_edge);
 }
 
@@ -215,7 +211,7 @@ btCollisionShape* PlaneShapeBullet::create_bt_shape(
     real_t p_extra_edge
 ) {
     btVector3 btPlaneNormal;
-    G_TO_B(plane.normal, btPlaneNormal);
+    R_TO_B(plane.normal, btPlaneNormal);
     return prepare(PlaneShapeBullet::create_shape_plane(btPlaneNormal, plane.d)
     );
 }
@@ -259,7 +255,7 @@ void BoxShapeBullet::set_data(const Variant& p_data) {
 
 Variant BoxShapeBullet::get_data() const {
     Vector3 g_half_extents;
-    B_TO_G(half_extents, g_half_extents);
+    B_TO_R(half_extents, g_half_extents);
     return g_half_extents;
 }
 
@@ -268,7 +264,7 @@ PhysicsServer::ShapeType BoxShapeBullet::get_type() const {
 }
 
 void BoxShapeBullet::setup(const Vector3& p_half_extents) {
-    G_TO_B(p_half_extents, half_extents);
+    R_TO_B(p_half_extents, half_extents);
     notifyShapeChanged();
 }
 
@@ -370,7 +366,7 @@ void ConvexPolygonShapeBullet::get_vertices(Vector<Vector3>& out_vertices) {
     const int n_of_vertices = vertices.size();
     out_vertices.resize(n_of_vertices);
     for (int i = n_of_vertices - 1; 0 <= i; --i) {
-        B_TO_G(vertices[i], out_vertices.write[i]);
+        B_TO_R(vertices[i], out_vertices.write[i]);
     }
 }
 
@@ -391,7 +387,7 @@ void ConvexPolygonShapeBullet::setup(const Vector<Vector3>& p_vertices) {
     const int n_of_vertices = p_vertices.size();
     vertices.resize(n_of_vertices);
     for (int i = n_of_vertices - 1; 0 <= i; --i) {
-        G_TO_B(p_vertices[i], vertices[i]);
+        R_TO_B(p_vertices[i], vertices[i]);
     }
     notifyShapeChanged();
 }
@@ -460,12 +456,12 @@ void ConcavePolygonShapeBullet::setup(PoolVector<Vector3> p_faces) {
         btVector3 supVec_1;
         btVector3 supVec_2;
         for (int i = 0; i < src_face_count; ++i) {
-            G_TO_B(facesr[i * 3 + 0], supVec_0);
-            G_TO_B(facesr[i * 3 + 1], supVec_1);
-            G_TO_B(facesr[i * 3 + 2], supVec_2);
+            R_TO_B(facesr[i * 3 + 0], supVec_0);
+            R_TO_B(facesr[i * 3 + 1], supVec_1);
+            R_TO_B(facesr[i * 3 + 2], supVec_2);
 
-            // Inverted from standard godot otherwise btGenerateInternalEdgeInfo
-            // generates wrong edge info
+            // Inverted, because btGenerateInternalEdgeInfo generates the wrong
+            // edge info.
             shapeInterface->addTriangle(supVec_2, supVec_1, supVec_0);
         }
 
@@ -552,10 +548,10 @@ void HeightMapShapeBullet::set_data(const Variant& p_data) {
         Ref<Image> l_image = l_heights_v;
         ERR_FAIL_COND(l_image.is_null());
 
-        // Float is the only common format between Godot and Bullet that can be
-        // used for decent collision. (Int16 would be nice too but we still
-        // don't have it) We could convert here automatically but it's better to
-        // not be intrusive and let the caller do it if necessary.
+        // Float is the only common format between Rebel and Bullet that can be
+        // used for decent collision. We could convert here automatically but
+        // it's better to not be intrusive and let the caller do it if
+        // necessary.
         ERR_FAIL_COND(l_image->get_format() != Image::FORMAT_RF);
 
         PoolByteArray im_data = l_image->get_data();

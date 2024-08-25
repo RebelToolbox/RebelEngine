@@ -15,10 +15,6 @@
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <btBulletCollisionCommon.h>
 
-/**
-    @author AndreaCatania
-*/
-
 AreaBullet::AreaBullet() :
     RigidCollisionObjectBullet(CollisionObjectBullet::TYPE_AREA),
     monitorable(true),
@@ -46,7 +42,7 @@ AreaBullet::AreaBullet() :
 }
 
 AreaBullet::~AreaBullet() {
-    // signal are handled by godot, so just clear without notify
+    // Signals are handled by Rebel Engine; so just clear without notifying.
     for (int i = overlappingObjects.size() - 1; 0 <= i; --i) {
         overlappingObjects[i].object->on_exit_area(this);
     }
@@ -162,7 +158,7 @@ void AreaBullet::set_monitorable(bool p_monitorable) {
 }
 
 bool AreaBullet::is_monitoring() const {
-    return get_godot_object_flags() & GOF_IS_MONITORING_AREA;
+    return get_object_flags() & GOF_IS_MONITORING_AREA;
 }
 
 void AreaBullet::main_shape_changed() {
@@ -297,13 +293,9 @@ void AreaBullet::set_event_callback(
     /// Set if monitoring
     if (eventsCallbacks[0].event_callback_id
         || eventsCallbacks[1].event_callback_id) {
-        set_godot_object_flags(
-            get_godot_object_flags() | GOF_IS_MONITORING_AREA
-        );
+        set_object_flags(get_object_flags() | GOF_IS_MONITORING_AREA);
     } else {
-        set_godot_object_flags(
-            get_godot_object_flags() & (~GOF_IS_MONITORING_AREA)
-        );
+        set_object_flags(get_object_flags() & (~GOF_IS_MONITORING_AREA));
     }
 }
 

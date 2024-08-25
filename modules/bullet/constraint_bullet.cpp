@@ -9,10 +9,6 @@
 #include "collision_object_bullet.h"
 #include "space_bullet.h"
 
-/**
-    @author AndreaCatania
-*/
-
 ConstraintBullet::ConstraintBullet() :
     space(nullptr),
     constraint(nullptr),

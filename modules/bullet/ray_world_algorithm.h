@@ -4,27 +4,23 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_RAY_WORLD_ALGORITHM_H
-#define GODOT_RAY_WORLD_ALGORITHM_H
+#ifndef RAY_WORLD_ALGORITHM_H
+#define RAY_WORLD_ALGORITHM_H
 
 #include <BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.h>
 #include <BulletCollision/CollisionDispatch/btCollisionCreateFunc.h>
 #include <BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
 
-/**
-    @author AndreaCatania
-*/
-
 class btDiscreteDynamicsWorld;
 
-class GodotRayWorldAlgorithm : public btActivatingCollisionAlgorithm {
+class RayWorldAlgorithm : public btActivatingCollisionAlgorithm {
     const btDiscreteDynamicsWorld* m_world;
     btPersistentManifold* m_manifoldPtr;
     bool m_ownManifold;
     bool m_isSwapped;
 
 public:
-    GodotRayWorldAlgorithm(
+    RayWorldAlgorithm(
         const btDiscreteDynamicsWorld* world,
         btPersistentManifold* mf,
         const btCollisionAlgorithmConstructionInfo& ci,
@@ -32,7 +28,7 @@ public:
         const btCollisionObjectWrapper* body1Wrap,
         bool isSwapped
     );
-    virtual ~GodotRayWorldAlgorithm();
+    virtual ~RayWorldAlgorithm();
 
     virtual void processCollision(
         const btCollisionObjectWrapper* body0Wrap,
@@ -64,9 +60,9 @@ public:
             const btCollisionObjectWrapper* body1Wrap
         ) {
             void* mem = ci.m_dispatcher1->allocateCollisionAlgorithm(
-                sizeof(GodotRayWorldAlgorithm)
+                sizeof(RayWorldAlgorithm)
             );
-            return new (mem) GodotRayWorldAlgorithm(
+            return new (mem) RayWorldAlgorithm(
                 m_world,
                 ci.m_manifold,
                 ci,
@@ -87,9 +83,9 @@ public:
             const btCollisionObjectWrapper* body1Wrap
         ) {
             void* mem = ci.m_dispatcher1->allocateCollisionAlgorithm(
-                sizeof(GodotRayWorldAlgorithm)
+                sizeof(RayWorldAlgorithm)
             );
-            return new (mem) GodotRayWorldAlgorithm(
+            return new (mem) RayWorldAlgorithm(
                 m_world,
                 ci.m_manifold,
                 ci,
@@ -101,4 +97,4 @@ public:
     };
 };
 
-#endif // GODOT_RAY_WORLD_ALGORITHM_H
+#endif // RAY_WORLD_ALGORITHM_H

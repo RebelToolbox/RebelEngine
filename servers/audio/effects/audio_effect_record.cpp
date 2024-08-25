@@ -172,7 +172,7 @@ void AudioEffectRecord::set_recording_active(bool p_record) {
     if (p_record) {
         if (current_instance == nullptr) {
             WARN_PRINT(
-                "Recording should not be set as active before Godot has "
+                "Recording should not be set as active before Rebel Engine has "
                 "initialized."
             );
             recording_active = false;

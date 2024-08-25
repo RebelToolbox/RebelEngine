@@ -51,10 +51,10 @@ GJK-EPA collision solver by Nathanael Presson, 2008
 #define EPA_MAX_VERTICES	128
 #define EPA_MAX_FACES		(EPA_MAX_VERTICES*2)
 #define EPA_MAX_ITERATIONS	255
-// -- GODOT start --
+// -- REBEL start --
 //#define EPA_ACCURACY		((real_t)0.0001)
 #define EPA_ACCURACY		((real_t)0.00001)
-// -- GODOT end --
+// -- REBEL end --
 #define EPA_FALLBACK		(10*EPA_ACCURACY)
 #define EPA_PLANE_EPS		((real_t)0.00001)
 #define EPA_INSIDE_EPS		((real_t)0.01)
@@ -789,10 +789,10 @@ struct	GJK
 					append(m_stock,face);
 					return(nullptr);
 				}
-				// -- GODOT start --
+				// -- REBEL start --
 				//m_status=m_stock.root?eStatus::OutOfVertices:eStatus::OutOfFaces;
 				m_status=eStatus::OutOfFaces;
-				// -- GODOT end --
+				// -- REBEL end --
 				return(nullptr);
 			}
 			sFace*				findbest()

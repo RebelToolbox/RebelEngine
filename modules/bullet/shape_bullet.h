@@ -16,10 +16,6 @@
 #include <LinearMath/btScalar.h>
 #include <LinearMath/btVector3.h>
 
-/**
-    @author AndreaCatania
-*/
-
 class ShapeBullet;
 class btCollisionShape;
 class ShapeOwnerBullet;
@@ -305,4 +301,5 @@ public:
 private:
     void setup(real_t p_length, bool p_slips_on_slope);
 };
-#endif
+
+#endif // SHAPE_BULLET_H

@@ -5,7 +5,3 @@
 // SPDX-License-Identifier: MIT
 
 #include "shape_owner_bullet.h"
-
-/**
-    @author AndreaCatania
-*/

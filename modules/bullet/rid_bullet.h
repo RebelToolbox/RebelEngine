@@ -9,10 +9,6 @@
 
 #include "core/rid.h"
 
-/**
-    @author AndreaCatania
-*/
-
 class BulletPhysicsServer;
 
 class RIDBullet : public RID_Data {
@@ -37,4 +33,5 @@ public:
         return physicsServer;
     }
 };
-#endif
+
+#endif // RID_BULLET_H

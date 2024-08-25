@@ -259,7 +259,6 @@ void SMBPitchShift::smbFft(float *fftBuffer, long fftFrameSize, long sign)
 	}
 }
 
-/* Godot code again */
 /* clang-format on */
 
 void AudioEffectPitchShiftInstance::process(

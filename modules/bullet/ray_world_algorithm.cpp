@@ -4,31 +4,26 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "godot_ray_world_algorithm.h"
+#include "ray_world_algorithm.h"
 
 #include "btRayShape.h"
 #include "collision_object_bullet.h"
 
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 
-/**
-    @author AndreaCatania
-*/
-
 // Epsilon to account for floating point inaccuracies
 #define RAY_PENETRATION_DEPTH_EPSILON 0.01
 
-GodotRayWorldAlgorithm::CreateFunc::CreateFunc(
+RayWorldAlgorithm::CreateFunc::CreateFunc(const btDiscreteDynamicsWorld* world
+) :
+    m_world(world) {}
+
+RayWorldAlgorithm::SwappedCreateFunc::SwappedCreateFunc(
     const btDiscreteDynamicsWorld* world
 ) :
     m_world(world) {}
 
-GodotRayWorldAlgorithm::SwappedCreateFunc::SwappedCreateFunc(
-    const btDiscreteDynamicsWorld* world
-) :
-    m_world(world) {}
-
-GodotRayWorldAlgorithm::GodotRayWorldAlgorithm(
+RayWorldAlgorithm::RayWorldAlgorithm(
     const btDiscreteDynamicsWorld* world,
     btPersistentManifold* mf,
     const btCollisionAlgorithmConstructionInfo& ci,
@@ -42,13 +37,13 @@ GodotRayWorldAlgorithm::GodotRayWorldAlgorithm(
     m_ownManifold(false),
     m_isSwapped(isSwapped) {}
 
-GodotRayWorldAlgorithm::~GodotRayWorldAlgorithm() {
+RayWorldAlgorithm::~RayWorldAlgorithm() {
     if (m_ownManifold && m_manifoldPtr) {
         m_dispatcher->releaseManifold(m_manifoldPtr);
     }
 }
 
-void GodotRayWorldAlgorithm::processCollision(
+void RayWorldAlgorithm::processCollision(
     const btCollisionObjectWrapper* body0Wrap,
     const btCollisionObjectWrapper* body1Wrap,
     const btDispatcherInfo& dispatchInfo,
@@ -125,7 +120,7 @@ void GodotRayWorldAlgorithm::processCollision(
     }
 }
 
-btScalar GodotRayWorldAlgorithm::calculateTimeOfImpact(
+btScalar RayWorldAlgorithm::calculateTimeOfImpact(
     btCollisionObject* body0,
     btCollisionObject* body1,
     const btDispatcherInfo& dispatchInfo,

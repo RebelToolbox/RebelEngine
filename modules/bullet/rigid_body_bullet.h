@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef BODYBULLET_H
-#define BODYBULLET_H
+#ifndef BODY_BULLET_H
+#define BODY_BULLET_H
 
 #include "collision_object_bullet.h"
 #include "space_bullet.h"
@@ -13,14 +13,10 @@
 #include <BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h>
 #include <LinearMath/btTransform.h>
 
-/**
-    @author AndreaCatania
-*/
-
 class AreaBullet;
 class SpaceBullet;
 class btRigidBody;
-class GodotMotionState;
+class MotionState;
 class BulletPhysicsDirectBodyState;
 
 /// This class could be used in multi thread with few changes but currently
@@ -178,7 +174,7 @@ private:
     KinematicUtilities* kinematic_utilities;
 
     PhysicsServer::BodyMode mode;
-    GodotMotionState* godotMotionState;
+    MotionState* motionState;
     btRigidBody* btBody;
     uint16_t locked_axis;
     real_t mass;
@@ -340,4 +336,4 @@ private:
     void _internal_set_mass(real_t p_mass);
 };
 
-#endif
+#endif // BODY_BULLET_H

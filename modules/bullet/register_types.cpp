@@ -10,10 +10,6 @@
 #include "core/class_db.h"
 #include "core/project_settings.h"
 
-/**
-    @author AndreaCatania
-*/
-
 #ifndef _3D_DISABLED
 PhysicsServer* _createBulletPhysicsCallback() {
     return memnew(BulletPhysicsServer);

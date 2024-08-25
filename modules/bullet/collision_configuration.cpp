@@ -4,33 +4,28 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "godot_collision_configuration.h"
+#include "collision_configuration.h"
 
-#include "godot_ray_world_algorithm.h"
+#include "ray_world_algorithm.h"
 
 #include <BulletCollision/BroadphaseCollision/btBroadphaseProxy.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 
-/**
-    @author AndreaCatania
-*/
-
-GodotCollisionConfiguration::GodotCollisionConfiguration(
+CollisionConfiguration::CollisionConfiguration(
     const btDiscreteDynamicsWorld* world,
     const btDefaultCollisionConstructionInfo& constructionInfo
 ) :
     btDefaultCollisionConfiguration(constructionInfo) {
     void* mem = nullptr;
 
-    mem = btAlignedAlloc(sizeof(GodotRayWorldAlgorithm::CreateFunc), 16);
-    m_rayWorldCF = new (mem) GodotRayWorldAlgorithm::CreateFunc(world);
+    mem          = btAlignedAlloc(sizeof(RayWorldAlgorithm::CreateFunc), 16);
+    m_rayWorldCF = new (mem) RayWorldAlgorithm::CreateFunc(world);
 
-    mem = btAlignedAlloc(sizeof(GodotRayWorldAlgorithm::SwappedCreateFunc), 16);
-    m_swappedRayWorldCF =
-        new (mem) GodotRayWorldAlgorithm::SwappedCreateFunc(world);
+    mem = btAlignedAlloc(sizeof(RayWorldAlgorithm::SwappedCreateFunc), 16);
+    m_swappedRayWorldCF = new (mem) RayWorldAlgorithm::SwappedCreateFunc(world);
 }
 
-GodotCollisionConfiguration::~GodotCollisionConfiguration() {
+CollisionConfiguration::~CollisionConfiguration() {
     m_rayWorldCF->~btCollisionAlgorithmCreateFunc();
     btAlignedFree(m_rayWorldCF);
 
@@ -38,7 +33,7 @@ GodotCollisionConfiguration::~GodotCollisionConfiguration() {
     btAlignedFree(m_swappedRayWorldCF);
 }
 
-btCollisionAlgorithmCreateFunc* GodotCollisionConfiguration::
+btCollisionAlgorithmCreateFunc* CollisionConfiguration::
     getCollisionAlgorithmCreateFunc(int proxyType0, int proxyType1) {
     if (CUSTOM_CONVEX_SHAPE_TYPE == proxyType0
         && CUSTOM_CONVEX_SHAPE_TYPE == proxyType1) {
@@ -56,7 +51,7 @@ btCollisionAlgorithmCreateFunc* GodotCollisionConfiguration::
     }
 }
 
-btCollisionAlgorithmCreateFunc* GodotCollisionConfiguration::
+btCollisionAlgorithmCreateFunc* CollisionConfiguration::
     getClosestPointsAlgorithmCreateFunc(int proxyType0, int proxyType1) {
     if (CUSTOM_CONVEX_SHAPE_TYPE == proxyType0
         && CUSTOM_CONVEX_SHAPE_TYPE == proxyType1) {
@@ -72,22 +67,21 @@ btCollisionAlgorithmCreateFunc* GodotCollisionConfiguration::
     }
 }
 
-GodotSoftCollisionConfiguration::GodotSoftCollisionConfiguration(
+SoftCollisionConfiguration::SoftCollisionConfiguration(
     const btDiscreteDynamicsWorld* world,
     const btDefaultCollisionConstructionInfo& constructionInfo
 ) :
     btSoftBodyRigidBodyCollisionConfiguration(constructionInfo) {
     void* mem = nullptr;
 
-    mem = btAlignedAlloc(sizeof(GodotRayWorldAlgorithm::CreateFunc), 16);
-    m_rayWorldCF = new (mem) GodotRayWorldAlgorithm::CreateFunc(world);
+    mem          = btAlignedAlloc(sizeof(RayWorldAlgorithm::CreateFunc), 16);
+    m_rayWorldCF = new (mem) RayWorldAlgorithm::CreateFunc(world);
 
-    mem = btAlignedAlloc(sizeof(GodotRayWorldAlgorithm::SwappedCreateFunc), 16);
-    m_swappedRayWorldCF =
-        new (mem) GodotRayWorldAlgorithm::SwappedCreateFunc(world);
+    mem = btAlignedAlloc(sizeof(RayWorldAlgorithm::SwappedCreateFunc), 16);
+    m_swappedRayWorldCF = new (mem) RayWorldAlgorithm::SwappedCreateFunc(world);
 }
 
-GodotSoftCollisionConfiguration::~GodotSoftCollisionConfiguration() {
+SoftCollisionConfiguration::~SoftCollisionConfiguration() {
     m_rayWorldCF->~btCollisionAlgorithmCreateFunc();
     btAlignedFree(m_rayWorldCF);
 
@@ -95,7 +89,7 @@ GodotSoftCollisionConfiguration::~GodotSoftCollisionConfiguration() {
     btAlignedFree(m_swappedRayWorldCF);
 }
 
-btCollisionAlgorithmCreateFunc* GodotSoftCollisionConfiguration::
+btCollisionAlgorithmCreateFunc* SoftCollisionConfiguration::
     getCollisionAlgorithmCreateFunc(int proxyType0, int proxyType1) {
     if (CUSTOM_CONVEX_SHAPE_TYPE == proxyType0
         && CUSTOM_CONVEX_SHAPE_TYPE == proxyType1) {
@@ -111,7 +105,7 @@ btCollisionAlgorithmCreateFunc* GodotSoftCollisionConfiguration::
     }
 }
 
-btCollisionAlgorithmCreateFunc* GodotSoftCollisionConfiguration::
+btCollisionAlgorithmCreateFunc* SoftCollisionConfiguration::
     getClosestPointsAlgorithmCreateFunc(int proxyType0, int proxyType1) {
     if (CUSTOM_CONVEX_SHAPE_TYPE == proxyType0
         && CUSTOM_CONVEX_SHAPE_TYPE == proxyType1) {

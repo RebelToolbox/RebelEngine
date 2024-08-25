@@ -12,13 +12,7 @@
 #include "core/variant.h"
 #include "portal_renderer.h"
 
-// #define GODOT_VERBOSE_PORTAL_ROOMS_BSP
-
-void PortalRoomsBSP::_log(String p_string) {
-#ifdef GODOT_VERBOSE_PORTAL_ROOMS_BSP
-    print_line(p_string);
-#endif
-}
+void PortalRoomsBSP::_log(String p_string) {}
 
 // rooms which contain internal rooms cannot use the optimization where it
 // terminates the search for room within if inside the previous room. We can't
@@ -217,9 +211,6 @@ void PortalRoomsBSP::create(PortalRenderer& r_portal_renderer) {
 
     build(0, room_ids);
 
-#ifdef GODOT_VERBOSE_PORTAL_ROOMS_BSP
-    debug_print_tree();
-#endif
     _log("PortalRoomsBSP " + itos(_nodes.size()) + " nodes.");
 }
 
@@ -609,18 +600,6 @@ int PortalRoomsBSP::evaluate_plane(
         DEV_ASSERT(!r_room_ids_front->size());
     }
 
-#define GODOT_BSP_PUSH_FRONT                                                   \
-    rooms_front++;                                                             \
-    if (r_room_ids_front) {                                                    \
-        r_room_ids_front->push_back(rid);                                      \
-    }
-
-#define GODOT_BSP_PUSH_BACK                                                    \
-    rooms_back++;                                                              \
-    if (r_room_ids_back) {                                                     \
-        r_room_ids_back->push_back(rid);                                       \
-    }
-
     for (int n = 0; n < p_room_ids.size(); n++) {
         int rid            = p_room_ids[n];
         const VSRoom& room = _portal_renderer->get_room(rid);
@@ -630,11 +609,17 @@ int PortalRoomsBSP::evaluate_plane(
         room._aabb.project_range_in_plane(p_plane, r_min, r_max);
 
         if ((r_min <= 0.0) && (r_max <= 0.0)) {
-            GODOT_BSP_PUSH_BACK
+            rooms_back++;
+            if (r_room_ids_back) {
+                r_room_ids_back->push_back(rid);
+            }
             continue;
         }
         if ((r_min >= 0.0) && (r_max >= 0.0)) {
-            GODOT_BSP_PUSH_FRONT
+            rooms_front++;
+            if (r_room_ids_front) {
+                r_room_ids_front->push_back(rid);
+            }
             continue;
         }
 
@@ -644,12 +629,18 @@ int PortalRoomsBSP::evaluate_plane(
         // test.
         if (p_portal && !p_portal->_internal) {
             if (p_portal->_linkedroom_ID[0] == rid) {
-                GODOT_BSP_PUSH_BACK
+                rooms_back++;
+                if (r_room_ids_back) {
+                    r_room_ids_back->push_back(rid);
+                }
                 continue;
             }
 
             if (p_portal->_linkedroom_ID[1] == rid) {
-                GODOT_BSP_PUSH_FRONT
+                rooms_front++;
+                if (r_room_ids_front) {
+                    r_room_ids_front->push_back(rid);
+                }
                 continue;
             }
         }
@@ -682,12 +673,18 @@ int PortalRoomsBSP::evaluate_plane(
 
         // if all points are in front
         if (!points_back) {
-            GODOT_BSP_PUSH_FRONT
+            rooms_front++;
+            if (r_room_ids_front) {
+                r_room_ids_front->push_back(rid);
+            }
             continue;
         }
         // if all points are behind
         if (!points_front) {
-            GODOT_BSP_PUSH_BACK
+            rooms_back++;
+            if (r_room_ids_back) {
+                r_room_ids_back->push_back(rid);
+            }
             continue;
         }
 
@@ -699,9 +696,6 @@ int PortalRoomsBSP::evaluate_plane(
             r_room_ids_back->push_back(rid);
         }
     }
-
-#undef GODOT_BSP_PUSH_BACK
-#undef GODOT_BSP_PUSH_FRONT
 
     // we want the split that splits the most front and back rooms
     return rooms_front * rooms_back;

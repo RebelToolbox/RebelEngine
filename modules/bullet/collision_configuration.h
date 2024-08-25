@@ -4,29 +4,25 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_COLLISION_CONFIGURATION_H
-#define GODOT_COLLISION_CONFIGURATION_H
+#ifndef COLLISION_CONFIGURATION_H
+#define COLLISION_CONFIGURATION_H
 
 #include <BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
 #include <BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
 
-/**
-    @author AndreaCatania
-*/
-
 class btDiscreteDynamicsWorld;
 
-class GodotCollisionConfiguration : public btDefaultCollisionConfiguration {
+class CollisionConfiguration : public btDefaultCollisionConfiguration {
     btCollisionAlgorithmCreateFunc* m_rayWorldCF;
     btCollisionAlgorithmCreateFunc* m_swappedRayWorldCF;
 
 public:
-    GodotCollisionConfiguration(
+    CollisionConfiguration(
         const btDiscreteDynamicsWorld* world,
         const btDefaultCollisionConstructionInfo& constructionInfo =
             btDefaultCollisionConstructionInfo()
     );
-    virtual ~GodotCollisionConfiguration();
+    virtual ~CollisionConfiguration();
 
     virtual btCollisionAlgorithmCreateFunc* getCollisionAlgorithmCreateFunc(
         int proxyType0,
@@ -38,18 +34,18 @@ public:
     );
 };
 
-class GodotSoftCollisionConfiguration :
+class SoftCollisionConfiguration :
     public btSoftBodyRigidBodyCollisionConfiguration {
     btCollisionAlgorithmCreateFunc* m_rayWorldCF;
     btCollisionAlgorithmCreateFunc* m_swappedRayWorldCF;
 
 public:
-    GodotSoftCollisionConfiguration(
+    SoftCollisionConfiguration(
         const btDiscreteDynamicsWorld* world,
         const btDefaultCollisionConstructionInfo& constructionInfo =
             btDefaultCollisionConstructionInfo()
     );
-    virtual ~GodotSoftCollisionConfiguration();
+    virtual ~SoftCollisionConfiguration();
 
     virtual btCollisionAlgorithmCreateFunc* getCollisionAlgorithmCreateFunc(
         int proxyType0,
@@ -60,4 +56,5 @@ public:
         int proxyType1
     );
 };
-#endif
+
+#endif // COLLISION_CONFIGURATION_H

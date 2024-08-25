@@ -380,8 +380,8 @@ void PortalRenderer::roomgroup_prepare(
 ) {
     // plus one based
     p_roomgroup--;
-    VSRoomGroup& rg       = _roomgroup_pool[p_roomgroup];
-    rg._godot_instance_ID = p_roomgroup_object_id;
+    VSRoomGroup& rg = _roomgroup_pool[p_roomgroup];
+    rg.object_id    = p_roomgroup_object_id;
 }
 
 void PortalRenderer::roomgroup_destroy(RoomGroupHandle p_roomgroup) {
@@ -779,10 +779,10 @@ void PortalRenderer::room_set_bound(
     p_room--; // plus one based
     VSRoom& room = _room_pool[p_room];
 
-    room._planes            = p_convex;
-    room._verts             = p_verts;
-    room._aabb              = p_aabb;
-    room._godot_instance_ID = p_room_object_id;
+    room._planes   = p_convex;
+    room._verts    = p_verts;
+    room._aabb     = p_aabb;
+    room.object_id = p_room_object_id;
 }
 
 void PortalRenderer::_add_portal_to_convex_hull(

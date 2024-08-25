@@ -10,10 +10,6 @@
 #include "constraint_bullet.h"
 #include "servers/physics_server.h"
 
-/**
-    @author AndreaCatania
-*/
-
 class RigidBodyBullet;
 class btTypedConstraint;
 
@@ -24,4 +20,5 @@ public:
 
     virtual PhysicsServer::JointType get_type() const = 0;
 };
-#endif
+
+#endif // JOINT_BULLET_H

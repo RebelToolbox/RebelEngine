@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted from the Bullet library.
 */
 
 #ifndef GENERIC_6DOF_JOINT_SW_H

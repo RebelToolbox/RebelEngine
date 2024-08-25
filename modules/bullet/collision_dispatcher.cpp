@@ -4,23 +4,19 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "godot_collision_dispatcher.h"
+#include "collision_dispatcher.h"
 
 #include "collision_object_bullet.h"
 
-/**
-    @author AndreaCatania
-*/
-
-const int GodotCollisionDispatcher::CASTED_TYPE_AREA =
+const int CollisionDispatcher::CASTED_TYPE_AREA =
     static_cast<int>(CollisionObjectBullet::TYPE_AREA);
 
-GodotCollisionDispatcher::GodotCollisionDispatcher(
+CollisionDispatcher::CollisionDispatcher(
     btCollisionConfiguration* collisionConfiguration
 ) :
     btCollisionDispatcher(collisionConfiguration) {}
 
-bool GodotCollisionDispatcher::needsCollision(
+bool CollisionDispatcher::needsCollision(
     const btCollisionObject* body0,
     const btCollisionObject* body1
 ) {
@@ -32,7 +28,7 @@ bool GodotCollisionDispatcher::needsCollision(
     return btCollisionDispatcher::needsCollision(body0, body1);
 }
 
-bool GodotCollisionDispatcher::needsResponse(
+bool CollisionDispatcher::needsResponse(
     const btCollisionObject* body0,
     const btCollisionObject* body1
 ) {

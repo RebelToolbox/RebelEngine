@@ -9,11 +9,11 @@
 #include "bullet_physics_server.h"
 #include "bullet_types_converter.h"
 #include "bullet_utilities.h"
+#include "collision_configuration.h"
+#include "collision_dispatcher.h"
 #include "constraint_bullet.h"
 #include "core/project_settings.h"
 #include "core/ustring.h"
-#include "godot_collision_configuration.h"
-#include "godot_collision_dispatcher.h"
 #include "rigid_body_bullet.h"
 #include "servers/physics_server.h"
 #include "soft_body_bullet.h"
@@ -28,10 +28,6 @@
 #include <BulletSoftBody/btSoftRigidDynamicsWorld.h>
 #include <assert.h>
 #include <btBulletDynamicsCommon.h>
-
-/**
-    @author AndreaCatania
-*/
 
 BulletPhysicsDirectSpaceState::BulletPhysicsDirectSpaceState(
     SpaceBullet* p_space
@@ -53,7 +49,7 @@ int BulletPhysicsDirectSpaceState::intersect_point(
     }
 
     btVector3 bt_point;
-    G_TO_B(p_point, bt_point);
+    R_TO_B(p_point, bt_point);
 
     btSphereShape sphere_point(0.001f);
     btCollisionObject collision_object_point;
@@ -63,7 +59,7 @@ int BulletPhysicsDirectSpaceState::intersect_point(
     );
 
     // Setup query
-    GodotAllContactResultCallback btResult(
+    AllContactResultCallback btResult(
         &collision_object_point,
         r_results,
         p_result_max,
@@ -75,7 +71,7 @@ int BulletPhysicsDirectSpaceState::intersect_point(
     btResult.m_collisionFilterMask  = p_collision_mask;
     space->dynamicsWorld->contactTest(&collision_object_point, btResult);
 
-    // The results is already populated by GodotAllConvexResultCallback
+    // The result is already populated by AllConvexResultCallback
     return btResult.m_count;
 }
 
@@ -92,11 +88,11 @@ bool BulletPhysicsDirectSpaceState::intersect_ray(
     btVector3 btVec_from;
     btVector3 btVec_to;
 
-    G_TO_B(p_from, btVec_from);
-    G_TO_B(p_to, btVec_to);
+    R_TO_B(p_from, btVec_from);
+    R_TO_B(p_to, btVec_to);
 
     // setup query
-    GodotClosestRayResultCallback btResult(
+    ClosestRayResultCallback btResult(
         btVec_from,
         btVec_to,
         &p_exclude,
@@ -109,8 +105,8 @@ bool BulletPhysicsDirectSpaceState::intersect_ray(
 
     space->dynamicsWorld->rayTest(btVec_from, btVec_to, btResult);
     if (btResult.hasHit()) {
-        B_TO_G(btResult.m_hitPointWorld, r_result.position);
-        B_TO_G(btResult.m_hitNormalWorld.normalize(), r_result.normal);
+        B_TO_R(btResult.m_hitPointWorld, r_result.position);
+        B_TO_R(btResult.m_hitNormalWorld.normalize(), r_result.normal);
         CollisionObjectBullet* gObj = static_cast<CollisionObjectBullet*>(
             btResult.m_collisionObject->getUserPointer()
         );
@@ -125,7 +121,7 @@ bool BulletPhysicsDirectSpaceState::intersect_ray(
         } else {
             WARN_PRINT(
                 "The raycast performed has hit a collision object that is not "
-                "part of Godot scene, please check it."
+                "part of the scene, please check it."
             );
         }
         return true;
@@ -167,14 +163,14 @@ int BulletPhysicsDirectSpaceState::intersect_shape(
     btConvexShape* btConvex = static_cast<btConvexShape*>(btShape);
 
     btTransform bt_xform;
-    G_TO_B(p_xform, bt_xform);
+    R_TO_B(p_xform, bt_xform);
     UNSCALE_BT_BASIS(bt_xform);
 
     btCollisionObject collision_object;
     collision_object.setCollisionShape(btConvex);
     collision_object.setWorldTransform(bt_xform);
 
-    GodotAllContactResultCallback btQuery(
+    AllContactResultCallback btQuery(
         &collision_object,
         r_results,
         p_result_max,
@@ -209,7 +205,7 @@ bool BulletPhysicsDirectSpaceState::cast_motion(
     r_closest_unsafe = 0.0f;
 
     btVector3 bt_motion;
-    G_TO_B(p_motion, bt_motion);
+    R_TO_B(p_motion, bt_motion);
 
     ShapeBullet* shape =
         space->get_physics_server()->get_shape_owner()->get(p_shape);
@@ -229,7 +225,7 @@ bool BulletPhysicsDirectSpaceState::cast_motion(
     btConvexShape* bt_convex_shape = static_cast<btConvexShape*>(btShape);
 
     btTransform bt_xform_from;
-    G_TO_B(p_xform, bt_xform_from);
+    R_TO_B(p_xform, bt_xform_from);
     UNSCALE_BT_BASIS(bt_xform_from);
 
     btTransform bt_xform_to(bt_xform_from);
@@ -242,7 +238,7 @@ bool BulletPhysicsDirectSpaceState::cast_motion(
         return true;
     }
 
-    GodotClosestConvexResultCallback btResult(
+    ClosestConvexResultCallback btResult(
         bt_xform_from.getOrigin(),
         bt_xform_to.getOrigin(),
         &p_exclude,
@@ -267,7 +263,7 @@ bool BulletPhysicsDirectSpaceState::cast_motion(
         if (r_info) {
             if (btCollisionObject::CO_RIGID_BODY
                 == btResult.m_hitCollisionObject->getInternalType()) {
-                B_TO_G(
+                B_TO_R(
                     static_cast<const btRigidBody*>(
                         btResult.m_hitCollisionObject
                     )
@@ -279,8 +275,8 @@ bool BulletPhysicsDirectSpaceState::cast_motion(
                 static_cast<CollisionObjectBullet*>(
                     btResult.m_hitCollisionObject->getUserPointer()
                 );
-            B_TO_G(btResult.m_hitPointWorld, r_info->point);
-            B_TO_G(btResult.m_hitNormalWorld, r_info->normal);
+            B_TO_R(btResult.m_hitPointWorld, r_info->point);
+            B_TO_R(btResult.m_hitNormalWorld, r_info->normal);
             r_info->rid         = collision_object->get_self();
             r_info->collider_id = collision_object->get_instance_id();
             r_info->shape       = btResult.m_shapeId;
@@ -330,14 +326,14 @@ bool BulletPhysicsDirectSpaceState::collide_shape(
     btConvexShape* btConvex = static_cast<btConvexShape*>(btShape);
 
     btTransform bt_xform;
-    G_TO_B(p_shape_xform, bt_xform);
+    R_TO_B(p_shape_xform, bt_xform);
     UNSCALE_BT_BASIS(bt_xform);
 
     btCollisionObject collision_object;
     collision_object.setCollisionShape(btConvex);
     collision_object.setWorldTransform(bt_xform);
 
-    GodotContactPairContactResultCallback btQuery(
+    ContactPairContactResultCallback btQuery(
         &collision_object,
         r_results,
         p_result_max,
@@ -384,14 +380,14 @@ bool BulletPhysicsDirectSpaceState::rest_info(
     btConvexShape* btConvex = static_cast<btConvexShape*>(btShape);
 
     btTransform bt_xform;
-    G_TO_B(p_shape_xform, bt_xform);
+    R_TO_B(p_shape_xform, bt_xform);
     UNSCALE_BT_BASIS(bt_xform);
 
     btCollisionObject collision_object;
     collision_object.setCollisionShape(btConvex);
     collision_object.setWorldTransform(bt_xform);
 
-    GodotRestInfoContactResultCallback btQuery(
+    RestInfoContactResultCallback btQuery(
         &collision_object,
         r_info,
         &p_exclude,
@@ -408,7 +404,7 @@ bool BulletPhysicsDirectSpaceState::rest_info(
     if (btQuery.m_collided) {
         if (btCollisionObject::CO_RIGID_BODY
             == btQuery.m_rest_info_collision_object->getInternalType()) {
-            B_TO_G(
+            B_TO_R(
                 static_cast<const btRigidBody*>(
                     btQuery.m_rest_info_collision_object
                 )
@@ -416,7 +412,7 @@ bool BulletPhysicsDirectSpaceState::rest_info(
                 r_info->linear_velocity
             );
         }
-        B_TO_G(btQuery.m_rest_info_bt_point, r_info->point);
+        B_TO_R(btQuery.m_rest_info_bt_point, r_info->point);
     }
 
     return btQuery.m_collided;
@@ -434,7 +430,7 @@ Vector3 BulletPhysicsDirectSpaceState::get_closest_point_to_object_volume(
     btScalar out_distance = 1e20;
 
     btVector3 bt_point;
-    G_TO_B(p_point, bt_point);
+    R_TO_B(p_point, bt_point);
 
     btSphereShape point_shape(0.);
 
@@ -478,7 +474,7 @@ Vector3 BulletPhysicsDirectSpaceState::get_closest_point_to_object_volume(
 
     if (shapes_found) {
         Vector3 out;
-        B_TO_G(out_closest_point, out);
+        B_TO_R(out_closest_point, out);
         return out;
     } else {
         // no shapes found, use distance to origin.
@@ -494,7 +490,7 @@ SpaceBullet::SpaceBullet() :
     dynamicsWorld(nullptr),
     soft_body_world_info(nullptr),
     ghostPairCallback(nullptr),
-    godotFilterCallback(nullptr),
+    filterCallback(nullptr),
     gravityDirection(0, -1, 0),
     gravityMagnitude(10),
     linear_damp(0.0),
@@ -796,14 +792,14 @@ BulletPhysicsDirectSpaceState* SpaceBullet::get_direct_state() {
     return direct_access;
 }
 
-btScalar calculateGodotCombinedRestitution(
+btScalar calculateCombinedRestitution(
     const btCollisionObject* body0,
     const btCollisionObject* body1
 ) {
     return CLAMP(body0->getRestitution() + body1->getRestitution(), 0, 1);
 }
 
-btScalar calculateGodotCombinedFriction(
+btScalar calculateCombinedFriction(
     const btCollisionObject* body0,
     const btCollisionObject* body1
 ) {
@@ -824,16 +820,16 @@ void SpaceBullet::create_empty_world(bool p_create_soft_world) {
     ERR_FAIL_COND_MSG(!world_mem, "Out of memory.");
 
     if (p_create_soft_world) {
-        collisionConfiguration = bulletnew(GodotSoftCollisionConfiguration(
+        collisionConfiguration = bulletnew(SoftCollisionConfiguration(
             static_cast<btDiscreteDynamicsWorld*>(world_mem)
         ));
     } else {
-        collisionConfiguration = bulletnew(GodotCollisionConfiguration(
+        collisionConfiguration = bulletnew(CollisionConfiguration(
             static_cast<btDiscreteDynamicsWorld*>(world_mem)
         ));
     }
 
-    dispatcher = bulletnew(GodotCollisionDispatcher(collisionConfiguration));
+    dispatcher = bulletnew(CollisionDispatcher(collisionConfiguration));
     broadphase = bulletnew(btDbvtBroadphase);
     solver     = bulletnew(btSequentialImpulseConstraintSolver);
 
@@ -855,10 +851,10 @@ void SpaceBullet::create_empty_world(bool p_create_soft_world) {
     }
 
     ghostPairCallback                     = bulletnew(btGhostPairCallback);
-    godotFilterCallback                   = bulletnew(GodotFilterCallback);
-    gCalculateCombinedRestitutionCallback = &calculateGodotCombinedRestitution;
-    gCalculateCombinedFrictionCallback    = &calculateGodotCombinedFriction;
-    gContactAddedCallback                 = &godotContactAddedCallback;
+    filterCallback                        = bulletnew(FilterCallback);
+    gCalculateCombinedRestitutionCallback = &calculateCombinedRestitution;
+    gCalculateCombinedFrictionCallback    = &calculateCombinedFriction;
+    gContactAddedCallback                 = &contactAddedCallback;
 
     dynamicsWorld->setWorldUserInfo(this);
 
@@ -867,8 +863,7 @@ void SpaceBullet::create_empty_world(bool p_create_soft_world) {
     dynamicsWorld->getBroadphase()
         ->getOverlappingPairCache()
         ->setInternalGhostPairCallback(ghostPairCallback); // Setup ghost check
-    dynamicsWorld->getPairCache()->setOverlapFilterCallback(godotFilterCallback
-    );
+    dynamicsWorld->getPairCache()->setOverlapFilterCallback(filterCallback);
 
     if (soft_body_world_info) {
         soft_body_world_info->m_broadphase = broadphase;
@@ -880,8 +875,8 @@ void SpaceBullet::create_empty_world(bool p_create_soft_world) {
 }
 
 void SpaceBullet::destroy_world() {
-    /// The world elements (like: Collision Objects, Constraints, Shapes) are
-    /// managed by godot
+    // The world elements (Collision Objects, Constraints, Shapes, etc.) are
+    // managed by Rebel.
 
     dynamicsWorld->getBroadphase()
         ->getOverlappingPairCache()
@@ -889,7 +884,7 @@ void SpaceBullet::destroy_world() {
     dynamicsWorld->getPairCache()->setOverlapFilterCallback(nullptr);
 
     bulletdelete(ghostPairCallback);
-    bulletdelete(godotFilterCallback);
+    bulletdelete(filterCallback);
 
     // Deallocate world
     dynamicsWorld->~btDiscreteDynamicsWorld();
@@ -1042,8 +1037,10 @@ void SpaceBullet::check_ghost_overlaps() {
                             continue;
                         }
 
-                        GodotDeepPenetrationContactResultCallback
-                            contactPointResult(&obA, &obB);
+                        DeepPenetrationContactResultCallback contactPointResult(
+                            &obA,
+                            &obB
+                        );
                         algorithm->processCollision(
                             &obA,
                             &obB,
@@ -1133,7 +1130,7 @@ void SpaceBullet::check_body_collision() {
                     Vector3 collisionLocalPosition;
                     Vector3 normalOnB;
                     float appliedImpulse = pt.m_appliedImpulse;
-                    B_TO_G(pt.m_normalWorldOnB, normalOnB);
+                    B_TO_R(pt.m_normalWorldOnB, normalOnB);
 
                     // The pt.m_index only contains the shape index when more
                     // than one collision shape is used and only if the
@@ -1150,13 +1147,13 @@ void SpaceBullet::check_body_collision() {
                     }
 
                     if (bodyA->can_add_collision()) {
-                        B_TO_G(
+                        B_TO_R(
                             pt.getPositionWorldOnB(),
                             collisionWorldPosition
                         );
                         /// pt.m_localPointB Doesn't report the exact point in
                         /// local space
-                        B_TO_G(
+                        B_TO_R(
                             pt.getPositionWorldOnB()
                                 - contactManifold->getBody1()
                                       ->getWorldTransform()
@@ -1174,13 +1171,13 @@ void SpaceBullet::check_body_collision() {
                         );
                     }
                     if (bodyB->can_add_collision()) {
-                        B_TO_G(
+                        B_TO_R(
                             pt.getPositionWorldOnA(),
                             collisionWorldPosition
                         );
                         /// pt.m_localPointA Doesn't report the exact point in
                         /// local space
-                        B_TO_G(
+                        B_TO_R(
                             pt.getPositionWorldOnA()
                                 - contactManifold->getBody0()
                                       ->getWorldTransform()
@@ -1211,7 +1208,7 @@ void SpaceBullet::check_body_collision() {
 
 void SpaceBullet::update_gravity() {
     btVector3 btGravity;
-    G_TO_B(gravityDirection * gravityMagnitude, btGravity);
+    R_TO_B(gravityDirection * gravityMagnitude, btGravity);
     // dynamicsWorld->setGravity(btGravity);
     dynamicsWorld->setGravity(btVector3(0, 0, 0));
     if (soft_body_world_info) {
@@ -1282,7 +1279,7 @@ bool SpaceBullet::test_body_motion(
 #endif
 
     btTransform body_transform;
-    G_TO_B(p_from, body_transform);
+    R_TO_B(p_from, body_transform);
     UNSCALE_BT_BASIS(body_transform);
 
     if (!p_body->get_kinematic_utilities()) {
@@ -1309,7 +1306,7 @@ bool SpaceBullet::test_body_motion(
     }
 
     btVector3 motion;
-    G_TO_B(p_motion, motion);
+    R_TO_B(p_motion, motion);
     real_t total_length    = motion.length();
     real_t unsafe_fraction = 1.0;
     real_t safe_fraction   = 1.0;
@@ -1362,7 +1359,7 @@ bool SpaceBullet::test_body_motion(
                 break;
             }
 
-            GodotKinClosestConvexResultCallback btResult(
+            KinClosestConvexResultCallback btResult(
                 shape_world_from.getOrigin(),
                 shape_world_to.getOrigin(),
                 p_body,
@@ -1427,7 +1424,7 @@ bool SpaceBullet::test_body_motion(
 
         // Parse results
         if (r_result) {
-            B_TO_G(motion + initial_recover_motion + __rec, r_result->motion);
+            B_TO_R(motion + initial_recover_motion + __rec, r_result->motion);
 
             if (has_penetration) {
                 const btRigidBody* btRigid = static_cast<const btRigidBody*>(
@@ -1437,22 +1434,22 @@ bool SpaceBullet::test_body_motion(
                     static_cast<CollisionObjectBullet*>(btRigid->getUserPointer(
                     ));
 
-                B_TO_G(
+                B_TO_R(
                     motion,
                     r_result->remainder
                 ); // is the remaining movements
                 r_result->remainder = p_motion - r_result->remainder;
 
-                B_TO_G(r_recover_result.pointWorld, r_result->collision_point);
-                B_TO_G(r_recover_result.normal, r_result->collision_normal);
-                B_TO_G(
+                B_TO_R(r_recover_result.pointWorld, r_result->collision_point);
+                B_TO_R(r_recover_result.normal, r_result->collision_normal);
+                // Calculates the velocity at a point.
+                B_TO_R(
                     btRigid->getVelocityInLocalPoint(
                         r_recover_result.pointWorld
                         - btRigid->getWorldTransform().getOrigin()
                     ),
                     r_result->collider_velocity
-                ); // It calculates velocity at point and assign it using
-                   // special function Bullet_to_Godot
+                );
                 r_result->collider    = collisionObject->get_self();
                 r_result->collider_id = collisionObject->get_instance_id();
                 r_result->collider_shape =
@@ -1494,7 +1491,7 @@ int SpaceBullet::test_ray_separation(
     float p_margin
 ) {
     btTransform body_transform;
-    G_TO_B(p_transform, body_transform);
+    R_TO_B(p_transform, body_transform);
     UNSCALE_BT_BASIS(body_transform);
 
     if (!p_body->get_kinematic_utilities()) {
@@ -1525,7 +1522,7 @@ int SpaceBullet::test_ray_separation(
         }
     }
 
-    B_TO_G(recover_motion, r_recover_motion);
+    B_TO_R(recover_motion, r_recover_motion);
     return rays_found;
 }
 
@@ -1587,7 +1584,7 @@ public:
             static_cast<btCollisionObject*>(proxy->m_clientObject);
         if (co->getInternalType() <= btCollisionObject::CO_RIGID_BODY) {
             if (self_collision_object != proxy->m_clientObject
-                && GodotFilterCallback::test_collision_filters(
+                && FilterCallback::test_collision_filters(
                     collision_layer,
                     collision_mask,
                     proxy->m_collisionFilterGroup,
@@ -1942,10 +1939,7 @@ bool SpaceBullet::RFP_convex_world_test(
         dispatcher
             ->findAlgorithm(&obA, &obB, nullptr, BT_CONTACT_POINT_ALGORITHMS);
     if (algorithm) {
-        GodotDeepPenetrationContactResultCallback contactPointResult(
-            &obA,
-            &obB
-        );
+        DeepPenetrationContactResultCallback contactPointResult(&obA, &obB);
         // discrete collision detection query
         algorithm->processCollision(
             &obA,
@@ -1998,9 +1992,9 @@ int SpaceBullet::add_separation_result(
             );
 
         r_result->collision_depth = p_recover_result.penetration_distance;
-        B_TO_G(p_recover_result.pointWorld, r_result->collision_point);
-        B_TO_G(p_recover_result.normal, r_result->collision_normal);
-        B_TO_G(
+        B_TO_R(p_recover_result.pointWorld, r_result->collision_point);
+        B_TO_R(p_recover_result.normal, r_result->collision_normal);
+        B_TO_R(
             btRigid->getVelocityInLocalPoint(
                 p_recover_result.pointWorld
                 - btRigid->getWorldTransform().getOrigin()

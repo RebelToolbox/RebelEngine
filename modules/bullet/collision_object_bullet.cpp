@@ -15,10 +15,6 @@
 
 #include <btBulletCollisionCommon.h>
 
-/**
-    @author AndreaCatania
-*/
-
 // We enable dynamic AABB tree so that we can actually perform a broadphase on
 // bodies with compound collision shapes. This is crucial for the performance of
 // kinematic bodies and for bodies with transforming shapes.
@@ -29,8 +25,8 @@ CollisionObjectBullet::ShapeWrapper::~ShapeWrapper() {}
 void CollisionObjectBullet::ShapeWrapper::set_transform(
     const Transform& p_transform
 ) {
-    G_TO_B(p_transform.get_basis().get_scale_abs(), scale);
-    G_TO_B(p_transform, transform);
+    R_TO_B(p_transform.get_basis().get_scale_abs(), scale);
+    R_TO_B(p_transform, transform);
     UNSCALE_BT_BASIS(transform);
 }
 
@@ -94,8 +90,7 @@ CollisionObjectBullet::CollisionObjectBullet(Type p_type) :
     isTransformChanged(false) {}
 
 CollisionObjectBullet::~CollisionObjectBullet() {
-    // Remove all overlapping, notify is not required since godot take care of
-    // it
+    // Remove all overlapping. Notifying is done by Rebel Engine.
     for (int i = areasOverlapped.size() - 1; 0 <= i; --i) {
         areasOverlapped[i]->remove_overlap(this, /*Notify*/ false);
     }
@@ -118,7 +113,7 @@ void CollisionObjectBullet::set_body_scale(const Vector3& p_new_scale) {
 
 btVector3 CollisionObjectBullet::get_bt_body_scale() const {
     btVector3 s;
-    G_TO_B(body_scale, s);
+    R_TO_B(body_scale, s);
     return s;
 }
 
@@ -218,11 +213,11 @@ void CollisionObjectBullet::on_exit_area(AreaBullet* p_area) {
     areasOverlapped.erase(p_area);
 }
 
-void CollisionObjectBullet::set_godot_object_flags(int flags) {
+void CollisionObjectBullet::set_object_flags(int flags) {
     bt_collision_object->setUserIndex2(flags);
 }
 
-int CollisionObjectBullet::get_godot_object_flags() const {
+int CollisionObjectBullet::get_object_flags() const {
     return bt_collision_object->getUserIndex2();
 }
 
@@ -230,7 +225,7 @@ void CollisionObjectBullet::set_transform(const Transform& p_global_transform) {
     set_body_scale(p_global_transform.basis.get_scale_abs());
 
     btTransform bt_transform;
-    G_TO_B(p_global_transform, bt_transform);
+    R_TO_B(p_global_transform, bt_transform);
     UNSCALE_BT_BASIS(bt_transform);
 
     set_transform__bullet(bt_transform);
@@ -238,7 +233,7 @@ void CollisionObjectBullet::set_transform(const Transform& p_global_transform) {
 
 Transform CollisionObjectBullet::get_transform() const {
     Transform t;
-    B_TO_G(get_transform__bullet(), t);
+    B_TO_R(get_transform__bullet(), t);
     t.basis.scale(body_scale);
     return t;
 }
@@ -360,7 +355,7 @@ const btTransform& RigidCollisionObjectBullet::get_bt_shape_transform(
 
 Transform RigidCollisionObjectBullet::get_shape_transform(int p_index) const {
     Transform trs;
-    B_TO_G(shapes[p_index].transform, trs);
+    B_TO_R(shapes[p_index].transform, trs);
     return trs;
 }
 

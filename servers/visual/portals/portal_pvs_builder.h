@@ -11,8 +11,6 @@
 #include "core/local_vector.h"
 #include "core/math/plane.h"
 
-// #define GODOT_PVS_SUPPORT_SAVE_FILE
-
 class PortalRenderer;
 class PVS;
 
@@ -31,10 +29,6 @@ public:
     );
 
 private:
-#ifdef GODOT_PVS_SUPPORT_SAVE_FILE
-    bool load_pvs(String p_filename);
-    void save_pvs(String p_filename);
-#endif
     void find_neighbors(LocalVector<Neighbours>& r_neighbors);
 
     void logd(int p_depth, String p_string);

@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted from the Bullet library.
 */
 
 #ifndef JACOBIAN_ENTRY_SW_H

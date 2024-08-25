@@ -4,17 +4,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef AREABULLET_H
-#define AREABULLET_H
+#ifndef AREA_BULLET_H
+#define AREA_BULLET_H
 
 #include "collision_object_bullet.h"
 #include "core/vector.h"
 #include "servers/physics_server.h"
 #include "space_bullet.h"
-
-/**
-    @author AndreaCatania
-*/
 
 class btGhostObject;
 
@@ -224,4 +220,4 @@ public:
     virtual void on_exit_area(AreaBullet* p_area);
 };
 
-#endif
+#endif // AREA_BULLET_H
