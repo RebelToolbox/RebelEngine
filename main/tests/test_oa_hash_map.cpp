@@ -90,7 +90,7 @@ MainLoop* test() {
 
         map.set("Hello", 1);
         map.set("World", 2);
-        map.set("Godot rocks", 42);
+        map.set("Rebel Engine is the best", 42);
 
         for (OAHashMap<String, int>::Iterator it = map.iter(); it.valid;
              it                                  = map.next_iter(it)) {

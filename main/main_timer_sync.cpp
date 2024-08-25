@@ -61,11 +61,6 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
         // dropping loads of frames, so the estimate will be inaccurate
         if (fps >= 50) {
             _estimated_fps = fps;
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
-            print_line(
-                "initial guess (average measured) refresh rate: " + itos(fps)
-            );
-#endif
         } else {
             // can't get started until above 50
             return;
@@ -80,9 +75,6 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
 
         if (_estimate_complete && _hits_at_estimated == 20) {
             _estimate_locked = true;
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
-            print_line("estimate LOCKED at " + itos(_estimated_fps) + " fps");
-#endif
             return;
         }
 
@@ -94,28 +86,8 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
             if (_estimated_fps) {
                 _estimate_complete = true;
                 _vsync_delta       = 1000000 / _estimated_fps;
-
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
-                print_line(
-                    "estimate complete. vsync_delta " + itos(_vsync_delta)
-                    + ", fps " + itos(_estimated_fps)
-                );
-#endif
             }
         }
-
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
-        if ((_hits_at_estimated % (400 / NUM_READINGS)) == 0) {
-            String sz = "hits at estimated : " + itos(_hits_at_estimated)
-                      + ", above : " + itos(_hits_above_estimated) + "( "
-                      + itos(_hits_one_above_estimated)
-                      + " ), below : " + itos(_hits_below_estimated) + " ("
-                      + itos(_hits_one_below_estimated) + " )";
-
-            print_line(sz);
-        }
-#endif
-
         return;
     }
 

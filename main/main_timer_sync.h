@@ -9,9 +9,6 @@
 
 #include "core/engine.h"
 
-// define these to get more debugging logs for the delta smoothing
-// #define GODOT_DEBUG_DELTA_SMOOTHER
-
 struct MainFrameTime {
     float idle_step;   // time to advance idles for (argument to process())
     int physics_steps; // number of times to iterate the physics engine
@@ -75,10 +72,6 @@ class MainTimerSync {
             _hits_one_below_estimated = 0;
 
             _estimate_complete = false;
-
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
-            print_line("estimated fps " + itos(_estimated_fps));
-#endif
         }
 
     } _delta_smoother;
