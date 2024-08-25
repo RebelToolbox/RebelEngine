@@ -7685,8 +7685,7 @@ bool RasterizerStorageGLES3::gi_probe_is_interior(RID p_probe) const {
 void RasterizerStorageGLES3::gi_probe_set_compress(RID p_probe, bool p_enable) {
     if (p_enable) {
         WARN_DEPRECATED_MSG(
-            "GIProbe's Compress property has been deprecated due to known bugs "
-            "and will be removed in Godot 4.0."
+            "GIProbe's Compress property has been deprecated due to known bugs."
         );
     }
 

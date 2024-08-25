@@ -27,7 +27,7 @@ void MIDIDriverCoreMidi::read(
 
 Error MIDIDriverCoreMidi::open() {
     CFStringRef name =
-        CFStringCreateWithCString(NULL, "Godot", kCFStringEncodingASCII);
+        CFStringCreateWithCString(NULL, "Rebel", kCFStringEncodingASCII);
     OSStatus result = MIDIClientCreate(name, NULL, NULL, &client);
     CFRelease(name);
     if (result != noErr) {
@@ -37,7 +37,7 @@ Error MIDIDriverCoreMidi::open() {
 
     result = MIDIInputPortCreate(
         client,
-        CFSTR("Godot Input"),
+        CFSTR("Rebel Input"),
         MIDIDriverCoreMidi::read,
         (void*)this,
         &port_in

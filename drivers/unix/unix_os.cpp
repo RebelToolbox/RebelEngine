@@ -54,14 +54,14 @@ static void _setup_clock() {
 #else
 #if defined(CLOCK_MONOTONIC_RAW)                                               \
     && !defined(WEB_ENABLED) // This is a better clock on Linux.
-#define GODOT_CLOCK CLOCK_MONOTONIC_RAW
+#define REBEL_CLOCK CLOCK_MONOTONIC_RAW
 #else
-#define GODOT_CLOCK CLOCK_MONOTONIC
+#define REBEL_CLOCK CLOCK_MONOTONIC
 #endif
 static void _setup_clock() {
     struct timespec tv_now = {0, 0};
     ERR_FAIL_COND_MSG(
-        clock_gettime(GODOT_CLOCK, &tv_now) != 0,
+        clock_gettime(REBEL_CLOCK, &tv_now) != 0,
         "OS CLOCK IS NOT WORKING!"
     );
     _clock_start =
@@ -243,7 +243,7 @@ uint64_t UnixOS::get_ticks_usec() const {
     // Unchecked return. Static analyzers might complain.
     // If _setup_clock() succeeded, we assume clock_gettime() works.
     struct timespec tv_now = {0, 0};
-    clock_gettime(GODOT_CLOCK, &tv_now);
+    clock_gettime(REBEL_CLOCK, &tv_now);
     uint64_t longtime =
         ((uint64_t)tv_now.tv_nsec / 1000L) + (uint64_t)tv_now.tv_sec * 1000000L;
 #endif
@@ -598,8 +598,8 @@ void UnixTerminalLogger::log_error(
     }
 
     // Disable color codes if stdout is not a TTY.
-    // This prevents Godot from writing ANSI escape codes when redirecting
-    // stdout and stderr to a file.
+    // This prevents Rebel Engine from writing ANSI escape codes when
+    // redirecting stdout and stderr to a file.
     const bool tty           = isatty(fileno(stdout));
     const char* gray         = tty ? "\E[0;90m" : "";
     const char* red          = tty ? "\E[0;91m" : "";
