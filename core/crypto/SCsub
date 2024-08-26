@@ -27,7 +27,7 @@ if not has_module:
         CPPDEFINES=[
             (
                 "MBEDTLS_CONFIG_FILE",
-                '\\"thirdparty/mbedtls/include/godot_core_mbedtls_config.h\\"',
+                '\\"thirdparty/mbedtls/include/rebel_mbedtls_config.h\\"',
             )
         ]
     )
@@ -39,7 +39,7 @@ if not has_module:
         "md5.c",
         "sha1.c",
         "sha256.c",
-        "godot_core_mbedtls_platform.c",
+        "rebel_mbedtls_platform.c",
     ]
     thirdparty_mbedtls_sources = [
         thirdparty_mbedtls_dir + file for file in thirdparty_mbedtls_sources
@@ -48,7 +48,7 @@ if not has_module:
     env.core_sources += thirdparty_obj
 
 
-# Godot source files
+# Rebel source files
 
 core_obj = []
 

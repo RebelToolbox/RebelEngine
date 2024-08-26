@@ -853,10 +853,9 @@ void OS::add_frame_delay(bool p_can_draw) {
 OS::OS() {
     void* volatile stack_bottom;
 
-    restart_on_exit = false;
-    singleton       = this;
-    _keep_screen_on = true; // set default value to true, because this had been
-                            // true before godot 2.0.
+    restart_on_exit                     = false;
+    singleton                           = this;
+    _keep_screen_on                     = true;
     low_processor_usage_mode            = false;
     low_processor_usage_mode_sleep_usec = 10000;
     _verbose_stdout                     = false;

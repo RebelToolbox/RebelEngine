@@ -174,7 +174,7 @@ Error HTTPClient::request_raw(
         // Should it add utf8 encoding?
     }
     if (add_uagent) {
-        request += "User-Agent: GodotEngine/" + String(VERSION_FULL_BUILD)
+        request += "User-Agent: RebelEngine/" + String(VERSION_FULL_BUILD)
                  + " (" + OS::get_singleton()->get_name() + ")\r\n";
     }
     if (add_accept) {
@@ -257,7 +257,7 @@ Error HTTPClient::request(
         // Should it add utf8 encoding?
     }
     if (add_uagent) {
-        request += "User-Agent: GodotEngine/" + String(VERSION_FULL_BUILD)
+        request += "User-Agent: RebelEngine/" + String(VERSION_FULL_BUILD)
                  + " (" + OS::get_singleton()->get_name() + ")\r\n";
     }
     if (add_accept) {
