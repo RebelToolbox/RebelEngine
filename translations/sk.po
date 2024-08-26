@@ -45567,13 +45567,21 @@ msgstr ""
 
 #: docs/ProjectSettings.xml
 msgid ""
+"Sets which physics engine to use for 3D physics.\n"
+"\"DEFAULT\" is currently the [url=https://pybullet.org/wordpress/]Bullet[/"
+"url] physics engine. The \"Rebel Physics\" engine is still supported as an "
+"alternative."
+msgstr ""
+
+#: docs/ProjectSettings.xml
+msgid ""
 "Additional expansion applied to object bounds in the 3D physics bounding "
 "volume hierarchy. This can reduce BVH processing at the cost of a slightly "
 "coarser broadphase, which can stress the physics more in some situations.\n"
 "The default value will work well in most situations. A value of 0.0 will "
 "turn this optimization off, and larger values may work better for larger, "
 "faster moving objects.\n"
-"[b]Note:[/b] Used only if [member ProjectSettings.physics/3d/godot_physics/"
+"[b]Note:[/b] Used only if [member ProjectSettings.physics/3d/rebel_physics/"
 "use_bvh] is enabled."
 msgstr ""
 
@@ -45581,14 +45589,6 @@ msgstr ""
 msgid ""
 "Enables the use of bounding volume hierarchy instead of octree for 3D "
 "physics spatial partitioning. This may give better performance."
-msgstr ""
-
-#: docs/ProjectSettings.xml
-msgid ""
-"Sets which physics engine to use for 3D physics.\n"
-"\"DEFAULT\" is currently the [url=https://pybullet.org/wordpress/]Bullet[/"
-"url] physics engine. The \"Rebel Physics\" engine is still supported as an "
-"alternative."
 msgstr ""
 
 #: docs/ProjectSettings.xml

@@ -56983,6 +56983,19 @@ msgstr ""
 "code]。"
 
 #: docs/ProjectSettings.xml
+#, fuzzy
+msgid ""
+"Sets which physics engine to use for 3D physics.\n"
+"\"DEFAULT\" is currently the [url=https://pybullet.org/wordpress/]Bullet[/"
+"url] physics engine. The \"Rebel Physics\" engine is still supported as an "
+"alternative."
+msgstr ""
+"设置用于 3D 物理的物理引擎。\n"
+"\"DEFAULT\"目前是 [url=https://bulletphysics.org]Bullet[/url] 物理引擎。仍然"
+"支持\"GodotPhysics\"引擎作为替代。"
+
+#: docs/ProjectSettings.xml
+#, fuzzy
 msgid ""
 "Additional expansion applied to object bounds in the 3D physics bounding "
 "volume hierarchy. This can reduce BVH processing at the cost of a slightly "
@@ -56990,7 +57003,7 @@ msgid ""
 "The default value will work well in most situations. A value of 0.0 will "
 "turn this optimization off, and larger values may work better for larger, "
 "faster moving objects.\n"
-"[b]Note:[/b] Used only if [member ProjectSettings.physics/3d/godot_physics/"
+"[b]Note:[/b] Used only if [member ProjectSettings.physics/3d/rebel_physics/"
 "use_bvh] is enabled."
 msgstr ""
 "在 3D 物理包围体积层次结构中，为对象的界限进行的额外扩展。可以减小 BVH 的处理"
@@ -57007,18 +57020,6 @@ msgid ""
 msgstr ""
 "允许使用边界体积层次结构而不是八叉树进行 3D 物理空间分区。这可能会提供更好的"
 "性能。"
-
-#: docs/ProjectSettings.xml
-#, fuzzy
-msgid ""
-"Sets which physics engine to use for 3D physics.\n"
-"\"DEFAULT\" is currently the [url=https://pybullet.org/wordpress/]Bullet[/"
-"url] physics engine. The \"Rebel Physics\" engine is still supported as an "
-"alternative."
-msgstr ""
-"设置用于 3D 物理的物理引擎。\n"
-"\"DEFAULT\"目前是 [url=https://bulletphysics.org]Bullet[/url] 物理引擎。仍然"
-"支持\"GodotPhysics\"引擎作为替代。"
 
 #: docs/ProjectSettings.xml
 msgid "Enables [member Viewport.physics_object_picking] on the root viewport."
