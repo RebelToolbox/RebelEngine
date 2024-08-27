@@ -60939,24 +60939,6 @@ msgid ""
 msgstr ""
 
 #: docs/ProjectSettings.xml
-msgid ""
-"Additional expansion applied to object bounds in the 3D physics bounding "
-"volume hierarchy. This can reduce BVH processing at the cost of a slightly "
-"coarser broadphase, which can stress the physics more in some situations.\n"
-"The default value will work well in most situations. A value of 0.0 will "
-"turn this optimization off, and larger values may work better for larger, "
-"faster moving objects.\n"
-"[b]Note:[/b] Used only if [member ProjectSettings.physics/3d/godot_physics/"
-"use_bvh] is enabled."
-msgstr ""
-
-#: docs/ProjectSettings.xml
-msgid ""
-"Enables the use of bounding volume hierarchy instead of octree for 3D "
-"physics spatial partitioning. This may give better performance."
-msgstr ""
-
-#: docs/ProjectSettings.xml
 #, fuzzy
 msgid ""
 "Sets which physics engine to use for 3D physics.\n"
@@ -60968,6 +60950,24 @@ msgstr ""
 "\"DEFAULT\" es actualmente el motor de física [url=https://bulletphysics."
 "org]Bullet[/url]. El motor de \"GodotPhysics3D\" sigue siendo soportado como "
 "una alternativa."
+
+#: docs/ProjectSettings.xml
+msgid ""
+"Additional expansion applied to object bounds in the 3D physics bounding "
+"volume hierarchy. This can reduce BVH processing at the cost of a slightly "
+"coarser broadphase, which can stress the physics more in some situations.\n"
+"The default value will work well in most situations. A value of 0.0 will "
+"turn this optimization off, and larger values may work better for larger, "
+"faster moving objects.\n"
+"[b]Note:[/b] Used only if [member ProjectSettings.physics/3d/rebel_physics/"
+"use_bvh] is enabled."
+msgstr ""
+
+#: docs/ProjectSettings.xml
+msgid ""
+"Enables the use of bounding volume hierarchy instead of octree for 3D "
+"physics spatial partitioning. This may give better performance."
+msgstr ""
 
 #: docs/ProjectSettings.xml
 msgid "Enables [member Viewport.physics_object_picking] on the root viewport."
