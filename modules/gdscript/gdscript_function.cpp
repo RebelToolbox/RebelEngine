@@ -415,7 +415,7 @@ Variant GDScriptFunction::call(
     {                                                                          \
         if (unlikely(m_cond)) {                                                \
             _err_print_error(                                                  \
-                FUNCTION_STR,                                                  \
+                __FUNCTION__,                                                  \
                 __FILE__,                                                      \
                 __LINE__,                                                      \
                 "Condition ' " _STR(m_cond) " ' is true. Breaking..:"          \
