@@ -18,8 +18,7 @@
 #include "editor_settings.h"
 
 EditorFileSystem* EditorFileSystem::singleton = nullptr;
-// the name is the version, to keep compatibility with different versions of
-// Godot
+// The version, to keep compatibility with different versions of Rebel Engine.
 #define CACHE_FILE_NAME "filesystem_cache6"
 
 void EditorFileSystemDirectory::sort_files() {

@@ -578,8 +578,7 @@ void EditorFileDialog::_item_list_item_rmb_selected(
     // Allow specific actions only on one item.
     bool single_item_selected = item_list->get_selected_items().size() == 1;
 
-    // Disallow deleting the .import folder, Godot kills a cat if you do and it
-    // is possibly a senseless novice action.
+    // Disallow deleting the .import folder.
     bool allow_delete = true;
     for (int i = 0; i < item_list->get_item_count(); i++) {
         if (!item_list->is_selected(i)) {

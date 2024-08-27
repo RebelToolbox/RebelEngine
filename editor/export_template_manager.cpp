@@ -263,7 +263,7 @@ void ExportTemplateManager::_refresh_mirrors() {
 
     String current_version = VERSION_FULL_CONFIG;
     const String mirrors_metadata_url =
-        "https://godotengine.org/mirrorlist/" + current_version + ".json";
+        "https://rebeltoolbox.org/mirrorlist/" + current_version + ".json";
     request_mirrors->request(mirrors_metadata_url);
 }
 
@@ -1271,7 +1271,7 @@ ExportTemplateManager::ExportTemplateManager() {
     install_file_dialog->set_title(TTR("Select Template File"));
     install_file_dialog->set_access(FileDialog::ACCESS_FILESYSTEM);
     install_file_dialog->set_mode(FileDialog::MODE_OPEN_FILE);
-    install_file_dialog->add_filter("*.tpz ; " + TTR("Godot Export Templates"));
+    install_file_dialog->add_filter("*.tpz ; " + TTR("Rebel Export Templates"));
     install_file_dialog->connect(
         "file_selected",
         this,

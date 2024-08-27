@@ -134,7 +134,7 @@ void ResourceImporterLayeredTexture::_save_tex(
     } else {
         f->store_8('A');
     }
-    f->store_8('T'); // godot streamable texture
+    f->store_8('T'); // Rebel streamable texture
 
     f->store_32(p_images[0]->get_width());
     f->store_32(p_images[0]->get_height());

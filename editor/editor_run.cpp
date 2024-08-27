@@ -200,7 +200,7 @@ Error EditorRun::run(
 
     if (p_custom_args != "") {
         // Allow the user to specify a command to run, similar to Steam's launch
-        // options. In this case, Godot will no longer be run directly; it's up
+        // options. In this case, Rebel will no longer be run directly; it's up
         // to the underlying command to run it. For instance, this can be used
         // on Linux to force a running project to use Optimus using `prime-run`
         // or similar. Example: `prime-run %command% --time-scale 0.5`
@@ -218,7 +218,7 @@ Error EditorRun::run(
                 exec = exec_args[0];
                 exec_args.remove(0);
 
-                // Append the Godot executable name before we append executable
+                // Append the Rebel executable name before we append executable
                 // arguments (since the order is reversed when using
                 // `push_front()`).
                 args.push_front(OS::get_singleton()->get_executable_path());
@@ -230,7 +230,7 @@ Error EditorRun::run(
                 args.push_front(exec_args[i].replace(" ", "%20"));
             }
 
-            // Append Godot-specific custom arguments.
+            // Append Rebel-specific custom arguments.
             custom_args =
                 p_custom_args
                     .substr(placeholder_pos + String("%command%").size())
@@ -239,7 +239,7 @@ Error EditorRun::run(
                 args.push_back(custom_args[i].replace(" ", "%20"));
             }
         } else {
-            // Append Godot-specific custom arguments.
+            // Append Rebel-specific custom arguments.
             custom_args = p_custom_args.split(" ", false);
             for (int i = 0; i < custom_args.size(); i++) {
                 args.push_back(custom_args[i].replace(" ", "%20"));

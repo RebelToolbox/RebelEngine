@@ -274,7 +274,7 @@ private:
 
             } else if (valid_path.ends_with("zip")) {
                 set_message(
-                    TTR("This directory already contains a Godot project."),
+                    TTR("This directory already contains a Rebel project."),
                     MESSAGE_ERROR,
                     INSTALL_PATH
                 );
@@ -1358,7 +1358,7 @@ void ProjectList::load_project_data(
     }
 
     if (config_version > ProjectSettings::CONFIG_VERSION) {
-        // Comes from an incompatible (more recent) Godot version, grey it out
+        // It comes from an more recent, non-backward compatible version.
         grayed = true;
     }
 
@@ -1436,7 +1436,7 @@ void ProjectList::load_projects() {
     for (List<PropertyInfo>::Element* E = properties.front(); E;
          E                              = E->next()) {
         // This is actually something like
-        // "projects/C:::Documents::Godot::Projects::MyGame"
+        // "projects/C:::Documents::Projects::MyGame"
         String property_key = E->get().name;
         if (!property_key.begins_with("projects/")) {
             continue;
@@ -2324,11 +2324,11 @@ void ProjectManager::_open_selected_projects_ask() {
     if (config_version == 0) {
         ask_update_settings->set_text(vformat(
             TTR("The following project settings file does not specify the "
-                "version of Godot through which it was created.\n\n%s\n\nIf "
-                "you proceed with opening it, it will be converted to Godot's "
-                "current configuration file format.\nWarning: You won't be "
-                "able to open the project with previous versions of the engine "
-                "anymore."),
+                "version of Rebel used to create it.\n\n%s\n\n"
+                "If you proceed with opening it, it will be converted to "
+                "Rebel's current configuration file format.\n"
+                "Warning: You won't be able to open the project with previous "
+                "versions of the engine anymore."),
             conf
         ));
         ask_update_settings->popup_centered_minsize();
@@ -2630,8 +2630,9 @@ void ProjectManager::_files_dropped(PoolStringArray p_files, int p_screen) {
                 varray(folders)
             );
             multi_scan_ask->set_text(vformat(
-                TTR("Are you sure to scan %s folders for existing Godot "
-                    "projects?\nThis could take a while."),
+                TTR("Are you sure to scan %s folders for existing Rebel "
+                    "projects?\n"
+                    "This could take a while."),
                 folders.size()
             ));
             multi_scan_ask->popup_centered_minsize();
@@ -2854,8 +2855,7 @@ ProjectManager::ProjectManager() {
 
     String cp;
     cp += 0xA9;
-    // TRANSLATORS: This refers to the application where users manage their
-    // Godot projects.
+    // TRANSLATORS: Project Manager is the application used to manage projects.
     OS::get_singleton()->set_window_title(
         VERSION_NAME + String(" - ") + TTR("Project Manager")
     );

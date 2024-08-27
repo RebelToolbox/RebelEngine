@@ -717,8 +717,7 @@ void EditorAssetLibrary::_notification(int p_what) {
 
 void EditorAssetLibrary::_update_repository_options() {
     Dictionary default_urls;
-    default_urls["godotengine.org (Official)"] =
-        "https://godotengine.org/asset-library/api";
+    default_urls["Rebel Marketplace"] = "https://marketplace.rebeltoolbox.com";
     Dictionary available_urls =
         _EDITOR_DEF("asset_library/available_urls", default_urls, true);
     repository->clear();
@@ -779,10 +778,8 @@ const char* EditorAssetLibrary::sort_text[SORT_MAX] = {
     TTRC("Least Recently Updated"),
     TTRC("Name (A-Z)"),
     TTRC("Name (Z-A)"),
-    TTRC("License (A-Z)"
-    ), // "cost" stores the SPDX license name in the Godot Asset Library.
-    TTRC("License (Z-A)"
-    ), // "cost" stores the SPDX license name in the Godot Asset Library.
+    TTRC("License (A-Z)"),
+    TTRC("License (Z-A)"),
 };
 
 const char* EditorAssetLibrary::support_key[SUPPORT_MAX] = {
@@ -1129,7 +1126,7 @@ void EditorAssetLibrary::_search(int p_page) {
 
     // We use the "branch" version, i.e. major.minor, as patch releases should
     // be compatible
-    args += "&godot_version=" + String(VERSION_BRANCH);
+    args += "&rebel_version=" + String(VERSION_BRANCH);
 
     String support_list;
     for (int i = 0; i < SUPPORT_MAX; i++) {

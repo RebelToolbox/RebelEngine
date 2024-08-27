@@ -236,7 +236,7 @@ PluginConfigDialog::PluginConfigDialog() {
     grid->add_child(author_lb);
 
     author_edit = memnew(LineEdit);
-    author_edit->set_placeholder("Godette");
+    author_edit->set_placeholder("Rebel");
     grid->add_child(author_edit);
 
     Label* version_lb = memnew(Label);

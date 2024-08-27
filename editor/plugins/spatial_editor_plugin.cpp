@@ -2357,7 +2357,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
 
         } else if (m->get_button_mask() & BUTTON_MASK_MIDDLE) {
             const int mod = _get_key_modifier(m);
-            if (nav_scheme == NAVIGATION_GODOT) {
+            if (nav_scheme == NAVIGATION_REBEL) {
                 if (mod
                     == _get_key_modifier_setting(
                         "editors/3d/navigation/pan_modifier"
@@ -2446,7 +2446,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
                 operator int();
         NavigationMode nav_mode = NAVIGATION_NONE;
 
-        if (nav_scheme == NAVIGATION_GODOT) {
+        if (nav_scheme == NAVIGATION_REBEL) {
             const int mod = _get_key_modifier(pan_gesture);
 
             if (mod

@@ -264,7 +264,7 @@ public:
     };
 
     enum NavigationScheme {
-        NAVIGATION_GODOT,
+        NAVIGATION_REBEL,
         NAVIGATION_MAYA,
         NAVIGATION_MODO,
     };

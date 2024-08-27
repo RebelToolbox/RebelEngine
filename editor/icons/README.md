@@ -1,7 +1,7 @@
 # Editor icons
 
-This folder contains all the icons used by Godot editor (except for platform
-icons which are located in their respective platform folder).
+This folder contains all the icons used by Rebel Editor;
+except for platform icons which are located in the platform folders.
 
 See [Editor icons](https://docs.rebeltoolbox.com/en/latest/development/editor/creating_icons.html)
-in the documentation for details on creating icons for the Godot editor.
+for details on creating icons for the Rebel Editor.

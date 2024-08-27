@@ -325,7 +325,7 @@ void ResourceImporterTexture::_save_stex(
     f->store_8('G');
     f->store_8('D');
     f->store_8('S');
-    f->store_8('T'); // godot streamable texture
+    f->store_8('T'); // Rebel streamable texture
 
     bool resize_to_po2 = false;
 
