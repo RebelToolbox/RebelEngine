@@ -276,8 +276,8 @@ void GraphEdit::_scroll_moved(double) {
     minimap->update();
     update();
 
-    if (!setting_scroll_ofs) { // in godot, signals on change value are avoided
-                               // as a convention
+    if (!setting_scroll_ofs) {
+        // Signals on value change are avoided by default.
         emit_signal("scroll_offset_changed", get_scroll_ofs());
     }
 }

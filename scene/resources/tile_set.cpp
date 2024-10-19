@@ -39,7 +39,7 @@ bool TileSet::_set(const StringName& p_name, const Variant& p_value) {
     } else if (what == "tile_mode") {
         tile_set_tile_mode(id, (TileMode)((int)p_value));
     } else if (what == "is_autotile") {
-        // backward compatibility for Godot 3.0.x
+        // Backward compatibility
         // autotile used to be a bool, it's now an enum
         bool is_autotile = p_value;
         if (is_autotile) {

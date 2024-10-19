@@ -367,12 +367,12 @@ private:
     real_t _settings_roaming_expansion_margin = 1.0;
 
     // debug override camera
-    ObjectID _godot_preview_camera_ID = -1;
-    // local version of the godot camera frustum,
-    // to prevent updating the visual server (and causing
-    // a screen refresh) where not necessary.
-    Vector3 _godot_camera_pos;
-    Vector<Plane> _godot_camera_planes;
+    ObjectID _preview_camera_ID = -1;
+    // Local version of the camera frustum.
+    // Prevents updating the visual server, which causes a screen refresh,
+    // if not necessary.
+    Vector3 _camera_pos;
+    Vector<Plane> _camera_planes;
 
 protected:
     static void _bind_methods();

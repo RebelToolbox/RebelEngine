@@ -995,13 +995,10 @@ void SurfaceTool::mikktSetTSpaceDefault(
     }
 
     if (vtx != nullptr) {
-        vtx->tangent  = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
-        vtx->binormal = Vector3(
-            -fvBiTangent[0],
-            -fvBiTangent[1],
-            -fvBiTangent[2]
-        ); // for some reason these are reversed, something with the coordinate
-           // system in Godot
+        vtx->tangent = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
+        // These are reversed, in the Rebel Engine coordinate system.
+        vtx->binormal =
+            Vector3(-fvBiTangent[0], -fvBiTangent[1], -fvBiTangent[2]);
     }
 }
 

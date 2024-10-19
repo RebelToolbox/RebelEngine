@@ -433,9 +433,7 @@ void Label::regenerate_word_cache() {
             current = String::char_uppercase(current);
         }
 
-        // ranges taken from https://en.wikipedia.org/wiki/Plane_(Unicode)
-        // if your language is not well supported, consider helping improve
-        // the unicode support in Godot.
+        // Ranges taken from https://en.wikipedia.org/wiki/Plane_(Unicode)
         bool separatable =
             (current >= 0x2E08 && current <= 0x9FFF)
             || // CJK scripts and symbols.
