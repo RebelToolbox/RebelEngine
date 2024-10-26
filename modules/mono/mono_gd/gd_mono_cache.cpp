@@ -12,8 +12,7 @@
 #include "gd_mono_method.h"
 #include "gd_mono_utils.h"
 
-namespace GDMonoCache
-{
+namespace GDMonoCache {
 
 CachedData cached_data;
 

@@ -11,8 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-namespace
-{
+namespace {
 
 int sfind(const String& p_text, int p_from) {
     if (p_from < 0) {

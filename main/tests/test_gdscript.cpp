@@ -17,8 +17,7 @@
 #include "modules/gdscript/gdscript_parser.h"
 #include "modules/gdscript/gdscript_tokenizer.h"
 
-namespace TestGDScript
-{
+namespace TestGDScript {
 
 static void _print_indent(int p_ident, const String& p_text) {
     String txt;
@@ -1139,8 +1138,7 @@ MainLoop* test(TestType p_type) {
 
 #else
 
-namespace TestGDScript
-{
+namespace TestGDScript {
 
 MainLoop* test(TestType p_type) {
     ERR_PRINT(

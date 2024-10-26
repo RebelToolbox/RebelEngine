@@ -55,8 +55,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXMeshGeometry.h"
 #include "FBXParser.h"
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 using namespace Util;
 

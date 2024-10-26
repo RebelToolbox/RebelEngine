@@ -12,8 +12,7 @@
 #include "mono_gd/gd_mono_marshal.h"
 #include "mono_gd/gd_mono_utils.h"
 
-namespace SignalAwaiterUtils
-{
+namespace SignalAwaiterUtils {
 
 Error connect_signal_awaiter(
     Object* p_source,

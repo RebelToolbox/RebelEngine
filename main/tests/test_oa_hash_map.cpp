@@ -9,8 +9,7 @@
 #include "core/oa_hash_map.h"
 #include "core/os/os.h"
 
-namespace TestOAHashMap
-{
+namespace TestOAHashMap {
 
 struct CountedItem {
     static int count;

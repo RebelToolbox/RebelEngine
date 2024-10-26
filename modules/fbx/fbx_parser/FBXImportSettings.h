@@ -52,8 +52,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FBX_IMPORT_SETTINGS_H
 #define FBX_IMPORT_SETTINGS_H
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 /** FBX import settings, parts of which are publicly accessible via their
  * corresponding AI_CONFIG constants */

@@ -57,8 +57,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "core/print_string.h"
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 // ------------------------------------------------------------------------------------------------
 Token::Token(
@@ -81,8 +80,7 @@ Token::Token(
 // ------------------------------------------------------------------------------------------------
 Token::~Token() {}
 
-namespace
-{
+namespace {
 
 // ------------------------------------------------------------------------------------------------
 void TokenizeError(

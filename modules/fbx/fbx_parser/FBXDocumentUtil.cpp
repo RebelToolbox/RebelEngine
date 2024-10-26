@@ -58,10 +58,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXUtil.h"
 #include "core/print_string.h"
 
-namespace FBXDocParser
-{
-namespace Util
-{
+namespace FBXDocParser {
+namespace Util {
 
 void DOMError(const std::string& message) {
     print_error("[FBX-DOM]" + String(message.c_str()));

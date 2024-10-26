@@ -56,11 +56,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdint.h>
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
-namespace Util
-{
+namespace Util {
 
 /** Get a string representation for a #TokenType. */
 const char* TokenTypeString(TokenType t);

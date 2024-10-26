@@ -13,8 +13,7 @@
 #include <math.h>
 #include <stdio.h>
 
-namespace TestAStar
-{
+namespace TestAStar {
 
 class ABCX : public AStar {
 public:

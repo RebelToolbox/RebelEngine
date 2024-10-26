@@ -14,8 +14,7 @@
 
 // #define GODOT_TEST_TRANSFORM_NON_UNIFORM_SCALE_TESTS_ENABLED
 
-namespace TestTransform
-{
+namespace TestTransform {
 
 bool test_plane() {
     bool pass = true;

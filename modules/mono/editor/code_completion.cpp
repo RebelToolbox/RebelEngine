@@ -12,8 +12,7 @@
 #include "scene/gui/control.h"
 #include "scene/main/node.h"
 
-namespace gdmono
-{
+namespace gdmono {
 
 // Almost everything here is taken from functions used by GDScript for code
 // completion, adapted for C#.

@@ -59,8 +59,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm> // std::transform
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 using namespace Util;
 

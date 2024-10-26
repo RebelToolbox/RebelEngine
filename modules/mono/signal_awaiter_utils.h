@@ -10,8 +10,7 @@
 #include "core/reference.h"
 #include "mono_gc_handle.h"
 
-namespace SignalAwaiterUtils
-{
+namespace SignalAwaiterUtils {
 
 Error connect_signal_awaiter(
     Object* p_source,

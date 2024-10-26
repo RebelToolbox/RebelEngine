@@ -54,8 +54,7 @@
 
 GDMono* GDMono::singleton = NULL;
 
-namespace
-{
+namespace {
 
 #if defined(WEB_ENABLED)
 extern "C" {
@@ -522,8 +521,7 @@ bool GDMono::_are_api_assemblies_out_of_sync() {
     return out_of_sync;
 }
 
-namespace GodotSharpBindings
-{
+namespace GodotSharpBindings {
 #ifdef MONO_GLUE_ENABLED
 
 uint64_t get_core_api_hash();

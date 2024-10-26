@@ -10,8 +10,7 @@
 #include "core/image.h"
 #include "core/pool_vector.h"
 
-namespace PNGDriverCommon
-{
+namespace PNGDriverCommon {
 
 // Attempt to load png from buffer (p_source, p_size) into p_image
 Error png_to_image(

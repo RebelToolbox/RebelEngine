@@ -425,8 +425,7 @@ struct VSOccluder {
     LocalVector<uint32_t, int32_t> list_ids;
 };
 
-namespace Occlusion
-{
+namespace Occlusion {
 struct Sphere {
     Vector3 pos;
     real_t radius;

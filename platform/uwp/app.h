@@ -13,8 +13,7 @@
 #include "GLES2/gl2.h"
 #include "uwp_os.h"
 
-namespace RebelUWP
-{
+namespace RebelUWP {
 ref class App sealed : public Windows::ApplicationModel::Core::IFrameworkView {
 public:
     App();

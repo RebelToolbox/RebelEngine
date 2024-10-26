@@ -11,8 +11,7 @@
 #include "gd_mono.h"
 #include "gd_mono_utils.h"
 
-namespace GDMonoMarshal
-{
+namespace GDMonoMarshal {
 
 template <typename T>
 T unbox(MonoObject* p_obj) {
@@ -203,8 +202,7 @@ PoolVector3Array mono_array_to_PoolVector3Array(MonoArray* p_array);
 
 // Structures
 
-namespace InteropLayout
-{
+namespace InteropLayout {
 
 enum {
     MATCHES_float = (sizeof(float) == sizeof(uint32_t)),

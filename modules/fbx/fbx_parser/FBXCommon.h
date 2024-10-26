@@ -53,8 +53,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <string>
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 const std::string NULL_RECORD    = { // 13 null bytes
     '\0',
     '\0',

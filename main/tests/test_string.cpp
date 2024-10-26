@@ -17,8 +17,7 @@
 #include <stdio.h>
 #include <wchar.h>
 
-namespace TestString
-{
+namespace TestString {
 
 bool test_1() {
     OS::get_singleton()->print("\n\nTest 1: Assign from cstr\n");

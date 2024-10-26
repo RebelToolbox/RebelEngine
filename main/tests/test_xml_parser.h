@@ -14,8 +14,7 @@
 
 #include <inttypes.h>
 
-namespace TestXMLParser
-{
+namespace TestXMLParser {
 
 MainLoop* test();
 } // namespace TestXMLParser

@@ -12,8 +12,7 @@
 #include "core/error_list.h"
 #include "core/ustring.h"
 
-namespace GodotSharpExport
-{
+namespace GodotSharpExport {
 
 Error get_assembly_dependencies(
     GDMonoAssembly* p_assembly,

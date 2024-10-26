@@ -16,8 +16,7 @@
 
 #define OBJECT_COUNT 50
 
-namespace TestRender
-{
+namespace TestRender {
 
 class TestMainLoop : public MainLoop {
     RID test_cube;

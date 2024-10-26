@@ -57,10 +57,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstring>
 #include <string>
 
-namespace FBXDocParser
-{
-namespace Util
-{
+namespace FBXDocParser {
+namespace Util {
 
 // ------------------------------------------------------------------------------------------------
 const char* TokenTypeString(TokenType t) {

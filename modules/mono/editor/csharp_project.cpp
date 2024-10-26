@@ -17,8 +17,7 @@
 #include "core/project_settings.h"
 #include "script_class_parser.h"
 
-namespace CSharpProject
-{
+namespace CSharpProject {
 
 void add_item(
     const String& p_project_path,

@@ -9,8 +9,7 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestGDScript
-{
+namespace TestGDScript {
 
 enum TestType {
     TEST_TOKENIZER,

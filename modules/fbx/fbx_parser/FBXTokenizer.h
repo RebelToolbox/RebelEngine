@@ -60,8 +60,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 /** Rough classification for text FBX tokens used for constructing the
  *  basic scope hierarchy. */
 enum TokenType {

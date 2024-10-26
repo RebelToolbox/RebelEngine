@@ -27,8 +27,7 @@
 #define ENV_PATH_SEP ":"
 #endif // WINDOWS_ENABLED
 
-namespace path
-{
+namespace path {
 
 String find_executable(const String& p_name) {
 #ifdef WINDOWS_ENABLED

@@ -59,8 +59,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <functional>
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 using namespace Util;
 

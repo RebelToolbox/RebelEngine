@@ -326,8 +326,7 @@ struct TypeInherits {
         && !TypesAreSame<B volatile const, void volatile const>::value;
 };
 
-namespace GodotTypeInfo
-{
+namespace GodotTypeInfo {
 enum Metadata {
     METADATA_NONE,
     METADATA_INT_IS_INT8,

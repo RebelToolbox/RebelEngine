@@ -31,12 +31,9 @@
 
 // Warning: JNI boilerplate ahead... continue at your own risk
 
-namespace gdmono
-{
-namespace android
-{
-namespace support
-{
+namespace gdmono {
+namespace android {
+namespace support {
 
 template <typename T>
 struct ScopedLocalRef {
