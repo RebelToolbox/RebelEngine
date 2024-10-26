@@ -9,8 +9,7 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestOrderedHashMap
-{
+namespace TestOrderedHashMap {
 
 MainLoop* test();
 } // namespace TestOrderedHashMap

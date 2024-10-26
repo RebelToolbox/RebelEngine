@@ -10,8 +10,7 @@
 #include "core/os/os.h"
 #include "core/ustring.h"
 
-namespace TestBasis
-{
+namespace TestBasis {
 
 enum RotOrder {
     EulerXYZ,

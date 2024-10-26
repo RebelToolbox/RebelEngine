@@ -56,8 +56,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXParser.h"
 #include "FBXTokenizer.h"
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 using namespace Util;
 
@@ -67,8 +66,7 @@ Property::Property() {}
 // ------------------------------------------------------------------------------------------------
 Property::~Property() {}
 
-namespace
-{
+namespace {
 
 // ------------------------------------------------------------------------------------------------
 // read a typed property out of a FBX element. The return value is NULL if the

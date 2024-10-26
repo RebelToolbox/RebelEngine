@@ -10,8 +10,7 @@
 #include "core/ustring.h"
 #include "core/variant.h"
 
-namespace gdmono
-{
+namespace gdmono {
 
 enum class CompletionKind {
     INPUT_ACTIONS = 0,

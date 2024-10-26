@@ -31,8 +31,7 @@
 #include "scene/main/scene_tree.h"
 #include "scene/main/viewport.h"
 
-namespace TestGUI
-{
+namespace TestGUI {
 
 class TestMainLoop : public SceneTree {
 public:

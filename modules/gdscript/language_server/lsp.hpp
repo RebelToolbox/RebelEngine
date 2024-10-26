@@ -11,8 +11,7 @@
 #include "core/list.h"
 #include "editor/docs/docs_data.h"
 
-namespace lsp
-{
+namespace lsp {
 
 typedef String DocumentUri;
 
@@ -349,8 +348,7 @@ struct Command {
 // Use namespace instead of enumeration to follow the LSP specifications
 // lsp::EnumName::EnumValue is OK but lsp::EnumValue is not
 
-namespace TextDocumentSyncKind
-{
+namespace TextDocumentSyncKind {
 /**
  * Documents should not be synced at all.
  */
@@ -661,8 +659,7 @@ struct TextDocumentContentChangeEvent {
 };
 
 // Use namespace instead of enumeration to follow the LSP specifications
-namespace DiagnosticSeverity
-{
+namespace DiagnosticSeverity {
 /**
  * Reports an error.
  */
@@ -769,8 +766,7 @@ struct Diagnostic {
  * Please note that `MarkupKinds` must not start with a `$`. This kinds
  * are reserved for internal usage.
  */
-namespace MarkupKind
-{
+namespace MarkupKind {
 static const String PlainText = "plaintext";
 static const String Markdown  = "markdown";
 }; // namespace MarkupKind
@@ -837,8 +833,7 @@ struct MarkupContent {
 /**
  * The kind of a completion entry.
  */
-namespace CompletionItemKind
-{
+namespace CompletionItemKind {
 static const int Text          = 1;
 static const int Method        = 2;
 static const int Function      = 3;
@@ -871,8 +866,7 @@ static const int TypeParameter = 25;
  * Defines whether the insert text in a completion item should be interpreted as
  * plain text or a snippet.
  */
-namespace InsertTextFormat
-{
+namespace InsertTextFormat {
 /**
  * The primary text to be inserted is treated as a plain string.
  */
@@ -1089,8 +1083,7 @@ struct CompletionList {
 /**
  * A symbol kind.
  */
-namespace SymbolKind
-{
+namespace SymbolKind {
 static const int File          = 1;
 static const int Module        = 2;
 static const int Namespace     = 3;
@@ -1374,8 +1367,7 @@ struct NativeSymbolInspectParams {
 /**
  * Enum of known range kinds
  */
-namespace FoldingRangeKind
-{
+namespace FoldingRangeKind {
 /**
  * Folding range for a comment
  */
@@ -1438,8 +1430,7 @@ struct FoldingRange {
 /**
  * How a completion was triggered
  */
-namespace CompletionTriggerKind
-{
+namespace CompletionTriggerKind {
 /**
  * Completion was triggered by typing an identifier (24x7 code
  * complete), manual invocation (e.g Ctrl+Space) or via API.

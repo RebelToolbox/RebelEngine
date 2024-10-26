@@ -55,8 +55,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <locale>
 #include <stdint.h>
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 // --------------------------------------------------------------------------------------
 /** Defines some useful byte order swap routines.
  *
@@ -219,8 +218,7 @@ struct ByteSwap::_swapper<T, 8> {
 #define LE_NCONST
 #endif
 
-namespace Intern
-{
+namespace Intern {
 
 // --------------------------------------------------------------------------------------------
 template <typename T, bool doit>

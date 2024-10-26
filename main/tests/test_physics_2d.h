@@ -9,8 +9,7 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestPhysics2D
-{
+namespace TestPhysics2D {
 
 MainLoop* test();
 } // namespace TestPhysics2D

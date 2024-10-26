@@ -26,8 +26,7 @@
 #include "gd_mono_marshal.h"
 #include "gd_mono_method_thunk.h"
 
-namespace GDMonoUtils
-{
+namespace GDMonoUtils {
 
 MonoObject* unmanaged_get_managed(Object* unmanaged) {
     if (!unmanaged) {
@@ -613,8 +612,7 @@ void dispose(MonoObject* p_mono_object, MonoException** r_exc) {
     CACHED_METHOD_THUNK(GodotObject, Dispose).invoke(p_mono_object, r_exc);
 }
 
-namespace Marshal
-{
+namespace Marshal {
 
 #ifdef MONO_GLUE_ENABLED
 #ifdef TOOLS_ENABLED

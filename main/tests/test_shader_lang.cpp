@@ -16,8 +16,7 @@
 
 typedef ShaderLanguage SL;
 
-namespace TestShaderLang
-{
+namespace TestShaderLang {
 
 static String _mktab(int p_level) {
     String tb;

@@ -56,8 +56,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXDocumentUtil.h"
 #include "FBXParser.h"
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 using namespace Util;
 

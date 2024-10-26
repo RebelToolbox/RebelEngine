@@ -21,8 +21,7 @@ MONO_API void godot_mono_register_m2n_icall_trampoline_dispatch_hook(
     GodotMonoM2nIcallTrampolineDispatch hook
 );
 
-namespace GDMonoWasmM2n
-{
+namespace GDMonoWasmM2n {
 
 struct HashMapCookieComparator {
     static bool compare(const char* p_lhs, const char* p_rhs) {

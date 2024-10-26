@@ -463,8 +463,7 @@ public:
     TestPhysicsMainLoop() {}
 };
 
-namespace TestPhysics
-{
+namespace TestPhysics {
 
 MainLoop* test() {
     return memnew(TestPhysicsMainLoop);

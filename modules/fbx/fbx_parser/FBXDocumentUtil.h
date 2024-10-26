@@ -58,10 +58,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 struct Token;
 struct Element;
 
-namespace FBXDocParser
-{
-namespace Util
-{
+namespace FBXDocParser {
+namespace Util {
 
 // Parser errors
 void DOMError(const std::string& message);

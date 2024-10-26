@@ -9,8 +9,7 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestBasis
-{
+namespace TestBasis {
 MainLoop* test();
 } // namespace TestBasis
 

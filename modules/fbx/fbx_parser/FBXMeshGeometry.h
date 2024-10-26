@@ -61,8 +61,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define AI_MAX_NUMBER_OF_TEXTURECOORDS 4
 #define AI_MAX_NUMBER_OF_COLOR_SETS    8
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 /*
  * DOM base class for all kinds of FBX geometry

@@ -57,8 +57,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdint.h>
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 // ------------------------------------------------------------------------------------------------
 Token::Token(
     const char* sbegin,
@@ -78,8 +77,7 @@ Token::Token(
     // measure from sBegin to sEnd and validate?
 }
 
-namespace
-{
+namespace {
 
 // ------------------------------------------------------------------------------------------------
 // signal tokenization error

@@ -869,8 +869,7 @@ void SurfaceTool::append_from(
 }
 
 // mikktspace callbacks
-namespace
-{
+namespace {
 struct TangentGenerationContextUserData {
     Vector<List<SurfaceTool::Vertex>::Element*> vertices;
     Vector<List<int>::Element*> indices;

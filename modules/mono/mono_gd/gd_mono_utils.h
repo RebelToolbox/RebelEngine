@@ -26,11 +26,9 @@
         GD_UNREACHABLE();                                                      \
     }
 
-namespace GDMonoUtils
-{
+namespace GDMonoUtils {
 
-namespace Marshal
-{
+namespace Marshal {
 
 bool type_is_generic_array(MonoReflectionType* p_reftype);
 bool type_is_generic_dictionary(MonoReflectionType* p_reftype);

@@ -24,8 +24,7 @@
 #define _AI_CONCAT(a, b) a##b
 #define AI_CONCAT(a, b)  _AI_CONCAT(a, b)
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 class Parser;
 class Object;
@@ -1447,8 +1446,7 @@ private:
 
 } // namespace FBXDocParser
 
-namespace std
-{
+namespace std {
 template <>
 struct hash<const FBXDocParser::Video> {
     std::size_t operator()(const FBXDocParser::Video& video) const {

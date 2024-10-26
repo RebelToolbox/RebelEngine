@@ -449,8 +449,7 @@ void TileMapEditor::_sbox_input(const Ref<InputEvent>& p_ie) {
 
 // Implementation detail of TileMapEditor::_update_palette();
 // In modern C++ this could have been inside its body.
-namespace
-{
+namespace {
 struct _PaletteEntry {
     int id;
     String name;

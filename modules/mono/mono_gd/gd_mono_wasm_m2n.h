@@ -32,8 +32,7 @@ struct Mono_InterpMethodArguments {
 };
 } // extern "C"
 
-namespace GDMonoWasmM2n
-{
+namespace GDMonoWasmM2n {
 
 template <size_t... Is>
 struct IndexSequence {};

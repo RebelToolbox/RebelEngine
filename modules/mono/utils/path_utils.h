@@ -10,8 +10,7 @@
 #include "core/string_builder.h"
 #include "core/ustring.h"
 
-namespace path
-{
+namespace path {
 
 String join(const String& p_a, const String& p_b);
 String join(const String& p_a, const String& p_b, const String& p_c);

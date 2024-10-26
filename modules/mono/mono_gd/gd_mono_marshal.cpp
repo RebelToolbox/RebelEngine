@@ -10,8 +10,7 @@
 #include "gd_mono_cache.h"
 #include "gd_mono_class.h"
 
-namespace GDMonoMarshal
-{
+namespace GDMonoMarshal {
 
 Variant::Type managed_to_variant_type(const ManagedType& p_type) {
     switch (p_type.type_encoding) {

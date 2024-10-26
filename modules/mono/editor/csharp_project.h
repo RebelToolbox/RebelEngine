@@ -9,8 +9,7 @@
 
 #include "core/ustring.h"
 
-namespace CSharpProject
-{
+namespace CSharpProject {
 
 void add_item(
     const String& p_project_path,

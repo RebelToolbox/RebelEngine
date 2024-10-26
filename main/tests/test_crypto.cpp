@@ -7,8 +7,7 @@
 #include "core/crypto/crypto.h"
 #include "core/os/os.h"
 
-namespace TestCrypto
-{
+namespace TestCrypto {
 
 class _MockCrypto : public Crypto {
     virtual PoolByteArray generate_random_bytes(int p_bytes) {

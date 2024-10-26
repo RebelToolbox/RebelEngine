@@ -10,8 +10,7 @@
 #include "gd_mono_header.h"
 #include "gd_mono_method_thunk.h"
 
-namespace GDMonoCache
-{
+namespace GDMonoCache {
 
 struct CachedData {
     // -----------------------------------------------

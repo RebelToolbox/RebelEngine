@@ -65,8 +65,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace FBXDocParser;
 
-namespace
-{
+namespace {
 
 // Initially, we did reinterpret_cast, breaking strict aliasing rules.
 // This actually caused trouble on Android, so let's be safe this time.
@@ -83,8 +82,7 @@ T SafeParse(const char* data, const char* end) {
 }
 } // namespace
 
-namespace FBXDocParser
-{
+namespace FBXDocParser {
 
 // ------------------------------------------------------------------------------------------------
 Element::Element(const TokenPtr key_token, Parser& parser) :
@@ -511,8 +509,7 @@ std::string ParseTokenAsString(const TokenPtr t, const char*& err_out) {
     return std::string(s + 1, length - 2);
 }
 
-namespace
-{
+namespace {
 
 // ------------------------------------------------------------------------------------------------
 // read the type code and element count of a binary data array and stop there

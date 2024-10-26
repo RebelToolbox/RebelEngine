@@ -16,8 +16,7 @@
 
 #include <mono/metadata/exception.h>
 
-namespace GDMonoInternals
-{
+namespace GDMonoInternals {
 void tie_managed_to_unmanaged(MonoObject* managed, Object* unmanaged) {
     // This method should not fail
 

@@ -9,8 +9,7 @@
 
 #include "core/ustring.h"
 
-namespace GodotSharpDirs
-{
+namespace GodotSharpDirs {
 
 String get_res_data_dir();
 String get_res_metadata_dir();

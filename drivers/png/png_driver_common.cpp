@@ -11,8 +11,7 @@
 #include <png.h>
 #include <string.h>
 
-namespace PNGDriverCommon
-{
+namespace PNGDriverCommon {
 
 // Print any warnings.
 // On error, set explain and return true.

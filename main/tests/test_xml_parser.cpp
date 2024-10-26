@@ -8,8 +8,7 @@
 
 #include "core/os/os.h"
 
-namespace TestXMLParser
-{
+namespace TestXMLParser {
 #define CHECK(X)                                                               \
     if (!(X)) {                                                                \
         OS::get_singleton()->print("\tFAIL at %s\n", #X);                      \

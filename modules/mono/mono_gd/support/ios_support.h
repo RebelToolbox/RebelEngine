@@ -11,12 +11,9 @@
 
 #include "core/ustring.h"
 
-namespace gdmono
-{
-namespace ios
-{
-namespace support
-{
+namespace gdmono {
+namespace ios {
+namespace support {
 
 void initialize();
 void cleanup();

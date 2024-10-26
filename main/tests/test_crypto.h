@@ -9,8 +9,7 @@
 
 #include "core/os/main_loop.h"
 
-namespace TestCrypto
-{
+namespace TestCrypto {
 
 MainLoop* test();
 } // namespace TestCrypto

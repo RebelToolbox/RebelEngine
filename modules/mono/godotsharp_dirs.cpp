@@ -21,8 +21,7 @@
 
 #include "mono_gd/gd_mono.h"
 
-namespace GodotSharpDirs
-{
+namespace GodotSharpDirs {
 
 String _get_expected_build_config() {
 #ifdef TOOLS_ENABLED

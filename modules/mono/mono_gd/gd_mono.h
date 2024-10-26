@@ -16,8 +16,7 @@
 #include "../utils/mono_reg_utils.h"
 #endif
 
-namespace ApiAssemblyInfo
-{
+namespace ApiAssemblyInfo {
 enum Type {
     API_CORE,
     API_EDITOR
@@ -303,8 +302,7 @@ public:
     ~GDMono();
 };
 
-namespace gdmono
-{
+namespace gdmono {
 
 class ScopeDomain {
     MonoDomain* prev_domain;

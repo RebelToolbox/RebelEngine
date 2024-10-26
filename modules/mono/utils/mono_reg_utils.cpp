@@ -15,8 +15,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-namespace MonoRegUtils
-{
+namespace MonoRegUtils {
 
 template <int>
 REGSAM bitness_sam_impl();

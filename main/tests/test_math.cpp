@@ -22,8 +22,7 @@
 #include "scene/resources/texture.h"
 #include "servers/visual/shader_language.h"
 
-namespace TestMath
-{
+namespace TestMath {
 
 class GetClassAndNamespace {
     String code;

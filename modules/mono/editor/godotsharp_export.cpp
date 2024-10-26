@@ -16,8 +16,7 @@
 
 #include <mono/metadata/image.h>
 
-namespace GodotSharpExport
-{
+namespace GodotSharpExport {
 
 MonoAssemblyName* new_mono_assembly_name() {
     // Mono has no public API to create an empty MonoAssemblyName and the struct

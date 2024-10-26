@@ -11,8 +11,7 @@
 #include "core/pair.h"
 #include "core/vector.h"
 
-namespace TestOrderedHashMap
-{
+namespace TestOrderedHashMap {
 
 bool test_insert() {
     OrderedHashMap<int, int> map;
