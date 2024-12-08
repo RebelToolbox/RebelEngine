@@ -553,8 +553,8 @@
 			};
 			function Execute(args) {
 				const is_editor = args.filter(function(v) { return v == '--editor' || v == '-e' }).length != 0;
-				const is_project_manager = args.filter(function(v) { return v == '--project-manager' }).length != 0;
-				const is_game = !is_editor && !is_project_manager;
+				const is_projects_manager = args.filter(function(v) { return v == '--projects-manager' }).length != 0;
+				const is_game = !is_editor && !is_projects_manager;
 				if (video_driver) {
 					args.push('--video-driver', video_driver);
 				}
@@ -583,7 +583,7 @@
 									showTab('loader');
 									setLoaderEnabled(true);
 								};
-								editor.start({'args': args, 'persistentDrops': is_project_manager, 'canvas': editorCanvas});
+								editor.start({'args': args, 'persistentDrops': is_projects_manager, 'canvas': editorCanvas});
 							});
 						}, 0);
 						OnEditorExit = null;
@@ -645,7 +645,7 @@
 					selectVideoMode();
 					showTab('editor');
 					setLoaderEnabled(false);
-					const args = ['--project-manager'];
+					const args = ['--projects-manager'];
 					if (video_driver) {
 						args.push('--video-driver', video_driver);
 					}

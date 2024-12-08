@@ -25,7 +25,7 @@ complete -c rebel -l quiet -d "Quiet mode, silences stdout messages (errors are 
 
 # Run options:
 complete -c rebel -s e -l editor -d "Start the editor instead of running the scene"
-complete -c rebel -s p -l project-manager -d "Start the project manager, even if a project is auto-detected"
+complete -c rebel -s p -l projects-manager -d "Start the Projects Manager, even if a project is auto-detected"
 complete -c rebel -s q -l quit -d "Quit after the first iteration"
 complete -c rebel -s l -l language -d "Use a specific locale (<locale> being a two-letter code)" -x
 complete -c rebel -l path -d "Path to a project (<directory> must contain a 'project.rebel' file)" -r

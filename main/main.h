@@ -21,7 +21,7 @@ class Main {
     static bool agile_input_event_flushing;
 
 public:
-    static bool is_project_manager();
+    static bool is_projects_manager();
 
     static Error setup(
         const char* execpath,

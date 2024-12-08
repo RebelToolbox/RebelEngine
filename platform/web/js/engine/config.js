@@ -129,7 +129,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		/**
 		 * A callback function for handling Rebel's ``OS.execute`` calls.
 		 *
-		 * This is for example used in the Web Editor template to switch between project manager and editor, and for running the game.
+		 * This is for example used in the Web Editor template to switch between Projects Manager and Rebel Editor, and for running the game.
 		 *
 		 * @callback EngineConfig.onExecute
 		 * @param {string} path The path that Rebel's wants executed.

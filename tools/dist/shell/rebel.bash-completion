@@ -20,7 +20,7 @@ _complete_options() {
 --verbose
 --quiet
 --editor
---project-manager
+--projects-manager
 --quit
 --language
 --path

@@ -667,9 +667,9 @@ void EditorAssetLibrary::_notification(int p_what) {
         case NOTIFICATION_VISIBILITY_CHANGED: {
             if (is_visible()) {
                 // Focus the search box automatically when switching to the
-                // Templates tab (in the Project Manager) or switching to the
-                // AssetLib tab (in the editor). The Project Manager's project
-                // filter box is automatically focused in the project manager
+                // Templates tab (in the Projects Manager) or switching to the
+                // AssetLib tab (in the editor). The Projects Manager's project
+                // filter box is automatically focused in the Projects Manager
                 // code.
                 filter->grab_focus();
 

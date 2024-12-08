@@ -22,7 +22,7 @@
 
 /**
  * NOTE: Do not assume the EditorNode singleton to be available in this class'
- * methods. EditorAbout is also used from the project manager where EditorNode
+ * methods. EditorAbout is also used from the Projects Manager where EditorNode
  * isn't initialized.
  */
 class EditorAbout : public AcceptDialog {
