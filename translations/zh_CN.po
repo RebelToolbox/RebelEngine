@@ -15596,8 +15596,8 @@ msgid ""
 "their [member color] to [code]Color(1, 1, 1, 0)[/code] instead."
 msgstr ""
 "如果[code]true[/code]，将绘制字符。如果[code]false[/code]，则隐藏字符。隐藏字"
-"符周围的字符将重排以占用隐藏字符的空间。如果不希望这样做，可以将它们的["
-"member color]设置为[code]Color(1, 1, 1, 0)[/code]。"
+"符周围的字符将重排以占用隐藏字符的空间。如果不希望这样做，可以将它们的"
+"[member color]设置为[code]Color(1, 1, 1, 0)[/code]。"
 
 #: docs/CheckBox.xml
 msgid "Binary choice user interface widget. See also [CheckButton]."
