@@ -51,6 +51,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FBX_COMMON_H
 #define FBX_COMMON_H
 
+#include <cstdint>
 #include <string>
 
 namespace FBXDocParser {
