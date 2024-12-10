@@ -56,18 +56,6 @@ jobs:
             build-options: production=yes tools=no target=release_debug
             rebel-executable: rebel.linux.opt.debug.64
 
-          - name: Linux Engine 32 bit
-            os: ubuntu-latest
-            artifact: linux-engine-x86-32
-            build-options: production=yes tools=no target=release bits=32
-            rebel-executable: rebel.linux.opt.32
-
-          - name: Linux Engine 32 bit Debug
-            os: ubuntu-latest
-            artifact: linux-engine-x86-32-debug
-            build-options: production=yes tools=no target=release_debug bits=32
-            rebel-executable: rebel.linux.opt.debug.32
-
           # Rebel Engine Windows builds
           - name: Windows Engine 64 bit
             os: windows-latest
@@ -489,8 +477,6 @@ jobs:
           # Move Linux templates.
           mv artifacts/rebel.linux.opt.64 templates/linux_64_release
           mv artifacts/rebel.linux.opt.debug.64 templates/linux_64_debug
-          mv artifacts/rebel.linux.opt.32 templates/linux_32_release
-          mv artifacts/rebel.linux.opt.debug.32 templates/linux_32_debug
           # Move Windows templates.
           mv artifacts/rebel.windows.opt.64.msvc.exe templates/windows_64_release.exe
           mv artifacts/rebel.windows.opt.debug.64.msvc.exe templates/windows_64_debug.exe
