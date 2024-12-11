@@ -219,7 +219,7 @@ jobs:
 
     steps:
       - name: Build Rebel
-        uses: RebelToolbox/RebelBuildAction@v2
+        uses: RebelToolbox/RebelBuildAction@v3
         with:
           artifact: ${{ matrix.artifact }}
           build-options: ${{ matrix.build-options }}
