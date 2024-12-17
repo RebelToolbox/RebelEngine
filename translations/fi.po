@@ -14,16 +14,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2021-10-28 22:08+0000\n"
-"Last-Translator: Tapani Niemi <tapani.niemi@kapsi.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/godot-engine/"
-"godot-class-reference/fi/>\n"
+"PO-Revision-Date: 2024-12-14 08:00+0000\n"
+"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/rebel-toolbox/"
+"rebel-engine-api/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 5.9-rc\n"
 
 #: tools/scripts/rst_from_xml.py
 msgid "Description"
@@ -6046,10 +6046,9 @@ msgid "Resets this [AnimationTreePlayer]."
 msgstr ""
 
 #: docs/AnimationTreePlayer.xml
-#, fuzzy
 msgid ""
 "Returns the time scale value of the TimeScale node with name [code]id[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa TimeScale-solmun aikaasteikkoarvon nimellä [code]id[/code]."
 
 #: docs/AnimationTreePlayer.xml
 msgid ""
@@ -6088,11 +6087,10 @@ msgid ""
 msgstr ""
 
 #: docs/AnimationTreePlayer.xml
-#, fuzzy
 msgid ""
 "Returns the cross fade time for the transition node with name [code]id[/"
 "code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa siirtymäsolmun ristihäipymisajan nimellä [code]id[/code]."
 
 #: docs/AnimationTreePlayer.xml
 msgid ""
@@ -11852,20 +11850,20 @@ msgid "Returns an array of [CameraFeed]s."
 msgstr ""
 
 #: docs/CameraServer.xml
-#, fuzzy
 msgid ""
 "Returns the [CameraFeed] corresponding to the camera with the given "
 "[code]index[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr ""
+"Palauttaa [CameraFeed]-arvon, joka vastaa kameraa annetulla "
+"[code]index[/code]."
 
 #: docs/CameraServer.xml
 msgid "Returns the number of [CameraFeed]s registered."
 msgstr ""
 
 #: docs/CameraServer.xml
-#, fuzzy
 msgid "Removes the specified camera [code]feed[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Poistaa määritetyn kameran [code]feed[/code]."
 
 #: docs/CameraServer.xml
 msgid "Emitted when a [CameraFeed] is added (e.g. a webcam is plugged in)."
@@ -25366,9 +25364,8 @@ msgid "Returns the interpolated color specified by [code]offset[/code]."
 msgstr ""
 
 #: docs/Gradient.xml
-#, fuzzy
 msgid "Removes the color at the index [code]point[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Poistaa värin hakemistosta [code]point[/code]."
 
 #: docs/Gradient.xml
 msgid "Sets the color of the ramp color at index [code]point[/code]."
@@ -25721,9 +25718,8 @@ msgid "Disables input and output slot whose index is [code]idx[/code]."
 msgstr ""
 
 #: docs/GraphNode.xml
-#, fuzzy
 msgid "Returns the [Color] of the input connection [code]idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa tuloliitännän [code]idx[/code] [Color]."
 
 #: docs/GraphNode.xml
 msgid ""
@@ -25739,9 +25735,8 @@ msgid "Returns the type of the input connection [code]idx[/code]."
 msgstr ""
 
 #: docs/GraphNode.xml
-#, fuzzy
 msgid "Returns the [Color] of the output connection [code]idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa lähtöliitännän [code]idx[/code] [Color]."
 
 #: docs/GraphNode.xml
 msgid ""
