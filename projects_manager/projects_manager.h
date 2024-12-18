@@ -120,13 +120,13 @@ private:
         const String& p_project_name = String()
     );
     void _on_about_button_pressed();
+    void _on_add_button_pressed();
     void _on_add_multiple_files_confirmed(const PoolStringArray& p_files);
     void _on_edit_button_pressed();
     void _on_edit_multiple_confirmed();
     void _on_extract_zip_file(const String& p_zip_file_path);
     void _on_files_dropped(const PoolStringArray& p_files, int);
     void _on_global_menu_action(const Variant& p_id, const Variant& p_meta);
-    void _on_import_button_pressed();
     void _on_install_asset(const String& p_zip_path, const String& p_title);
     void _on_item_double_clicked();
     void _on_language_selected(int p_id);
@@ -142,7 +142,7 @@ private:
     void _on_restart_confirmed();
     void _on_run_button_pressed();
     void _on_run_multiple_confirmed();
-    void _on_scan_button_pressed();
+    void _on_search_button_pressed();
     void _on_search_folder_selected(const String& p_folder);
     void _on_selection_changed();
     void _on_tab_changed(int p_tab);
@@ -158,7 +158,7 @@ private:
     );
     void _quit();
     void _run_selected();
-    void _scan_folder(const String& p_base);
+    void _search_folder(const String& p_base);
     void _show_editor_about();
     void _unhandled_input(const Ref<InputEvent>& p_event);
     void _update_project_buttons();

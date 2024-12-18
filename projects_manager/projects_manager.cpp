@@ -104,14 +104,14 @@ void create_project_directories() {
         );
     }
 
-    String autoscan_project_path = EditorSettings::get_singleton()->get(
-        "filesystem/directories/autoscan_project_path"
+    String auto_search_project_path = EditorSettings::get_singleton()->get(
+        "filesystem/directories/auto_search_project_path"
     );
-    error = dir_access->make_dir_recursive(autoscan_project_path);
+    error = dir_access->make_dir_recursive(auto_search_project_path);
     if (error != OK) {
         ERR_PRINT(
-            "Could not create autoscan project directory: "
-            + autoscan_project_path
+            "Could not create auto search project path: "
+            + auto_search_project_path
         );
     }
 }
@@ -186,12 +186,12 @@ ProjectsManager::ProjectsManager() {
     SceneTree::get_singleton()
         ->connect("global_menu_action", this, "_on_global_menu_action");
 
-    String autoscan_project_path = EditorSettings::get_singleton()->get(
-        "filesystem/directories/autoscan_project_path"
+    String auto_search_project_path = EditorSettings::get_singleton()->get(
+        "filesystem/directories/auto_search_project_path"
     );
-    if (!autoscan_project_path.empty()
-        && DirAccess::exists(autoscan_project_path)) {
-        _scan_folder(autoscan_project_path);
+    if (!auto_search_project_path.empty()
+        && DirAccess::exists(auto_search_project_path)) {
+        _search_folder(auto_search_project_path);
     }
 
     _update_project_buttons();
@@ -207,6 +207,10 @@ void ProjectsManager::_bind_methods() {
     ClassDB::bind_method(
         "_on_about_button_pressed",
         &ProjectsManager::_on_about_button_pressed
+    );
+    ClassDB::bind_method(
+        "_on_add_button_pressed",
+        &ProjectsManager::_on_add_button_pressed
     );
     ClassDB::bind_method(
         D_METHOD("_on_add_multiple_files_confirmed", "folders"),
@@ -232,10 +236,6 @@ void ProjectsManager::_bind_methods() {
         D_METHOD("_on_global_menu_action"),
         &ProjectsManager::_on_global_menu_action,
         DEFVAL(Variant())
-    );
-    ClassDB::bind_method(
-        "_on_import_button_pressed",
-        &ProjectsManager::_on_import_button_pressed
     );
     ClassDB::bind_method(
         "_on_install_asset",
@@ -298,8 +298,8 @@ void ProjectsManager::_bind_methods() {
         &ProjectsManager::_on_run_multiple_confirmed
     );
     ClassDB::bind_method(
-        "_on_scan_button_pressed",
-        &ProjectsManager::_on_scan_button_pressed
+        "_on_search_button_pressed",
+        &ProjectsManager::_on_search_button_pressed
     );
     ClassDB::bind_method(
         "_on_search_folder_selected",
@@ -362,6 +362,45 @@ Control* ProjectsManager::_create_buttons() {
     VBoxContainer* buttons_container = memnew(VBoxContainer);
     buttons_container->set_custom_minimum_size(Size2(120, 120));
 
+    Button* new_project_button = memnew(Button);
+    new_project_button->set_text(TTR("New"));
+    new_project_button->set_shortcut(ED_SHORTCUT(
+        "projects_manager/new_project",
+        TTR("Create new project"),
+        KEY_MASK_CMD | KEY_N
+    ));
+    new_project_button
+        ->connect("pressed", this, "_on_new_project_button_pressed");
+    buttons_container->add_child(new_project_button);
+
+    Button* add_button = memnew(Button);
+    add_button->set_text(TTR("Add"));
+    add_button->set_shortcut(ED_SHORTCUT(
+        "projects_manager/add_project",
+        TTR("Add existing project"),
+        KEY_MASK_CMD | KEY_A
+    ));
+    add_button->connect("pressed", this, "_on_add_button_pressed");
+    buttons_container->add_child(add_button);
+
+    Button* search_button = memnew(Button);
+    search_button->set_text(TTR("Search"));
+    search_button->set_shortcut(ED_SHORTCUT(
+        "projects_manager/projects_search",
+        TTR("Search for existing projects"),
+        KEY_MASK_CMD | KEY_S
+    ));
+    search_button->connect("pressed", this, "_on_search_button_pressed");
+    buttons_container->add_child(search_button);
+
+    remove_missing_button = memnew(Button);
+    remove_missing_button->set_text(TTR("Remove Missing"));
+    remove_missing_button
+        ->connect("pressed", this, "_on_remove_missing_button_pressed");
+    buttons_container->add_child(remove_missing_button);
+
+    buttons_container->add_child(memnew(HSeparator));
+
     edit_button = memnew(Button);
     edit_button->set_text(TTR("Edit"));
     edit_button->set_shortcut(ED_SHORTCUT(
@@ -381,41 +420,6 @@ Control* ProjectsManager::_create_buttons() {
     ));
     run_button->connect("pressed", this, "_on_run_button_pressed");
     buttons_container->add_child(run_button);
-
-    buttons_container->add_child(memnew(HSeparator));
-
-    Button* scan_button = memnew(Button);
-    scan_button->set_text(TTR("Scan"));
-    scan_button->set_shortcut(ED_SHORTCUT(
-        "projects_manager/scan_projects",
-        TTR("Scan Projects"),
-        KEY_MASK_CMD | KEY_S
-    ));
-    scan_button->connect("pressed", this, "_on_scan_button_pressed");
-    buttons_container->add_child(scan_button);
-
-    buttons_container->add_child(memnew(HSeparator));
-
-    Button* new_project_button = memnew(Button);
-    new_project_button->set_text(TTR("New Project"));
-    new_project_button->set_shortcut(ED_SHORTCUT(
-        "projects_manager/new_project",
-        TTR("New Project"),
-        KEY_MASK_CMD | KEY_N
-    ));
-    new_project_button
-        ->connect("pressed", this, "_on_new_project_button_pressed");
-    buttons_container->add_child(new_project_button);
-
-    Button* import_button = memnew(Button);
-    import_button->set_text(TTR("Import"));
-    import_button->set_shortcut(ED_SHORTCUT(
-        "projects_manager/import_project",
-        TTR("Import existing project"),
-        KEY_MASK_CMD | KEY_I
-    ));
-    import_button->connect("pressed", this, "_on_import_button_pressed");
-    buttons_container->add_child(import_button);
 
     rename_button = memnew(Button);
     rename_button->set_text(TTR("Rename"));
@@ -437,13 +441,7 @@ Control* ProjectsManager::_create_buttons() {
     remove_button->connect("pressed", this, "_on_remove_button_pressed");
     buttons_container->add_child(remove_button);
 
-    remove_missing_button = memnew(Button);
-    remove_missing_button->set_text(TTR("Remove Missing"));
-    remove_missing_button
-        ->connect("pressed", this, "_on_remove_missing_button_pressed");
-    buttons_container->add_child(remove_missing_button);
-
-    buttons_container->add_spacer();
+    buttons_container->add_child(memnew(HSeparator));
 
     Button* about_button = memnew(Button);
     about_button->set_text(TTR("About"));
@@ -481,9 +479,9 @@ void ProjectsManager::_create_dialogs() {
 
 Control* ProjectsManager::_create_add_multiple_files_confirmation() {
     add_multiple_files_confirmation = memnew(ConfirmationDialog);
-    add_multiple_files_confirmation->set_text(
-        TTR("Are you sure you want to add or scan multiple files and folders?")
-    );
+    add_multiple_files_confirmation->set_text(TTR(
+        "Are you sure you want to add or search multiple files and folders?"
+    ));
     Button* ok_button = add_multiple_files_confirmation->get_ok();
     ok_button->set_text(TTR("Add"));
     ok_button->connect(
@@ -690,7 +688,7 @@ Control* ProjectsManager::_create_select_search_folder() {
     select_search_folder = memnew(FileDialog);
     select_search_folder->set_access(FileDialog::ACCESS_FILESYSTEM);
     select_search_folder->set_mode(FileDialog::MODE_OPEN_DIR);
-    select_search_folder->set_title(TTR("Select a Folder to Scan"));
+    select_search_folder->set_title(TTR("Select a Folder to Search"));
     select_search_folder->set_current_dir(EditorSettings::get_singleton()->get(
         "filesystem/directories/default_project_path"
     ));
@@ -761,7 +759,7 @@ void ProjectsManager::_add_file(const String& p_file) {
     DirAccessRef dir_access = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     if (dir_access->dir_exists(p_file)) {
         // File is a folder.
-        _scan_folder(p_file);
+        _search_folder(p_file);
         return;
     }
 
@@ -878,6 +876,10 @@ void ProjectsManager::_on_about_button_pressed() {
     _show_editor_about();
 }
 
+void ProjectsManager::_on_add_button_pressed() {
+    add_project_dialog->show_dialog();
+}
+
 void ProjectsManager::_on_edit_button_pressed() {
     _edit_selected_projects_requested();
 }
@@ -922,10 +924,6 @@ void ProjectsManager::_on_global_menu_action(
             OS::get_singleton()->execute(exec, args, false, &pid);
         }
     }
-}
-
-void ProjectsManager::_on_import_button_pressed() {
-    add_project_dialog->show_dialog();
 }
 
 void ProjectsManager::_on_install_asset(
@@ -1049,7 +1047,7 @@ void ProjectsManager::_on_run_multiple_confirmed() {
     _run_selected();
 }
 
-void ProjectsManager::_on_scan_button_pressed() {
+void ProjectsManager::_on_search_button_pressed() {
     select_search_folder->popup_centered_ratio();
 }
 
@@ -1060,7 +1058,7 @@ void ProjectsManager::_on_add_multiple_files_confirmed(
 }
 
 void ProjectsManager::_on_search_folder_selected(const String& p_folder) {
-    _scan_folder(p_folder);
+    _search_folder(p_folder);
 }
 
 void ProjectsManager::_on_selection_changed() {
@@ -1177,16 +1175,16 @@ void ProjectsManager::_run_selected() {
     }
 }
 
-void ProjectsManager::_scan_folder(const String& p_folder) {
+void ProjectsManager::_search_folder(const String& p_folder) {
     DirAccessRef dir_access = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
     Error error             = dir_access->change_dir(p_folder);
-    ERR_FAIL_COND_MSG(error != OK, "Could not scan directory: " + p_folder);
+    ERR_FAIL_COND_MSG(error != OK, "Could not search directory: " + p_folder);
 
     dir_access->list_dir_begin();
     String dir_entry = dir_access->get_next();
     while (!dir_entry.empty()) {
         if (dir_access->current_is_dir() && !dir_entry.begins_with(".")) {
-            _scan_folder(p_folder.plus_file(dir_entry));
+            _search_folder(p_folder.plus_file(dir_entry));
         } else if (dir_entry == "project.rebel") {
             print_line("Found Rebel Project in " + p_folder);
             _add_project(p_folder);
@@ -1249,9 +1247,9 @@ void ProjectsManager::_update_project_buttons() {
         }
     }
 
+    remove_missing_button->set_disabled(!missing_projects);
     edit_button->set_disabled(nothing_selected || missing_project_selected);
     run_button->set_disabled(nothing_selected || missing_project_selected);
     rename_button->set_disabled(nothing_selected || missing_project_selected);
     remove_button->set_disabled(nothing_selected);
-    remove_missing_button->set_disabled(!missing_projects);
 }
