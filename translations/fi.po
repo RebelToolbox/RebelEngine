@@ -11854,8 +11854,8 @@ msgid ""
 "Returns the [CameraFeed] corresponding to the camera with the given "
 "[code]index[/code]."
 msgstr ""
-"Palauttaa [CameraFeed]-arvon, joka vastaa kameraa annetulla "
-"[code]index[/code]."
+"Palauttaa [CameraFeed]-arvon, joka vastaa kameraa annetulla [code]index[/"
+"code]."
 
 #: docs/CameraServer.xml
 msgid "Returns the number of [CameraFeed]s registered."
