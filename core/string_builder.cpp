@@ -40,14 +40,12 @@ String StringBuilder::as_string() const {
     CharType* buffer = memnew_arr(CharType, string_length);
 
     int current_position = 0;
-
-    int godot_string_elem = 0;
-    int c_string_elem     = 0;
+    int string_elem      = 0;
+    int c_string_elem    = 0;
 
     for (int i = 0; i < appended_strings.size(); i++) {
         if (appended_strings[i] == -1) {
-            // Godot string
-            const String& s = strings[godot_string_elem];
+            const String& s = strings[string_elem];
 
             memcpy(
                 buffer + current_position,
@@ -57,7 +55,7 @@ String StringBuilder::as_string() const {
 
             current_position += s.length();
 
-            godot_string_elem++;
+            string_elem++;
         } else {
             const char* s = c_strings[c_string_elem];
 

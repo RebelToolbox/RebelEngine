@@ -566,7 +566,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         preset_accent_color = Color(0.32, 0.58, 0.89);
         preset_base_color   = Color(0.22, 0.24, 0.29);
         preset_contrast     = 0.25;
-    } else if (preset == "Godot 2") {
+    } else if (preset == "Rebel 2") {
         preset_accent_color = Color(0.53, 0.67, 0.89);
         preset_base_color   = Color(0.24, 0.23, 0.27);
         preset_contrast     = 0.25;

@@ -253,7 +253,7 @@ File extracted from upstream release tarball:
 - The `LICENSE` file.
 - Applied the patch in `patches/1453.diff` (upstream PR:
   https://github.com/ARMmbed/mbedtls/pull/1453).
-- Added 2 files `godot_core_mbedtls_platform.c` and `godot_core_mbedtls_config.h`
+- Added 2 files `rebel_mbedtls_platform.c` and `rebel_mbedtls_config.h`
   providing configuration for light bundling with core.
 
 

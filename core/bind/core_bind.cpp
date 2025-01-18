@@ -516,13 +516,13 @@ Error _OS::shell_open(String p_uri) {
     if (p_uri.begins_with("res://")) {
         WARN_PRINT(
             "Attempting to open an URL with the \"res://\" protocol. Use "
-            "`ProjectSettings.globalize_path()` to convert a Godot-specific "
+            "`ProjectSettings.globalize_path()` to convert a Rebel-specific "
             "path to a system path before opening it with `OS.shell_open()`."
         );
     } else if (p_uri.begins_with("user://")) {
         WARN_PRINT(
             "Attempting to open an URL with the \"user://\" protocol. Use "
-            "`ProjectSettings.globalize_path()` to convert a Godot-specific "
+            "`ProjectSettings.globalize_path()` to convert a Rebel-specific "
             "path to a system path before opening it with `OS.shell_open()`."
         );
     }

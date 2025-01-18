@@ -6278,7 +6278,7 @@ VisualShaderEditor::VisualShaderEditor() {
         "Special",
         "",
         "VisualShaderNodeExpression",
-        TTR("Custom Godot Shader Language expression, with custom amount of "
+        TTR("Custom Rebel Shader Language expression, with custom amount of "
             "input and output ports. This is a direct injection of code into "
             "the vertex/fragment/light function, do not use it to write the "
             "function declarations inside.")
@@ -6298,7 +6298,7 @@ VisualShaderEditor::VisualShaderEditor() {
         "Special",
         "",
         "VisualShaderNodeGlobalExpression",
-        TTR("Custom Godot Shader Language expression, which is placed on top "
+        TTR("Custom Rebel Shader Language expression, which is placed on top "
             "of the resulted shader. You can place various function "
             "definitions inside and call it later in the Expressions. You can "
             "also declare varyings, uniforms and constants.")

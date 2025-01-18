@@ -1260,8 +1260,7 @@ void InputDefault::_get_mapped_hat_events(
     }
 }
 
-// string names of the SDL buttons in the same order as input_event.h godot
-// buttons
+// String names of the SDL buttons in the same order as Rebel Engine buttons.
 static const char* _joy_buttons[] = {
     "a",
     "b",

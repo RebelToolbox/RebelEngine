@@ -2617,7 +2617,8 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
                 // Git commit hash information available; use it for greater
                 // accuracy, including for development versions.
                 OS::get_singleton()->shell_open(vformat(
-                    "https://github.com/godotengine/godot/blob/%s/%s#L%d",
+                    "https://github.com/RebelToolbox/RebelEngine/blob/%s/"
+                    "%s#L%d",
                     VERSION_HASH,
                     file,
                     line_number
@@ -2626,7 +2627,8 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
                 // Git commit hash information unavailable; fall back to tagged
                 // releases.
                 OS::get_singleton()->shell_open(vformat(
-                    "https://github.com/godotengine/godot/blob/%s-stable/"
+                    "https://github.com/RebelToolbox/RebelEngine/blob/"
+                    "%s-stable/"
                     "%s#L%d",
                     VERSION_NUMBER,
                     file,

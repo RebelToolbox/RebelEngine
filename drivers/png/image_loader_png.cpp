@@ -72,7 +72,7 @@ PoolVector<uint8_t> ImageLoaderPNG::lossless_pack_png(const Ref<Image>& p_image
 ) {
     PoolVector<uint8_t> out_buffer;
 
-    // add Godot's own "PNG " prefix
+    // Add Rebel's own "PNG " prefix.
     if (out_buffer.resize(4) != OK) {
         ERR_FAIL_V(PoolVector<uint8_t>());
     }

@@ -12,8 +12,6 @@
 #include "core/os/os.h"
 #include "core/ustring.h"
 
-// #define GODOT_TEST_TRANSFORM_NON_UNIFORM_SCALE_TESTS_ENABLED
-
 namespace TestTransform {
 
 bool test_plane() {
@@ -137,13 +135,6 @@ bool test_aabb() {
     if (!test_aabb_regular()) {
         pass = false;
     }
-
-#ifdef GODOT_TEST_TRANSFORM_NON_UNIFORM_SCALE_TESTS_ENABLED
-    if (!test_aabb_non_uniform_scale()) {
-        pass = false;
-    }
-#endif
-
     return pass;
 }
 
@@ -244,13 +235,6 @@ bool test_vector3() {
     if (!test_vector3_regular()) {
         pass = false;
     }
-
-#ifdef GODOT_TEST_TRANSFORM_NON_UNIFORM_SCALE_TESTS_ENABLED
-    if (!test_vector3_non_uniform_scale()) {
-        pass = false;
-    }
-#endif
-
     return pass;
 }
 

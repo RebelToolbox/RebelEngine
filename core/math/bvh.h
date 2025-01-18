@@ -9,12 +9,10 @@
 
 // BVH
 // This class provides a wrapper around BVH tree, which contains most of the
-// functionality for a dynamic BVH with templated leaf size. However BVH also
-// adds facilities for pairing, to maintain compatibility with Godot 3.2.
-// Pairing is a collision pairing system, on top of the basic BVH.
+// functionality for a dynamic BVH with templated leaf size.
+// BVH also adds facilities for pairing. Pairing is a collision pairing system,
+// on top of the basic BVH.
 
-// Some notes on the use of BVH / Octree from Godot 3.2.
-// This is not well explained elsewhere.
 // The rendering tree mask and types that are sent to the BVH are NOT layer
 // masks. They are INSTANCE_TYPES (defined in visual_server.h), e.g. MESH,
 // MULTIMESH, PARTICLES etc. Thus the lights do no cull by layer mask in the

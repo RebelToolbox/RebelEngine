@@ -2709,31 +2709,31 @@ const BindingsGenerator::TypeInterface* BindingsGenerator::
 }
 
 StringName BindingsGenerator::_get_int_type_name_from_meta(
-    GodotTypeInfo::Metadata p_meta
+    RebelTypeInfo::Metadata p_meta
 ) {
     switch (p_meta) {
-        case GodotTypeInfo::METADATA_INT_IS_INT8:
+        case RebelTypeInfo::METADATA_INT_IS_INT8:
             return "sbyte";
             break;
-        case GodotTypeInfo::METADATA_INT_IS_INT16:
+        case RebelTypeInfo::METADATA_INT_IS_INT16:
             return "short";
             break;
-        case GodotTypeInfo::METADATA_INT_IS_INT32:
+        case RebelTypeInfo::METADATA_INT_IS_INT32:
             return "int";
             break;
-        case GodotTypeInfo::METADATA_INT_IS_INT64:
+        case RebelTypeInfo::METADATA_INT_IS_INT64:
             return "long";
             break;
-        case GodotTypeInfo::METADATA_INT_IS_UINT8:
+        case RebelTypeInfo::METADATA_INT_IS_UINT8:
             return "byte";
             break;
-        case GodotTypeInfo::METADATA_INT_IS_UINT16:
+        case RebelTypeInfo::METADATA_INT_IS_UINT16:
             return "ushort";
             break;
-        case GodotTypeInfo::METADATA_INT_IS_UINT32:
+        case RebelTypeInfo::METADATA_INT_IS_UINT32:
             return "uint";
             break;
-        case GodotTypeInfo::METADATA_INT_IS_UINT64:
+        case RebelTypeInfo::METADATA_INT_IS_UINT64:
             return "ulong";
             break;
         default:
@@ -2743,13 +2743,13 @@ StringName BindingsGenerator::_get_int_type_name_from_meta(
 }
 
 StringName BindingsGenerator::_get_float_type_name_from_meta(
-    GodotTypeInfo::Metadata p_meta
+    RebelTypeInfo::Metadata p_meta
 ) {
     switch (p_meta) {
-        case GodotTypeInfo::METADATA_REAL_IS_FLOAT:
+        case RebelTypeInfo::METADATA_REAL_IS_FLOAT:
             return "float";
             break;
-        case GodotTypeInfo::METADATA_REAL_IS_DOUBLE:
+        case RebelTypeInfo::METADATA_REAL_IS_DOUBLE:
             return "double";
             break;
         default:
@@ -3005,12 +3005,12 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
                 if (return_info.type == Variant::INT) {
                     imethod.return_type.cname = _get_int_type_name_from_meta(
                         m ? m->get_argument_meta(-1)
-                          : GodotTypeInfo::METADATA_NONE
+                          : RebelTypeInfo::METADATA_NONE
                     );
                 } else if (return_info.type == Variant::REAL) {
                     imethod.return_type.cname = _get_float_type_name_from_meta(
                         m ? m->get_argument_meta(-1)
-                          : GodotTypeInfo::METADATA_NONE
+                          : RebelTypeInfo::METADATA_NONE
                     );
                 } else {
                     imethod.return_type.cname =
@@ -3040,12 +3040,12 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
                     if (arginfo.type == Variant::INT) {
                         iarg.type.cname = _get_int_type_name_from_meta(
                             m ? m->get_argument_meta(i)
-                              : GodotTypeInfo::METADATA_NONE
+                              : RebelTypeInfo::METADATA_NONE
                         );
                     } else if (arginfo.type == Variant::REAL) {
                         iarg.type.cname = _get_float_type_name_from_meta(
                             m ? m->get_argument_meta(i)
-                              : GodotTypeInfo::METADATA_NONE
+                              : RebelTypeInfo::METADATA_NONE
                         );
                     } else {
                         iarg.type.cname = Variant::get_type_name(arginfo.type);

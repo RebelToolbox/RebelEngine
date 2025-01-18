@@ -470,8 +470,8 @@ void Main::print_help(const char* p_binary) {
     );
 #ifdef DEBUG_METHODS_ENABLED
     OS::get_singleton()->print(
-        "  --gdnative-generate-json-api     Generate JSON dump of the Godot "
-        "API for GDNative bindings.\n"
+        "  --gdnative-generate-json-api     Generate JSON dump of the Rebel "
+        "Engine API for GDNative bindings.\n"
     );
 #endif
     OS::get_singleton()->print(
@@ -621,8 +621,8 @@ Error Main::setup(
     while (I) {
 #ifdef MACOS_ENABLED
         // Ignore the process serial number argument passed by macOS Gatekeeper.
-        // Otherwise, Godot would try to open a non-existent project on the
-        // first start and abort.
+        // Otherwise, Rebel Engine would try to open a non-existent project on
+        // the first start and abort.
         if (I->get().begins_with("-psn_")) {
             I = I->next();
             continue;
@@ -1788,14 +1788,11 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 
 #ifdef UNIX_ENABLED
     // Print warning before initializing audio.
-    if (OS::get_singleton()->get_environment("USER") == "root"
-        && !OS::get_singleton()->has_environment("GODOT_SILENCE_ROOT_WARNING"
-        )) {
+    if (OS::get_singleton()->get_environment("USER") == "root") {
         WARN_PRINT(
-            "Started the engine as `root`/superuser. This is a security risk, "
-            "and subsystems like audio may not work correctly.\nSet the "
-            "environment variable `GODOT_SILENCE_ROOT_WARNING` to 1 to silence "
-            "this warning."
+            "Started the engine as `root`/superuser.\n"
+            "This is a security risk, and subsystems like audio may not work "
+            "correctly.\n"
         );
     }
 #endif
@@ -2144,7 +2141,7 @@ bool Main::start() {
                 || args[i].ends_with(".escn") || args[i].ends_with(".res")
                 || args[i].ends_with(".tres")) {
                 // Only consider the positional argument to be a scene path if
-                // it ends with a file extension associated with Godot scenes.
+                // it ends with a file extension associated with Rebel scenes.
                 // This makes it possible for projects to parse command-line
                 // arguments for custom CLI arguments or other file extensions
                 // without trouble. This can be used to implement "drag-and-drop

@@ -415,7 +415,7 @@ Error ProjectSettings::_setup(
         bool found = _load_resource_pack(exec_path);
 
         // Attempt with exec_name.pck.
-        // (This is the usual case when distributing a Godot game.)
+        // (This is the usual case when distributing a Rebel game.)
         String exec_dir      = exec_path.get_base_dir();
         String exec_filename = exec_path.get_file();
         String exec_basename = exec_filename.get_basename();

@@ -3088,10 +3088,8 @@ String String::format(const Variant& values, String placeholder) const {
         for (int i = 0; i < values_arr.size(); i++) {
             String i_as_str = String::num_int64(i);
 
-            if (values_arr[i].get_type()
-                == Variant::
-                    ARRAY) { // Array in Array structure
-                             // [["name","RobotGuy"],[0,"godot"],["strength",9000.91]]
+            if (values_arr[i].get_type() == Variant::ARRAY) {
+                // Array in Array structure
                 Array value_arr = values_arr[i];
 
                 if (value_arr.size() == 2) {

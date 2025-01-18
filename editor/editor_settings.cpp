@@ -255,7 +255,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
         String host_lang = OS::get_singleton()->get_locale();
         host_lang        = TranslationServer::standardize_locale(host_lang);
 
-        // Some locales are not properly supported currently in Godot due to
+        // Some locales are not properly supported currently in Rebel due to
         // lack of font shaping (e.g. Arabic or Hindi), so even though we have
         // work in progress translations for them, we skip them as they don't
         // render properly. (GH-28577)
@@ -442,7 +442,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
         Variant::STRING,
         "interface/theme/preset",
         PROPERTY_HINT_ENUM,
-        "Default,Alien,Arc,Godot 2,Grey,Light,Solarized (Dark),Solarized "
+        "Default,Alien,Arc,Rebel 2,Grey,Light,Solarized (Dark),Solarized "
         "(Light),Custom",
         PROPERTY_USAGE_DEFAULT
     );
@@ -868,7 +868,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
         Variant::INT,
         "editors/3d/navigation/navigation_scheme",
         PROPERTY_HINT_ENUM,
-        "Godot,Maya,Modo"
+        "Rebel,Maya,Modo"
     );
     _initial_set("editors/3d/navigation/zoom_style", 0);
     hints["editors/3d/navigation/zoom_style"] = PropertyInfo(

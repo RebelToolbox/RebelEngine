@@ -205,7 +205,8 @@ Error AudioDriverPulseAudio::init_device() {
     // Note: If using an even amount of channels (2, 4, etc) channels and
     // pa_map.channels will be equal, if not then pa_map.channels will have the
     // real amount of channels PulseAudio is using and channels will have the
-    // amount of channels Godot is using (in this case it's pa_map.channels + 1)
+    // amount of channels Rebel Engine is using (in this case it's
+    // pa_map.channels + 1)
     Error err = detect_channels();
     if (err != OK) {
         // This most likely means there are no sinks.
@@ -330,7 +331,7 @@ Error AudioDriverPulseAudio::init() {
     pa_ml = pa_mainloop_new();
     ERR_FAIL_COND_V(pa_ml == nullptr, ERR_CANT_OPEN);
 
-    pa_ctx = pa_context_new(pa_mainloop_get_api(pa_ml), "Godot");
+    pa_ctx = pa_context_new(pa_mainloop_get_api(pa_ml), "Rebel");
     ERR_FAIL_COND_V(pa_ctx == nullptr, ERR_CANT_OPEN);
 
     pa_ready = 0;

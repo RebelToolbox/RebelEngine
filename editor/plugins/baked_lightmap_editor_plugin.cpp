@@ -62,7 +62,7 @@ void BakedLightmapEditorPlugin::_bake_select_file(const String& p_file) {
                 break;
             case BakedLightmap::BAKE_ERROR_NO_LIGHTMAPPER:
                 EditorNode::get_singleton()->show_warning(
-                    TTR("Godot editor was built without ray tracing support, "
+                    TTR("Rebel Editor was built without ray tracing support, "
                         "lightmaps can't be baked.")
                 );
                 break;

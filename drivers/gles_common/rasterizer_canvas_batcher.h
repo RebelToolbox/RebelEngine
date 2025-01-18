@@ -1789,7 +1789,7 @@ bool C_PREAMBLE::_prefill_ninepatch(
 
     // cope with ninepatch of zero area. These cannot be created by the user
     // interface or gdscript, but can be created programmatically from c++, e.g.
-    // by the Godot UI for sliders. We will just not draw these.
+    // by the Rebel UI for sliders. We will just not draw these.
     if ((p_np->rect.size.x * p_np->rect.size.y) <= 0.0f) {
         return false;
     }
