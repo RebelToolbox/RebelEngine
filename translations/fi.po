@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2024-12-14 08:00+0000\n"
+"PO-Revision-Date: 2025-01-17 15:00+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-engine-api/fi/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-rc\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: tools/scripts/rst_from_xml.py
 msgid "Description"
@@ -25752,24 +25752,20 @@ msgid "Returns the type of the output connection [code]idx[/code]."
 msgstr ""
 
 #: docs/GraphNode.xml
-#, fuzzy
 msgid "Returns the left (input) [Color] of the slot [code]idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa paikan [code]idx[/code] vasemmanpuoleisen (syöte) [Color]."
 
 #: docs/GraphNode.xml
-#, fuzzy
 msgid "Returns the right (output) [Color] of the slot [code]idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa paikan [code]idx[/code] oikeanpuoleisen (ulostulon) [Color]."
 
 #: docs/GraphNode.xml
-#, fuzzy
 msgid "Returns the left (input) type of the slot [code]idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa paikan [code]idx[/code] vasemman (syöttö)tyypin."
 
 #: docs/GraphNode.xml
-#, fuzzy
 msgid "Returns the right (output) type of the slot [code]idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa paikan [code]idx[/code] oikean (lähtö)tyypin."
 
 #: docs/GraphNode.xml
 msgid ""
@@ -31371,9 +31367,8 @@ msgid "Returns the offset of the piece with the index [code]idx[/code]."
 msgstr ""
 
 #: docs/LargeTexture.xml
-#, fuzzy
 msgid "Returns the [Texture] of the piece with the index [code]idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa kappaleen [Texture] indeksillä [code]idx[/code]."
 
 #: docs/LargeTexture.xml
 msgid ""
@@ -51178,9 +51173,8 @@ msgid ""
 msgstr ""
 
 #: docs/Skeleton.xml
-#, fuzzy
 msgid "Sets the pose transform for bone [code]bone_idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Asettaa asentomuunnoksen luulle [code]bone_idx[/code]."
 
 #: docs/Skeleton.xml
 msgid "Sets the rest transform for bone [code]bone_idx[/code]."
@@ -55757,9 +55751,8 @@ msgid "Returns tab [Rect2] with local position and size."
 msgstr ""
 
 #: docs/Tabs.xml
-#, fuzzy
 msgid "Returns the title of the tab at index [code]tab_idx[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa välilehden otsikon indeksissä [code]tab_idx[/code]."
 
 #: docs/Tabs.xml
 msgid "Returns the [Tabs]' rearrange group ID."
@@ -56015,9 +56008,8 @@ msgid "Returns an array containing the line number of each breakpoint."
 msgstr ""
 
 #: docs/TextEdit.xml
-#, fuzzy
 msgid "Returns the [Color] of the specified [code]keyword[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa määritetyn [code]keyword[/code] [Color]."
 
 #: docs/TextEdit.xml
 msgid "Returns the text of a specific line."
@@ -56039,11 +56031,12 @@ msgid "Returns the height of a largest line."
 msgstr "Palauttaa parametrin sinin."
 
 #: docs/TextEdit.xml
-#, fuzzy
 msgid ""
 "Returns the width in pixels of the [code]wrap_index[/code] on [code]line[/"
 "code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr ""
+"Palauttaa [code]line[/code]:lla olevan [code]wrap_index[/code]:n leveyden "
+"pikseleinä."
 
 #: docs/TextEdit.xml
 #, fuzzy
@@ -57178,11 +57171,12 @@ msgid ""
 msgstr ""
 
 #: docs/Theme.xml
-#, fuzzy
 msgid ""
 "Returns the constant at [code]name[/code] if the theme has [code]node_type[/"
 "code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr ""
+"Palauttaa vakion [code]name[/code]:lla, jos teemalla on [code]node_type[/"
+"code]."
 
 #: docs/Theme.xml
 msgid ""
@@ -59405,9 +59399,8 @@ msgid ""
 msgstr ""
 
 #: docs/TreeItem.xml
-#, fuzzy
 msgid "Returns the number of buttons in column [code]column[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa painikkeiden määrän sarakkeessa [code]column[/code]."
 
 #: docs/TreeItem.xml
 msgid ""
@@ -60860,9 +60853,8 @@ msgid ""
 msgstr ""
 
 #: docs/Vector2.xml
-#, fuzzy
 msgid "Returns the cross product of this vector and [code]with[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa tämän vektorin ja [code]with[/code]:n ristitulon."
 
 #: docs/Vector2.xml
 msgid ""
@@ -61100,9 +61092,8 @@ msgid ""
 msgstr ""
 
 #: docs/Vector3.xml
-#, fuzzy
 msgid "Returns the cross product of this vector and [code]b[/code]."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr "Palauttaa tämän vektorin ja [code]b[/code]:n ristitulon."
 
 #: docs/Vector3.xml
 msgid ""
@@ -65412,11 +65403,12 @@ msgid "Returns the value of a certain material's parameter."
 msgstr ""
 
 #: docs/VisualServer.xml
-#, fuzzy
 msgid ""
 "Returns the default value for the param if available. Returns [code]null[/"
 "code] otherwise."
-msgstr "Laskee kahden vektorin ristitulon."
+msgstr ""
+"Palauttaa parametrin oletusarvon, jos se on saatavilla. Palauttaa [code]"
+"null[/code] muussa tapauksessa."
 
 #: docs/VisualServer.xml
 msgid ""
