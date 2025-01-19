@@ -1919,7 +1919,7 @@ msgstr "নতুন নাম:"
 
 #: editor/editor_feature_profile.cpp
 #, fuzzy
-msgid "Godot Feature Profile"
+msgid "Rebel Feature Profile"
 msgstr "এক্সপোর্ট টেমপ্লেটসমূহ লোড হচ্ছে"
 
 #: editor/editor_feature_profile.cpp
@@ -4081,7 +4081,7 @@ msgstr "টেমপ্লেট ফাইল নির্বাচন করু
 
 #: editor/export_template_manager.cpp
 #, fuzzy
-msgid "Godot Export Templates"
+msgid "Rebel Export Templates"
 msgstr "এক্সপোর্ট টেমপ্লেটসমূহ লোড হচ্ছে"
 
 #: editor/export_template_manager.cpp
@@ -5864,7 +5864,7 @@ msgstr ""
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
 msgid ""
-"Godot editor was built without ray tracing support, lightmaps can't be baked."
+"Rebel Editor was built without ray tracing support, lightmaps can't be baked."
 msgstr ""
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
@@ -7928,7 +7928,7 @@ msgstr "ডকুমেন্টসমূহ বন্ধ করুন"
 
 #: editor/plugins/script_editor_plugin.cpp
 #, fuzzy
-msgid "Open Godot online documentation."
+msgid "Open Rebel Documentation online."
 msgstr "রেফারেন্সের ডকুমেন্টেশনে খুঁজুন।"
 
 #: editor/plugins/script_editor_plugin.cpp
@@ -11081,7 +11081,7 @@ msgstr "ভেক্টর ইউনিফর্ম পরিবর্তন ক
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid ""
-"Custom Godot Shader Language expression, with custom amount of input and "
+"Custom Rebel Shader Language expression, with custom amount of input and "
 "output ports. This is a direct injection of code into the vertex/fragment/"
 "light function, do not use it to write the function declarations inside."
 msgstr ""
@@ -11094,7 +11094,7 @@ msgstr ""
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid ""
-"Custom Godot Shader Language expression, which is placed on top of the "
+"Custom Rebel Shader Language expression, which is placed on top of the "
 "resulted shader. You can place various function definitions inside and call "
 "it later in the Expressions. You can also declare varyings, uniforms and "
 "constants."
@@ -11341,7 +11341,7 @@ msgid "ZIP File"
 msgstr "ফাইল"
 
 #: editor/project_export.cpp
-msgid "Godot Game Pack"
+msgid "Rebel Game Pack"
 msgstr ""
 
 #: editor/project_export.cpp
@@ -11385,7 +11385,7 @@ msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
 
 #: editor/project_manager.cpp
-msgid "This directory already contains a Godot project."
+msgid "This directory already contains a Rebel project."
 msgstr ""
 
 #: editor/project_manager.cpp
@@ -11554,12 +11554,12 @@ msgstr "একধিক প্রকল্প খোলায় আপনি স�
 
 #: editor/project_manager.cpp
 msgid ""
-"The following project settings file does not specify the version of Godot "
-"through which it was created.\n"
+"The following project settings file does not specify the version of Rebel "
+"used to create it.\n"
 "\n"
 "%s\n"
 "\n"
-"If you proceed with opening it, it will be converted to Godot's current "
+"If you proceed with opening it, it will be converted to Rebel's current "
 "configuration file format.\n"
 "Warning: You won't be able to open the project with previous versions of the "
 "engine anymore."
@@ -11636,13 +11636,13 @@ msgstr ""
 #: editor/project_manager.cpp
 #, fuzzy
 msgid ""
-"Are you sure to scan %s folders for existing Godot projects?\n"
+"Are you sure to scan %s folders for existing Rebel projects?\n"
 "This could take a while."
 msgstr ""
 "বিদ্যমান Godot প্রজেক্টের খোঁজে আপনি %s ফোল্ডারসমূহ স্ক্যান করতে যাচ্ছেন। আপনি কি "
 "সুনিশ্চিত?"
 
-#. TRANSLATORS: This refers to the application where users manage their Godot projects.
+#. TRANSLATORS: Project Manager is the application used to manage projects.
 #: editor/project_manager.cpp
 msgid "Project Manager"
 msgstr "প্রজেক্ট ম্যানেজার"

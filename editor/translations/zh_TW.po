@@ -1850,7 +1850,8 @@ msgid "New profile name:"
 msgstr "新增設定檔名稱："
 
 #: editor/editor_feature_profile.cpp
-msgid "Godot Feature Profile"
+#, fuzzy
+msgid "Rebel Feature Profile"
 msgstr "Godot 功能設定檔"
 
 #: editor/editor_feature_profile.cpp
@@ -3818,8 +3819,9 @@ msgid "Select Template File"
 msgstr "選擇樣板檔案"
 
 #: editor/export_template_manager.cpp
-msgid "Godot Export Templates"
-msgstr "Godot 匯出樣板"
+#, fuzzy
+msgid "Rebel Export Templates"
+msgstr "管理匯出樣板"
 
 #: editor/export_template_manager.cpp
 msgid ""
@@ -5440,8 +5442,9 @@ msgid ""
 msgstr "部分網格無效。請確保 UV2 通道的值位於 [0.0,1.0] 矩形內。"
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Godot editor was built without ray tracing support, lightmaps can't be baked."
+"Rebel Editor was built without ray tracing support, lightmaps can't be baked."
 msgstr "Godot 編輯器在建構時未支援光線追蹤 (Ray Tracing) ，無法烘焙光照圖。"
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
@@ -7328,8 +7331,9 @@ msgid "Online Docs"
 msgstr "線上說明文件"
 
 #: editor/plugins/script_editor_plugin.cpp
-msgid "Open Godot online documentation."
-msgstr "打開 Godot 線上說明文件。"
+#, fuzzy
+msgid "Open Rebel Documentation online."
+msgstr "開啟說明文件"
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Search the reference documentation."
@@ -10213,8 +10217,9 @@ msgid "Vector uniform."
 msgstr "向量均勻。"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Custom Godot Shader Language expression, with custom amount of input and "
+"Custom Rebel Shader Language expression, with custom amount of input and "
 "output ports. This is a direct injection of code into the vertex/fragment/"
 "light function, do not use it to write the function declarations inside."
 msgstr ""
@@ -10228,8 +10233,9 @@ msgid ""
 msgstr "依據表面法線與相機檢視方向的內積來回傳下降率（將其相關輸入傳入）。"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Custom Godot Shader Language expression, which is placed on top of the "
+"Custom Rebel Shader Language expression, which is placed on top of the "
 "resulted shader. You can place various function definitions inside and call "
 "it later in the Expressions. You can also declare varyings, uniforms and "
 "constants."
@@ -10459,7 +10465,8 @@ msgid "ZIP File"
 msgstr "ZIP 檔案"
 
 #: editor/project_export.cpp
-msgid "Godot Game Pack"
+#, fuzzy
+msgid "Rebel Game Pack"
 msgstr "Godot 遊戲包"
 
 #: editor/project_export.cpp
@@ -10498,7 +10505,8 @@ msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "請選擇一個「project.godot」或「.zip」檔案。"
 
 #: editor/project_manager.cpp
-msgid "This directory already contains a Godot project."
+#, fuzzy
+msgid "This directory already contains a Rebel project."
 msgstr "該目錄已經包含了一個 Godot 專案。"
 
 #: editor/project_manager.cpp
@@ -10663,13 +10671,14 @@ msgid "Are you sure to open more than one project?"
 msgstr "確定要打開多個專案嗎？"
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"The following project settings file does not specify the version of Godot "
-"through which it was created.\n"
+"The following project settings file does not specify the version of Rebel "
+"used to create it.\n"
 "\n"
 "%s\n"
 "\n"
-"If you proceed with opening it, it will be converted to Godot's current "
+"If you proceed with opening it, it will be converted to Rebel's current "
 "configuration file format.\n"
 "Warning: You won't be able to open the project with previous versions of the "
 "engine anymore."
@@ -10752,14 +10761,15 @@ msgstr ""
 "界面將會在重新啟動編輯器或專案管理員後更新。"
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Are you sure to scan %s folders for existing Godot projects?\n"
+"Are you sure to scan %s folders for existing Rebel projects?\n"
 "This could take a while."
 msgstr ""
 "確定要掃描 %s 中的 Godot 專案嗎？\n"
 "這可能需要一段時間。"
 
-#. TRANSLATORS: This refers to the application where users manage their Godot projects.
+#. TRANSLATORS: Project Manager is the application used to manage projects.
 #: editor/project_manager.cpp
 msgid "Project Manager"
 msgstr "專案管理員"

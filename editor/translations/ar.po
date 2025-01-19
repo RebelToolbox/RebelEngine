@@ -1895,7 +1895,8 @@ msgid "New profile name:"
 msgstr "اسم مَلف (profile) جديد:"
 
 #: editor/editor_feature_profile.cpp
-msgid "Godot Feature Profile"
+#, fuzzy
+msgid "Rebel Feature Profile"
 msgstr "ملفات غودوت المُرشّحة"
 
 #: editor/editor_feature_profile.cpp
@@ -3946,8 +3947,9 @@ msgid "Select Template File"
 msgstr "حدد ملف القالب"
 
 #: editor/export_template_manager.cpp
-msgid "Godot Export Templates"
-msgstr "إدارة قوالب التصدير لغودوت"
+#, fuzzy
+msgid "Rebel Export Templates"
+msgstr "إدارة قوالب التصدير"
 
 #: editor/export_template_manager.cpp
 msgid ""
@@ -5593,7 +5595,7 @@ msgstr ""
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
 #, fuzzy
 msgid ""
-"Godot editor was built without ray tracing support, lightmaps can't be baked."
+"Rebel Editor was built without ray tracing support, lightmaps can't be baked."
 msgstr "تم تجميع محرر Godot دون دعم لتتبع الأشعة. لا يمكن بناء خرائط الإضاءة."
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
@@ -7537,8 +7539,9 @@ msgid "Online Docs"
 msgstr "مستندات الإنترنت"
 
 #: editor/plugins/script_editor_plugin.cpp
-msgid "Open Godot online documentation."
-msgstr "افتح مستندات غودوت على الشبكة."
+#, fuzzy
+msgid "Open Rebel Documentation online."
+msgstr "فتح الوثائق"
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Search the reference documentation."
@@ -10567,8 +10570,9 @@ msgid "Vector uniform."
 msgstr "مُتجهات موحدة."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Custom Godot Shader Language expression, with custom amount of input and "
+"Custom Rebel Shader Language expression, with custom amount of input and "
 "output ports. This is a direct injection of code into the vertex/fragment/"
 "light function, do not use it to write the function declarations inside."
 msgstr ""
@@ -10586,8 +10590,9 @@ msgstr ""
 "(يمرر المُدخلات المرتبطة بها)."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Custom Godot Shader Language expression, which is placed on top of the "
+"Custom Rebel Shader Language expression, which is placed on top of the "
 "resulted shader. You can place various function definitions inside and call "
 "it later in the Expressions. You can also declare varyings, uniforms and "
 "constants."
@@ -10837,7 +10842,8 @@ msgid "ZIP File"
 msgstr "الملف المضغوط ZIP File"
 
 #: editor/project_export.cpp
-msgid "Godot Game Pack"
+#, fuzzy
+msgid "Rebel Game Pack"
 msgstr "رُزمة لعبة غودوت"
 
 #: editor/project_export.cpp
@@ -10876,7 +10882,8 @@ msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "من فضلك اختر ملف \"project.godot\" أو \".zip\"."
 
 #: editor/project_manager.cpp
-msgid "This directory already contains a Godot project."
+#, fuzzy
+msgid "This directory already contains a Rebel project."
 msgstr "الدليل المُختار يتضمن بالفعل مشروعاً لغودوت."
 
 #: editor/project_manager.cpp
@@ -11043,13 +11050,14 @@ msgid "Are you sure to open more than one project?"
 msgstr "هل أنت واثق من فتح أكثر من مشروع؟"
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"The following project settings file does not specify the version of Godot "
-"through which it was created.\n"
+"The following project settings file does not specify the version of Rebel "
+"used to create it.\n"
 "\n"
 "%s\n"
 "\n"
-"If you proceed with opening it, it will be converted to Godot's current "
+"If you proceed with opening it, it will be converted to Rebel's current "
 "configuration file format.\n"
 "Warning: You won't be able to open the project with previous versions of the "
 "engine anymore."
@@ -11138,14 +11146,15 @@ msgstr ""
 "ستتحدث الواجهة بعد إعادة تشغيل المُحرر أو مُدير المشاريع."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Are you sure to scan %s folders for existing Godot projects?\n"
+"Are you sure to scan %s folders for existing Rebel projects?\n"
 "This could take a while."
 msgstr ""
 "هل أنت متأكد من فحص %s من المجلدات بحثاً عن مشاريع غودوت متوافرة؟\n"
 "قد يستغرق وقتاً."
 
-#. TRANSLATORS: This refers to the application where users manage their Godot projects.
+#. TRANSLATORS: Project Manager is the application used to manage projects.
 #: editor/project_manager.cpp
 msgid "Project Manager"
 msgstr "مدير المشروع"
