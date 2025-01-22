@@ -14,10 +14,11 @@
 #ifndef PKEY_Device_FriendlyName
 
 #undef DEFINE_PROPERTYKEY
-/* clang-format off */
-#define DEFINE_PROPERTYKEY(id, a, b, c, d, e, f, g, h, i, j, k, l) \
-	const PROPERTYKEY id = { { a, b, c, { d, e, f, g, h, i, j, k, } }, l };
-/* clang-format on */
+#define DEFINE_PROPERTYKEY(id, a, b, c, d, e, f, g, h, i, j, k, l)             \
+    const PROPERTYKEY id = {                                                   \
+        {a, b, c, {d, e, f, g, h, i, j, k}},                                   \
+        l                                                                      \
+    };
 
 DEFINE_PROPERTYKEY(
     PKEY_Device_FriendlyName,
