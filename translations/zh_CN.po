@@ -34042,6 +34042,7 @@ msgid "A node with the ability to send HTTP(S) requests."
 msgstr "具有发送 HTTP(S) 请求能力的节点。"
 
 #: docs/HTTPRequest.xml
+#, fuzzy
 msgid ""
 "A node with the ability to send HTTP requests. Uses [HTTPClient] "
 "internally.\n"
@@ -34068,7 +34069,7 @@ msgid ""
 "    # Note: Don't make simultaneous requests using a single HTTPRequest "
 "node.\n"
 "    # The snippet below is provided for reference only.\n"
-"    var body = {\"name\": \"Godette\"}\n"
+"    var body = {\"name\": \"Rebel\"}\n"
 "    error = http_request.request(\"https://httpbin.org/post\", [], true, "
 "HTTPClient.METHOD_POST, body)\n"
 "    if error != OK:\n"

@@ -1899,7 +1899,8 @@ msgid "New profile name:"
 msgstr "Nazwa nowego profilu:"
 
 #: editor/editor_feature_profile.cpp
-msgid "Godot Feature Profile"
+#, fuzzy
+msgid "Rebel Feature Profile"
 msgstr "Profil funkcjonalności Godota"
 
 #: editor/editor_feature_profile.cpp
@@ -3924,8 +3925,9 @@ msgid "Select Template File"
 msgstr "Wybierz plik szablonu"
 
 #: editor/export_template_manager.cpp
-msgid "Godot Export Templates"
-msgstr "Szablony eksportu Godota"
+#, fuzzy
+msgid "Rebel Export Templates"
+msgstr "Zarządzaj szablonami eksportu"
 
 #: editor/export_template_manager.cpp
 msgid ""
@@ -5575,8 +5577,9 @@ msgstr ""
 "mieszczą się w kwadratowym obszarze [0.0, 1.0]."
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Godot editor was built without ray tracing support, lightmaps can't be baked."
+"Rebel Editor was built without ray tracing support, lightmaps can't be baked."
 msgstr ""
 "Edytor Godota został zbudowany bez wsparcia ray tracingu, mapy światła nie "
 "mogą zostać wypalone."
@@ -7491,8 +7494,9 @@ msgid "Online Docs"
 msgstr "Dokumentacja online"
 
 #: editor/plugins/script_editor_plugin.cpp
-msgid "Open Godot online documentation."
-msgstr "Otwórz dokumentację Godota online."
+#, fuzzy
+msgid "Open Rebel Documentation online."
+msgstr "Otwórz dokumentację"
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Search the reference documentation."
@@ -10419,8 +10423,9 @@ msgid "Vector uniform."
 msgstr "Uniform wektorowy."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Custom Godot Shader Language expression, with custom amount of input and "
+"Custom Rebel Shader Language expression, with custom amount of input and "
 "output ports. This is a direct injection of code into the vertex/fragment/"
 "light function, do not use it to write the function declarations inside."
 msgstr ""
@@ -10437,8 +10442,9 @@ msgstr ""
 "kierunku widoku kamery (podaj tu powiązane wejście)."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
+#, fuzzy
 msgid ""
-"Custom Godot Shader Language expression, which is placed on top of the "
+"Custom Rebel Shader Language expression, which is placed on top of the "
 "resulted shader. You can place various function definitions inside and call "
 "it later in the Expressions. You can also declare varyings, uniforms and "
 "constants."
@@ -10684,7 +10690,8 @@ msgid "ZIP File"
 msgstr "Plik ZIP"
 
 #: editor/project_export.cpp
-msgid "Godot Game Pack"
+#, fuzzy
+msgid "Rebel Game Pack"
 msgstr "Godotowa paczka gry"
 
 #: editor/project_export.cpp
@@ -10724,7 +10731,8 @@ msgid "Please choose a \"project.rebel\" or \".zip\" file."
 msgstr "Proszę wybrać plik \"project.godot\" lub \".zip\"."
 
 #: editor/project_manager.cpp
-msgid "This directory already contains a Godot project."
+#, fuzzy
+msgid "This directory already contains a Rebel project."
 msgstr "Ten folder już zawiera projekt Godota."
 
 #: editor/project_manager.cpp
@@ -10893,13 +10901,14 @@ msgid "Are you sure to open more than one project?"
 msgstr "Czy jesteś pewny że chcesz otworzyć więcej niż jeden projekt?"
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"The following project settings file does not specify the version of Godot "
-"through which it was created.\n"
+"The following project settings file does not specify the version of Rebel "
+"used to create it.\n"
 "\n"
 "%s\n"
 "\n"
-"If you proceed with opening it, it will be converted to Godot's current "
+"If you proceed with opening it, it will be converted to Rebel's current "
 "configuration file format.\n"
 "Warning: You won't be able to open the project with previous versions of the "
 "engine anymore."
@@ -10989,15 +10998,16 @@ msgstr ""
 "Interfejs zaktualizuje się po restarcie edytora lub menedżera projektów."
 
 #: editor/project_manager.cpp
+#, fuzzy
 msgid ""
-"Are you sure to scan %s folders for existing Godot projects?\n"
+"Are you sure to scan %s folders for existing Rebel projects?\n"
 "This could take a while."
 msgstr ""
 "Czy na pewno chcesz przeskanować %s folderów w poszukiwaniu istniejących "
 "projektów Godota?\n"
 "To może chwilę zająć."
 
-#. TRANSLATORS: This refers to the application where users manage their Godot projects.
+#. TRANSLATORS: Project Manager is the application used to manage projects.
 #: editor/project_manager.cpp
 msgid "Project Manager"
 msgstr "Menedżer projektów"
