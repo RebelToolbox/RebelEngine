@@ -788,6 +788,7 @@ PoolStringArray OS::get_connected_midi_inputs() {
             OS::get_singleton()->get_name()
         )
     );
+    return list;
 }
 
 void OS::open_midi_inputs() {

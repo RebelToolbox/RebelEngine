@@ -333,6 +333,7 @@ String WindowsDirAccess::get_filesystem_type() const {
     }
 
     ERR_FAIL_V("");
+    return String();
 }
 
 WindowsDirAccess::WindowsDirAccess() {

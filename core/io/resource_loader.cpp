@@ -385,6 +385,7 @@ RES ResourceLoader::_load(
 #endif
 
     ERR_FAIL_V_MSG(RES(), "No loader found for resource: " + p_path + ".");
+    return RES();
 }
 
 bool ResourceLoader::_add_to_loading_map(const String& p_path) {
@@ -653,6 +654,7 @@ Ref<ResourceInteractiveLoader> ResourceLoader::load_interactive(
         Ref<ResourceInteractiveLoader>(),
         "No loader found for resource: " + path + "."
     );
+    return Ref<ResourceInteractiveLoader>();
 }
 
 void ResourceLoader::add_resource_format_loader(
