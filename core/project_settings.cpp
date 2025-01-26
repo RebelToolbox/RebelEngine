@@ -1084,6 +1084,7 @@ Error ProjectSettings::save_custom(
             "Unknown config file format: " + p_path + "."
         );
     }
+    return ERR_FILE_UNRECOGNIZED;
 }
 
 Variant _GLOBAL_DEF_ALIAS(

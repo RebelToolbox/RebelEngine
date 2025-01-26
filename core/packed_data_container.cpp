@@ -79,6 +79,7 @@ Variant PackedDataContainer::_iter_get_ofs(
     } else {
         ERR_FAIL_V(Variant());
     }
+    return Variant();
 }
 
 Variant PackedDataContainer::_get_at_ofs(
