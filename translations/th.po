@@ -16,18 +16,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2025-02-14 14:06+0000\n"
+"PO-Revision-Date: 2025-02-18 11:02+0000\n"
 "Last-Translator: \"SUrAsEk seEhAwoNG (pLeE)\" <seehawong805@gmail.com>\n"
-"Language-Team: Thai <https://hosted.weblate.org/projects/rebel-toolbox/rebel-"
-"engine-api/th/>\n"
+"Language-Team: Thai <https://hosted.weblate.org/projects/rebel-toolbox/"
+"rebel-engine-api/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10\n"
+"X-Generator: Weblate 5.10.1-dev\n"
 
 #: tools/scripts/rst_from_xml.py
+#, fuzzy
 msgid "Description"
 msgstr "รายละเอียด"
 
