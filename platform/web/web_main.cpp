@@ -72,7 +72,7 @@ extern EMSCRIPTEN_KEEPALIVE int rebel_js_main(int argc, char* argv[]) {
     Main::start();
     os->get_main_loop()->init();
 #ifdef TOOLS_ENABLED
-    if (Main::is_project_manager() && FileAccess::exists("/tmp/preload.zip")) {
+    if (Main::is_projects_manager() && FileAccess::exists("/tmp/preload.zip")) {
         PoolStringArray ps;
         ps.push_back("/tmp/preload.zip");
         os->get_main_loop()->emit_signal("files_dropped", ps, -1);

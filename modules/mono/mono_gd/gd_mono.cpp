@@ -160,7 +160,7 @@ void gd_mono_debug_init() {
 
     if (Engine::get_singleton()->is_editor_hint()
         || ProjectSettings::get_singleton()->get_resource_path().empty()
-        || Main::is_project_manager()) {
+        || Main::is_projects_manager()) {
         if (da_args.size() == 0) {
             return;
         }
@@ -492,7 +492,7 @@ void GDMono::initialize_load_assemblies() {
         "Mono: Failed to load '" TOOLS_ASM_NAME "' assemblies."
     );
 
-    if (Main::is_project_manager()) {
+    if (Main::is_projects_manager()) {
         return;
     }
 #endif
@@ -1057,9 +1057,9 @@ bool GDMono::_load_core_api_assembly(
     // For the editor and the editor player we want to load it from a specific
     // path to make sure we can keep it up to date
 
-    // If running the project manager, load it from the prebuilt API directory
+    // If running the Projects Manager, load it from the prebuilt API directory
     String assembly_dir =
-        !Main::is_project_manager()
+        !Main::is_projects_manager()
             ? GodotSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
             : GodotSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
                 p_config
@@ -1116,9 +1116,9 @@ bool GDMono::_load_editor_api_assembly(
     // For the editor and the editor player we want to load it from a specific
     // path to make sure we can keep it up to date
 
-    // If running the project manager, load it from the prebuilt API directory
+    // If running the Projects Manager, load it from the prebuilt API directory
     String assembly_dir =
-        !Main::is_project_manager()
+        !Main::is_projects_manager()
             ? GodotSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
             : GodotSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
                 p_config
@@ -1233,10 +1233,10 @@ void GDMono::_load_api_assemblies() {
         // Fine, try one more time, but this time update them from the prebuilt
         // assemblies directory before trying to load them again.
 
-        // Shouldn't happen. The project manager loads the prebuilt API
+        // Shouldn't happen. The Projects Manager loads the prebuilt API
         // assemblies
         CRASH_COND_MSG(
-            Main::is_project_manager(),
+            Main::is_projects_manager(),
             "Failed to load one of the prebuilt API assemblies."
         );
 

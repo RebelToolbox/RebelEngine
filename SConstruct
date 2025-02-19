@@ -727,6 +727,7 @@ if selected_platform in platform_list:
     SConscript("servers/SCsub")
     SConscript("scene/SCsub")
     SConscript("editor/SCsub")
+    SConscript("projects_manager/SCsub")
     SConscript("drivers/SCsub")
 
     SConscript("platform/SCsub")

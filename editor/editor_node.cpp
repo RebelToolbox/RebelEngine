@@ -2083,7 +2083,7 @@ void EditorNode::_dialog_action(String p_file) {
                 p_file
             );
             ProjectSettings::get_singleton()->save();
-            // would be nice to show the project manager opened with the
+            // would be nice to show the Projects Manager opened with the
             // highlighted field..
 
             if (pick_main_scene->has_meta("from_native")
@@ -3298,8 +3298,9 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                             p_option == FILE_QUIT ? TTR("Quit") : TTR("Yes")
                         );
                         confirmation->set_text(
-                            p_option == FILE_QUIT ? TTR("Exit the editor?")
-                                                  : TTR("Open Project Manager?")
+                            p_option == FILE_QUIT
+                                ? TTR("Exit the editor?")
+                                : TTR("Open Projects Manager?")
                         );
                         confirmation->popup_centered_minsize();
                     } else {
@@ -3332,7 +3333,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                                  ? TTR("Save changes to the following scene(s) "
                                        "before quitting?")
                                  : TTR("Save changes to the following scene(s) "
-                                       "before opening Project Manager?"))
+                                       "before opening Projects Manager?"))
                             + unsaved_scenes
                         );
                         save_confirmation->popup_centered_minsize();
@@ -3753,7 +3754,7 @@ void EditorNode::_discard_changes(const String& p_str) {
             List<String> args;
             args.push_back("--path");
             args.push_back(exec.get_base_dir());
-            args.push_back("--project-manager");
+            args.push_back("--projects-manager");
 
             OS::ProcessID pid = 0;
             Error err = OS::get_singleton()->execute(exec, args, false, &pid);
@@ -8026,7 +8027,7 @@ EditorNode::EditorNode() {
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/quit_to_project_list",
-            TTR("Quit to Project List"),
+            TTR("Quit to Projects Manager"),
             KEY_MASK_SHIFT + KEY_MASK_ALT + KEY_Q
         ),
         RUN_PROJECT_MANAGER,
@@ -8036,7 +8037,7 @@ EditorNode::EditorNode() {
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/quit_to_project_list",
-            TTR("Quit to Project List"),
+            TTR("Quit to Projects Manager"),
             KEY_MASK_SHIFT + KEY_MASK_CMD + KEY_Q
         ),
         RUN_PROJECT_MANAGER,

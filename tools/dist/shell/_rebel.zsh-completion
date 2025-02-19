@@ -16,7 +16,7 @@ _arguments \
   '(-v --verbose)'{-v,--verbose}'[use verbose stdout mode]' \
   '--quiet[quiet mode, silences stdout messages (errors are still displayed)]' \
   '(-e --editor)'{-e,--editor}'[start the editor instead of running the scene]' \
-  '(-p --project-manager)'{-p,--project-manager}'[start the project manager, even if a project is auto-detected]' \
+  '(-p --projects-manager)'{-p,--projects-manager}'[start the Projects Manager, even if a project is auto-detected]' \
   '(-q --quit)'{-q,--quit}'[quit after the first iteration]' \
   '(-l --language)'{-l,--language}'[use a specific locale (<locale> being a two-letter code)]:two-letter locale code' \
   "--path[path to a project (<directory> must contain a 'project.rebel' file)]:path to directory with 'project.rebel' file:_dirs" \

@@ -53,7 +53,7 @@
 #include "editor/editor_settings.h"
 #include "editor/editor_translation.h"
 #include "editor/progress_dialog.h"
-#include "editor/project_manager.h"
+#include "projects_manager/projects_manager.h"
 #ifndef NO_EDITOR_SPLASH
 #include "main/splash_editor.gen.h"
 #endif
@@ -95,8 +95,8 @@ static int audio_driver_idx = -1;
 
 // Engine config/tools
 
-static bool editor          = false;
-static bool project_manager = false;
+static bool editor           = false;
+static bool projects_manager = false;
 static String locale;
 static bool show_help                      = false;
 static bool auto_quit                      = false;
@@ -133,11 +133,11 @@ static bool print_fps           = false;
 /* Helper methods */
 
 // Used by Mono module, should likely be registered in Engine singleton instead
-// FIXME: This is also not 100% accurate, `project_manager` is only true when it
-// was requested, but not if e.g. we fail to load and project and fallback to
+// FIXME: This is also not 100% accurate, `projects_manager` is only true when
+// it was requested, but not if e.g. we fail to load and project and fallback to
 // the manager.
-bool Main::is_project_manager() {
-    return project_manager;
+bool Main::is_projects_manager() {
+    return projects_manager;
 }
 
 static String unescape_cmdline(const String& p_str) {
@@ -253,8 +253,8 @@ void Main::print_help(const char* p_binary) {
         "running the scene.\n"
     );
     OS::get_singleton()->print(
-        "  -p, --project-manager            Start the project manager, even if "
-        "a project is auto-detected.\n"
+        "  -p, --projects-manager            Start the Projects Manager, even "
+        "if a project is auto-detected.\n"
     );
 #endif
     OS::get_singleton()->print(
@@ -946,18 +946,14 @@ Error Main::setup(
                 goto error;
             }
 #ifdef TOOLS_ENABLED
-        } else if (I->get() == "-e" || I->get() == "--editor") { // starts
-                                                                 // editor
-
+        } else if (I->get() == "-e" || I->get() == "--editor") {
+            // Starts Rebel Editor
             editor = true;
-        } else if (I->get() == "-p" || I->get() == "--project-manager") { // starts
-                                                                          // project
-                                                                          // manager
-
-            project_manager = true;
-        } else if (I->get() == "--build-solutions") { // Build the scripting
-                                                      // solution such C#
-
+        } else if (I->get() == "-p" || I->get() == "--projects-manager") {
+            // Starts Projects Manager"
+            projects_manager = true;
+        } else if (I->get() == "--build-solutions") {
+            // Builds the scripting solution such C#
             auto_build_solutions = true;
             editor               = true;
 #ifdef DEBUG_METHODS_ENABLED
@@ -1133,10 +1129,10 @@ Error Main::setup(
     }
 
 #ifdef TOOLS_ENABLED
-    if (editor && project_manager) {
+    if (editor && projects_manager) {
         OS::get_singleton()->print(
-            "Error: Command line arguments implied opening both editor and "
-            "project manager, which is not possible. Aborting.\n"
+            "Error: Command line arguments implied opening both Rebel Editor "
+            "and Projects Manager, which is not possible. Aborting.\n"
         );
         goto error;
     }
@@ -1305,9 +1301,9 @@ Error Main::setup(
         }
     }
 
-    if (!project_manager && !editor) {
-        // Determine if the project manager should be requested
-        project_manager = main_args.size() == 0 && !found_project;
+    if (!projects_manager && !editor) {
+        // Determine if the Projects Manager should be requested
+        projects_manager = main_args.size() == 0 && !found_project;
     }
 #endif
 
@@ -1334,11 +1330,11 @@ Error Main::setup(
             "0,20,1,or_greater"
         )
     ); // no negative numbers
-    if (!project_manager && !editor
+    if (!projects_manager && !editor
         && FileAccess::get_create_func(FileAccess::ACCESS_USERDATA)
         && GLOBAL_GET("logging/file_logging/enable_file_logging")) {
-        // Don't create logs for the project manager as they would be written to
-        // the current working directory, which is inconvenient.
+        // Don't create logs for the Projects Manager as they would be written
+        // to the current working directory, which is inconvenient.
         String base_path = GLOBAL_GET("logging/file_logging/log_path");
         int max_files    = GLOBAL_GET("logging/file_logging/max_log_files");
         OS::get_singleton()->add_logger(
@@ -1349,7 +1345,7 @@ Error Main::setup(
     if (main_args.size() == 0
         && String(GLOBAL_DEF("application/run/main_scene", "")) == "") {
 #ifdef TOOLS_ENABLED
-        if (!editor && !project_manager) {
+        if (!editor && !projects_manager) {
 #endif
             const String error_msg =
                 "Error: Can't run project: no main scene defined in the "
@@ -1362,7 +1358,7 @@ Error Main::setup(
 #endif
     }
 
-    if (editor || project_manager) {
+    if (editor || projects_manager) {
         Engine::get_singleton()->set_editor_hint(true);
         use_custom_res = false;
         input_map->load_default(); // keys for editor
@@ -1538,8 +1534,8 @@ Error Main::setup(
         3
     );
 
-    if (editor || project_manager) {
-        // The editor and project manager always detect and use hiDPI if needed
+    if (editor || projects_manager) {
+        // The editor and Projects Manager always detect and use hiDPI if needed
         OS::get_singleton()->_allow_hidpi   = true;
         OS::get_singleton()->_allow_layered = false;
     }
@@ -1893,8 +1889,8 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 #if defined(TOOLS_ENABLED) && !defined(NO_EDITOR_SPLASH)
         const Color boot_bg_color = GLOBAL_DEF(
             "application/boot_splash/bg_color",
-            (editor || project_manager) ? boot_splash_editor_bg_color
-                                        : boot_splash_bg_color
+            (editor || projects_manager) ? boot_splash_editor_bg_color
+                                         : boot_splash_bg_color
         );
 #else
         const Color boot_bg_color = GLOBAL_DEF(
@@ -1916,7 +1912,7 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 #ifndef NO_DEFAULT_BOOT_LOGO
             MAIN_PRINT("Main: Create bootsplash");
 #if defined(TOOLS_ENABLED) && !defined(NO_EDITOR_SPLASH)
-            Ref<Image> splash = (editor || project_manager)
+            Ref<Image> splash = (editor || projects_manager)
                                   ? memnew(Image(boot_splash_editor_png))
                                   : memnew(Image(boot_splash_png));
 #else
@@ -1988,7 +1984,7 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
                 "input_devices/pointing/emulate_touch_from_mouse",
                 false
             ))
-            && !(editor || project_manager)) {
+            && !(editor || projects_manager)) {
             if (!OS::get_singleton()->has_touchscreen_ui_hint()) {
                 // only if no touchscreen ui hint, set emulation
                 id->set_emulate_touch_from_mouse(true);
@@ -2131,8 +2127,8 @@ bool Main::start() {
             docs_base = false;
         } else if (args[i] == "-e" || args[i] == "--editor") {
             editor = true;
-        } else if (args[i] == "-p" || args[i] == "--project-manager") {
-            project_manager = true;
+        } else if (args[i] == "-p" || args[i] == "--projects-manager") {
+            projects_manager = true;
 #endif
         } else if (args[i].length() && args[i][0] != '-' && positional_arg == "") {
             positional_arg = args[i];
@@ -2397,7 +2393,7 @@ bool Main::start() {
         ResourceLoader::add_custom_loaders();
         ResourceSaver::add_custom_savers();
 
-        if (!project_manager && !editor) { // game
+        if (!projects_manager && !editor) { // game
             if (game_path != "" || script != "") {
                 if (script_debugger && script_debugger->is_remote()) {
                     ScriptDebuggerRemote* remote_debugger =
@@ -2525,7 +2521,7 @@ bool Main::start() {
         }
 #endif
 
-        if (!editor && !project_manager) {
+        if (!editor && !projects_manager) {
             // standard helpers that can be changed from main config
 
             String stretch_mode =
@@ -2680,7 +2676,7 @@ bool Main::start() {
         }
 
         String local_game_path;
-        if (game_path != "" && !project_manager) {
+        if (game_path != "" && !projects_manager) {
             local_game_path = game_path.replace("\\", "/");
 
             if (!local_game_path.begins_with("res://")) {
@@ -2741,7 +2737,7 @@ bool Main::start() {
             }
         }
 
-        if (!project_manager && !editor) { // game
+        if (!projects_manager && !editor) { // game
 
             // Load SSL Certificates from Project Settings (or builtin).
             Crypto::load_default_certificates(
@@ -2799,18 +2795,18 @@ bool Main::start() {
         }
 
 #ifdef TOOLS_ENABLED
-        if (project_manager
+        if (projects_manager
             || (script == "" && test == "" && game_path == "" && !editor)) {
             Engine::get_singleton()->set_editor_hint(true);
-            ProjectManager* pmanager        = memnew(ProjectManager);
+            ProjectsManager* pmanager       = memnew(ProjectsManager);
             ProgressDialog* progress_dialog = memnew(ProgressDialog);
             pmanager->add_child(progress_dialog);
             sml->get_root()->add_child(pmanager);
             OS::get_singleton()->set_context(OS::CONTEXT_PROJECTMAN);
-            project_manager = true;
+            projects_manager = true;
         }
 
-        if (project_manager || editor) {
+        if (projects_manager || editor) {
             // Hide console window if requested (Windows-only).
             bool hide_console = EditorSettings::get_singleton()->get_setting(
                 "interface/editor/hide_console_window"
@@ -3041,7 +3037,7 @@ bool Main::iteration() {
     Engine::get_singleton()->_idle_frames++;
 
     if (frame > 1000000) {
-        if (editor || project_manager) {
+        if (editor || projects_manager) {
             if (print_fps) {
                 print_line(vformat(
                     "Editor FPS: %d (%s mspf)",

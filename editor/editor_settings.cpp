@@ -527,10 +527,10 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
     /* Filesystem */
 
     // Directories
-    _initial_set("filesystem/directories/autoscan_project_path", "");
-    hints["filesystem/directories/autoscan_project_path"] = PropertyInfo(
+    _initial_set("filesystem/directories/auto_search_project_path", "");
+    hints["filesystem/directories/auto_search_project_path"] = PropertyInfo(
         Variant::STRING,
-        "filesystem/directories/autoscan_project_path",
+        "filesystem/directories/auto_search_project_path",
         PROPERTY_HINT_GLOBAL_DIR
     );
     _initial_set(
@@ -1069,10 +1069,10 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
 
     /* Extra config */
 
-    _initial_set("project_manager/sorting_order", 0);
-    hints["project_manager/sorting_order"] = PropertyInfo(
+    _initial_set("projects_manager/sorting_order", 0);
+    hints["projects_manager/sorting_order"] = PropertyInfo(
         Variant::INT,
-        "project_manager/sorting_order",
+        "projects_manager/sorting_order",
         PROPERTY_HINT_ENUM,
         "Name,Path,Last Modified"
     );

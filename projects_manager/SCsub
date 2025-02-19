@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+
+Import("env")
+
+if env["tools"]:
+    env.projects_manager_sources = []
+    env.add_source_files(env.projects_manager_sources, "*.cpp")
+
+    lib = env.add_library("projects-manager", env.projects_manager_sources)
+    env.Prepend(LIBS=[lib])
