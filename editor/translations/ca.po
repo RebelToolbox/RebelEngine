@@ -564,9 +564,9 @@ msgstr "FPS"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "Edita"
 
@@ -830,6 +830,7 @@ msgstr "L'escena no conté cap script."
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "Afegeix"
 
@@ -837,8 +838,8 @@ msgstr "Afegeix"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "Treu"
 
@@ -1046,7 +1047,7 @@ msgid "Resource"
 msgstr "Recurs"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "Camí"
 
@@ -1172,7 +1173,8 @@ msgstr "Modifica Valor del Diccionari"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "Fes click per a copiar."
 
@@ -1549,7 +1551,7 @@ msgstr "Nom del node:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "Nom"
 
@@ -1590,8 +1592,8 @@ msgid "Choose a Directory"
 msgstr "Tria un Directori"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "Crea un Directori"
 
@@ -1865,7 +1867,7 @@ msgid "Make Current"
 msgstr "Fer Actual"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "Importar"
 
@@ -1930,7 +1932,7 @@ msgid "Open in File Manager"
 msgstr "Obrir en el Gestor de Fitxers"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "Mostrar en el Gestor de Fitxers"
 
@@ -2323,7 +2325,7 @@ msgstr "RPC Sortint"
 msgid "Outgoing RSET"
 msgstr "RSET Sortint"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "Finestra nova"
 
@@ -2683,7 +2685,8 @@ msgid "Exit the editor?"
 msgstr "Voleu Sortir de l'editor?"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "Obre el Gestor de Projectes?"
 
 #: editor/editor_node.cpp
@@ -2695,7 +2698,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "Voleu Desar els canvis en les escenes següents abans de Sortir?"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr ""
 "Desar els canvis a la(les) següent(s) escenes abans d'obrir el Gestor de "
 "Projectes?"
@@ -2960,8 +2964,8 @@ msgstr "Refés"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "Eines vàries o d'escena."
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "Projecte"
 
@@ -3007,8 +3011,9 @@ msgid "Reload Current Project"
 msgstr "Recarregar Projecte Actual"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "Sortir a la Llista de Projectes"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "Gestor del Projecte"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3385,7 +3390,7 @@ msgstr "Obre l'Editor 3D"
 msgid "Open Script Editor"
 msgstr "Editor d'Scripts"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "Exportar Biblioteca de Recursos"
 
@@ -3676,7 +3681,9 @@ msgstr ""
 msgid "Select Node(s) to Import"
 msgstr "Selecciona Node(s) per Importar"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Navega"
 
@@ -4207,8 +4214,9 @@ msgstr "Mou"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "Reanomena"
 
@@ -5047,6 +5055,7 @@ msgstr "Animació"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "Nou"
 
@@ -5562,7 +5571,8 @@ msgstr "Importa…"
 msgid "Plugins..."
 msgstr "Connectors…"
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Ordena:"
 
@@ -7563,7 +7573,8 @@ msgstr "Tanca-ho Tot"
 msgid "Close Docs"
 msgstr "Tanca la Documentació"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "Executar"
 
@@ -7572,6 +7583,7 @@ msgstr "Executar"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "Cerca"
 
@@ -7587,8 +7599,8 @@ msgstr "Pas a Pas (per Procediments)"
 msgid "Break"
 msgstr "Atura"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "Continua"
 
@@ -10959,7 +10971,7 @@ msgstr "Mode d'Exportació?"
 msgid "Export All"
 msgstr "Exportar Tot"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "Fitxer ZIP"
 
@@ -10978,420 +10990,6 @@ msgstr "Gestor de Plantilles d'Exportació"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "Exporta en mode Depuració"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "The path specified doesn't exist."
-msgstr "El camí no existeix."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr ""
-"S'ha produit un error en obrir el fitxer comprimit, no té el format ZIP."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr "Fitxer de projecte '.zip' invalid, no conte un fitxer 'project.godot'."
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "Selecciona un directori buit."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "Si us plau seleccioneu un fitxer 'project.godot' o '.zip'."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "El directori ja conté un projecte de Godot."
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "Nou Projecte de Joc"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "Project importat"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Invalid project name."
-msgstr "El nom del Projecte no és vàlid."
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "No s'ha pogut crear el directori."
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "Ja hi ha un directori amb el mateix nom en aquest camí."
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "Fóra bo anomenar el projecte."
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "El Camí del Projecte no és vàlid (S'ha produit algun canvi?)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr ""
-"No es pot carregar el fitxer 'project.godot' en el camí del projecte (error "
-"%d). Pot ser que falti o que estigui malmès."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "No es pot editar el fitxer 'project.godot' en el camí del projecte."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "No es pot crear el fitxer 'project.godot' en el camí del projecte."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr ""
-"S'ha produit un error en obrir el fitxer comprimit, no té el format ZIP."
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "Ha fracassat l'extracció del paquet dels següents fitxers:"
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "Paquet instal·lat amb èxit!"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "Reanomena el Projecte"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "Importa un Projecte existent"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "Importa i Edita"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "Crea un Projecte nou"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "Crea i Edita"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "Instal·la el Projecte:"
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "Instal·la i Edita"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "Nom del Projecte:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "Camí del Projecte:"
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "Camí d'instal·lació del Projecte:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "Renderitzador:"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3.0"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"Qualitat visual superior\n"
-"Totes les característiques disponibles\n"
-"Incompatible amb maquinari mes vell\n"
-"No recomanat per a jocs web"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2.0"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"Qualitat visual inferior\n"
-"Algunes característiques no disponibles\n"
-"Funciona en la majoria de maquinari\n"
-"Recomanat per a jocs web"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr ""
-"El renderitzador es pot canviar més tard, però és possible que calgui "
-"ajustar les escenes."
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "Projecte sense nom"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Missing Project"
-msgstr "Importa un Projecte existent"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Error: Project is missing on the filesystem."
-msgstr "Error: falta el projecte al sistema de fitxers."
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "No es pot obrir el projecte a '%s'."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "Esteu segur que voleu obrir més d'un projecte de cop?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"El següent fitxer de configuració del projecte següent no especifica la "
-"versió de Godot amb la que s'ha creat.\n"
-"\n"
-"% s\n"
-"\n"
-"Si continueu amb l'obertura, es convertirà al format de fitxer de "
-"configuració actual de Godot.\n"
-"Advertiment: Ja no podreu obrir el projecte amb versions anteriors del motor."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"El següent fitxer de configuració del projecte va ser generat per una versió "
-"anterior del motor, i necessita ser convertit per a aquesta versió:\n"
-"\n"
-"% s\n"
-"\n"
-"Voleu convertir-lo?\n"
-"Advertiment: ja no podreu obrir el projecte amb versions anteriors del motor."
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-"La configuració del projecte va ser creada per una versió més recent del "
-"motor, la configuració del qual no és compatible amb aquesta versió."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"No es pot executar el projecte: Manca una escena principal.\n"
-"Establiu una escena principal des de \"Configuració del Projecte\" dins la "
-"categoria \"aplicació\"."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"No es pot executar el projecte: S'han d'importar els Actius.\n"
-"Edita el Projecte per inicialitzar-lo."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "Esteu segur que voleu executar %d projectes de cop?"
-
-#: editor/project_manager.cpp
-msgid "Remove %d projects from the list?"
-msgstr "Voleu eliminar %d projectes de la llista?"
-
-#: editor/project_manager.cpp
-msgid "Remove this project from the list?"
-msgstr "Voleu eliminar aquest projecte de la llista?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"Eliminar %d projectes de la llista?\n"
-"El contingut del directori del projecte no es modificarà."
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"L'idioma ha canviat.\n"
-"La interfície s'actualitzarà després de reiniciar l'editor o el gestor de "
-"projectes."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"Esteu segur que voleu escanejar %s carpetes per als projectes de Godot "
-"existents?\n"
-"Això pot trigar una estona."
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "Gestor del Projecte"
-
-#: editor/project_manager.cpp
-msgid "Local Projects"
-msgstr "Projectes Locals"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Loading, please wait..."
-msgstr "S'estan buscant rèpliques..."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Last Modified"
-msgstr "Última modificació"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Edit Project"
-msgstr "Exporta Projecte"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Run Project"
-msgstr "Reanomena el Projecte"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "Explora"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Scan Projects"
-msgstr "Projecte"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "Selecciona un Directori per Explorar"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "Nou Projecte"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Import Project"
-msgstr "Project importat"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove Project"
-msgstr "Reanomena el Projecte"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove Missing"
-msgstr "Suprimeix els que falten"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "Quant a"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Asset Library Projects"
-msgstr "Biblioteca d'Actius"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "Reinicia"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "Treu-los tots"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "No es pot executar el projecte"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"Actualment no teniu cap projecte.\n"
-"Us agradaria explorar projectes d'exemple oficials a la biblioteca d'actius?"
-
-#: editor/project_manager.cpp
-msgid "Filter projects"
-msgstr "Filtrar projectes"
-
-#: editor/project_manager.cpp
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -14114,6 +13712,385 @@ msgstr "No s'ha pogut crear el directori:"
 #, fuzzy
 msgid "Error starting HTTP server:"
 msgstr "Error en desar l'escena:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "Importa un Projecte existent"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "Afegir Punt"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "Nom del Projecte:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "Si us plau seleccioneu un fitxer 'project.godot' o '.zip'."
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "Nom del Projecte:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "Obre el directori de Dades del Projecte"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "No s'han pogut actualitzar les dependències:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "No es pot moure un directori dins si mateix."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "No s'ha pogut obrir el zip amb les plantilles d'exportació."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "Ja hi ha un directori amb el mateix nom en aquest camí."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "No es pot crear el fitxer 'project.godot' en el camí del projecte."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "El camí no existeix."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "Selecciona un directori buit."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "Crea un Projecte nou"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "Crea i Edita"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "Renderitzador:"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"Qualitat visual superior\n"
+"Totes les característiques disponibles\n"
+"Incompatible amb maquinari mes vell\n"
+"No recomanat per a jocs web"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"Qualitat visual inferior\n"
+"Algunes característiques no disponibles\n"
+"Funciona en la majoria de maquinari\n"
+"Recomanat per a jocs web"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr ""
+"El renderitzador es pot canviar més tard, però és possible que calgui "
+"ajustar les escenes."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "El nom del Projecte no és vàlid."
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "No es pot crear el fitxer 'project.godot' en el camí del projecte."
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid "Loading, please wait..."
+msgstr "S'estan buscant rèpliques..."
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid "Last Modified"
+msgstr "Última modificació"
+
+#: projects_manager/projects_list.cpp
+msgid "Filter projects"
+msgstr "Filtrar projectes"
+
+#: projects_manager/projects_list.cpp
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "Importa un Projecte existent"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "Error: falta el projecte al sistema de fitxers."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "Projecte sense nom"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "Gestor del Projecte"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "Crea un Projecte nou"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "Importa un Projecte existent"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "Importa un Projecte existent"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove Missing"
+msgstr "Suprimeix els que falten"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Edit Project"
+msgstr "Exporta Projecte"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Run Project"
+msgstr "Reanomena el Projecte"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "Reanomena el Projecte"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove Project"
+msgstr "Reanomena el Projecte"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "Quant a"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "Esteu segur que voleu eliminar totes les connexions d'aquest senyal?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "Esteu segur que voleu obrir més d'un projecte de cop?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "No es pot executar el projecte"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"No es pot executar el projecte: S'han d'importar els Actius.\n"
+"Edita el Projecte per inicialitzar-lo."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"No es pot executar el projecte: Manca una escena principal.\n"
+"Establiu una escena principal des de \"Configuració del Projecte\" dins la "
+"categoria \"aplicació\"."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"Actualment no teniu cap projecte.\n"
+"Us agradaria explorar projectes d'exemple oficials a la biblioteca d'actius?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Local Projects"
+msgstr "Projectes Locals"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "Anar al directori pare."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"Eliminar %d projectes de la llista?\n"
+"El contingut del directori del projecte no es modificarà."
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "Treu-los tots"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"L'idioma ha canviat.\n"
+"La interfície s'actualitzarà després de reiniciar l'editor o el gestor de "
+"projectes."
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "Reinicia"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "Selecciona un Directori per Explorar"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Asset Library Projects"
+msgstr "Biblioteca d'Actius"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove %d projects from the list?"
+msgstr "Voleu eliminar %d projectes de la llista?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "Voleu eliminar %d projectes de la llista?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "Esteu segur que voleu executar %d projectes de cop?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "No es pot obrir el projecte a '%s'."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+"La configuració del projecte va ser creada per una versió més recent del "
+"motor, la configuració del qual no és compatible amb aquesta versió."
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "No es pot obrir el projecte a '%s'."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"El següent fitxer de configuració del projecte va ser generat per una versió "
+"anterior del motor, i necessita ser convertit per a aquesta versió:\n"
+"\n"
+"% s\n"
+"\n"
+"Voleu convertir-lo?\n"
+"Advertiment: ja no podreu obrir el projecte amb versions anteriors del motor."
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr ""
+"No es pot carregar el fitxer 'project.godot' en el camí del projecte (error "
+"%d). Pot ser que falti o que estigui malmès."
 
 #: scene/2d/animated_sprite.cpp
 #, fuzzy

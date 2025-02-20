@@ -569,9 +569,9 @@ msgstr "FPS"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "編輯"
 
@@ -831,6 +831,7 @@ msgstr "場景中無任何腳本。"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "新增"
 
@@ -838,8 +839,8 @@ msgstr "新增"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "移除"
 
@@ -1043,7 +1044,7 @@ msgid "Resource"
 msgstr "資源"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "路徑"
 
@@ -1166,7 +1167,8 @@ msgstr "改變字典值"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "按一下以複製。"
 
@@ -1528,7 +1530,7 @@ msgstr "節點名稱："
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "名稱"
 
@@ -1569,8 +1571,8 @@ msgid "Choose a Directory"
 msgstr "選擇資料夾"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "建立資料夾"
 
@@ -1825,7 +1827,7 @@ msgid "Make Current"
 msgstr "設為目前的"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "匯入"
 
@@ -1887,7 +1889,7 @@ msgid "Open in File Manager"
 msgstr "在檔案總管中開啟"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "在檔案總管中顯示"
 
@@ -2272,7 +2274,7 @@ msgstr "連出 RPC"
 msgid "Outgoing RSET"
 msgstr "連出 RSET"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "新視窗"
 
@@ -2612,7 +2614,8 @@ msgid "Exit the editor?"
 msgstr "要結束編輯器嗎？"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "要開啟專案管理員嗎？"
 
 #: editor/editor_node.cpp
@@ -2624,7 +2627,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "退出前要先保存下列場景嗎？"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr "開啟專案管理員前要先保存以下場景嗎？"
 
 #: editor/editor_node.cpp
@@ -2874,8 +2878,8 @@ msgstr "取消復原"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "其他專案或全場景共通工具。"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "專案"
 
@@ -2921,8 +2925,9 @@ msgid "Reload Current Project"
 msgstr "重新載入目前專案"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "退出到專案列表"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "專案管理員"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3277,7 +3282,7 @@ msgstr "開啟 3D 編輯器"
 msgid "Open Script Editor"
 msgstr "開啟腳本編輯器"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "開啟素材庫"
 
@@ -3558,7 +3563,9 @@ msgstr "按住 %s 以取整數。按住 Shift 以進行更精確的更動。"
 msgid "Select Node(s) to Import"
 msgstr "選擇要匯入的節點"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "瀏覽"
 
@@ -4053,8 +4060,9 @@ msgstr "移動"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "重新命名"
 
@@ -4861,6 +4869,7 @@ msgstr "動畫"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "新增"
 
@@ -5371,7 +5380,8 @@ msgstr "匯入..."
 msgid "Plugins..."
 msgstr "外掛..."
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "排序："
 
@@ -7288,7 +7298,8 @@ msgstr "全部關閉"
 msgid "Close Docs"
 msgstr "關閉說明文件"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "執行"
 
@@ -7297,6 +7308,7 @@ msgstr "執行"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "搜尋"
 
@@ -7312,8 +7324,8 @@ msgstr "不進入函式"
 msgid "Break"
 msgstr "中斷"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "繼續"
 
@@ -10460,7 +10472,7 @@ msgstr "匯出模式？"
 msgid "Export All"
 msgstr "全部匯出"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "ZIP 檔案"
 
@@ -10480,392 +10492,6 @@ msgstr "管理匯出樣板"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "以偵錯模式匯出"
-
-#: editor/project_manager.cpp
-msgid "The path specified doesn't exist."
-msgstr "指定的路徑不存在。"
-
-#: editor/project_manager.cpp
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr "開啟套件檔案時發生錯誤（非 ZIP 格式）。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr "無效的「.zip」專案檔；未包含「project.godot」檔案。"
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "請選擇一個空資料夾。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "請選擇一個「project.godot」或「.zip」檔案。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "該目錄已經包含了一個 Godot 專案。"
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "新遊戲專案"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "已匯入的項目"
-
-#: editor/project_manager.cpp
-msgid "Invalid project name."
-msgstr "無效的專案名稱。"
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "無法建立資料夾。"
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "該路徑下已有相同名稱的資料夾。"
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "最好幫你的專案起個名字。"
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "不正確的專案路徑（有修改了什麼嗎？）。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr "無法自專案路徑內載入 project.godot（錯誤 %d）。檔案可能遺失或損毀。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "無法在專案路徑中編輯 project.godot。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "無法在項目路徑中建立 project.godot。"
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr "無法開啟套件檔案，非 ZIP 格式。"
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "自套件中取得下列檔案失敗："
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "套件安裝成功！"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "重新命名項目"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "匯入現有專案"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "匯入並編輯"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "建立新專案"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "建立並編輯"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "安裝專案："
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "安裝並編輯"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "專案名稱："
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "專案路徑："
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "專案安裝路徑："
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "算繪引擎："
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3.0版本"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr "所使用的 GPU 驅動程式不支援。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"更好的視覺品質\n"
-"所有功能可用\n"
-"與舊硬體不相容\n"
-"不推薦用於網頁遊戲"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2.0版本"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"較低的視覺品質\n"
-"有些功能不可用\n"
-"在大多數硬體上可用\n"
-"推薦用於網頁遊戲"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr "稍後仍可更改算繪引擎，但可能需要對場景進行調整。"
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "未命名專案"
-
-#: editor/project_manager.cpp
-msgid "Missing Project"
-msgstr "遺失專案"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr "錯誤：專案在檔案系統上遺失。"
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "無法於「%s」打開專案。"
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "確定要打開多個專案嗎？"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"下列專案設定檔未指定建立其之 Godot 版本。\n"
-"\n"
-"%s\n"
-"\n"
-"若您繼續開啟，會將其轉換為目前 Godot 版本的組態設定檔案格式。\n"
-"警告：您將不再可使用舊版的 Godot 開啟該專案。"
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"下列專案設定檔是由較舊版本的 Godot 產生，需進行轉換以適用於目前版本的 "
-"Godot：\n"
-"\n"
-"%s\n"
-"\n"
-"要進行轉換嗎？\n"
-"警告：您將不再可使用舊版的 Godot 開啟該專案。"
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr "該專案設定是由新版本的 Godot 所建立，其設定無法相容於這個版本。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"無法執行專案：未定義主場景。\n"
-"請編輯專案並在 [專案設定] 的「Application」分類中設定主場景。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"無法執行專案：需要匯入素材\n"
-"請編輯專案以觸發初始匯入。"
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "確定要一次執行 %d 個專案？"
-
-#: editor/project_manager.cpp
-msgid "Remove %d projects from the list?"
-msgstr "是否從列表中移除%d個專案？"
-
-#: editor/project_manager.cpp
-msgid "Remove this project from the list?"
-msgstr "是否從列表中移除該專案？"
-
-#: editor/project_manager.cpp
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"確定自清單移除所有遺失的專案嗎？\n"
-"專案資料夾的內容不會被修改。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"語言已更改。\n"
-"界面將會在重新啟動編輯器或專案管理員後更新。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"確定要掃描 %s 中的 Godot 專案嗎？\n"
-"這可能需要一段時間。"
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "專案管理員"
-
-#: editor/project_manager.cpp
-msgid "Local Projects"
-msgstr "本地專案"
-
-#: editor/project_manager.cpp
-msgid "Loading, please wait..."
-msgstr "載入中，請稍後..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr "最後修改時間"
-
-#: editor/project_manager.cpp
-msgid "Edit Project"
-msgstr "編輯專案"
-
-#: editor/project_manager.cpp
-msgid "Run Project"
-msgstr "執行專案"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "掃描"
-
-#: editor/project_manager.cpp
-msgid "Scan Projects"
-msgstr "掃描專案"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "選擇資料夾以進行掃描"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "新增專案"
-
-#: editor/project_manager.cpp
-msgid "Import Project"
-msgstr "匯入專案"
-
-#: editor/project_manager.cpp
-msgid "Remove Project"
-msgstr "移除專案"
-
-#: editor/project_manager.cpp
-msgid "Remove Missing"
-msgstr "刪除遺失"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "關於"
-
-#: editor/project_manager.cpp
-msgid "Asset Library Projects"
-msgstr "素材庫專案"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "立即重新啟動"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "移除全部"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr "同時刪除專案內容（無法復原！）"
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "無法執行專案"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"目前沒有任何專案。\n"
-"要在素材庫中瀏覽官方範例專案嗎？"
-
-#: editor/project_manager.cpp
-msgid "Filter projects"
-msgstr "篩選專案"
-
-#: editor/project_manager.cpp
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
-"該搜尋框可以用來依據名稱與路徑中的最後一部分來篩選專案。\n"
-"若要以名稱與完整路徑來篩選專案，搜尋內容應至少包含一個「/」字元。"
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -13432,6 +13058,370 @@ msgstr "無法建立HTTP伺服器目錄："
 #: platform/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "啟動HTTP伺服器時發生錯誤："
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "匯入現有專案"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "新增控制點"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "專案名稱："
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "請選擇一個「project.godot」或「.zip」檔案。"
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "專案名稱："
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "開啟專案資料目錄"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "無法更新相依性："
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "無法移動資料夾至該資料夾自己。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "無法開啟匯出樣板檔。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "該路徑下已有相同名稱的資料夾。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "無法在項目路徑中建立 project.godot。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "指定的路徑不存在。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "請選擇一個空資料夾。"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "建立新專案"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "建立並編輯"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "算繪引擎："
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3.0版本"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"更好的視覺品質\n"
+"所有功能可用\n"
+"與舊硬體不相容\n"
+"不推薦用於網頁遊戲"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2.0版本"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"較低的視覺品質\n"
+"有些功能不可用\n"
+"在大多數硬體上可用\n"
+"推薦用於網頁遊戲"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr "稍後仍可更改算繪引擎，但可能需要對場景進行調整。"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "無效的專案名稱。"
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "無法在項目路徑中建立 project.godot。"
+
+#: projects_manager/projects_list.cpp
+msgid "Loading, please wait..."
+msgstr "載入中，請稍後..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr "最後修改時間"
+
+#: projects_manager/projects_list.cpp
+msgid "Filter projects"
+msgstr "篩選專案"
+
+#: projects_manager/projects_list.cpp
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+"該搜尋框可以用來依據名稱與路徑中的最後一部分來篩選專案。\n"
+"若要以名稱與完整路徑來篩選專案，搜尋內容應至少包含一個「/」字元。"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "遺失專案"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "錯誤：專案在檔案系統上遺失。"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "未命名專案"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "專案管理員"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "建立新專案"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "匯入現有專案"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "匯入現有專案"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Missing"
+msgstr "刪除遺失"
+
+#: projects_manager/projects_manager.cpp
+msgid "Edit Project"
+msgstr "編輯專案"
+
+#: projects_manager/projects_manager.cpp
+msgid "Run Project"
+msgstr "執行專案"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "重新命名項目"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Project"
+msgstr "移除專案"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "關於"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "確定要刪除所有來自此訊號的連接嗎？"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "確定要打開多個專案嗎？"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "無法執行專案"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"無法執行專案：需要匯入素材\n"
+"請編輯專案以觸發初始匯入。"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"無法執行專案：未定義主場景。\n"
+"請編輯專案並在 [專案設定] 的「Application」分類中設定主場景。"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"目前沒有任何專案。\n"
+"要在素材庫中瀏覽官方範例專案嗎？"
+
+#: projects_manager/projects_manager.cpp
+msgid "Local Projects"
+msgstr "本地專案"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "同時刪除專案內容（無法復原！）"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"確定自清單移除所有遺失的專案嗎？\n"
+"專案資料夾的內容不會被修改。"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "移除全部"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"語言已更改。\n"
+"界面將會在重新啟動編輯器或專案管理員後更新。"
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "立即重新啟動"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "選擇資料夾以進行掃描"
+
+#: projects_manager/projects_manager.cpp
+msgid "Asset Library Projects"
+msgstr "素材庫專案"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove %d projects from the list?"
+msgstr "是否從列表中移除%d個專案？"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "是否從列表中移除%d個專案？"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "確定要一次執行 %d 個專案？"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "無法於「%s」打開專案。"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr "該專案設定是由新版本的 Godot 所建立，其設定無法相容於這個版本。"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "無法於「%s」打開專案。"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"下列專案設定檔是由較舊版本的 Godot 產生，需進行轉換以適用於目前版本的 "
+"Godot：\n"
+"\n"
+"%s\n"
+"\n"
+"要進行轉換嗎？\n"
+"警告：您將不再可使用舊版的 Godot 開啟該專案。"
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr "無法自專案路徑內載入 project.godot（錯誤 %d）。檔案可能遺失或損毀。"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

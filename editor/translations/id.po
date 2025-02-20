@@ -583,9 +583,9 @@ msgstr "FPS"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "Sunting"
 
@@ -847,6 +847,7 @@ msgstr "Skena tidak berisi skrip apapun."
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "Tambah"
 
@@ -854,8 +855,8 @@ msgstr "Tambah"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "Hapus"
 
@@ -1060,7 +1061,7 @@ msgid "Resource"
 msgstr "Resource"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "Jalur"
 
@@ -1186,7 +1187,8 @@ msgstr "Ubah Nilai Kamus"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "Klik untuk salin."
 
@@ -1551,7 +1553,7 @@ msgstr "Nama Node:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "Nama"
 
@@ -1592,8 +1594,8 @@ msgid "Choose a Directory"
 msgstr "Pilih sebuah Direktori"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "Buat Folder"
 
@@ -1859,7 +1861,7 @@ msgid "Make Current"
 msgstr "Jadikan Profil Saat Ini"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "Impor"
 
@@ -1922,7 +1924,7 @@ msgid "Open in File Manager"
 msgstr "Tampilkan di Pengelola Berkas"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "Tampilkan di Manajer Berkas"
 
@@ -2315,7 +2317,7 @@ msgstr "RPC Keluar"
 msgid "Outgoing RSET"
 msgstr "RSET Keluar"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "Jendela Baru"
 
@@ -2672,7 +2674,8 @@ msgid "Exit the editor?"
 msgstr "Keluar editor?"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "Buka Project Manager?"
 
 #: editor/editor_node.cpp
@@ -2684,7 +2687,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "Simpan perubahan skena saat ini sebelum keluar?"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr "Simpan perubahan skena saat ini sebelum membuka Manajer Proyek?"
 
 #: editor/editor_node.cpp
@@ -2946,8 +2950,8 @@ msgstr "Ulangi"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "Perkakas macam-macam proyek atau lingkup skena."
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "Proyek"
 
@@ -2993,8 +2997,9 @@ msgid "Reload Current Project"
 msgstr "Muat Ulang Project Saat Ini"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "Keluar ke daftar proyek"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "Manajer Proyek"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3363,7 +3368,7 @@ msgstr "Buka Editor 3D"
 msgid "Open Script Editor"
 msgstr "Buka Editor Skrip"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "Buka Pustaka Aset"
 
@@ -3652,7 +3657,9 @@ msgstr ""
 msgid "Select Node(s) to Import"
 msgstr "Pilih node untuk diimpor"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Telusur"
 
@@ -4155,8 +4162,9 @@ msgstr "Pindahkan"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "Ubah Nama"
 
@@ -4971,6 +4979,7 @@ msgstr "Animasi"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "Baru"
 
@@ -5481,7 +5490,8 @@ msgstr "Impor…"
 msgid "Plugins..."
 msgstr "Pengaya…"
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Sortir:"
 
@@ -7431,7 +7441,8 @@ msgstr "Tutup Semua"
 msgid "Close Docs"
 msgstr "Tutup Dokumentasi"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "Jalankan"
 
@@ -7440,6 +7451,7 @@ msgstr "Jalankan"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "Cari"
 
@@ -7455,8 +7467,8 @@ msgstr "Langkahi"
 msgid "Break"
 msgstr "Putuskan"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "Lanjutkan"
 
@@ -10719,7 +10731,7 @@ msgstr "Mode ekspor?"
 msgid "Export All"
 msgstr "Ekspor Semua"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "Berkas ZIP"
 
@@ -10739,416 +10751,6 @@ msgstr "Mengatur Templat Ekspor"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "Ekspor dengan Awakutu"
-
-#: editor/project_manager.cpp
-msgid "The path specified doesn't exist."
-msgstr "Lokasi yang ditentukan tidak ada."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr "Galat saat membuka berkas paket (tidak dalam format ZIP)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr ""
-"Berkas proyek \".zip\" tidak valid; tidak terdapat berkas \"project.godot\" "
-"di dalamnya."
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "Silakan pilih direktori kosong."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "Silakan pilih berkas \"project.godot\" atau \".zip\"."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "Direktori ini sudah berisi proyek Godot."
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "Proyek Baru Permainan"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "Proyek yang Diimpor"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Invalid project name."
-msgstr "Nama Proyek Tidak Valid."
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "Tidak dapat membuat folder."
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "Sudah ada direktori di lokasi ini dengan nama yang diberikan."
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "Sebaiknya berikan nama untuk proyek Anda."
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "Lokasi proyek tidak valid (mengubah sesuatu?)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr ""
-"Tidak dapat memuat project.godot dalam lokasi proyek (galat %d). Mungkin "
-"berkas itu tidak ada atau rusak."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "Tidak dapat menyunting project.godot dalam lokasi proyek."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "Tidak dapat membuat project.godot dalam lokasi proyek."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr "Gagal saat membuka paket, tidak dalam bentuk zip."
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "Berkas berikut gagal diekstrak dari paket:"
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "Paket Sukses Terpasang!"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "Ubah Nama Proyek"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "Impor Projek yang Sudah Ada"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "Impor & Ubah"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "Buat Projek Baru"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "Buat & Ubah"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "Pasang Proyek:"
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "Pasang & Ubah"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "Nama Projek:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "Lokasi Projek:"
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "Lokasi Pemasangan Proyek:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "Perender:"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3.0"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr "Tidak didukung oleh driver GPU Anda."
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"Kualitas visual lebih tinggi\n"
-"Semua fitur tersedia\n"
-"Tidak kompatibel dengan perangkat lama\n"
-"Tidak direkomendasikan untuk permainan berbasis web"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2.0"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"Kualitas visual lebih rendah\n"
-"Beberapa fitur tidak tersedia\n"
-"Bekerja di sebagian besar perangkat\n"
-"Direkomendasikan untuk permainan berbasis web"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr "Perender dapat diubah nanti, tapi skena mungkin perlu disesuaikan."
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "Proyek Tanpa Nama"
-
-#: editor/project_manager.cpp
-msgid "Missing Project"
-msgstr "Proyek hilang"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr "Galat: Proyek ini tidak ditemukan dalam berkas sistem."
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "Tidak dapat membuka proyek di '%s'."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "Apakah Anda yakin membuka lebih dari satu proyek?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Berkas pengaturan proyek berikut tidak mencantumkan versi Godot mana ketika "
-"itu dibuat.\n"
-"\n"
-"%s\n"
-"\n"
-"Jika Anda memutuskan untuk membukanya, proyek ini akan dikonversi ke format "
-"berkas pengaturan Godot saat ini.\n"
-"Peringatan: Anda tidak akan lagi bisa membuka proyek ini menggunakan versi "
-"Godot sebelumnya."
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Berkas pengaturan proyek berikut dihasilkan oleh Godot versi lebih lama, dan "
-"perlu dikonversi untuk versi ini.\n"
-"\n"
-"%s\n"
-"\n"
-"Apakah Anda ingin mengonversinya?\n"
-"Peringatan: Anda tidak akan lagi bisa membuka proyek ini menggunakan Godot "
-"versi sebelumnya."
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-"Pengaturan proyek dibuat oleh versi mesin yang lebih baru, yang mana "
-"pengaturannya tidak kompatibel dengan versi ini."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"Tidak dapat menjalankan proyek: tidak ada skena utama yang didefinisikan.\n"
-"Harap sunting proyek Anda dan atur skena utama dalam Pengaturan Proyek di "
-"bawah kategori \"Aplikasi\"."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"Tidak dapat menjalankan proyek: Aset perlu diimpor.\n"
-"Silakan sunting proyek untuk memicu pengimporan awal."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "Apakah Anda yakin menjalankan %d proyek sekaligus?"
-
-#: editor/project_manager.cpp
-msgid "Remove %d projects from the list?"
-msgstr "Buang proyek %d dari daftar?"
-
-#: editor/project_manager.cpp
-msgid "Remove this project from the list?"
-msgstr "Buang proyek ini dari daftar?"
-
-#: editor/project_manager.cpp
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"Hapus semua proyek yang hilang dari daftar?\n"
-"Konten folder proyek tidak akan diubah."
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"Bahasa diubah.\n"
-"Antarmuka akan diperbarui setelah menjalankan ulang editor atau manajer "
-"proyek."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"Apakah Anda yakin untuk memindai %s folder untuk proyek Godot yang ada?\n"
-"Ini bisa memakan waktu yang lama."
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "Manajer Proyek"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Local Projects"
-msgstr "Proyek"
-
-#: editor/project_manager.cpp
-msgid "Loading, please wait..."
-msgstr "Memuat, tunggu sejenak..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr "Terakhir Diubah"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Edit Project"
-msgstr "Ekspor Projek"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Run Project"
-msgstr "Ubah Nama Proyek"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "Pindai"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Scan Projects"
-msgstr "Proyek"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "Pilih Berkas untuk Dipindai"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "Projek Baru"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Import Project"
-msgstr "Proyek yang Diimpor"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove Project"
-msgstr "Ubah Nama Proyek"
-
-#: editor/project_manager.cpp
-msgid "Remove Missing"
-msgstr "Hapus yang Tidak Ada"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "Tentang"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Asset Library Projects"
-msgstr "Pustaka Aset"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "Mulai ulang Sekarang"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "Hapus semua"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "Tidak dapat menjalankan proyek"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"Saat ini Anda tidak memiliki proyek.\n"
-"Apakah Anda ingin menjelajahi contoh proyek resmi di Pustaka Aset?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Filter projects"
-msgstr "Filter properti"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
-"Kotak filter pencarian proyek berdasarkan nama dan lokasi komponen "
-"terakhir.\n"
-"Untuk memfilter proyek berdasarkan nama dan lokasi penuhnya, kueri harus "
-"mengandung paling tidak satu karakter `/`."
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -13774,6 +13376,386 @@ msgstr "Tidak dapat menciptakan direktori server HTTP:"
 #: platform/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "Kesalahan memulai server HTTP:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "Impor Projek yang Sudah Ada"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "Tambah Titik"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "Nama Projek:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "Silakan pilih berkas \"project.godot\" atau \".zip\"."
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "Nama Projek:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "Buka Project Data Manager"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "Tidak bisa memperbarui dependensi:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "Tidak dapat memindahkan folder ke dalam dirinya sendiri."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "Tidak dapat membuka file template ekspor."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "Sudah ada direktori di lokasi ini dengan nama yang diberikan."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "Tidak dapat membuat project.godot dalam lokasi proyek."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "Lokasi yang ditentukan tidak ada."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "Silakan pilih direktori kosong."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "Buat Projek Baru"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "Buat & Ubah"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "Perender:"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"Kualitas visual lebih tinggi\n"
+"Semua fitur tersedia\n"
+"Tidak kompatibel dengan perangkat lama\n"
+"Tidak direkomendasikan untuk permainan berbasis web"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"Kualitas visual lebih rendah\n"
+"Beberapa fitur tidak tersedia\n"
+"Bekerja di sebagian besar perangkat\n"
+"Direkomendasikan untuk permainan berbasis web"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr "Perender dapat diubah nanti, tapi skena mungkin perlu disesuaikan."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "Nama Proyek Tidak Valid."
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "Tidak dapat membuat project.godot dalam lokasi proyek."
+
+#: projects_manager/projects_list.cpp
+msgid "Loading, please wait..."
+msgstr "Memuat, tunggu sejenak..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr "Terakhir Diubah"
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid "Filter projects"
+msgstr "Filter properti"
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+"Kotak filter pencarian proyek berdasarkan nama dan lokasi komponen "
+"terakhir.\n"
+"Untuk memfilter proyek berdasarkan nama dan lokasi penuhnya, kueri harus "
+"mengandung paling tidak satu karakter `/`."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "Proyek hilang"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "Galat: Proyek ini tidak ditemukan dalam berkas sistem."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "Proyek Tanpa Nama"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "Manajer Proyek"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "Buat Projek Baru"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "Impor Projek yang Sudah Ada"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "Impor Projek yang Sudah Ada"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Missing"
+msgstr "Hapus yang Tidak Ada"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Edit Project"
+msgstr "Ekspor Projek"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Run Project"
+msgstr "Ubah Nama Proyek"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "Ubah Nama Proyek"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove Project"
+msgstr "Ubah Nama Proyek"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "Tentang"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "Anda yakin ingin menghapus semua hubungan dari sinyal ini?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "Apakah Anda yakin membuka lebih dari satu proyek?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "Tidak dapat menjalankan proyek"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"Tidak dapat menjalankan proyek: Aset perlu diimpor.\n"
+"Silakan sunting proyek untuk memicu pengimporan awal."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"Tidak dapat menjalankan proyek: tidak ada skena utama yang didefinisikan.\n"
+"Harap sunting proyek Anda dan atur skena utama dalam Pengaturan Proyek di "
+"bawah kategori \"Aplikasi\"."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"Saat ini Anda tidak memiliki proyek.\n"
+"Apakah Anda ingin menjelajahi contoh proyek resmi di Pustaka Aset?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Local Projects"
+msgstr "Proyek"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "Pergi ke direktori atasnya."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"Hapus semua proyek yang hilang dari daftar?\n"
+"Konten folder proyek tidak akan diubah."
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "Hapus semua"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"Bahasa diubah.\n"
+"Antarmuka akan diperbarui setelah menjalankan ulang editor atau manajer "
+"proyek."
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "Mulai ulang Sekarang"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "Pilih Berkas untuk Dipindai"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Asset Library Projects"
+msgstr "Pustaka Aset"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove %d projects from the list?"
+msgstr "Buang proyek %d dari daftar?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "Buang proyek %d dari daftar?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "Apakah Anda yakin menjalankan %d proyek sekaligus?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "Tidak dapat membuka proyek di '%s'."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+"Pengaturan proyek dibuat oleh versi mesin yang lebih baru, yang mana "
+"pengaturannya tidak kompatibel dengan versi ini."
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "Tidak dapat membuka proyek di '%s'."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"Berkas pengaturan proyek berikut dihasilkan oleh Godot versi lebih lama, dan "
+"perlu dikonversi untuk versi ini.\n"
+"\n"
+"%s\n"
+"\n"
+"Apakah Anda ingin mengonversinya?\n"
+"Peringatan: Anda tidak akan lagi bisa membuka proyek ini menggunakan Godot "
+"versi sebelumnya."
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr ""
+"Tidak dapat memuat project.godot dalam lokasi proyek (galat %d). Mungkin "
+"berkas itu tidak ada atau rusak."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

@@ -576,9 +576,9 @@ msgstr "초당 프레임"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "편집"
 
@@ -840,6 +840,7 @@ msgstr "씬에 스크립트가 없습니다."
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "추가"
 
@@ -847,8 +848,8 @@ msgstr "추가"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "제거"
 
@@ -1054,7 +1055,7 @@ msgid "Resource"
 msgstr "리소스"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "경로"
 
@@ -1178,7 +1179,8 @@ msgstr "딕셔너리 값 바꾸기"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "클릭하여 복사합니다."
 
@@ -1541,7 +1543,7 @@ msgstr "노드 이름:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "이름"
 
@@ -1582,8 +1584,8 @@ msgid "Choose a Directory"
 msgstr "디렉토리를 선택하세요"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "폴더 만들기"
 
@@ -1846,7 +1848,7 @@ msgid "Make Current"
 msgstr "현재 프로필로 설정"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "가져오기"
 
@@ -1908,7 +1910,7 @@ msgid "Open in File Manager"
 msgstr "파일 매니저에서 열기"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "파일 매니저에서 보기"
 
@@ -2298,7 +2300,7 @@ msgstr "발신 RPC"
 msgid "Outgoing RSET"
 msgstr "발신 RSET"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "새 창"
 
@@ -2652,7 +2654,8 @@ msgid "Exit the editor?"
 msgstr "에디터를 나가시겠습니까?"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "프로젝트 매니저를 여시겠습니까?"
 
 #: editor/editor_node.cpp
@@ -2664,7 +2667,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "종료하기 전에 해당 씬의 변경사항을 저장하시겠습니까?"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr "프로젝트 매니저를 열기 전에 해당 씬의 변경사항을 저장하시겠습니까?"
 
 #: editor/editor_node.cpp
@@ -2924,8 +2928,8 @@ msgstr "다시 실행"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "프로젝트 또는 씬 관련 여러가지 툴."
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "프로젝트"
 
@@ -2971,8 +2975,9 @@ msgid "Reload Current Project"
 msgstr "현재 프로젝트 새로고침"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "종료 후 프로젝트 목록 열기"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "프로젝트 매니저"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3338,7 +3343,7 @@ msgstr "3D 에디터 열기"
 msgid "Open Script Editor"
 msgstr "스크립트 에디터 열기"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "애셋 라이브러리 열기"
 
@@ -3623,7 +3628,9 @@ msgstr "%s를 눌러 정수로 반올림합니다. Shift를 눌러 좀 더 정�
 msgid "Select Node(s) to Import"
 msgstr "가져올 노드 선택"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "탐색"
 
@@ -4125,8 +4132,9 @@ msgstr "이동"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "이름 바꾸기"
 
@@ -4944,6 +4952,7 @@ msgstr "애니메이션"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "새로 만들기"
 
@@ -5455,7 +5464,8 @@ msgstr "가져오기..."
 msgid "Plugins..."
 msgstr "플러그인..."
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "정렬:"
 
@@ -7391,7 +7401,8 @@ msgstr "모두 닫기"
 msgid "Close Docs"
 msgstr "문서 닫기"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "실행"
 
@@ -7400,6 +7411,7 @@ msgstr "실행"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "검색"
 
@@ -7415,8 +7427,8 @@ msgstr "한 단계씩 코드 실행"
 msgid "Break"
 msgstr "정지"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "계속"
 
@@ -10590,7 +10602,7 @@ msgstr "내보내기 모드?"
 msgid "Export All"
 msgstr "모두 내보내기"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "ZIP 파일"
 
@@ -10610,400 +10622,6 @@ msgstr "내보내기 템플릿 관리"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "디버그와 함께 내보내기"
-
-#: editor/project_manager.cpp
-msgid "The path specified doesn't exist."
-msgstr "지정한 경로가 없습니다."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr "패키지 파일을 여는 중 오류 (ZIP 형식이 아닙니다)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr ""
-"잘못된 \".zip\" 프로젝트 파일입니다. \"project.godot\" 파일이 들어있지 않습니"
-"다."
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "비어있는 폴더를 선택해주세요."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "\"project.godot\" 파일 또는 \".zip\" 파일을 선택해주세요."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "디렉토리에 Godot 프로젝트가 이미 존재합니다."
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "새 게임 프로젝트"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "가져온 프로젝트"
-
-#: editor/project_manager.cpp
-msgid "Invalid project name."
-msgstr "잘못된 프로젝트 이름입니다."
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "폴더를 만들 수 없습니다."
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "이미 이 경로에 이 이름과 같은 폴더가 있습니다."
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "프로젝트 이름을 정하는 게 좋을 것입니다."
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "잘못된 프로젝트 경로 (무언가를 변경하셨습니까?)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr ""
-"프로젝트 경로에서 project.godot을 불러올 수 없습니다 (오류 %d). 누락되거나 손"
-"상된 모양입니다."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "프로젝트 경로에서 project.godot 파일을 편집할 수 없습니다."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "프로젝트 경로에서 project.godot 파일을 만들 수 없습니다."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr "패키지 파일을 여는 중 오류. ZIP 형식이 아닙니다."
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "다음 파일을 패키지에서 추출하는데 실패함:"
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "패키지를 성공적으로 설치했습니다!"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "프로젝트 이름 바꾸기"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "기존 프로젝트 가져오기"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "가져오기 & 편집"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "새 프로젝트 만들기"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "만들기 & 편집"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "프로젝트 설치:"
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "설치 & 편집"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "프로젝트 이름:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "프로젝트 경로:"
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "프로젝트 설치 경로:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "렌더러:"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3.0"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr "당신의 GPU 드라이버에 의해 지원되지 않습니다."
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"높은 시각적 품질\n"
-"모든 기능 사용 가능\n"
-"오래된 하드웨어에는 호환하지 않음\n"
-"웹 게임에는 비 추천"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2.0"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"낮은 시각적 품질\n"
-"일부 기능은 사용할 수 없음\n"
-"대부분의 하드웨어에서 작동함\n"
-"웹 게임에 추천"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr "렌더러는 나중에 바꿀 수 있지만, 씬을 조정해야 할 수도 있습니다."
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "이름 없는 프로젝트"
-
-#: editor/project_manager.cpp
-msgid "Missing Project"
-msgstr "누락된 프로젝트"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr "오류: 프로젝트가 파일시스템에서 누락되었습니다."
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "'%s'에서 프로젝트를 열 수 없습니다."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "두 개 이상의 프로젝트를 여시겠습니까?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"다음 프로젝트 설정 파일은 현재 버전의 Godot에서 만든 것이 아닙니다.\n"
-"↵\n"
-"%s↵\n"
-"↵\n"
-"파일 열기를 계속한다면, 현재 Godot의 구성 파일 형식으로 변환될 것입니다.\n"
-"경고: 더 이상 이 프로젝트를 이전 버전의 엔진에서 열 수 없을 것입니다."
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"다음 프로젝트 설정 파일은 이전 버전에 만든 것으로, 현재 버전에 맞게 변환해야 "
-"합니다:\n"
-"\n"
-"%s\n"
-"\n"
-"변환할까요?\n"
-"경고: 더 이상 이 프로젝트를 이전 버전의 엔진에서 열 수 없을 것입니다."
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-"프로젝트 설정이 새 버전에 맞게 만들어졌습니다. 이 버전에서는 호환하지 않습니"
-"다."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"프로젝트를 실행할 수 없음: 메인 씬을 정의하지 않았습니다.\n"
-"프로젝트를 편집하고 프로젝트 설정의 \"Application\" 카테고리에서 메인 씬을 설"
-"정해주세요."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"프로젝트를 실행할 수 없음: 애셋을 가져와야 합니다.\n"
-"프로젝트를 편집해서 최초 가져오기가 실행되도록 하세요."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "한 번에 %d개의 프로젝트를 실행할 건가요?"
-
-#: editor/project_manager.cpp
-msgid "Remove %d projects from the list?"
-msgstr "목록에서 프로젝트 %d개를 제거하시겠습니까?"
-
-#: editor/project_manager.cpp
-msgid "Remove this project from the list?"
-msgstr "목록에서 이 프로젝트를 제거하시겠습니까?"
-
-#: editor/project_manager.cpp
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"모든 누락된 프로젝트를 목록에서 제거하시겠습니까?\n"
-"프로젝트 폴더의 콘텐츠는 수정되지 않습니다."
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"언어가 바뀌었습니다.\n"
-"인터페이스는 에디터나 프로젝트 매니저를 다시 시작하고 나서 갱신됩니다."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"Godot 프로젝트를 확인하기 위해 %s 폴더를 스캔하시겠습니까?\n"
-"시간이 걸릴 수 있습니다."
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "프로젝트 매니저"
-
-#: editor/project_manager.cpp
-msgid "Local Projects"
-msgstr "로컬 프로젝트"
-
-#: editor/project_manager.cpp
-msgid "Loading, please wait..."
-msgstr "로드 중, 기다려 주세요..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr "마지막으로 수정됨"
-
-#: editor/project_manager.cpp
-msgid "Edit Project"
-msgstr "프로젝트 편집"
-
-#: editor/project_manager.cpp
-msgid "Run Project"
-msgstr "프로젝트 실행"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "스캔"
-
-#: editor/project_manager.cpp
-msgid "Scan Projects"
-msgstr "프로젝트 스캔"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "스캔할 폴더를 선택하세요"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "새 프로젝트"
-
-#: editor/project_manager.cpp
-msgid "Import Project"
-msgstr "프로젝트 가져오기"
-
-#: editor/project_manager.cpp
-msgid "Remove Project"
-msgstr "프로젝트 제거"
-
-#: editor/project_manager.cpp
-msgid "Remove Missing"
-msgstr "누락된 부분 제거"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "정보"
-
-#: editor/project_manager.cpp
-msgid "Asset Library Projects"
-msgstr "애셋 라이브러리 프로젝트"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "지금 다시 시작"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "모두 제거"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr "프로젝트 콘텐츠도 삭제 (되돌릴 수 없습니다!)"
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "프로젝트를 실행할 수 없습니다"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"현재 프로젝트가 하나도 없습니다.\n"
-"애셋 라이브러리에서 공식 예제 프로젝트를 찾아볼까요?"
-
-#: editor/project_manager.cpp
-msgid "Filter projects"
-msgstr "프로젝트 필터"
-
-#: editor/project_manager.cpp
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
-"이 필드는 프로젝트를 이름과 경로의 마지막 부분으로 거릅니다.\n"
-"프로젝트를 이름과 전체 경로를 기준으로 걸러내려면, 검색어에 `/`를 한 글자 이"
-"상 포함시켜야 합니다."
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -13611,6 +13229,376 @@ msgstr "HTTP 서버 디렉토리를 만들 수 없음:"
 #: platform/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "HTTP 서버를 시작하는 중 오류:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "기존 프로젝트 가져오기"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "점 추가"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "프로젝트 이름:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "\"project.godot\" 파일 또는 \".zip\" 파일을 선택해주세요."
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "프로젝트 이름:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "프로젝트 데이터 폴더 열기"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "종속 항목을 업데이트할 수 없음:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "폴더를 자신의 하위로 옮길 수 없습니다."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "내보내기 템플릿 파일을 열 수 없습니다."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "이미 이 경로에 이 이름과 같은 폴더가 있습니다."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "프로젝트 경로에서 project.godot 파일을 만들 수 없습니다."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "지정한 경로가 없습니다."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "비어있는 폴더를 선택해주세요."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "새 프로젝트 만들기"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "만들기 & 편집"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "렌더러:"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"높은 시각적 품질\n"
+"모든 기능 사용 가능\n"
+"오래된 하드웨어에는 호환하지 않음\n"
+"웹 게임에는 비 추천"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"낮은 시각적 품질\n"
+"일부 기능은 사용할 수 없음\n"
+"대부분의 하드웨어에서 작동함\n"
+"웹 게임에 추천"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr "렌더러는 나중에 바꿀 수 있지만, 씬을 조정해야 할 수도 있습니다."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "잘못된 프로젝트 이름입니다."
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "프로젝트 경로에서 project.godot 파일을 만들 수 없습니다."
+
+#: projects_manager/projects_list.cpp
+msgid "Loading, please wait..."
+msgstr "로드 중, 기다려 주세요..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr "마지막으로 수정됨"
+
+#: projects_manager/projects_list.cpp
+msgid "Filter projects"
+msgstr "프로젝트 필터"
+
+#: projects_manager/projects_list.cpp
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+"이 필드는 프로젝트를 이름과 경로의 마지막 부분으로 거릅니다.\n"
+"프로젝트를 이름과 전체 경로를 기준으로 걸러내려면, 검색어에 `/`를 한 글자 이"
+"상 포함시켜야 합니다."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "누락된 프로젝트"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "오류: 프로젝트가 파일시스템에서 누락되었습니다."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "이름 없는 프로젝트"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "프로젝트 매니저"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "새 프로젝트 만들기"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "기존 프로젝트 가져오기"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "기존 프로젝트 가져오기"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Missing"
+msgstr "누락된 부분 제거"
+
+#: projects_manager/projects_manager.cpp
+msgid "Edit Project"
+msgstr "프로젝트 편집"
+
+#: projects_manager/projects_manager.cpp
+msgid "Run Project"
+msgstr "프로젝트 실행"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "프로젝트 이름 바꾸기"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Project"
+msgstr "프로젝트 제거"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "정보"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "이 시그널의 모든 연결을 제거하시겠습니까?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "두 개 이상의 프로젝트를 여시겠습니까?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "프로젝트를 실행할 수 없습니다"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"프로젝트를 실행할 수 없음: 애셋을 가져와야 합니다.\n"
+"프로젝트를 편집해서 최초 가져오기가 실행되도록 하세요."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"프로젝트를 실행할 수 없음: 메인 씬을 정의하지 않았습니다.\n"
+"프로젝트를 편집하고 프로젝트 설정의 \"Application\" 카테고리에서 메인 씬을 설"
+"정해주세요."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"현재 프로젝트가 하나도 없습니다.\n"
+"애셋 라이브러리에서 공식 예제 프로젝트를 찾아볼까요?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Local Projects"
+msgstr "로컬 프로젝트"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "프로젝트 콘텐츠도 삭제 (되돌릴 수 없습니다!)"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"모든 누락된 프로젝트를 목록에서 제거하시겠습니까?\n"
+"프로젝트 폴더의 콘텐츠는 수정되지 않습니다."
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "모두 제거"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"언어가 바뀌었습니다.\n"
+"인터페이스는 에디터나 프로젝트 매니저를 다시 시작하고 나서 갱신됩니다."
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "지금 다시 시작"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "스캔할 폴더를 선택하세요"
+
+#: projects_manager/projects_manager.cpp
+msgid "Asset Library Projects"
+msgstr "애셋 라이브러리 프로젝트"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove %d projects from the list?"
+msgstr "목록에서 프로젝트 %d개를 제거하시겠습니까?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "목록에서 프로젝트 %d개를 제거하시겠습니까?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "한 번에 %d개의 프로젝트를 실행할 건가요?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "'%s'에서 프로젝트를 열 수 없습니다."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+"프로젝트 설정이 새 버전에 맞게 만들어졌습니다. 이 버전에서는 호환하지 않습니"
+"다."
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "'%s'에서 프로젝트를 열 수 없습니다."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"다음 프로젝트 설정 파일은 이전 버전에 만든 것으로, 현재 버전에 맞게 변환해야 "
+"합니다:\n"
+"\n"
+"%s\n"
+"\n"
+"변환할까요?\n"
+"경고: 더 이상 이 프로젝트를 이전 버전의 엔진에서 열 수 없을 것입니다."
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr ""
+"프로젝트 경로에서 project.godot을 불러올 수 없습니다 (오류 %d). 누락되거나 손"
+"상된 모양입니다."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""
