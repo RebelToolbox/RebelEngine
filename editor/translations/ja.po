@@ -584,9 +584,9 @@ msgstr "フレームレート(FPS)"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "編集"
 
@@ -848,6 +848,7 @@ msgstr "シーンにはスクリプトが含まれていません。"
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "追加"
 
@@ -855,8 +856,8 @@ msgstr "追加"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "除去"
 
@@ -1060,7 +1061,7 @@ msgid "Resource"
 msgstr "リソース"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "パス"
 
@@ -1185,7 +1186,8 @@ msgstr "Dictionary 値の変更"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "クリックしてコピーします。"
 
@@ -1549,7 +1551,7 @@ msgstr "ノード名:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "名前"
 
@@ -1590,8 +1592,8 @@ msgid "Choose a Directory"
 msgstr "ディレクトリを選択"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "フォルダーを作成"
 
@@ -1858,7 +1860,7 @@ msgid "Make Current"
 msgstr "使用する"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "インポート"
 
@@ -1922,7 +1924,7 @@ msgid "Open in File Manager"
 msgstr "ファイルマネージャーで開く"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "ファイルマネージャーで表示"
 
@@ -2311,7 +2313,7 @@ msgstr "RPC送信"
 msgid "Outgoing RSET"
 msgstr "RSET送信"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "新規ウィンドウ"
 
@@ -2668,7 +2670,8 @@ msgid "Exit the editor?"
 msgstr "エディターを終了しますか？"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "プロジェクトマネージャーを開きますか？"
 
 #: editor/editor_node.cpp
@@ -2680,7 +2683,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "終了する前に、以下のシーンへの変更を保存しますか？"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr ""
 "プロジェクトマネージャーを開く前に、以下のシーンへの変更を保存しますか？"
 
@@ -2940,8 +2944,8 @@ msgstr "やり直す"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "その他のプロジェクトまたはシーン全体のツール。"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "プロジェクト"
 
@@ -2987,8 +2991,9 @@ msgid "Reload Current Project"
 msgstr "現在のプロジェクトをリロード"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "終了してプロジェクト一覧を開く"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "プロジェクトマネージャー"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3360,7 +3365,7 @@ msgstr "3Dエディターを開く"
 msgid "Open Script Editor"
 msgstr "スクリプトエディターを開く"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "アセットライブラリを開く"
 
@@ -3647,7 +3652,9 @@ msgstr "%s を押したままで整数値に丸める。Shiftを押したまま�
 msgid "Select Node(s) to Import"
 msgstr "インポートするノードを選択"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "参照"
 
@@ -4154,8 +4161,9 @@ msgstr "移動"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "名前の変更"
 
@@ -4970,6 +4978,7 @@ msgstr "アニメーション"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "新規"
 
@@ -5483,7 +5492,8 @@ msgstr "インポート..."
 msgid "Plugins..."
 msgstr "プラグイン..."
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "ソート:"
 
@@ -7432,7 +7442,8 @@ msgstr "すべて閉じる"
 msgid "Close Docs"
 msgstr "ドキュメントを閉じる"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "実行"
 
@@ -7441,6 +7452,7 @@ msgstr "実行"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "検索"
 
@@ -7456,8 +7468,8 @@ msgstr "ステップオーバー"
 msgid "Break"
 msgstr "ブレーク"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "続行"
 
@@ -10656,7 +10668,7 @@ msgstr "エクスポートのモードは？"
 msgid "Export All"
 msgstr "すべてエクスポート"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "ZIPファイル"
 
@@ -10676,405 +10688,6 @@ msgstr "エクスポートテンプレートの管理"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "デバッグ付きエクスポート"
-
-#: editor/project_manager.cpp
-msgid "The path specified doesn't exist."
-msgstr "指定されたパスは存在しません。"
-
-#: editor/project_manager.cpp
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr ""
-"パッケージ ファイルを開くときにエラーが発生しました (ZIP形式ではありません)。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr ""
-"無効な\".zip\"プロジェクトファイルです。\"project.godot\"ファイルが含まれてい"
-"ません。"
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "空のフォルダーを選択してください。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "\"project.godot\"または\".zip\"ファイルを選択してください。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "このディレクトリにはすでにGodotプロジェクトが含まれています。"
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "新しいゲームプロジェクト"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "インポートされたプロジェクト"
-
-#: editor/project_manager.cpp
-msgid "Invalid project name."
-msgstr "無効なプロジェクト名です。"
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "フォルダーを作成できませんでした。"
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "このパスには、指定された名前のフォルダーがすでに存在します。"
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "プロジェクトには名前を付けることを推奨します。"
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "無効なプロジェクトパスです (なにか変更がありましたか？)。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr ""
-"プロジェクトパスの project.godot を読み込めませんでした。 (エラー %d)。見つか"
-"らないか破損している可能性があります。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "プロジェクトパスの project.godot を編集できませんでした。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "project.godot をプロジェクトパスに生成できませんでした。"
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr "パッケージファイルを開けませんでした、zip 形式ではありません。"
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "次のファイルをパッケージから抽出できませんでした:"
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "パッケージのインストールに成功しました！"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "プロジェクト名の変更"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "既存のプロジェクトをインポート"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "インポートして編集"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "新規プロジェクトを作成"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "作成して編集"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "プロジェクトをインストール:"
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "インストールして編集"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "プロジェクト名:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "プロジェクトパス:"
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "プロジェクトのインストールパス:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "レンダラー:"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3.0"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr "お使いのGPUドライバーではサポートされていません。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"高いビジュアルクオリティ\n"
-"すべての機能を利用可能\n"
-"古いハードウェアとの互換性なし\n"
-"Webゲームには非推奨"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2.0"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"低いビジュアルクオリティ\n"
-"一部機能は利用不可\n"
-"ほとんどのハードウェアで動作\n"
-"Webゲームに推奨"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr ""
-"レンダラーは後で変更できますが、シーンの調整が必要となる場合があります。"
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "名無しのプロジェクト"
-
-#: editor/project_manager.cpp
-msgid "Missing Project"
-msgstr "プロジェクトがありません"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr "エラー: ファイルシステム上にプロジェクトが見つかりません。"
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "次の場所のプロジェクトを開けません '%s'。"
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "複数のプロジェクトを開いてもよろしいですか？"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"次のプロジェクト設定ファイルには、作成に使用されたGodotのバージョンが指定され"
-"ていません。\n"
-"\n"
-"%s\n"
-"\n"
-"ファイルを開くと、Godotの現在の設定ファイル形式に変換されます。\n"
-"警告: 以前のバージョンのエンジンではプロジェクトを開けなくなります。"
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"以下のプロジェクト設定ファイルは、古いバージョンのエンジンにより生成されてお"
-"り、現在のバージョン用に変換が必要です:\n"
-"\n"
-"%s\n"
-"\n"
-"変換しますか？\n"
-"警告: プロジェクトは旧バージョンのエンジンで開くことができなくなります。"
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-"プロジェクト設定は、このバージョンと互換性のない新しいバージョンのエンジンで"
-"作成されています。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"プロジェクトを実行できません:メインシーンが定義されていません\n"
-"プロジェクトを編集し、「アプリケーション」カテゴリ内の「プロジェクト設定」で"
-"メインシーンを設定してください。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"プロジェクトを実行できません:アセットをインポートする必要があります。\n"
-"プロジェクトを編集して初期インポートを開始してください。"
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "%d個のプロジェクトを同時に実行してもよろしいですか？"
-
-#: editor/project_manager.cpp
-msgid "Remove %d projects from the list?"
-msgstr "リストから %d 個のプロジェクトを除去しますか？"
-
-#: editor/project_manager.cpp
-msgid "Remove this project from the list?"
-msgstr "このプロジェクトをリストから除去しますか？"
-
-#: editor/project_manager.cpp
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"見つからないすべてのプロジェクトを一覧から削除しますか？\n"
-"プロジェクトフォルダーの内容は変更されません。"
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"言語が変更されました。\n"
-"エディターまたはプロジェクトマネージャーの再起動後にインターフェースが更新さ"
-"れます。"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"%s個のフォルダー内に存在するGodotプロジェクトをスキャンしますか？\n"
-"これにはしばらく時間がかかります。"
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "プロジェクトマネージャー"
-
-#: editor/project_manager.cpp
-msgid "Local Projects"
-msgstr "ローカルのプロジェクト"
-
-#: editor/project_manager.cpp
-msgid "Loading, please wait..."
-msgstr "読み込み中、しばらくお待ちください..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr "最終更新"
-
-#: editor/project_manager.cpp
-msgid "Edit Project"
-msgstr "プロジェクトを編集"
-
-#: editor/project_manager.cpp
-msgid "Run Project"
-msgstr "プロジェクトを実行"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "スキャン"
-
-#: editor/project_manager.cpp
-msgid "Scan Projects"
-msgstr "プロジェクトをスキャン"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "スキャンするフォルダーを選択"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "新規プロジェクト"
-
-#: editor/project_manager.cpp
-msgid "Import Project"
-msgstr "プロジェクトをインポート"
-
-#: editor/project_manager.cpp
-msgid "Remove Project"
-msgstr "プロジェクトを除去"
-
-#: editor/project_manager.cpp
-msgid "Remove Missing"
-msgstr "存在しないものを除去"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "概要"
-
-#: editor/project_manager.cpp
-msgid "Asset Library Projects"
-msgstr "アセットライブラリのプロジェクト"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "今すぐ再起動"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "すべて除去"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr "プロジェクトの内容も削除する (元に戻せません！)"
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "プロジェクトを実行できません"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"プロジェクトが何も登録されていません。\n"
-"アセットライブラリで公式のサンプルプロジェクトをチェックしますか？"
-
-#: editor/project_manager.cpp
-msgid "Filter projects"
-msgstr "プロジェクトを絞り込む"
-
-#: editor/project_manager.cpp
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
-"このフィールドは、プロジェクト名とパスの最後の部分でプロジェクトをフィルタリ"
-"ングします。\n"
-"プロジェクト名および完全パスでフィルターするには、クエリには `/` 文字が少なく"
-"とも1つ必要です。"
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -13712,6 +13325,379 @@ msgstr "HTTPサーバーのディレクトリの作成に失敗:"
 #: platform/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "HTTPサーバーの開始に失敗:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "既存のプロジェクトをインポート"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "ポイントを追加"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "プロジェクト名:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "\"project.godot\"または\".zip\"ファイルを選択してください。"
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "プロジェクト名:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "プロジェクトのデータフォルダーを開く"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "依存関係を更新できません:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "フォルダーをフォルダー自身の中に移動することはできません。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "エクスポートテンプレート ファイルを開けません。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "このパスには、指定された名前のフォルダーがすでに存在します。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "project.godot をプロジェクトパスに生成できませんでした。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "指定されたパスは存在しません。"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "空のフォルダーを選択してください。"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "新規プロジェクトを作成"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "作成して編集"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "レンダラー:"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"高いビジュアルクオリティ\n"
+"すべての機能を利用可能\n"
+"古いハードウェアとの互換性なし\n"
+"Webゲームには非推奨"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"低いビジュアルクオリティ\n"
+"一部機能は利用不可\n"
+"ほとんどのハードウェアで動作\n"
+"Webゲームに推奨"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr ""
+"レンダラーは後で変更できますが、シーンの調整が必要となる場合があります。"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "無効なプロジェクト名です。"
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "project.godot をプロジェクトパスに生成できませんでした。"
+
+#: projects_manager/projects_list.cpp
+msgid "Loading, please wait..."
+msgstr "読み込み中、しばらくお待ちください..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr "最終更新"
+
+#: projects_manager/projects_list.cpp
+msgid "Filter projects"
+msgstr "プロジェクトを絞り込む"
+
+#: projects_manager/projects_list.cpp
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+"このフィールドは、プロジェクト名とパスの最後の部分でプロジェクトをフィルタリ"
+"ングします。\n"
+"プロジェクト名および完全パスでフィルターするには、クエリには `/` 文字が少なく"
+"とも1つ必要です。"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "プロジェクトがありません"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "エラー: ファイルシステム上にプロジェクトが見つかりません。"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "名無しのプロジェクト"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "プロジェクトマネージャー"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "新規プロジェクトを作成"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "既存のプロジェクトをインポート"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "既存のプロジェクトをインポート"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Missing"
+msgstr "存在しないものを除去"
+
+#: projects_manager/projects_manager.cpp
+msgid "Edit Project"
+msgstr "プロジェクトを編集"
+
+#: projects_manager/projects_manager.cpp
+msgid "Run Project"
+msgstr "プロジェクトを実行"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "プロジェクト名の変更"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Project"
+msgstr "プロジェクトを除去"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "概要"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "このシグナルからすべての接続を除去してもよろしいですか？"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "複数のプロジェクトを開いてもよろしいですか？"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "プロジェクトを実行できません"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"プロジェクトを実行できません:アセットをインポートする必要があります。\n"
+"プロジェクトを編集して初期インポートを開始してください。"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"プロジェクトを実行できません:メインシーンが定義されていません\n"
+"プロジェクトを編集し、「アプリケーション」カテゴリ内の「プロジェクト設定」で"
+"メインシーンを設定してください。"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"プロジェクトが何も登録されていません。\n"
+"アセットライブラリで公式のサンプルプロジェクトをチェックしますか？"
+
+#: projects_manager/projects_manager.cpp
+msgid "Local Projects"
+msgstr "ローカルのプロジェクト"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "プロジェクトの内容も削除する (元に戻せません！)"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"見つからないすべてのプロジェクトを一覧から削除しますか？\n"
+"プロジェクトフォルダーの内容は変更されません。"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "すべて除去"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"言語が変更されました。\n"
+"エディターまたはプロジェクトマネージャーの再起動後にインターフェースが更新さ"
+"れます。"
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "今すぐ再起動"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "スキャンするフォルダーを選択"
+
+#: projects_manager/projects_manager.cpp
+msgid "Asset Library Projects"
+msgstr "アセットライブラリのプロジェクト"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove %d projects from the list?"
+msgstr "リストから %d 個のプロジェクトを除去しますか？"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "リストから %d 個のプロジェクトを除去しますか？"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "%d個のプロジェクトを同時に実行してもよろしいですか？"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "次の場所のプロジェクトを開けません '%s'。"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+"プロジェクト設定は、このバージョンと互換性のない新しいバージョンのエンジンで"
+"作成されています。"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "次の場所のプロジェクトを開けません '%s'。"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"以下のプロジェクト設定ファイルは、古いバージョンのエンジンにより生成されてお"
+"り、現在のバージョン用に変換が必要です:\n"
+"\n"
+"%s\n"
+"\n"
+"変換しますか？\n"
+"警告: プロジェクトは旧バージョンのエンジンで開くことができなくなります。"
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr ""
+"プロジェクトパスの project.godot を読み込めませんでした。 (エラー %d)。見つか"
+"らないか破損している可能性があります。"
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

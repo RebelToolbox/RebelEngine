@@ -565,9 +565,9 @@ msgstr "Khung hình(FPS)"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "Chỉnh sửa"
 
@@ -830,6 +830,7 @@ msgstr "Cảnh không chứa tệp lệnh."
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "Thêm"
 
@@ -837,8 +838,8 @@ msgstr "Thêm"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "Xóa"
 
@@ -1043,7 +1044,7 @@ msgid "Resource"
 msgstr "Tài nguyên"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "Đường dẫn"
 
@@ -1168,7 +1169,8 @@ msgstr "Đổi giá trị từ điển"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "Nháy để sao chép."
 
@@ -1539,7 +1541,7 @@ msgstr "Tên Node:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "Tên"
 
@@ -1580,8 +1582,8 @@ msgid "Choose a Directory"
 msgstr "Chọn một Thư mục"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "Tạo thư mục"
 
@@ -1840,7 +1842,7 @@ msgid "Make Current"
 msgstr "Đặt làm hiện tại"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "Nhập"
 
@@ -1902,7 +1904,7 @@ msgid "Open in File Manager"
 msgstr "Mở trong trình quản lý tệp tin"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "Xem trong trình quản lý tệp"
 
@@ -2295,7 +2297,7 @@ msgstr "RPC đi"
 msgid "Outgoing RSET"
 msgstr "RSET đi"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "Cửa sổ mới"
 
@@ -2644,7 +2646,8 @@ msgid "Exit the editor?"
 msgstr "Thoát trình chỉnh sửa?"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "Mở Quản lý Dự án?"
 
 #: editor/editor_node.cpp
@@ -2656,7 +2659,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "Lưu thay đổi trong các scene sau trước khi thoát?"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr "Lưu thay đổi trong các cảnh sau trước khi mở Quản lí Dự án?"
 
 #: editor/editor_node.cpp
@@ -2914,8 +2918,8 @@ msgstr "Làm lại"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "Dự án ngoài lề hoặc các công cụ toàn phân cảnh."
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "Dự Án"
 
@@ -2961,8 +2965,9 @@ msgid "Reload Current Project"
 msgstr "Tải lại dự án hiện tại"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "Thoát khỏi Danh sách Dự án"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "Trình quản lý Dự án"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3324,7 +3329,7 @@ msgstr "Mở trình chỉnh sửa 3D"
 msgid "Open Script Editor"
 msgstr "Mở trình chỉnh sửa tập lệnh"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "Mở Thư viện Nguyên liệu"
 
@@ -3601,7 +3606,9 @@ msgstr "Giữ Ctrl để làm tròn về số nguyên. Giữ Shift để sửa t
 msgid "Select Node(s) to Import"
 msgstr "Chọn Nút để Nhập"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Duyệt"
 
@@ -4126,8 +4133,9 @@ msgstr "Di chuyển"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "Đổi tên"
 
@@ -4943,6 +4951,7 @@ msgstr "Hoạt ảnh"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "Mới"
 
@@ -5456,7 +5465,8 @@ msgstr "Nhập..."
 msgid "Plugins..."
 msgstr "Tiện ích..."
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Sắp xếp:"
 
@@ -7407,7 +7417,8 @@ msgstr "Đóng tất cả"
 msgid "Close Docs"
 msgstr "Đóng Docs"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "Chạy"
 
@@ -7416,6 +7427,7 @@ msgstr "Chạy"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -7431,8 +7443,8 @@ msgstr ""
 msgid "Break"
 msgstr "Thoát"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "Tiếp tục"
 
@@ -10666,7 +10678,7 @@ msgstr "Chế độ xuất?"
 msgid "Export All"
 msgstr "Xuất tất cả"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "Tệp ZIP"
 
@@ -10686,414 +10698,6 @@ msgstr "Quản Lý Các Mẫu Xuất Bản"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "Xuất cùng gỡ lỗi"
-
-#: editor/project_manager.cpp
-msgid "The path specified doesn't exist."
-msgstr "Đường dẫn đã cho không tồn tại."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr "Lỗi mở gói (không phải dạng ZIP)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr ""
-"Tệp dự án \".zip\" không hợp lệ; trong nó không chứa tệp \"project.godot\"."
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "Hãy chọn một thư mục trống."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "Chọn tệp \"project.godot\" hoặc tệp \".zip\"."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "Thư mục này đã chứa một dự án Godot."
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "Dự án Trò chơi Mới"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "Đã nạp Dự án"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Invalid project name."
-msgstr "Tên dự án không hợp lệ."
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "Không thể tạo thư mục."
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "Đã tồn tại một thư mục cùng tên trên đường dẫn này."
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "Nó là một ý tưởng tuyệt để đặt tên cho dự án của bạn."
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "Đường dẫn dự án không hợp lệ (bạn có thay đổi điều gì?)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr ""
-"Không thể nạp 'project.godot' trong đường dẫn dự án (lỗi %d). Nó có thể bị "
-"thiếu hoặc đã hỏng."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "Không thể chỉnh sửa 'project.godot' trong đường dẫn dự án."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "Không thể tạo 'project.godot' trong đường dẫn dự án."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr "Lỗi không thể mở gói, không phải dạng nén ZIP."
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "Không thể lấy các tệp sau khỏi gói:"
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "Cài đặt gói thành công!"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "Đổi tên Dự án"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "Nạp Dự án có sẵn"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "Nhập & Chỉnh sửa"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "Tạo mới Dự án"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "Tạo & Sửa"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "Cài đặt Dự án:"
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "Cài đặt & Chỉnh sửa"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "Tên Dự án:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "Đường dẫn Dự án:"
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "Đường dẫn cài đặt Dự án:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "Trình kết xuất hình ảnh:"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3.0"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr "GPU driver của bạn không hỗ trợ."
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"Chất lượng hình ảnh cao hơn\n"
-"Đầy đủ mọi tính năng\n"
-"Không tương thích với các dòng máy cũ\n"
-"Khuyến cáo đối với trò chơi trên web"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2.0"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"Giảm chất lượng hình ảnh\n"
-"Không hỗ trợ một số tính năng\n"
-"Chạy trên đa số dòng máy\n"
-"Khuyên dùng cho trò chơi trên web"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr ""
-"Trình kết xuất có thể đổi sau, nhưng có thể sẽ phải chỉnh lại các Cảnh."
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "Dự án không tên"
-
-#: editor/project_manager.cpp
-msgid "Missing Project"
-msgstr "Dự án bị lỗi"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr "Lỗi: Dự án bị thiếu trên hệ thống tệp tin."
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "Không thể mở dự án tại '%s'."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "Bạn chắc chắn mở nhiều hơn một dự án?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Tệp dự án không chỉ định phiên bản Godot mà nó được tạo.\n"
-"\n"
-"%s\n"
-"\n"
-"Nếu bạn vẫn tiến hành mở dự án, tệp dự án sẽ được chuyển đổi sang cấu hình "
-"Godot hiện tại.\n"
-"Cảnh báo: Bạn sẽ không thể mở dự án với các phiên bản cũ của Godot nữa."
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Tệp dự án được tạo bởi phiên bản Godot cũ và cần được chuyển đổi cho phiên "
-"bản này:\n"
-"\n"
-"%s\n"
-"\n"
-"Bạn có muốn chuyển đổi nó?\n"
-"Cảnh báo: Bạn sẽ không thể mở dự án với các phiên bản Godot cũ nữa."
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-"Các cài đặt dự án đã được tạo bởi phiên bản Godot mới và không tương thích "
-"với phiên bản này."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"Không thể chạy dự án: chưa chọn phân cảnh chính.\n"
-"Để chọn phân cảnh chính, mở \"Cài đặt Dự án\" sau đó vào mục \"Ứng dụng\"."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"Không thể chạy dự án: Các tài sản chưa được nạp.\n"
-"Vui lòng thiết lập dự án để kích hoạt nạp tài sản ban đầu."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "Bạn có chắc chắn chạy các dự án %d cùng lúc?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove %d projects from the list?"
-msgstr "Chọn thiết bị trong danh sách"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove this project from the list?"
-msgstr "Chọn thiết bị trong danh sách"
-
-#: editor/project_manager.cpp
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"Gỡ tất cả dự án bị hỏng khỏi danh sách?\n"
-"Nội dung các thư mục dự án sẽ không bị sửa đổi."
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"Đã thay đổi ngôn ngữ.\n"
-"Giao diện sẽ cập nhật sau khi khởi động lại trình biên tập hoặc trình quản "
-"lí dự án."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"Bạn có chắc chắn quét các thư mục %s để tìm các dự án Godot có sẵn?\n"
-"Điều này sẽ mất chút thời gian."
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "Trình quản lý Dự án"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Local Projects"
-msgstr "Dự án"
-
-#: editor/project_manager.cpp
-msgid "Loading, please wait..."
-msgstr "Đang tải, đợi xíu..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr "Sửa đổi lần cuối"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Edit Project"
-msgstr "Xuất bản Dự án"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Run Project"
-msgstr "Đổi tên Dự án"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "Quét"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Scan Projects"
-msgstr "Dự án"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "Chọn một Folder để Quét"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "Tạo Dự Án"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Import Project"
-msgstr "Đã nạp Dự án"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove Project"
-msgstr "Đổi tên Dự án"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove Missing"
-msgstr "Xóa Animation"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "Về chúng tôi"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Asset Library Projects"
-msgstr "Thư viện tài nguyên"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "Restart ngay"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "Xoá tất cả"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "Không thể chạy dự án"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"Hiện tại bạn không có bất kỳ dự án nào.\n"
-"Bạn có muốn xem qua các dự án ví dụ trên Thư Viện không?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Filter projects"
-msgstr "Lọc các thuộc tính"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
-"Hộp tìm kiếm lọc các dự án theo tên và phần cuối đường dẫn.\n"
-"Để lọc các dự án theo tên và đường dẫn đầy đủ, truy vấn phải chứa ít nhất "
-"một ký tự '/'."
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -13748,6 +13352,386 @@ msgstr "Không thể tạo folder."
 #, fuzzy
 msgid "Error starting HTTP server:"
 msgstr "Lỗi khi lưu scene."
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "Nạp Dự án có sẵn"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "Thêm điểm"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "Tên Dự án:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "Chọn tệp \"project.godot\" hoặc tệp \".zip\"."
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "Tên Dự án:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "Mở Thư mục dữ liệu của Dự Án"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "Không thể cập nhật các phần phụ thuộc:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "Không thể di chuyển thư mục vào chính nó."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "Không thể mở tệp zip các mẫu xuất bản."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "Đã tồn tại một thư mục cùng tên trên đường dẫn này."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "Không thể tạo 'project.godot' trong đường dẫn dự án."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "Đường dẫn đã cho không tồn tại."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "Hãy chọn một thư mục trống."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "Tạo mới Dự án"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "Tạo & Sửa"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "Trình kết xuất hình ảnh:"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"Chất lượng hình ảnh cao hơn\n"
+"Đầy đủ mọi tính năng\n"
+"Không tương thích với các dòng máy cũ\n"
+"Khuyến cáo đối với trò chơi trên web"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"Giảm chất lượng hình ảnh\n"
+"Không hỗ trợ một số tính năng\n"
+"Chạy trên đa số dòng máy\n"
+"Khuyên dùng cho trò chơi trên web"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr ""
+"Trình kết xuất có thể đổi sau, nhưng có thể sẽ phải chỉnh lại các Cảnh."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "Tên dự án không hợp lệ."
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "Không thể tạo 'project.godot' trong đường dẫn dự án."
+
+#: projects_manager/projects_list.cpp
+msgid "Loading, please wait..."
+msgstr "Đang tải, đợi xíu..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr "Sửa đổi lần cuối"
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid "Filter projects"
+msgstr "Lọc các thuộc tính"
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+"Hộp tìm kiếm lọc các dự án theo tên và phần cuối đường dẫn.\n"
+"Để lọc các dự án theo tên và đường dẫn đầy đủ, truy vấn phải chứa ít nhất "
+"một ký tự '/'."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "Dự án bị lỗi"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "Lỗi: Dự án bị thiếu trên hệ thống tệp tin."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "Dự án không tên"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "Trình quản lý Dự án"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "Tạo mới Dự án"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "Nạp Dự án có sẵn"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "Nạp Dự án có sẵn"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove Missing"
+msgstr "Xóa Animation"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Edit Project"
+msgstr "Xuất bản Dự án"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Run Project"
+msgstr "Đổi tên Dự án"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "Đổi tên Dự án"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove Project"
+msgstr "Đổi tên Dự án"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "Về chúng tôi"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "Bạn có chắc muốn xóa bỏ tất cả kết nối từ tín hiệu này?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "Bạn chắc chắn mở nhiều hơn một dự án?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "Không thể chạy dự án"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"Không thể chạy dự án: Các tài sản chưa được nạp.\n"
+"Vui lòng thiết lập dự án để kích hoạt nạp tài sản ban đầu."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"Không thể chạy dự án: chưa chọn phân cảnh chính.\n"
+"Để chọn phân cảnh chính, mở \"Cài đặt Dự án\" sau đó vào mục \"Ứng dụng\"."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"Hiện tại bạn không có bất kỳ dự án nào.\n"
+"Bạn có muốn xem qua các dự án ví dụ trên Thư Viện không?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Local Projects"
+msgstr "Dự án"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "Đến thư mục mẹ."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"Gỡ tất cả dự án bị hỏng khỏi danh sách?\n"
+"Nội dung các thư mục dự án sẽ không bị sửa đổi."
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "Xoá tất cả"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"Đã thay đổi ngôn ngữ.\n"
+"Giao diện sẽ cập nhật sau khi khởi động lại trình biên tập hoặc trình quản "
+"lí dự án."
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "Restart ngay"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "Chọn một Folder để Quét"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Asset Library Projects"
+msgstr "Thư viện tài nguyên"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove %d projects from the list?"
+msgstr "Chọn thiết bị trong danh sách"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "Chọn thiết bị trong danh sách"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "Bạn có chắc chắn chạy các dự án %d cùng lúc?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "Không thể mở dự án tại '%s'."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+"Các cài đặt dự án đã được tạo bởi phiên bản Godot mới và không tương thích "
+"với phiên bản này."
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "Không thể mở dự án tại '%s'."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"Tệp dự án được tạo bởi phiên bản Godot cũ và cần được chuyển đổi cho phiên "
+"bản này:\n"
+"\n"
+"%s\n"
+"\n"
+"Bạn có muốn chuyển đổi nó?\n"
+"Cảnh báo: Bạn sẽ không thể mở dự án với các phiên bản Godot cũ nữa."
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr ""
+"Không thể nạp 'project.godot' trong đường dẫn dự án (lỗi %d). Nó có thể bị "
+"thiếu hoặc đã hỏng."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

@@ -600,9 +600,9 @@ msgstr "klatek na sekundę"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "Edycja"
 
@@ -864,6 +864,7 @@ msgstr "Scena nie posiada żadnego skryptu."
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "Dodaj"
 
@@ -871,8 +872,8 @@ msgstr "Dodaj"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "Usuń"
 
@@ -1077,7 +1078,7 @@ msgid "Resource"
 msgstr "Zasoby"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "Ścieżka"
 
@@ -1202,7 +1203,8 @@ msgstr "Zmień wartość słownika"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "Kliknij, by skopiować."
 
@@ -1567,7 +1569,7 @@ msgstr "Nazwa węzła:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "Nazwa"
 
@@ -1608,8 +1610,8 @@ msgid "Choose a Directory"
 msgstr "Wybierz katalog"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "Utwórz katalog"
 
@@ -1873,7 +1875,7 @@ msgid "Make Current"
 msgstr "Ustaw na bieżący"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "Zaimportuj"
 
@@ -1936,7 +1938,7 @@ msgid "Open in File Manager"
 msgstr "Otwórz w menedżerze plików"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "Pokaż w menedżerze plików"
 
@@ -2323,7 +2325,7 @@ msgstr "Wychodzące RPC"
 msgid "Outgoing RSET"
 msgstr "Wychodzące RSET"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "Nowe okno"
 
@@ -2680,7 +2682,8 @@ msgid "Exit the editor?"
 msgstr "Zamknąć edytor?"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "Otworzyć menadżera projektów?"
 
 #: editor/editor_node.cpp
@@ -2692,7 +2695,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "Czy zapisać zmiany w aktualnej scenie/scenach przed wyjściem?"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr ""
 "Zapisać zmiany w następujących scenach przed otwarciem menedżera projektów?"
 
@@ -2953,8 +2957,8 @@ msgstr "Ponów"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "Różne narzędzia dla scen lub projektu."
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "Projekt"
 
@@ -3000,8 +3004,9 @@ msgid "Reload Current Project"
 msgstr "Wczytaj ponownie aktualny projekt"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "Wyjdź do listy projektów"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "Menedżer projektów"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3369,7 +3374,7 @@ msgstr "Otwórz edytor 3D"
 msgid "Open Script Editor"
 msgstr "Otwórz edytor skryptów"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "Otwórz bibliotekę zasobów"
 
@@ -3658,7 +3663,9 @@ msgstr ""
 msgid "Select Node(s) to Import"
 msgstr "Wybierz węzły do importu"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Przeglądaj"
 
@@ -4164,8 +4171,9 @@ msgstr "Przenieś"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "Zmień nazwę"
 
@@ -4987,6 +4995,7 @@ msgstr "Animacja"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "Nowy"
 
@@ -5500,7 +5509,8 @@ msgstr "Importuj..."
 msgid "Plugins..."
 msgstr "Wtyczki..."
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Sortuj:"
 
@@ -7451,7 +7461,8 @@ msgstr "Zamknij wszystkie"
 msgid "Close Docs"
 msgstr "Zamknij pliki pomocy"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "Uruchom"
 
@@ -7460,6 +7471,7 @@ msgstr "Uruchom"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "Szukaj"
 
@@ -7475,8 +7487,8 @@ msgstr "Przekrocz"
 msgid "Break"
 msgstr "Przerwa"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "Kontynuuj"
 
@@ -10685,7 +10697,7 @@ msgstr "Tryb eksportu?"
 msgid "Export All"
 msgstr "Eksportuj wszystko"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "Plik ZIP"
 
@@ -10705,406 +10717,6 @@ msgstr "Zarządzaj szablonami eksportu"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "Eksport z debugowaniem"
-
-#: editor/project_manager.cpp
-msgid "The path specified doesn't exist."
-msgstr "Podana ścieżka nie istnieje."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr "Błąd otwierania pliku pakietu (nie jest w formacie ZIP)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr ""
-"Niewłaściwy plik \".zip\" projektu; nie zawiera pliku \"project.godot\"."
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "Proszę wybrać pusty folder."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "Proszę wybrać plik \"project.godot\" lub \".zip\"."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "Ten folder już zawiera projekt Godota."
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "Nowy projekt gry"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "Zaimportowano projekt"
-
-#: editor/project_manager.cpp
-msgid "Invalid project name."
-msgstr "Nieprawidłowa nazwa projektu."
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "Nie można utworzyć katalogu."
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "Folder o podanej nazwie istnieje już w tej lokalizacji."
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "Dobrym pomysłem byłoby nazwanie swojego projektu."
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "Niepoprawna ścieżka projektu (zmienić cokolwiek?)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr ""
-"Nie udało się wczytać project.godot w ścieżce projektu (błąd %d). Może go "
-"brakować lub być uszkodzony."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "Nie można było edytować engine.cfg w ścieżce projektu."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "Nie można utworzyć project.godot w ścieżka projektu."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr "Błąd otwierania pliku pakietu, nie jest w formacie ZIP."
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "Nie powiodło się wypakowanie z pakietu następujących plików:"
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "Pakiet zainstalowano poprawnie!"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "Zmień nazwę projektu"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "Importuj istniejący projekt"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "Importuj i edytuj"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "Utwórz nowy projekt"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "Utwórz i edytuj"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "Zainstaluj projekt:"
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "Zainstaluj i edytuj"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "Nazwa projektu:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "Ścieżka do projektu:"
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "Ścieżka instalacji projektu:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "Renderer:"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3.0"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr "Nie obsługiwany przez twój sterownik GPU."
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"Wyższa jakość wizualna\n"
-"Wszystkie funkcjonalności dostępne\n"
-"Niekompatybilne ze starszym sprzętem\n"
-"Niezalecane dla gier przeglądarkowych"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2.0"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"Mniejsza jakość wizualna\n"
-"Niektóre funkcjonalności niedostępne\n"
-"Działa na większości sprzętu\n"
-"Rekomendowane dla gier przeglądarkowych"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr ""
-"Renderer może zostać później zmieniony, ale sceny mogą potrzebować "
-"dostosowania."
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "Projekt bez nazwy"
-
-#: editor/project_manager.cpp
-msgid "Missing Project"
-msgstr "Brakujący projekt"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr "Błąd: Projekt nieobecny w systemie plików."
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "Nie można otworzyć projektu w \"%s\"."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "Czy jesteś pewny że chcesz otworzyć więcej niż jeden projekt?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Podany plik ustawień projektu nie zawiera informacji o wersji Godota, w "
-"której został stworzony.\n"
-"\n"
-"%s\n"
-"\n"
-"Jeśli mimo to go otworzysz, zostanie przekonwertowany do aktualnego formatu "
-"pliku konfiguracji Godota.\n"
-"Ostrzeżenie: Nie będziesz w stanie więcej otworzyć tego projektu z "
-"wcześniejszymi wersjami silnika."
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Podany plik ustawień projektu został wygenerowany przez starszą wersję "
-"silnika i musi zostać przekonwertowany do aktualnej wersji.\n"
-"\n"
-"%s\n"
-"\n"
-"Chcesz go przekonwertować?\n"
-"Ostrzeżenie: Nie będziesz w stanie więcej otworzyć tego projektu z "
-"wcześniejszymi wersjami silnika."
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-"Opcje projektu zostały utworzone w nowszej wersji silnika, która nie jest "
-"kompatybilna z obecną wersją."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"Nie można uruchomić projektu: główna scena niezdefiniowana.\n"
-"Edytuj projekt i zmień główną scenę w Ustawieniach Projektu pod kategorią "
-"\"Application\"."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"Nie można uruchomić projektu: Zasoby muszą zostać zaimportowane\n"
-"Otwórz projekt w edytorze aby zaimportować zasoby."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "Czy na pewno chcesz uruchomić %d projektów na raz?"
-
-#: editor/project_manager.cpp
-msgid "Remove %d projects from the list?"
-msgstr "Usunąć %d projektów z listy?"
-
-#: editor/project_manager.cpp
-msgid "Remove this project from the list?"
-msgstr "Usunąć ten projekt z listy?"
-
-#: editor/project_manager.cpp
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"Usunąć wszystkie brakujące projekty z listy?\n"
-"Zawartość folderów projektów nie zostanie zmodyfikowana."
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"Język został zmieniony.\n"
-"Interfejs zaktualizuje się po restarcie edytora lub menedżera projektów."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"Czy na pewno chcesz przeskanować %s folderów w poszukiwaniu istniejących "
-"projektów Godota?\n"
-"To może chwilę zająć."
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "Menedżer projektów"
-
-#: editor/project_manager.cpp
-msgid "Local Projects"
-msgstr "Lokalne projekty"
-
-#: editor/project_manager.cpp
-msgid "Loading, please wait..."
-msgstr "Wczytywanie, proszę czekać..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr "Data modyfikacji"
-
-#: editor/project_manager.cpp
-msgid "Edit Project"
-msgstr "Edytuj projekt"
-
-#: editor/project_manager.cpp
-msgid "Run Project"
-msgstr "Uruchom projekt"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "Skanuj"
-
-#: editor/project_manager.cpp
-msgid "Scan Projects"
-msgstr "Skanuj projekty"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "Wybierz folder do skanowania"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "Nowy projekt"
-
-#: editor/project_manager.cpp
-msgid "Import Project"
-msgstr "Importuj projekt"
-
-#: editor/project_manager.cpp
-msgid "Remove Project"
-msgstr "Usuń projekt"
-
-#: editor/project_manager.cpp
-msgid "Remove Missing"
-msgstr "Usuń brakujące"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "O silniku"
-
-#: editor/project_manager.cpp
-msgid "Asset Library Projects"
-msgstr "Projekty Biblioteki Zasobów"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "Uruchom ponownie"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "Usuń wszystkie"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr "Usuń także projekt (nie można cofnąć!)"
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "Nie można uruchomić projektu"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"Nie posiadasz obecnie żadnych projektów.\n"
-"Czy chcesz zobaczyć oficjalne przykładowe projekty w Bibliotece Zasobów?"
-
-#: editor/project_manager.cpp
-msgid "Filter projects"
-msgstr "Filtruj projekty"
-
-#: editor/project_manager.cpp
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
-"To pole filtruje projekty po nazwie i ostatniej składowej ścieżki.\n"
-"By filtrować projekty po nazwie i pełnej ścieżce, zapytanie musi zawierać "
-"przynajmniej jeden znak \"/\"."
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -13735,6 +13347,379 @@ msgstr "Nie udało się utworzyć folderu serwera HTTP:"
 #: platform/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "Błąd uruchamiania serwera HTTP:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "Importuj istniejący projekt"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "Dodaj punkt"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "Nazwa projektu:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "Proszę wybrać plik \"project.godot\" lub \".zip\"."
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "Nazwa projektu:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "Otwórz folder danych projektu"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "Nie można zaktualizować zależności:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "Nie można przenieść katalogu do siebie samego."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "Nie można otworzyć pliku szablonów eksportu."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "Folder o podanej nazwie istnieje już w tej lokalizacji."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "Nie można utworzyć project.godot w ścieżka projektu."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "Podana ścieżka nie istnieje."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "Proszę wybrać pusty folder."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "Utwórz nowy projekt"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "Utwórz i edytuj"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "Renderer:"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"Wyższa jakość wizualna\n"
+"Wszystkie funkcjonalności dostępne\n"
+"Niekompatybilne ze starszym sprzętem\n"
+"Niezalecane dla gier przeglądarkowych"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2.0"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"Mniejsza jakość wizualna\n"
+"Niektóre funkcjonalności niedostępne\n"
+"Działa na większości sprzętu\n"
+"Rekomendowane dla gier przeglądarkowych"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr ""
+"Renderer może zostać później zmieniony, ale sceny mogą potrzebować "
+"dostosowania."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "Nieprawidłowa nazwa projektu."
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "Nie można utworzyć project.godot w ścieżka projektu."
+
+#: projects_manager/projects_list.cpp
+msgid "Loading, please wait..."
+msgstr "Wczytywanie, proszę czekać..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr "Data modyfikacji"
+
+#: projects_manager/projects_list.cpp
+msgid "Filter projects"
+msgstr "Filtruj projekty"
+
+#: projects_manager/projects_list.cpp
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+"To pole filtruje projekty po nazwie i ostatniej składowej ścieżki.\n"
+"By filtrować projekty po nazwie i pełnej ścieżce, zapytanie musi zawierać "
+"przynajmniej jeden znak \"/\"."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "Brakujący projekt"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "Błąd: Projekt nieobecny w systemie plików."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "Projekt bez nazwy"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "Menedżer projektów"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "Utwórz nowy projekt"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "Importuj istniejący projekt"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "Importuj istniejący projekt"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Missing"
+msgstr "Usuń brakujące"
+
+#: projects_manager/projects_manager.cpp
+msgid "Edit Project"
+msgstr "Edytuj projekt"
+
+#: projects_manager/projects_manager.cpp
+msgid "Run Project"
+msgstr "Uruchom projekt"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "Zmień nazwę projektu"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Project"
+msgstr "Usuń projekt"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "O silniku"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "Na pewno chcesz usunąć wszystkie połączenia z tego sygnału?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "Czy jesteś pewny że chcesz otworzyć więcej niż jeden projekt?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "Nie można uruchomić projektu"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"Nie można uruchomić projektu: Zasoby muszą zostać zaimportowane\n"
+"Otwórz projekt w edytorze aby zaimportować zasoby."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"Nie można uruchomić projektu: główna scena niezdefiniowana.\n"
+"Edytuj projekt i zmień główną scenę w Ustawieniach Projektu pod kategorią "
+"\"Application\"."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"Nie posiadasz obecnie żadnych projektów.\n"
+"Czy chcesz zobaczyć oficjalne przykładowe projekty w Bibliotece Zasobów?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Local Projects"
+msgstr "Lokalne projekty"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "Usuń także projekt (nie można cofnąć!)"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"Usunąć wszystkie brakujące projekty z listy?\n"
+"Zawartość folderów projektów nie zostanie zmodyfikowana."
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "Usuń wszystkie"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"Język został zmieniony.\n"
+"Interfejs zaktualizuje się po restarcie edytora lub menedżera projektów."
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "Uruchom ponownie"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "Wybierz folder do skanowania"
+
+#: projects_manager/projects_manager.cpp
+msgid "Asset Library Projects"
+msgstr "Projekty Biblioteki Zasobów"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove %d projects from the list?"
+msgstr "Usunąć %d projektów z listy?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "Usunąć %d projektów z listy?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "Czy na pewno chcesz uruchomić %d projektów na raz?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "Nie można otworzyć projektu w \"%s\"."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+"Opcje projektu zostały utworzone w nowszej wersji silnika, która nie jest "
+"kompatybilna z obecną wersją."
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "Nie można otworzyć projektu w \"%s\"."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"Podany plik ustawień projektu został wygenerowany przez starszą wersję "
+"silnika i musi zostać przekonwertowany do aktualnej wersji.\n"
+"\n"
+"%s\n"
+"\n"
+"Chcesz go przekonwertować?\n"
+"Ostrzeżenie: Nie będziesz w stanie więcej otworzyć tego projektu z "
+"wcześniejszymi wersjami silnika."
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr ""
+"Nie udało się wczytać project.godot w ścieżce projektu (błąd %d). Może go "
+"brakować lub być uszkodzony."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""
