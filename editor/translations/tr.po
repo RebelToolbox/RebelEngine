@@ -613,9 +613,9 @@ msgstr "FPS"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -877,6 +877,7 @@ msgstr "Sahne hiç komut içermiyor."
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "Ekle"
 
@@ -884,8 +885,8 @@ msgstr "Ekle"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "Kaldır"
 
@@ -1090,7 +1091,7 @@ msgid "Resource"
 msgstr "Kaynak"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "Yol"
 
@@ -1216,7 +1217,8 @@ msgstr "Sözlükteki Değeri Değiştir"
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr "Kopyalamak için tıkla."
 
@@ -1581,7 +1583,7 @@ msgstr "Düğüm adı:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "İsim"
 
@@ -1622,8 +1624,8 @@ msgid "Choose a Directory"
 msgstr "Bir Dizin Seç"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "Klasör Oluştur"
 
@@ -1889,7 +1891,7 @@ msgid "Make Current"
 msgstr "Geçerli Yap"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "İçe Aktar"
 
@@ -1953,7 +1955,7 @@ msgid "Open in File Manager"
 msgstr "Dosya Yöneticisinde Aç"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "Dosya Yöneticisinde Göster"
 
@@ -2343,7 +2345,7 @@ msgstr "Giden RPC"
 msgid "Outgoing RSET"
 msgstr "Giden RSET"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 msgid "New Window"
 msgstr "Yeni Pencere"
 
@@ -2699,7 +2701,8 @@ msgid "Exit the editor?"
 msgstr "Düzenleyiciden çık?"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "Proje Yöneticisi Açılsın Mı?"
 
 #: editor/editor_node.cpp
@@ -2711,7 +2714,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "Çıkmadan önce değişiklikler aşağıdaki sahne(ler)e kaydedilsin mi?"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr ""
 "Proje Yöneticisi açılmadan önce değişiklikler aşağıdaki sahneye(lere) "
 "kaydedilsin mi?"
@@ -2973,8 +2977,8 @@ msgstr "Yeniden yap"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "Çeşitli proje ya da sahne-çapında araçlar."
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 msgid "Project"
 msgstr "Proje"
 
@@ -3020,8 +3024,9 @@ msgid "Reload Current Project"
 msgstr "Projeyi Tekrar Yükle"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "Proje Listesine Çık"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "Proje Yöneticisi"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3393,7 +3398,7 @@ msgstr "3B Düzenleyiciyi Aç"
 msgid "Open Script Editor"
 msgstr "Betik Düzenleyiciyi Aç"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 msgid "Open Asset Library"
 msgstr "Projeler Kütüphanesini Aç"
 
@@ -3683,7 +3688,9 @@ msgstr ""
 msgid "Select Node(s) to Import"
 msgstr "Düğüm(leri) içe Aktarmak için Seç"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Gözat"
 
@@ -4191,8 +4198,9 @@ msgstr "Taşı"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "Yeniden Adlandır"
 
@@ -5012,6 +5020,7 @@ msgstr "Animasyon"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "Yeni"
 
@@ -5526,7 +5535,8 @@ msgstr "İçe Aktar..."
 msgid "Plugins..."
 msgstr "Eklentiler..."
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Sırala:"
 
@@ -7471,7 +7481,8 @@ msgstr "Tümünü Kapat"
 msgid "Close Docs"
 msgstr "Belgeleri Kapat"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "Çalıştır"
 
@@ -7480,6 +7491,7 @@ msgstr "Çalıştır"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "Ara"
 
@@ -7495,8 +7507,8 @@ msgstr "Adımla"
 msgid "Break"
 msgstr "Ara Ver"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "Devam Et"
 
@@ -10699,7 +10711,7 @@ msgstr "Dışa Aktarma Modu?"
 msgid "Export All"
 msgstr "Tümünü Dışa Aktar"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 msgid "ZIP File"
 msgstr "ZIP Dosyası"
 
@@ -10719,404 +10731,6 @@ msgstr "Dışa Aktarım Şablonlarını Yönet"
 #: editor/project_export.cpp
 msgid "Export With Debug"
 msgstr "Hata Ayıklama İle Dışa Aktar"
-
-#: editor/project_manager.cpp
-msgid "The path specified doesn't exist."
-msgstr "Belirtilen yol mevcut değil."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr "Paket dosyası açılırken hata (ZIP formatında değil)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr "Geçersiz \".zip\" proje dosyası; \"project.godot\" dosyası içermiyor."
-
-#: editor/project_manager.cpp
-msgid "Please choose an empty folder."
-msgstr "Lütfen boş bir klasör seçin."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "Lütfen bir \"project.godot\" veya \".zip\" dosyası seçin."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "This directory already contains a Rebel project."
-msgstr "Bu dizinde zaten bir Godot projesi var."
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "Yeni Oyun Projesi"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "İçe Aktarılan Proje"
-
-#: editor/project_manager.cpp
-msgid "Invalid project name."
-msgstr "Geçersiz Proje Adı."
-
-#: editor/project_manager.cpp
-msgid "Couldn't create folder."
-msgstr "Klasör oluşturulamadı."
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr "Yolda bu isimde bir klasör zaten var."
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "Projenizi isimlendirmek iyi bir fikir olabilir."
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "Geçersiz proje yolu (bir şey değişti mi?)."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr ""
-"Proje yolundaki proje.godot düzenlenemedi (error %d). Eksik veya bozulmuş "
-"olabilir."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "proje yolundaki proje.godot düzenlenemedi."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "proje.godot proje yolunda oluşturulamadı."
-
-#: editor/project_manager.cpp
-msgid "Error opening package file, not in ZIP format."
-msgstr "Paket dosyası açılırken hata oluştu, zip formatında değil."
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "Aşağıdaki dosyaların, çıkından ayıklanma işlemi başarısız oldu:"
-
-#: editor/project_manager.cpp
-msgid "Package installed successfully!"
-msgstr "Paket Başarı ile Kuruldu!"
-
-#: editor/project_manager.cpp
-msgid "Rename Project"
-msgstr "Projeyi Yeniden Adlandır"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "Var Olan Projeyi İçe Aktar"
-
-#: editor/project_manager.cpp
-msgid "Import & Edit"
-msgstr "İçe Aktar & Düzenle"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "Yeni Proje Oluştur"
-
-#: editor/project_manager.cpp
-msgid "Create & Edit"
-msgstr "Oluştur & Düzenle"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "Projeyi Kur:"
-
-#: editor/project_manager.cpp
-msgid "Install & Edit"
-msgstr "Kur & Düzenle"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "Proje Adı:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "Proje Yolu:"
-
-#: editor/project_manager.cpp
-msgid "Project Installation Path:"
-msgstr "Proje Yükleme Yolu:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr "Oluşturucu:"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr "OpenGL ES 3"
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr "GPU sürücüleriniz tarafından desteklenmiyor."
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-"Daha yüksek görsel kalite\n"
-"Tüm özellikler mevcut\n"
-"Eski donanımla uyumsuz\n"
-"Web oyunları için önerilmez"
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr "OpenGL ES 2"
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-"Daha Düşük Görsel Kalite\n"
-"Bazı özellikler eksik\n"
-"Çoğu donanımda çalışır\n"
-"Web uygulamaları için önerilir"
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr ""
-"Oluşturucu daha sonra değiştirilebilir, ancak sahnelerin ayarlanması "
-"gerekebilir."
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "Adsız Proje"
-
-#: editor/project_manager.cpp
-msgid "Missing Project"
-msgstr "Eksik Proje"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr "Hata: Proje dosya sisteminde mevcut değil.."
-
-#: editor/project_manager.cpp
-msgid "Can't open project at '%s'."
-msgstr "'%s' adresindeki proje açılamıyor."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "Birden fazla proje açmakta kararlı mısınız?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Aşağıdaki proje ayarları dosyası, içinden oluşturulduğu Godot sürümünü "
-"belirtmiyor.\n"
-"\n"
-"%s\n"
-"\n"
-"Açmaya devam ederseniz, Godot'un geçerli yapılandırma dosyası biçimine "
-"dönüştürülecektir..\n"
-"Uyarı: Projeyi artık motorun önceki sürümleriyle açamayacaksınız."
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-"Aşağıdaki proje ayarları dosyası daha eski bir motor sürümü tarafından "
-"oluşturulmuştur ve bu sürüm için dönüştürülmesi gerekir:\n"
-"\n"
-"%s\n"
-"\n"
-"Dönüştürmek ister misiniz?\n"
-"Uyarı: Projeyi artık motorun önceki sürümleriyle açamayacaksınız."
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-"Proje ayarları, bu sürümle uyumlu olmayan daha yeni bir motor sürümü "
-"tarafından oluşturuldu."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"Proje çalıştırılamadı: tanımlanmış ana sahne yok.\n"
-"Lütfen projeyi düzenleyin ve \"Uygulama\" kategorisi altındaki \"Proje "
-"Ayarları\" kısmından ana sahneyi belirleyin."
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"Proje Çalıştırılamadı: varlıkların içe aktarılmış olması gerekir.\n"
-"Lütfen ilk içe aktarmayı tetiklemek için projeyi düzenleyin."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to run %d projects at once?"
-msgstr "Birden fazla projeyi çalıştırmak istediğinize emin misiniz?"
-
-#: editor/project_manager.cpp
-msgid "Remove %d projects from the list?"
-msgstr "%d proje listeden kaldırılsın mı?"
-
-#: editor/project_manager.cpp
-msgid "Remove this project from the list?"
-msgstr "Bu proje listeden kaldırılsın mı?"
-
-#: editor/project_manager.cpp
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr ""
-"Tüm eksik projeleri listeden kaldır?\n"
-"Proje klasörlerinin içeriği değiştirilmeyecek."
-
-#: editor/project_manager.cpp
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"Dil değişti.\n"
-"Değişiklik düzenleyici veya proje yöneticisi yeniden başladığında etkili "
-"olacak."
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"Var olan Godot projeleri için %s klasör taraması yapmak istediğinize emin "
-"misiniz?\n"
-"Bu biraz zaman alabilir."
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "Proje Yöneticisi"
-
-#: editor/project_manager.cpp
-msgid "Local Projects"
-msgstr "Yerel Projeler"
-
-#: editor/project_manager.cpp
-msgid "Loading, please wait..."
-msgstr "Yükleniyor, lütfen bekleyin..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr "Son Değişiklik"
-
-#: editor/project_manager.cpp
-msgid "Edit Project"
-msgstr "Projjeyi Düzenle"
-
-#: editor/project_manager.cpp
-msgid "Run Project"
-msgstr "Projeyi Çalıştır"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "Tara"
-
-#: editor/project_manager.cpp
-msgid "Scan Projects"
-msgstr "Projeleri Tara"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "Tarama İçin Bir Klasör Seç"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "Yeni Proje"
-
-#: editor/project_manager.cpp
-msgid "Import Project"
-msgstr "Projeyi İçe Aktar"
-
-#: editor/project_manager.cpp
-msgid "Remove Project"
-msgstr "Projeyi Kaldır"
-
-#: editor/project_manager.cpp
-msgid "Remove Missing"
-msgstr "Eksikleri Kaldır"
-
-#: editor/project_manager.cpp
-msgid "About"
-msgstr "Hakkında"
-
-#: editor/project_manager.cpp
-msgid "Asset Library Projects"
-msgstr "Kaynak Kütüphanesi Projeleri"
-
-#: editor/project_manager.cpp
-msgid "Restart Now"
-msgstr "Şimdi Yeniden Başlat"
-
-#: editor/project_manager.cpp
-msgid "Remove All"
-msgstr "Tümünü Kaldır"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr "Ayrıca proje içeriğini silin (geri alma yok!)"
-
-#: editor/project_manager.cpp
-msgid "Can't run project"
-msgstr "Proje çalıştırılamadı"
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-"Herhangi bir projen yok.\n"
-"Varlık Kütüphanesi'ndeki resmî örnek projeleri incelemek ister misin?"
-
-#: editor/project_manager.cpp
-msgid "Filter projects"
-msgstr "Projeleri Ayıkla"
-
-#: editor/project_manager.cpp
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
-"Arama kutusu, projeleri adına ve son dizin bileşenine göre filtreler.\n"
-"Projeleri adına ve tam dizinine göre filtrelemek için, sorgunun en az bir `/"
-"` karakteri içermesi gereklidir."
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -13742,6 +13356,379 @@ msgstr "HTTP sunucu klasörü oluşturulamadı:"
 #: platform/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "HTTP sunucusu başlatılırken hata:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "Var Olan Projeyi İçe Aktar"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "Nokta Ekle"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "Proje Adı:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "Lütfen bir \"project.godot\" veya \".zip\" dosyası seçin."
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "Proje Adı:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "Proje Verileri Klasörünü Aç"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "Bağımlılıklar güncellenemedi:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "Bir klasör kendisinin içine taşınamaz."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "Dışa aktarım kalıpları dosyası açılamadı."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "There is already a folder with this project name."
+msgstr "Yolda bu isimde bir klasör zaten var."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "proje.godot proje yolunda oluşturulamadı."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "Belirtilen yol mevcut değil."
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "Please choose an empty folder."
+msgstr "Lütfen boş bir klasör seçin."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "Yeni Proje Oluştur"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create & Edit"
+msgstr "Oluştur & Düzenle"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr "Oluşturucu:"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr "OpenGL ES 3"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+"Daha yüksek görsel kalite\n"
+"Tüm özellikler mevcut\n"
+"Eski donanımla uyumsuz\n"
+"Web oyunları için önerilmez"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr "OpenGL ES 2"
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+"Daha Düşük Görsel Kalite\n"
+"Bazı özellikler eksik\n"
+"Çoğu donanımda çalışır\n"
+"Web uygulamaları için önerilir"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr ""
+"Oluşturucu daha sonra değiştirilebilir, ancak sahnelerin ayarlanması "
+"gerekebilir."
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "Geçersiz Proje Adı."
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "proje.godot proje yolunda oluşturulamadı."
+
+#: projects_manager/projects_list.cpp
+msgid "Loading, please wait..."
+msgstr "Yükleniyor, lütfen bekleyin..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr "Son Değişiklik"
+
+#: projects_manager/projects_list.cpp
+msgid "Filter projects"
+msgstr "Projeleri Ayıkla"
+
+#: projects_manager/projects_list.cpp
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+"Arama kutusu, projeleri adına ve son dizin bileşenine göre filtreler.\n"
+"Projeleri adına ve tam dizinine göre filtrelemek için, sorgunun en az bir `/"
+"` karakteri içermesi gereklidir."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "Eksik Proje"
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Error: Project settings not found"
+msgstr "Hata: Proje dosya sisteminde mevcut değil.."
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "Adsız Proje"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "Proje Yöneticisi"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "Yeni Proje Oluştur"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "Var Olan Projeyi İçe Aktar"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "Var Olan Projeyi İçe Aktar"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Missing"
+msgstr "Eksikleri Kaldır"
+
+#: projects_manager/projects_manager.cpp
+msgid "Edit Project"
+msgstr "Projjeyi Düzenle"
+
+#: projects_manager/projects_manager.cpp
+msgid "Run Project"
+msgstr "Projeyi Çalıştır"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Rename Project"
+msgstr "Projeyi Yeniden Adlandır"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove Project"
+msgstr "Projeyi Kaldır"
+
+#: projects_manager/projects_manager.cpp
+msgid "About"
+msgstr "Hakkında"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr "Bu sinyalden, tüm bağlantıları kaldırmak istediğinizden emin misiniz?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "Birden fazla proje açmakta kararlı mısınız?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't run project"
+msgstr "Proje çalıştırılamadı"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"Proje Çalıştırılamadı: varlıkların içe aktarılmış olması gerekir.\n"
+"Lütfen ilk içe aktarmayı tetiklemek için projeyi düzenleyin."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"Proje çalıştırılamadı: tanımlanmış ana sahne yok.\n"
+"Lütfen projeyi düzenleyin ve \"Uygulama\" kategorisi altındaki \"Proje "
+"Ayarları\" kısmından ana sahneyi belirleyin."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+"Herhangi bir projen yok.\n"
+"Varlık Kütüphanesi'ndeki resmî örnek projeleri incelemek ister misin?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Local Projects"
+msgstr "Yerel Projeler"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "Ayrıca proje içeriğini silin (geri alma yok!)"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr ""
+"Tüm eksik projeleri listeden kaldır?\n"
+"Proje klasörlerinin içeriği değiştirilmeyecek."
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove All"
+msgstr "Tümünü Kaldır"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"Dil değişti.\n"
+"Değişiklik düzenleyici veya proje yöneticisi yeniden başladığında etkili "
+"olacak."
+
+#: projects_manager/projects_manager.cpp
+msgid "Restart Now"
+msgstr "Şimdi Yeniden Başlat"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "Tarama İçin Bir Klasör Seç"
+
+#: projects_manager/projects_manager.cpp
+msgid "Asset Library Projects"
+msgstr "Kaynak Kütüphanesi Projeleri"
+
+#: projects_manager/projects_manager.cpp
+msgid "Remove %d projects from the list?"
+msgstr "%d proje listeden kaldırılsın mı?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "%d proje listeden kaldırılsın mı?"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure to run %d projects at once?"
+msgstr "Birden fazla projeyi çalıştırmak istediğinize emin misiniz?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "'%s' adresindeki proje açılamıyor."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+"Proje ayarları, bu sürümle uyumlu olmayan daha yeni bir motor sürümü "
+"tarafından oluşturuldu."
+
+#: projects_manager/projects_manager.cpp
+msgid "Can't open project at '%s'."
+msgstr "'%s' adresindeki proje açılamıyor."
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+"Aşağıdaki proje ayarları dosyası daha eski bir motor sürümü tarafından "
+"oluşturulmuştur ve bu sürüm için dönüştürülmesi gerekir:\n"
+"\n"
+"%s\n"
+"\n"
+"Dönüştürmek ister misiniz?\n"
+"Uyarı: Projeyi artık motorun önceki sürümleriyle açamayacaksınız."
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr ""
+"Proje yolundaki proje.godot düzenlenemedi (error %d). Eksik veya bozulmuş "
+"olabilir."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""

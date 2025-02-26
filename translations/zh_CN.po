@@ -54961,8 +54961,9 @@ msgstr ""
 "必须启用 [member application/config/use_custom_user_dir]设置才能使其生效。"
 
 #: docs/ProjectSettings.xml
+#, fuzzy
 msgid ""
-"The project's description, displayed as a tooltip in the Project Manager "
+"The project's description, displayed as a tooltip in the Projects Manager "
 "when hovering the project."
 msgstr "项目的描述，在项目管理器中悬停时显示为工具提示。"
 
@@ -54981,11 +54982,12 @@ msgstr ""
 "通过调用[method OS.set_native_icon]自动完成。"
 
 #: docs/ProjectSettings.xml
+#, fuzzy
 msgid ""
-"The project's name. It is used both by the Project Manager and by exporters. "
-"The project name can be translated by translating its value in localization "
-"files. The window title will be set to match the project name automatically "
-"on startup.\n"
+"The project's name. It is used both by the Projects Manager and by "
+"exporters. The project name can be translated by translating its value in "
+"localization files. The window title will be set to match the project name "
+"automatically on startup.\n"
 "[b]Note:[/b] Changing this value will also change the user data folder's "
 "path if [member application/config/use_custom_user_dir] is [code]false[/"
 "code]. After renaming the project, you will no longer be able to access "

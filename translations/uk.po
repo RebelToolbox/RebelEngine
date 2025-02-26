@@ -44127,7 +44127,7 @@ msgstr ""
 
 #: docs/ProjectSettings.xml
 msgid ""
-"The project's description, displayed as a tooltip in the Project Manager "
+"The project's description, displayed as a tooltip in the Projects Manager "
 "when hovering the project."
 msgstr ""
 
@@ -44145,10 +44145,10 @@ msgstr ""
 
 #: docs/ProjectSettings.xml
 msgid ""
-"The project's name. It is used both by the Project Manager and by exporters. "
-"The project name can be translated by translating its value in localization "
-"files. The window title will be set to match the project name automatically "
-"on startup.\n"
+"The project's name. It is used both by the Projects Manager and by "
+"exporters. The project name can be translated by translating its value in "
+"localization files. The window title will be set to match the project name "
+"automatically on startup.\n"
 "[b]Note:[/b] Changing this value will also change the user data folder's "
 "path if [member application/config/use_custom_user_dir] is [code]false[/"
 "code]. After renaming the project, you will no longer be able to access "

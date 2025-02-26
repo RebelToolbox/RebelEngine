@@ -561,9 +561,9 @@ msgstr "এফপিএস"
 #: editor/plugins/polygon_2d_editor_plugin.cpp
 #: editor/plugins/script_text_editor.cpp
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
-#: editor/plugins/tile_set_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp editor/property_editor.cpp
-#: modules/visual_script/visual_script_editor.cpp
+#: editor/plugins/tile_set_editor_plugin.cpp editor/project_settings_editor.cpp
+#: editor/property_editor.cpp modules/visual_script/visual_script_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Edit"
 msgstr "সম্পাদন করুন (Edit)"
 
@@ -834,6 +834,7 @@ msgstr "নোডে কোনো জ্যামিতিক আকার ন�
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/item_list_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp editor/project_settings_editor.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Add"
 msgstr "সংযোজন করুন"
 
@@ -841,8 +842,8 @@ msgstr "সংযোজন করুন"
 #: editor/groups_editor.cpp editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #: editor/plugins/resource_preloader_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp editor/project_manager.cpp
-#: editor/project_settings_editor.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_manager.cpp
 msgid "Remove"
 msgstr "অপসারণ করুন"
 
@@ -1063,7 +1064,7 @@ msgid "Resource"
 msgstr "রিসোর্স"
 
 #: editor/dependency_editor.cpp editor/editor_autoload_settings.cpp
-#: editor/project_manager.cpp editor/project_settings_editor.cpp
+#: editor/project_settings_editor.cpp projects_manager/projects_list.cpp
 msgid "Path"
 msgstr "পথ"
 
@@ -1189,7 +1190,8 @@ msgstr "ডিকশনারি ভ্যালু  পরিবর্তন �
 msgid "Rebel Engine"
 msgstr ""
 
-#: editor/editor_about.cpp editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_about.cpp editor/editor_node.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Click to copy."
 msgstr ""
 
@@ -1573,7 +1575,7 @@ msgstr "নোডের নাম:"
 
 #: editor/editor_autoload_settings.cpp editor/editor_help_search.cpp
 #: editor/editor_plugin_settings.cpp editor/editor_profiler.cpp
-#: editor/project_manager.cpp editor/settings_config_dialog.cpp
+#: editor/settings_config_dialog.cpp projects_manager/projects_list.cpp
 msgid "Name"
 msgstr "নাম"
 
@@ -1617,8 +1619,8 @@ msgid "Choose a Directory"
 msgstr "একটি স্থান পছন্দ করুন"
 
 #: editor/editor_dir_dialog.cpp editor/editor_file_dialog.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
-#: scene/gui/file_dialog.cpp
+#: editor/filesystem_dock.cpp projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Create Folder"
 msgstr "ফোল্ডার তৈরি করুন"
 
@@ -1890,7 +1892,7 @@ msgid "Make Current"
 msgstr "বর্তমান:"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
-#: editor/plugins/theme_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/theme_editor_plugin.cpp
 msgid "Import"
 msgstr "ইম্পোর্ট"
 
@@ -1962,7 +1964,7 @@ msgid "Open in File Manager"
 msgstr "ফাইল-ম্যানেজারে দেখুন"
 
 #: editor/editor_file_dialog.cpp editor/editor_node.cpp
-#: editor/filesystem_dock.cpp editor/project_manager.cpp
+#: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 #, fuzzy
 msgid "Show in File Manager"
 msgstr "ফাইল-ম্যানেজারে দেখুন"
@@ -2395,7 +2397,7 @@ msgstr ""
 msgid "Outgoing RSET"
 msgstr ""
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_list.cpp
 #, fuzzy
 msgid "New Window"
 msgstr "উইন্ডো"
@@ -2750,7 +2752,8 @@ msgid "Exit the editor?"
 msgstr "এডিটর হতে প্রস্থান করবেন?"
 
 #: editor/editor_node.cpp
-msgid "Open Project Manager?"
+#, fuzzy
+msgid "Open Projects Manager?"
 msgstr "Open প্রকল্প ম্যানেজার?"
 
 #: editor/editor_node.cpp
@@ -2763,7 +2766,8 @@ msgid "Save changes to the following scene(s) before quitting?"
 msgstr "বন্ধ করার পূর্বে পরিবর্তনসমূহ (সিন) সংরক্ষণ করবেন?"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Project Manager?"
+#, fuzzy
+msgid "Save changes to the following scene(s) before opening Projects Manager?"
 msgstr "প্রজেক্ট ম্যানেজার ওপেন করার পূর্বে পরিবর্তনসমূহ (সিন) সংরক্ষণ করবেন?"
 
 #: editor/editor_node.cpp
@@ -3038,8 +3042,8 @@ msgstr "পুনরায় করুন"
 msgid "Miscellaneous project or scene-wide tools."
 msgstr "প্রকল্প অথবা দৃশ্যে-ব্যাপী বিবিধ সরঞ্জাম-সমূহ।"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
-#: editor/script_create_dialog.cpp
+#: editor/editor_node.cpp editor/script_create_dialog.cpp
+#: projects_manager/add_project_dialog.cpp
 #, fuzzy
 msgid "Project"
 msgstr "নতুন প্রকল্প"
@@ -3091,8 +3095,9 @@ msgid "Reload Current Project"
 msgstr "নামহীন প্রকল্প"
 
 #: editor/editor_node.cpp
-msgid "Quit to Project List"
-msgstr "প্রকল্পের তালিকায় প্রস্থান করুন"
+#, fuzzy
+msgid "Quit to Projects Manager"
+msgstr "প্রজেক্ট ম্যানেজার"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3474,7 +3479,7 @@ msgstr "এডিটরে খুলুন"
 msgid "Open Script Editor"
 msgstr "এডিটরে খুলুন"
 
-#: editor/editor_node.cpp editor/project_manager.cpp
+#: editor/editor_node.cpp projects_manager/projects_manager.cpp
 #, fuzzy
 msgid "Open Asset Library"
 msgstr "লাইব্রেরি এক্সপোর্ট করুন"
@@ -3780,7 +3785,9 @@ msgstr ""
 msgid "Select Node(s) to Import"
 msgstr "ইম্পোর্টের জন্য নোড(সমূহ) নির্বাচন করুন"
 
-#: editor/editor_sub_scene.cpp editor/project_manager.cpp
+#: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "ব্রাউস"
 
@@ -4342,8 +4349,9 @@ msgstr "সরান"
 
 #: editor/filesystem_dock.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-#: editor/project_manager.cpp editor/rename_dialog.cpp
-#: editor/scene_tree_dock.cpp
+#: editor/rename_dialog.cpp editor/scene_tree_dock.cpp
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
 msgid "Rename"
 msgstr "পুনঃনামকরণ করুন"
 
@@ -5243,6 +5251,7 @@ msgstr "অ্যানিমেশন"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "নতুন"
 
@@ -5793,7 +5802,8 @@ msgstr "পুন-ইম্পোর্ট..."
 msgid "Plugins..."
 msgstr "প্লাগইন-সমূহ"
 
-#: editor/plugins/asset_library_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/asset_library_editor_plugin.cpp
+#: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "সাজান:"
 
@@ -7882,7 +7892,8 @@ msgstr "সবগুলি বন্ধ করুন"
 msgid "Close Docs"
 msgstr "ডকুমেন্টসমূহ বন্ধ করুন"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
+#: editor/plugins/script_editor_plugin.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Run"
 msgstr "চালান"
 
@@ -7891,6 +7902,7 @@ msgstr "চালান"
 #: editor/plugins/shader_editor_plugin.cpp editor/plugins/text_editor.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Search"
 msgstr "অনুসন্ধান করুন"
 
@@ -7906,8 +7918,8 @@ msgstr "ধাপ লাফিয়ে যান"
 msgid "Break"
 msgstr "বিরতি/ভাঙ্গন"
 
-#: editor/plugins/script_editor_plugin.cpp editor/project_manager.cpp
-#: editor/script_editor_debugger.cpp
+#: editor/plugins/script_editor_plugin.cpp editor/script_editor_debugger.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Continue"
 msgstr "সচল"
 
@@ -11335,7 +11347,7 @@ msgstr "এক্সপোর্ট মোড:"
 msgid "Export All"
 msgstr "এক্সপোর্ট"
 
-#: editor/project_export.cpp editor/project_manager.cpp
+#: editor/project_export.cpp projects_manager/add_project_dialog.cpp
 #, fuzzy
 msgid "ZIP File"
 msgstr "ফাইল"
@@ -11357,398 +11369,6 @@ msgstr "এক্সপোর্ট টেমপ্লেটসমূহ লো�
 #, fuzzy
 msgid "Export With Debug"
 msgstr "Tile Set এক্সপোর্ট করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "The path specified doesn't exist."
-msgstr "ফাইলটি বিদ্যমান নয়।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Error opening package file (it's not in ZIP format)."
-msgstr "জিপ ফরম্যাট খুঁজে পেতে ব্যার্থ, প্যাকেজ ফাইল ওপেন করা যায়নি।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.rebel\" file."
-msgstr "এমন একটি ফোল্ডার বাছাই করুন যেখানে 'project.godot' নামে কোন ফাইল নেই।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose an empty folder."
-msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
-
-#: editor/project_manager.cpp
-msgid "This directory already contains a Rebel project."
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "New Game Project"
-msgstr "নতুন গেম প্রকল্প"
-
-#: editor/project_manager.cpp
-msgid "Imported Project"
-msgstr "প্রকল্প ইম্পোর্ট করা হয়েছে"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Invalid project name."
-msgstr "প্রকল্পের নাম:"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create folder."
-msgstr "ফোল্ডার তৈরী করা সম্ভব হয়নি।"
-
-#: editor/project_manager.cpp
-msgid "There is already a folder in this path with the specified name."
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "It would be a good idea to name your project."
-msgstr "আপনার প্রজেক্টটির জন্য একটি নাম নির্দিষ্ট করুন।"
-
-#: editor/project_manager.cpp
-msgid "Invalid project path (changed anything?)."
-msgstr "অকার্যকর প্রকল্পের পথ (কোনোকিছু পরিবর্তন করেছেন?)।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Couldn't load project.rebel in project path (error %d). It may be missing or "
-"corrupted."
-msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't edit project.rebel in project path."
-msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Couldn't create project.rebel in project path."
-msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Error opening package file, not in ZIP format."
-msgstr "জিপ ফরম্যাট খুঁজে পেতে ব্যার্থ, প্যাকেজ ফাইল ওপেন করা যায়নি।"
-
-#: editor/project_manager.cpp
-msgid "The following files failed extraction from package:"
-msgstr "প্যাকেজ হতে নীম্নোক্ত ফাইলসমূহ এক্সট্রাক্ট করা অসফল হয়েছে:"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Package installed successfully!"
-msgstr "প্যাকেজ ইন্সটল সম্পন্ন হয়েছে!"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Rename Project"
-msgstr "নামহীন প্রকল্প"
-
-#: editor/project_manager.cpp
-msgid "Import Existing Project"
-msgstr "বিদ্যমান প্রকল্প ইম্পোর্ট করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Import & Edit"
-msgstr "ইম্পোর্ট করুন এবং খুলুন"
-
-#: editor/project_manager.cpp
-msgid "Create New Project"
-msgstr "নতুন প্রকল্প তৈরি করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Create & Edit"
-msgstr "Emitter তৈরি করুন"
-
-#: editor/project_manager.cpp
-msgid "Install Project:"
-msgstr "প্রকল্প ইন্সটল করুন:"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Install & Edit"
-msgstr "ইন্সটল"
-
-#: editor/project_manager.cpp
-msgid "Project Name:"
-msgstr "প্রকল্পের নাম:"
-
-#: editor/project_manager.cpp
-msgid "Project Path:"
-msgstr "প্রকল্পের পথ:"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Project Installation Path:"
-msgstr "প্রকল্পের পথ:"
-
-#: editor/project_manager.cpp
-msgid "Renderer:"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 3.0"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "Not supported by your GPU drivers."
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid ""
-"Higher visual quality\n"
-"All features available\n"
-"Incompatible with older hardware\n"
-"Not recommended for web games"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "OpenGL ES 2.0"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid ""
-"Lower visual quality\n"
-"Some features not available\n"
-"Works on most hardware\n"
-"Recommended for web games"
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "Renderer can be changed later, but scenes may need to be adjusted."
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid "Unnamed Project"
-msgstr "নামহীন প্রকল্প"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Missing Project"
-msgstr "বিদ্যমান প্রকল্প ইম্পোর্ট করুন"
-
-#: editor/project_manager.cpp
-msgid "Error: Project is missing on the filesystem."
-msgstr ""
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Can't open project at '%s'."
-msgstr "সংযোগ..."
-
-#: editor/project_manager.cpp
-msgid "Are you sure to open more than one project?"
-msgstr "একধিক প্রকল্প খোলায় আপনি সুনিশ্চিত?"
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file does not specify the version of Rebel "
-"used to create it.\n"
-"\n"
-"%s\n"
-"\n"
-"If you proceed with opening it, it will be converted to Rebel's current "
-"configuration file format.\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid ""
-"The following project settings file was generated by an older engine "
-"version, and needs to be converted for this version:\n"
-"\n"
-"%s\n"
-"\n"
-"Do you want to convert it?\n"
-"Warning: You won't be able to open the project with previous versions of the "
-"engine anymore."
-msgstr ""
-
-#: editor/project_manager.cpp
-msgid ""
-"The project settings were created by a newer engine version, whose settings "
-"are not compatible with this version."
-msgstr ""
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Can't run project: no main scene defined.\n"
-"Please edit the project and set the main scene in the Project Settings under "
-"the \"Application\" category."
-msgstr ""
-"কোনো মুখ্য দৃশ্য নির্ধারণ করা হয়নি, নির্ধারণ করবেন?\n"
-"আপনি পরবর্তিতে তা 'অ্যাপ্লিকেশন (application)' বিভাগের \\\"প্রকল্পের সেটিংস "
-"(Project Settings)\\\"-এ পরিবর্তন করতে পারবেন।"
-
-#: editor/project_manager.cpp
-msgid ""
-"Can't run project: Assets need to be imported.\n"
-"Please edit the project to trigger the initial import."
-msgstr ""
-"প্রজেক্ট রান করা সম্ভব হচ্ছে না: অ্যাসেট সমূহ ইম্পোর্ট করা প্রয়োজন।\n"
-"ইম্পোর্ট শুরু করার জন্য প্রজেক্ট এডিট করুন।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Are you sure to run %d projects at once?"
-msgstr "একধিক প্রকল্প চালানোয় আপনি সুনিশ্চিত?"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove %d projects from the list?"
-msgstr "লিস্ট থেকে ডিভাইস সিলেক্ট করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove this project from the list?"
-msgstr "লিস্ট থেকে ডিভাইস সিলেক্ট করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Remove all missing projects from the list?\n"
-"The project folders' contents won't be modified."
-msgstr "তালিকা হতে প্রকল্প অপসারণ করবেন? (ফোল্ডারের বিষয়াদি পরিবর্তন হবে না)"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Language changed.\n"
-"The interface will update after restarting the editor or project manager."
-msgstr ""
-"ভাষা পরিবর্তন করা হয়েছে।\n"
-"পরবর্তীতে প্রজেক্ট ম্যানেজার অথবা এডিটর শুরু হওয়ার সময় ইউ আই পরিবর্তনসমূহ ব্যবহৃত হবে।"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid ""
-"Are you sure to scan %s folders for existing Rebel projects?\n"
-"This could take a while."
-msgstr ""
-"বিদ্যমান Godot প্রজেক্টের খোঁজে আপনি %s ফোল্ডারসমূহ স্ক্যান করতে যাচ্ছেন। আপনি কি "
-"সুনিশ্চিত?"
-
-#. TRANSLATORS: Project Manager is the application used to manage projects.
-#: editor/project_manager.cpp
-msgid "Project Manager"
-msgstr "প্রজেক্ট ম্যানেজার"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Local Projects"
-msgstr "নতুন প্রকল্প"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Loading, please wait..."
-msgstr "মিরর রিট্রাইভ করা হচ্ছে, দযা করে অপেক্ষা করুন..."
-
-#: editor/project_manager.cpp
-msgid "Last Modified"
-msgstr ""
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Edit Project"
-msgstr "প্রকল্প এক্সপোর্ট করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Run Project"
-msgstr "নামহীন প্রকল্প"
-
-#: editor/project_manager.cpp
-msgid "Scan"
-msgstr "স্ক্যান"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Scan Projects"
-msgstr "নতুন প্রকল্প"
-
-#: editor/project_manager.cpp
-msgid "Select a Folder to Scan"
-msgstr "স্ক্যান করার জন্য ফোল্ডার নির্বাচন করুন"
-
-#: editor/project_manager.cpp
-msgid "New Project"
-msgstr "নতুন প্রকল্প"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Import Project"
-msgstr "প্রকল্প ইম্পোর্ট করা হয়েছে"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove Project"
-msgstr "নামহীন প্রকল্প"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove Missing"
-msgstr "পথের বিন্দু অপসারণ করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "About"
-msgstr "সম্বন্ধে"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Asset Library Projects"
-msgstr "লাইব্রেরি এক্সপোর্ট করুন"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Restart Now"
-msgstr "পুনরারম্ভ (সেঃ):"
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Remove All"
-msgstr "অপসারণ করুন"
-
-#: editor/project_manager.cpp
-msgid "Also delete project contents (no undo!)"
-msgstr ""
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Can't run project"
-msgstr "সংযোগ..."
-
-#: editor/project_manager.cpp
-msgid ""
-"You currently don't have any projects.\n"
-"Would you like to explore official example projects in the Asset Library?"
-msgstr ""
-
-#: editor/project_manager.cpp
-#, fuzzy
-msgid "Filter projects"
-msgstr "ফিল্টারসমূহ"
-
-#: editor/project_manager.cpp
-msgid ""
-"This field filters projects by name and last path component.\n"
-"To filter projects by name and full path, the query must contain at least "
-"one `/` character."
-msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Physical Key"
@@ -14549,6 +14169,365 @@ msgstr "ফোল্ডার তৈরী করা সম্ভব হয়ন�
 #, fuzzy
 msgid "Error starting HTTP server:"
 msgstr "দৃশ্য সংরক্ষণে সমস্যা হয়েছে।"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Add Existing Project"
+msgstr "বিদ্যমান প্রকল্প ইম্পোর্ট করুন"
+
+#: projects_manager/add_project_dialog.cpp
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Add & Edit"
+msgstr "ইনপুট যোগ করুন"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Project File:"
+msgstr "প্রকল্পের নাম:"
+
+#: projects_manager/add_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.rebel\" or \".zip\" file."
+msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
+
+#: projects_manager/add_project_dialog.cpp
+msgid "Extract"
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+msgid "Project Name:"
+msgstr "প্রকল্পের নাম:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Project Folder:"
+msgstr "প্রকল্প ম্যানেজার"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+msgid "Extract zip file: "
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#, fuzzy
+msgid "Unable to open zip file: "
+msgstr "'%s' দৃশ্যটির অসংলগ্ন নির্ভরতা রয়েছে:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot create a folder with this project name."
+msgstr "ফাইলকে তার নিজের উপরেই ইম্পোর্ট করা সম্ভব নয়:"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Cannot open the current project folder."
+msgstr "এক্সপোর্ট টেমপ্লেটের zip খোলায় সমস্যা হয়েছে।"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+msgid "There is already a folder with this project name."
+msgstr ""
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a folder with this project name."
+msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "The project folder does not exist."
+msgstr "ফাইলটি বিদ্যমান নয়।"
+
+#: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please choose an empty folder."
+msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Create New Project"
+msgstr "নতুন প্রকল্প তৈরি করুন"
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Create & Edit"
+msgstr "Emitter তৈরি করুন"
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer:"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 3.0 is not supported by your graphics card."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Higher visual quality\n"
+"All features available\n"
+"Incompatible with older hardware\n"
+"Not recommended for web games"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid "OpenGL ES 2.0"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid ""
+"Lower visual quality\n"
+"Some features not available\n"
+"Works on most hardware\n"
+"Recommended for web games"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid "Renderer can be changed later, but scenes may need to be adjusted."
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+msgid "My Game"
+msgstr ""
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Please give your project a name."
+msgstr "প্রকল্পের নাম:"
+
+#: projects_manager/new_project_dialog.cpp
+#, fuzzy
+msgid "Couldn't create a project in this project folder."
+msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid "Loading, please wait..."
+msgstr "মিরর রিট্রাইভ করা হচ্ছে, দযা করে অপেক্ষা করুন..."
+
+#: projects_manager/projects_list.cpp
+msgid "Last Modified"
+msgstr ""
+
+#: projects_manager/projects_list.cpp
+#, fuzzy
+msgid "Filter projects"
+msgstr "ফিল্টারসমূহ"
+
+#: projects_manager/projects_list.cpp
+msgid ""
+"This field filters projects by name and last path component.\n"
+"To filter projects by name and full path, the query must contain at least "
+"one `/` character."
+msgstr ""
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Missing project"
+msgstr "বিদ্যমান প্রকল্প ইম্পোর্ট করুন"
+
+#: projects_manager/projects_list_item.cpp
+msgid "Error: Project settings not found"
+msgstr ""
+
+#: projects_manager/projects_list_item.cpp
+#, fuzzy
+msgid "Unnamed project"
+msgstr "নামহীন প্রকল্প"
+
+#. TRANSLATORS: Projects Manager is the application used to manage projects.
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Projects Manager"
+msgstr "প্রজেক্ট ম্যানেজার"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Create new project"
+msgstr "নতুন প্রকল্প তৈরি করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Add existing project"
+msgstr "বিদ্যমান প্রকল্প ইম্পোর্ট করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Search for existing projects"
+msgstr "বিদ্যমান প্রকল্প ইম্পোর্ট করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove Missing"
+msgstr "পথের বিন্দু অপসারণ করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Edit Project"
+msgstr "প্রকল্প এক্সপোর্ট করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Run Project"
+msgstr "নামহীন প্রকল্প"
+
+#: projects_manager/projects_manager.cpp
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid "Rename Project"
+msgstr "নামহীন প্রকল্প"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove Project"
+msgstr "নামহীন প্রকল্প"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "About"
+msgstr "সম্বন্ধে"
+
+#: projects_manager/projects_manager.cpp
+msgid "Are you sure you want to add or search multiple files and folders?"
+msgstr ""
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure you want to edit more than one project?"
+msgstr "একধিক প্রকল্প খোলায় আপনি সুনিশ্চিত?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't run project"
+msgstr "সংযোগ..."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"Can't run project: Assets need to be imported.\n"
+"Please edit the project to trigger the initial import."
+msgstr ""
+"প্রজেক্ট রান করা সম্ভব হচ্ছে না: অ্যাসেট সমূহ ইম্পোর্ট করা প্রয়োজন।\n"
+"ইম্পোর্ট শুরু করার জন্য প্রজেক্ট এডিট করুন।"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Can't run project: no main scene defined.\n"
+"Please edit the project and set the main scene in the Project Settings under "
+"the \"Application\" category."
+msgstr ""
+"কোনো মুখ্য দৃশ্য নির্ধারণ করা হয়নি, নির্ধারণ করবেন?\n"
+"আপনি পরবর্তিতে তা 'অ্যাপ্লিকেশন (application)' বিভাগের \\\"প্রকল্পের সেটিংস "
+"(Project Settings)\\\"-এ পরিবর্তন করতে পারবেন।"
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"You currently don't have any projects.\n"
+"Would you like to explore official example projects in the Asset Library?"
+msgstr ""
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Local Projects"
+msgstr "নতুন প্রকল্প"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Also delete project folder?"
+msgstr "ফোল্ডার তৈরী করা সম্ভব হয়নি।"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Remove all missing projects from the list?\n"
+"The project folders' contents won't be modified."
+msgstr "তালিকা হতে প্রকল্প অপসারণ করবেন? (ফোল্ডারের বিষয়াদি পরিবর্তন হবে না)"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove All"
+msgstr "অপসারণ করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid ""
+"Language changed.\n"
+"The interface will be updated after restarting Projects Manager."
+msgstr ""
+"ভাষা পরিবর্তন করা হয়েছে।\n"
+"পরবর্তীতে প্রজেক্ট ম্যানেজার অথবা এডিটর শুরু হওয়ার সময় ইউ আই পরিবর্তনসমূহ ব্যবহৃত হবে।"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Restart Now"
+msgstr "পুনরারম্ভ (সেঃ):"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Select a Folder to Search"
+msgstr "স্ক্যান করার জন্য ফোল্ডার নির্বাচন করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Asset Library Projects"
+msgstr "লাইব্রেরি এক্সপোর্ট করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove %d projects from the list?"
+msgstr "লিস্ট থেকে ডিভাইস সিলেক্ট করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Remove selected project from the list?"
+msgstr "লিস্ট থেকে ডিভাইস সিলেক্ট করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Are you sure to run %d projects at once?"
+msgstr "একধিক প্রকল্প চালানোয় আপনি সুনিশ্চিত?"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project settings file "
+msgstr "সংযোগ..."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"The project settings were created with a newer version of Rebel Engine.\n"
+msgstr ""
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Can't open project at '%s'."
+msgstr "সংযোগ..."
+
+#: projects_manager/projects_manager.cpp
+msgid ""
+"The following project settings file %s was created with an older version of "
+"Rebel Editor.\n"
+"Do you want to upgrade the settings file?\n"
+"Warning: You will not be able to open the project with the previous version "
+"of Rebel Editor again."
+msgstr ""
+
+#: projects_manager/rename_project_dialog.cpp
+#, fuzzy
+msgid ""
+"Couldn't load project.rebel in the project folder.\n"
+"The file or folder is missing or corrupt."
+msgstr "প্রকল্পের পথে engine.cfg তৈরি করা সম্ভব হয়নি।"
 
 #: scene/2d/animated_sprite.cpp
 #, fuzzy
