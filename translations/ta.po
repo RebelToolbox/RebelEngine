@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2025-03-02 13:11+0000\n"
+"PO-Revision-Date: 2025-03-03 08:13+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-engine-api/ta/>\n"
@@ -22444,87 +22444,106 @@ msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set linear acceleration properties."
 msgstr ""
+"நேரியல் முடுக்கம் பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] "
+"மற்றும் [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set radial acceleration properties."
 msgstr ""
+"ரேடியல் முடுக்கம் பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] "
+"மற்றும் [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set tangential acceleration properties."
 msgstr ""
+"தொடு முடுக்கம் பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] "
+"மற்றும் [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set damping properties."
 msgstr ""
+"[முறை set_param], [முறை set_param_randomness] மற்றும் [முறை set_param_curve] "
+"உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set angle properties."
 msgstr ""
+"கோண பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] மற்றும் "
+"[முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set scale properties."
 msgstr ""
+"அளவிலான பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] மற்றும் "
+"[முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set hue variation properties."
 msgstr ""
+"[முறை set_param], [முறை set_param_randomness] மற்றும் [முறை set_param_curve] "
+"உடன் பயன்படுத்தவும் மாறுபாடு பண்புகளை அமைக்கவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set animation speed properties."
 msgstr ""
+"அனிமேசன் வேக பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] மற்றும்"
+" [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set animation offset properties."
 msgstr ""
+"அனிமேசன் ஆஃப்செட் பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] "
+"மற்றும் [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Represents the size of the [enum Parameter] enum."
-msgstr ""
+msgstr "[Enum அளவுரு] enum இன் அளவைக் குறிக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Use with [method set_particle_flag] to set [member flag_align_y]."
 msgstr ""
+"[METHER SET_PARTICLE_FLAG] உடன் பயன்படுத்தவும் [உறுப்பினர் FLAG_ALIGN_Y]."
 
 #: docs/CPUParticles.xml
 msgid "Use with [method set_particle_flag] to set [member flag_rotate_y]."
-msgstr ""
+msgstr "[METHER SET_PARTICLE_FLAG] உடன் [உறுப்பினர் FLAG_ROTATE_Y] அமைக்கவும்."
 
 #: docs/CPUParticles.xml
 msgid "Use with [method set_particle_flag] to set [member flag_disable_z]."
-msgstr ""
+msgstr "[Method_particle_flag] உடன் [உறுப்பினர் FLAG_DISABLE_Z] அமைக்கவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/GeometryInstance.xml
 #: docs/ParticlesMaterial.xml docs/SpatialMaterial.xml
 msgid "Represents the size of the [enum Flags] enum."
-msgstr ""
+msgstr "[Enum கொடிகள்] enum இன் அளவைக் குறிக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "All particles will be emitted from a single point."
-msgstr ""
+msgstr "அனைத்து துகள்களும் ஒரு புள்ளியிலிருந்து வெளியேற்றப்படும்."
 
 #: docs/CPUParticles.xml docs/ParticlesMaterial.xml
 msgid "Particles will be emitted in the volume of a sphere."
-msgstr ""
+msgstr "துகள்கள் ஒரு கோளத்தின் அளவில் வெளியேற்றப்படும்."
 
 #: docs/CPUParticles.xml docs/ParticlesMaterial.xml
 msgid "Particles will be emitted in the volume of a box."
-msgstr ""
+msgstr "ஒரு பெட்டியின் அளவில் துகள்கள் வெளியேற்றப்படும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
@@ -22532,6 +22551,8 @@ msgid ""
 "emission_points]. Particle color will be modulated by [member "
 "emission_colors]."
 msgstr ""
+"[உறுப்பினர் உமிழ்வு_ புள்ளிகள்] மத்தியில் தோராயமாக தேர்ந்தெடுக்கப்பட்ட நிலையில் துகள்கள் "
+"வெளியேற்றப்படும். துகள் வண்ணம் [உறுப்பினர் உமிழ்வு_கோலர்கள்] மூலம் மாற்றியமைக்கப்படும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
@@ -22540,18 +22561,21 @@ msgid ""
 "[member emission_normals]. Particle color will be modulated by [member "
 "emission_colors]."
 msgstr ""
+"[உறுப்பினர் உமிழ்வு_ புள்ளிகள்] மத்தியில் தோராயமாக தேர்ந்தெடுக்கப்பட்ட நிலையில் துகள்கள் "
+"வெளியேற்றப்படும். [உறுப்பினர் உமிழ்வு_நார்மல்கள்] அடிப்படையில் துகள் விரைவு மற்றும் சுழற்சி "
+"அமைக்கப்படும். துகள் வண்ணம் [உறுப்பினர் உமிழ்வு_கோலர்கள்] மூலம் மாற்றியமைக்கப்படும்."
 
 #: docs/CPUParticles.xml docs/ParticlesMaterial.xml
 msgid "Particles will be emitted in a ring or cylinder."
-msgstr ""
+msgstr "துகள்கள் ஒரு மோதிரம் அல்லது சிலிண்டரில் வெளியேற்றப்படும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Represents the size of the [enum EmissionShape] enum."
-msgstr ""
+msgstr "[Enum உமிழ்வு] enum இன் அளவைக் குறிக்கிறது."
 
 #: docs/CPUParticles2D.xml
 msgid "CPU-based 2D particle emitter."
-msgstr ""
+msgstr "CPU- அடிப்படையிலான 2D துகள் உமிழ்ப்பான்."
 
 #: docs/CPUParticles2D.xml
 msgid ""
@@ -22562,41 +22586,56 @@ msgid ""
 "[b]Note:[/b] Unlike [Particles2D], the visibility rect is generated on-the-"
 "fly and doesn't need to be configured by the user."
 msgstr ""
+"CPU- அடிப்படையிலான 2 டி துகள் முனை பலவிதமான துகள் அமைப்புகள் மற்றும் விளைவுகளை "
+"உருவாக்க பயன்படுகிறது.\n"
+" வன்பொருள் முடுக்கம் மூலம் அதே செயல்பாட்டை வழங்கும் [துகள்கள் 2 டி] ஐயும் காண்க, ஆனால் பழை"
+"ய சாதனங்களில் இயங்காது.\n"
+" ."
 
 #: docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid ""
 "https://docs.rebeltoolbox.com/en/latest/tutorials/2d/particle_systems_2d.html"
 msgstr ""
+"https://docs.rebeltoolbox.com/en/latest/tutorials/2d/particle_systems_2d.html"
 
 #: docs/CPUParticles2D.xml
 msgid ""
 "Sets this node's properties to match a given [Particles2D] node with an "
 "assigned [ParticlesMaterial]."
 msgstr ""
+"கொடுக்கப்பட்ட [துகள்கள் 2 டி] முனையை ஒதுக்கப்பட்ட [துகள்கள் திறன்] உடன் பொருத்த இந்த "
+"முனையின் பண்புகளை அமைக்கிறது."
 
 #: docs/CPUParticles2D.xml
 msgid ""
 "Each particle's initial color. If [member texture] is defined, it will be "
 "multiplied by this color."
 msgstr ""
+"ஒவ்வொரு துகள் ஆரம்ப நிறம். [உறுப்பினர் அமைப்பு] வரையறுக்கப்பட்டால், அது இந்த வண்ணத்தால் "
+"பெருக்கப்படும்."
 
 #: docs/CPUParticles2D.xml
 msgid ""
 "Each particle's color will vary along this [Gradient] (multiplied with "
 "[member color])."
 msgstr ""
+"ஒவ்வொரு துகள் நிறமும் இந்த [சாய்வு] உடன் மாறுபடும் ([உறுப்பினர் வண்ணத்துடன்] "
+"பெருக்கப்படுகிறது)."
 
 #: docs/CPUParticles2D.xml
 msgid ""
 "The rectangle's extents if [member emission_shape] is set to [constant "
 "EMISSION_SHAPE_RECTANGLE]."
 msgstr ""
+"[உறுப்பினர் உமிழ்வு_சேப்] [நிலையான உமிழ்வு_சேப்_ரெக்டாங்கல்] என அமைக்கப்பட்டால் செவ்வகத்தின் "
+"நீட்டிப்பு."
 
 #: docs/CPUParticles2D.xml
 msgid ""
 "The sphere's radius if [member emission_shape] is set to [constant "
 "EMISSION_SHAPE_SPHERE]."
 msgstr ""
+"[உறுப்பினர் உமிழ்வு_சேப்] [நிலையான உமிழ்வு_சேப்_ச்பெர்] என அமைக்கப்பட்டால் கோளத்தின் ஆரம்."
 
 #: docs/CPUParticles2D.xml docs/Particles.xml docs/Particles2D.xml
 msgid ""
@@ -22604,6 +22643,9 @@ msgid ""
 "the value to 2 will make the particles render at 2 frames per second. Note "
 "this does not slow down the simulation of the particle system itself."
 msgstr ""
+"துகள் அமைப்பின் பிரேம் வீதம் ஒரு மதிப்புக்கு நிர்ணயிக்கப்பட்டுள்ளது. உதாரணமாக, மதிப்பை 2 "
+"ஆக மாற்றுவது துகள்கள் நொடிக்கு 2 பிரேம்களில் வழங்கப்படும். இது துகள் அமைப்பின் "
+"உருவகப்படுத்துதலை மெதுவாக்காது என்பதை நினைவில் கொள்க."
 
 #: docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid ""
@@ -22613,40 +22655,51 @@ msgid ""
 "Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for "
 "a comparison of normal map coordinates expected by popular engines."
 msgstr ""
+"[உறுப்பினர் அமைப்பு] சொத்துக்கு பயன்படுத்தப்பட வேண்டிய சாதாரண வரைபடம்.\n"
+" . பிரபலமான இயந்திரங்களால் எதிர்பார்க்கப்படும் சாதாரண MAP ஆயத்தொகுதிகளின் ஒப்பீட்டிற்கு [/"
+"wiki.polycount.com/wiki/"
+"normal_map_technical_details#common_swizzle_coordinates] [/url] ஐப் பார்க்கவும்."
 
 #: docs/CPUParticles2D.xml
 msgid ""
 "Orbital velocity applied to each particle. Makes the particles circle around "
 "origin. Specified in number of full rotations around origin per second."
 msgstr ""
+"ஒவ்வொரு துகள்களுக்கும் சுற்றுப்பாதை விரைவு பயன்படுத்தப்படுகிறது. துகள்கள் வட்டத்தை சுற்றி "
+"வட்டமிடுகின்றன. நொடிக்கு தோற்றத்தைச் சுற்றியுள்ள முழு சுழற்சிகளின் எண்ணிக்கையில் "
+"குறிப்பிடப்பட்டுள்ளது."
 
 #: docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid ""
 "Each particle's initial direction range from [code]+spread[/code] to [code]-"
 "spread[/code] degrees."
 msgstr ""
+"ஒவ்வொரு துகள் ஆரம்ப திசையும் [குறியீடு]+பரவல் [/குறியீடு] முதல் [குறியீடு] -spread "
+"[/code] டிகிரி வரை இருக்கும்."
 
 #: docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid "Particle texture. If [code]null[/code], particles will be squares."
 msgstr ""
+"துகள் அமைப்பு. [குறியீடு] சுழிய [/குறியீடு] என்றால், துகள்கள் சதுரங்களாக இருக்கும்."
 
 #: docs/CPUParticles2D.xml
 msgid "Present for consistency with 3D particle nodes, not used in 2D."
-msgstr ""
+msgstr "3 டி துகள் முனைகளுடன் ஒத்துப்போகிறது, 2D இல் பயன்படுத்தப்படவில்லை."
 
 #: docs/CPUParticles2D.xml
 msgid ""
 "Particles will be emitted on the surface of a sphere flattened to two "
 "dimensions."
 msgstr ""
+"இரண்டு பரிமாணங்களுக்கு தட்டையான ஒரு கோளத்தின் மேற்பரப்பில் துகள்கள் வெளியேற்றப்படும்."
 
 #: docs/CPUParticles2D.xml
 msgid "Particles will be emitted in the area of a rectangle."
-msgstr ""
+msgstr "ஒரு செவ்வகத்தின் பகுதியில் துகள்கள் வெளியேற்றப்படும்."
 
 #: docs/Crypto.xml
 msgid "Access to advanced cryptographic functionalities."
-msgstr ""
+msgstr "மேம்பட்ட கிரிப்டோகிராஃபிக் செயல்பாடுகளுக்கான அணுகல்."
 
 #: docs/Crypto.xml
 msgid ""
@@ -22688,6 +22741,43 @@ msgid ""
 "[/codeblock]\n"
 "[b]Note:[/b] Not available in Web exports."
 msgstr ""
+"கிரிபல் எஞ்சினில் இன்னும் சில மேம்பட்ட கிரிப்டோகிராஃபிக் செயல்பாடுகளை அணுக மறையீட்டு "
+"வகுப்பு உங்களை அனுமதிக்கிறது.\n"
+" இப்போதைக்கு, கிரிப்டோகிராஃபிக்கல் பாதுகாப்பான சீரற்ற பைட்டுகள், ஆர்எச்ஏ விசைகள் மற்றும் தன்"
+"வய கையொப்பமிடப்பட்ட ஃச் 509 சான்றிதழ்கள் உருவாக்கம், சமச்சீரற்ற விசை "
+"குறியாக்கம்/மறைகுறியாக்கம் மற்றும் கையொப்பமிடுதல்/சரிபார்ப்பு ஆகியவை இதில் அடங்கும்.\n"
+" [கோட் பிளாக்]\n"
+" முனை நீட்டிக்கிறது\n"
+"\n"
+" var மறையீட்டு = கிரிப்டோ.நியூ ()\n"
+" var key = cryptokey.new ()\n"
+" var cert = x509 sertificate.new ()\n"
+"\n"
+" func _ready ():\n"
+" # புதிய RSA விசையை உருவாக்குங்கள்.\n"
+" key = crypto.genare_rsa (4096)\n"
+" # கொடுக்கப்பட்ட விசையுடன் புதிய தன்வய கையொப்பமிடப்பட்ட சான்றிதழை உருவாக்குங்கள்.\n"
+" cert = crypto.generate_self_signed_certificate (விசை, "
+"\"cn = mydomain.com, o = எனது விளையாட்டு நிறுவனம், c = it\")\n"
+" # பயனர் கோப்புறையில் விசை மற்றும் சான்றிதழை சேமிக்கவும்.\n"
+" key.save (\"பயனர்: //generated.key\")\n"
+" cert.save (\"பயனர்: //generated.crt\")\n"
+" # குறியாக்கம்\n"
+" var தகவல்கள் = \"சில தரவு\"\n"
+" var encrypted = crypto.encrypt (key, data.to_utf8 ())\n"
+" # Decryption\n"
+" var debrypted = crypto.decrypt (விசை, குறியாக்கம் செய்யப்பட்டது)\n"
+" # கையொப்பமிடுதல்\n"
+" var signature = crypto.sign (hashingcontext.hash_sha256, data.sha256_buffer "
+"(), key)\n"
+" # சரிபார்க்கிறது\n"
+" var சரிபார்க்கப்பட்ட = crypto.verify (hashingcontext.hash_sha256, "
+"data.sha256_buffer (), கையொப்பம், விசை)\n"
+" # காசோலைகள்\n"
+" உறுதிப்படுத்தவும் (சரிபார்க்கப்பட்டது)\n"
+" உறுதிப்படுத்தவும் (data.to_utf8 () == மறைகுறியாக்கப்பட்டது)\n"
+" [/codeBlock]\n"
+" [b] குறிப்பு: [/b] வலை ஏற்றுமதியில் கிடைக்கவில்லை."
 
 #: docs/Crypto.xml
 msgid ""
@@ -22697,6 +22787,11 @@ msgid ""
 "string-comparison-with-double-hmac-strategy]this blog post[/url] for more "
 "information."
 msgstr ""
+"நேர தாக்குதல்களைத் தடுப்பதற்காக நேர தகவல்களை கசியாமல் சமத்துவத்திற்கான இரண்டு "
+"[பூல்பிடியர்ரே] களை ஒப்பிடுகிறது.\n"
+" மேலும் தகவலுக்கு இந்த வலைப்பதிவு இடுகை [/url] [url = https: //paragonie.com/"
+"blog/2015/11/preventing-timing-attacks-on-tring-combarison-with-play-hmac-"
+"strategy] ஐப் பார்க்கவும்."
 
 #: docs/Crypto.xml
 msgid ""
@@ -22705,6 +22800,10 @@ msgid ""
 "[b]Note:[/b] The maximum size of accepted ciphertext is limited by the key "
 "size."
 msgstr ""
+"வழங்கப்பட்ட தனிப்பட்ட [குறியீடு] விசை [/குறியீடு] உடன் கொடுக்கப்பட்ட [குறியீடு] "
+"சைஃபெர்டெக்ச்ட் [/குறியீடு] ஐ மறைகுறியாக்கவும்.\n"
+" [b] குறிப்பு: [/b] ஏற்றுக்கொள்ளப்பட்ட சைஃபெர்டெக்ச்டின் அதிகபட்ச அளவு முக்கிய அளவால் "
+"வரையறுக்கப்படுகிறது."
 
 #: docs/Crypto.xml
 msgid ""
@@ -22713,18 +22812,26 @@ msgid ""
 "[b]Note:[/b] The maximum size of accepted plaintext is limited by the key "
 "size."
 msgstr ""
+"வழங்கப்பட்ட பொது [குறியீடு] விசை [/குறியீடு] உடன் கொடுக்கப்பட்ட [குறியீடு] எளிய உரை "
+"[/குறியீட்டை] குறியாக்கவும்.\n"
+" [b] குறிப்பு: [/b] ஏற்றுக்கொள்ளப்பட்ட எளிய உரையின் அதிகபட்ச அளவு முக்கிய அளவால் "
+"வரையறுக்கப்படுகிறது."
 
 #: docs/Crypto.xml
 msgid ""
 "Generates a [PoolByteArray] of cryptographically secure random bytes with "
 "given [code]size[/code]."
 msgstr ""
+"கொடுக்கப்பட்ட [குறியீடு] அளவு [/குறியீடு] உடன் கிரிப்டோகிராஃபிக்கல் பாதுகாப்பான சீரற்ற "
+"பைட்டுகளின் [பூல்பி டியர்ரே] ஐ உருவாக்குகிறது."
 
 #: docs/Crypto.xml
 msgid ""
 "Generates an RSA [CryptoKey] that can be used for creating self-signed "
 "certificates and passed to [method StreamPeerSSL.accept_stream]."
 msgstr ""
+"தன்வய கையொப்பமிடப்பட்ட சான்றிதழ்களை உருவாக்கப் பயன்படுத்தக்கூடிய ஒரு RSA [கிரிப்டோக்கி] ஐ "
+"உருவாக்குகிறது மற்றும் [முறை ச்ட்ரீம்பியர்ச். Accept_stream] க்கு அனுப்பப்படுகிறது."
 
 #: docs/Crypto.xml
 msgid ""
@@ -22745,6 +22852,20 @@ msgid ""
 "Game Company,C=IT\")\n"
 "[/codeblock]"
 msgstr ""
+"கொடுக்கப்பட்ட [கிரிப்டோக்கி] மற்றும் [குறியீடு] வழங்குபவர்_பெயர் [/குறியீடு] இலிருந்து தன்"
+"வய கையொப்பமிடப்பட்ட [x509 சான்றிதழ்] உருவாக்குகிறது. சான்றிதழ் செல்லுபடியாகும் "
+"[குறியீடு] not_bear [/code] மற்றும் [குறியீடு] not_fter [/code] (முதல் "
+"செல்லுபடியாகும் தேதி மற்றும் கடைசி செல்லுபடியாகும் தேதி) மூலம் வரையறுக்கப்படும். .\n"
+" RSA விசை மற்றும் X509 தன்வய கையொப்பமிடப்பட்ட சான்றிதழை உருவாக்க ஒரு சிறிய "
+"எடுத்துக்காட்டு.\n"
+" [கோட் பிளாக்]\n"
+" var மறையீட்டு = கிரிப்டோ.நியூ ()\n"
+" # 4096 பிட்கள் ஆர்எச்ஏ விசையை உருவாக்குங்கள்.\n"
+" var key = crypto.generate_rsa (4096)\n"
+" # கொடுக்கப்பட்ட விசையைப் பயன்படுத்தி தன்வய கையொப்பமிடப்பட்ட சான்றிதழை உருவாக்கவும்.\n"
+" var cert = crypto.generate_self_signed_certificate (விசை, "
+"\"cn = example.com, o = ஒரு விளையாட்டு நிறுவனம், c = it\")\n"
+" [/codeBlock]"
 
 #: docs/Crypto.xml
 msgid ""
@@ -22755,22 +22876,33 @@ msgid ""
 "Currently, only [constant HashingContext.HASH_SHA256] and [constant "
 "HashingContext.HASH_SHA1] are supported."
 msgstr ""
+"[குறியீடு] விசையை [/குறியீடு] பயன்படுத்தி [குறியீடு] MSG [/குறியீடு] இன் டைசச்ட் ஒரு "
+"[url = https: //en.wikipedia.org/wiki/hmac] ஐ உருவாக்குகிறது. [குறியீடு] "
+"HASH_TYPE [/CODE] அளவுரு என்பது உள் மற்றும் வெளிப்புற ஆச்களுக்குப் பயன்படுத்தப்படும் ஆங் "
+"அல்காரிதம் ஆகும்.\n"
+" தற்போது, [நிலையான hashingcontext.hash_sha256] மற்றும் "
+"[நிலையான hashingcontext.hash_sha1] மட்டுமே ஆதரிக்கப்படுகின்றன."
 
 #: docs/Crypto.xml
 msgid ""
 "Sign a given [code]hash[/code] of type [code]hash_type[/code] with the "
 "provided private [code]key[/code]."
 msgstr ""
+"வழங்கப்பட்ட தனிப்பட்ட [குறியீடு] விசையுடன் [/குறியீடு] வகை [குறியீடு] ஆச்_ வகை "
+"[/குறியீடு] உடன் கொடுக்கப்பட்ட [குறியீடு] ஆச் [/குறியீடு] கையொப்பமிடுங்கள்."
 
 #: docs/Crypto.xml
 msgid ""
 "Verify that a given [code]signature[/code] for [code]hash[/code] of type "
 "[code]hash_type[/code] against the provided public [code]key[/code]."
 msgstr ""
+"வழங்கப்பட்ட பொது [குறியீடு] விசை [/குறியீடு] க்கு எதிராக [குறியீடு] ஆச்_ வகை "
+"[/குறியீடு] வகை [குறியீடு] ஆச் [/குறியீடு] க்கான கொடுக்கப்பட்ட [குறியீடு] கையொப்பம் "
+"[/குறியீடு] என்பதை சரிபார்க்கவும்."
 
 #: docs/CryptoKey.xml
 msgid "A cryptographic key (RSA)."
-msgstr ""
+msgstr "ஒரு கிரிப்டோகிராஃபிக் விசை (RSA)."
 
 #: docs/CryptoKey.xml
 msgid ""
@@ -22781,12 +22913,20 @@ msgid ""
 "StreamPeerSSL.accept_stream] along with the appropriate certificate.\n"
 "[b]Note:[/b] Not available in Web exports."
 msgstr ""
+"கிரிப்டோக்கி வகுப்பு ஒரு கிரிப்டோகிராஃபிக் விசையை குறிக்கிறது. விசைகளை ஏற்றவும், வேறு"
+" எந்த [வளத்தைப் போலவும் சேமிக்க முடியும்.\n"
+" [முறை கிரிப்டோ.செனரேட்_எல்ஃபி_சைனெட்_செர்ஃபிகேட்] வழியாக தன்வய கையொப்பமிடப்பட்ட "
+"[எக்ச் 509 சான்றிதழ்] மற்றும் பொருத்தமான சான்றிதழுடன் "
+"[முறை ச்ட்ரீம் பியர்ச்.எச்.எல்.அக்செப்ட்_ச்ட்ரீம்] இல் தனிப்பட்ட விசையாக அவற்றைப் பயன்படுத்தலாம்.\n"
+" [b] குறிப்பு: [/b] வலை ஏற்றுமதியில் கிடைக்கவில்லை."
 
 #: docs/CryptoKey.xml
 msgid ""
 "Return [code]true[/code] if this CryptoKey only has the public part, and not "
 "the private one."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] இந்த கிரிப்டோகிக்கு பொது பகுதியை மட்டுமே கொண்டிருந்தால், "
+"தனிப்பட்டதாக இல்லாவிட்டால்."
 
 #: docs/CryptoKey.xml
 msgid ""
@@ -22795,12 +22935,18 @@ msgid ""
 "[b]Note:[/b] [code]path[/code] should be a \"*.pub\" file if "
 "[code]public_only[/code] is [code]true[/code], a \"*.key\" file otherwise."
 msgstr ""
+"[குறியீடு] பாதையிலிருந்து [/குறியீடு] ஒரு விசையை ஏற்றுகிறது. [குறியீடு] பொது_ஒரு "
+"[/குறியீடு] [குறியீடு] உண்மை [/குறியீடு] என்றால், பொது விசை மட்டுமே ஏற்றப்படும்.\n"
+" ."
 
 #: docs/CryptoKey.xml
 msgid ""
 "Loads a key from the given [code]string[/code]. If [code]public_only[/code] "
 "is [code]true[/code], only the public key will be loaded."
 msgstr ""
+"கொடுக்கப்பட்ட [குறியீடு] சரம் [/குறியீடு] இலிருந்து ஒரு விசையை ஏற்றுகிறது. [குறியீடு] "
+"பொது_ஒரு [/குறியீடு] [குறியீடு] உண்மை [/குறியீடு] என்றால், பொது விசை மட்டுமே "
+"ஏற்றப்படும்."
 
 #: docs/CryptoKey.xml
 msgid ""
@@ -22809,16 +22955,22 @@ msgid ""
 "[b]Note:[/b] [code]path[/code] should be a \"*.pub\" file if "
 "[code]public_only[/code] is [code]true[/code], a \"*.key\" file otherwise."
 msgstr ""
+"கொடுக்கப்பட்ட [குறியீடு] பாதைக்கு ஒரு விசையை சேமிக்கிறது [/குறியீடு]. [குறியீடு] "
+"பொது_ஒரு [/குறியீடு] [குறியீடு] உண்மை [/குறியீடு] என்றால், பொது விசை மட்டுமே "
+"சேமிக்கப்படும்.\n"
+" ."
 
 #: docs/CryptoKey.xml
 msgid ""
 "Returns a string containing the key in PEM format. If [code]public_only[/"
 "code] is [code]true[/code], only the public key will be included."
 msgstr ""
+"PEM வடிவத்தில் விசையைக் கொண்ட ஒரு சரத்தை வழங்குகிறது. [குறியீடு] பொது_ஒரு [/குறியீடு]"
+" [குறியீடு] உண்மை [/குறியீடு] என்றால், பொது விசை மட்டுமே சேர்க்கப்படும்."
 
 #: modules/csg/docs/CSGBox.xml
 msgid "A CSG Box shape."
-msgstr ""
+msgstr "ஒரு CSG பெட்டி வடிவம்."
 
 #: modules/csg/docs/CSGBox.xml
 msgid ""
@@ -22829,6 +22981,12 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"சி.எச்.சி அமைப்புடன் பயன்படுத்த ஒரு பெட்டியை உருவாக்க இந்த முனை உங்களை அனுமதிக்கிறது.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGBox.xml modules/csg/docs/CSGCombiner.xml
 #: modules/csg/docs/CSGCylinder.xml modules/csg/docs/CSGMesh.xml
@@ -22836,27 +22994,28 @@ msgstr ""
 #: modules/csg/docs/CSGShape.xml modules/csg/docs/CSGSphere.xml
 #: modules/csg/docs/CSGTorus.xml
 msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/csg_tools.html"
-msgstr ""
+msgstr "https://docs.rebeltoolbox.com/en/latest/tutorials/3d/csg_tools.html"
 
 #: modules/csg/docs/CSGBox.xml
 msgid "Depth of the box measured from the center of the box."
-msgstr ""
+msgstr "பெட்டியின் ஆழம் பெட்டியின் மையத்திலிருந்து அளவிடப்படுகிறது."
 
 #: modules/csg/docs/CSGBox.xml
 msgid "Height of the box measured from the center of the box."
-msgstr ""
+msgstr "பெட்டியின் மையத்திலிருந்து அளவிடப்படும் பெட்டியின் உயரம்."
 
 #: modules/csg/docs/CSGBox.xml
 msgid "The material used to render the box."
-msgstr ""
+msgstr "பெட்டியை வழங்க பயன்படுத்தப்படும் பொருள்."
 
 #: modules/csg/docs/CSGBox.xml
 msgid "Width of the box measured from the center of the box."
-msgstr ""
+msgstr "பெட்டியின் மையத்திலிருந்து அளவிடப்படும் பெட்டியின் அகலம்."
 
 #: modules/csg/docs/CSGCombiner.xml
 msgid "A CSG node that allows you to combine other CSG modifiers."
 msgstr ""
+"மற்ற சிஎச்சி மாற்றியமைப்பாளர்களை இணைக்க உங்களை அனுமதிக்கும் சி.எச்.சி முனை."
 
 #: modules/csg/docs/CSGCombiner.xml
 msgid ""
@@ -22874,10 +23033,23 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"வடிவங்களின் சிக்கலான ஏற்பாடுகளுக்கு, உங்கள் சிஎச்சி முனைகளில் கட்டமைப்பைச் சேர்க்க சில "
+"நேரங்களில் தேவைப்படுகிறது. இந்த கட்டமைப்பை உருவாக்க CSGCombiner முனை உங்களை "
+"அனுமதிக்கிறது. முனை அதன் குழந்தைகளின் சி.எச்.சி நடவடிக்கைகளின் முடிவை இணைக்கிறது. இந்"
+"த வழியில், ஒரு சி.எச்.சி.காம்பினர் முனையின் குழந்தைகள், மற்றும் இரண்டாவது "
+"சி.எச்.சி.காம்பைனர் முனையின் குழந்தைகளாக இருக்கும் இரண்டாவது வடிவ வடிவங்களில் தனித்தனி "
+"செயல்பாடுகளின் ஒரு தொகுப்பு வடிவங்களில் செயல்பாடுகளைச் செய்ய முடியும், பின்னர் இரண்டு "
+"இறுதி முடிவுகளை இறுதி வடிவத்தை உருவாக்க அதன் உள்ளீட்டாக எடுக்கும் ஒரு செயல்பாட்டைச் "
+"செய்யுங்கள்.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid "A CSG Cylinder shape."
-msgstr ""
+msgstr "ஒரு சி.எச்.சி சிலிண்டர் வடிவம்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid ""
@@ -22889,30 +23061,40 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"இந்த முனை CSG அமைப்புடன் பயன்படுத்த ஒரு சிலிண்டரை (அல்லது கூம்பு) உருவாக்க உங்களை "
+"அனுமதிக்கிறது.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid ""
 "If [code]true[/code] a cone is created, the [member radius] will only apply "
 "to one side."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] ஒரு கூம்பு உருவாக்கப்பட்டால், [உறுப்பினர் ஆரம்] ஒரு "
+"பக்கத்திற்கு மட்டுமே பொருந்தும்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid "The height of the cylinder."
-msgstr ""
+msgstr "சிலிண்டரின் உயரம்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid "The material used to render the cylinder."
-msgstr ""
+msgstr "சிலிண்டரை வழங்க பயன்படுத்தப்படும் பொருள்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid "The radius of the cylinder."
-msgstr ""
+msgstr "சிலிண்டரின் ஆரம்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid ""
 "The number of sides of the cylinder, the higher this number the more detail "
 "there will be in the cylinder."
 msgstr ""
+"சிலிண்டரின் பக்கங்களின் எண்ணிக்கை, இந்த எண்ணிக்கையானது சிலிண்டரில் அதிக விவரங்கள் இருக்கும்."
 
 #: modules/csg/docs/CSGCylinder.xml
 msgid ""
@@ -22920,10 +23102,13 @@ msgid ""
 "effect making the cylinder seem rounded. If [code]false[/code] the cylinder "
 "will have a flat shaded look."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] சிலிண்டரின் இயல்பானவை சிலிண்டரை வட்டமானதாகக் காண்பிக்கும் "
+"மென்மையான விளைவைக் கொடுக்க அமைக்கப்பட்டால். [குறியீடு] தவறான [/குறியீடு] சிலிண்டருக்கு "
+"தட்டையான நிழல் தோற்றத்தைக் கொண்டிருக்கும்."
 
 #: modules/csg/docs/CSGMesh.xml
 msgid "A CSG Mesh shape that uses a mesh resource."
-msgstr ""
+msgstr "ஒரு கண்ணி வளத்தைப் பயன்படுத்தும் சி.எச்.சி கண்ணி வடிவம்."
 
 #: modules/csg/docs/CSGMesh.xml
 msgid ""
@@ -22937,10 +23122,20 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"இந்த சி.எச்.சி முனை எந்த மெச் வளத்தையும் ஒரு சி.எச்.சி வடிவமாகப் பயன்படுத்த "
+"அனுமதிக்கிறது, அது மூடப்பட்டிருந்தால், சுய-ஒன்றிணைக்கவில்லை, உள் முகங்களைக் "
+"கொண்டிருக்கவில்லை மற்றும் இரண்டு முகங்களுடன் இணைக்கும் விளிம்புகள் இல்லை. சி.எச்.சி "
+"முனைகளாகப் பயன்படுத்த 2 டி வெளியேற்றப்பட்ட பலகோணங்களை வரைவதற்கு [CSGPolygon] ஐயும் "
+"காண்க.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGMesh.xml
 msgid "The [Material] used in drawing the CSG shape."
-msgstr ""
+msgstr "சி.எச்.சி வடிவத்தை வரைவதற்கு [பொருள்] பயன்படுத்தப்படுகிறது."
 
 #: modules/csg/docs/CSGMesh.xml
 msgid ""
@@ -22951,10 +23146,14 @@ msgid ""
 "If a flat shader is required, ensure that all faces' vertex normals are "
 "parallel."
 msgstr ""
+"சி.எச்.சி வடிவமாக பயன்படுத்த [கண்ணி] ஆதாரம்.\n"
+" . இயல்பாக, சி.எச்.சி.எம்ச் மெசின் வெர்டெக்ச் இயல்புகளை புறக்கணித்து, முகங்களின் இயல்புகளைப்"
+" பயன்படுத்தி கணக்கிடப்பட்ட மென்மையான நிழலைப் பயன்படுத்தும். ஒரு தட்டையான சேடர் தேவைப்பட்டால்"
+", அனைத்து முகங்களின் வெர்டெக்ச் இயல்புகளும் இணையாக இருப்பதை உறுதிசெய்க."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid "Extrudes a 2D polygon shape to create a 3D mesh."
-msgstr ""
+msgstr "3D கண்ணி உருவாக்க 2 டி பலகோண வடிவத்தை வெளியேற்றுகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -22966,11 +23165,20 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"2 டி புள்ளிகளின் வரிசை விரைவாகவும் எளிதாகவும் பலவிதமான 3D மெச்களை உருவாக்க "
+"வெளியேற்றப்படுகிறது. 3D மெச்களை CSG முனைகளாகப் பயன்படுத்துவதற்கும் [CSGMESH] ஐயும் "
+"காண்க.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is [constant MODE_DEPTH], the depth of the extrusion."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_டெப்ட்] ஆக இருக்கும்போது, வெளியேற்றத்தின் ஆழம்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -22979,10 +23187,15 @@ msgid ""
 "V around the outline of the [member polygon]), the bottom-left quarter to "
 "the front end face, and the bottom-right quarter to the back end face."
 msgstr ""
+"இதன் விளைவாக வரும் கண்ணி பயன்படுத்த வேண்டிய பொருள். புற ஊதா பொருளின் மேல் பாதியை "
+"வெளியேற்றப்பட்ட வடிவத்திற்கு (யு [உறுப்பினர் பலகோணத்தின்] வெளிப்புறத்தைச் சுற்றியுள்ள "
+"எக்ச்ட்ரசன்களின் நீளம் மற்றும் வி), கீழ்-இடது காலாண்டு முன் முகம், மற்றும் கீழ்-வலது காலாண்டு "
+"முதல் பின் முகம் வரை வரைபடமாக்குகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid "The [member mode] used to extrude the [member polygon]."
 msgstr ""
+"[உறுப்பினர் பலகோணத்தை] வெளியேற்றுவதற்கு [உறுப்பினர் பயன்முறை] பயன்படுத்தப்படுகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -22991,12 +23204,18 @@ msgid ""
 "shape. If [code]false[/code] the top half of the material is repeated every "
 "step of the extrusion."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] ஆக இருக்கும்போது, இயல்பாக, "
+"[உறுப்பினர் பொருளின்] மேல் பாதி வெளியேற்றப்பட்ட வடிவத்தின் முழு நீளத்திலும் நீட்டப்படுகிறது"
+". [குறியீடு] பொய் [/குறியீடு] பொருளின் மேல் பாதி வெளியேற்றத்தின் ஒவ்வொரு அடியிலும் "
+"மீண்டும் மீண்டும் செய்யப்படுகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is [constant MODE_PATH], the path interval or ratio of "
 "path points to extrusions."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] ஆக இருக்கும்போது, பாதை இடைவெளி அல்லது "
+"பாதை புள்ளிகளின் விகிதம்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23004,6 +23223,9 @@ msgid ""
 "interval should be by distance ([constant PATH_INTERVAL_DISTANCE]) or "
 "subdivision fractions ([constant PATH_INTERVAL_SUBDIVIDE])."
 msgstr ""
+"When [member mode] is [constant MODE_PATH], this will determine if the "
+"இடைவேளை should be by distance ([constant PATH_INTERVAL_DISTANCE]) or "
+"subdivision fractions ([constant PATH_INTERVAL_SUBDIVIDE])."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23011,6 +23233,9 @@ msgid ""
 "the path are joined, by adding an extrusion between the last and first "
 "points of the path."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] ஆக இருக்கும்போது, [குறியீடு] உண்மை "
+"[/குறியீடு] பாதையின் முனைகள் இணைந்தால், பாதையின் கடைசி மற்றும் முதல் புள்ளிகளுக்கு "
+"இடையில் ஒரு வெளியேற்றத்தை சேர்ப்பதன் மூலம்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23018,24 +23243,33 @@ msgid ""
 "[Transform] of the [CSGPolygon] is used as the starting point for the "
 "extrusions, not the [Transform] of the [member path_node]."
 msgstr ""
+"When [member mode] is [constant MODE_PATH], if [code]true[/code] the "
+"[Transform] of the [CSGPolygon] is used அச் the starting புள்ளியம் க்கு the "
+"extrusions, not the [Transform] of the [member path_node]."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is [constant MODE_PATH], the location of the [Path] "
 "object used to extrude the [member polygon]."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] ஆக இருக்கும்போது, [உறுப்பினர் பலகோணத்தை] "
+"வெளியேற்றுவதற்குப் பயன்படுத்தப்படும் [பாதை] பொருளின் இருப்பிடம்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is [constant MODE_PATH], the [enum PathRotation] method "
 "used to rotate the [member polygon] as it is extruded."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] ஆக இருக்கும்போது, [உறுப்பினர் பலகோணத்தை] "
+"வெளியேற்றுவதால் [எனம் பாத்ரோடேசன்] முறை."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is [constant MODE_PATH], extrusions that are less than "
 "this angle, will be merged together to reduce polygon count."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] ஆக இருக்கும்போது, இந்த கோணத்தை விடக் "
+"குறைவான வெளியேற்றங்கள், பலகோண எண்ணிக்கையைக் குறைக்க ஒன்றாக இணைக்கப்படும்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23043,6 +23277,8 @@ msgid ""
 "path, in meters, the texture coordinates will tile. When set to 0, texture "
 "coordinates will match geometry exactly with no tiling."
 msgstr ""
+". 0 ஆக அமைக்கப்பட்டால், அமைப்பு ஒருங்கிணைப்புகள் வடிவவியலை சரியாக டைலிங் இல்லாமல் "
+"பொருந்தும்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23053,36 +23289,51 @@ msgid ""
 "[b]Note:[/b] If only 1 or 2 points are defined in [member polygon], no mesh "
 "will be generated."
 msgstr ""
+"வெளியேற்றப்பட்ட 2 டி பலகோணத்தை வரையறுக்கும் புள்ளி வரிசை. இது 3 அல்லது அதற்கு மேற்பட்ட "
+"புள்ளிகளைக் கொண்ட குவிந்த அல்லது குழிவான பலகோணமாக இருக்கலாம். பலகோணம் [i] [/i] எந்த "
+"குறுக்குவெட்டு விளிம்புகளையும் கொண்டிருக்கக்கூடாது. இல்லையெனில், முக்கோணம் தோல்வியடையும், "
+"எந்த கண்ணி உருவாக்கப்படாது.\n"
+" [b] குறிப்பு: [/b] [உறுப்பினர் பலகோணத்தில்] 1 அல்லது 2 புள்ளிகள் மட்டுமே "
+"வரையறுக்கப்பட்டால், எந்த கண்ணும் உருவாக்கப்படாது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid "If [code]true[/code], applies smooth shading to the extrusions."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] என்றால், வெளியேற்றங்களுக்கு மென்மையான நிழலைப் "
+"பயன்படுத்துகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is [constant MODE_SPIN], the total number of degrees the "
 "[member polygon] is rotated when extruding."
 msgstr ""
+"When [member mode] is [constant MODE_SPIN], the total எண் of degrees the "
+"[member polygon] is rotated when extruding."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is [constant MODE_SPIN], the number of extrusions made."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_ச்பின்] ஆக இருக்கும்போது, வெளியேற்றங்களின் "
+"எண்ணிக்கை."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid "The [member polygon] shape is extruded along the negative Z axis."
-msgstr ""
+msgstr "[உறுப்பினர் பலகோணம்] வடிவம் எதிர்மறை சட் அச்சில் வெளியேற்றப்படுகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "The [member polygon] shape is extruded by rotating it around the Y axis."
 msgstr ""
+"[உறுப்பினர் பலகோணம்] வடிவம் ஒய் அச்சில் சுழற்றுவதன் மூலம் வெளியேற்றப்படுகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "The [member polygon] shape is extruded along the [Path] specified in [member "
 "path_node]."
 msgstr ""
+"[உறுப்பினர் பாதை_நோட்] இல் குறிப்பிடப்பட்டுள்ள [பாதை] உடன் [உறுப்பினர் பலகோணம்] வடிவம் "
+"வெளியேற்றப்படுகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23090,6 +23341,9 @@ msgid ""
 "[b]Note:[/b] Requires the path's Z coordinates to continually decrease to "
 "ensure viable shapes."
 msgstr ""
+"[உறுப்பினர் பலகோணம்] வடிவம் சுழற்றப்படவில்லை.\n"
+" [b] குறிப்பு: [/b] சாத்தியமான வடிவங்களை உறுதிப்படுத்த பாதையின் சட் ஆயத்தொகுப்புகள் "
+"தொடர்ந்து குறைய வேண்டும்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23098,12 +23352,17 @@ msgid ""
 "[b]Note:[/b] Requires the path's Z coordinates to continually decrease to "
 "ensure viable shapes."
 msgstr ""
+"[உறுப்பினர் பலகோணம்] வடிவம் பாதையில் சுழலும், ஆனால் அது பாதை அச்சில் சுழற்றப்படவில்லை.\n"
+" [b] குறிப்பு: [/b] சாத்தியமான வடிவங்களை உறுதிப்படுத்த பாதையின் சட் ஆயத்தொகுப்புகள் "
+"தொடர்ந்து குறைய வேண்டும்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "The [member polygon] shape follows the path and its rotations around the "
 "path axis."
 msgstr ""
+"[உறுப்பினர் பலகோணம்] வடிவம் பாதை அச்சைச் சுற்றியுள்ள பாதையையும் அதன் சுழற்சிகளையும் "
+"பின்பற்றுகிறது."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
@@ -23111,16 +23370,21 @@ msgid ""
 "will determine the distance, in meters, each interval of the path will "
 "extrude."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] என அமைக்கப்பட்டால், "
+"[உறுப்பினர் பாதை_இன்டர்வால்] தூரத்தை தீர்மானிக்கும், மீட்டரில், பாதையின் ஒவ்வொரு இடைவெளியும் "
+"வெளிவரும்."
 
 #: modules/csg/docs/CSGPolygon.xml
 msgid ""
 "When [member mode] is set to [constant MODE_PATH], [member path_interval] "
 "will subdivide the polygons along the path."
 msgstr ""
+"[உறுப்பினர் பயன்முறை] [நிலையான பயன்முறை_பாத்] என அமைக்கப்பட்டால், "
+"[உறுப்பினர் பாதை_இன்டர்வால்] பலகோணங்களை பாதையில் பிரிக்கும்."
 
 #: modules/csg/docs/CSGPrimitive.xml
 msgid "Base class for CSG primitives."
-msgstr ""
+msgstr "சி.எச்.சி ஆதிமனிதர்களுக்கான அடிப்படை வகுப்பு."
 
 #: modules/csg/docs/CSGPrimitive.xml
 msgid ""
@@ -23133,14 +23397,22 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"பல்வேறு சி.எச்.சி ஆதிமனிதர்களுக்கான பெற்றோர் வகுப்பு. அவற்றில் பொதுவான குறியீடு மற்றும் "
+"செயல்பாடு இதில் உள்ளது. இதை நேரடியாகப் பயன்படுத்த முடியாது. அதற்கு பதிலாக அதிலிருந்து"
+" பெறப்பட்ட பல்வேறு வகுப்புகளில் ஒன்றைப் பயன்படுத்தவும்.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGPrimitive.xml
 msgid "Invert the faces of the mesh."
-msgstr ""
+msgstr "கண்ணி முகங்களை தலைகீழாக மாற்றவும்."
 
 #: modules/csg/docs/CSGShape.xml
 msgid "The CSG base class."
-msgstr ""
+msgstr "சி.எச்.சி அடிப்படை வகுப்பு."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
@@ -23152,10 +23424,17 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"கிளர்ச்சி இயந்திரத்தில் உள்ள பல்வேறு சி.எச்.சி முனைகளுக்கு சி.எச்.சி செயல்பாட்டு ஆதரவை "
+"வழங்கும் சி.எச்.சி அடிப்படை வகுப்பு இது.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGShape.xml docs/RayCast2D.xml docs/SoftBody.xml
 msgid "Returns an individual bit on the collision mask."
-msgstr ""
+msgstr "மோதல் முகமூடியில் ஒரு தனிப்பட்ட பிட்டை வழங்குகிறது."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
@@ -23163,30 +23442,40 @@ msgid ""
 "node and the second is the root [Mesh] of this node. Only works when this "
 "node is the root shape."
 msgstr ""
+"இரண்டு உறுப்புகளுடன் ஒரு [வரிசையை] தருகிறது, முதலாவது இந்த முனையின் [உருமாற்றம்] "
+"மற்றும் இரண்டாவது இந்த முனையின் வேர் [கண்ணி] ஆகும். இந்த முனை வேர் வடிவமாக இருக்கும்போது "
+"மட்டுமே செயல்படும்."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
 "Returns [code]true[/code] if this is a root shape and is thus the object "
 "that is rendered."
-msgstr ""
+msgstr "இது ஒரு மூல வடிவமாக இருந்தால் [குறியீடு] உண்மை [/code] ஐ வழங்குகிறது."
 
 #: modules/csg/docs/CSGShape.xml docs/SoftBody.xml
 msgid ""
 "Sets individual bits on the layer mask. Use this if you only need to change "
 "one layer's value."
 msgstr ""
+"அடுக்கு முகமூடியில் தனிப்பட்ட பிட்களை அமைக்கிறது. நீங்கள் ஒரு அடுக்கின் மதிப்பை மட்டுமே "
+"மாற்ற வேண்டும் என்றால் இதைப் பயன்படுத்தவும்."
 
 #: modules/csg/docs/CSGShape.xml docs/SoftBody.xml
 msgid ""
 "Sets individual bits on the collision mask. Use this if you only need to "
 "change one layer's value."
 msgstr ""
+"மோதல் முகமூடியில் தனிப்பட்ட பிட்களை அமைக்கிறது. நீங்கள் ஒரு அடுக்கின் மதிப்பை மட்டுமே மாற்"
+"ற வேண்டும் என்றால் இதைப் பயன்படுத்தவும்."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
 "Calculate tangents for the CSG shape which allows the use of normal maps. "
 "This is only applied on the root shape, this setting is ignored on any child."
 msgstr ""
+"சி.எச்.சி வடிவத்திற்கான தொடுகோடுகளை கணக்கிடுங்கள், இது சாதாரண வரைபடங்களைப் பயன்படுத்த "
+"அனுமதிக்கிறது. இது மூல வடிவத்தில் மட்டுமே பயன்படுத்தப்படுகிறது, இந்த அமைப்பு எந்த "
+"குழந்தையிலும் புறக்கணிக்கப்படுகிறது."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
@@ -23201,6 +23490,13 @@ msgid ""
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
+"இந்த பகுதி இருக்கும் இயற்பியல் அடுக்குகள்.\n"
+" ஒத்துழைக்கக்கூடிய பொருள்கள் 32 வெவ்வேறு அடுக்குகளில் ஏதேனும் இருக்கக்கூடும். இந்த "
+"அடுக்குகள் குறிச்சொல் அமைப்பு போல செயல்படுகின்றன, மேலும் அவை காட்சி அல்ல. மோதல்_மாச்க் "
+"சொத்தைப் பயன்படுத்தி, எந்த பொருள்களை மோதலாம் என்பதைத் தேர்ந்தெடுக்க இந்த அடுக்குகளைப் "
+"பயன்படுத்தலாம்.\n"
+" பொருள் A என்பது பொருள் B ச்கேன்களை எதிர்க்கும் அடுக்குகளில் இருந்தால் ஒரு தொடர்பு "
+"கண்டறியப்படுகிறது, அல்லது பொருள் B பொருள் A ஆல் ச்கேன் செய்யப்படுகிறது."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
@@ -23209,6 +23505,9 @@ msgid ""
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
+"இயற்பியல் அடுக்குகள் இந்த சி.எச்.சி வடிவம் மோதல்களுக்கு ச்கேன் செய்கிறது. [Url = https: "
+"//docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction.html"
+"#collision-layers-and-mass] மோதல் அடுக்குகள் மற்றும் முகமூடிகள் [/url] ஐக் காண்க."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
@@ -23216,6 +23515,9 @@ msgid ""
 "CSG child node as the operation is between this node and the previous child "
 "of this nodes parent."
 msgstr ""
+"இந்த வடிவத்தில் நிகழ்த்தப்படும் செயல்பாடு. இந்த முனைக்கும் இந்த முனைகளின் முந்தைய "
+"குழந்தைக்கும் இடையில் செயல்பாடு இருப்பதால் முதல் சி.எச்.சி குழந்தை முனைக்கு இது "
+"புறக்கணிக்கப்படுகிறது."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
@@ -23223,6 +23525,9 @@ msgid ""
 "can be perfectly aligned. A lower value results in greater precision but may "
 "be harder to adjust."
 msgstr ""
+"ச்னாப் கண்ணி ஒரு குறிப்பிட்ட தூரத்திற்கு ச்னாப் செய்கிறது, இதனால் இரண்டு மெச்களின் முகங்களை "
+"சரியாக சீரமைக்க முடியும். குறைந்த மதிப்பு அதிக துல்லியமாக விளைகிறது, ஆனால் சரிசெய்ய "
+"கடினமாக இருக்கலாம்."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
@@ -23230,24 +23535,30 @@ msgid ""
 "always act like a static body. Note that the collision shape is still active "
 "even if the CSG shape itself is hidden."
 msgstr ""
+"எங்கள் சி.எச்.சி வடிவத்திற்காக இயற்பியல் இயந்திரத்திற்கு மோதல் வடிவத்தை சேர்க்கிறது. இது "
+"எப்போதும் ஒரு நிலையான உடலைப் போல செயல்படும். சி.எச்.சி வடிவம் மறைக்கப்பட்டிருந்தாலும் "
+"மோதல் வடிவம் இன்னும் செயலில் உள்ளது என்பதை நினைவில் கொள்க."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
 "Geometry of both primitives is merged, intersecting geometry is removed."
 msgstr ""
+"இரண்டு ஆதிமனிதர்களின் வடிவியல் ஒன்றிணைக்கப்பட்டு, குறுக்குவெட்டு வடிவியல் அகற்றப்படுகிறது."
 
 #: modules/csg/docs/CSGShape.xml
 msgid "Only intersecting geometry remains, the rest is removed."
-msgstr ""
+msgstr "வடிவவியலை வெட்டுவது மட்டுமே உள்ளது, மீதமுள்ளவை அகற்றப்படுகின்றன."
 
 #: modules/csg/docs/CSGShape.xml
 msgid ""
 "The second shape is subtracted from the first, leaving a dent with its shape."
 msgstr ""
+"இரண்டாவது வடிவம் முதல்வரிலிருந்து கழிக்கப்படுகிறது, அதன் வடிவத்துடன் ஒரு டென்ட்டை "
+"விட்டுச்செல்கிறது."
 
 #: modules/csg/docs/CSGSphere.xml
 msgid "A CSG Sphere shape."
-msgstr ""
+msgstr "ஒரு சி.எச்.சி கோள வடிவம்."
 
 #: modules/csg/docs/CSGSphere.xml
 msgid ""
@@ -23258,22 +23569,28 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"இந்த முனை CSG அமைப்புடன் பயன்படுத்த ஒரு கோளத்தை உருவாக்க உங்களை அனுமதிக்கிறது.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGSphere.xml
 msgid "The material used to render the sphere."
-msgstr ""
+msgstr "கோளத்தை வழங்க பயன்படுத்தப்படும் பொருள்."
 
 #: modules/csg/docs/CSGSphere.xml
 msgid "Number of vertical slices for the sphere."
-msgstr ""
+msgstr "கோளத்திற்கான செங்குத்து துண்டுகளின் எண்ணிக்கை."
 
 #: modules/csg/docs/CSGSphere.xml
 msgid "Radius of the sphere."
-msgstr ""
+msgstr "கோளத்தின் ஆரம்."
 
 #: modules/csg/docs/CSGSphere.xml
 msgid "Number of horizontal slices for the sphere."
-msgstr ""
+msgstr "கோளத்திற்கான கிடைமட்ட துண்டுகளின் எண்ணிக்கை."
 
 #: modules/csg/docs/CSGSphere.xml
 msgid ""
@@ -23281,10 +23598,13 @@ msgid ""
 "effect making the sphere seem rounded. If [code]false[/code] the sphere will "
 "have a flat shaded look."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] கோளத்தின் இயல்பானவை ஒரு மென்மையான விளைவைக் கொடுக்க "
+"அமைக்கப்பட்டால், கோளத்தை வட்டமாகத் தோன்றும். [குறியீடு] பொய் [/குறியீடு] கோளத்திற்கு தட்டையா"
+"ன நிழல் தோற்றத்தைக் கொண்டிருக்கும்."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid "A CSG Torus shape."
-msgstr ""
+msgstr "ஒரு சி.எச்.சி டோரச் வடிவம்."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid ""
@@ -23295,6 +23615,12 @@ msgid ""
 "node also has a significant CPU cost, so it should be avoided during "
 "gameplay."
 msgstr ""
+"சி.எச்.சி அமைப்புடன் பயன்படுத்த டோரசை உருவாக்க இந்த முனை உங்களை அனுமதிக்கிறது.\n"
+" [b] குறிப்பு: [/b] CSG முனைகள் நிலை முன்மாதிரிக்கு பயன்படுத்தப்பட வேண்டும். "
+"[ப்ரிமிடிவேமேச்] உடன் [மெசின்ச்டன்ச்] உருவாக்குவதை ஒப்பிடும்போது சி.எச்.சி முனைகளை "
+"உருவாக்குவது குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது. மற்றொரு சி.எச்.சி முனைக்குள் "
+"ஒரு சி.எச்.சி முனையை நகர்த்துவதும் குறிப்பிடத்தக்க சிபியு செலவைக் கொண்டுள்ளது, எனவே இது"
+" விளையாட்டின் போது தவிர்க்கப்பட வேண்டும்."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid "The inner radius of the torus."
