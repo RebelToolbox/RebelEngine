@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2025-03-02 02:02+0000\n"
+"PO-Revision-Date: 2025-03-02 13:11+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-engine-api/ta/>\n"
@@ -21982,16 +21982,18 @@ msgstr "[ENUM அளவுரு] குறிப்பிட்டுள்ள 
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Sets the [Curve] of the parameter specified by [enum Parameter]."
-msgstr ""
+msgstr "[ENUM அளவுரு] குறிப்பிட்டுள்ள அளவுருவின் [வளைவை] அமைக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Sets the randomness factor of the parameter specified by [enum Parameter]."
-msgstr ""
+msgstr "[ENUM அளவுரு] குறிப்பிட்டுள்ள அளவுருவின் சீரற்ற காரணியை அமைக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Enables or disables the given flag (see [enum Flags] for options)."
 msgstr ""
+"கொடுக்கப்பட்ட கொடியை இயக்குகிறது அல்லது முடக்குகிறது (விருப்பங்களுக்கு [enum கொடிகள்] "
+"ஐப் பார்க்கவும்)."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
@@ -22002,56 +22004,61 @@ msgid ""
 "therefore removing all particles that were already emitted before changing "
 "[member amount]."
 msgstr ""
+"ஒரு உமிழ்வு சுழற்சியில் வெளிப்படும் துகள்களின் எண்ணிக்கை ([உறுப்பினர் வாழ்நாள்] உடன் "
+"தொடர்புடையது).\n"
+" ."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Initial rotation applied to each particle, in degrees."
-msgstr ""
+msgstr "ஒவ்வொரு துகள்களுக்கும், டிகிரிகளில் ஆரம்ப சுழற்சி பயன்படுத்தப்படுகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's rotation will be animated along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் சுழற்சியும் இந்த [வளைவுடன்] அனிமேசன் செய்யப்படும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Rotation randomness ratio."
-msgstr ""
+msgstr "சுழற்சி சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Initial angular velocity applied to each particle in [i]degrees[/i] per "
 "second. Sets the speed of rotation of the particle."
 msgstr ""
+"ஒவ்வொரு துகள்களுக்கும் [i] டிகிரி [/i] நொடிக்கு பயன்படுத்தப்படும் ஆரம்ப கோண விரைவு. "
+"துகள் சுழற்சியின் வேகத்தை அமைக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's angular velocity will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் கோண விரைவு இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Angular velocity randomness ratio."
-msgstr ""
+msgstr "கோண விரைவு சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Particle animation offset."
-msgstr ""
+msgstr "துகள் அனிமேசன் ஆஃப்செட்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's animation offset will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் அனிமேசன் ஆஃப்செட் இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Animation offset randomness ratio."
-msgstr ""
+msgstr "அனிமேசன் ஆஃப்செட் சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Particle animation speed."
-msgstr ""
+msgstr "துகள் அனிமேசன் விரைவு."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's animation speed will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் அனிமேசன் விரைவு இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Animation speed randomness ratio."
-msgstr ""
+msgstr "அனிமேசன் வேக சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml
 msgid ""
@@ -22059,98 +22066,117 @@ msgid ""
 "[SpatialMaterial] make sure to set [member SpatialMaterial."
 "vertex_color_use_as_albedo] to [code]true[/code]."
 msgstr ""
+"ஒவ்வொரு துகள் ஆரம்ப நிறம். ஒரு [இடஞ்சார்ந்த அளவிலான] இல் துகள் காட்சி நிறத்தைக் "
+"கொண்டிருப்பது [உறுப்பினர் இடஞ்சார்ந்ததாக இருக்கும்."
 
 #: docs/CPUParticles.xml docs/ParticlesMaterial.xml
 msgid ""
 "Each particle's color will vary along this [GradientTexture] over its "
 "lifetime (multiplied with [member color])."
 msgstr ""
+"ஒவ்வொரு துகள் நிறமும் அதன் வாழ்நாளில் இந்த [சாய்வு டெக்ச்டெக்சர்] உடன் மாறுபடும் ([உறுப்பினர்"
+" வண்ணத்துடன்)."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "The rate at which particles lose velocity."
-msgstr ""
+msgstr "துகள்கள் வேகத்தை இழக்கும் வீதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Damping will vary along this [Curve]."
-msgstr ""
+msgstr "இந்த [வளைவுடன்] ஈரமாக்குதல் மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Damping randomness ratio."
-msgstr ""
+msgstr "சீரற்ற விகிதத்தை குறைத்தல்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Unit vector specifying the particles' emission direction."
-msgstr ""
+msgstr "துகள்களின் உமிழ்வு திசையை குறிப்பிடும் அலகு திசையன்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
 msgid "Particle draw order. Uses [enum DrawOrder] values."
-msgstr ""
+msgstr "துகள் டிரா வரிசை. [Enum drayorder] மதிப்புகளைப் பயன்படுத்துகிறது."
 
 #: docs/CPUParticles.xml
 msgid ""
 "The rectangle's extents if [member emission_shape] is set to [constant "
 "EMISSION_SHAPE_BOX]."
 msgstr ""
+"[உறுப்பினர்கள் உமிழ்வு வடிவம்] செவ்வகத்தின் அளவு [நிலையான உமிழ்வு_சேப்_பாக்ச்] என "
+"அமைக்கப்பட்டுள்ளது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Sets the [Color]s to modulate particles by when using [constant "
 "EMISSION_SHAPE_POINTS] or [constant EMISSION_SHAPE_DIRECTED_POINTS]."
 msgstr ""
+"[நிலையான உமிழ்வு_சேப்_ புள்ளிகள்] அல்லது [நிலையான உமிழ்வு_சேப்_பிரக்ட்_ புள்ளிகள்] "
+"பயன்படுத்தும் போது துகள்களை மாற்றியமைக்க [வண்ணம்] களை அமைக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Sets the direction the particles will be emitted in when using [constant "
 "EMISSION_SHAPE_DIRECTED_POINTS]."
 msgstr ""
+"[நிலையான உமிழ்வு_சேப்_பிரக்ட்_ புள்ளிகள்] பயன்படுத்தும் போது துகள்கள் வெளிப்படும் திசையை "
+"அமைக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Sets the initial positions to spawn particles when using [constant "
 "EMISSION_SHAPE_POINTS] or [constant EMISSION_SHAPE_DIRECTED_POINTS]."
 msgstr ""
+"[நிலையான உமிழ்வு_சேப்_ புள்ளிகள்] அல்லது [நிலையான உமிழ்வு_சேப்_பிரக்ட்_ புள்ளிகள்] "
+"பயன்படுத்தும் போது ஆரம்ப நிலைகளை உருவாக்குங்கள்."
 
 #: docs/CPUParticles.xml
 msgid ""
 "The axis for the ring shaped emitter when using [constant "
 "EMISSION_SHAPE_RING]."
 msgstr ""
+"[நிலையான உமிழ்வு_சேப்_ரிங்] ஐப் பயன்படுத்தும் போது வளைய வடிவ உமிழ்ப்பாளருக்கான அச்சு."
 
 #: docs/CPUParticles.xml
 msgid ""
 "The height for the ring shaped emitter when using [constant "
 "EMISSION_SHAPE_RING]."
 msgstr ""
+"[நிலையான உமிழ்வு_சேப்_ரிங்] ஐப் பயன்படுத்தும் போது வளைய வடிவ உமிழ்ப்பாளரின் உயரம்."
 
 #: docs/CPUParticles.xml
 msgid ""
 "The inner radius for the ring shaped emitter when using [constant "
 "EMISSION_SHAPE_RING]."
 msgstr ""
+"[நிலையான உமிழ்வு_சேப்_ரிங்] ஐப் பயன்படுத்தும் போது வளைய வடிவ உமிழ்ப்பாளருக்கான உள் ஆரம்."
 
 #: docs/CPUParticles.xml
 msgid ""
 "The radius for the ring shaped emitter when using [constant "
 "EMISSION_SHAPE_RING]."
 msgstr ""
+"[நிலையான உமிழ்வு_சேப்_ரிங்] ஐப் பயன்படுத்தும் போது வளைய வடிவ உமிழ்ப்பாளருக்கான ஆரம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Particles will be emitted inside this region. See [enum EmissionShape] for "
 "possible values."
 msgstr ""
+"இந்த பகுதிக்குள் துகள்கள் வெளியேற்றப்படும். சாத்தியமான மதிப்புகளுக்கு [enum உமிழ்வு] ஐப் "
+"பார்க்கவும்."
 
 #: docs/CPUParticles.xml
 msgid ""
 "The sphere's radius if [enum EmissionShape] is set to [constant "
 "EMISSION_SHAPE_SPHERE]."
 msgstr ""
+"[ENUM உமிழ்வு] [நிலையான உமிழ்வு_சேப்_ச்பெர்] என அமைக்கப்பட்டால் கோளத்தின் ஆரம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
 msgid "If [code]true[/code], particles are being emitted."
-msgstr ""
+msgstr "[குறியீடு] உண்மை [/குறியீடு] என்றால், துகள்கள் வெளியேற்றப்படுகின்றன."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid ""
@@ -22158,6 +22184,9 @@ msgid ""
 "[code]0[/code], there will be a gap in emissions before the next cycle "
 "begins."
 msgstr ""
+"உமிழ்வு சுழற்சியில் விரைவாக துகள்கள் எவ்வாறு வெளியேற்றப்படுகின்றன. [குறியீடு] 0 "
+"[/குறியீடு] ஐ விட அதிகமாக இருந்தால், அடுத்த சுழற்சி தொடங்குவதற்கு முன்பு உமிழ்வில் "
+"இடைவெளி இருக்கும்."
 
 #: docs/CPUParticles.xml
 msgid ""
@@ -22165,24 +22194,31 @@ msgid ""
 "the value to 2 will make the particles render at 2 frames per second. Note "
 "this does not slow down the particle system itself."
 msgstr ""
+"துகள் அமைப்பின் பிரேம் வீதம் ஒரு மதிப்புக்கு நிர்ணயிக்கப்பட்டுள்ளது. உதாரணமாக, மதிப்பை 2 "
+"ஆக மாற்றுவது துகள்கள் நொடிக்கு 2 பிரேம்களில் வழங்கப்படும். இது துகள் அமைப்பை மெதுவாக்காது"
+" என்பதை நினைவில் கொள்க."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Align Y axis of particle with the direction of its velocity."
-msgstr ""
+msgstr "துகள் ஒய் அச்சை அதன் வேகத்தின் திசையுடன் சீரமைக்கவும்."
 
 #: docs/CPUParticles.xml docs/ParticlesMaterial.xml
 msgid "If [code]true[/code], particles will not move on the z axis."
-msgstr ""
+msgstr "[குறியீடு] உண்மை [/குறியீடு] என்றால், துகள்கள் சட் அச்சில் நகராது."
 
 #: docs/CPUParticles.xml docs/ParticlesMaterial.xml
 msgid "If [code]true[/code], particles rotate around Y axis by [member angle]."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] என்றால், துகள்கள் [உறுப்பினர் கோணத்தால்] ஒய் அச்சில் "
+"சுழல்கின்றன."
 
 #: docs/CPUParticles.xml
 msgid ""
 "Amount of [member spread] in Y/Z plane. A value of [code]1[/code] restricts "
 "particles to X/Z plane."
 msgstr ""
+"Y/Z விமானத்தில் [உறுப்பினர் பரவலின்] அளவு. [குறியீடு] 1 [/குறியீடு] இன் மதிப்பு "
+"எக்ச்/இசட் விமானத்திற்கு துகள்களைக் கட்டுப்படுத்துகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
@@ -22190,54 +22226,59 @@ msgid ""
 "If [code]true[/code], results in fractional delta calculation which has a "
 "smoother particles display effect."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] என்றால், மென்மையான துகள்கள் காட்சி விளைவைக் கொண்ட பகுதியளவு"
+" டெல்டா கணக்கீட்டில் முடிவுகள்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Gravity applied to every particle."
-msgstr ""
+msgstr "ஒவ்வொரு துகள்களுக்கும் ஈர்ப்பு பயன்படுத்தப்படுகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Initial hue variation applied to each particle."
-msgstr ""
+msgstr "ஒவ்வொரு துகள்களுக்கும் ஆரம்ப சாயல் மாறுபாடு பயன்படுத்தப்படுகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's hue will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் சாயலும் இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Hue variation randomness ratio."
-msgstr ""
+msgstr "சாயல் மாறுபாடு சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid ""
 "Initial velocity magnitude for each particle. Direction comes from [member "
 "spread] and the node's orientation."
 msgstr ""
+"ஒவ்வொரு துகள்களுக்கும் ஆரம்ப திசைவேக அளவு. திசை [உறுப்பினர் பரவல்] மற்றும் முனையின் "
+"நோக்குநிலையிலிருந்து வருகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Initial velocity randomness ratio."
-msgstr ""
+msgstr "ஆரம்ப விரைவு சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
 msgid "The amount of time each particle will exist (in seconds)."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் இருக்கும் நேரத்தின் அளவு (நொடிகளில்)."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Particle lifetime randomness ratio."
-msgstr ""
+msgstr "துகள் வாழ்நாள் சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid ""
 "Linear acceleration applied to each particle in the direction of motion."
 msgstr ""
+"இயக்கத்தின் திசையில் ஒவ்வொரு துகள்களுக்கும் நேரியல் முடுக்கம் பயன்படுத்தப்படுகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's linear acceleration will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் நேரியல் முடுக்கம் இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Linear acceleration randomness ratio."
-msgstr ""
+msgstr "நேரியல் முடுக்கம் சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
@@ -22245,18 +22286,26 @@ msgid ""
 "If [code]true[/code], particles use the parent node's coordinate space. If "
 "[code]false[/code], they use global coordinates."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] என்றால், துகள்கள் பெற்றோர் முனையின் ஒருங்கிணைப்பு இடத்தைப் "
+"பயன்படுத்துகின்றன. [குறியீடு] பொய் [/குறியீடு] என்றால், அவை உலகளாவிய ஆயத்தொகுதிகளைப் "
+"பயன்படுத்துகின்றன."
 
 #: docs/CPUParticles.xml
 msgid ""
 "The [Mesh] used for each particle. If [code]null[/code], particles will be "
 "spheres."
 msgstr ""
+"ஒவ்வொரு துகள்களுக்கும் பயன்படுத்தப்படும் [கண்ணி]. [குறியீடு] சுழிய [/குறியீடு] என்றால், "
+"துகள்கள் கோளங்களாக இருக்கும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid ""
 "If [code]true[/code], only one emission cycle occurs. If set [code]true[/"
 "code] during a cycle, emission will stop at the cycle's end."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] என்றால், ஒரு உமிழ்வு சுழற்சி மட்டுமே நிகழ்கிறது. ஒரு "
+"சுழற்சியின் போது [குறியீடு] உண்மை [/குறியீடு] அமைக்கப்பட்டால், உமிழ்வு சுழற்சியின் "
+"முடிவில் நின்றுவிடும்."
 
 #: docs/CPUParticles.xml
 msgid ""
@@ -22266,60 +22315,73 @@ msgid ""
 "This property is only available when [member flag_disable_z] is [code]true[/"
 "code]."
 msgstr ""
+"ஒவ்வொரு துகள்களுக்கும் சுற்றுப்பாதை விரைவு பயன்படுத்தப்படுகிறது. உள்ளக XY விமானத்தில் "
+"தோற்றத்தைச் சுற்றி துகள்கள் வட்டத்தை உருவாக்குகின்றன. நொடிக்கு தோற்றத்தைச் சுற்றியுள்ள முழு "
+"சுழற்சிகளின் எண்ணிக்கையில் குறிப்பிடப்பட்டுள்ளது.\n"
+" [உறுப்பினர் FLAG_DISABLE_Z] [குறியீடு] உண்மை [/குறியீடு] ஆக இருக்கும்போது மட்டுமே இந்"
+"த சொத்து கிடைக்கும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's orbital velocity will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் சுற்றுப்பாதை விரைவு இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Orbital velocity randomness ratio."
-msgstr ""
+msgstr "சுற்றுப்பாதை விரைவு சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid "Particle system starts as if it had already run for this many seconds."
 msgstr ""
+"துகள் அமைப்பு இந்த பல விநாடிகளுக்கு ஏற்கனவே இயங்கியது போல் தொடங்குகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid ""
 "Radial acceleration applied to each particle. Makes particle accelerate away "
 "from origin."
 msgstr ""
+"ஒவ்வொரு துகள்களுக்கும் ரேடியல் முடுக்கம் பயன்படுத்தப்படுகிறது. துகள் தோற்றத்திலிருந்து "
+"விரைவுபடுத்துகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's radial acceleration will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் ரேடியல் முடுக்கம் இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Radial acceleration randomness ratio."
-msgstr ""
+msgstr "ரேடியல் முடுக்கம் சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid "Emission lifetime randomness ratio."
-msgstr ""
+msgstr "உமிழ்வு வாழ்நாள் சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Initial scale applied to each particle."
-msgstr ""
+msgstr "ஒவ்வொரு துகள்களுக்கும் ஆரம்ப அளவு பயன்படுத்தப்படுகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's scale will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் அளவும் இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Scale randomness ratio."
-msgstr ""
+msgstr "அளவிலான சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles2D.xml
 msgid ""
 "Particle system's running speed scaling ratio. A value of [code]0[/code] can "
 "be used to pause the particles."
 msgstr ""
+"துகள் அமைப்பின் இயங்கும் வேக அளவிடுதல் விகிதம். [குறியீடு] 0 [/குறியீடு] இன் மதிப்பு "
+"துகள்களை இடைநிறுத்த பயன்படுத்தப்படலாம்."
 
 #: docs/CPUParticles.xml
 msgid ""
 "Each particle's initial direction range from [code]+spread[/code] to [code]-"
 "spread[/code] degrees. Applied to X/Z plane and Y/Z planes."
 msgstr ""
+"ஒவ்வொரு துகள் ஆரம்ப திசையும் [குறியீடு]+பரவல் [/குறியீடு] முதல் [குறியீடு] -spread "
+"[/code] டிகிரி வரை இருக்கும். எக்ச்/இசட் வானூர்தி மற்றும் YZ விமானங்களுக்கு "
+"பயன்படுத்தப்படுகிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid ""
@@ -22327,46 +22389,55 @@ msgid ""
 "perpendicular to the particle's velocity giving the particles a swirling "
 "motion."
 msgstr ""
+"ஒவ்வொரு துகள்களுக்கும் டான்சென்சியல் முடுக்கம் பயன்படுத்தப்படுகிறது. தொடுநிலை முடுக்கம் "
+"துகள்களின் வேகத்திற்கு செங்குத்தாக உள்ளது, இது துகள்களுக்கு ஒரு சுழலும் இயக்கத்தை "
+"அளிக்கிறது."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid "Each particle's tangential acceleration will vary along this [Curve]."
-msgstr ""
+msgstr "ஒவ்வொரு துகள் தொடுநிலை முடுக்கம் இந்த [வளைவுடன்] மாறுபடும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/ParticlesMaterial.xml
 msgid "Tangential acceleration randomness ratio."
-msgstr ""
+msgstr "தொடுநிலை முடுக்கம் சீரற்ற விகிதம்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
 msgid "Particles are drawn in the order emitted."
-msgstr ""
+msgstr "உமிழப்படும் வரிசையில் துகள்கள் வரையப்படுகின்றன."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml docs/Particles.xml
 #: docs/Particles2D.xml
 msgid "Particles are drawn in order of remaining lifetime."
-msgstr ""
+msgstr "மீதமுள்ள வாழ்நாளின் வரிசையில் துகள்கள் வரையப்படுகின்றன."
 
 #: docs/CPUParticles.xml docs/Particles.xml
 msgid "Particles are drawn in order of depth."
-msgstr ""
+msgstr "ஆழத்தின் வரிசையில் துகள்கள் வரையப்படுகின்றன."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set initial velocity properties."
 msgstr ""
+"ஆரம்ப திசைவேக பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] "
+"மற்றும் [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set angular velocity properties."
 msgstr ""
+"கோண திசைவேக பண்புகளை அமைக்க [முறை set_param], [முறை set_param_randomness] மற்றும்"
+" [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
 "Use with [method set_param], [method set_param_randomness], and [method "
 "set_param_curve] to set orbital velocity properties."
 msgstr ""
+"சுற்றுப்பாதை திசைவேக பண்புகளை அமைக்க [முறை set_param], "
+"[முறை set_param_randomness] மற்றும் [முறை set_param_curve] உடன் பயன்படுத்தவும்."
 
 #: docs/CPUParticles.xml docs/CPUParticles2D.xml
 msgid ""
