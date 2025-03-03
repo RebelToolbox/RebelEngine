@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2025-03-03 08:13+0000\n"
+"PO-Revision-Date: 2025-03-03 15:48+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-engine-api/ta/>\n"
@@ -23624,23 +23624,23 @@ msgstr ""
 
 #: modules/csg/docs/CSGTorus.xml
 msgid "The inner radius of the torus."
-msgstr ""
+msgstr "டோரசின் உள் ஆரம்."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid "The material used to render the torus."
-msgstr ""
+msgstr "டோரசை வழங்க பயன்படுத்தப்படும் பொருள்."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid "The outer radius of the torus."
-msgstr ""
+msgstr "டோரசின் வெளிப்புற ஆரம்."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid "The number of edges each ring of the torus is constructed of."
-msgstr ""
+msgstr "டோரசின் ஒவ்வொரு வளையத்தின் விளிம்புகளின் எண்ணிக்கை கட்டப்பட்டுள்ளது."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid "The number of slices the torus is constructed of."
-msgstr ""
+msgstr "டோரச் கட்டப்பட்ட துண்டுகளின் எண்ணிக்கை."
 
 #: modules/csg/docs/CSGTorus.xml
 msgid ""
@@ -23648,12 +23648,16 @@ msgid ""
 "effect making the torus seem rounded. If [code]false[/code] the torus will "
 "have a flat shaded look."
 msgstr ""
+"[குறியீடு] உண்மை [/குறியீடு] டோரசின் இயல்பானவை ஒரு மென்மையான விளைவைக் கொடுக்க "
+"அமைக்கப்பட்டால், டோரச் வட்டமானதாகத் தோன்றும். [குறியீடு] பொய் [/குறியீடு] டோரச் ஒரு தட்டையா"
+"ன நிழல் தோற்றத்தைக் கொண்டிருக்கும்."
 
 #: modules/mono/docs/CSharpScript.xml
 msgid ""
 "A script implemented in the C# programming language (Mono-enabled builds "
 "only)."
 msgstr ""
+"சி# நிரலாக்க மொழியில் செயல்படுத்தப்பட்ட ஒரு ச்கிரிப்ட் (மோனோ-இயக்கப்பட்ட கட்டங்கள் மட்டுமே)."
 
 #: modules/mono/docs/CSharpScript.xml
 msgid ""
@@ -23661,20 +23665,25 @@ msgid ""
 "class and is only available in Mono-enabled Rebel builds.\n"
 "See also [GodotSharp]."
 msgstr ""
+"இந்த வகுப்பு ஒரு சி# ச்கிரிப்டைக் குறிக்கிறது. இது [GDSCRIPT] வகுப்பிற்கு சி# "
+"சமமானதாகும், இது மோனோ-இயக்கப்பட்ட கிளர்ச்சி கட்டமைப்புகளில் மட்டுமே கிடைக்கிறது.\n"
+" [கோடோட்சார்ப்] ஐயும் காண்க."
 
 #: modules/mono/docs/CSharpScript.xml
 msgid ""
 "https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/c_sharp/index."
 "html"
 msgstr ""
+"https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/c_sharp/"
+"index.html"
 
 #: modules/mono/docs/CSharpScript.xml modules/gdnative/docs/PluginScript.xml
 msgid "Returns a new instance of the script."
-msgstr ""
+msgstr "ச்கிரிப்ட்டின் புதிய நிகழ்வை வழங்குகிறது."
 
 #: docs/CubeMap.xml
 msgid "A CubeMap is a 6-sided 3D texture."
-msgstr ""
+msgstr "ஒரு கியூபேமேப் என்பது 6 பக்க 3D அமைப்பு."
 
 #: docs/CubeMap.xml
 msgid ""
@@ -23682,100 +23691,115 @@ msgid ""
 "to make an object look as if it's reflecting its surroundings. This usually "
 "delivers much better performance than other reflection methods."
 msgstr ""
+"6-பக்க 3D அமைப்பு பொதுவாக போலி பிரதிபலிப்புகளுக்கு பயன்படுத்தப்படுகிறது. ஒரு பொருளை "
+"அதன் சுற்றுப்புறங்களை பிரதிபலிப்பது போல் தோற்றமளிக்க இது பயன்படுத்தப்படலாம். இது பொதுவாக "
+"மற்ற பிரதிபலிப்பு முறைகளை விட மிகச் சிறந்த செயல்திறனை வழங்குகிறது."
 
 #: docs/CubeMap.xml
 msgid "Returns the [CubeMap]'s height."
-msgstr ""
+msgstr "[கியூபேமேப்] இன் உயரத்தை வழங்குகிறது."
 
 #: docs/CubeMap.xml
 msgid ""
 "Returns an [Image] for a side of the [CubeMap] using one of the [enum Side] "
 "constants."
 msgstr ""
+"[எனம் சைட்] மாறிலிகளில் ஒன்றைப் பயன்படுத்தி [கியூபேமேப்] ஒரு பக்கத்திற்கு [படத்தை] "
+"வழங்குகிறது."
 
 #: docs/CubeMap.xml
 msgid "Returns the [CubeMap]'s width."
-msgstr ""
+msgstr "[கியூபேமேப்பின் அகலத்தை வழங்குகிறது."
 
 #: docs/CubeMap.xml
 msgid ""
 "Sets an [Image] for a side of the [CubeMap] using one of the [enum Side] "
 "constants."
 msgstr ""
+"[எனம் சைட்] மாறிலிகளில் ஒன்றைப் பயன்படுத்தி [கியூபேமேப்] ஒரு பக்கத்திற்கு [படத்தை] "
+"அமைக்கிறது."
 
 #: docs/CubeMap.xml
 msgid ""
 "The render flags for the [CubeMap]. See the [enum Flags] constants for "
 "details."
 msgstr ""
+"[கியூபேமேப்] க்கான கொடிகள். விவரங்களுக்கு [enum கொடிகள்] மாறிலிகளைப் பார்க்கவும்."
 
 #: docs/CubeMap.xml
 msgid ""
 "The lossy storage quality of the [CubeMap] if the storage mode is set to "
 "[constant STORAGE_COMPRESS_LOSSY]."
 msgstr ""
+"சேமிப்பக பயன்முறை [நிலையான சேமிப்பு_அமிரெச்_லோசி] என அமைக்கப்பட்டால் [கியூபேமேப்] "
+"இழப்பு சேமிப்பக தகுதி."
 
 #: docs/CubeMap.xml
 msgid "The [CubeMap]'s storage mode. See [enum Storage] constants."
-msgstr ""
+msgstr "[கியூபேமேப்] சேமிப்பக முறை. [Enum சேமிப்பு] மாறிலிகளைக் காண்க."
 
 #: docs/CubeMap.xml
 msgid "Store the [CubeMap] without any compression."
-msgstr ""
+msgstr "[க்யூப்மேப்] எந்த சுருக்கமும் இல்லாமல் சேமிக்கவும்."
 
 #: docs/CubeMap.xml
 msgid "Store the [CubeMap] with strong compression that reduces image quality."
 msgstr ""
+"படத்தின் தரத்தை குறைக்கும் வலுவான சுருக்கத்துடன் [கியூபேமேப்] சேமிக்கவும்."
 
 #: docs/CubeMap.xml
 msgid ""
 "Store the [CubeMap] with moderate compression that doesn't reduce image "
 "quality."
 msgstr ""
+"படத்தின் தரத்தை குறைக்காத மிதமான சுருக்கத்துடன் [கியூபேமேப்] ஐ சேமிக்கவும்."
 
 #: docs/CubeMap.xml
 msgid "Identifier for the left face of the [CubeMap]."
-msgstr ""
+msgstr "[க்யூபேப்] இன் இடது முகத்திற்கான அடையாளங்காட்டி."
 
 #: docs/CubeMap.xml
 msgid "Identifier for the right face of the [CubeMap]."
-msgstr ""
+msgstr "[க்யூபேப்] இன் வலது முகத்திற்கான அடையாளங்காட்டி."
 
 #: docs/CubeMap.xml
 msgid "Identifier for the bottom face of the [CubeMap]."
-msgstr ""
+msgstr "[க்யூபேப்] இன் கீழ் முகத்திற்கான அடையாளங்காட்டி."
 
 #: docs/CubeMap.xml
 msgid "Identifier for the top face of the [CubeMap]."
-msgstr ""
+msgstr "[கியூபேமேப்] இன் மேல் முகத்திற்கான அடையாளங்காட்டி."
 
 #: docs/CubeMap.xml
 msgid "Identifier for the front face of the [CubeMap]."
-msgstr ""
+msgstr "[கியூபேப்] இன் முன் முகத்திற்கான அடையாளங்காட்டி."
 
 #: docs/CubeMap.xml
 msgid "Identifier for the back face of the [CubeMap]."
-msgstr ""
+msgstr "[கியூபேமேப்] இன் பின்புற முகத்திற்கான அடையாளங்காட்டி."
 
 #: docs/CubeMap.xml
 msgid "Generate mipmaps, to enable smooth zooming out of the texture."
 msgstr ""
+"அமைப்பிலிருந்து மென்மையான பெரிதாக்குவதை செயல்படுத்த, MIPMAPS ஐ உருவாக்கவும்."
 
 #: docs/CubeMap.xml
 msgid "Repeat (instead of clamp to edge)."
-msgstr ""
+msgstr "மீண்டும் செய்யவும் (விளிம்பிற்கு கிளம்புக்கு பதிலாக)."
 
 #: docs/CubeMap.xml
 msgid "Turn on magnifying filter, to enable smooth zooming in of the texture."
 msgstr ""
+"அமைப்பின் மென்மையான பெரிதாக்கத்தை இயக்க, பூதக்கண்ணாடி வடிகட்டியை இயக்கவும்."
 
 #: docs/CubeMap.xml
 msgid "Default flags. Generate mipmaps, repeat, and filter are enabled."
 msgstr ""
+"இயல்புநிலை கொடிகள். MIPMAPS ஐ உருவாக்குங்கள், மீண்டும் மீண்டும், வடிகட்டி இயக்கப்பட்டுள்ளன."
 
 #: docs/CubeMesh.xml
 msgid "Generate an axis-aligned cuboid [PrimitiveMesh]."
-msgstr ""
+msgstr "அச்சு-சீரமைக்கப்பட்ட க்யூபாய்டை [ப்ரிமிடிவேமேச்] உருவாக்குங்கள்."
 
 #: docs/CubeMesh.xml
 msgid ""
@@ -23788,26 +23812,33 @@ msgid ""
 "this, increase [member subdivide_depth], [member subdivide_height] and "
 "[member subdivide_width] until you no longer notice UV jittering."
 msgstr ""
+"அச்சு-சீரமைக்கப்பட்ட க்யூபாய்டை [ப்ரிமிடிவேமேச்] உருவாக்குங்கள்.\n"
+" கனசதுரத்தின் புற ஊதா தளவமைப்பு 3 × 2 தளவமைப்பில் ஏற்பாடு செய்யப்பட்டுள்ளது, இது ஒவ்வொரு"
+" முகத்தையும் தனித்தனியாக கட்டமைக்க அனுமதிக்கிறது. எல்லா முகங்களிலும் ஒரே அமைப்பைப் "
+"பயன்படுத்த, பொருளின் புற ஊதா சொத்தை [குறியீடு] திசையன் 3 (3, 2, 1) [/குறியீடு] என "
+"மாற்றவும்.\n"
+" . இதைத் தீர்க்க, [உறுப்பினர் subdivide_depth], [உறுப்பினர் துணைப்பிரிவு_ஐட்] மற்றும் "
+"[உறுப்பினர் துணைப்பிரிவு_ அகலம்] ஆகியவற்றை அதிகரிக்கவும்."
 
 #: docs/CubeMesh.xml
 msgid "Size of the cuboid mesh."
-msgstr ""
+msgstr "கியூபாய்டு கண்ணி அளவு."
 
 #: docs/CubeMesh.xml
 msgid "Number of extra edge loops inserted along the Z axis."
-msgstr ""
+msgstr "சட் அச்சில் செருகப்பட்ட கூடுதல் விளிம்பு சுழல்களின் எண்ணிக்கை."
 
 #: docs/CubeMesh.xml
 msgid "Number of extra edge loops inserted along the Y axis."
-msgstr ""
+msgstr "ஒய் அச்சில் செருகப்பட்ட கூடுதல் விளிம்பு சுழல்களின் எண்ணிக்கை."
 
 #: docs/CubeMesh.xml
 msgid "Number of extra edge loops inserted along the X axis."
-msgstr ""
+msgstr "ஃச் அச்சில் செருகப்பட்ட கூடுதல் விளிம்பு சுழல்களின் எண்ணிக்கை."
 
 #: docs/CullInstance.xml
 msgid "Parent of all nodes that can be culled by the Portal system."
-msgstr ""
+msgstr "போர்டல் அமைப்பால் தேர்ந்தெடுக்கக்கூடிய அனைத்து முனைகளின் பெற்றோர்."
 
 #: docs/CullInstance.xml
 msgid ""
@@ -23830,6 +23861,18 @@ msgid ""
 "Objects that are not [code]Static[/code] or [code]Dynamic[/code] can be "
 "freely created and deleted during the lifetime of the game level."
 msgstr ""
+"[போர்டல்] அமைப்பால் குறைக்கக்கூடிய முனைகளுக்கு பொதுவான செயல்பாட்டை வழங்குகிறது.\n"
+" [குறியீடு] நிலையான [/குறியீடு] மற்றும் [குறியீடு] மாறும் [/குறியீடு] பொருள்கள் "
+"கணினியில் மிகவும் திறமையாக நிர்வகிக்கப்படும் பொருள்கள், ஆனால் சில எச்சரிக்கைகள் உள்ளன. "
+"[ரூம் மேனேசர்] [குறியீடு] அறைகள்_ கான்வர்ட் [/குறியீடு] செயல்பாட்டைப் பயன்படுத்தி [அறை] கள்"
+" மாற்றப்படும்போது அவை ஆரம்பத்தில் இருக்கும் என்று எதிர்பார்க்கப்படுகிறது, மேலும் அவற்றின் "
+"வாழ்நாள் விளையாட்டு மட்டத்திற்கு சமமாக இருக்க வேண்டும் (அதாவது [குறியீடு] அறைகள்_ கிளையர்"
+" [/குறியீடு] [ரூம் மேனேசர்] இல் நீங்கள் அழைக்கும் வரை [குறியீடு] [/குறியீடு] [/குறியீடு] "
+"மற்றும்/குறியீட்டின் போது நீங்கள் நீக்கக்கூடாது [குறியீடு] [/குறியீடு] கட்டளைகளைக் காட்டு.\n"
+" . இது எங்கிருந்தாலும் திறம்பட மாற்றப்படுவதற்கு இது உதவுகிறது.\n"
+" .\n"
+" [குறியீடு] நிலையான [/குறியீடு] அல்லது [குறியீடு] மாறும் [/குறியீடு] இல்லாத பொருள்களை"
+" விளையாட்டு மட்டத்தின் வாழ்நாளில் இலவசமாக உருவாக்கி நீக்க முடியும்."
 
 #: docs/CullInstance.xml
 msgid ""
@@ -23841,6 +23884,12 @@ msgid ""
 "This can be used to control autoplacement of building exteriors in an outer "
 "[RoomGroup]."
 msgstr ""
+".\n"
+" [குறியீடு] 0 [/குறியீடு] தவிர வேறு மதிப்புக்கு அமைக்கப்படும்போது, [குறியீடு] "
+"ஆட்டோபிளேச்_பிரியோரிட்டி [/குறியீடு] உடன் [அறையில்] ஒரு [அறையில்] தன்னியக்கமாக்க "
+"முயற்சிக்கும்.\n"
+" வெளிப்புற [ரூம் குழுமம்] இல் கட்டிட வெளிப்புறங்களின் தன்னியக்கத்தைக் கட்டுப்படுத்த இதைப் "
+"பயன்படுத்தலாம்."
 
 #: docs/CullInstance.xml
 msgid ""
@@ -23852,12 +23901,18 @@ msgid ""
 "[code]PORTAL_MODE_STATIC[/code] or [code]PORTAL_MODE_DYNAMIC[/code], and for "
 "[Portal]s."
 msgstr ""
+"ஒரு [அறைக்கு] ஒரு கையேடு பிணைப்பு வெளிப்படையாகக் குறிப்பிடப்படாதபோது, அறைக்குள் உள்ள "
+"பொருட்களின் வடிவவியலிலிருந்து குவிந்த அல் பவுண்ட் மதிப்பிடப்படும். ஒரு பொருளின் வடிவியல் "
+"அறையின் இந்த மதிப்பீட்டில் சேர்க்கப்பட்டுள்ளதா என்பதை இந்த அமைப்பு தீர்மானிக்கிறது.\n"
+" ."
 
 #: docs/CullInstance.xml
 msgid ""
 "When using [Room]s and [Portal]s, this specifies how the [CullInstance] is "
 "processed in the system."
 msgstr ""
+"[அறை] கள் மற்றும் [போர்ட்டல்] கள் பயன்படுத்தும் போது, [குல்லின்ச்டன்ச்] கணினியில் எவ்வாறு "
+"செயலாக்கப்படுகிறது என்பதை இது குறிப்பிடுகிறது."
 
 #: docs/CullInstance.xml
 msgid ""
@@ -23869,6 +23924,9 @@ msgid ""
 "data has been invalidated. You will need to reconvert the rooms using the "
 "[RoomManager] to activate the system again."
 msgstr ""
+"[B] நகரும் [/b] - எ.கா. சுவர்கள், தளங்கள்.\n"
+" . ஏனென்றால் [பி] அறை வரைபடம் [/b] தரவு செல்லாதது. கணினியை மீண்டும் செயல்படுத்த "
+"[ரூம்மேனேசர்] ஐப் பயன்படுத்தி அறைகளை மீண்டும் மாற்ற வேண்டும்."
 
 #: docs/CullInstance.xml
 msgid ""
@@ -23880,26 +23938,34 @@ msgid ""
 "data has been invalidated. You will need to reconvert the rooms using the "
 "[RoomManager] to activate the system again."
 msgstr ""
+"அறைகளுக்குள் இருக்கும் நிகழ்வுகளுக்கு பயன்படுத்தவும், ஆனால் [b] அறையை மாற்றாது [/b] - "
+"எ.கா. நகரும் தளங்கள்.\n"
+" . ஏனென்றால் [பி] அறை வரைபடம் [/b] தரவு செல்லாதது. கணினியை மீண்டும் செயல்படுத்த "
+"[ரூம்மேனேசர்] ஐப் பயன்படுத்தி அறைகளை மீண்டும் மாற்ற வேண்டும்."
 
 #: docs/CullInstance.xml
 msgid "Use for instances that will move [b]between[/b] [Room]s - e.g. players."
-msgstr ""
+msgstr "[/B] [அறை] கள் - எ.கா. வீரர்கள்."
 
 #: docs/CullInstance.xml
 msgid ""
 "Use for instances that will be frustum culled only - e.g. first person "
 "weapon, debug."
 msgstr ""
+"வெறித்தனமான நிகழ்வுகளுக்கு மட்டுமே பயன்படுத்தவும் - எ.கா. முதல் நபர் கருவி, "
+"பிழைத்திருத்தம்."
 
 #: docs/CullInstance.xml
 msgid ""
 "Use for instances that will not be shown at all - e.g. [b]manual room "
 "bounds[/b] (specified by prefix [i]'Bound_'[/i])."
 msgstr ""
+"காட்டப்படாத நிகழ்வுகளுக்கு பயன்படுத்தவும் - எ.கா. [b] கையேடு அறை வரம்புகள் [/b] "
+"(முன்னொட்டு மூலம் குறிப்பிடப்பட்டுள்ளது [i] 'பிணைக்கப்பட்ட _' [/i])."
 
 #: docs/Curve.xml
 msgid "A mathematic curve."
-msgstr ""
+msgstr "ஒரு கணித வளைவு."
 
 #: docs/Curve.xml
 msgid ""
@@ -23907,6 +23973,9 @@ msgid ""
 "ranges between [code]0[/code] and [code]1[/code] on the Y axis and positions "
 "points relative to the [code]0.5[/code] Y position."
 msgstr ""
+"மற்ற பொருள்களுக்கு சேமித்து மீண்டும் பயன்படுத்தக்கூடிய ஒரு வளைவு. இயல்பாக, இது ஒய் அச்சில் "
+"[குறியீடு] 0 [/குறியீடு] மற்றும் [குறியீடு] 1 [/குறியீடு] மற்றும் [குறியீடு] 0.5 "
+"[/குறியீடு] ஒய் நிலைக்கு தொடர்புடைய புள்ளிகளை நிலைநிறுத்துகிறது."
 
 #: docs/Curve.xml
 msgid ""
@@ -23916,56 +23985,73 @@ msgid ""
 "assignments to the [code]*_tangent[/code] angle if [code]*_mode[/code] is "
 "set to [constant TANGENT_FREE]."
 msgstr ""
+"வளைவுக்கு ஒரு புள்ளியைச் சேர்க்கிறது. ஒவ்வொரு பக்கத்திற்கும், [குறியீடு]*_ பயன்முறை "
+"[/குறியீடு] [நிலையான டேன்சென்ட்_லினியர்] என்றால், [குறியீடு]*_ தொடுகோடு [/குறியீடு] "
+"கோணம் (டிகிரிகளில்) வளைவின் சாய்வை அருகிலுள்ள புள்ளியில் பாதியிலேயே பயன்படுத்துகிறது. "
+"[குறியீடு]*_ முறை [/குறியீடு] கோணத்திற்கு தனிப்பயன் பணிகளை அனுமதிக்கிறது [குறியீடு]*"
+"_ பயன்முறை [/குறியீடு] [நிலையான டேன்சென்ட்_ஃப்ரீ] என அமைக்கப்பட்டால்."
 
 #: docs/Curve.xml
 msgid "Recomputes the baked cache of points for the curve."
 msgstr ""
+"வளைவுக்கான புள்ளிகளின் வேகவைத்த தற்காலிக சேமிப்பை மறுபரிசீலனை செய்கிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Removes points that are closer than [code]CMP_EPSILON[/code] (0.00001) units "
 "to their neighbor on the curve."
 msgstr ""
+"[குறியீடு] cmp_epsilon [/code] (0.00001) அலகுகளை வளைவில் தங்கள் அண்டை நாடுகளை விட "
+"நெருக்கமான புள்ளிகளை நீக்குகிறது."
 
 #: docs/Curve.xml docs/Curve2D.xml docs/Curve3D.xml
 msgid "Removes all points from the curve."
-msgstr ""
+msgstr "வளைவிலிருந்து அனைத்து புள்ளிகளையும் நீக்குகிறது."
 
 #: docs/Curve.xml docs/Curve2D.xml docs/Curve3D.xml
 msgid "Returns the number of points describing the curve."
-msgstr ""
+msgstr "வளைவை விவரிக்கும் புள்ளிகளின் எண்ணிக்கையை வழங்குகிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Returns the left [enum TangentMode] for the point at [code]index[/code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] புள்ளிக்கு இடது [enum tangentmode] ஐ வழங்குகிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Returns the left tangent angle (in degrees) for the point at [code]index[/"
 "code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] புள்ளிக்கு இடது தொடு கோணத்தை (டிகிரிகளில்) "
+"வழங்குகிறது."
 
 #: docs/Curve.xml
 msgid "Returns the curve coordinates for the point at [code]index[/code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] புள்ளிக்கான வளைவு ஒருங்கிணைப்புகளை வழங்குகிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Returns the right [enum TangentMode] for the point at [code]index[/code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] புள்ளிக்கு வலது [enum tangentmode] ஐ வழங்குகிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Returns the right tangent angle (in degrees) for the point at [code]index[/"
 "code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] புள்ளிக்கு வலது தொடுக கோணத்தை (டிகிரிகளில்) "
+"வழங்குகிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Returns the Y value for the point that would exist at the X position "
 "[code]offset[/code] along the curve."
 msgstr ""
+"வளைவுடன் ஃச் நிலை [குறியீடு] ஆஃப்செட் [/குறியீடு] இல் இருக்கும் புள்ளிக்கான ஒய் மதிப்பை "
+"வழங்குகிறது."
 
 #: docs/Curve.xml
 msgid ""
@@ -23973,64 +24059,80 @@ msgid ""
 "[code]offset[/code] along the curve using the baked cache. Bakes the curve's "
 "points if not already baked."
 msgstr ""
+"சுடப்பட்ட தற்காலிக சேமிப்பைப் பயன்படுத்தி வளைவுடன் ஃச் நிலை [குறியீடு] ஆஃப்செட் "
+"[/குறியீடு] இல் இருக்கும் புள்ளிக்கான ஒய் மதிப்பை வழங்குகிறது. ஏற்கனவே சுடப்படாவிட்டால் "
+"வளைவின் புள்ளிகளை சுட்டுக்கொள்ளுங்கள்."
 
 #: docs/Curve.xml
 msgid "Removes the point at [code]index[/code] from the curve."
-msgstr ""
+msgstr "வளைவிலிருந்து [குறியீடு] குறியீட்டில் [/குறியீடு] புள்ளியை நீக்குகிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Sets the left [enum TangentMode] for the point at [code]index[/code] to "
 "[code]mode[/code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] [குறியீடு] பயன்முறையில் [/குறியீடு] புள்ளிக்கு இடது "
+"[enum tangentmode] ஐ அமைக்கிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Sets the left tangent angle for the point at [code]index[/code] to "
 "[code]tangent[/code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] [குறியீடு] தொடுகோடு [/குறியீடு] க்கு இடது "
+"தொடுகோடு கோணத்தை அமைக்கிறது."
 
 #: docs/Curve.xml
 msgid "Sets the offset from [code]0.5[/code]."
-msgstr ""
+msgstr "[குறியீடு] 0.5 [/குறியீடு] இலிருந்து ஆஃப்செட்டை அமைக்கிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Sets the right [enum TangentMode] for the point at [code]index[/code] to "
 "[code]mode[/code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] [குறியீடு] பயன்முறையில் [/குறியீடு] புள்ளிக்கு வலது "
+"[enum tangentmode] ஐ அமைக்கிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Sets the right tangent angle for the point at [code]index[/code] to "
 "[code]tangent[/code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] [குறியீடு] டேன்சென்ட் [/குறியீடு] க்கு சரியான "
+"தொடுகோடு கோணத்தை அமைக்கிறது."
 
 #: docs/Curve.xml
 msgid ""
 "Assigns the vertical position [code]y[/code] to the point at [code]index[/"
 "code]."
 msgstr ""
+"[குறியீடு] குறியீட்டில் [/குறியீடு] புள்ளிக்கு செங்குத்து நிலை [குறியீடு] ஒய் [/code] ஐ "
+"ஒதுக்குகிறது."
 
 #: docs/Curve.xml
 msgid "The number of points to include in the baked (i.e. cached) curve data."
 msgstr ""
+"வேகவைத்த (அதாவது தற்காலிக சேமிப்பு) வளைவு தரவுகளில் சேர்க்க வேண்டிய புள்ளிகளின் "
+"எண்ணிக்கை."
 
 #: docs/Curve.xml
 msgid "The maximum value the curve can reach."
-msgstr ""
+msgstr "வளைவு அடையக்கூடிய அதிகபட்ச மதிப்பு."
 
 #: docs/Curve.xml
 msgid "The minimum value the curve can reach."
-msgstr ""
+msgstr "வளைவு அடையக்கூடிய குறைந்தபட்ச மதிப்பு."
 
 #: docs/Curve.xml
 msgid "Emitted when [member max_value] or [member min_value] is changed."
 msgstr ""
+"[உறுப்பினர் MAX_VALUE] அல்லது [உறுப்பினர் min_value] மாற்றப்படும்போது உமிழப்படும்."
 
 #: docs/Curve.xml
 msgid "The tangent on this side of the point is user-defined."
-msgstr ""
+msgstr "புள்ளியின் இந்த பக்கத்தில் உள்ள தொடுகோடு பயனர் வரையறுக்கப்பட்டுள்ளது."
 
 #: docs/Curve.xml
 msgid ""
