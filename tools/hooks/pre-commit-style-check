@@ -114,10 +114,12 @@ while read -r file; do
     "clang-format")
         "$application" ${options:+"$options"} "$file" | \
             diff -u "$file" - | \
-            sed -e "1s|--- |--- a/|" -e "2s|+++ -|+++ b/$file|" >> "$patch_file";;
+            sed -e "1s|--- |--- a/|" -e "2s|+++ -|+++ b/$file|" \
+            >> "$patch_file";;
     "black")
         "$application" ${options:+"$options"} --diff "$file" | \
-            sed -e "1s|--- |--- a/|" -e "2s|+++ |+++ b/|" >> "$patch_file";;
+            sed -e "1,2s|\\\\|/|g" -e "1s|--- |--- a/|" -e "2s|+++ |+++ b/|" \
+            >> "$patch_file";;
     *)
         echo "Unrecognised application: $application_name."
         echo "Please consider adding $application_name's method for creating diffs."
