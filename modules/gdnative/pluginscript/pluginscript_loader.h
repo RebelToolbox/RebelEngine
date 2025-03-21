@@ -7,7 +7,7 @@
 #ifndef PYTHONSCRIPT_PY_LOADER_H
 #define PYTHONSCRIPT_PY_LOADER_H
 
-// Godot imports
+// Rebel imports
 #include "core/io/resource_loader.h"
 #include "core/io/resource_saver.h"
 #include "core/script_language.h"

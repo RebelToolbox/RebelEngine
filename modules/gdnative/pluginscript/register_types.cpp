@@ -15,11 +15,11 @@
 #include "pluginscript_script.h"
 #include "scene/main/scene_tree.h"
 
-#include <pluginscript/godot_pluginscript.h>
+#include <pluginscript/rebel_pluginscript.h>
 
 static List<PluginScriptLanguage*> pluginscript_languages;
 
-static Error _check_language_desc(const godot_pluginscript_language_desc* desc
+static Error _check_language_desc(const rebel_pluginscript_language_desc* desc
 ) {
     ERR_FAIL_COND_V(!desc->name || desc->name == String(), ERR_BUG);
     ERR_FAIL_COND_V(!desc->type || desc->type == String(), ERR_BUG);
@@ -74,8 +74,8 @@ static Error _check_language_desc(const godot_pluginscript_language_desc* desc
     return OK;
 }
 
-void GDAPI godot_pluginscript_register_language(
-    const godot_pluginscript_language_desc* language_desc
+void GDAPI rebel_pluginscript_register_language(
+    const rebel_pluginscript_language_desc* language_desc
 ) {
     Error ret = _check_language_desc(language_desc);
     if (ret) {

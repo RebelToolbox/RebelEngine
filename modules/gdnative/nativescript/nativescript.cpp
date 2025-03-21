@@ -278,13 +278,13 @@ ScriptInstance* NativeScript::instance_create(Object* p_this) {
         nsi->userdata = NULL;
     } else {
         nsi->userdata = script_data->create_func.create_func(
-            (godot_object*)p_this,
+            (rebel_object*)p_this,
             script_data->create_func.method_data
         );
     }
 #else
     nsi->userdata = script_data->create_func.create_func(
-        (godot_object*)p_this,
+        (rebel_object*)p_this,
         script_data->create_func.method_data
     );
 #endif
@@ -661,14 +661,14 @@ void NativeScriptInstance::_ml_call_reversed(
     Map<StringName, NativeScriptDesc::Method>::Element* E =
         script_data->methods.find(p_method);
     if (E) {
-        godot_variant res = E->get().method.method(
-            (godot_object*)owner,
+        rebel_variant res = E->get().method.method(
+            (rebel_object*)owner,
             E->get().method.method_data,
             userdata,
             p_argcount,
-            (godot_variant**)p_args
+            (rebel_variant**)p_args
         );
-        godot_variant_destroy(&res);
+        rebel_variant_destroy(&res);
     }
 }
 
@@ -683,10 +683,10 @@ bool NativeScriptInstance::set(
             script_data->properties.find(p_name);
         if (P) {
             P.get().setter.set_func(
-                (godot_object*)owner,
+                (rebel_object*)owner,
                 P.get().setter.method_data,
                 userdata,
-                (godot_variant*)&p_value
+                (rebel_variant*)&p_value
             );
             return true;
         }
@@ -697,16 +697,16 @@ bool NativeScriptInstance::set(
             Variant name           = p_name;
             const Variant* args[2] = {&name, &p_value};
 
-            godot_variant result;
+            rebel_variant result;
             result = E->get().method.method(
-                (godot_object*)owner,
+                (rebel_object*)owner,
                 E->get().method.method_data,
                 userdata,
                 2,
-                (godot_variant**)args
+                (rebel_variant**)args
             );
             bool handled = *(Variant*)&result;
-            godot_variant_destroy(&result);
+            rebel_variant_destroy(&result);
             if (handled) {
                 return true;
             }
@@ -724,14 +724,14 @@ bool NativeScriptInstance::get(const StringName& p_name, Variant& r_ret) const {
         OrderedHashMap<StringName, NativeScriptDesc::Property>::Element P =
             script_data->properties.find(p_name);
         if (P) {
-            godot_variant value;
+            rebel_variant value;
             value = P.get().getter.get_func(
-                (godot_object*)owner,
+                (rebel_object*)owner,
                 P.get().getter.method_data,
                 userdata
             );
             r_ret = *(Variant*)&value;
-            godot_variant_destroy(&value);
+            rebel_variant_destroy(&value);
             return true;
         }
 
@@ -741,16 +741,16 @@ bool NativeScriptInstance::get(const StringName& p_name, Variant& r_ret) const {
             Variant name           = p_name;
             const Variant* args[1] = {&name};
 
-            godot_variant result;
+            rebel_variant result;
             result = E->get().method.method(
-                (godot_object*)owner,
+                (rebel_object*)owner,
                 E->get().method.method_data,
                 userdata,
                 1,
-                (godot_variant**)args
+                (rebel_variant**)args
             );
             r_ret = *(Variant*)&result;
-            godot_variant_destroy(&result);
+            rebel_variant_destroy(&result);
             if (r_ret.get_type() != Variant::NIL) {
                 return true;
             }
@@ -771,16 +771,16 @@ void NativeScriptInstance::get_property_list(List<PropertyInfo>* p_properties
         Map<StringName, NativeScriptDesc::Method>::Element* E =
             script_data->methods.find("_get_property_list");
         if (E) {
-            godot_variant result;
+            rebel_variant result;
             result = E->get().method.method(
-                (godot_object*)owner,
+                (rebel_object*)owner,
                 E->get().method.method_data,
                 userdata,
                 0,
                 nullptr
             );
             Variant res = *(Variant*)&result;
-            godot_variant_destroy(&result);
+            rebel_variant_destroy(&result);
 
             ERR_FAIL_COND_MSG(
                 res.get_type() != Variant::ARRAY,
@@ -864,18 +864,18 @@ Variant NativeScriptInstance::call(
         Map<StringName, NativeScriptDesc::Method>::Element* E =
             script_data->methods.find(p_method);
         if (E) {
-            godot_variant result;
+            rebel_variant result;
 
 #ifdef DEBUG_ENABLED
             current_method_call = p_method;
 #endif
 
             result = E->get().method.method(
-                (godot_object*)owner,
+                (rebel_object*)owner,
                 E->get().method.method_data,
                 userdata,
                 p_argcount,
-                (godot_variant**)p_args
+                (rebel_variant**)p_args
             );
 
 #ifdef DEBUG_ENABLED
@@ -883,7 +883,7 @@ Variant NativeScriptInstance::call(
 #endif
 
             Variant res = *(Variant*)&result;
-            godot_variant_destroy(&result);
+            rebel_variant_destroy(&result);
             r_error.error = Variant::CallError::CALL_OK;
             return res;
         }
@@ -980,19 +980,19 @@ MultiplayerAPI::RPCMode NativeScriptInstance::get_rpc_mode(
             script_data->methods.find(p_method);
         if (E) {
             switch (E->get().rpc_mode) {
-                case GODOT_METHOD_RPC_MODE_DISABLED:
+                case REBEL_METHOD_RPC_MODE_DISABLED:
                     return MultiplayerAPI::RPC_MODE_DISABLED;
-                case GODOT_METHOD_RPC_MODE_REMOTE:
+                case REBEL_METHOD_RPC_MODE_REMOTE:
                     return MultiplayerAPI::RPC_MODE_REMOTE;
-                case GODOT_METHOD_RPC_MODE_MASTER:
+                case REBEL_METHOD_RPC_MODE_MASTER:
                     return MultiplayerAPI::RPC_MODE_MASTER;
-                case GODOT_METHOD_RPC_MODE_PUPPET:
+                case REBEL_METHOD_RPC_MODE_PUPPET:
                     return MultiplayerAPI::RPC_MODE_PUPPET;
-                case GODOT_METHOD_RPC_MODE_REMOTESYNC:
+                case REBEL_METHOD_RPC_MODE_REMOTESYNC:
                     return MultiplayerAPI::RPC_MODE_REMOTESYNC;
-                case GODOT_METHOD_RPC_MODE_MASTERSYNC:
+                case REBEL_METHOD_RPC_MODE_MASTERSYNC:
                     return MultiplayerAPI::RPC_MODE_MASTERSYNC;
-                case GODOT_METHOD_RPC_MODE_PUPPETSYNC:
+                case REBEL_METHOD_RPC_MODE_PUPPETSYNC:
                     return MultiplayerAPI::RPC_MODE_PUPPETSYNC;
                 default:
                     return MultiplayerAPI::RPC_MODE_DISABLED;
@@ -1015,19 +1015,19 @@ MultiplayerAPI::RPCMode NativeScriptInstance::get_rset_mode(
             script_data->properties.find(p_variable);
         if (E) {
             switch (E.get().rset_mode) {
-                case GODOT_METHOD_RPC_MODE_DISABLED:
+                case REBEL_METHOD_RPC_MODE_DISABLED:
                     return MultiplayerAPI::RPC_MODE_DISABLED;
-                case GODOT_METHOD_RPC_MODE_REMOTE:
+                case REBEL_METHOD_RPC_MODE_REMOTE:
                     return MultiplayerAPI::RPC_MODE_REMOTE;
-                case GODOT_METHOD_RPC_MODE_MASTER:
+                case REBEL_METHOD_RPC_MODE_MASTER:
                     return MultiplayerAPI::RPC_MODE_MASTER;
-                case GODOT_METHOD_RPC_MODE_PUPPET:
+                case REBEL_METHOD_RPC_MODE_PUPPET:
                     return MultiplayerAPI::RPC_MODE_PUPPET;
-                case GODOT_METHOD_RPC_MODE_REMOTESYNC:
+                case REBEL_METHOD_RPC_MODE_REMOTESYNC:
                     return MultiplayerAPI::RPC_MODE_REMOTESYNC;
-                case GODOT_METHOD_RPC_MODE_MASTERSYNC:
+                case REBEL_METHOD_RPC_MODE_MASTERSYNC:
                     return MultiplayerAPI::RPC_MODE_MASTERSYNC;
-                case GODOT_METHOD_RPC_MODE_PUPPETSYNC:
+                case REBEL_METHOD_RPC_MODE_PUPPETSYNC:
                     return MultiplayerAPI::RPC_MODE_PUPPETSYNC;
                 default:
                     return MultiplayerAPI::RPC_MODE_DISABLED;
@@ -1055,14 +1055,14 @@ void NativeScriptInstance::call_multilevel(
         Map<StringName, NativeScriptDesc::Method>::Element* E =
             script_data->methods.find(p_method);
         if (E) {
-            godot_variant res = E->get().method.method(
-                (godot_object*)owner,
+            rebel_variant res = E->get().method.method(
+                (rebel_object*)owner,
                 E->get().method.method_data,
                 userdata,
                 p_argcount,
-                (godot_variant**)p_args
+                (rebel_variant**)p_args
             );
-            godot_variant_destroy(&res);
+            rebel_variant_destroy(&res);
         }
         script_data = script_data->base_data;
     }
@@ -1088,7 +1088,7 @@ NativeScriptInstance::~NativeScriptInstance() {
     }
 
     script_data->destroy_func.destroy_func(
-        (godot_object*)owner,
+        (rebel_object*)owner,
         script_data->destroy_func.method_data,
         userdata
     );
@@ -1560,7 +1560,7 @@ void NativeScriptLanguage::profiling_add_data(
 }
 
 int NativeScriptLanguage::register_binding_functions(
-    godot_instance_binding_functions p_binding_functions
+    rebel_instance_binding_functions p_binding_functions
 ) {
     // find index
 
@@ -1651,7 +1651,7 @@ void* NativeScriptLanguage::get_instance_binding_data(
             binding_functions[p_idx].second.alloc_instance_binding_data(
                 binding_functions[p_idx].second.data,
                 global_type_tag,
-                (godot_object*)p_object
+                (rebel_object*)p_object
             );
     }
 
@@ -1850,7 +1850,7 @@ void NativeScriptLanguage::init_library(const Ref<GDNativeLibrary>& lib) {
                           .utf8()
                           .get_data());
         } else {
-            ((void (*)(godot_string*))proc_ptr)((godot_string*)&lib_path);
+            ((void (*)(rebel_string*))proc_ptr)((rebel_string*)&lib_path);
         }
     } else {
         // already initialized. Nice.
@@ -2154,7 +2154,7 @@ void NativeReloadNode::_notification(int p_what) {
                 );
                 if (err != OK) {
                     ERR_PRINT(String(
-                                  "No godot_nativescript_init in \"" + L->key()
+                                  "No rebel_nativescript_init in \"" + L->key()
                                   + "\" found"
                     )
                                   .utf8()

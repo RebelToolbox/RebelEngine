@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-// Godot imports
+// Rebel imports
 #include "core/os/file_access.h"
 #include "core/os/os.h"
 #include "core/project_settings.h"
@@ -87,13 +87,13 @@ Ref<Script> PluginScriptLanguage::get_template(
     Script* ns         = create_script();
     Ref<Script> script = Ref<Script>(ns);
     if (_desc.get_template_source_code) {
-        godot_string src = _desc.get_template_source_code(
+        rebel_string src = _desc.get_template_source_code(
             _data,
-            (godot_string*)&p_class_name,
-            (godot_string*)&p_base_class_name
+            (rebel_string*)&p_class_name,
+            (rebel_string*)&p_base_class_name
         );
         script->set_source_code(*(String*)&src);
-        godot_string_destroy(&src);
+        rebel_string_destroy(&src);
     }
     return script;
 }
@@ -112,12 +112,12 @@ bool PluginScriptLanguage::validate(
     if (_desc.validate) {
         bool ret = _desc.validate(
             _data,
-            (godot_string*)&p_script,
+            (rebel_string*)&p_script,
             &r_line_error,
             &r_col_error,
-            (godot_string*)&r_test_error,
-            (godot_string*)&p_path,
-            (godot_pool_string_array*)&functions
+            (rebel_string*)&r_test_error,
+            (rebel_string*)&p_path,
+            (rebel_pool_string_array*)&functions
         );
         for (int i = 0; i < functions.size(); i++) {
             r_functions->push_back(functions[i]);
@@ -149,8 +149,8 @@ int PluginScriptLanguage::find_function(
     if (_desc.find_function) {
         return _desc.find_function(
             _data,
-            (godot_string*)&p_function,
-            (godot_string*)&p_code
+            (rebel_string*)&p_function,
+            (rebel_string*)&p_code
         );
     }
     return -1;
@@ -162,14 +162,14 @@ String PluginScriptLanguage::make_function(
     const PoolStringArray& p_args
 ) const {
     if (_desc.make_function) {
-        godot_string tmp = _desc.make_function(
+        rebel_string tmp = _desc.make_function(
             _data,
-            (godot_string*)&p_class,
-            (godot_string*)&p_name,
-            (godot_pool_string_array*)&p_args
+            (rebel_string*)&p_class,
+            (rebel_string*)&p_name,
+            (rebel_pool_string_array*)&p_args
         );
         String ret = *(String*)&tmp;
-        godot_string_destroy(&tmp);
+        rebel_string_destroy(&tmp);
         return ret;
     }
     return String();
@@ -185,14 +185,14 @@ Error PluginScriptLanguage::complete_code(
 ) {
     if (_desc.complete_code) {
         Array options;
-        godot_error tmp = _desc.complete_code(
+        rebel_error tmp = _desc.complete_code(
             _data,
-            (godot_string*)&p_code,
-            (godot_string*)&p_path,
-            (godot_object*)p_owner,
-            (godot_array*)&options,
+            (rebel_string*)&p_code,
+            (rebel_string*)&p_path,
+            (rebel_object*)p_owner,
+            (rebel_array*)&options,
             &r_force,
-            (godot_string*)&r_call_hint
+            (rebel_string*)&r_call_hint
         );
         for (int i = 0; i < options.size(); i++) {
             ScriptCodeCompletionOption option(
@@ -214,7 +214,7 @@ void PluginScriptLanguage::auto_indent_code(
     if (_desc.auto_indent_code) {
         _desc.auto_indent_code(
             _data,
-            (godot_string*)&p_code,
+            (rebel_string*)&p_code,
             p_from_line,
             p_to_line
         );
@@ -229,8 +229,8 @@ void PluginScriptLanguage::add_global_constant(
     const String variable = String(p_variable);
     _desc.add_global_constant(
         _data,
-        (godot_string*)&variable,
-        (godot_variant*)&p_value
+        (rebel_string*)&variable,
+        (rebel_variant*)&p_value
     );
 }
 
@@ -245,10 +245,10 @@ void PluginScriptLanguage::get_recognized_extensions(List<String>* p_extensions
 
 void PluginScriptLanguage::get_public_functions(List<MethodInfo>* p_functions
 ) const {
-    // TODO: provide this statically in `godot_pluginscript_language_desc` ?
+    // TODO: provide this statically in `rebel_pluginscript_language_desc` ?
     if (_desc.get_public_functions) {
         Array functions;
-        _desc.get_public_functions(_data, (godot_array*)&functions);
+        _desc.get_public_functions(_data, (rebel_array*)&functions);
         for (int i = 0; i < functions.size(); i++) {
             MethodInfo mi = MethodInfo::from_dict(functions[i]);
             p_functions->push_back(mi);
@@ -259,10 +259,10 @@ void PluginScriptLanguage::get_public_functions(List<MethodInfo>* p_functions
 void PluginScriptLanguage::get_public_constants(
     List<Pair<String, Variant>>* p_constants
 ) const {
-    // TODO: provide this statically in `godot_pluginscript_language_desc` ?
+    // TODO: provide this statically in `rebel_pluginscript_language_desc` ?
     if (_desc.get_public_constants) {
         Dictionary constants;
-        _desc.get_public_constants(_data, (godot_dictionary*)&constants);
+        _desc.get_public_constants(_data, (rebel_dictionary*)&constants);
         for (const Variant* key = constants.next(); key;
              key                = constants.next(key)) {
             Variant value = constants[*key];
@@ -298,9 +298,9 @@ int PluginScriptLanguage::profiling_get_accumulated_data(
     int info_count = 0;
 #ifdef DEBUG_ENABLED
     if (_desc.profiling_get_accumulated_data) {
-        godot_pluginscript_profiling_data* info =
-            (godot_pluginscript_profiling_data*)memalloc(
-                sizeof(godot_pluginscript_profiling_data) * p_info_max
+        rebel_pluginscript_profiling_data* info =
+            (rebel_pluginscript_profiling_data*)memalloc(
+                sizeof(rebel_pluginscript_profiling_data) * p_info_max
             );
         info_count =
             _desc.profiling_get_accumulated_data(_data, info, p_info_max);
@@ -309,7 +309,7 @@ int PluginScriptLanguage::profiling_get_accumulated_data(
             p_info_arr[i].call_count = info[i].call_count;
             p_info_arr[i].total_time = info[i].total_time;
             p_info_arr[i].self_time  = info[i].self_time;
-            godot_string_name_destroy(&info[i].signature);
+            rebel_string_name_destroy(&info[i].signature);
         }
     }
 #endif
@@ -323,9 +323,9 @@ int PluginScriptLanguage::profiling_get_frame_data(
     int info_count = 0;
 #ifdef DEBUG_ENABLED
     if (_desc.profiling_get_frame_data) {
-        godot_pluginscript_profiling_data* info =
-            (godot_pluginscript_profiling_data*)memalloc(
-                sizeof(godot_pluginscript_profiling_data) * p_info_max
+        rebel_pluginscript_profiling_data* info =
+            (rebel_pluginscript_profiling_data*)memalloc(
+                sizeof(rebel_pluginscript_profiling_data) * p_info_max
             );
         info_count = _desc.profiling_get_frame_data(_data, info, p_info_max);
         for (int i = 0; i < info_count; ++i) {
@@ -333,7 +333,7 @@ int PluginScriptLanguage::profiling_get_frame_data(
             p_info_arr[i].call_count = info[i].call_count;
             p_info_arr[i].total_time = info[i].total_time;
             p_info_arr[i].self_time  = info[i].self_time;
-            godot_string_name_destroy(&info[i].signature);
+            rebel_string_name_destroy(&info[i].signature);
         }
     }
 #endif
@@ -352,9 +352,9 @@ void PluginScriptLanguage::frame() {
 
 String PluginScriptLanguage::debug_get_error() const {
     if (_desc.debug_get_error) {
-        godot_string tmp = _desc.debug_get_error(_data);
+        rebel_string tmp = _desc.debug_get_error(_data);
         String ret       = *(String*)&tmp;
-        godot_string_destroy(&tmp);
+        rebel_string_destroy(&tmp);
         return ret;
     }
     return String("Nothing");
@@ -376,9 +376,9 @@ int PluginScriptLanguage::debug_get_stack_level_line(int p_level) const {
 
 String PluginScriptLanguage::debug_get_stack_level_function(int p_level) const {
     if (_desc.debug_get_stack_level_function) {
-        godot_string tmp = _desc.debug_get_stack_level_function(_data, p_level);
+        rebel_string tmp = _desc.debug_get_stack_level_function(_data, p_level);
         String ret       = *(String*)&tmp;
-        godot_string_destroy(&tmp);
+        rebel_string_destroy(&tmp);
         return ret;
     }
     return String("Nothing");
@@ -386,9 +386,9 @@ String PluginScriptLanguage::debug_get_stack_level_function(int p_level) const {
 
 String PluginScriptLanguage::debug_get_stack_level_source(int p_level) const {
     if (_desc.debug_get_stack_level_source) {
-        godot_string tmp = _desc.debug_get_stack_level_source(_data, p_level);
+        rebel_string tmp = _desc.debug_get_stack_level_source(_data, p_level);
         String ret       = *(String*)&tmp;
-        godot_string_destroy(&tmp);
+        rebel_string_destroy(&tmp);
         return ret;
     }
     return String("Nothing");
@@ -407,8 +407,8 @@ void PluginScriptLanguage::debug_get_stack_level_locals(
         _desc.debug_get_stack_level_locals(
             _data,
             p_level,
-            (godot_pool_string_array*)&locals,
-            (godot_array*)&values,
+            (rebel_pool_string_array*)&locals,
+            (rebel_array*)&values,
             p_max_subitems,
             p_max_depth
         );
@@ -434,8 +434,8 @@ void PluginScriptLanguage::debug_get_stack_level_members(
         _desc.debug_get_stack_level_members(
             _data,
             p_level,
-            (godot_pool_string_array*)&members,
-            (godot_array*)&values,
+            (rebel_pool_string_array*)&members,
+            (rebel_array*)&values,
             p_max_subitems,
             p_max_depth
         );
@@ -459,8 +459,8 @@ void PluginScriptLanguage::debug_get_globals(
         Array values;
         _desc.debug_get_globals(
             _data,
-            (godot_pool_string_array*)&locals,
-            (godot_array*)&values,
+            (rebel_pool_string_array*)&locals,
+            (rebel_array*)&values,
             p_max_subitems,
             p_max_depth
         );
@@ -480,15 +480,15 @@ String PluginScriptLanguage::debug_parse_stack_level_expression(
     int p_max_depth
 ) {
     if (_desc.debug_parse_stack_level_expression) {
-        godot_string tmp = _desc.debug_parse_stack_level_expression(
+        rebel_string tmp = _desc.debug_parse_stack_level_expression(
             _data,
             p_level,
-            (godot_string*)&p_expression,
+            (rebel_string*)&p_expression,
             p_max_subitems,
             p_max_depth
         );
         String ret = *(String*)&tmp;
-        godot_string_destroy(&tmp);
+        rebel_string_destroy(&tmp);
         return ret;
     }
     return String("Nothing");
@@ -518,7 +518,7 @@ void PluginScriptLanguage::unlock() {
 }
 
 PluginScriptLanguage::PluginScriptLanguage(
-    const godot_pluginscript_language_desc* desc
+    const rebel_pluginscript_language_desc* desc
 ) :
     _desc(*desc) {
     _resource_loader = Ref<ResourceFormatLoaderPluginScript>(

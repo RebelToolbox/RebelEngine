@@ -22,7 +22,7 @@ class ARVRInterfaceGDNative : public ARVRInterface {
     void cleanup();
 
 protected:
-    const godot_arvr_interface_gdnative* interface;
+    const rebel_arvr_interface_gdnative* interface;
     void* data;
 
     static void _bind_methods();
@@ -32,7 +32,7 @@ public:
     ARVRInterfaceGDNative();
     ~ARVRInterfaceGDNative();
 
-    void set_interface(const godot_arvr_interface_gdnative* p_interface);
+    void set_interface(const rebel_arvr_interface_gdnative* p_interface);
 
     virtual StringName get_name() const;
     virtual int get_capabilities() const;

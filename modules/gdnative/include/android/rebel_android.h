@@ -4,9 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_ANDROID_GDN_H
-#define GODOT_ANDROID_GDN_H
-
+#ifndef GDNATIVE_ANDROID_H
+#define GDNATIVE_ANDROID_H
 #include <gdnative/gdnative.h>
 
 #ifdef __ANDROID__
@@ -20,13 +19,13 @@
 extern "C" {
 #endif
 
-JNIEnv* GDAPI godot_android_get_env();
-jobject GDAPI godot_android_get_activity();
-jobject GDAPI godot_android_get_surface();
-bool GDAPI godot_android_is_activity_resumed();
+JNIEnv* GDAPI rebel_android_get_env();
+jobject GDAPI rebel_android_get_activity();
+jobject GDAPI rebel_android_get_surface();
+bool GDAPI rebel_android_is_activity_resumed();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* !GODOT_ANDROID_GDN_H */
+#endif // GDNATIVE_ANDROID_H

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-// Godot imports
+// Rebel imports
 #include "core/os/file_access.h"
 // Pythonscript imports
 #include "pluginscript_language.h"

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-#include "nativescript/godot_nativescript.h"
+#include "nativescript/rebel_nativescript.h"
 
 #include "core/class_db.h"
 #include "core/error_macros.h"
@@ -24,12 +24,12 @@ extern "C" void _native_script_hook() {}
 
 // Script API
 
-void GDAPI godot_nativescript_register_class(
+void GDAPI rebel_nativescript_register_class(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_base,
-    godot_instance_create_func p_create_func,
-    godot_instance_destroy_func p_destroy_func
+    rebel_instance_create_func p_create_func,
+    rebel_instance_destroy_func p_destroy_func
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -54,12 +54,12 @@ void GDAPI godot_nativescript_register_class(
     classes->insert(p_name, desc);
 }
 
-void GDAPI godot_nativescript_register_tool_class(
+void GDAPI rebel_nativescript_register_tool_class(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_base,
-    godot_instance_create_func p_create_func,
-    godot_instance_destroy_func p_destroy_func
+    rebel_instance_create_func p_create_func,
+    rebel_instance_destroy_func p_destroy_func
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -83,12 +83,12 @@ void GDAPI godot_nativescript_register_tool_class(
     classes->insert(p_name, desc);
 }
 
-void GDAPI godot_nativescript_register_method(
+void GDAPI rebel_nativescript_register_method(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_function_name,
-    godot_method_attributes p_attr,
-    godot_instance_method p_method
+    rebel_method_attributes p_attr,
+    rebel_instance_method p_method
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -107,13 +107,13 @@ void GDAPI godot_nativescript_register_method(
     E->get().methods.insert(p_function_name, method);
 }
 
-void GDAPI godot_nativescript_register_property(
+void GDAPI rebel_nativescript_register_property(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_path,
-    godot_property_attributes* p_attr,
-    godot_property_set_func p_set_func,
-    godot_property_get_func p_get_func
+    rebel_property_attributes* p_attr,
+    rebel_property_set_func p_set_func,
+    rebel_property_get_func p_get_func
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -140,10 +140,10 @@ void GDAPI godot_nativescript_register_property(
     E->get().properties.insert(p_path, property);
 }
 
-void GDAPI godot_nativescript_register_signal(
+void GDAPI rebel_nativescript_register_signal(
     void* p_gdnative_handle,
     const char* p_name,
-    const godot_signal* p_signal
+    const rebel_signal* p_signal
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -160,7 +160,7 @@ void GDAPI godot_nativescript_register_signal(
     for (int i = 0; i < p_signal->num_args; i++) {
         PropertyInfo info;
 
-        godot_signal_argument arg = p_signal->args[i];
+        rebel_signal_argument arg = p_signal->args[i];
 
         info.hint        = (PropertyHint)arg.hint;
         info.hint_string = *(String*)&arg.hint_string;
@@ -173,7 +173,7 @@ void GDAPI godot_nativescript_register_signal(
 
     for (int i = 0; i < p_signal->num_default_args; i++) {
         Variant* v;
-        godot_signal_argument attrib = p_signal->args[i];
+        rebel_signal_argument attrib = p_signal->args[i];
 
         v = (Variant*)&attrib.default_value;
 
@@ -191,7 +191,7 @@ void GDAPI godot_nativescript_register_signal(
     E->get().signals_.insert(*(String*)&p_signal->name, signal);
 }
 
-void GDAPI* godot_nativescript_get_userdata(godot_object* p_instance) {
+void GDAPI* rebel_nativescript_get_userdata(rebel_object* p_instance) {
     Object* instance = (Object*)p_instance;
     if (!instance) {
         return nullptr;
@@ -213,12 +213,12 @@ void GDAPI* godot_nativescript_get_userdata(godot_object* p_instance) {
  *
  */
 
-void GDAPI godot_nativescript_set_method_argument_information(
+void GDAPI rebel_nativescript_set_method_argument_information(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_function_name,
     int p_num_args,
-    const godot_method_arg* p_args
+    const rebel_method_arg* p_args
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -242,7 +242,7 @@ void GDAPI godot_nativescript_set_method_argument_information(
     List<PropertyInfo> args;
 
     for (int i = 0; i < p_num_args; i++) {
-        godot_method_arg arg = p_args[i];
+        rebel_method_arg arg = p_args[i];
         String name          = *(String*)&arg.name;
         String hint_string   = *(String*)&arg.hint_string;
 
@@ -255,10 +255,10 @@ void GDAPI godot_nativescript_set_method_argument_information(
     method_information->arguments = args;
 }
 
-void GDAPI godot_nativescript_set_class_documentation(
+void GDAPI rebel_nativescript_set_class_documentation(
     void* p_gdnative_handle,
     const char* p_name,
-    godot_string p_documentation
+    rebel_string p_documentation
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -272,11 +272,11 @@ void GDAPI godot_nativescript_set_class_documentation(
     E->get().documentation = *(String*)&p_documentation;
 }
 
-void GDAPI godot_nativescript_set_method_documentation(
+void GDAPI rebel_nativescript_set_method_documentation(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_function_name,
-    godot_string p_documentation
+    rebel_string p_documentation
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -297,11 +297,11 @@ void GDAPI godot_nativescript_set_method_documentation(
     method->get().documentation = *(String*)&p_documentation;
 }
 
-void GDAPI godot_nativescript_set_property_documentation(
+void GDAPI rebel_nativescript_set_property_documentation(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_path,
-    godot_string p_documentation
+    rebel_string p_documentation
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -322,11 +322,11 @@ void GDAPI godot_nativescript_set_property_documentation(
     property.get().documentation = *(String*)&p_documentation;
 }
 
-void GDAPI godot_nativescript_set_signal_documentation(
+void GDAPI rebel_nativescript_set_signal_documentation(
     void* p_gdnative_handle,
     const char* p_name,
     const char* p_signal_name,
-    godot_string p_documentation
+    rebel_string p_documentation
 ) {
     String* s = (String*)p_gdnative_handle;
 
@@ -347,7 +347,7 @@ void GDAPI godot_nativescript_set_signal_documentation(
     signal->get().documentation = *(String*)&p_documentation;
 }
 
-void GDAPI godot_nativescript_set_global_type_tag(
+void GDAPI rebel_nativescript_set_global_type_tag(
     int p_idx,
     const char* p_name,
     const void* p_type_tag
@@ -356,7 +356,7 @@ void GDAPI godot_nativescript_set_global_type_tag(
         ->set_global_type_tag(p_idx, StringName(p_name), p_type_tag);
 }
 
-const void GDAPI* godot_nativescript_get_global_type_tag(
+const void GDAPI* rebel_nativescript_get_global_type_tag(
     int p_idx,
     const char* p_name
 ) {
@@ -366,7 +366,7 @@ const void GDAPI* godot_nativescript_get_global_type_tag(
     );
 }
 
-void GDAPI godot_nativescript_set_type_tag(
+void GDAPI rebel_nativescript_set_type_tag(
     void* p_gdnative_handle,
     const char* p_name,
     const void* p_type_tag
@@ -380,7 +380,7 @@ void GDAPI godot_nativescript_set_type_tag(
     E->get().type_tag = p_type_tag;
 }
 
-const void GDAPI* godot_nativescript_get_type_tag(const godot_object* p_object
+const void GDAPI* rebel_nativescript_get_type_tag(const rebel_object* p_object
 ) {
     const Object* o = (Object*)p_object;
 
@@ -402,8 +402,8 @@ const void GDAPI* godot_nativescript_get_type_tag(const godot_object* p_object
     return nullptr;
 }
 
-int GDAPI godot_nativescript_register_instance_binding_data_functions(
-    godot_instance_binding_functions p_binding_functions
+int GDAPI rebel_nativescript_register_instance_binding_data_functions(
+    rebel_instance_binding_functions p_binding_functions
 ) {
     return NativeScriptLanguage::get_singleton()->register_binding_functions(
         p_binding_functions
@@ -411,13 +411,13 @@ int GDAPI godot_nativescript_register_instance_binding_data_functions(
 }
 
 void GDAPI
-godot_nativescript_unregister_instance_binding_data_functions(int p_idx) {
+rebel_nativescript_unregister_instance_binding_data_functions(int p_idx) {
     NativeScriptLanguage::get_singleton()->unregister_binding_functions(p_idx);
 }
 
-void GDAPI* godot_nativescript_get_instance_binding_data(
+void GDAPI* rebel_nativescript_get_instance_binding_data(
     int p_idx,
-    godot_object* p_object
+    rebel_object* p_object
 ) {
     return NativeScriptLanguage::get_singleton()->get_instance_binding_data(
         p_idx,
@@ -425,7 +425,7 @@ void GDAPI* godot_nativescript_get_instance_binding_data(
     );
 }
 
-void GDAPI godot_nativescript_profiling_add_data(
+void GDAPI rebel_nativescript_profiling_add_data(
     const char* p_signature,
     uint64_t p_time
 ) {
