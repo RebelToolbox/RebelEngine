@@ -41,11 +41,11 @@ if env["tools"]:
     reg_exporters = "void register_exporters() {\n"
     for e in env.platform_exporters:
         # Glob all .cpp files in export folder
-        files = Glob("#platform/" + e + "/export/" + "*.cpp")
+        files = Glob("#platforms/" + e + "/export/" + "*.cpp")
         env.add_source_files(env.editor_sources, files)
 
         reg_exporters += "\tregister_" + e + "_exporter();\n"
-        reg_exporters_inc += '#include "platform/' + e + '/export/export.h"\n'
+        reg_exporters_inc += '#include "platforms/' + e + '/export/export.h"\n'
     reg_exporters += "}\n"
 
     # NOTE: It is safe to generate this file here, since this is still executed serially

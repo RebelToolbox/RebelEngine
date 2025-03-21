@@ -263,7 +263,7 @@ jobs:
         run: |
           # Copy Android libraries to project's jniLibs folders
           # For each library identify the correct build and architecture folder.
-          project_src_dir=platform/android/project/engine/src
+          project_src_dir=platforms/android/project/engine/src
           stl_lib_src_dir=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs
           rebel_lib_file=librebel_android.so
           for library in `ls -1 bin/librebel.android.*`; do
@@ -306,7 +306,7 @@ jobs:
       - name: Create Android Templates
         run: |
           # Create Android Templates
-          cd platform/android/project
+          cd platforms/android/project
           ./gradlew createAndroidTemplates
           cd ../../..
 

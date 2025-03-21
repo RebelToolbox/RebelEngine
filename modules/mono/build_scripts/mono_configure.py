@@ -19,7 +19,7 @@ android_arch_dirs = {
 
 def get_android_out_dir(env):
     return os.path.join(
-        Dir("#platform/android/project/engine/src/main").abspath,
+        Dir("#platforms/android/project/engine/src/main").abspath,
         "release" if env["target"] == "release" else "debug",
         "jniLibs",
         android_arch_dirs[env["android_arch"]],

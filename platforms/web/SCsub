@@ -1,0 +1,97 @@
+#!/usr/bin/env python
+
+Import("env")
+
+web_files = [
+    "api/web_javascript.cpp",
+    "api/web_tools_editor_plugin.cpp",
+    "web_audio_driver.cpp",
+    "web_http_client.cpp",
+    "web_main.cpp",
+    "web_os.cpp",
+    "rebel_webgl2.cpp",
+]
+
+sys_env = env.Clone()
+sys_env.AddJSLibraries(
+    [
+        "js/libs/rebel_audio.js",
+        "js/libs/rebel_display.js",
+        "js/libs/rebel_fetch.js",
+        "js/libs/rebel_input.js",
+        "js/libs/rebel_os.js",
+        "js/libs/rebel_runtime.js",
+    ]
+)
+
+if env["web_eval"]:
+    sys_env.AddJSLibraries(["js/libs/rebel_eval.js"])
+
+for lib in sys_env["JS_LIBS"]:
+    sys_env.Append(LINKFLAGS=["--js-library", lib.abspath])
+for js in env["JS_PRE"]:
+    sys_env.Append(LINKFLAGS=["--pre-js", js.abspath])
+for ext in env["JS_EXTERNS"]:
+    sys_env["ENV"]["EMCC_CLOSURE_ARGS"] += " --externs " + ext.abspath
+
+build = []
+if env["gdnative_enabled"]:
+    build_targets = ["#bin/rebel${PROGSUFFIX}.js", "#bin/rebel${PROGSUFFIX}.wasm"]
+    # Reset libraries. The main runtime will only link emscripten libraries, not Rebel ones.
+    sys_env["LIBS"] = []
+    # We use IDBFS. Since Emscripten 1.39.1 it needs to be linked explicitly.
+    sys_env.Append(LIBS=["idbfs.js"])
+    # Configure it as a main module (dynamic linking support).
+    sys_env.Append(CCFLAGS=["-s", "MAIN_MODULE=1"])
+    sys_env.Append(LINKFLAGS=["-s", "MAIN_MODULE=1"])
+    sys_env.Append(CCFLAGS=["-s", "EXPORT_ALL=1"])
+    sys_env.Append(LINKFLAGS=["-s", "EXPORT_ALL=1"])
+    sys_env.Append(LINKFLAGS=["-s", "WARN_ON_UNDEFINED_SYMBOLS=0"])
+    # Force exporting the standard library (printf, malloc, etc.)
+    sys_env["ENV"]["EMCC_FORCE_STDLIBS"] = "libc,libc++,libc++abi"
+    # The main emscripten runtime, with exported standard libraries.
+    sys = sys_env.Program(build_targets, ["web_runtime.cpp"])
+
+    # The side library, containing all Rebel code.
+    wasm_env = env.Clone()
+    wasm_env.Append(
+        CPPDEFINES=["WASM_GDNATIVE"]
+    )  # So that OS knows it can run GDNative libraries.
+    wasm_env.Append(CCFLAGS=["-s", "SIDE_MODULE=2"])
+    wasm_env.Append(LINKFLAGS=["-s", "SIDE_MODULE=2"])
+    wasm = wasm_env.add_program("#bin/rebel.side${PROGSUFFIX}.wasm", web_files)
+    build = [sys[0], sys[1], wasm[0]]
+else:
+    build_targets = ["#bin/rebel${PROGSUFFIX}.js", "#bin/rebel${PROGSUFFIX}.wasm"]
+    if env["threads_enabled"]:
+        build_targets.append("#bin/rebel${PROGSUFFIX}.worker.js")
+    # We use IDBFS. Since Emscripten 1.39.1 it needs to be linked explicitly.
+    sys_env.Append(LIBS=["idbfs.js"])
+    build = sys_env.Program(build_targets, web_files + ["web_runtime.cpp"])
+
+sys_env.Depends(build[0], sys_env["JS_LIBS"])
+sys_env.Depends(build[0], sys_env["JS_PRE"])
+sys_env.Depends(build[0], sys_env["JS_EXTERNS"])
+
+engine = [
+    "js/engine/preloader.js",
+    "js/engine/config.js",
+    "js/engine/engine.js",
+]
+externs = [env.File("#platforms/web/js/engine/engine.externs.js")]
+js_engine = env.CreateEngineFile("#bin/rebel${PROGSUFFIX}.engine.js", engine, externs)
+env.Depends(js_engine, externs)
+
+wrap_list = [
+    build[0],
+    js_engine,
+]
+js_wrapped = env.Textfile(
+    "#bin/rebel",
+    [env.File(f) for f in wrap_list],
+    TEXTFILESUFFIX="${PROGSUFFIX}.wrapped.js",
+)
+
+# Extra will be the thread worker, or the GDNative side, or None
+extra = build[2] if len(build) > 2 else None
+env.CreateTemplateZip(js_wrapped, build[1], extra)

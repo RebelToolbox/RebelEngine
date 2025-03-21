@@ -49,10 +49,10 @@ logs/
 # Gradle generated
 .gradle/
 local.properties
-platform/android/project/*/build/
-platform/android/project/*/.cxx/
-platform/android/project/*/libs/
-platform/android/project/**/jniLibs/
+platforms/android/project/*/build/
+platforms/android/project/*/.cxx/
+platforms/android/project/*/libs/
+platforms/android/project/**/jniLibs/
 
 # Python generated
 __pycache__/

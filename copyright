@@ -71,26 +71,26 @@ Copyright: 2022-Present, Rebel Engine contributors
  2006-2020, assimp team
 License: BSD-3-clause
 
-Files: ./platform/android/project/engine/src/main/aidl/com/android/vending/licensing/
- ./platform/android/project/engine/src/main/res/layout/status_bar_ongoing_event_progress_bar.xml
- ./platform/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/
- ./platform/android/project/engine/src/main/java/com/google/android/vending/licensing/
- ./platform/android/project/engine/src/main/java/com/rebeltoolbox/rebelengine/input/InputManagerCompat.java
- ./platform/android/project/engine/src/main/java/com/rebeltoolbox/rebelengine/input/InputManagerV16.java
+Files: ./platforms/android/project/engine/src/main/aidl/com/android/vending/licensing/
+ ./platforms/android/project/engine/src/main/res/layout/status_bar_ongoing_event_progress_bar.xml
+ ./platforms/android/project/engine/src/main/java/com/google/android/vending/expansion/downloader/
+ ./platforms/android/project/engine/src/main/java/com/google/android/vending/licensing/
+ ./platforms/android/project/engine/src/main/java/com/rebeltoolbox/rebelengine/input/InputManagerCompat.java
+ ./platforms/android/project/engine/src/main/java/com/rebeltoolbox/rebelengine/input/InputManagerV16.java
 Comment: The Android Open Source Project
 Copyright: 2008-2013, The Android Open Source Project
 License: Apache-2.0
 
-Files: ./platform/android/project/engine/src/main/java/com/google/android/vending/licensing/util/Base64.java
- ./platform/android/project/engine/src/main/java/com/google/android/vending/licensing/util/Base64DecoderException.java
+Files: ./platforms/android/project/engine/src/main/java/com/google/android/vending/licensing/util/Base64.java
+ ./platforms/android/project/engine/src/main/java/com/google/android/vending/licensing/util/Base64DecoderException.java
 Comment: The Android Open Source Project
 Copyright: 2002, Google Inc.
 License: Apache-2.0
 
-Files: ./platform/android/android_power.cpp
- ./platform/macos/macos_power.cpp
- ./platform/windows/windows_power.cpp
- ./platform/linux/linux_power.cpp
+Files: ./platforms/android/android_power.cpp
+ ./platforms/macos/macos_power.cpp
+ ./platforms/windows/windows_power.cpp
+ ./platforms/linux/linux_power.cpp
 Comment: Simple DirectMedia Layer
 Copyright: 2022-Present, Rebel Engine contributors
  2017-2022, Godot Engine contributors
