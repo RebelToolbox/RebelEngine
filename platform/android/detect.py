@@ -13,7 +13,14 @@ def get_name():
 
 
 def can_build():
-    return os.path.exists(get_env_android_sdk_root())
+    if not "ANDROID_HOME" in os.environ:
+        print("Building for Android requires ANDROID_HOME to be defined")
+        return False
+    android_home = get_android_home()
+    if not os.path.exists(android_home):
+        print("The ANDROID_HOME path does not exist")
+        return False
+    return True
 
 
 def get_opts():
@@ -39,13 +46,12 @@ def get_opts():
     ]
 
 
-# Return the ANDROID_SDK_ROOT environment variable.
-def get_env_android_sdk_root():
-    return os.environ.get("ANDROID_SDK_ROOT", -1)
+def get_android_home():
+    return os.environ["ANDROID_HOME"]
 
 
 def get_android_ndk_root():
-    return get_env_android_sdk_root() + "/ndk/" + get_ndk_version()
+    return get_android_home() + "/ndk/" + get_ndk_version()
 
 
 def get_ndk_version():
@@ -64,9 +70,7 @@ def install_ndk_if_needed():
     if not os.path.exists(get_android_ndk_root()):
         extension = ".bat" if os.name == "nt" else ""
         sdkmanager = (
-            get_env_android_sdk_root()
-            + "/cmdline-tools/latest/bin/sdkmanager"
-            + extension
+            get_android_home() + "/cmdline-tools/latest/bin/sdkmanager" + extension
         )
         if os.path.exists(sdkmanager):
             # Install the Android NDK
@@ -76,7 +80,7 @@ def install_ndk_if_needed():
         else:
             print("ERROR: Cannot find " + sdkmanager)
             print(
-                "Please ensure ANDROID_SDK_ROOT is correct and cmdline-tools are installed."
+                "Please ensure ANDROID_HOME is correct and cmdline-tools are installed."
             )
             print(
                 "Alternatively, install NDK version " + get_ndk_version() + " manually."
