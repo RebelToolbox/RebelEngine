@@ -31,7 +31,7 @@ while IFS= read -rd '' f; do
         continue
     elif [[ "$f" == "thirdparty"* ]]; then
         continue
-    elif [[ "$f" == "platform/android/project/engine/src/main/java/com/google"* ]]; then
+    elif [[ "$f" == "platforms/android/project/engine/src/main/java/com/google"* ]]; then
         continue
     elif [[ "$f" == *"-so_wrap."* ]]; then
         continue

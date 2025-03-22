@@ -1,0 +1,59 @@
+ext.versions = [
+    compileSdk         : 34,
+    // Also update platforms/android/export/export_plugin.cpp:
+    // - DEFAULT_MIN_SDK_VERSION
+    // - DEFAULT_TARGET_SDK_VERSION
+    minSdk             : 21,
+    targetSdk          : 34,
+    javaVersion        : 17,
+    // Also update platforms/android/detect.py get_ndk_version()
+    ndkVersion         : '26.3.11579264'
+]
+
+ext.stringProperty = { String property, String defaultValue ->
+    project.hasProperty(property)
+        ? project.property(property)
+        : defaultValue
+}
+
+ext.integerProperty = { String property, Integer defaultValue ->
+    if (project.hasProperty(property)) {
+        try {
+            return Integer.parseInt(project.property(property))
+        } catch (ignored) {
+        }
+    }
+    return defaultValue
+}
+
+ext.arrayProperty = { String property, String defaultValue = "" ->
+    List<String> propertyStrings = []
+    def items = stringProperty(property, defaultValue).split("\\|")
+    for (String item : items) {
+        if (!item.trim().isEmpty()) {
+            propertyStrings.add(item.trim())
+        }
+    }
+    return propertyStrings.toArray()
+}
+
+ext.buildVersion = {
+    String version = "custom_build"
+    // Read version information from `version.py` file.
+    File versionFile = new File("../../../version.py")
+    if (versionFile.isFile()) {
+        List<String> lines = versionFile.readLines()
+        List<String> keys = ["major", "minor", "patch", "status", "module_config"]
+        List<String> values = []
+        for (String line in lines) {
+            String[] keyValue = line.split("=")
+            String key = keyValue[0].trim()
+            String value = keyValue[1].trim().replaceAll("\"", "")
+            if (keys.contains(key) && !value.isEmpty()) {
+                values.add(value)
+            }
+        }
+        version = values.join(".")
+    }
+    return version
+}

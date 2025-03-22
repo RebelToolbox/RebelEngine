@@ -11,9 +11,9 @@
 // all others.
 
 #ifdef __ANDROID__
-#include "platform/android/android_jni_os.h"
-#include "platform/android/android_jni_thread.h"
-#include "platform/android/android_os.h"
+#include "platforms/android/android_jni_os.h"
+#include "platforms/android/android_jni_thread.h"
+#include "platforms/android/android_os.h"
 #else
 #define JNIEnv  void
 #define jobject void*

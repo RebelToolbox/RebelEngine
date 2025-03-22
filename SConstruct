@@ -29,7 +29,7 @@ platform_apis = []
 
 time_at_start = time.time()
 
-for x in sorted(glob.glob("platform/*")):
+for x in sorted(glob.glob("platforms/*")):
     if not os.path.isdir(x) or not os.path.exists(x + "/detect.py"):
         continue
     tmppath = "./" + x
@@ -38,15 +38,15 @@ for x in sorted(glob.glob("platform/*")):
     import detect
 
     if os.path.exists(x + "/export/export.cpp"):
-        platform_exporters.append(x[9:])
+        platform_exporters.append(x[10:])
     if os.path.exists(x + "/api/api.cpp"):
-        platform_apis.append(x[9:])
+        platform_apis.append(x[10:])
     if detect.is_active():
         active_platforms.append(detect.get_name())
         active_platform_ids.append(x)
     if detect.can_build():
-        x = x.replace("platform/", "")  # rest of world
-        x = x.replace("platform\\", "")  # win32
+        x = x.replace("platforms/", "")  # rest of world
+        x = x.replace("platforms\\", "")  # win32
         platform_list += [x]
         platform_opts[x] = detect.get_opts()
         platform_flags[x] = detect.get_flags()
@@ -402,7 +402,7 @@ if not env_base["deprecated"]:
     env_base.Append(CPPDEFINES=["DISABLE_DEPRECATED"])
 
 if selected_platform in platform_list:
-    tmppath = "./platform/" + selected_platform
+    tmppath = "./platforms/" + selected_platform
     sys.path.insert(0, tmppath)
     import detect
 
@@ -729,12 +729,11 @@ if selected_platform in platform_list:
     SConscript("editor/SCsub")
     SConscript("projects_manager/SCsub")
     SConscript("drivers/SCsub")
-
-    SConscript("platform/SCsub")
+    SConscript("platforms/SCsub")
     SConscript("modules/SCsub")
     SConscript("main/SCsub")
 
-    SConscript("platform/" + selected_platform + "/SCsub")  # build selected platform
+    SConscript("platforms/" + selected_platform + "/SCsub")  # build selected platform
 
     # Microsoft Visual Studio Project Generation
     if env["vsproj"]:

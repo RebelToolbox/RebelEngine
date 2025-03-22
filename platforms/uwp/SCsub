@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+Import("env")
+
+uwp_files = [
+    "app.cpp",
+    "#platforms/windows/windows_dir_access.cpp",
+    "#platforms/windows/windows_file_access.cpp",
+    "#platforms/windows/windows_key_mapping.cpp",
+    "#platforms/windows/windows_terminal_logger.cpp",
+    "uwp_egl_context.cpp",
+    "uwp_joypad.cpp",
+    "uwp_power.cpp",
+    "uwp_os.cpp",
+]
+
+if "build_angle" in env and env["build_angle"]:
+    cmd = env.AlwaysBuild(env.ANGLE("libANGLE.lib", None))
+
+prog = env.add_program("#bin/rebel", uwp_files)
+
+if "build_angle" in env and env["build_angle"]:
+    env.Depends(prog, [cmd])

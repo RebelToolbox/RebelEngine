@@ -10,7 +10,7 @@ options="--Wno-error=unknown"
 include_extensions=".c .h .cpp .hpp .cc .hh .cxx .m .mm .inc .java .glsl"
 
 # Directories and file patterns to ignore.
-exclude_directories="thirdparty platform/android/project/engine/src/main/java/com/google"
+exclude_directories="thirdparty platforms/android/project/engine/src/main/java/com/google"
 exclude_file_patterns="\-so_wrap\."
 
 # To get consistent formatting, use the same clang-format version as CI.

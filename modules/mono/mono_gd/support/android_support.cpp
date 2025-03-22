@@ -25,9 +25,9 @@
 #include "../gd_mono_marshal.h"
 #include "core/os/os.h"
 #include "core/ustring.h"
-#include "platform/android/android_jni_os.h"
-#include "platform/android/android_jni_thread.h"
-#include "platform/android/android_os.h"
+#include "platforms/android/android_jni_os.h"
+#include "platforms/android/android_jni_thread.h"
+#include "platforms/android/android_os.h"
 
 // Warning: JNI boilerplate ahead... continue at your own risk
 

@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+import sys
+
+Import("env")
+
+server_files = [
+    "server_os.cpp",
+]
+
+if sys.platform == "darwin":
+    server_files.append("#platforms/macos/macos_crash_handler.mm")
+    server_files.append("#platforms/macos/macos_power.cpp")
+else:
+    server_files.append("#platforms/linux/linux_crash_handler.cpp")
+    server_files.append("#platforms/linux/linux_power.cpp")
+
+prog = env.add_program("#bin/rebel_server", ["server_main.cpp"] + server_files)
