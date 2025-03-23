@@ -1794,21 +1794,21 @@ msgstr ""
 "Омогући 'Увоз Etc' у подешавањима пројекта, или онемогући 'Поваратак "
 "Управљача Омогућен'."
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 #, fuzzy
 msgid "Custom debug template not found."
 msgstr "Шаблонска датотека није пронађена:\n"
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 #, fuzzy
 msgid "Custom release template not found."
 msgstr "Прилагођени образци објаве нису пронађени."
 
-#: editor/editor_export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/web/export/export.cpp
 #, fuzzy
 msgid "Template file not found:"
 msgstr "Шаблонска датотека није пронађена:\n"
@@ -14381,79 +14381,79 @@ msgstr "Потражи VisualScript"
 msgid "Get %s"
 msgstr "Повуци %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Package name is missing."
 msgstr "Недостаје име паковања."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Package segments must be of non-zero length."
 msgstr "Одломци паковања не могу бити нулте дужине."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "The character '%s' is not allowed in Android application package names."
 msgstr "Карактер '%s' није дозвољен у именима паковања Android апликације."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "A digit cannot be the first character in a package segment."
 msgstr "Цифра не може бити први карактер у одломку паковања."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "The character '%s' cannot be the first character in a package segment."
 msgstr "Карактер '%s' не може бити први карактер у одломку паковања."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "The package must have at least one '.' separator."
 msgstr "Паковање мора имати бар један '.' раздвојник."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Select device from the list"
 msgstr "Одабери уређај са листе"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Running on %s"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Exporting APK..."
 msgstr "Извоз"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Uninstalling..."
 msgstr "Деинсталирај"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Installing to device, please wait..."
 msgstr "Прихватам одредишта, молим сачекајте..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Could not install to device: %s"
 msgstr "Не могу покренути подпроцес!"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Running on device..."
 msgstr "Обрађивање скриптице..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Could not execute on device."
 msgstr "Неуспех при прављењу директоријума."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find the 'apksigner' tool."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "The Android project template is not installed. It can be installed from the "
@@ -14462,124 +14462,124 @@ msgstr ""
 "Android нацрт изградње није инсталиран у пројекат. Инсталирај га из Пројекат "
 "менија."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Debug Keystore, Debug User AND Debug Password settings must be "
 "configured OR none of them."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Debug keystore not configured in the Editor Settings nor in the preset."
 msgstr ""
 "Сладиште кључева Разгрешеника није подешено у Подешавањима Уредника ни у "
 "поставкама."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Release Keystore, Release User AND Release Password settings must be "
 "configured OR none of them."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Release keystore incorrectly configured in the export preset."
 msgstr ""
 "Сладиште кључева Разгрешеника није подешено у Подешавањима Уредника ни у "
 "поставкама."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "A valid Android SDK path is required in Editor Settings."
 msgstr ""
 "Неважећа Android SDK путања за произвољну изградњу у Подешавањима Уредника."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Invalid Android SDK path in Editor Settings."
 msgstr ""
 "Неважећа Android SDK путања за произвољну изградњу у Подешавањима Уредника."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'platform-tools' directory!"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK platform-tools' adb command."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Please check in the Android SDK directory specified in Editor Settings."
 msgstr ""
 "Неважећа Android SDK путања за произвољну изградњу у Подешавањима Уредника."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'build-tools' directory!"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK build-tools' apksigner command."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Invalid public key for APK expansion."
 msgstr "Неважећи јавни кључ за АПК проширење."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Invalid package name:"
 msgstr "Неважеће име паковања:"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Hand Tracking\" is only valid when \"Xr Mode\" is \"Oculus Mobile VrApi\" "
 "or \"OpenXR\"."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Passthrough\" is only valid when \"Xr Mode\" is \"OpenXR\"."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Export AAB\" is only valid when \"Use Custom Build\" is enabled."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version.\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current minimum is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Min Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Min Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Target Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Target Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "'apksigner' could not be found.\n"
 "Please check the command is available in the Android SDK build-tools "
@@ -14587,57 +14587,57 @@ msgid ""
 "The resulting %s is unsigned."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Signing debug %s..."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Signing release %s..."
 msgstr ""
 "Скенирање датотека,\n"
 "Молим сачекајте..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Could not find keystore, unable to export."
 msgstr "Неуспешно отварање нацрта за извоз:"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Verifying %s..."
 msgstr "Додавање %s..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' verification of %s failed."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Exporting for Android"
 msgstr "Извоз"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android App Bundle requires the *.aab extension."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "APK Expansion not compatible with Android App Bundle."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android APK requires the *.apk extension."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unsupported export format!\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Trying to build from a custom project template, but no version info for it "
@@ -14646,7 +14646,7 @@ msgstr ""
 "Покушај изградње за произвољни нацрт изградње, али не постоји инфо о "
 "верзији. Молимо реинсталирај из \"Пројекат\" менија."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Android build version mismatch:\n"
@@ -14659,28 +14659,28 @@ msgstr ""
 "   Годот Верзија: %s\n"
 "Молимо реинсталирајте Android нацрт изградње из \"Пројекат\" менија."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Unable to overwrite res://android/project/src/main/res/*.xml files with "
 "project name"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Could not export project files to gradle project\n"
 msgstr "Неуспешна измена project.godot-а у путањи пројекта."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Could not write expansion package file!"
 msgstr "Неуспело уписивање фајла:"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Building Android Project (gradle)"
 msgstr "Изградња Android Пројекта (gradle)"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
@@ -14690,34 +14690,34 @@ msgstr ""
 "Изградња Android пројекта неуспешна, провери излаз за грешке.\n"
 "Алтернативно посети docs.rebeltoolbox.com за Android документацију изградње."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Moving output"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Unable to copy and rename export file, check gradle project directory for "
 "outputs."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Package not found: %s"
 msgstr "Анимација није нађена: '%s'"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Creating APK..."
 msgstr "Прављење контура..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
 msgstr "Неуспешно отварање нацрта за извоз:"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Missing libraries in the export template for the selected architectures: "
 "%s.\n"
@@ -14725,182 +14725,182 @@ msgid ""
 "architectures in the export preset."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Adding files..."
 msgstr "Додавање %s..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Could not export project files"
 msgstr "Неуспело уписивање фајла:"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Aligning APK..."
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
 msgstr ""
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 #, fuzzy
 msgid "Identifier is missing."
 msgstr "Идентификатор недостаје."
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 #, fuzzy
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Карактер '%s' није дозвољен као идентификатор."
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 #, fuzzy
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 "Тимски ИД Продавнице Апликација није наведен - неуспешно подешавање пројекта."
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 #, fuzzy
 msgid "Invalid Identifier:"
 msgstr "Неважећи идентификатор:"
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 #, fuzzy
 msgid "Required icon is not specified in the preset."
 msgstr "Неопходна иконица није наведена у подешавању."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 #, fuzzy
 msgid "Invalid bundle identifier:"
 msgstr "Неважећи идентификатор:"
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr ""
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr ""
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr ""
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr ""
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid package short name."
 msgstr "Неважеће кратко име паковања."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid package unique name."
 msgstr "Неважеће јединствено име паковања."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid package publisher display name."
 msgstr "Неважеће приказно име издавача паковања."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid product GUID."
 msgstr "Неважећи GUID продукт."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid publisher GUID."
 msgstr "Неважећи GUID итдавача."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid background color."
 msgstr "Неважећа боја позадине."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid Store Logo image dimensions (should be 50x50)."
 msgstr "Неважеће димензије Логотипа Продавнице (треба да буде 50*50)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid square 44x44 logo image dimensions (should be 44x44)."
 msgstr "Неважеће димензије слике за квадрат логотип (треба да буде 44*44)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid square 71x71 logo image dimensions (should be 71x71)."
 msgstr "Неважеће димензије слике за квадрат логотип  (треба да буде 71*71)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid square 150x150 logo image dimensions (should be 150x150)."
 msgstr "Неважеће димензије слике за квадрат логотип (треба да буде 150*150)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid square 310x310 logo image dimensions (should be 310x310)."
 msgstr "Неважеће димензије слике за квадрат логотип (треба да буде 310*310)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid wide 310x150 logo image dimensions (should be 310x150)."
 msgstr "Неважеће димензије слике за широки логотип (треба да буде 310*150)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 #, fuzzy
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Неважеће димензије слике за уводни екран (треба да буде 620*300)."
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Stop HTTP Server"
 msgstr "Заустави HTTP Сервер"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Run in Browser"
 msgstr "Покрени у Претраживачу"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Run exported HTML in the system's default browser."
 msgstr "Покрени извезени HTML у уобичајеном претраживачу система."
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Could not open template for export:"
 msgstr "Неуспешно отварање нацрта за извоз:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Invalid export template:"
 msgstr "Неважећи извозни нацрт:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Could not write file:"
 msgstr "Неуспело уписивање фајла:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Could not read file:"
 msgstr "Неуспело уписивање фајла:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Could not read HTML shell:"
 msgstr "Неуспешно читаље произвољне  HTML шкољке:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Could not create HTTP server directory:"
 msgstr "Неуспех при прављењу директоријума."
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 #, fuzzy
 msgid "Error starting HTTP server:"
 msgstr "Грешка памћена сцена."
