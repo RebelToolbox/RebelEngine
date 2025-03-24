@@ -24,7 +24,7 @@ if env["builtin_xatlas"]:
     env.modules_sources += thirdparty_obj
 
 
-# Godot source files
+# Rebel source files
 
 module_obj = []
 

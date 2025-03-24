@@ -87,7 +87,7 @@ if env["builtin_libtheora"]:
     env.modules_sources += thirdparty_obj
 
 
-# Godot source files
+# Rebel source files
 
 module_obj = []
 
