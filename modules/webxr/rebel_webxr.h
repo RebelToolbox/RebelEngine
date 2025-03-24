@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_WEBXR_H
-#define GODOT_WEBXR_H
+#ifndef REBEL_WEBXR_H
+#define REBEL_WEBXR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,4 +68,4 @@ extern int* rebel_webxr_get_bounds_geometry();
 }
 #endif
 
-#endif /* GODOT_WEBXR_H */
+#endif // REBEL_WEBXR_H
