@@ -1675,19 +1675,19 @@ msgstr ""
 "Activá Import Pvrtc' en la Ajustes del Proyecto, o desactiva 'Driver "
 "Fallback Enabled'."
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Plantilla debug personalizada no encontrada."
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Plantilla release personalizada no encontrada."
 
-#: editor/editor_export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Plantilla no encontrada:"
 
@@ -12893,70 +12893,70 @@ msgstr "Buscar en VisualScript"
 msgid "Get %s"
 msgstr "Obtener %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package name is missing."
 msgstr "Nombre de paquete faltante."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package segments must be of non-zero length."
 msgstr "Los segmentos del paquete deben ser de largo no nulo."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The character '%s' is not allowed in Android application package names."
 msgstr ""
 "El caracter '%s' no está permitido en nombres de paquete de aplicación "
 "Android."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "A digit cannot be the first character in a package segment."
 msgstr "Un dígito no puede ser el primer caracter en un segmento de paquete."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The character '%s' cannot be the first character in a package segment."
 msgstr ""
 "El caracter '%s' no puede ser el primer caracter en un segmento de paquete."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The package must have at least one '.' separator."
 msgstr "El paquete debe tener al menos un '.' como separador."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Select device from the list"
 msgstr "Seleccionar dispositivo de la lista"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Running on %s"
 msgstr "Ejecutando en %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Exporting APK..."
 msgstr "Exportar APK..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Uninstalling..."
 msgstr "Desinstalando..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Installing to device, please wait..."
 msgstr "Instalando en el dispositivo, espera por favor..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not install to device: %s"
 msgstr "No se pudo instalar en el dispositivo: %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Running on device..."
 msgstr "Ejecutando en el dispositivo..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not execute on device."
 msgstr "No se ha podido ejecutar en el dispositivo."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find the 'apksigner' tool."
 msgstr "No se pudo encontrar la herramienta 'apksigner'."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "The Android project template is not installed. It can be installed from the "
@@ -12965,7 +12965,7 @@ msgstr ""
 "La plantilla de exportación de Android no esta instalada en el proyecto. "
 "Instalala desde el menú de Proyecto."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Debug Keystore, Debug User AND Debug Password settings must be "
 "configured OR none of them."
@@ -12973,12 +12973,12 @@ msgstr ""
 "Deben estar configurados o bien Debug Keystore, Debug User Y Debug Password "
 "o bien ninguno de ellos."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Debug keystore not configured in the Editor Settings nor in the preset."
 msgstr ""
 "Keystore debug no configurada en Configuración del Editor ni en el preset."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Release Keystore, Release User AND Release Password settings must be "
 "configured OR none of them."
@@ -12986,57 +12986,57 @@ msgstr ""
 "Deben estar configurados o bien Release Keystore, Release User y Release "
 "Passoword o bien ninguno de ellos."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Release keystore incorrectly configured in the export preset."
 msgstr ""
 "Release keystore no está configurado correctamente en el preset de "
 "exportación."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "A valid Android SDK path is required in Editor Settings."
 msgstr ""
 "Se requiere una ruta válida al SDK de Android en la Configuración del Editor."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid Android SDK path in Editor Settings."
 msgstr "Ruta del SDK de Android inválida en la Configuración del Editor."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'platform-tools' directory!"
 msgstr "¡No se encontró el directorio 'platform-tools'!"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK platform-tools' adb command."
 msgstr "No se pudo encontrar el comando adb en las Android SDK platform-tools."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Please check in the Android SDK directory specified in Editor Settings."
 msgstr ""
 "Por favor, comprueba el directorio del SDK de Android especificado en la "
 "Configuración del Editor."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'build-tools' directory!"
 msgstr "¡No se encontró el directorio 'build-tools'!"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK build-tools' apksigner command."
 msgstr ""
 "No se pudo encontrar el comando apksigner en las Android SDK build-tools."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid public key for APK expansion."
 msgstr "Clave pública inválida para la expansión de APK."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid package name:"
 msgstr "Nombre de paquete inválido:"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
 msgstr "\"Use Custom Build\" debe estar activado para usar los plugins."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Hand Tracking\" is only valid when \"Xr Mode\" is \"Oculus Mobile VrApi\" "
 "or \"OpenXR\"."
@@ -13044,16 +13044,16 @@ msgstr ""
 "\"Hand Tracking\" sólo es válido cuando \"Xr Mode\" es \"Oculus Mobile "
 "VrApi\" o \"OpenXR\"."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Passthrough\" is only valid when \"Xr Mode\" is \"OpenXR\"."
 msgstr "\"Passthrough\" sólo es válido cuando \"Xr Mode\" es \"OpenXR\"."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Export AAB\" is only valid when \"Use Custom Build\" is enabled."
 msgstr ""
 "\"Export AAB\" sólo es válido cuando \"Use Custom Build\" está activado."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version.\n"
@@ -13061,31 +13061,31 @@ msgstr ""
 "La versión de \"Target Sdk\" debe ser mayor o igual a la versión de \"Min "
 "Sdk\"."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current minimum is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Min Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Min Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Target Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Target Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "'apksigner' could not be found.\n"
 "Please check the command is available in the Android SDK build-tools "
@@ -13097,52 +13097,52 @@ msgstr ""
 "SDK build-tools.\n"
 "El %s resultante está sin firmar."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Signing debug %s..."
 msgstr "Firmando %s debug..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Signing release %s..."
 msgstr "Firmando %s release..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not find keystore, unable to export."
 msgstr "No se pudo encontrar la keystore, no se puedo exportar."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
 msgstr "'apksigner' ha retornado con error #%d"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Verifying %s..."
 msgstr "Verificando %s..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' verification of %s failed."
 msgstr "La verificación de 'apksigner' de %s ha fallado."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Exporting for Android"
 msgstr "Exportando para Android"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android App Bundle requires the *.aab extension."
 msgstr ""
 "¡Nombre de archivo inválido! Android App Bundle requiere la extensión *.aab."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "APK Expansion not compatible with Android App Bundle."
 msgstr "La Expansión APK no es compatible con Android App Bundle."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android APK requires the *.apk extension."
 msgstr "¡Nombre de archivo inválido! Android APK requiere la extensión *.apk."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unsupported export format!\n"
 msgstr "¡Formato de exportación no soportado!\n"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Trying to build from a custom project template, but no version info for it "
@@ -13152,7 +13152,7 @@ msgstr ""
 "información de la versión para ello. Por favor, reinstalá desde el menú "
 "'Proyecto'."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Android build version mismatch:\n"
@@ -13166,7 +13166,7 @@ msgstr ""
 "Por favor, reinstalá la plantilla de compilación de Android desde el menú "
 "'Proyecto'."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Unable to overwrite res://android/project/src/main/res/*.xml files with "
@@ -13175,20 +13175,20 @@ msgstr ""
 "No se pudieron sobrescribir los archivos res://android/build/res/*.xml con "
 "el nombre del proyecto"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files to gradle project\n"
 msgstr ""
 "No se pudieron exportar los archivos del proyecto a un proyecto gradle\n"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not write expansion package file!"
 msgstr "¡No se pudo escribir el archivo del paquete de expansión!"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Building Android Project (gradle)"
 msgstr "Construir Proyecto Android (gradle)"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
@@ -13199,11 +13199,11 @@ msgstr ""
 "También podés visitar docs.rebeltoolbox.com para consultar la documentación "
 "de compilación de Android."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Moving output"
 msgstr "Moviendo salida"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Unable to copy and rename export file, check gradle project directory for "
 "outputs."
@@ -13211,15 +13211,15 @@ msgstr ""
 "No se puede copiar y renombrar el archivo de exportación, comprobá el "
 "directorio del proyecto de gradle para ver los resultados."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package not found: %s"
 msgstr "Paquete no encontrado:% s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Creating APK..."
 msgstr "Creando APK..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
@@ -13227,7 +13227,7 @@ msgstr ""
 "No se pudo encontrar la plantilla APK para exportar:\n"
 "%s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Missing libraries in the export template for the selected architectures: "
 "%s.\n"
@@ -13239,163 +13239,163 @@ msgstr ""
 "Por favor, construya una plantilla con todas las bibliotecas necesarias, o "
 "desmarque las arquitecturas faltantes en el preset de exportación."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Adding files..."
 msgstr "Agregando archivos..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files"
 msgstr "No se pudieron exportar los archivos del proyecto"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Aligning APK..."
 msgstr "Alineando APK..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
 msgstr "No se pudo descomprimir el APK temporal no alineado."
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Identificador no encontrado."
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "El caracter '%s' no esta permitido como identificador."
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr ""
 "App Store Team ID no especificado - no se puede configurar el proyecto."
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Identificador inválido:"
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "El icono requerido no esta especificado en el preset."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "Identificador de paquete no válido:"
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "Notarización: se requiere firma de código."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "Notarización: se requiere hardened runtime."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "Notarización: nombre de ID de Apple no especificado."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "Notarización: contraseña de ID de Apple no especificada."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package short name."
 msgstr "Nombre corto de paquete inválido."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package unique name."
 msgstr "Nombre único de paquete inválido."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package publisher display name."
 msgstr "Nombre de paquete de editor inválido."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid product GUID."
 msgstr "GUID de producto inválido."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid publisher GUID."
 msgstr "GUID de publisher inválido."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid background color."
 msgstr "Color de fondo inválido."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid Store Logo image dimensions (should be 50x50)."
 msgstr ""
 "Dimensiones de la imagen para el Store Logo inválidas (debería ser 50x50)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 44x44 logo image dimensions (should be 44x44)."
 msgstr ""
 "Dimensiones de la imagen para el logo cuadrado de 44x44 inválidas (debería "
 "ser 44x44)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 71x71 logo image dimensions (should be 71x71)."
 msgstr ""
 "Dimensiones de la imagen para el logo cuadrado de 71x71 inválidas (debería "
 "ser 71x71)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 150x150 logo image dimensions (should be 150x150)."
 msgstr ""
 "Dimensiones de la imagen para el logo cuadrado de 150x150 inválidas (debería "
 "ser 150x150)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 310x310 logo image dimensions (should be 310x310)."
 msgstr ""
 "Dimensiones de la imagen para el logo cuadrado de 310x310 inválidas (debería "
 "ser 310x310)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid wide 310x150 logo image dimensions (should be 310x150)."
 msgstr ""
 "Dimensiones de la imagen para el logo ancho de 310x150 inválidas (debería "
 "ser 310x150)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Dimensiones de la imagen del splash inválidas (debería ser 620x300)."
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Stop HTTP Server"
 msgstr "Detener Servidor HTTP"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Run in Browser"
 msgstr "Ejecutar en el Navegador"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Run exported HTML in the system's default browser."
 msgstr "Ejecutar HTML exportado en el navegador por defecto del sistema."
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not open template for export:"
 msgstr "No se pudo abrir la plantilla para exportar:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Invalid export template:"
 msgstr "Plantilla de exportación inválida:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not write file:"
 msgstr "No se pudo escribir el archivo:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not read file:"
 msgstr "No se pudo leer el archivo:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not read HTML shell:"
 msgstr "No se pudo leer el shell HTML:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not create HTTP server directory:"
 msgstr "No se pudo crear el directorio del servidor HTTP:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "Error al iniciar el servidor HTTP:"
 

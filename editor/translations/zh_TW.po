@@ -1656,19 +1656,19 @@ msgstr ""
 "目標平台上的 GLES2 回退驅動器功能必須使用「PVRTC」紋理壓縮。\n"
 "請在專案設定中啟用「Import Pvrtc」或是禁用「Driver Fallback Enabled」。"
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "找不到自定義偵錯樣板。"
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "找不到自定義發行樣板。"
 
-#: editor/editor_export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "找不到樣板檔案："
 
@@ -12596,135 +12596,135 @@ msgstr "搜尋視覺腳本 (VisualScript)"
 msgid "Get %s"
 msgstr "取得 %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package name is missing."
 msgstr "缺少套件名稱。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package segments must be of non-zero length."
 msgstr "套件片段 (Segment) 的長度不可為 0。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The character '%s' is not allowed in Android application package names."
 msgstr "Android 應用程式套件名稱不可使用字元「%s」。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "A digit cannot be the first character in a package segment."
 msgstr "套件片段 (Segment) 的第一個字元不可為數字。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The character '%s' cannot be the first character in a package segment."
 msgstr "套件片段 (Segment) 的第一個字元不可為「%s」。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The package must have at least one '.' separator."
 msgstr "套件必須至少有一個「.」分隔字元。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Select device from the list"
 msgstr "自清單中選擇裝置"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Running on %s"
 msgstr "目前執行進度：%d"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Exporting APK..."
 msgstr "正在匯出APK……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Uninstalling..."
 msgstr "正在解除安裝……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Installing to device, please wait..."
 msgstr "正在安裝至裝置，請稍後……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not install to device: %s"
 msgstr "無法安裝至裝置：%s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Running on device..."
 msgstr "正在執行於裝置……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not execute on device."
 msgstr "無法於裝置上執行。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find the 'apksigner' tool."
 msgstr "找不到「apksigner」工具。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr "尚未於專案中安裝 Android 建置樣板。請先於專案目錄中進行安裝。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Debug Keystore, Debug User AND Debug Password settings must be "
 "configured OR none of them."
 msgstr "必須全部設定或不設定Debug Keystore、Debug User以及Debug Password。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Debug keystore not configured in the Editor Settings nor in the preset."
 msgstr "尚未於編輯器設定或預設設定中設定金鑰儲存區 (Keystore)。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Release Keystore, Release User AND Release Password settings must be "
 "configured OR none of them."
 msgstr ""
 "必須全部設定或不設定Release Keystore、Release User以及Release Password。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Release keystore incorrectly configured in the export preset."
 msgstr "發行金鑰儲存區中不正確之組態設定至匯出預設設定。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "A valid Android SDK path is required in Editor Settings."
 msgstr "必須於 [編輯器設定] 中提供一個有效的 Android SDK 路徑。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid Android SDK path in Editor Settings."
 msgstr "[編輯器設定] 中所指定的 Android SDK 路徑無效。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'platform-tools' directory!"
 msgstr "缺少「platform-tools」資料夾！"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK platform-tools' adb command."
 msgstr "找不到 Android SDK platform-tools 的 adb 指令。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Please check in the Android SDK directory specified in Editor Settings."
 msgstr "請檢查 [編輯器設定] 中所指定的 Android SDK 資料夾。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'build-tools' directory!"
 msgstr "缺少「build-tools」資料夾！"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK build-tools' apksigner command."
 msgstr "找不到 Android SDK build-tools 的 apksigner 指令。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid public key for APK expansion."
 msgstr "無效的 APK Expansion 公鑰。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid package name:"
 msgstr "無效的套件名稱："
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
 msgstr "「使用自定建置」必須啟用以使用本外掛。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Hand Tracking\" is only valid when \"Xr Mode\" is \"Oculus Mobile VrApi\" "
 "or \"OpenXR\"."
@@ -12732,45 +12732,45 @@ msgstr ""
 "「Hand Tracking」（手部追蹤）僅可在「Xr Mode」（XR 模式）設為「Oculus Mobile "
 "VR」或「OpenXR」時可用。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Passthrough\" is only valid when \"Xr Mode\" is \"OpenXR\"."
 msgstr "「Passthrough」僅可在「Xr Mode」（XR 模式）設為「OpenXR」時可用。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Export AAB\" is only valid when \"Use Custom Build\" is enabled."
 msgstr "「Export AAB」僅於「Use Custom Build」啟用時可用。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version.\n"
 msgstr "「Target Sdk」版本必須高於或于「Min Sdk」版本一致。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current minimum is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Min Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Min Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Target Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Target Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "'apksigner' could not be found.\n"
 "Please check the command is available in the Android SDK build-tools "
@@ -12781,51 +12781,51 @@ msgstr ""
 "請確認此命令可用於Android SDK build-tools的目錄。\n"
 "%s 未簽署。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Signing debug %s..."
 msgstr "正在簽署偵錯版本%s……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Signing release %s..."
 msgstr "正在簽署發布版本%s……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not find keystore, unable to export."
 msgstr "找不到金鑰儲存區，無法匯出。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
 msgstr "「apksigner」回傳錯誤 #%d"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Verifying %s..."
 msgstr "正在驗證 %s…"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' verification of %s failed."
 msgstr "「apksigner」無法驗證%s。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Exporting for Android"
 msgstr "正在為Android匯出"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android App Bundle requires the *.aab extension."
 msgstr "無效的檔案名稱！Android App Bundle 必須要有 *.aab 副檔名。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "APK Expansion not compatible with Android App Bundle."
 msgstr "APK Expansion 與 Android App Bundle 不相容。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android APK requires the *.apk extension."
 msgstr "無效的檔案名稱！Android APK 必須要有 *.apk 副檔名。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unsupported export format!\n"
 msgstr "不支援的匯出格式！\n"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Trying to build from a custom project template, but no version info for it "
@@ -12833,7 +12833,7 @@ msgid ""
 msgstr ""
 "嘗試自自定建置樣板進行建置，但無版本資訊可用。請自「專案」選單中重新安裝。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Android build version mismatch:\n"
@@ -12846,26 +12846,26 @@ msgstr ""
 "   Godot 版本：%s\n"
 "請自「專案」目錄中重新安裝 Android 建置樣板。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Unable to overwrite res://android/project/src/main/res/*.xml files with "
 "project name"
 msgstr "無法以專案名稱覆蓋檔案res://android/build/res/*.xml"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files to gradle project\n"
 msgstr "無法匯出專案檔至Gradle專案。\n"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not write expansion package file!"
 msgstr "無法寫入擴充套件檔案！"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Building Android Project (gradle)"
 msgstr "建置 Android 專案（Gradle）"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
@@ -12875,25 +12875,25 @@ msgstr ""
 "建置 Android 專案失敗，請檢查輸出以確認錯誤。\n"
 "也可以瀏覽 docs.rebeltoolbox.com 以瀏覽 Android 建置說明文件。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Moving output"
 msgstr "移動輸出"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Unable to copy and rename export file, check gradle project directory for "
 "outputs."
 msgstr "無法複製並更名匯出的檔案，請於 Gradle 專案資料夾內確認輸出。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package not found: %s"
 msgstr "未找到套件：「%s」"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Creating APK..."
 msgstr "正在建立APK……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
@@ -12901,7 +12901,7 @@ msgstr ""
 "找不到樣板APK以匯出：\n"
 "%s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Missing libraries in the export template for the selected architectures: "
 "%s.\n"
@@ -12911,151 +12911,151 @@ msgstr ""
 "遺失所選取架構（%s）的匯出樣板函式庫。\n"
 "請使用所有必要的函式庫建構樣板，或在匯出預設設定中取消勾選遺失的架構。"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Adding files..."
 msgstr "正在加入檔案 %s……"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files"
 msgstr "無法匯出專案檔案"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Aligning APK..."
 msgstr "正在對齊 APK…"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
 msgstr "無法解壓縮暫時非對齊APK。"
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "缺少識別符。"
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "字元「%s」不可用於識別符中。"
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "尚未設定 App Store Team ID - 無法設定專案。"
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "無效的識別符："
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "必須在預設設定中指定必填圖示。"
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "無效的捆綁識別符："
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "公證：需要程式碼簽署。"
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "公證：需要強化執行階段（Hardened Runtime）。"
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "公證：未指定Apple ID名稱。"
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "公證：未指定Apple ID密碼。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package short name."
 msgstr "無效的套件段名稱。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package unique name."
 msgstr "無效的套件唯一名稱。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package publisher display name."
 msgstr "無效的套件發佈者顯示名稱。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid product GUID."
 msgstr "無效的產品 GUID。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid publisher GUID."
 msgstr "無效的發佈者 GUID。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid background color."
 msgstr "無效的背景顏色。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid Store Logo image dimensions (should be 50x50)."
 msgstr "無效的商店 LOGO 圖片尺寸（需為 50x50）。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 44x44 logo image dimensions (should be 44x44)."
 msgstr "無效的矩形 44x44 LOGO 圖片尺寸（需為 44x44）。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 71x71 logo image dimensions (should be 71x71)."
 msgstr "無效的矩形 71x71 LOGO 圖片尺寸（需為 71x71）。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 150x150 logo image dimensions (should be 150x150)."
 msgstr "無效的矩形 150x150 LOGO 圖片尺寸（需為 150x150）。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 310x310 logo image dimensions (should be 310x310)."
 msgstr "無效的矩形 310x310 LOGO 圖片尺寸（需為 310x310）。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid wide 310x150 logo image dimensions (should be 310x150)."
 msgstr "無效的寬 310x150 LOGO 圖片尺寸（需為 310x150）。"
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "無效的啟動畫面圖片尺寸（應為 620x300）。"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Stop HTTP Server"
 msgstr "停止 HTTP 伺服器"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Run in Browser"
 msgstr "在瀏覽器中執行"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Run exported HTML in the system's default browser."
 msgstr "在系統的預設瀏覽器中執行已匯出的 HTML。"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not open template for export:"
 msgstr "無法開啟樣板以輸出："
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Invalid export template:"
 msgstr "無效的輸出樣板："
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not write file:"
 msgstr "無法寫入檔案："
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not read file:"
 msgstr "無法讀取檔案："
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not read HTML shell:"
 msgstr "無法讀取HTML殼層："
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not create HTTP server directory:"
 msgstr "無法建立HTTP伺服器目錄："
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "啟動HTTP伺服器時發生錯誤："
 

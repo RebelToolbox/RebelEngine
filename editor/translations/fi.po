@@ -1658,19 +1658,19 @@ msgstr ""
 "Kytke 'Import Pvrtc' päälle projektin asetuksista tai poista 'Driver "
 "Fallback Enabled' asetus."
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 msgid "Custom debug template not found."
 msgstr "Mukautettua debug-vientimallia ei löytynyt."
 
-#: editor/editor_export.cpp platform/android/export/export_plugin.cpp
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
-#: platform/uwp/export/export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/android/export/export_plugin.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
+#: platforms/uwp/export/export.cpp platforms/web/export/export.cpp
 msgid "Custom release template not found."
 msgstr "Mukautettua release-vientimallia ei löytynyt."
 
-#: editor/editor_export.cpp platform/web/export/export.cpp
+#: editor/editor_export.cpp platforms/web/export/export.cpp
 msgid "Template file not found:"
 msgstr "Mallitiedostoa ei löytynyt:"
 
@@ -12831,67 +12831,67 @@ msgstr "Hae VisualScriptistä"
 msgid "Get %s"
 msgstr "Hae %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package name is missing."
 msgstr "Paketin nimi puuttuu."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package segments must be of non-zero length."
 msgstr "Paketin osioiden pituuksien täytyy olla nollasta poikkeavia."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The character '%s' is not allowed in Android application package names."
 msgstr "Merkki '%s' ei ole sallittu Android-sovellusten pakettien nimissä."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "A digit cannot be the first character in a package segment."
 msgstr "Paketin osion ensimmäinen merkki ei voi olla numero."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The character '%s' cannot be the first character in a package segment."
 msgstr "Merkki '%s' ei voi olla paketin osion ensimmäinen merkki."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "The package must have at least one '.' separator."
 msgstr "Paketilla on oltava ainakin yksi '.' erotinmerkki."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Select device from the list"
 msgstr "Valitse laite listasta"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Running on %s"
 msgstr "Ajetaan %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Exporting APK..."
 msgstr "Viedään APK:ta..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Uninstalling..."
 msgstr "Poistetaan asennusta..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Installing to device, please wait..."
 msgstr "Asennetaan laitteelle, hetkinen..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not install to device: %s"
 msgstr "Ei voitu asentaa laitteelle: %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Running on device..."
 msgstr "Ajetaan laitteella..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not execute on device."
 msgstr "Ei voitu suorittaa laitteella."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find the 'apksigner' tool."
 msgstr "'apksigner' työkalua ei löydy."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "The Android project template is not installed. It can be installed from the "
@@ -12900,7 +12900,7 @@ msgstr ""
 "Android-käännösmallia ei ole asennettu projektiin. Asenna se Projekti-"
 "valikosta."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Debug Keystore, Debug User AND Debug Password settings must be "
 "configured OR none of them."
@@ -12908,12 +12908,12 @@ msgstr ""
 "Joko Debug Keystore, Debug User JA Debug Password asetukset on kaikki "
 "konfiguroitava TAI ei mitään niistä."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Debug keystore not configured in the Editor Settings nor in the preset."
 msgstr ""
 "Debug keystore ei ole määritettynä editorin asetuksissa eikä esiasetuksissa."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Either Release Keystore, Release User AND Release Password settings must be "
 "configured OR none of them."
@@ -12921,54 +12921,54 @@ msgstr ""
 "Joko Release Keystore, Release User JA Release Password asetukset on kaikki "
 "konfiguroitava TAI ei mitään niistä."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Release keystore incorrectly configured in the export preset."
 msgstr "Release keystore on konfiguroitu väärin viennin esiasetuksissa."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "A valid Android SDK path is required in Editor Settings."
 msgstr "Editorin asetuksiin tarvitaan kelvollinen Android SDK -polku."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid Android SDK path in Editor Settings."
 msgstr "Editorin asetuksissa on virheellinen Android SDK -polku."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'platform-tools' directory!"
 msgstr "'platform-tools' hakemisto puuttuu!"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK platform-tools' adb command."
 msgstr "Android SDK platform-tools adb-komentoa ei löydy."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Please check in the Android SDK directory specified in Editor Settings."
 msgstr ""
 "Ole hyvä ja tarkista editorin asetuksissa määritelty Android SDK -hakemisto."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Missing 'build-tools' directory!"
 msgstr "'build-tools' hakemisto puuttuu!"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unable to find Android SDK build-tools' apksigner command."
 msgstr "Android SDK build-tools apksigner-komentoa ei löydy."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid public key for APK expansion."
 msgstr "Virheellinen julkinen avain APK-laajennosta varten."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid package name:"
 msgstr "Virheellinen paketin nimi:"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Use Custom Build\" must be enabled to use the plugins."
 msgstr ""
 "\"Use Custom Build\" asetuksen täytyy olla päällä, jotta liittännäisiä voi "
 "käyttää."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Hand Tracking\" is only valid when \"Xr Mode\" is \"Oculus Mobile VrApi\" "
 "or \"OpenXR\"."
@@ -12976,19 +12976,19 @@ msgstr ""
 "\"Hand Tracking\" on käyttökelpoinen ainoastaan kun \"Xr Mode\" asetuksen "
 "arvo on \"Oculus Mobile VrAPI\" tai \"OpenXR\"."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Passthrough\" is only valid when \"Xr Mode\" is \"OpenXR\"."
 msgstr ""
 "\"Passthrough\" on käyttökelpoinen ainoastaan kun \"Xr Mode\" asetuksen arvo "
 "on \"OpenXR\"."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Export AAB\" is only valid when \"Use Custom Build\" is enabled."
 msgstr ""
 "\"Export AAB\" on käyttökelpoinen vain, kun \"Use Custom Build\" asetus on "
 "päällä."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version.\n"
@@ -12996,31 +12996,31 @@ msgstr ""
 "\"Target Sdk\" versionumeron on oltava suurempi tai yhtä suuri kuin \"Min "
 "Sdk\" versionumeron."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current minimum is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Min Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Min Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Target Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Target Sdk\" to \"%d\".\n"
 msgstr ""
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "'apksigner' could not be found.\n"
 "Please check the command is available in the Android SDK build-tools "
@@ -13032,54 +13032,54 @@ msgstr ""
 "hakemistossa.\n"
 "Tuloksena syntynyt %s on allekirjoittamaton."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Signing debug %s..."
 msgstr "Allekirjoitetaan debug %s..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Signing release %s..."
 msgstr "Allekirjoitetaan release %s..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not find keystore, unable to export."
 msgstr "Keystorea ei löytynyt, ei voida viedä."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
 msgstr "'apksigner' palautti virheen #%d"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Verifying %s..."
 msgstr "Todennetaan %s..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' verification of %s failed."
 msgstr "'apksigner' todennus kohteelle %s epäonnistui."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Exporting for Android"
 msgstr "Viedään Androidille"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android App Bundle requires the *.aab extension."
 msgstr ""
 "Virheellinen tiedostonimi! Android App Bundle tarvitsee *.aab "
 "tiedostopäätteen."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "APK Expansion not compatible with Android App Bundle."
 msgstr "APK Expansion ei ole yhteensopiva Android App Bundlen kanssa."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android APK requires the *.apk extension."
 msgstr ""
 "Virheellinen tiedostonimi! Android APK tarvitsee *.apk tiedostopäätteen."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Unsupported export format!\n"
 msgstr "Vientiformaatti ei ole tuettu!\n"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Trying to build from a custom project template, but no version info for it "
@@ -13088,7 +13088,7 @@ msgstr ""
 "Yritetään kääntää mukautetulla käännösmallilla, mutta sillä ei ole "
 "versiotietoa. Ole hyvä ja uudelleenasenna se 'Projekti'-valikosta."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Android build version mismatch:\n"
@@ -13101,7 +13101,7 @@ msgstr ""
 "   Godotin versio: %s\n"
 "Ole hyvä ja uudelleenasenna Androidin käännösmalli 'Projekti'-valikosta."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Unable to overwrite res://android/project/src/main/res/*.xml files with "
@@ -13110,19 +13110,19 @@ msgstr ""
 "Ei voitu ylikirjoittaa res://android/build/res/*.xml tiedostoja projektin "
 "nimellä"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files to gradle project\n"
 msgstr "Ei voitu viedä projektitiedostoja gradle-projektiksi.\n"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not write expansion package file!"
 msgstr "Ei voitu kirjoittaa laajennuspakettitiedostoa!"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Building Android Project (gradle)"
 msgstr "Käännetään Android-projektia (gradle)"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
@@ -13133,11 +13133,11 @@ msgstr ""
 "Vaihtoehtoisesti, lue docs.rebeltoolbox.com sivustolta Androidin "
 "käännösdokumentaatio."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Moving output"
 msgstr "Siirretään tulostetta"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Unable to copy and rename export file, check gradle project directory for "
 "outputs."
@@ -13145,15 +13145,15 @@ msgstr ""
 "Vientitiedoston kopiointi ja uudelleennimeäminen ei onnistu, tarkista "
 "tulosteet gradle-projektin hakemistosta."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Package not found: %s"
 msgstr "Pakettia ei löytynyt: %s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Creating APK..."
 msgstr "Luodaan APK:ta..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
@@ -13161,7 +13161,7 @@ msgstr ""
 "Ei löydetty APK-vientimallia vientiä varten:\n"
 "%s"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Missing libraries in the export template for the selected architectures: "
 "%s.\n"
@@ -13172,153 +13172,153 @@ msgstr ""
 "Ole hyvä ja kokoa malli, jossa on kaikki tarvittavat kirjastot, tai poista "
 "puuttuvien arkkitehtuurien valinta viennin esiasetuksista."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Adding files..."
 msgstr "Lisätään tiedostoja..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files"
 msgstr "Ei voitu viedä projektin tiedostoja"
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Aligning APK..."
 msgstr "Tasataan APK:ta..."
 
-#: platform/android/export/export_plugin.cpp
+#: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
 msgstr "Ei voitu purkaa väliaikaista unaligned APK:ta."
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 msgid "Identifier is missing."
 msgstr "Tunniste puuttuu."
 
-#: platform/ios/export/export.cpp platform/macos/export/export.cpp
+#: platforms/ios/export/export.cpp platforms/macos/export/export.cpp
 msgid "The character '%s' is not allowed in Identifier."
 msgstr "Merkki '%s' ei ole sallittu Identifier osiossa."
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "App Store Team ID not specified - cannot configure the project."
 msgstr "App Store Team ID ei ole määritetty - ei voida konfiguroida projektia."
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "Invalid Identifier:"
 msgstr "Virheellinen Identifier osio:"
 
-#: platform/ios/export/export.cpp
+#: platforms/ios/export/export.cpp
 msgid "Required icon is not specified in the preset."
 msgstr "Vaadittavaa ikonia ei ole määritetty esiasetuksissa."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Invalid bundle identifier:"
 msgstr "Virheellinen bundle-tunniste:"
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: code signing required."
 msgstr "Notarisointi: koodin allekirjoitus tarvitaan."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
 msgstr "Notarisointi: hardened runtime tarvitaan."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
 msgstr "Notarointi: Apple ID nimeä ei ole määritetty."
 
-#: platform/macos/export/export.cpp
+#: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
 msgstr "Notarointi: Apple ID salasanaa ei ole määritetty."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package short name."
 msgstr "Paketin lyhyt nimi on virheellinen."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package unique name."
 msgstr "Paketin yksilöllinen nimi on virheellinen."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid package publisher display name."
 msgstr "Paketin julkaisijan näyttönimi on virheellinen."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid product GUID."
 msgstr "Tuotteen GUID (yleisesti yksilöllinen tunniste) on virheellinen."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid publisher GUID."
 msgstr "Julkaisijan GUID (yleisesti yksilöllinen tunniste) on virheellinen."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid background color."
 msgstr "Virheellinen taustaväri."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid Store Logo image dimensions (should be 50x50)."
 msgstr "Virheellinen Store Logo kuvan koko (pitäisi olla 50x50)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 44x44 logo image dimensions (should be 44x44)."
 msgstr "Virheellinen neliömäisen 44x44 logon kuvakoko (pitäisi olla 44x44)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 71x71 logo image dimensions (should be 71x71)."
 msgstr "Virheellinen neliömäisen 71x71 logon kuvakoko (pitäisi olla 71x71)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 150x150 logo image dimensions (should be 150x150)."
 msgstr ""
 "Virheellinen neliömäisen 150x150 logon kuvakoko (pitäisi olla 150x150)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid square 310x310 logo image dimensions (should be 310x310)."
 msgstr ""
 "Virheellinen neliömäisen 310x310 logon kuvakoko (pitäisi olla 310x310)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid wide 310x150 logo image dimensions (should be 310x150)."
 msgstr "Virheellinen leveän 310x150 logon kuvakoko (pitäisi olla 310x150)."
 
-#: platform/uwp/export/export.cpp
+#: platforms/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr "Virheellinen käynnistyskuvan kuvakoko (pitäisi olla 620x300)."
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Stop HTTP Server"
 msgstr "Pysäytä HTTP-palvelin"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Run in Browser"
 msgstr "Suorita selaimessa"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Run exported HTML in the system's default browser."
 msgstr "Suorita viety HTML järjestelmän oletusselaimessa."
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not open template for export:"
 msgstr "Mallin avaus vientiin epäonnistui:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Invalid export template:"
 msgstr "Virheellinen vientimalli:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not write file:"
 msgstr "Ei voitu kirjoittaa tiedostoa:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not read file:"
 msgstr "Ei voitu lukea tiedostoa:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not read HTML shell:"
 msgstr "Ei voitu lukea HTML tulkkia:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Could not create HTTP server directory:"
 msgstr "Ei voitu luoda HTTP-palvelimen hakemistoa:"
 
-#: platform/web/export/export.cpp
+#: platforms/web/export/export.cpp
 msgid "Error starting HTTP server:"
 msgstr "Virhe käynnistettäessä HTTP-palvelinta:"
 
