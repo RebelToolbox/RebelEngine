@@ -28,11 +28,11 @@
 #endif
 
 #include "editor/editor_internal_calls.h"
-#include "godotsharp_dirs.h"
 #include "mono_gd/gd_mono_cache.h"
 #include "mono_gd/gd_mono_class.h"
 #include "mono_gd/gd_mono_marshal.h"
 #include "mono_gd/gd_mono_utils.h"
+#include "rebelsharp_dirs.h"
 #include "signal_awaiter_utils.h"
 #include "utils/macros.h"
 #include "utils/string_utils.h"
@@ -43,16 +43,16 @@
 
 #ifdef TOOLS_ENABLED
 static bool _create_project_solution_if_needed() {
-    String sln_path    = GodotSharpDirs::get_project_sln_path();
-    String csproj_path = GodotSharpDirs::get_project_csproj_path();
+    String sln_path    = RebelSharpDirs::get_project_sln_path();
+    String csproj_path = RebelSharpDirs::get_project_csproj_path();
 
     if (!FileAccess::exists(sln_path) || !FileAccess::exists(csproj_path)) {
         // A solution does not yet exist, create a new one
 
         CRASH_COND(
-            CSharpLanguage::get_singleton()->get_godotsharp_editor() == NULL
+            CSharpLanguage::get_singleton()->get_rebelsharp_editor() == NULL
         );
-        return CSharpLanguage::get_singleton()->get_godotsharp_editor()->call(
+        return CSharpLanguage::get_singleton()->get_rebelsharp_editor()->call(
             "CreateProjectSolution"
         );
     }
@@ -315,7 +315,7 @@ static String get_base_class_name(
 ) {
     String base_class = p_base_class_name;
     if (p_class_name == base_class) {
-        base_class = "Godot." + base_class;
+        base_class = "Rebel." + base_class;
     }
     return base_class;
 }
@@ -418,7 +418,7 @@ static String variant_type_to_managed_name(const String& p_var_type_name) {
     }
 
     if (p_var_type_name == Variant::get_type_name(Variant::OBJECT)) {
-        return "Godot.Object";
+        return "Rebel.Object";
     }
 
     if (p_var_type_name == Variant::get_type_name(Variant::REAL)) {
@@ -502,7 +502,7 @@ String CSharpLanguage::make_function(
     const PoolStringArray& p_args
 ) const {
     // FIXME
-    // - Due to Godot's API limitation this just appends the function to the end
+    // - Due to Rebel's API limitation this just appends the function to the end
     // of the file
     // - Use fully qualified name if there is ambiguity
     String s = "private void " + p_name + "(";
@@ -665,9 +665,9 @@ Vector<ScriptLanguage::StackInfo> CSharpLanguage::stack_trace_get_info(
         // we skip this frame? can reproduce with a MissingMethodException on
         // internal calls
 
-        sif.file = GDMonoMarshal::mono_string_to_godot(file_name);
+        sif.file = GDMonoMarshal::mono_string_to_rebel(file_name);
         sif.line = file_line_num;
-        sif.func = GDMonoMarshal::mono_string_to_godot(method_decl);
+        sif.func = GDMonoMarshal::mono_string_to_rebel(method_decl);
     }
 
     return si;
@@ -705,7 +705,7 @@ void CSharpLanguage::frame() {
 
             if (task_scheduler) {
                 MonoException* exc = NULL;
-                CACHED_METHOD_THUNK(GodotTaskScheduler, Activate)
+                CACHED_METHOD_THUNK(RebelTaskScheduler, Activate)
                     .invoke(task_scheduler, &exc);
 
                 if (exc) {
@@ -756,7 +756,7 @@ void CSharpLanguage::reload_tool_script(
     CRASH_COND(!Engine::get_singleton()->is_editor_hint());
 
 #ifdef TOOLS_ENABLED
-    get_godotsharp_editor()
+    get_rebelsharp_editor()
         ->get_node(NodePath("HotReloadAssemblyWatcher"))
         ->call("RestartTimer");
 #endif
@@ -793,7 +793,7 @@ bool CSharpLanguage::is_assembly_reloading_needed() {
             // Maybe it wasn't loaded from the default path, so check this as
             // well
             proj_asm_path =
-                GodotSharpDirs::get_res_temp_assemblies_dir().plus_file(
+                RebelSharpDirs::get_res_temp_assemblies_dir().plus_file(
                     appname_safe
                 );
             if (!FileAccess::exists(proj_asm_path)) {
@@ -806,7 +806,7 @@ bool CSharpLanguage::is_assembly_reloading_needed() {
             return false; // Already up to date
         }
     } else {
-        if (!FileAccess::exists(GodotSharpDirs::get_res_temp_assemblies_dir()
+        if (!FileAccess::exists(RebelSharpDirs::get_res_temp_assemblies_dir()
                                     .plus_file(appname_safe))) {
             return false; // No assembly to load
         }
@@ -1065,9 +1065,9 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
             }
 
             bool obj_type =
-                CACHED_CLASS(GodotObject)->is_assignable_from(script_class);
+                CACHED_CLASS(RebelObject)->is_assignable_from(script_class);
             if (!obj_type) {
-                // The class no longer inherits Godot.Object, can't reload
+                // The class no longer inherits Rebel.Object, can't reload
                 script->pending_reload_instances.clear();
                 continue;
             }
@@ -1112,7 +1112,7 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
                 if (si) {
                     // If the script instance is not null, then it must be a
                     // placeholder. Non-placeholder script instances are removed
-                    // in godot_icall_Object_Disposed.
+                    // in rebel_icall_Object_Disposed.
                     CRASH_COND(!si->is_placeholder());
 
                     if (script->is_tool()
@@ -1228,7 +1228,7 @@ void CSharpLanguage::_load_scripts_metadata() {
 #endif
 
     String scripts_metadata_path =
-        GodotSharpDirs::get_res_metadata_dir().plus_file(
+        RebelSharpDirs::get_res_metadata_dir().plus_file(
             scripts_metadata_filename
         );
 
@@ -1273,12 +1273,12 @@ Error CSharpLanguage::open_in_external_editor(
     int p_line,
     int p_col
 ) {
-    return (Error)(int)get_godotsharp_editor()
+    return (Error)(int)get_rebelsharp_editor()
         ->call("OpenInExternalEditor", p_script, p_line, p_col);
 }
 
 bool CSharpLanguage::overrides_external_editor() {
-    return get_godotsharp_editor()->call("OverridesExternalEditor");
+    return get_rebelsharp_editor()->call("OverridesExternalEditor");
 }
 #endif
 
@@ -1346,12 +1346,12 @@ void CSharpLanguage::_on_scripts_domain_unloaded() {
 void CSharpLanguage::_editor_init_callback() {
     register_editor_internal_calls();
 
-    // Initialize GodotSharpEditor
+    // Initialize RebelSharpEditor
 
     GDMonoClass* editor_klass =
         GDMono::get_singleton()->get_tools_assembly()->get_class(
-            "GodotTools",
-            "GodotSharpEditor"
+            "RebelTools",
+            "RebelSharpEditor"
         );
     CRASH_COND(editor_klass == NULL);
 
@@ -1363,21 +1363,21 @@ void CSharpLanguage::_editor_init_callback() {
     GDMonoUtils::runtime_object_init(mono_object, editor_klass, &exc);
     UNHANDLED_EXCEPTION(exc);
 
-    EditorPlugin* godotsharp_editor = Object::cast_to<EditorPlugin>(
+    EditorPlugin* rebelsharp_editor = Object::cast_to<EditorPlugin>(
         GDMonoMarshal::mono_object_to_variant(mono_object)
     );
-    CRASH_COND(godotsharp_editor == NULL);
+    CRASH_COND(rebelsharp_editor == NULL);
 
     // Enable it as a plugin
-    EditorNode::add_editor_plugin(godotsharp_editor);
+    EditorNode::add_editor_plugin(rebelsharp_editor);
     ED_SHORTCUT(
         "mono/build_solution",
         TTR("Build Solution"),
         KEY_MASK_ALT | KEY_B
     );
-    godotsharp_editor->enable_plugin();
+    rebelsharp_editor->enable_plugin();
 
-    get_singleton()->godotsharp_editor = godotsharp_editor;
+    get_singleton()->rebelsharp_editor = rebelsharp_editor;
 }
 #endif
 
@@ -1432,7 +1432,7 @@ CSharpLanguage::CSharpLanguage() {
     scripts_metadata_invalidated = true;
 
 #ifdef TOOLS_ENABLED
-    godotsharp_editor = NULL;
+    rebelsharp_editor = NULL;
 #endif
 }
 
@@ -1471,7 +1471,7 @@ bool CSharpLanguage::setup_csharp_script_binding(
 
     ERR_FAIL_NULL_V(type_class, false);
 
-    MonoObject* mono_object = GDMonoUtils::create_managed_for_godot_object(
+    MonoObject* mono_object = GDMonoUtils::create_managed_for_rebel_object(
         type_class,
         type_name,
         p_object
@@ -1492,7 +1492,7 @@ bool CSharpLanguage::setup_csharp_script_binding(
         // Unsafe refcount increment. The managed instance also counts as a
         // reference. This way if the unmanaged world has no references to our
         // owner but the managed instance is alive, the refcount will be 1
-        // instead of 0. See: godot_icall_Reference_Dtor(MonoObject *p_obj,
+        // instead of 0. See: rebel_icall_Reference_Dtor(MonoObject *p_obj,
         // Object *p_ptr)
 
         ref->reference();
@@ -1559,7 +1559,7 @@ void CSharpLanguage::free_instance_binding_data(void* p_data) {
             // instance from Dispose(bool).
             MonoObject* mono_object = script_binding.gchandle->get_target();
             if (mono_object) {
-                CACHED_FIELD(GodotObject, ptr)
+                CACHED_FIELD(RebelObject, ptr)
                     ->set_value_raw(mono_object, NULL);
             }
         }
@@ -2141,7 +2141,7 @@ MonoObject* CSharpInstance::_internal_new_managed() {
                                    // the refcount_incremented callback)
     }
 
-    CACHED_FIELD(GodotObject, ptr)->set_value_raw(mono_object, owner);
+    CACHED_FIELD(RebelObject, ptr)->set_value_raw(mono_object, owner);
 
     // Construct
     ctor->invoke_raw(mono_object, NULL);
@@ -2432,7 +2432,7 @@ String CSharpInstance::to_string(bool* r_valid) {
         return String();
     }
 
-    return GDMonoMarshal::mono_string_to_godot(result);
+    return GDMonoMarshal::mono_string_to_rebel(result);
 }
 
 Ref<Script> CSharpInstance::get_script() const {
@@ -2702,7 +2702,7 @@ bool CSharpScript::_update_exports(
             ctor->invoke(tmp_object, NULL, &ctor_exc);
 
             tmp_native = GDMonoMarshal::unbox<Object*>(
-                CACHED_FIELD(GodotObject, ptr)->get_value(tmp_object)
+                CACHED_FIELD(RebelObject, ptr)->get_value(tmp_object)
             );
 
             if (ctor_exc) {
@@ -3172,7 +3172,7 @@ int CSharpScript::_try_get_member_export_hint(
             // editor is changed to not display values.
             r_hint_string = name_only_hint_string;
         }
-    } else if (p_variant_type == Variant::OBJECT && CACHED_CLASS(GodotResource)->is_assignable_from(p_type.type_class)) {
+    } else if (p_variant_type == Variant::OBJECT && CACHED_CLASS(RebelResource)->is_assignable_from(p_type.type_class)) {
         GDMonoClass* field_native_class =
             GDMonoUtils::get_class_native_base(p_type.type_class);
         CRASH_COND(field_native_class == NULL);
@@ -3408,9 +3408,9 @@ void CSharpScript::initialize_for_managed_type(
     if (p_script->script_class != p_script->native) {
         GDMonoClass* native_top = p_script->native;
         while (native_top) {
-            native_top->fetch_methods_with_godot_api_checks(p_script->native);
+            native_top->fetch_methods_with_rebel_api_checks(p_script->native);
 
-            if (native_top == CACHED_CLASS(GodotObject)) {
+            if (native_top == CACHED_CLASS(RebelObject)) {
                 break;
             }
 
@@ -3419,13 +3419,13 @@ void CSharpScript::initialize_for_managed_type(
     }
 #endif
 
-    p_script->script_class->fetch_methods_with_godot_api_checks(p_script->native
+    p_script->script_class->fetch_methods_with_rebel_api_checks(p_script->native
     );
 
     // Need to fetch method from base classes as well
     GDMonoClass* top = p_script->script_class;
     while (top && top != p_script->native) {
-        top->fetch_methods_with_godot_api_checks(p_script->native);
+        top->fetch_methods_with_rebel_api_checks(p_script->native);
         top = top->get_parent_class();
     }
 
@@ -3579,7 +3579,7 @@ CSharpInstance* CSharpScript::_create_instance(
         instances.insert(instance->owner);
     }
 
-    CACHED_FIELD(GodotObject, ptr)->set_value_raw(mono_object, instance->owner);
+    CACHED_FIELD(RebelObject, ptr)->set_value_raw(mono_object, instance->owner);
 
     // Construct
     ctor->invoke(mono_object, p_args);
@@ -3792,7 +3792,7 @@ Error CSharpScript::reload(bool p_keep_state) {
                 namespace_->operator String(),
                 class_name->operator String()
             );
-            if (klass && CACHED_CLASS(GodotObject)->is_assignable_from(klass)) {
+            if (klass && CACHED_CLASS(RebelObject)->is_assignable_from(klass)) {
                 script_class = klass;
             }
         } else {
@@ -3844,9 +3844,9 @@ Error CSharpScript::reload(bool p_keep_state) {
             if (script_class != native) {
                 GDMonoClass* native_top = native;
                 while (native_top) {
-                    native_top->fetch_methods_with_godot_api_checks(native);
+                    native_top->fetch_methods_with_rebel_api_checks(native);
 
-                    if (native_top == CACHED_CLASS(GodotObject)) {
+                    if (native_top == CACHED_CLASS(RebelObject)) {
                         break;
                     }
 
@@ -3855,12 +3855,12 @@ Error CSharpScript::reload(bool p_keep_state) {
             }
 #endif
 
-            script_class->fetch_methods_with_godot_api_checks(native);
+            script_class->fetch_methods_with_rebel_api_checks(native);
 
             // Need to fetch method from base classes as well
             GDMonoClass* top = script_class;
             while (top && top != native) {
-                top->fetch_methods_with_godot_api_checks(native);
+                top->fetch_methods_with_rebel_api_checks(native);
                 top = top->get_parent_class();
             }
 
@@ -4099,7 +4099,7 @@ Error ResourceFormatSaverCSharpScript::save(
 
         if (_create_project_solution_if_needed()) {
             CSharpProject::add_item(
-                GodotSharpDirs::get_project_csproj_path(),
+                RebelSharpDirs::get_project_csproj_path(),
                 "Compile",
                 ProjectSettings::get_singleton()->globalize_path(p_path)
             );

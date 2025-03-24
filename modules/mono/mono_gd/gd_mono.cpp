@@ -7,7 +7,7 @@
 #include "gd_mono.h"
 
 #include "../csharp_script.h"
-#include "../godotsharp_dirs.h"
+#include "../rebelsharp_dirs.h"
 #include "../utils/path_utils.h"
 #include "core/os/dir_access.h"
 #include "core/os/file_access.h"
@@ -114,13 +114,13 @@ void gd_mono_profiler_init() {
 
 void gd_mono_debug_init() {
     CharString da_args = OS::get_singleton()
-                             ->get_environment("GODOT_MONO_DEBUGGER_AGENT")
+                             ->get_environment("REBEL_MONO_DEBUGGER_AGENT")
                              .utf8();
 
     if (da_args.length()) {
         // Clear to avoid passing it to child processes
         OS::get_singleton()->set_environment(
-            "GODOT_MONO_DEBUGGER_AGENT",
+            "REBEL_MONO_DEBUGGER_AGENT",
             String()
         );
     } else {
@@ -219,7 +219,7 @@ MonoDomain* gd_initialize_mono_runtime() {
     const char* runtime_version = "v4.0.30319";
 #endif
 
-    return mono_jit_init_version("GodotEngine.RootDomain", runtime_version);
+    return mono_jit_init_version("RebelEngine.RootDomain", runtime_version);
 }
 #endif
 
@@ -246,7 +246,7 @@ void GDMono::add_mono_shared_libs_dir_to_path() {
 #ifdef WINDOWS_ENABLED
     path_value += ';';
 
-    String bundled_bin_dir = GodotSharpDirs::get_data_mono_bin_dir();
+    String bundled_bin_dir = RebelSharpDirs::get_data_mono_bin_dir();
 #ifdef TOOLS_ENABLED
     if (DirAccess::exists(bundled_bin_dir)) {
         path_value += bundled_bin_dir;
@@ -262,7 +262,7 @@ void GDMono::add_mono_shared_libs_dir_to_path() {
 #else
     path_value += ':';
 
-    String bundled_lib_dir = GodotSharpDirs::get_data_mono_lib_dir();
+    String bundled_lib_dir = RebelSharpDirs::get_data_mono_lib_dir();
     if (DirAccess::exists(bundled_lib_dir)) {
         path_value += bundled_lib_dir;
     } else {
@@ -279,8 +279,8 @@ void GDMono::determine_mono_dirs(
     String& r_assembly_rootdir,
     String& r_config_dir
 ) {
-    String bundled_assembly_rootdir = GodotSharpDirs::get_data_mono_lib_dir();
-    String bundled_config_dir       = GodotSharpDirs::get_data_mono_etc_dir();
+    String bundled_assembly_rootdir = RebelSharpDirs::get_data_mono_lib_dir();
+    String bundled_config_dir       = RebelSharpDirs::get_data_mono_etc_dir();
 
 #ifdef TOOLS_ENABLED
 
@@ -365,7 +365,7 @@ void GDMono::initialize() {
     print_verbose("Mono JIT compiler version " + String(runtime_build_info));
     mono_free(runtime_build_info);
 
-    _init_godot_api_hashes();
+    _init_rebel_api_hashes();
     _init_exception_policy();
 
     GDMonoLog::get_singleton()->initialize();
@@ -385,7 +385,7 @@ void GDMono::initialize() {
 #endif
 
 #ifdef ANDROID_ENABLED
-    mono_config_parse_memory(get_godot_android_mono_config().utf8().get_data());
+    mono_config_parse_memory(get_rebel_android_mono_config().utf8().get_data());
 #else
     mono_config_parse(NULL);
 #endif
@@ -511,7 +511,7 @@ void GDMono::initialize_load_assemblies() {
 bool GDMono::_are_api_assemblies_out_of_sync() {
     bool out_of_sync = core_api_assembly.assembly
                     && (core_api_assembly.out_of_sync
-                        || !GDMonoCache::cached_data.godot_api_cache_updated);
+                        || !GDMonoCache::cached_data.rebel_api_cache_updated);
 #ifdef TOOLS_ENABLED
     if (!out_of_sync) {
         out_of_sync =
@@ -521,7 +521,7 @@ bool GDMono::_are_api_assemblies_out_of_sync() {
     return out_of_sync;
 }
 
-namespace GodotSharpBindings {
+namespace RebelSharpBindings {
 #ifdef MONO_GLUE_ENABLED
 
 uint64_t get_core_api_hash();
@@ -556,20 +556,20 @@ void register_generated_icalls() {
 }
 
 #endif // MONO_GLUE_ENABLED
-} // namespace GodotSharpBindings
+} // namespace RebelSharpBindings
 
 void GDMono::_register_internal_calls() {
-    GodotSharpBindings::register_generated_icalls();
+    RebelSharpBindings::register_generated_icalls();
 }
 
-void GDMono::_init_godot_api_hashes() {
+void GDMono::_init_rebel_api_hashes() {
 #if defined(MONO_GLUE_ENABLED) && defined(DEBUG_METHODS_ENABLED)
-    if (get_api_core_hash() != GodotSharpBindings::get_core_api_hash()) {
+    if (get_api_core_hash() != RebelSharpBindings::get_core_api_hash()) {
         ERR_PRINT("Mono: Core API hash mismatch.");
     }
 
 #ifdef TOOLS_ENABLED
-    if (get_api_editor_hash() != GodotSharpBindings::get_editor_api_hash()) {
+    if (get_api_editor_hash() != RebelSharpBindings::get_editor_api_hash()) {
         ERR_PRINT("Mono: Editor API hash mismatch.");
     }
 #endif // TOOLS_ENABLED
@@ -729,9 +729,9 @@ ApiAssemblyInfo::Version ApiAssemblyInfo::Version::get_from_loaded_assembly(
 
     if (nativecalls_klass) {
         GDMonoField* api_hash_field =
-            nativecalls_klass->get_field("godot_api_hash");
+            nativecalls_klass->get_field("rebel_api_hash");
         if (api_hash_field) {
-            api_assembly_version.godot_api_hash =
+            api_assembly_version.rebel_api_hash =
                 GDMonoMarshal::unbox<uint64_t>(api_hash_field->get_value(NULL));
         }
 
@@ -779,9 +779,9 @@ bool GDMono::copy_prebuilt_api_assembly(
     const String& p_config
 ) {
     String src_dir =
-        GodotSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(p_config);
+        RebelSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(p_config);
     String dst_dir =
-        GodotSharpDirs::get_res_assemblies_base_dir().plus_file(p_config);
+        RebelSharpDirs::get_res_assemblies_base_dir().plus_file(p_config);
 
     String assembly_name = p_api_type == ApiAssemblyInfo::API_CORE
                              ? CORE_API_ASSEMBLY_NAME
@@ -864,17 +864,17 @@ static bool try_get_cached_api_hash_for(
         return false;
     }
 
-    r_out_of_sync = GodotSharpBindings::get_bindings_version()
+    r_out_of_sync = RebelSharpBindings::get_bindings_version()
                      != (uint32_t)cfg->get_value("core", "bindings_version")
-                 || GodotSharpBindings::get_cs_glue_version()
+                 || RebelSharpBindings::get_cs_glue_version()
                         != (uint32_t)cfg->get_value("core", "cs_glue_version")
-                 || GodotSharpBindings::get_bindings_version(
+                 || RebelSharpBindings::get_bindings_version(
                     ) != (uint32_t)cfg->get_value("editor", "bindings_version")
-                 || GodotSharpBindings::get_cs_glue_version()
+                 || RebelSharpBindings::get_cs_glue_version()
                         != (uint32_t)cfg->get_value("editor", "cs_glue_version")
-                 || GodotSharpBindings::get_core_api_hash()
+                 || RebelSharpBindings::get_core_api_hash()
                         != (uint64_t)cfg->get_value("core", "api_hash")
-                 || GodotSharpBindings::get_editor_api_hash()
+                 || RebelSharpBindings::get_editor_api_hash()
                         != (uint64_t)cfg->get_value("editor", "api_hash");
 
     return true;
@@ -905,31 +905,31 @@ static void create_cached_api_hash_for(const String& p_api_assemblies_dir) {
     cfg->set_value(
         "core",
         "bindings_version",
-        GodotSharpBindings::get_bindings_version()
+        RebelSharpBindings::get_bindings_version()
     );
     cfg->set_value(
         "core",
         "cs_glue_version",
-        GodotSharpBindings::get_cs_glue_version()
+        RebelSharpBindings::get_cs_glue_version()
     );
     cfg->set_value(
         "editor",
         "bindings_version",
-        GodotSharpBindings::get_bindings_version()
+        RebelSharpBindings::get_bindings_version()
     );
     cfg->set_value(
         "editor",
         "cs_glue_version",
-        GodotSharpBindings::get_cs_glue_version()
+        RebelSharpBindings::get_cs_glue_version()
     );
 
     // This assumes the prebuilt api assemblies we copied to the project are not
     // out of sync
-    cfg->set_value("core", "api_hash", GodotSharpBindings::get_core_api_hash());
+    cfg->set_value("core", "api_hash", RebelSharpBindings::get_core_api_hash());
     cfg->set_value(
         "editor",
         "api_hash",
-        GodotSharpBindings::get_editor_api_hash()
+        RebelSharpBindings::get_editor_api_hash()
     );
 
     Error err = cfg->save(cached_api_hash_path);
@@ -939,7 +939,7 @@ static void create_cached_api_hash_for(const String& p_api_assemblies_dir) {
 bool GDMono::_temp_domain_load_are_assemblies_out_of_sync(const String& p_config
 ) {
     MonoDomain* temp_domain =
-        GDMonoUtils::create_domain("GodotEngine.Domain.CheckApiAssemblies");
+        GDMonoUtils::create_domain("RebelEngine.Domain.CheckApiAssemblies");
     ERR_FAIL_NULL_V(
         temp_domain,
         "Failed to create temporary domain to check API assemblies"
@@ -978,7 +978,7 @@ String GDMono::update_api_assemblies_from_prebuilt(
             : String("and we failed to copy the prebuilt assemblies.")))
 
     String dst_assemblies_dir =
-        GodotSharpDirs::get_res_assemblies_base_dir().plus_file(p_config);
+        RebelSharpDirs::get_res_assemblies_base_dir().plus_file(p_config);
 
     String core_assembly_path =
         dst_assemblies_dir.plus_file(CORE_API_ASSEMBLY_NAME ".dll");
@@ -1012,7 +1012,7 @@ String GDMono::update_api_assemblies_from_prebuilt(
     print_verbose("Updating '" + p_config + "' API assemblies");
 
     String prebuilt_api_dir =
-        GodotSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(p_config);
+        RebelSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(p_config);
     String prebuilt_core_dll_path =
         prebuilt_api_dir.plus_file(CORE_API_ASSEMBLY_NAME ".dll");
     String prebuilt_editor_dll_path =
@@ -1060,8 +1060,8 @@ bool GDMono::_load_core_api_assembly(
     // If running the Projects Manager, load it from the prebuilt API directory
     String assembly_dir =
         !Main::is_projects_manager()
-            ? GodotSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
-            : GodotSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
+            ? RebelSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
+            : RebelSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
                 p_config
             );
 
@@ -1090,11 +1090,11 @@ bool GDMono::_load_core_api_assembly(
                 ApiAssemblyInfo::API_CORE
             );
         r_loaded_api_assembly.out_of_sync =
-            GodotSharpBindings::get_core_api_hash()
-                != api_assembly_ver.godot_api_hash
-            || GodotSharpBindings::get_bindings_version()
+            RebelSharpBindings::get_core_api_hash()
+                != api_assembly_ver.rebel_api_hash
+            || RebelSharpBindings::get_bindings_version()
                    != api_assembly_ver.bindings_version
-            || GodotSharpBindings::get_cs_glue_version()
+            || RebelSharpBindings::get_cs_glue_version()
                    != api_assembly_ver.cs_glue_version;
     } else {
         r_loaded_api_assembly.out_of_sync = false;
@@ -1119,8 +1119,8 @@ bool GDMono::_load_editor_api_assembly(
     // If running the Projects Manager, load it from the prebuilt API directory
     String assembly_dir =
         !Main::is_projects_manager()
-            ? GodotSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
-            : GodotSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
+            ? RebelSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
+            : RebelSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
                 p_config
             );
 
@@ -1142,11 +1142,11 @@ bool GDMono::_load_editor_api_assembly(
                 ApiAssemblyInfo::API_EDITOR
             );
         r_loaded_api_assembly.out_of_sync =
-            GodotSharpBindings::get_editor_api_hash()
-                != api_assembly_ver.godot_api_hash
-            || GodotSharpBindings::get_bindings_version()
+            RebelSharpBindings::get_editor_api_hash()
+                != api_assembly_ver.rebel_api_hash
+            || RebelSharpBindings::get_bindings_version()
                    != api_assembly_ver.bindings_version
-            || GodotSharpBindings::get_cs_glue_version()
+            || RebelSharpBindings::get_cs_glue_version()
                    != api_assembly_ver.cs_glue_version;
     } else {
         r_loaded_api_assembly.out_of_sync = false;
@@ -1203,9 +1203,9 @@ bool GDMono::_try_load_api_assemblies(
 }
 
 bool GDMono::_on_core_api_assembly_loaded() {
-    GDMonoCache::update_godot_api_cache();
+    GDMonoCache::update_rebel_api_cache();
 
-    if (!GDMonoCache::cached_data.godot_api_cache_updated) {
+    if (!GDMonoCache::cached_data.rebel_api_cache_updated) {
         return false;
     }
 
@@ -1274,7 +1274,7 @@ void GDMono::_load_api_assemblies() {
             if (core_api_assembly.out_of_sync) {
                 ERR_PRINT("The assembly '" CORE_API_ASSEMBLY_NAME
                           "' is out of sync.");
-            } else if (!GDMonoCache::cached_data.godot_api_cache_updated) {
+            } else if (!GDMonoCache::cached_data.rebel_api_cache_updated) {
                 ERR_PRINT("The loaded assembly '" CORE_API_ASSEMBLY_NAME
                           "' is in sync, but the cache update failed.");
             }
@@ -1355,7 +1355,7 @@ Error GDMono::_load_scripts_domain() {
 
     print_verbose("Mono: Loading scripts domain...");
 
-    scripts_domain = GDMonoUtils::create_domain("GodotEngine.Domain.Scripts");
+    scripts_domain = GDMonoUtils::create_domain("RebelEngine.Domain.Scripts");
 
     ERR_FAIL_NULL_V_MSG(
         scripts_domain,
@@ -1387,7 +1387,7 @@ Error GDMono::_unload_scripts_domain() {
 
     mono_gc_collect(mono_gc_max_generation());
 
-    GDMonoCache::clear_godot_api_cache();
+    GDMonoCache::clear_rebel_api_cache();
 
     _domain_assemblies_cleanup(mono_domain_get_id(scripts_domain));
 
@@ -1639,7 +1639,7 @@ GDMono::~GDMono() {
 
         mono_gc_collect(mono_gc_max_generation());
 
-        GDMonoCache::clear_godot_api_cache();
+        GDMonoCache::clear_rebel_api_cache();
 
         _domain_assemblies_cleanup(mono_domain_get_id(root_domain));
 
@@ -1684,48 +1684,48 @@ GDMono::~GDMono() {
     singleton = NULL;
 }
 
-_GodotSharp* _GodotSharp::singleton = NULL;
+_RebelSharp* _RebelSharp::singleton = NULL;
 
-void _GodotSharp::attach_thread() {
+void _RebelSharp::attach_thread() {
     GDMonoUtils::attach_current_thread();
 }
 
-void _GodotSharp::detach_thread() {
+void _RebelSharp::detach_thread() {
     GDMonoUtils::detach_current_thread();
 }
 
-int32_t _GodotSharp::get_domain_id() {
+int32_t _RebelSharp::get_domain_id() {
     MonoDomain* domain = mono_domain_get();
     CRASH_COND(!domain
     ); // User must check if runtime is initialized before calling this method
     return mono_domain_get_id(domain);
 }
 
-int32_t _GodotSharp::get_scripts_domain_id() {
+int32_t _RebelSharp::get_scripts_domain_id() {
     MonoDomain* domain = GDMono::get_singleton()->get_scripts_domain();
     CRASH_COND(!domain
     ); // User must check if scripts domain is loaded before calling this method
     return mono_domain_get_id(domain);
 }
 
-bool _GodotSharp::is_scripts_domain_loaded() {
+bool _RebelSharp::is_scripts_domain_loaded() {
     return GDMono::get_singleton()->is_runtime_initialized()
         && GDMono::get_singleton()->get_scripts_domain() != NULL;
 }
 
-bool _GodotSharp::_is_domain_finalizing_for_unload(int32_t p_domain_id) {
+bool _RebelSharp::_is_domain_finalizing_for_unload(int32_t p_domain_id) {
     return is_domain_finalizing_for_unload(p_domain_id);
 }
 
-bool _GodotSharp::is_domain_finalizing_for_unload() {
+bool _RebelSharp::is_domain_finalizing_for_unload() {
     return is_domain_finalizing_for_unload(mono_domain_get());
 }
 
-bool _GodotSharp::is_domain_finalizing_for_unload(int32_t p_domain_id) {
+bool _RebelSharp::is_domain_finalizing_for_unload(int32_t p_domain_id) {
     return is_domain_finalizing_for_unload(mono_domain_get_by_id(p_domain_id));
 }
 
-bool _GodotSharp::is_domain_finalizing_for_unload(MonoDomain* p_domain) {
+bool _RebelSharp::is_domain_finalizing_for_unload(MonoDomain* p_domain) {
     if (!p_domain) {
         return true;
     }
@@ -1736,15 +1736,15 @@ bool _GodotSharp::is_domain_finalizing_for_unload(MonoDomain* p_domain) {
     return mono_domain_is_unloading(p_domain);
 }
 
-bool _GodotSharp::is_runtime_shutting_down() {
+bool _RebelSharp::is_runtime_shutting_down() {
     return mono_runtime_is_shutting_down();
 }
 
-bool _GodotSharp::is_runtime_initialized() {
+bool _RebelSharp::is_runtime_initialized() {
     return GDMono::get_singleton()->is_runtime_initialized();
 }
 
-void _GodotSharp::_reload_assemblies(bool p_soft_reload) {
+void _RebelSharp::_reload_assemblies(bool p_soft_reload) {
 #ifdef GD_MONO_HOT_RELOAD
     // This method may be called more than once with `call_deferred`, so we need
     // to check again if reloading is needed to avoid reloading multiple times
@@ -1755,51 +1755,51 @@ void _GodotSharp::_reload_assemblies(bool p_soft_reload) {
 #endif
 }
 
-void _GodotSharp::_bind_methods() {
+void _RebelSharp::_bind_methods() {
     ClassDB::bind_method(
         D_METHOD("attach_thread"),
-        &_GodotSharp::attach_thread
+        &_RebelSharp::attach_thread
     );
     ClassDB::bind_method(
         D_METHOD("detach_thread"),
-        &_GodotSharp::detach_thread
+        &_RebelSharp::detach_thread
     );
 
     ClassDB::bind_method(
         D_METHOD("get_domain_id"),
-        &_GodotSharp::get_domain_id
+        &_RebelSharp::get_domain_id
     );
     ClassDB::bind_method(
         D_METHOD("get_scripts_domain_id"),
-        &_GodotSharp::get_scripts_domain_id
+        &_RebelSharp::get_scripts_domain_id
     );
     ClassDB::bind_method(
         D_METHOD("is_scripts_domain_loaded"),
-        &_GodotSharp::is_scripts_domain_loaded
+        &_RebelSharp::is_scripts_domain_loaded
     );
     ClassDB::bind_method(
         D_METHOD("is_domain_finalizing_for_unload", "domain_id"),
-        &_GodotSharp::_is_domain_finalizing_for_unload
+        &_RebelSharp::_is_domain_finalizing_for_unload
     );
 
     ClassDB::bind_method(
         D_METHOD("is_runtime_shutting_down"),
-        &_GodotSharp::is_runtime_shutting_down
+        &_RebelSharp::is_runtime_shutting_down
     );
     ClassDB::bind_method(
         D_METHOD("is_runtime_initialized"),
-        &_GodotSharp::is_runtime_initialized
+        &_RebelSharp::is_runtime_initialized
     );
     ClassDB::bind_method(
         D_METHOD("_reload_assemblies"),
-        &_GodotSharp::_reload_assemblies
+        &_RebelSharp::_reload_assemblies
     );
 }
 
-_GodotSharp::_GodotSharp() {
+_RebelSharp::_RebelSharp() {
     singleton = this;
 }
 
-_GodotSharp::~_GodotSharp() {
+_RebelSharp::~_RebelSharp() {
     singleton = NULL;
 }

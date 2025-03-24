@@ -18,13 +18,13 @@
 #include "core/reference.h"
 #include "core/string_name.h"
 
-Object* godot_icall_Object_Ctor(MonoObject* p_obj) {
+Object* rebel_icall_Object_Ctor(MonoObject* p_obj) {
     Object* instance = memnew(Object);
     GDMonoInternals::tie_managed_to_unmanaged(p_obj, instance);
     return instance;
 }
 
-void godot_icall_Object_Disposed(MonoObject* p_obj, Object* p_ptr) {
+void rebel_icall_Object_Disposed(MonoObject* p_obj, Object* p_ptr) {
 #ifdef DEBUG_ENABLED
     CRASH_COND(p_ptr == NULL);
 #endif
@@ -57,7 +57,7 @@ void godot_icall_Object_Disposed(MonoObject* p_obj, Object* p_ptr) {
     }
 }
 
-void godot_icall_Reference_Disposed(
+void rebel_icall_Reference_Disposed(
     MonoObject* p_obj,
     Object* p_ptr,
     MonoBoolean p_is_finalizer
@@ -119,16 +119,16 @@ void godot_icall_Reference_Disposed(
     }
 }
 
-MethodBind* godot_icall_Object_ClassDB_get_method(
+MethodBind* rebel_icall_Object_ClassDB_get_method(
     MonoString* p_type,
     MonoString* p_method
 ) {
-    StringName type(GDMonoMarshal::mono_string_to_godot(p_type));
-    StringName method(GDMonoMarshal::mono_string_to_godot(p_method));
+    StringName type(GDMonoMarshal::mono_string_to_rebel(p_type));
+    StringName method(GDMonoMarshal::mono_string_to_rebel(p_method));
     return ClassDB::get_method(type, method);
 }
 
-MonoObject* godot_icall_Object_weakref(Object* p_obj) {
+MonoObject* rebel_icall_Object_weakref(Object* p_obj) {
     if (!p_obj) {
         return NULL;
     }
@@ -152,13 +152,13 @@ MonoObject* godot_icall_Object_weakref(Object* p_obj) {
     return GDMonoUtils::unmanaged_get_managed(wref.ptr());
 }
 
-int32_t godot_icall_SignalAwaiter_connect(
+int32_t rebel_icall_SignalAwaiter_connect(
     Object* p_source,
     MonoString* p_signal,
     Object* p_target,
     MonoObject* p_awaiter
 ) {
-    String signal = GDMonoMarshal::mono_string_to_godot(p_signal);
+    String signal = GDMonoMarshal::mono_string_to_rebel(p_signal);
     return (int32_t)SignalAwaiterUtils::connect_signal_awaiter(
         p_source,
         signal,
@@ -167,7 +167,7 @@ int32_t godot_icall_SignalAwaiter_connect(
     );
 }
 
-MonoArray* godot_icall_DynamicGodotObject_SetMemberList(Object* p_ptr) {
+MonoArray* rebel_icall_DynamicRebelObject_SetMemberList(Object* p_ptr) {
     List<PropertyInfo> property_list;
     p_ptr->get_property_list(&property_list);
 
@@ -181,7 +181,7 @@ MonoArray* godot_icall_DynamicGodotObject_SetMemberList(Object* p_ptr) {
     for (List<PropertyInfo>::Element* E = property_list.front(); E;
          E                              = E->next()) {
         MonoString* boxed =
-            GDMonoMarshal::mono_string_from_godot(E->get().name);
+            GDMonoMarshal::mono_string_from_rebel(E->get().name);
         mono_array_setref(result, i, boxed);
         i++;
     }
@@ -189,13 +189,13 @@ MonoArray* godot_icall_DynamicGodotObject_SetMemberList(Object* p_ptr) {
     return result;
 }
 
-MonoBoolean godot_icall_DynamicGodotObject_InvokeMember(
+MonoBoolean rebel_icall_DynamicRebelObject_InvokeMember(
     Object* p_ptr,
     MonoString* p_name,
     MonoArray* p_args,
     MonoObject** r_result
 ) {
-    String name = GDMonoMarshal::mono_string_to_godot(p_name);
+    String name = GDMonoMarshal::mono_string_to_rebel(p_name);
 
     int argc = mono_array_length(p_args);
 
@@ -216,12 +216,12 @@ MonoBoolean godot_icall_DynamicGodotObject_InvokeMember(
     return error.error == Variant::CallError::CALL_OK;
 }
 
-MonoBoolean godot_icall_DynamicGodotObject_GetMember(
+MonoBoolean rebel_icall_DynamicRebelObject_GetMember(
     Object* p_ptr,
     MonoString* p_name,
     MonoObject** r_result
 ) {
-    String name = GDMonoMarshal::mono_string_to_godot(p_name);
+    String name = GDMonoMarshal::mono_string_to_rebel(p_name);
 
     bool valid;
     Variant value = p_ptr->get(StringName(name), &valid);
@@ -233,12 +233,12 @@ MonoBoolean godot_icall_DynamicGodotObject_GetMember(
     return valid;
 }
 
-MonoBoolean godot_icall_DynamicGodotObject_SetMember(
+MonoBoolean rebel_icall_DynamicRebelObject_SetMember(
     Object* p_ptr,
     MonoString* p_name,
     MonoObject* p_value
 ) {
-    String name   = GDMonoMarshal::mono_string_to_godot(p_name);
+    String name   = GDMonoMarshal::mono_string_to_rebel(p_name);
     Variant value = GDMonoMarshal::mono_object_to_variant(p_value);
 
     bool valid;
@@ -247,7 +247,7 @@ MonoBoolean godot_icall_DynamicGodotObject_SetMember(
     return valid;
 }
 
-MonoString* godot_icall_Object_ToString(Object* p_ptr) {
+MonoString* rebel_icall_Object_ToString(Object* p_ptr) {
 #ifdef DEBUG_ENABLED
     // Cannot happen in C#; would get an ObjectDisposedException instead.
     CRASH_COND(p_ptr == NULL);
@@ -262,54 +262,54 @@ MonoString* godot_icall_Object_ToString(Object* p_ptr) {
 
     String result =
         "[" + p_ptr->get_class() + ":" + itos(p_ptr->get_instance_id()) + "]";
-    return GDMonoMarshal::mono_string_from_godot(result);
+    return GDMonoMarshal::mono_string_from_rebel(result);
 }
 
-void godot_register_object_icalls() {
+void rebel_register_object_icalls() {
     GDMonoUtils::add_internal_call(
-        "Godot.Object::godot_icall_Object_Ctor",
-        godot_icall_Object_Ctor
+        "Rebel.Object::rebel_icall_Object_Ctor",
+        rebel_icall_Object_Ctor
     );
     GDMonoUtils::add_internal_call(
-        "Godot.Object::godot_icall_Object_Disposed",
-        godot_icall_Object_Disposed
+        "Rebel.Object::rebel_icall_Object_Disposed",
+        rebel_icall_Object_Disposed
     );
     GDMonoUtils::add_internal_call(
-        "Godot.Object::godot_icall_Reference_Disposed",
-        godot_icall_Reference_Disposed
+        "Rebel.Object::rebel_icall_Reference_Disposed",
+        rebel_icall_Reference_Disposed
     );
     GDMonoUtils::add_internal_call(
-        "Godot.Object::godot_icall_Object_ClassDB_get_method",
-        godot_icall_Object_ClassDB_get_method
+        "Rebel.Object::rebel_icall_Object_ClassDB_get_method",
+        rebel_icall_Object_ClassDB_get_method
     );
     GDMonoUtils::add_internal_call(
-        "Godot.Object::godot_icall_Object_ToString",
-        godot_icall_Object_ToString
+        "Rebel.Object::rebel_icall_Object_ToString",
+        rebel_icall_Object_ToString
     );
     GDMonoUtils::add_internal_call(
-        "Godot.Object::godot_icall_Object_weakref",
-        godot_icall_Object_weakref
+        "Rebel.Object::rebel_icall_Object_weakref",
+        rebel_icall_Object_weakref
     );
     GDMonoUtils::add_internal_call(
-        "Godot.SignalAwaiter::godot_icall_SignalAwaiter_connect",
-        godot_icall_SignalAwaiter_connect
+        "Rebel.SignalAwaiter::rebel_icall_SignalAwaiter_connect",
+        rebel_icall_SignalAwaiter_connect
     );
     GDMonoUtils::add_internal_call(
-        "Godot.DynamicGodotObject::godot_icall_DynamicGodotObject_"
+        "Rebel.DynamicRebelObject::rebel_icall_DynamicRebelObject_"
         "SetMemberList",
-        godot_icall_DynamicGodotObject_SetMemberList
+        rebel_icall_DynamicRebelObject_SetMemberList
     );
     GDMonoUtils::add_internal_call(
-        "Godot.DynamicGodotObject::godot_icall_DynamicGodotObject_InvokeMember",
-        godot_icall_DynamicGodotObject_InvokeMember
+        "Rebel.DynamicRebelObject::rebel_icall_DynamicRebelObject_InvokeMember",
+        rebel_icall_DynamicRebelObject_InvokeMember
     );
     GDMonoUtils::add_internal_call(
-        "Godot.DynamicGodotObject::godot_icall_DynamicGodotObject_GetMember",
-        godot_icall_DynamicGodotObject_GetMember
+        "Rebel.DynamicRebelObject::rebel_icall_DynamicRebelObject_GetMember",
+        rebel_icall_DynamicRebelObject_GetMember
     );
     GDMonoUtils::add_internal_call(
-        "Godot.DynamicGodotObject::godot_icall_DynamicGodotObject_SetMember",
-        godot_icall_DynamicGodotObject_SetMember
+        "Rebel.DynamicRebelObject::rebel_icall_DynamicRebelObject_SetMember",
+        rebel_icall_DynamicRebelObject_SetMember
     );
 }
 

@@ -427,7 +427,7 @@ class CSharpLanguage : public ScriptLanguage {
     void _on_scripts_domain_unloaded();
 
 #ifdef TOOLS_ENABLED
-    EditorPlugin* godotsharp_editor;
+    EditorPlugin* rebelsharp_editor;
 
     static void _editor_init_callback();
 #endif
@@ -454,8 +454,8 @@ public:
     }
 
 #ifdef TOOLS_ENABLED
-    _FORCE_INLINE_ EditorPlugin* get_godotsharp_editor() const {
-        return godotsharp_editor;
+    _FORCE_INLINE_ EditorPlugin* get_rebelsharp_editor() const {
+        return rebelsharp_editor;
     }
 #endif
 

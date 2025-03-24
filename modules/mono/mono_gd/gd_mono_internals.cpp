@@ -37,7 +37,7 @@ void tie_managed_to_unmanaged(MonoObject* managed, Object* unmanaged) {
     CRASH_COND(native == NULL);
 
     if (native == klass) {
-        // If it's just a wrapper Godot class and not a custom inheriting class,
+        // If it's just a wrapper Rebel class and not a custom inheriting class,
         // then attach a script binding instead. One of the advantages of this
         // is that if a script is attached later and it's not a C# script, then
         // the managed object won't have to be disposed. Another reason for
@@ -58,7 +58,7 @@ void tie_managed_to_unmanaged(MonoObject* managed, Object* unmanaged) {
             // Unsafe refcount increment. The managed instance also counts as a
             // reference. This way if the unmanaged world has no references to
             // our owner but the managed instance is alive, the refcount will be
-            // 1 instead of 0. See: godot_icall_Reference_Dtor(MonoObject
+            // 1 instead of 0. See: rebel_icall_Reference_Dtor(MonoObject
             // *p_obj, Object *p_ptr)
 
             // May not me referenced yet, so we must use init_ref() instead of
@@ -136,7 +136,7 @@ void gd_unhandled_exception_event(MonoException* p_exc) {
     MonoImage* mono_image =
         GDMono::get_singleton()->get_core_api_assembly()->get_image();
 
-    MonoClass* gd_klass = mono_class_from_name(mono_image, "Godot", "GD");
+    MonoClass* gd_klass = mono_class_from_name(mono_image, "Rebel", "GD");
     MonoMethod* unhandled_exception_method =
         mono_class_get_method_from_name(gd_klass, "OnUnhandledException", -1);
     void* args[1];

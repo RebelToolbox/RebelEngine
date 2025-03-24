@@ -56,7 +56,7 @@ class GDMonoClass {
     MonoCustomAttrInfo* attributes;
 
     // This contains both the original method names and remapped method names
-    // from the native Godot identifiers to the C# functions. Most
+    // from the native Rebel identifiers to the C# functions. Most
     // method-related functions refer to this and it's possible this is
     // unintuitive for outside users; this may be a prime location for
     // refactoring or renaming.
@@ -129,7 +129,7 @@ public:
     MonoObject* get_attribute(GDMonoClass* p_attr_class);
 
     void fetch_attributes();
-    void fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base);
+    void fetch_methods_with_rebel_api_checks(GDMonoClass* p_native_base);
 
     bool implements_interface(GDMonoClass* p_interface);
     bool has_public_parameterless_ctor();

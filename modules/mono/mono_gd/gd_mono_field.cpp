@@ -98,7 +98,7 @@ void GDMonoField::set_value_from_variant(
                 mono_field_set_value(p_object, mono_field, mono_string);
             } else {
                 MonoString* mono_string =
-                    GDMonoMarshal::mono_string_from_godot(p_value);
+                    GDMonoMarshal::mono_string_from_rebel(p_value);
                 mono_field_set_value(p_object, mono_field, mono_string);
             }
         } break;
@@ -285,7 +285,7 @@ void GDMonoField::set_value_from_variant(
 
             GDMonoClass* array_type_class =
                 GDMono::get_singleton()->get_class(array_type->eklass);
-            if (CACHED_CLASS(GodotObject)
+            if (CACHED_CLASS(RebelObject)
                     ->is_assignable_from(array_type_class)) {
                 MonoArray* managed = GDMonoMarshal::Array_to_mono_array(
                     p_value.operator ::Array(),
@@ -304,8 +304,8 @@ void GDMonoField::set_value_from_variant(
         case MONO_TYPE_CLASS: {
             GDMonoClass* type_class = type.type_class;
 
-            // GodotObject
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+            // RebelObject
+            if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                 MonoObject* managed = GDMonoUtils::unmanaged_get_managed(
                     p_value.operator Object*()
                 );
@@ -328,7 +328,7 @@ void GDMonoField::set_value_from_variant(
                 break;
             }
 
-            // Godot.Collections.Dictionary or IDictionary
+            // Rebel.Collections.Dictionary or IDictionary
             if (CACHED_CLASS(Dictionary) == type_class
                 || type_class == CACHED_CLASS(System_Collections_IDictionary)) {
                 MonoObject* managed = GDMonoUtils::create_managed_from(
@@ -339,7 +339,7 @@ void GDMonoField::set_value_from_variant(
                 break;
             }
 
-            // Godot.Collections.Array or ICollection or IEnumerable
+            // Rebel.Collections.Array or ICollection or IEnumerable
             if (CACHED_CLASS(Array) == type_class
                 || type_class == CACHED_CLASS(System_Collections_ICollection)
                 || type_class == CACHED_CLASS(System_Collections_IEnumerable)) {
@@ -380,7 +380,7 @@ void GDMonoField::set_value_from_variant(
                 } break;
                 case Variant::STRING: {
                     MonoString* mono_string =
-                        GDMonoMarshal::mono_string_from_godot(p_value);
+                        GDMonoMarshal::mono_string_from_rebel(p_value);
                     mono_field_set_value(p_object, mono_field, mono_string);
                 } break;
                 case Variant::VECTOR2: {
@@ -478,7 +478,7 @@ void GDMonoField::set_value_from_variant(
                 type.type_class->get_mono_type()
             );
 
-            // Godot.Collections.Dictionary<TKey, TValue>
+            // Rebel.Collections.Dictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_generic_dictionary(reftype)) {
                 MonoObject* managed = GDMonoUtils::create_managed_from(
                     p_value.operator Dictionary(),
@@ -488,7 +488,7 @@ void GDMonoField::set_value_from_variant(
                 break;
             }
 
-            // Godot.Collections.Array<T>
+            // Rebel.Collections.Array<T>
             if (GDMonoUtils::Marshal::type_is_generic_array(reftype)) {
                 MonoObject* managed = GDMonoUtils::create_managed_from(
                     p_value.operator Array(),
@@ -545,7 +545,7 @@ void GDMonoField::set_value_from_variant(
                     &key_reftype,
                     &value_reftype
                 );
-                GDMonoClass* godot_dict_class =
+                GDMonoClass* rebel_dict_class =
                     GDMonoUtils::Marshal::make_generic_dictionary_type(
                         key_reftype,
                         value_reftype
@@ -553,7 +553,7 @@ void GDMonoField::set_value_from_variant(
 
                 MonoObject* managed = GDMonoUtils::create_managed_from(
                     p_value.operator Dictionary(),
-                    godot_dict_class
+                    rebel_dict_class
                 );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
@@ -567,20 +567,20 @@ void GDMonoField::set_value_from_variant(
                     reftype,
                     &elem_reftype
                 );
-                GDMonoClass* godot_array_class =
+                GDMonoClass* rebel_array_class =
                     GDMonoUtils::Marshal::make_generic_array_type(elem_reftype);
 
                 MonoObject* managed = GDMonoUtils::create_managed_from(
                     p_value.operator Array(),
-                    godot_array_class
+                    rebel_array_class
                 );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
 
-            // GodotObject
+            // RebelObject
             GDMonoClass* type_class = type.type_class;
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+            if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                 MonoObject* managed = GDMonoUtils::unmanaged_get_managed(
                     p_value.operator Object*()
                 );
@@ -615,7 +615,7 @@ int GDMonoField::get_int_value(MonoObject* p_object) {
 
 String GDMonoField::get_string_value(MonoObject* p_object) {
     MonoObject* val = get_value(p_object);
-    return GDMonoMarshal::mono_string_to_godot((MonoString*)val);
+    return GDMonoMarshal::mono_string_to_rebel((MonoString*)val);
 }
 
 bool GDMonoField::has_attribute(GDMonoClass* p_attr_class) {

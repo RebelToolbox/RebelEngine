@@ -92,7 +92,7 @@ GDMonoClass* get_object_class(MonoObject* p_object);
 GDMonoClass* type_get_proxy_class(const StringName& p_type);
 GDMonoClass* get_class_native_base(GDMonoClass* p_class);
 
-MonoObject* create_managed_for_godot_object(
+MonoObject* create_managed_for_rebel_object(
     GDMonoClass* p_class,
     const StringName& p_native,
     Object* p_object
@@ -196,7 +196,7 @@ void add_internal_call(const char* p_name, R (*p_func)(P...)) {
 } // namespace GDMonoUtils
 
 #define NATIVE_GDMONOCLASS_NAME(m_class)                                       \
-    (GDMonoMarshal::mono_string_to_godot(                                      \
+    (GDMonoMarshal::mono_string_to_rebel(                                      \
         (MonoString*)m_class->get_field(BINDINGS_NATIVE_NAME_FIELD)            \
             ->get_value(NULL)                                                  \
     ))
