@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotTools.BuildLogger", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotTools.OpenVisualStudio", "GodotTools.OpenVisualStudio\GodotTools.OpenVisualStudio.csproj", "{EAFFF236-FA96-4A4D-BD23-0E51EF988277}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotTools.IdeMessaging", "GodotTools.IdeMessaging\GodotTools.IdeMessaging.csproj", "{92600954-25F0-4291-8E11-1FEE9FC4BE20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
