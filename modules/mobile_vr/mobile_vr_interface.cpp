@@ -497,7 +497,7 @@ CameraMatrix MobileVRInterface::get_projection_for_eye(
         // which probably means implementing a specific class for iOS and
         // Android. For now this is purely here as an example. Note also that if
         // you use a normal viewport with AR/VR turned off you can still use the
-        // tracker output of this interface to position a stock standard Godot
+        // tracker output of this interface to position a stock standard Rebel
         // camera and have control over this. This will make more sense when we
         // implement ARkit on iOS (probably a separate interface).
         eye.set_perspective(60.0, p_aspect, p_z_near, p_z_far, false);
