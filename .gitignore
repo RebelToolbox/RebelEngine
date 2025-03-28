@@ -54,6 +54,9 @@ platforms/android/project/*/.cxx/
 platforms/android/project/*/libs/
 platforms/android/project/**/jniLibs/
 
+# CSharp generated
+obj/
+
 # Python generated
 __pycache__/
 
