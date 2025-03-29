@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_LSP_H
-#define GODOT_LSP_H
+#ifndef LSP_H
+#define LSP_H
 
 #include "core/class_db.h"
 #include "core/list.h"
@@ -1911,7 +1911,7 @@ struct InitializeResult {
     }
 };
 
-struct GodotNativeClassInfo {
+struct NativeClassInfo {
     String name;
     const DocsData::ClassDoc* class_doc  = nullptr;
     const ClassDB::ClassInfo* class_info = nullptr;
@@ -1925,17 +1925,17 @@ struct GodotNativeClassInfo {
 };
 
 /** Features not included in the standard lsp specifications */
-struct GodotCapabilities {
+struct NativeCapabilities {
     /**
      * Native class list
      */
-    List<GodotNativeClassInfo> native_classes;
+    List<NativeClassInfo> native_classes;
 
     Dictionary to_json() {
         Dictionary dict;
         Array classes;
-        for (List<GodotNativeClassInfo>::Element* E = native_classes.front(); E;
-             E                                      = E->next()) {
+        for (List<NativeClassInfo>::Element* E = native_classes.front(); E;
+             E                                 = E->next()) {
             classes.push_back(E->get().to_json());
         }
         dict["native_classes"] = classes;
@@ -1999,4 +1999,4 @@ static String marked_documentation(const String& p_bbcode) {
 
 } // namespace lsp
 
-#endif
+#endif // LSP_H

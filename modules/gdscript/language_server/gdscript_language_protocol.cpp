@@ -248,14 +248,14 @@ Dictionary GDScriptLanguageProtocol::initialize(const Dictionary& p_params) {
 }
 
 void GDScriptLanguageProtocol::initialized(const Variant& p_params) {
-    lsp::GodotCapabilities capabilities;
+    lsp::NativeCapabilities capabilities;
 
     DocsData* docs_data = EditorHelp::get_docs_data();
     for (Map<String, DocsData::ClassDoc>::Element* E =
              docs_data->class_list.front();
          E;
          E = E->next()) {
-        lsp::GodotNativeClassInfo gdclass;
+        lsp::NativeClassInfo gdclass;
         gdclass.name      = E->get().name;
         gdclass.class_doc = &(E->get());
         if (ClassDB::ClassInfo* ptr =
