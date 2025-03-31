@@ -1,56 +1,57 @@
 diff --git a/thirdparty/enet/enet/enet.h b/thirdparty/enet/enet/enet.h
-index fc45cbd0c9..77f8004b80 100644
+index fc45cbd0..053623a8 100644
 --- a/thirdparty/enet/enet/enet.h
 +++ b/thirdparty/enet/enet/enet.h
-@@ -10,13 +10,19 @@ extern "C"
+@@ -10,13 +10,10 @@ extern "C"
  {
  #endif
  
 +#include <stdint.h>
  #include <stdlib.h>
  
-+// -- Godot start --
-+#if 0
- #ifdef _WIN32
- #include "enet/win32.h"
- #else
- #include "enet/unix.h"
- #endif
-+#endif
-+#include "enet/godot.h"
-+// -- Godot end --
+-#ifdef _WIN32
+-#include "enet/win32.h"
+-#else
+-#include "enet/unix.h"
+-#endif
++#include "enet/rebel_enet.h"
  
  #include "enet/types.h"
  #include "enet/protocol.h"
-@@ -86,11 +92,15 @@ typedef enum _ENetSocketShutdown
-  * but not for enet_host_create.  Once a server responds to a broadcast, the
-  * address is updated from ENET_HOST_BROADCAST to the server's actual IP address.
-  */
-+// -- Godot start --
-+#if 0
- typedef struct _ENetAddress
- {
-    enet_uint32 host;
-    enet_uint16 port;
- } ENetAddress;
-+#endif
-+// -- Godot end --
+@@ -76,22 +73,6 @@ typedef enum _ENetSocketShutdown
+ #define ENET_HOST_BROADCAST 0xFFFFFFFFU
+ #define ENET_PORT_ANY       0
  
+-/**
+- * Portable internet address structure. 
+- *
+- * The host must be specified in network byte-order, and the port must be in host 
+- * byte-order. The constant ENET_HOST_ANY may be used to specify the default 
+- * server host. The constant ENET_HOST_BROADCAST may be used to specify the
+- * broadcast address (255.255.255.255).  This makes sense for enet_host_connect,
+- * but not for enet_host_create.  Once a server responds to a broadcast, the
+- * address is updated from ENET_HOST_BROADCAST to the server's actual IP address.
+- */
+-typedef struct _ENetAddress
+-{
+-   enet_uint32 host;
+-   enet_uint16 port;
+-} ENetAddress;
+-
  /**
   * Packet flag bit constants.
-@@ -604,6 +614,10 @@ ENET_API size_t enet_range_coder_decompress (void *, const enet_uint8 *, size_t,
+  *
+@@ -604,6 +585,8 @@ ENET_API size_t enet_range_coder_decompress (void *, const enet_uint8 *, size_t,
     
  extern size_t enet_protocol_command_size (enet_uint8);
  
-+// -- Godot start --
-+#include "enet/godot_ext.h"
-+// -- Godot end --
++#include "enet/rebel_enet_ext.h"
 +
  #ifdef __cplusplus
  }
  #endif
 diff --git a/thirdparty/enet/host.c b/thirdparty/enet/host.c
-index 3b2180f7fd..21ab27e247 100644
+index 3b2180f7..21ab27e2 100644
 --- a/thirdparty/enet/host.c
 +++ b/thirdparty/enet/host.c
 @@ -87,7 +87,7 @@ enet_host_create (const ENetAddress * address, size_t peerCount, size_t channelL
@@ -63,7 +64,7 @@ index 3b2180f7fd..21ab27e247 100644
      host -> receivedData = NULL;
      host -> receivedDataLength = 0;
 diff --git a/thirdparty/enet/protocol.c b/thirdparty/enet/protocol.c
-index 9d654f1d96..d7fe80f117 100644
+index 9d654f1d..d7fe80f1 100644
 --- a/thirdparty/enet/protocol.c
 +++ b/thirdparty/enet/protocol.c
 @@ -309,7 +309,7 @@ enet_protocol_handle_connect (ENetHost * host, ENetProtocolHeader * header, ENet

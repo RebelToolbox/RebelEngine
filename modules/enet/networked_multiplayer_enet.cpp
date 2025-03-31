@@ -97,7 +97,7 @@ Error NetworkedMultiplayerENet::create_server(
     ENetAddress address;
     memset(&address, 0, sizeof(address));
 
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
     if (bind_ip.is_wildcard()) {
         address.wildcard = 1;
     } else {
@@ -126,7 +126,7 @@ Error NetworkedMultiplayerENet::create_server(
         ERR_CANT_CREATE,
         "Couldn't create an ENet multiplayer server."
     );
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
     if (dtls_enabled) {
         enet_host_dtls_server_setup(host, dtls_key.ptr(), dtls_cert.ptr());
     }
@@ -180,7 +180,7 @@ Error NetworkedMultiplayerENet::create_client(
     if (p_client_port != 0) {
         ENetAddress c_client;
 
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
         if (bind_ip.is_wildcard()) {
             c_client.wildcard = 1;
         } else {
@@ -223,7 +223,7 @@ Error NetworkedMultiplayerENet::create_client(
         ERR_CANT_CREATE,
         "Couldn't create the ENet client host."
     );
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
     if (dtls_enabled) {
         enet_host_dtls_client_setup(
             host,
@@ -242,7 +242,7 @@ Error NetworkedMultiplayerENet::create_client(
     if (p_address.is_valid_ip_address()) {
         ip = p_address;
     } else {
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
         ip = IP::get_singleton()->resolve_hostname(p_address);
 #else
         ip = IP::get_singleton()->resolve_hostname(p_address, IP::TYPE_IPV4);
@@ -258,7 +258,7 @@ Error NetworkedMultiplayerENet::create_client(
     }
 
     ENetAddress address;
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
     enet_address_set_ip(&address, ip.get_ipv6(), 16);
 #else
     if (!ip.is_ipv4()) {
@@ -266,7 +266,7 @@ Error NetworkedMultiplayerENet::create_client(
         ERR_FAIL_V_MSG(
             ERR_INVALID_PARAMETER,
             "Connecting to an IPv6 server isn't supported when using vanilla "
-            "ENet. Recompile Godot with the bundled ENet library."
+            "ENet. Recompile Rebel Engine with the bundled ENet library."
         );
     }
     address.host = *(uint32_t*)ip.get_ipv4();
@@ -856,7 +856,7 @@ int NetworkedMultiplayerENet::get_unique_id() const {
 
 void NetworkedMultiplayerENet::set_refuse_new_connections(bool p_enable) {
     refuse_connections = p_enable;
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
     if (active) {
         enet_host_refuse_new_connections(host, p_enable);
     }
@@ -1041,7 +1041,7 @@ IP_Address NetworkedMultiplayerENet::get_peer_address(int p_peer_id) const {
     );
 
     IP_Address out;
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
     out.set_ipv6((uint8_t*)&(peer_map[p_peer_id]->address.host));
 #else
     out.set_ipv4((uint8_t*)&(peer_map[p_peer_id]->address.host));
@@ -1070,7 +1070,7 @@ int NetworkedMultiplayerENet::get_peer_port(int p_peer_id) const {
             p_peer_id
         )
     );
-#ifdef GODOT_ENET
+#ifdef REBEL_ENET
     return peer_map[p_peer_id]->address.port;
 #else
     return peer_map[p_peer_id]->address.port;

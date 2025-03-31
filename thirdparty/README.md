@@ -65,21 +65,16 @@ commits.
 - License: MIT
 
 Files extracted from upstream source:
-
-- all .c files in the main directory (except unix.c win32.c)
-- the include/enet/ folder as enet/ (except unix.h win32.h)
+- all .c files in the root directory (except unix.c win32.c)
+- all .h files in the include/enet/ folder (except unix.h win32.h) into enet/ folder
 - LICENSE file
 
-Important: enet.h, host.c, protocol.c have been slightly modified
-to be usable by Godot's socket implementation and allow IPv6 and DTLS.
-Apply the patches in the `patches/` folder when syncing on newer upstream
-commits.
-
-Three files (godot.cpp, enet/godot.h, enet/godot_ext.h) have been added to provide
-enet socket implementation using Godot classes.
-
-It is still possible to build against a system wide ENet but doing so
-will limit its functionality to IPv4 only.
+Note: Rebel Engine updates ENet to use Rebel sockets and support IPv6.
+Rebel Enet patch file and additional Rebel socket implementation files:
+- patches/rebel_enet.patch
+- rebel_enet.cpp
+- enet/rebel_enet.h
+- enet/rebel_enet_ext.h
 
 
 ## etc2comp
