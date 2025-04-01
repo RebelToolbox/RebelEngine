@@ -3,10 +3,6 @@
 // SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 //
 // SPDX-License-Identifier: MIT
-/**
- @file  godot.cpp
- @brief ENet Godot specific functions
-*/
 
 #include "core/io/dtls_server.h"
 #include "core/io/ip.h"
@@ -19,7 +15,7 @@
 #include "enet/enet.h"
 
 /// Abstract ENet interface for UDP/DTLS.
-class ENetGodotSocket {
+class ENetRebelSocket {
 
 public:
 	virtual Error bind(IP_Address p_ip, uint16_t p_port) = 0;
@@ -28,14 +24,14 @@ public:
 	virtual int set_option(ENetSocketOption p_option, int p_value) = 0;
 	virtual void close() = 0;
 	virtual void set_refuse_new_connections(bool p_refuse) { /* Only used by dtls server */ }
-	virtual ~ENetGodotSocket(){};
+	virtual ~ENetRebelSocket(){};
 };
 
 class ENetDTLSClient;
 class ENetDTLSServer;
 
 /// NetSocket interface
-class ENetUDP : public ENetGodotSocket {
+class ENetUDP : public ENetRebelSocket {
 
 	friend class ENetDTLSClient;
 	friend class ENetDTLSServer;
@@ -125,7 +121,7 @@ public:
 };
 
 /// DTLS Client ENet interface
-class ENetDTLSClient : public ENetGodotSocket {
+class ENetDTLSClient : public ENetRebelSocket {
 
 	bool connected;
 	Ref<PacketPeerUDP> udp;
@@ -209,7 +205,7 @@ public:
 };
 
 /// DTLSServer - ENet interface
-class ENetDTLSServer : public ENetGodotSocket {
+class ENetDTLSServer : public ENetRebelSocket {
 
 	Ref<DTLSServer> server;
 	Ref<UDPServer> udp_server;
@@ -399,7 +395,7 @@ void enet_host_dtls_client_setup(ENetHost *host, void *p_cert, uint8_t p_verify,
 
 void enet_host_refuse_new_connections(ENetHost *host, int p_refuse) {
 	ERR_FAIL_COND(!host->socket);
-	((ENetGodotSocket *)host->socket)->set_refuse_new_connections(p_refuse);
+	((ENetRebelSocket *)host->socket)->set_refuse_new_connections(p_refuse);
 }
 
 int enet_socket_bind(ENetSocket socket, const ENetAddress *address) {
@@ -411,7 +407,7 @@ int enet_socket_bind(ENetSocket socket, const ENetAddress *address) {
 		ip.set_ipv6(address->host);
 	}
 
-	ENetGodotSocket *sock = (ENetGodotSocket *)socket;
+	ENetRebelSocket *sock = (ENetRebelSocket *)socket;
 	if (sock->bind(ip, address->port) != OK) {
 		return -1;
 	}
@@ -419,7 +415,7 @@ int enet_socket_bind(ENetSocket socket, const ENetAddress *address) {
 }
 
 void enet_socket_destroy(ENetSocket socket) {
-	ENetGodotSocket *sock = (ENetGodotSocket *)socket;
+	ENetRebelSocket *sock = (ENetRebelSocket *)socket;
 	sock->close();
 	memdelete(sock);
 }
@@ -428,7 +424,7 @@ int enet_socket_send(ENetSocket socket, const ENetAddress *address, const ENetBu
 
 	ERR_FAIL_COND_V(address == nullptr, -1);
 
-	ENetGodotSocket *sock = (ENetGodotSocket *)socket;
+	ENetRebelSocket *sock = (ENetRebelSocket *)socket;
 	IP_Address dest;
 	Error err;
 	size_t i = 0;
@@ -470,7 +466,7 @@ int enet_socket_receive(ENetSocket socket, ENetAddress *address, ENetBuffer *buf
 
 	ERR_FAIL_COND_V(bufferCount != 1, -1);
 
-	ENetGodotSocket *sock = (ENetGodotSocket *)socket;
+	ENetRebelSocket *sock = (ENetRebelSocket *)socket;
 
 	int read;
 	IP_Address ip;
@@ -512,7 +508,7 @@ int enet_socket_listen(ENetSocket socket, int backlog) {
 
 int enet_socket_set_option(ENetSocket socket, ENetSocketOption option, int value) {
 
-	ENetGodotSocket *sock = (ENetGodotSocket *)socket;
+	ENetRebelSocket *sock = (ENetRebelSocket *)socket;
 	return sock->set_option(option, value);
 }
 

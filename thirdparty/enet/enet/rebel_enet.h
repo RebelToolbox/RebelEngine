@@ -3,13 +3,9 @@
 // SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
 //
 // SPDX-License-Identifier: MIT
-/**
- @file  godot.h
- @brief ENet Godot header
-*/
 
-#ifndef __ENET_GODOT_H__
-#define __ENET_GODOT_H__
+#ifndef REBEL_ENET_H
+#define REBEL_ENET_H
 
 #ifdef WINDOWS_ENABLED
 #include <stdint.h>
@@ -45,12 +41,23 @@ typedef struct
 
 typedef void ENetSocketSet;
 
+/**
+ * Portable internet address structure.
+ *
+ * The host must be specified in network byte-order, and the port must be in host
+ * byte-order. The constant ENET_HOST_ANY may be used to specify the default
+ * server host. The constant ENET_HOST_BROADCAST may be used to specify the
+ * broadcast address (255.255.255.255).  This makes sense for enet_host_connect,
+ * but not for enet_host_create.  Once a server responds to a broadcast, the
+ * address is updated from ENET_HOST_BROADCAST to the server's actual IP address.
+ */
 typedef struct _ENetAddress
 {
    uint8_t host[16];
    uint16_t port;
    uint8_t wildcard;
 } ENetAddress;
+
 #define enet_host_equal(host_a, host_b) (memcmp(&host_a, &host_b,16) == 0)
 
-#endif /* __ENET_GODOT_H__ */
+#endif // REBEL_ENET_H
