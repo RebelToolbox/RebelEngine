@@ -1,0 +1,280 @@
+diff --git a/thirdparty/oidn/common/platform.h b/thirdparty/oidn/common/platform.h
+index be14bc7c..9373b617 100644
+--- a/thirdparty/oidn/common/platform.h
++++ b/thirdparty/oidn/common/platform.h
+@@ -19,7 +19,7 @@
+ #if defined(_WIN32)
+   #define WIN32_LEAN_AND_MEAN
+   #define NOMINMAX
+-  #include <Windows.h>
++  #include <windows.h>
+ #elif defined(__APPLE__)
+   #include <sys/sysctl.h>
+ #endif
+@@ -129,4 +129,3 @@ namespace oidn {
+   std::string getBuildName();
+ 
+ } // namespace oidn
+-
+diff --git a/thirdparty/oidn/core/autoencoder.cpp b/thirdparty/oidn/core/autoencoder.cpp
+index d6915e68..26c7a01d 100644
+--- a/thirdparty/oidn/core/autoencoder.cpp
++++ b/thirdparty/oidn/core/autoencoder.cpp
+@@ -90,13 +90,12 @@ namespace oidn {
+     if (!dirty)
+       return;
+ 
+-    device->executeTask([&]()
+     {
+       if (mayiuse(avx512_common))
+         net = buildNet<16>();
+       else
+         net = buildNet<8>();
+-    });
++    }
+ 
+     dirty = false;
+   }
+@@ -109,7 +108,6 @@ namespace oidn {
+     if (!net)
+       return;
+ 
+-    device->executeTask([&]()
+     {
+       Progress progress;
+       progress.func = progressFunc;
+@@ -156,7 +154,7 @@ namespace oidn {
+           tileIndex++;
+         }
+       }
+-    });
++    }
+   }
+ 
+   void AutoencoderFilter::computeTileSize()
+@@ -464,34 +462,6 @@ namespace oidn {
+       return std::make_shared<GammaTransferFunction>();
+   }
+ 
+-  // --------------------------------------------------------------------------
+-  // RTFilter
+-  // --------------------------------------------------------------------------
+-
+-  namespace weights
+-  {
+-    // LDR
+-    extern unsigned char rt_ldr[];         // color
+-    extern unsigned char rt_ldr_alb[];     // color, albedo
+-    extern unsigned char rt_ldr_alb_nrm[]; // color, albedo, normal
+-
+-    // HDR
+-    extern unsigned char rt_hdr[];         // color
+-    extern unsigned char rt_hdr_alb[];     // color, albedo
+-    extern unsigned char rt_hdr_alb_nrm[]; // color, albedo, normal
+-  }
+-
+-  RTFilter::RTFilter(const Ref<Device>& device)
+-    : AutoencoderFilter(device)
+-  {
+-    weightData.ldr         = weights::rt_ldr;
+-    weightData.ldr_alb     = weights::rt_ldr_alb;
+-    weightData.ldr_alb_nrm = weights::rt_ldr_alb_nrm;
+-    weightData.hdr         = weights::rt_hdr;
+-    weightData.hdr_alb     = weights::rt_hdr_alb;
+-    weightData.hdr_alb_nrm = weights::rt_hdr_alb_nrm;
+-  }
+-
+   // --------------------------------------------------------------------------
+   // RTLightmapFilter
+   // --------------------------------------------------------------------------
+diff --git a/thirdparty/oidn/core/autoencoder.h b/thirdparty/oidn/core/autoencoder.h
+index c1990528..b0c29c25 100644
+--- a/thirdparty/oidn/core/autoencoder.h
++++ b/thirdparty/oidn/core/autoencoder.h
+@@ -89,16 +89,6 @@ namespace oidn {
+     bool isCommitted() const { return bool(net); }
+   };
+ 
+-  // --------------------------------------------------------------------------
+-  // RTFilter - Generic ray tracing denoiser
+-  // --------------------------------------------------------------------------
+-
+-  class RTFilter : public AutoencoderFilter
+-  {
+-  public:
+-    explicit RTFilter(const Ref<Device>& device);
+-  };
+-
+   // --------------------------------------------------------------------------
+   // RTLightmapFilter - Ray traced lightmap denoiser
+   // --------------------------------------------------------------------------
+diff --git a/thirdparty/oidn/core/common.h b/thirdparty/oidn/core/common.h
+index a3a7e8a9..6c87f377 100644
+--- a/thirdparty/oidn/core/common.h
++++ b/thirdparty/oidn/core/common.h
+@@ -27,7 +27,6 @@
+ #include "common/ref.h"
+ #include "common/exception.h"
+ #include "common/thread.h"
+-#include "common/tasking.h"
+ #include "math.h"
+ 
+ namespace oidn {
+diff --git a/thirdparty/oidn/core/device.cpp b/thirdparty/oidn/core/device.cpp
+index c4556950..b99bc656 100644
+--- a/thirdparty/oidn/core/device.cpp
++++ b/thirdparty/oidn/core/device.cpp
+@@ -29,7 +29,6 @@ namespace oidn {
+ 
+   Device::~Device()
+   {
+-    observer.reset();
+   }
+ 
+   void Device::setError(Device* device, Error code, const std::string& message)
+@@ -141,22 +140,7 @@ namespace oidn {
+     if (isCommitted())
+       throw Exception(Error::InvalidOperation, "device can be committed only once");
+ 
+-    // Get the optimal thread affinities
+-    if (setAffinity)
+-    {
+-      affinity = std::make_shared<ThreadAffinity>(1, verbose); // one thread per core
+-      if (affinity->getNumThreads() == 0)
+-        affinity.reset();
+-    }
+-
+-    // Create the task arena
+-    const int maxNumThreads = affinity ? affinity->getNumThreads() : tbb::this_task_arena::max_concurrency();
+-    numThreads = (numThreads > 0) ? min(numThreads, maxNumThreads) : maxNumThreads;
+-    arena = std::make_shared<tbb::task_arena>(numThreads);
+-
+-    // Automatically set the thread affinities
+-    if (affinity)
+-      observer = std::make_shared<PinningObserver>(affinity, *arena);
++    numThreads = 1;
+ 
+     dirty = false;
+ 
+@@ -191,9 +175,7 @@ namespace oidn {
+ 
+     Ref<Filter> filter;
+ 
+-    if (type == "RT")
+-      filter = makeRef<RTFilter>(Ref<Device>(this));
+-    else if (type == "RTLightmap")
++    if (type == "RTLightmap")
+       filter = makeRef<RTLightmapFilter>(Ref<Device>(this));
+     else
+       throw Exception(Error::InvalidArgument, "unknown filter type");
+@@ -210,11 +192,6 @@ namespace oidn {
+     std::cout << "  Build   : " << getBuildName() << std::endl;
+     std::cout << "  Platform: " << getPlatformName() << std::endl;
+ 
+-    std::cout << "  Tasking :";
+-    std::cout << " TBB" << TBB_VERSION_MAJOR << "." << TBB_VERSION_MINOR;
+-    std::cout << " TBB_header_interface_" << TBB_INTERFACE_VERSION << " TBB_lib_interface_" << tbb::TBB_runtime_interface_version();
+-    std::cout << std::endl;
+-
+     std::cout << std::endl;
+   }
+ 
+diff --git a/thirdparty/oidn/core/device.h b/thirdparty/oidn/core/device.h
+index c2df7145..93a83eb7 100644
+--- a/thirdparty/oidn/core/device.h
++++ b/thirdparty/oidn/core/device.h
+@@ -41,11 +41,6 @@ namespace oidn {
+     ErrorFunction errorFunc = nullptr;
+     void* errorUserPtr = nullptr;
+ 
+-    // Tasking
+-    std::shared_ptr<tbb::task_arena> arena;
+-    std::shared_ptr<PinningObserver> observer;
+-    std::shared_ptr<ThreadAffinity> affinity;
+-
+     // Parameters
+     int numThreads = 0; // autodetect by default
+     bool setAffinity = true;
+@@ -66,18 +61,6 @@ namespace oidn {
+ 
+     void commit();
+ 
+-    template<typename F>
+-    void executeTask(F& f)
+-    {
+-      arena->execute(f);
+-    }
+-
+-    template<typename F>
+-    void executeTask(const F& f)
+-    {
+-      arena->execute(f);
+-    }
+-
+     Ref<Buffer> newBuffer(size_t byteSize);
+     Ref<Buffer> newBuffer(void* ptr, size_t byteSize);
+     Ref<Filter> newFilter(const std::string& type);
+@@ -86,7 +69,7 @@ namespace oidn {
+     __forceinline std::mutex& getMutex() { return mutex; }
+ 
+   private:
+-    bool isCommitted() const { return bool(arena); }
++    bool isCommitted() const { return false; }
+     void checkCommitted();
+ 
+     void print();
+diff --git a/thirdparty/oidn/core/network.cpp b/thirdparty/oidn/core/network.cpp
+index 8c2de095..a15898bc 100644
+--- a/thirdparty/oidn/core/network.cpp
++++ b/thirdparty/oidn/core/network.cpp
+@@ -18,6 +18,8 @@
+ #include "weights_reorder.h"
+ #include "network.h"
+ 
++#include <cstring>
++
+ namespace oidn {
+ 
+   template<int K>
+diff --git a/thirdparty/oidn/core/transfer_function.cpp b/thirdparty/oidn/core/transfer_function.cpp
+index 601f814d..ddefc64c 100644
+--- a/thirdparty/oidn/core/transfer_function.cpp
++++ b/thirdparty/oidn/core/transfer_function.cpp
+@@ -38,16 +38,13 @@ namespace oidn {
+     // Compute the average log luminance of the downsampled image
+     using Sum = std::pair<float, int>;
+ 
+-    Sum sum =
+-      tbb::parallel_reduce(
+-        tbb::blocked_range2d<int>(0, HK, 0, WK),
+-        Sum(0.f, 0),
+-        [&](const tbb::blocked_range2d<int>& r, Sum sum) -> Sum
++    Sum sum = Sum(0.0f, 0);
++    {
++      {
+         {
+-          // Iterate over blocks
+-          for (int i = r.rows().begin(); i != r.rows().end(); ++i)
++          for (int i = 0; i != HK; ++i)
+           {
+-            for (int j = r.cols().begin(); j != r.cols().end(); ++j)
++            for (int j = 0; j != WK; ++j)
+             {
+               // Compute the average luminance in the current block
+               const int beginH = int(ptrdiff_t(i)   * H / HK);
+@@ -81,12 +78,9 @@ namespace oidn {
+               }
+             }
+           }
+-
+-          return sum;
+-        },
+-        [](Sum a, Sum b) -> Sum { return Sum(a.first+b.first, a.second+b.second); },
+-        tbb::static_partitioner()
+-      );
++        }
++      }
++    }
+ 
+     return (sum.second > 0) ? (key / exp2(sum.first / float(sum.second))) : 1.f;
+   }
