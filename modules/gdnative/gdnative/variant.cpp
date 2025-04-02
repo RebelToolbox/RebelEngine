@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 static_assert(
-    sizeof(godot_variant) == sizeof(Variant),
+    sizeof(rebel_variant) == sizeof(Variant),
     "Variant size mismatch"
 );
 
@@ -40,74 +40,74 @@ static_assert(
 
 // Constructors
 
-godot_variant_type GDAPI godot_variant_get_type(const godot_variant* p_self) {
+rebel_variant_type GDAPI rebel_variant_get_type(const rebel_variant* p_self) {
     const Variant* self = (const Variant*)p_self;
-    return (godot_variant_type)self->get_type();
+    return (rebel_variant_type)self->get_type();
 }
 
 void GDAPI
-godot_variant_new_copy(godot_variant* p_dest, const godot_variant* p_src) {
+rebel_variant_new_copy(rebel_variant* p_dest, const rebel_variant* p_src) {
     Variant* dest = (Variant*)p_dest;
     Variant* src  = (Variant*)p_src;
     memnew_placement(dest, Variant(*src));
 }
 
-void GDAPI godot_variant_new_nil(godot_variant* r_dest) {
+void GDAPI rebel_variant_new_nil(rebel_variant* r_dest) {
     Variant* dest = (Variant*)r_dest;
     memnew_placement(dest, Variant);
 }
 
-void GDAPI godot_variant_new_bool(godot_variant* r_dest, const godot_bool p_b) {
+void GDAPI rebel_variant_new_bool(rebel_variant* r_dest, const rebel_bool p_b) {
     Variant* dest = (Variant*)r_dest;
     memnew_placement_custom(dest, Variant, Variant(p_b));
 }
 
-void GDAPI godot_variant_new_uint(godot_variant* r_dest, const uint64_t p_i) {
+void GDAPI rebel_variant_new_uint(rebel_variant* r_dest, const uint64_t p_i) {
     Variant* dest = (Variant*)r_dest;
     memnew_placement_custom(dest, Variant, Variant(p_i));
 }
 
-void GDAPI godot_variant_new_int(godot_variant* r_dest, const int64_t p_i) {
+void GDAPI rebel_variant_new_int(rebel_variant* r_dest, const int64_t p_i) {
     Variant* dest = (Variant*)r_dest;
     memnew_placement_custom(dest, Variant, Variant(p_i));
 }
 
-void GDAPI godot_variant_new_real(godot_variant* r_dest, const double p_r) {
+void GDAPI rebel_variant_new_real(rebel_variant* r_dest, const double p_r) {
     Variant* dest = (Variant*)r_dest;
     memnew_placement_custom(dest, Variant, Variant(p_r));
 }
 
 void GDAPI
-godot_variant_new_string(godot_variant* r_dest, const godot_string* p_s) {
+rebel_variant_new_string(rebel_variant* r_dest, const rebel_string* p_s) {
     Variant* dest = (Variant*)r_dest;
     String* s     = (String*)p_s;
     memnew_placement_custom(dest, Variant, Variant(*s));
 }
 
 void GDAPI
-godot_variant_new_vector2(godot_variant* r_dest, const godot_vector2* p_v2) {
+rebel_variant_new_vector2(rebel_variant* r_dest, const rebel_vector2* p_v2) {
     Variant* dest = (Variant*)r_dest;
     Vector2* v2   = (Vector2*)p_v2;
     memnew_placement_custom(dest, Variant, Variant(*v2));
 }
 
 void GDAPI
-godot_variant_new_rect2(godot_variant* r_dest, const godot_rect2* p_rect2) {
+rebel_variant_new_rect2(rebel_variant* r_dest, const rebel_rect2* p_rect2) {
     Variant* dest = (Variant*)r_dest;
     Rect2* rect2  = (Rect2*)p_rect2;
     memnew_placement_custom(dest, Variant, Variant(*rect2));
 }
 
 void GDAPI
-godot_variant_new_vector3(godot_variant* r_dest, const godot_vector3* p_v3) {
+rebel_variant_new_vector3(rebel_variant* r_dest, const rebel_vector3* p_v3) {
     Variant* dest = (Variant*)r_dest;
     Vector3* v3   = (Vector3*)p_v3;
     memnew_placement_custom(dest, Variant, Variant(*v3));
 }
 
-void GDAPI godot_variant_new_transform2d(
-    godot_variant* r_dest,
-    const godot_transform2d* p_t2d
+void GDAPI rebel_variant_new_transform2d(
+    rebel_variant* r_dest,
+    const rebel_transform2d* p_t2d
 ) {
     Variant* dest    = (Variant*)r_dest;
     Transform2D* t2d = (Transform2D*)p_t2d;
@@ -115,36 +115,36 @@ void GDAPI godot_variant_new_transform2d(
 }
 
 void GDAPI
-godot_variant_new_plane(godot_variant* r_dest, const godot_plane* p_plane) {
+rebel_variant_new_plane(rebel_variant* r_dest, const rebel_plane* p_plane) {
     Variant* dest = (Variant*)r_dest;
     Plane* plane  = (Plane*)p_plane;
     memnew_placement_custom(dest, Variant, Variant(*plane));
 }
 
 void GDAPI
-godot_variant_new_quat(godot_variant* r_dest, const godot_quat* p_quat) {
+rebel_variant_new_quat(rebel_variant* r_dest, const rebel_quat* p_quat) {
     Variant* dest = (Variant*)r_dest;
     Quat* quat    = (Quat*)p_quat;
     memnew_placement_custom(dest, Variant, Variant(*quat));
 }
 
 void GDAPI
-godot_variant_new_aabb(godot_variant* r_dest, const godot_aabb* p_aabb) {
+rebel_variant_new_aabb(rebel_variant* r_dest, const rebel_aabb* p_aabb) {
     Variant* dest = (Variant*)r_dest;
     AABB* aabb    = (AABB*)p_aabb;
     memnew_placement_custom(dest, Variant, Variant(*aabb));
 }
 
 void GDAPI
-godot_variant_new_basis(godot_variant* r_dest, const godot_basis* p_basis) {
+rebel_variant_new_basis(rebel_variant* r_dest, const rebel_basis* p_basis) {
     Variant* dest = (Variant*)r_dest;
     Basis* basis  = (Basis*)p_basis;
     memnew_placement_custom(dest, Variant, Variant(*basis));
 }
 
-void GDAPI godot_variant_new_transform(
-    godot_variant* r_dest,
-    const godot_transform* p_trans
+void GDAPI rebel_variant_new_transform(
+    rebel_variant* r_dest,
+    const rebel_transform* p_trans
 ) {
     Variant* dest    = (Variant*)r_dest;
     Transform* trans = (Transform*)p_trans;
@@ -152,15 +152,15 @@ void GDAPI godot_variant_new_transform(
 }
 
 void GDAPI
-godot_variant_new_color(godot_variant* r_dest, const godot_color* p_color) {
+rebel_variant_new_color(rebel_variant* r_dest, const rebel_color* p_color) {
     Variant* dest = (Variant*)r_dest;
     Color* color  = (Color*)p_color;
     memnew_placement_custom(dest, Variant, Variant(*color));
 }
 
-void GDAPI godot_variant_new_node_path(
-    godot_variant* r_dest,
-    const godot_node_path* p_np
+void GDAPI rebel_variant_new_node_path(
+    rebel_variant* r_dest,
+    const rebel_node_path* p_np
 ) {
     Variant* dest = (Variant*)r_dest;
     NodePath* np  = (NodePath*)p_np;
@@ -168,14 +168,14 @@ void GDAPI godot_variant_new_node_path(
 }
 
 void GDAPI
-godot_variant_new_rid(godot_variant* r_dest, const godot_rid* p_rid) {
+rebel_variant_new_rid(rebel_variant* r_dest, const rebel_rid* p_rid) {
     Variant* dest = (Variant*)r_dest;
     RID* rid      = (RID*)p_rid;
     memnew_placement_custom(dest, Variant, Variant(*rid));
 }
 
 void GDAPI
-godot_variant_new_object(godot_variant* r_dest, const godot_object* p_obj) {
+rebel_variant_new_object(rebel_variant* r_dest, const rebel_object* p_obj) {
     Variant* dest        = (Variant*)r_dest;
     Object* obj          = (Object*)p_obj;
     Reference* reference = Object::cast_to<Reference>(obj);
@@ -189,7 +189,7 @@ godot_variant_new_object(godot_variant* r_dest, const godot_object* p_obj) {
 #if defined(DEBUG_METHODS_ENABLED)
         if (reference) {
             ERR_PRINT(
-                "Reference object has 0 refcount in godot_variant_new_object - "
+                "Reference object has 0 refcount in rebel_variant_new_object - "
                 "you lost it somewhere."
             );
         }
@@ -198,9 +198,9 @@ godot_variant_new_object(godot_variant* r_dest, const godot_object* p_obj) {
     }
 }
 
-void GDAPI godot_variant_new_dictionary(
-    godot_variant* r_dest,
-    const godot_dictionary* p_dict
+void GDAPI rebel_variant_new_dictionary(
+    rebel_variant* r_dest,
+    const rebel_dictionary* p_dict
 ) {
     Variant* dest    = (Variant*)r_dest;
     Dictionary* dict = (Dictionary*)p_dict;
@@ -208,97 +208,97 @@ void GDAPI godot_variant_new_dictionary(
 }
 
 void GDAPI
-godot_variant_new_array(godot_variant* r_dest, const godot_array* p_arr) {
+rebel_variant_new_array(rebel_variant* r_dest, const rebel_array* p_arr) {
     Variant* dest = (Variant*)r_dest;
     Array* arr    = (Array*)p_arr;
     memnew_placement_custom(dest, Variant, Variant(*arr));
 }
 
-void GDAPI godot_variant_new_pool_byte_array(
-    godot_variant* r_dest,
-    const godot_pool_byte_array* p_pba
+void GDAPI rebel_variant_new_pool_byte_array(
+    rebel_variant* r_dest,
+    const rebel_pool_byte_array* p_pba
 ) {
     Variant* dest      = (Variant*)r_dest;
     PoolByteArray* pba = (PoolByteArray*)p_pba;
     memnew_placement_custom(dest, Variant, Variant(*pba));
 }
 
-void GDAPI godot_variant_new_pool_int_array(
-    godot_variant* r_dest,
-    const godot_pool_int_array* p_pia
+void GDAPI rebel_variant_new_pool_int_array(
+    rebel_variant* r_dest,
+    const rebel_pool_int_array* p_pia
 ) {
     Variant* dest     = (Variant*)r_dest;
     PoolIntArray* pia = (PoolIntArray*)p_pia;
     memnew_placement_custom(dest, Variant, Variant(*pia));
 }
 
-void GDAPI godot_variant_new_pool_real_array(
-    godot_variant* r_dest,
-    const godot_pool_real_array* p_pra
+void GDAPI rebel_variant_new_pool_real_array(
+    rebel_variant* r_dest,
+    const rebel_pool_real_array* p_pra
 ) {
     Variant* dest      = (Variant*)r_dest;
     PoolRealArray* pra = (PoolRealArray*)p_pra;
     memnew_placement_custom(dest, Variant, Variant(*pra));
 }
 
-void GDAPI godot_variant_new_pool_string_array(
-    godot_variant* r_dest,
-    const godot_pool_string_array* p_psa
+void GDAPI rebel_variant_new_pool_string_array(
+    rebel_variant* r_dest,
+    const rebel_pool_string_array* p_psa
 ) {
     Variant* dest        = (Variant*)r_dest;
     PoolStringArray* psa = (PoolStringArray*)p_psa;
     memnew_placement_custom(dest, Variant, Variant(*psa));
 }
 
-void GDAPI godot_variant_new_pool_vector2_array(
-    godot_variant* r_dest,
-    const godot_pool_vector2_array* p_pv2a
+void GDAPI rebel_variant_new_pool_vector2_array(
+    rebel_variant* r_dest,
+    const rebel_pool_vector2_array* p_pv2a
 ) {
     Variant* dest          = (Variant*)r_dest;
     PoolVector2Array* pv2a = (PoolVector2Array*)p_pv2a;
     memnew_placement_custom(dest, Variant, Variant(*pv2a));
 }
 
-void GDAPI godot_variant_new_pool_vector3_array(
-    godot_variant* r_dest,
-    const godot_pool_vector3_array* p_pv3a
+void GDAPI rebel_variant_new_pool_vector3_array(
+    rebel_variant* r_dest,
+    const rebel_pool_vector3_array* p_pv3a
 ) {
     Variant* dest          = (Variant*)r_dest;
     PoolVector3Array* pv3a = (PoolVector3Array*)p_pv3a;
     memnew_placement_custom(dest, Variant, Variant(*pv3a));
 }
 
-void GDAPI godot_variant_new_pool_color_array(
-    godot_variant* r_dest,
-    const godot_pool_color_array* p_pca
+void GDAPI rebel_variant_new_pool_color_array(
+    rebel_variant* r_dest,
+    const rebel_pool_color_array* p_pca
 ) {
     Variant* dest       = (Variant*)r_dest;
     PoolColorArray* pca = (PoolColorArray*)p_pca;
     memnew_placement_custom(dest, Variant, Variant(*pca));
 }
 
-godot_bool GDAPI godot_variant_as_bool(const godot_variant* p_self) {
+rebel_bool GDAPI rebel_variant_as_bool(const rebel_variant* p_self) {
     const Variant* self = (const Variant*)p_self;
     return self->operator bool();
 }
 
-uint64_t GDAPI godot_variant_as_uint(const godot_variant* p_self) {
+uint64_t GDAPI rebel_variant_as_uint(const rebel_variant* p_self) {
     const Variant* self = (const Variant*)p_self;
     return self->operator uint64_t();
 }
 
-int64_t GDAPI godot_variant_as_int(const godot_variant* p_self) {
+int64_t GDAPI rebel_variant_as_int(const rebel_variant* p_self) {
     const Variant* self = (const Variant*)p_self;
     return self->operator int64_t();
 }
 
-double GDAPI godot_variant_as_real(const godot_variant* p_self) {
+double GDAPI rebel_variant_as_real(const rebel_variant* p_self) {
     const Variant* self = (const Variant*)p_self;
     return self->operator double();
 }
 
-godot_string GDAPI godot_variant_as_string(const godot_variant* p_self) {
-    godot_string raw_dest;
+rebel_string GDAPI rebel_variant_as_string(const rebel_variant* p_self) {
+    rebel_string raw_dest;
     const Variant* self = (const Variant*)p_self;
     String* dest        = (String*)&raw_dest;
     memnew_placement(
@@ -308,89 +308,89 @@ godot_string GDAPI godot_variant_as_string(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_vector2 GDAPI godot_variant_as_vector2(const godot_variant* p_self) {
-    godot_vector2 raw_dest;
+rebel_vector2 GDAPI rebel_variant_as_vector2(const rebel_variant* p_self) {
+    rebel_vector2 raw_dest;
     const Variant* self = (const Variant*)p_self;
     Vector2* dest       = (Vector2*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_rect2 GDAPI godot_variant_as_rect2(const godot_variant* p_self) {
-    godot_rect2 raw_dest;
+rebel_rect2 GDAPI rebel_variant_as_rect2(const rebel_variant* p_self) {
+    rebel_rect2 raw_dest;
     const Variant* self = (const Variant*)p_self;
     Rect2* dest         = (Rect2*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_vector3 GDAPI godot_variant_as_vector3(const godot_variant* p_self) {
-    godot_vector3 raw_dest;
+rebel_vector3 GDAPI rebel_variant_as_vector3(const rebel_variant* p_self) {
+    rebel_vector3 raw_dest;
     const Variant* self = (const Variant*)p_self;
     Vector3* dest       = (Vector3*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_transform2d GDAPI godot_variant_as_transform2d(const godot_variant* p_self
+rebel_transform2d GDAPI rebel_variant_as_transform2d(const rebel_variant* p_self
 ) {
-    godot_transform2d raw_dest;
+    rebel_transform2d raw_dest;
     const Variant* self = (const Variant*)p_self;
     Transform2D* dest   = (Transform2D*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_plane GDAPI godot_variant_as_plane(const godot_variant* p_self) {
-    godot_plane raw_dest;
+rebel_plane GDAPI rebel_variant_as_plane(const rebel_variant* p_self) {
+    rebel_plane raw_dest;
     const Variant* self = (const Variant*)p_self;
     Plane* dest         = (Plane*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_quat GDAPI godot_variant_as_quat(const godot_variant* p_self) {
-    godot_quat raw_dest;
+rebel_quat GDAPI rebel_variant_as_quat(const rebel_variant* p_self) {
+    rebel_quat raw_dest;
     const Variant* self = (const Variant*)p_self;
     Quat* dest          = (Quat*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_aabb GDAPI godot_variant_as_aabb(const godot_variant* p_self) {
-    godot_aabb raw_dest;
+rebel_aabb GDAPI rebel_variant_as_aabb(const rebel_variant* p_self) {
+    rebel_aabb raw_dest;
     const Variant* self = (const Variant*)p_self;
     AABB* dest          = (AABB*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_basis GDAPI godot_variant_as_basis(const godot_variant* p_self) {
-    godot_basis raw_dest;
+rebel_basis GDAPI rebel_variant_as_basis(const rebel_variant* p_self) {
+    rebel_basis raw_dest;
     const Variant* self = (const Variant*)p_self;
     Basis* dest         = (Basis*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_transform GDAPI godot_variant_as_transform(const godot_variant* p_self) {
-    godot_transform raw_dest;
+rebel_transform GDAPI rebel_variant_as_transform(const rebel_variant* p_self) {
+    rebel_transform raw_dest;
     const Variant* self = (const Variant*)p_self;
     Transform* dest     = (Transform*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_color GDAPI godot_variant_as_color(const godot_variant* p_self) {
-    godot_color raw_dest;
+rebel_color GDAPI rebel_variant_as_color(const rebel_variant* p_self) {
+    rebel_color raw_dest;
     const Variant* self = (const Variant*)p_self;
     Color* dest         = (Color*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_node_path GDAPI godot_variant_as_node_path(const godot_variant* p_self) {
-    godot_node_path raw_dest;
+rebel_node_path GDAPI rebel_variant_as_node_path(const rebel_variant* p_self) {
+    rebel_node_path raw_dest;
     const Variant* self = (const Variant*)p_self;
     NodePath* dest      = (NodePath*)&raw_dest;
     memnew_placement(
@@ -400,24 +400,24 @@ godot_node_path GDAPI godot_variant_as_node_path(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_rid GDAPI godot_variant_as_rid(const godot_variant* p_self) {
-    godot_rid raw_dest;
+rebel_rid GDAPI rebel_variant_as_rid(const rebel_variant* p_self) {
+    rebel_rid raw_dest;
     const Variant* self = (const Variant*)p_self;
     RID* dest           = (RID*)&raw_dest;
     *dest               = *self;
     return raw_dest;
 }
 
-godot_object GDAPI* godot_variant_as_object(const godot_variant* p_self) {
+rebel_object GDAPI* rebel_variant_as_object(const rebel_variant* p_self) {
     const Variant* self = (const Variant*)p_self;
     Object* dest;
     dest = *self;
-    return (godot_object*)dest;
+    return (rebel_object*)dest;
 }
 
-godot_dictionary GDAPI godot_variant_as_dictionary(const godot_variant* p_self
+rebel_dictionary GDAPI rebel_variant_as_dictionary(const rebel_variant* p_self
 ) {
-    godot_dictionary raw_dest;
+    rebel_dictionary raw_dest;
     const Variant* self = (const Variant*)p_self;
     Dictionary* dest    = (Dictionary*)&raw_dest;
     memnew_placement(
@@ -427,8 +427,8 @@ godot_dictionary GDAPI godot_variant_as_dictionary(const godot_variant* p_self
     return raw_dest;
 }
 
-godot_array GDAPI godot_variant_as_array(const godot_variant* p_self) {
-    godot_array raw_dest;
+rebel_array GDAPI rebel_variant_as_array(const rebel_variant* p_self) {
+    rebel_array raw_dest;
     const Variant* self = (const Variant*)p_self;
     Array* dest         = (Array*)&raw_dest;
     memnew_placement(
@@ -438,9 +438,9 @@ godot_array GDAPI godot_variant_as_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_pool_byte_array GDAPI
-godot_variant_as_pool_byte_array(const godot_variant* p_self) {
-    godot_pool_byte_array raw_dest;
+rebel_pool_byte_array GDAPI
+rebel_variant_as_pool_byte_array(const rebel_variant* p_self) {
+    rebel_pool_byte_array raw_dest;
     const Variant* self = (const Variant*)p_self;
     PoolByteArray* dest = (PoolByteArray*)&raw_dest;
     memnew_placement(
@@ -451,9 +451,9 @@ godot_variant_as_pool_byte_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_pool_int_array GDAPI
-godot_variant_as_pool_int_array(const godot_variant* p_self) {
-    godot_pool_int_array raw_dest;
+rebel_pool_int_array GDAPI
+rebel_variant_as_pool_int_array(const rebel_variant* p_self) {
+    rebel_pool_int_array raw_dest;
     const Variant* self = (const Variant*)p_self;
     PoolIntArray* dest  = (PoolIntArray*)&raw_dest;
     memnew_placement(
@@ -464,9 +464,9 @@ godot_variant_as_pool_int_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_pool_real_array GDAPI
-godot_variant_as_pool_real_array(const godot_variant* p_self) {
-    godot_pool_real_array raw_dest;
+rebel_pool_real_array GDAPI
+rebel_variant_as_pool_real_array(const rebel_variant* p_self) {
+    rebel_pool_real_array raw_dest;
     const Variant* self = (const Variant*)p_self;
     PoolRealArray* dest = (PoolRealArray*)&raw_dest;
     memnew_placement(
@@ -477,9 +477,9 @@ godot_variant_as_pool_real_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_pool_string_array GDAPI
-godot_variant_as_pool_string_array(const godot_variant* p_self) {
-    godot_pool_string_array raw_dest;
+rebel_pool_string_array GDAPI
+rebel_variant_as_pool_string_array(const rebel_variant* p_self) {
+    rebel_pool_string_array raw_dest;
     const Variant* self   = (const Variant*)p_self;
     PoolStringArray* dest = (PoolStringArray*)&raw_dest;
     memnew_placement(
@@ -490,9 +490,9 @@ godot_variant_as_pool_string_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_pool_vector2_array GDAPI
-godot_variant_as_pool_vector2_array(const godot_variant* p_self) {
-    godot_pool_vector2_array raw_dest;
+rebel_pool_vector2_array GDAPI
+rebel_variant_as_pool_vector2_array(const rebel_variant* p_self) {
+    rebel_pool_vector2_array raw_dest;
     const Variant* self    = (const Variant*)p_self;
     PoolVector2Array* dest = (PoolVector2Array*)&raw_dest;
     memnew_placement(
@@ -503,9 +503,9 @@ godot_variant_as_pool_vector2_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_pool_vector3_array GDAPI
-godot_variant_as_pool_vector3_array(const godot_variant* p_self) {
-    godot_pool_vector3_array raw_dest;
+rebel_pool_vector3_array GDAPI
+rebel_variant_as_pool_vector3_array(const rebel_variant* p_self) {
+    rebel_pool_vector3_array raw_dest;
     const Variant* self    = (const Variant*)p_self;
     PoolVector3Array* dest = (PoolVector3Array*)&raw_dest;
     memnew_placement(
@@ -516,9 +516,9 @@ godot_variant_as_pool_vector3_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_pool_color_array GDAPI
-godot_variant_as_pool_color_array(const godot_variant* p_self) {
-    godot_pool_color_array raw_dest;
+rebel_pool_color_array GDAPI
+rebel_variant_as_pool_color_array(const rebel_variant* p_self) {
+    rebel_pool_color_array raw_dest;
     const Variant* self  = (const Variant*)p_self;
     PoolColorArray* dest = (PoolColorArray*)&raw_dest;
     memnew_placement(
@@ -529,17 +529,17 @@ godot_variant_as_pool_color_array(const godot_variant* p_self) {
     return raw_dest;
 }
 
-godot_variant GDAPI godot_variant_call(
-    godot_variant* p_self,
-    const godot_string* p_method,
-    const godot_variant** p_args,
-    const godot_int p_argcount,
-    godot_variant_call_error* r_error
+rebel_variant GDAPI rebel_variant_call(
+    rebel_variant* p_self,
+    const rebel_string* p_method,
+    const rebel_variant** p_args,
+    const rebel_int p_argcount,
+    rebel_variant_call_error* r_error
 ) {
     Variant* self        = (Variant*)p_self;
     String* method       = (String*)p_method;
     const Variant** args = (const Variant**)p_args;
-    godot_variant raw_dest;
+    rebel_variant raw_dest;
     Variant* dest = (Variant*)&raw_dest;
     Variant::CallError error;
     memnew_placement_custom(
@@ -548,65 +548,65 @@ godot_variant GDAPI godot_variant_call(
         Variant(self->call(*method, args, p_argcount, error))
     );
     if (r_error) {
-        r_error->error    = (godot_variant_call_error_error)error.error;
+        r_error->error    = (rebel_variant_call_error_error)error.error;
         r_error->argument = error.argument;
-        r_error->expected = (godot_variant_type)error.expected;
+        r_error->expected = (rebel_variant_type)error.expected;
     }
     return raw_dest;
 }
 
-godot_bool GDAPI godot_variant_has_method(
-    const godot_variant* p_self,
-    const godot_string* p_method
+rebel_bool GDAPI rebel_variant_has_method(
+    const rebel_variant* p_self,
+    const rebel_string* p_method
 ) {
     const Variant* self  = (const Variant*)p_self;
     const String* method = (const String*)p_method;
     return self->has_method(*method);
 }
 
-godot_bool GDAPI godot_variant_operator_equal(
-    const godot_variant* p_self,
-    const godot_variant* p_other
+rebel_bool GDAPI rebel_variant_operator_equal(
+    const rebel_variant* p_self,
+    const rebel_variant* p_other
 ) {
     const Variant* self  = (const Variant*)p_self;
     const Variant* other = (const Variant*)p_other;
     return self->operator==(*other);
 }
 
-godot_bool GDAPI godot_variant_operator_less(
-    const godot_variant* p_self,
-    const godot_variant* p_other
+rebel_bool GDAPI rebel_variant_operator_less(
+    const rebel_variant* p_self,
+    const rebel_variant* p_other
 ) {
     const Variant* self  = (const Variant*)p_self;
     const Variant* other = (const Variant*)p_other;
     return self->operator<(*other);
 }
 
-godot_bool GDAPI godot_variant_hash_compare(
-    const godot_variant* p_self,
-    const godot_variant* p_other
+rebel_bool GDAPI rebel_variant_hash_compare(
+    const rebel_variant* p_self,
+    const rebel_variant* p_other
 ) {
     const Variant* self  = (const Variant*)p_self;
     const Variant* other = (const Variant*)p_other;
     return self->hash_compare(*other);
 }
 
-godot_bool GDAPI godot_variant_booleanize(const godot_variant* p_self) {
+rebel_bool GDAPI rebel_variant_booleanize(const rebel_variant* p_self) {
     const Variant* self = (const Variant*)p_self;
     return self->booleanize();
 }
 
-void GDAPI godot_variant_destroy(godot_variant* p_self) {
+void GDAPI rebel_variant_destroy(rebel_variant* p_self) {
     Variant* self = (Variant*)p_self;
     self->~Variant();
 }
 
 // GDNative core 1.1
 
-godot_string GDAPI godot_variant_get_operator_name(godot_variant_operator p_op
+rebel_string GDAPI rebel_variant_get_operator_name(rebel_variant_operator p_op
 ) {
     Variant::Operator op = (Variant::Operator)p_op;
-    godot_string raw_dest;
+    rebel_string raw_dest;
     String* dest = (String*)&raw_dest;
     memnew_placement(
         dest,
@@ -615,12 +615,12 @@ godot_string GDAPI godot_variant_get_operator_name(godot_variant_operator p_op
     return raw_dest;
 }
 
-void GDAPI godot_variant_evaluate(
-    godot_variant_operator p_op,
-    const godot_variant* p_a,
-    const godot_variant* p_b,
-    godot_variant* r_ret,
-    godot_bool* r_valid
+void GDAPI rebel_variant_evaluate(
+    rebel_variant_operator p_op,
+    const rebel_variant* p_a,
+    const rebel_variant* p_b,
+    rebel_variant* r_ret,
+    rebel_bool* r_valid
 ) {
     Variant::Operator op = (Variant::Operator)p_op;
     const Variant* a     = (const Variant*)p_a;

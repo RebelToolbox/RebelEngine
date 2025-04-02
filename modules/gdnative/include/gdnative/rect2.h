@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_RECT2_H
-#define GODOT_RECT2_H
+#ifndef GDNATIVE_RECT2_H
+#define GDNATIVE_RECT2_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,12 +13,12 @@ extern "C" {
 
 #include <stdint.h>
 
-#ifndef GODOT_CORE_API_GODOT_RECT2_TYPE_DEFINED
-#define GODOT_CORE_API_GODOT_RECT2_TYPE_DEFINED
+#ifndef REBEL_CORE_API_REBEL_RECT2_TYPE_DEFINED
+#define REBEL_CORE_API_REBEL_RECT2_TYPE_DEFINED
 
-typedef struct godot_rect2 {
+typedef struct rebel_rect2 {
     uint8_t _dont_touch_that[16];
-} godot_rect2;
+} rebel_rect2;
 #endif
 
 // reduce extern "C" nesting for VS2013
@@ -33,77 +33,77 @@ typedef struct godot_rect2 {
 extern "C" {
 #endif
 
-void GDAPI godot_rect2_new_with_position_and_size(
-    godot_rect2* r_dest,
-    const godot_vector2* p_pos,
-    const godot_vector2* p_size
+void GDAPI rebel_rect2_new_with_position_and_size(
+    rebel_rect2* r_dest,
+    const rebel_vector2* p_pos,
+    const rebel_vector2* p_size
 );
-void GDAPI godot_rect2_new(
-    godot_rect2* r_dest,
-    const godot_real p_x,
-    const godot_real p_y,
-    const godot_real p_width,
-    const godot_real p_height
-);
-
-godot_string GDAPI godot_rect2_as_string(const godot_rect2* p_self);
-
-godot_real GDAPI godot_rect2_get_area(const godot_rect2* p_self);
-
-godot_bool GDAPI
-godot_rect2_intersects(const godot_rect2* p_self, const godot_rect2* p_b);
-
-godot_bool GDAPI
-godot_rect2_encloses(const godot_rect2* p_self, const godot_rect2* p_b);
-
-godot_bool GDAPI godot_rect2_has_no_area(const godot_rect2* p_self);
-
-godot_rect2 GDAPI
-godot_rect2_clip(const godot_rect2* p_self, const godot_rect2* p_b);
-
-godot_rect2 GDAPI
-godot_rect2_merge(const godot_rect2* p_self, const godot_rect2* p_b);
-
-godot_bool GDAPI
-godot_rect2_has_point(const godot_rect2* p_self, const godot_vector2* p_point);
-
-godot_rect2 GDAPI
-godot_rect2_grow(const godot_rect2* p_self, const godot_real p_by);
-
-godot_rect2 GDAPI godot_rect2_grow_individual(
-    const godot_rect2* p_self,
-    const godot_real p_left,
-    const godot_real p_top,
-    const godot_real p_right,
-    const godot_real p_bottom
+void GDAPI rebel_rect2_new(
+    rebel_rect2* r_dest,
+    const rebel_real p_x,
+    const rebel_real p_y,
+    const rebel_real p_width,
+    const rebel_real p_height
 );
 
-godot_rect2 GDAPI godot_rect2_grow_margin(
-    const godot_rect2* p_self,
-    const godot_int p_margin,
-    const godot_real p_by
+rebel_string GDAPI rebel_rect2_as_string(const rebel_rect2* p_self);
+
+rebel_real GDAPI rebel_rect2_get_area(const rebel_rect2* p_self);
+
+rebel_bool GDAPI
+rebel_rect2_intersects(const rebel_rect2* p_self, const rebel_rect2* p_b);
+
+rebel_bool GDAPI
+rebel_rect2_encloses(const rebel_rect2* p_self, const rebel_rect2* p_b);
+
+rebel_bool GDAPI rebel_rect2_has_no_area(const rebel_rect2* p_self);
+
+rebel_rect2 GDAPI
+rebel_rect2_clip(const rebel_rect2* p_self, const rebel_rect2* p_b);
+
+rebel_rect2 GDAPI
+rebel_rect2_merge(const rebel_rect2* p_self, const rebel_rect2* p_b);
+
+rebel_bool GDAPI
+rebel_rect2_has_point(const rebel_rect2* p_self, const rebel_vector2* p_point);
+
+rebel_rect2 GDAPI
+rebel_rect2_grow(const rebel_rect2* p_self, const rebel_real p_by);
+
+rebel_rect2 GDAPI rebel_rect2_grow_individual(
+    const rebel_rect2* p_self,
+    const rebel_real p_left,
+    const rebel_real p_top,
+    const rebel_real p_right,
+    const rebel_real p_bottom
 );
 
-godot_rect2 GDAPI godot_rect2_abs(const godot_rect2* p_self);
+rebel_rect2 GDAPI rebel_rect2_grow_margin(
+    const rebel_rect2* p_self,
+    const rebel_int p_margin,
+    const rebel_real p_by
+);
 
-godot_rect2 GDAPI
-godot_rect2_expand(const godot_rect2* p_self, const godot_vector2* p_to);
+rebel_rect2 GDAPI rebel_rect2_abs(const rebel_rect2* p_self);
 
-godot_bool GDAPI
-godot_rect2_operator_equal(const godot_rect2* p_self, const godot_rect2* p_b);
+rebel_rect2 GDAPI
+rebel_rect2_expand(const rebel_rect2* p_self, const rebel_vector2* p_to);
 
-godot_vector2 GDAPI godot_rect2_get_position(const godot_rect2* p_self);
+rebel_bool GDAPI
+rebel_rect2_operator_equal(const rebel_rect2* p_self, const rebel_rect2* p_b);
 
-godot_vector2 GDAPI godot_rect2_get_size(const godot_rect2* p_self);
+rebel_vector2 GDAPI rebel_rect2_get_position(const rebel_rect2* p_self);
+
+rebel_vector2 GDAPI rebel_rect2_get_size(const rebel_rect2* p_self);
 
 void GDAPI
-godot_rect2_set_position(godot_rect2* p_self, const godot_vector2* p_pos);
+rebel_rect2_set_position(rebel_rect2* p_self, const rebel_vector2* p_pos);
 
 void GDAPI
-godot_rect2_set_size(godot_rect2* p_self, const godot_vector2* p_size);
+rebel_rect2_set_size(rebel_rect2* p_self, const rebel_vector2* p_size);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // GODOT_RECT2_H
+#endif // GDNATIVE_RECT2_H

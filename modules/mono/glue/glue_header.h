@@ -15,15 +15,15 @@
 
 /**
  * Registers internal calls that were not generated. This function is called
- * from the generated GodotSharpBindings::register_generated_icalls() function.
+ * from the generated RebelSharpBindings::register_generated_icalls() function.
  */
-void godot_register_glue_header_icalls() {
-    godot_register_collections_icalls();
-    godot_register_gd_icalls();
-    godot_register_nodepath_icalls();
-    godot_register_object_icalls();
-    godot_register_rid_icalls();
-    godot_register_string_icalls();
+void rebel_register_glue_header_icalls() {
+    rebel_register_collections_icalls();
+    rebel_register_gd_icalls();
+    rebel_register_nodepath_icalls();
+    rebel_register_object_icalls();
+    rebel_register_rid_icalls();
+    rebel_register_string_icalls();
 }
 
 // Used by the generated glue
@@ -42,7 +42,7 @@ void godot_register_glue_header_icalls() {
 #include "core/typedefs.h"
 #include "core/ustring.h"
 
-#define GODOTSHARP_INSTANCE_OBJECT(m_instance, m_type)                         \
+#define REBELSHARP_INSTANCE_OBJECT(m_instance, m_type)                         \
     static ClassDB::ClassInfo* ci = NULL;                                      \
     if (!ci) {                                                                 \
         ci = ClassDB::classes.getptr(m_type);                                  \

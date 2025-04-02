@@ -195,5 +195,5 @@ int GDMonoProperty::get_int_value(MonoObject* p_object) {
 
 String GDMonoProperty::get_string_value(MonoObject* p_object) {
     MonoObject* val = get_value(p_object);
-    return GDMonoMarshal::mono_string_to_godot((MonoString*)val);
+    return GDMonoMarshal::mono_string_to_rebel((MonoString*)val);
 }

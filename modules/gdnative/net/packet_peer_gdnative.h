@@ -9,21 +9,21 @@
 
 #include "core/io/packet_peer.h"
 #include "modules/gdnative/gdnative.h"
-#include "modules/gdnative/include/net/godot_net.h"
+#include "modules/gdnative/include/net/rebel_net.h"
 
 class PacketPeerGDNative : public PacketPeer {
     GDCLASS(PacketPeerGDNative, PacketPeer);
 
 protected:
     static void _bind_methods();
-    const godot_net_packet_peer* interface;
+    const rebel_net_packet_peer* interface;
 
 public:
     PacketPeerGDNative();
     ~PacketPeerGDNative();
 
     /* Sets the interface implementation from GDNative */
-    void set_native_packet_peer(const godot_net_packet_peer* p_impl);
+    void set_native_packet_peer(const rebel_net_packet_peer* p_impl);
 
     /* Specific to PacketPeer */
     virtual Error get_packet(const uint8_t** r_buffer, int& r_buffer_size);

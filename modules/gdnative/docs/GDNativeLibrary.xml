@@ -47,8 +47,8 @@ SPDX-License-Identifier: MIT
             If [code]true[/code], Rebel Engine loads the library at startup rather than the first time a script uses the library, calling [code]{prefix}gdnative_singleton[/code] after initializing the library (where [code]{prefix}[/code] is the value of [member symbol_prefix]). The library remains loaded as long as Rebel Engine is running.
             [b]Note:[/b] A singleton library cannot be [member reloadable].
         </member>
-        <member name="symbol_prefix" type="String" setter="set_symbol_prefix" getter="get_symbol_prefix" default="&quot;godot_&quot;">
-            The prefix this library's entry point functions begin with. For example, a GDNativeLibrary would declare its [code]gdnative_init[/code] function as [code]godot_gdnative_init[/code] by default.
+        <member name="symbol_prefix" type="String" setter="set_symbol_prefix" getter="get_symbol_prefix" default="&quot;rebel_&quot;">
+            The prefix this library's entry point functions begin with. For example, a GDNativeLibrary would declare its [code]gdnative_init[/code] function as [code]rebel_gdnative_init[/code] by default.
             On platforms that require statically linking libraries (currently only iOS), each library must have a different [code]symbol_prefix[/code].
         </member>
     </members>

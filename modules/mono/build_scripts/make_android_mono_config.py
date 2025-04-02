@@ -36,7 +36,7 @@ static const unsigned char config_compressed_data[] = { %s };
 
 } // namespace
 
-String get_godot_android_mono_config() {
+String get_rebel_android_mono_config() {
 	PoolVector<uint8_t> data;
 	data.resize(config_uncompressed_size);
 	PoolVector<uint8_t>::Write w = data.write();

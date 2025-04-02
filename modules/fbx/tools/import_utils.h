@@ -17,7 +17,7 @@
 
 /**
  * Import Utils
- * Conversion tools / glue code to convert from FBX to Godot
+ * Conversion tools / glue code to convert from FBX to Rebel Engine
  */
 class ImportUtils {
 public:

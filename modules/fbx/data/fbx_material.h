@@ -16,7 +16,7 @@ struct FBXMaterial : public Reference {
     bool warning_non_pbr_material    = false;
     FBXDocParser::Material* material = nullptr;
 
-    /* Godot materials
+    /* Rebel materials
      *** Texture Maps:
      * Albedo - color, texture
      * Metallic - specular, metallic, texture

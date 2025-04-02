@@ -21,7 +21,7 @@
     static_assert((m_cond), "Condition '" #m_cond "' failed")
 #else
 #define GD_STATIC_ASSERT(m_cond)                                               \
-    typedef int GD_UNIQUE_NAME(godot_static_assert)[((m_cond) ? 1 : -1)]
+    typedef int GD_UNIQUE_NAME(rebel_static_assert)[((m_cond) ? 1 : -1)]
 #endif
 
 // final

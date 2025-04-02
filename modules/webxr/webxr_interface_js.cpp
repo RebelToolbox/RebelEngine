@@ -11,8 +11,8 @@
 #include "core/os/input.h"
 #include "core/os/os.h"
 #include "emscripten.h"
-#include "godot_webxr.h"
 #include "main/input_default.h"
+#include "rebel_webxr.h"
 #include "servers/visual/visual_server_globals.h"
 
 #include <stdlib.h>

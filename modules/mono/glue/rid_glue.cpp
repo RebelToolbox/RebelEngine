@@ -10,7 +10,7 @@
 
 #include "core/resource.h"
 
-RID* godot_icall_RID_Ctor(Object* p_from) {
+RID* rebel_icall_RID_Ctor(Object* p_from) {
     Resource* res_from = Object::cast_to<Resource>(p_from);
 
     if (res_from) {
@@ -20,27 +20,27 @@ RID* godot_icall_RID_Ctor(Object* p_from) {
     return memnew(RID);
 }
 
-void godot_icall_RID_Dtor(RID* p_ptr) {
+void rebel_icall_RID_Dtor(RID* p_ptr) {
     ERR_FAIL_NULL(p_ptr);
     memdelete(p_ptr);
 }
 
-uint32_t godot_icall_RID_get_id(RID* p_ptr) {
+uint32_t rebel_icall_RID_get_id(RID* p_ptr) {
     return p_ptr->get_id();
 }
 
-void godot_register_rid_icalls() {
+void rebel_register_rid_icalls() {
     GDMonoUtils::add_internal_call(
-        "Godot.RID::godot_icall_RID_Ctor",
-        godot_icall_RID_Ctor
+        "Rebel.RID::rebel_icall_RID_Ctor",
+        rebel_icall_RID_Ctor
     );
     GDMonoUtils::add_internal_call(
-        "Godot.RID::godot_icall_RID_Dtor",
-        godot_icall_RID_Dtor
+        "Rebel.RID::rebel_icall_RID_Dtor",
+        rebel_icall_RID_Dtor
     );
     GDMonoUtils::add_internal_call(
-        "Godot.RID::godot_icall_RID_get_id",
-        godot_icall_RID_get_id
+        "Rebel.RID::rebel_icall_RID_get_id",
+        rebel_icall_RID_get_id
     );
 }
 

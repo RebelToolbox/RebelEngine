@@ -139,11 +139,9 @@ Error save_exr(
     EXRImage image;
     InitEXRImage(&image);
 
+    // To store header information on the stack, the maximum number of channels
+    // is hard-coded to 4 and the information is limited to the subset needed.
     const int max_channels = 4;
-
-    // Godot does not support more than 4 channels,
-    // so we can preallocate header infos on the stack and use only the subset
-    // we need
     PoolByteArray channels[max_channels];
     unsigned char* channels_ptrs[max_channels];
     EXRChannelInfo channel_infos[max_channels];

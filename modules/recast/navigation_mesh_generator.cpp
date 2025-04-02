@@ -342,7 +342,7 @@ void EditorNavigationMeshGenerator::
         for (unsigned int j = 0; j < ntris; j++) {
             Vector<int> nav_indices;
             nav_indices.resize(3);
-            // Polygon order in recast is opposite than godot's
+            // Polygon order in Recast is the opposite to Rebel's
             nav_indices.write[0] = ((int)(bverts + tris[j * 4 + 0]));
             nav_indices.write[1] = ((int)(bverts + tris[j * 4 + 2]));
             nav_indices.write[2] = ((int)(bverts + tris[j * 4 + 1]));
@@ -567,14 +567,6 @@ void EditorNavigationMeshGenerator::bake(
     Ref<NavigationMesh> p_nav_mesh,
     Node* p_node
 ) {
-    if (!Engine::get_singleton()->is_editor_hint()) {
-        ERR_PRINT(
-            "Invoking EditorNavigationMeshGenerator::bake(...) in-game is not "
-            "supported in Godot 3.2 or below. Aborting bake..."
-        );
-        return;
-    }
-
     ERR_FAIL_COND(!p_nav_mesh.is_valid());
 
     EditorProgress ep("bake", TTR("Navigation Mesh Generator Setup:"), 11);

@@ -12,7 +12,7 @@
 #include "core/ustring.h"
 
 // This function is defined in an auto-generated source file
-String get_godot_android_mono_config();
+String get_rebel_android_mono_config();
 
 #endif // ANDROID_ENABLED
 

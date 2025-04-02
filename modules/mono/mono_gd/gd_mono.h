@@ -7,7 +7,7 @@
 #ifndef GD_MONO_H
 #define GD_MONO_H
 
-#include "../godotsharp_defs.h"
+#include "../rebelsharp_defs.h"
 #include "core/io/config_file.h"
 #include "gd_mono_assembly.h"
 #include "gd_mono_log.h"
@@ -23,24 +23,24 @@ enum Type {
 };
 
 struct Version {
-    uint64_t godot_api_hash;
+    uint64_t rebel_api_hash;
     uint32_t bindings_version;
     uint32_t cs_glue_version;
 
     bool operator==(const Version& p_other) const {
-        return godot_api_hash == p_other.godot_api_hash
+        return rebel_api_hash == p_other.rebel_api_hash
             && bindings_version == p_other.bindings_version
             && cs_glue_version == p_other.cs_glue_version;
     }
 
-    Version() : godot_api_hash(0), bindings_version(0), cs_glue_version(0) {}
+    Version() : rebel_api_hash(0), bindings_version(0), cs_glue_version(0) {}
 
     Version(
-        uint64_t p_godot_api_hash,
+        uint64_t p_rebel_api_hash,
         uint32_t p_bindings_version,
         uint32_t p_cs_glue_version
     ) :
-        godot_api_hash(p_godot_api_hash),
+        rebel_api_hash(p_rebel_api_hash),
         bindings_version(p_bindings_version),
         cs_glue_version(p_cs_glue_version) {}
 
@@ -139,7 +139,7 @@ private:
 #ifdef TOOLS_ENABLED
     uint64_t api_editor_hash;
 #endif
-    void _init_godot_api_hashes();
+    void _init_rebel_api_hashes();
     void _init_exception_policy();
 
     GDMonoLog* gdmono_log;
@@ -350,8 +350,8 @@ public:
     );                                                                         \
     (void)__gdmono__scope__exit__domain__unload__;
 
-class _GodotSharp : public Object {
-    GDCLASS(_GodotSharp, Object);
+class _RebelSharp : public Object {
+    GDCLASS(_RebelSharp, Object);
 
     friend class GDMono;
 
@@ -363,11 +363,11 @@ class _GodotSharp : public Object {
     void _reload_assemblies(bool p_soft_reload);
 
 protected:
-    static _GodotSharp* singleton;
+    static _RebelSharp* singleton;
     static void _bind_methods();
 
 public:
-    static _GodotSharp* get_singleton() {
+    static _RebelSharp* get_singleton() {
         return singleton;
     }
 
@@ -386,8 +386,8 @@ public:
     bool is_runtime_shutting_down();
     bool is_runtime_initialized();
 
-    _GodotSharp();
-    ~_GodotSharp();
+    _RebelSharp();
+    ~_RebelSharp();
 };
 
 #endif // GD_MONO_H

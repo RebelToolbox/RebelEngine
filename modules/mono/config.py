@@ -82,7 +82,7 @@ def configure(env):
 def get_classes():
     return [
         "CSharpScript",
-        "GodotSharp",
+        "RebelSharp",
     ]
 
 

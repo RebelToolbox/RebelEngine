@@ -137,7 +137,7 @@ if env["builtin_libwebp"]:
     env.modules_sources += thirdparty_obj
 
 
-# Godot source files
+# Rebel source files
 
 module_obj = []
 

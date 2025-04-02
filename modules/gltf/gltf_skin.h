@@ -40,13 +40,13 @@ private:
     GLTFSkeletonIndex skeleton = -1;
 
     // A mapping from the joint indices (in the order of joints_original) to the
-    // Godot Skeleton's bone_indices
+    // Rebel Skeleton's bone_indices
     Map<int, int> joint_i_to_bone_i;
     Map<int, StringName> joint_i_to_name;
 
     // The Actual Skin that will be created as a mapping between the IBM's of
     // this skin to the generated skeleton for the mesh instances.
-    Ref<Skin> godot_skin;
+    Ref<Skin> skin;
 
 protected:
     static void _bind_methods();
@@ -79,7 +79,7 @@ public:
     Dictionary get_joint_i_to_name();
     void set_joint_i_to_name(Dictionary p_joint_i_to_name);
 
-    Ref<Skin> get_godot_skin();
-    void set_godot_skin(Ref<Skin> p_godot_skin);
+    Ref<Skin> get_skin();
+    void set_skin(Ref<Skin> p_skin);
 };
 #endif // GLTF_SKIN_H

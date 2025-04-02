@@ -6,7 +6,7 @@
 
 #include "gd_mono_log.h"
 
-#include "../godotsharp_dirs.h"
+#include "../rebelsharp_dirs.h"
 #include "../utils/string_utils.h"
 #include "core/os/dir_access.h"
 #include "core/os/os.h"
@@ -137,13 +137,13 @@ void GDMonoLog::_delete_old_log_files(const String& p_logs_dir) {
 
 void GDMonoLog::initialize() {
     CharString log_level =
-        OS::get_singleton()->get_environment("GODOT_MONO_LOG_LEVEL").utf8();
+        OS::get_singleton()->get_environment("REBEL_MONO_LOG_LEVEL").utf8();
 
     if (log_level.length() != 0
         && get_log_level_id(log_level.get_data()) == -1) {
         ERR_PRINT(
             String()
-            + "Mono: Ignoring invalid log level (GODOT_MONO_LOG_LEVEL): '"
+            + "Mono: Ignoring invalid log level (REBEL_MONO_LOG_LEVEL): '"
             + log_level.get_data() + "'."
         );
         log_level = CharString();
@@ -153,7 +153,7 @@ void GDMonoLog::initialize() {
         log_level = get_default_log_level();
     }
 
-    String logs_dir = GodotSharpDirs::get_mono_logs_dir();
+    String logs_dir = RebelSharpDirs::get_mono_logs_dir();
 
     if (_try_create_logs_dir(logs_dir)) {
         _delete_old_log_files(logs_dir);

@@ -32,7 +32,7 @@ void add_item(
         GDMono::get_singleton()->get_tools_project_editor_assembly();
 
     GDMonoClass* klass = tools_project_editor_assembly->get_class(
-        "GodotTools.ProjectEditor",
+        "RebelTools.ProjectEditor",
         "ProjectUtils"
     );
 

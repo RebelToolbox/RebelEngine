@@ -281,7 +281,7 @@ int PacketPeerMbedDTLS::get_available_packet_count() const {
 }
 
 int PacketPeerMbedDTLS::get_max_packet_size() const {
-    return 488; // 512 (UDP in Godot) - 24 (DTLS header)
+    return 488; // 512 (UDP in Rebel) - 24 (DTLS header)
 }
 
 PacketPeerMbedDTLS::PacketPeerMbedDTLS() {

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-// Godot imports
+// Rebel imports
 #include "core/os/file_access.h"
 // PluginScript imports
 #include "pluginscript_instance.h"
@@ -265,21 +265,21 @@ Error PluginScript::reload(bool p_keep_state) {
     }
 
     Error err;
-    godot_pluginscript_script_manifest manifest = _desc->init(
+    rebel_pluginscript_script_manifest manifest = _desc->init(
         _language->_data,
-        (godot_string*)&_path,
-        (godot_string*)&_source,
-        (godot_error*)&err
+        (rebel_string*)&_path,
+        (rebel_string*)&_source,
+        (rebel_error*)&err
     );
 // Manifest's attributes must be explicitly freed
 #define FREE_SCRIPT_MANIFEST(manifest)                                         \
     {                                                                          \
-        godot_string_name_destroy(&manifest.name);                             \
-        godot_string_name_destroy(&manifest.base);                             \
-        godot_dictionary_destroy(&manifest.member_lines);                      \
-        godot_array_destroy(&manifest.methods);                                \
-        godot_array_destroy(&manifest.signals);                                \
-        godot_array_destroy(&manifest.properties);                             \
+        rebel_string_name_destroy(&manifest.name);                             \
+        rebel_string_name_destroy(&manifest.base);                             \
+        rebel_dictionary_destroy(&manifest.member_lines);                      \
+        rebel_array_destroy(&manifest.methods);                                \
+        rebel_array_destroy(&manifest.signals);                                \
+        rebel_array_destroy(&manifest.properties);                             \
     }
 
     if (err) {

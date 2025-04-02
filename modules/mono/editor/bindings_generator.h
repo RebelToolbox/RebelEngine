@@ -111,14 +111,14 @@ class BindingsGenerator {
         bool is_vararg;
 
         /**
-         * Virtual methods ("virtual" as defined by the Godot API) are methods
+         * Virtual methods ("virtual" as defined by the Rebel API) are methods
          * that by default do nothing, but can be overridden by the user to add
          * custom functionality. e.g.: _ready, _process, etc.
          */
         bool is_virtual;
 
         /**
-         * Determines if the call should fallback to Godot's object.Call(string,
+         * Determines if the call should fallback to Rebel's object.Call(string,
          * params) in C#.
          */
         bool requires_object_call;

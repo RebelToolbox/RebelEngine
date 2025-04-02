@@ -61,8 +61,8 @@ struct CachedData {
     GDMonoClass* class_Plane;
     GDMonoClass* class_NodePath;
     GDMonoClass* class_RID;
-    GDMonoClass* class_GodotObject;
-    GDMonoClass* class_GodotResource;
+    GDMonoClass* class_RebelObject;
+    GDMonoClass* class_RebelResource;
     GDMonoClass* class_Node;
     GDMonoClass* class_Control;
     GDMonoClass* class_Spatial;
@@ -91,21 +91,21 @@ struct CachedData {
     GDMonoClass* class_MasterAttribute;
     GDMonoClass* class_PuppetAttribute;
     GDMonoClass* class_SlaveAttribute;
-    GDMonoClass* class_GodotMethodAttribute;
-    GDMonoField* field_GodotMethodAttribute_methodName;
+    GDMonoClass* class_RebelMethodAttribute;
+    GDMonoField* field_RebelMethodAttribute_methodName;
 
-    GDMonoField* field_GodotObject_ptr;
+    GDMonoField* field_RebelObject_ptr;
     GDMonoField* field_NodePath_ptr;
     GDMonoField* field_Image_ptr;
     GDMonoField* field_RID_ptr;
 
-    GDMonoMethodThunk<MonoObject*> methodthunk_GodotObject_Dispose;
+    GDMonoMethodThunk<MonoObject*> methodthunk_RebelObject_Dispose;
     GDMonoMethodThunkR<Array*, MonoObject*> methodthunk_Array_GetPtr;
     GDMonoMethodThunkR<Dictionary*, MonoObject*> methodthunk_Dictionary_GetPtr;
     GDMonoMethodThunk<MonoObject*, MonoArray*>
         methodthunk_SignalAwaiter_SignalCallback;
     GDMonoMethodThunk<MonoObject*> methodthunk_SignalAwaiter_FailureCallback;
-    GDMonoMethodThunk<MonoObject*> methodthunk_GodotTaskScheduler_Activate;
+    GDMonoMethodThunk<MonoObject*> methodthunk_RebelTaskScheduler_Activate;
 
     // Start of MarshalUtils methods
 
@@ -145,28 +145,28 @@ struct CachedData {
     Ref<MonoGCHandle> task_scheduler_handle;
 
     bool corlib_cache_updated;
-    bool godot_api_cache_updated;
+    bool rebel_api_cache_updated;
 
     void clear_corlib_cache();
-    void clear_godot_api_cache();
+    void clear_rebel_api_cache();
 
     CachedData() {
         clear_corlib_cache();
-        clear_godot_api_cache();
+        clear_rebel_api_cache();
     }
 };
 
 extern CachedData cached_data;
 
 void update_corlib_cache();
-void update_godot_api_cache();
+void update_rebel_api_cache();
 
 inline void clear_corlib_cache() {
     cached_data.clear_corlib_cache();
 }
 
-inline void clear_godot_api_cache() {
-    cached_data.clear_godot_api_cache();
+inline void clear_rebel_api_cache() {
+    cached_data.clear_rebel_api_cache();
 }
 
 } // namespace GDMonoCache

@@ -73,8 +73,7 @@ void GDScriptTextDocument::didOpen(const Variant& p_param) {
 }
 
 void GDScriptTextDocument::didClose(const Variant& p_param) {
-    // Left empty on purpose. Godot does nothing special on closing a document,
-    // but it satisfies LSP clients that require didClose be implemented.
+    // Nothing to do.
 }
 
 void GDScriptTextDocument::didChange(const Variant& p_param) {

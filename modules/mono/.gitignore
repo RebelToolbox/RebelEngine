@@ -1,2 +1,2 @@
-# Do not ignore solution files inside the mono module. Overrides Godot's global gitignore.
+# Do not ignore solution files inside the mono module. Overrides global gitignore.
 !*.sln

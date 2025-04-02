@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 
 #include "modules/gdnative/gdnative.h"
-#include "modules/gdnative/include/net/godot_net.h"
+#include "modules/gdnative/include/net/rebel_net.h"
 
 #ifdef WEBRTC_GDNATIVE_ENABLED
 #include "modules/webrtc/webrtc_data_channel_gdnative.h"
@@ -14,9 +14,9 @@
 
 extern "C" {
 
-void GDAPI godot_net_bind_webrtc_peer_connection(
-    godot_object* p_obj,
-    const godot_net_webrtc_peer_connection* p_impl
+void GDAPI rebel_net_bind_webrtc_peer_connection(
+    rebel_object* p_obj,
+    const rebel_net_webrtc_peer_connection* p_impl
 ) {
 #ifdef WEBRTC_GDNATIVE_ENABLED
     ((WebRTCPeerConnectionGDNative*)p_obj)
@@ -24,22 +24,22 @@ void GDAPI godot_net_bind_webrtc_peer_connection(
 #endif
 }
 
-void GDAPI godot_net_bind_webrtc_data_channel(
-    godot_object* p_obj,
-    const godot_net_webrtc_data_channel* p_impl
+void GDAPI rebel_net_bind_webrtc_data_channel(
+    rebel_object* p_obj,
+    const rebel_net_webrtc_data_channel* p_impl
 ) {
 #ifdef WEBRTC_GDNATIVE_ENABLED
     ((WebRTCDataChannelGDNative*)p_obj)->set_native_webrtc_data_channel(p_impl);
 #endif
 }
 
-godot_error GDAPI
-godot_net_set_webrtc_library(const godot_net_webrtc_library* p_lib) {
+rebel_error GDAPI
+rebel_net_set_webrtc_library(const rebel_net_webrtc_library* p_lib) {
 #ifdef WEBRTC_GDNATIVE_ENABLED
-    return (godot_error)WebRTCPeerConnectionGDNative::set_default_library(p_lib
+    return (rebel_error)WebRTCPeerConnectionGDNative::set_default_library(p_lib
     );
 #else
-    return (godot_error)ERR_UNAVAILABLE;
+    return (rebel_error)ERR_UNAVAILABLE;
 #endif
 }
 }

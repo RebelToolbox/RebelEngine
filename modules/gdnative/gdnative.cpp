@@ -16,13 +16,13 @@
 
 static const String init_symbol           = "gdnative_init";
 static const String terminate_symbol      = "gdnative_terminate";
-static const String default_symbol_prefix = "godot_";
+static const String default_symbol_prefix = "rebel_";
 static const bool default_singleton       = false;
 static const bool default_load_once       = true;
 static const bool default_reloadable      = true;
 
 // Defined in gdnative_api_struct.gen.cpp
-extern const godot_gdnative_core_api_struct api_struct;
+extern const rebel_gdnative_core_api_struct api_struct;
 
 Map<String, Vector<Ref<GDNative>>> GDNativeLibrary::loaded_libraries;
 
@@ -349,13 +349,13 @@ Ref<GDNativeLibrary> GDNative::get_library() const {
 }
 
 extern "C" void _gdnative_report_version_mismatch(
-    const godot_object* p_library,
+    const rebel_object* p_library,
     const char* p_ext,
-    godot_gdnative_api_version p_want,
-    godot_gdnative_api_version p_have
+    rebel_gdnative_api_version p_want,
+    rebel_gdnative_api_version p_have
 );
 extern "C" void _gdnative_report_loading_error(
-    const godot_object* p_library,
+    const rebel_object* p_library,
     const char* p_what
 );
 
@@ -468,8 +468,8 @@ bool GDNative::initialize() {
         return false;
     }
 
-    godot_gdnative_init_fn library_init_fpointer;
-    library_init_fpointer = (godot_gdnative_init_fn)library_init;
+    rebel_gdnative_init_fn library_init_fpointer;
+    library_init_fpointer = (rebel_gdnative_init_fn)library_init;
 
     static uint64_t core_api_hash   = 0;
     static uint64_t editor_api_hash = 0;
@@ -481,7 +481,7 @@ bool GDNative::initialize() {
         no_api_hash     = ClassDB::get_api_hash(ClassDB::API_NONE);
     }
 
-    godot_gdnative_init_options options;
+    rebel_gdnative_init_options options;
 
     options.api_struct              = &api_struct;
     options.in_editor               = Engine::get_singleton()->is_editor_hint();
@@ -490,8 +490,8 @@ bool GDNative::initialize() {
     options.no_api_hash             = no_api_hash;
     options.report_version_mismatch = &_gdnative_report_version_mismatch;
     options.report_loading_error    = &_gdnative_report_loading_error;
-    options.gd_native_library       = (godot_object*)(get_library().ptr());
-    options.active_library_path     = (godot_string*)&path;
+    options.gd_native_library       = (rebel_object*)(get_library().ptr());
+    options.active_library_path     = (rebel_string*)&path;
 
     library_init_fpointer(&options);
 
@@ -549,10 +549,10 @@ bool GDNative::terminate() {
         return true;
     }
 
-    godot_gdnative_terminate_fn library_terminate_pointer;
-    library_terminate_pointer = (godot_gdnative_terminate_fn)library_terminate;
+    rebel_gdnative_terminate_fn library_terminate_pointer;
+    library_terminate_pointer = (rebel_gdnative_terminate_fn)library_terminate;
 
-    godot_gdnative_terminate_options options;
+    rebel_gdnative_terminate_options options;
     options.in_editor = Engine::get_singleton()->is_editor_hint();
 
     library_terminate_pointer(&options);
@@ -620,11 +620,11 @@ Variant GDNative::call_native(
         return Variant();
     }
 
-    godot_variant result =
-        E->get()(procedure_handle, (godot_array*)&p_arguments);
+    rebel_variant result =
+        E->get()(procedure_handle, (rebel_array*)&p_arguments);
 
     Variant res = *(Variant*)&result;
-    godot_variant_destroy(&result);
+    rebel_variant_destroy(&result);
     return res;
 }
 

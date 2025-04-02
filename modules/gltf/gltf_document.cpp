@@ -3592,9 +3592,8 @@ Error GLTFDocument::_parse_images(
         //  - a URI with embedded base64-encoded data, or
         //  - a reference to a bufferView; in that case mimeType must be
         //  defined."
-        // Since mimeType is optional for external files and base64 data, we'll
-        // have to fall back on letting Godot parse the data to figure out if
-        // it's PNG or JPEG.
+        // Since the mimeType is optional for external files and base64 data,
+        // we parse the data to determine if it's a PNG or JPEG image.
 
         // We'll assume that we use either URI or bufferView, so let's warn the
         // user if their image somehow uses both. And fail if it has neither.
@@ -3662,9 +3661,8 @@ Error GLTFDocument::_parse_images(
                 // ResourceLoader will rely on the file extension to use the
                 // relevant loader. The spec says that if mimeType is defined,
                 // it should take precedence (e.g. there could be a `.png` image
-                // which is actually JPEG), but there's no easy API for that in
-                // Godot, so we'd have to load as a buffer (i.e. embedded in the
-                // material), so we do this only as fallback.
+                // which is actually JPEG), but we don't have an API for that,
+                // so we load it into the buffer embedded in the material.
                 Ref<Texture> texture = ResourceLoader::load(uri);
                 if (texture.is_valid()) {
                     state->images.push_back(texture);
@@ -4686,8 +4684,7 @@ void GLTFDocument::_capture_nodes_for_multirooted_skin(
     }
 
     // Go up the tree till all of the multiple roots of the skin are at the same
-    // hierarchy level. This sucks, but 99% of all game engines (not just Godot)
-    // would have this same issue.
+    // hierarchy level.
     for (int i = 0; i < roots.size(); ++i) {
         GLTFNodeIndex current_node = roots[i];
         while (state->nodes[current_node]->height > maxHeight) {
@@ -5180,8 +5177,8 @@ Error GLTFDocument::_create_skeletons(Ref<GLTFState> state) {
          ++skel_i) {
         Ref<GLTFSkeleton> gltf_skeleton = state->skeletons.write[skel_i];
 
-        Skeleton* skeleton            = memnew(Skeleton);
-        gltf_skeleton->godot_skeleton = skeleton;
+        Skeleton* skeleton      = memnew(Skeleton);
+        gltf_skeleton->skeleton = skeleton;
         state->skeleton3d_to_gltf_skeleton[skeleton->get_instance_id()] =
             skel_i;
 
@@ -5271,7 +5268,7 @@ Error GLTFDocument::_map_skin_joints_indices_to_skeleton_bone_indices(
             const Ref<GLTFNode> node   = state->nodes[node_i];
 
             const int bone_index =
-                skeleton->godot_skeleton->find_bone(node->get_name());
+                skeleton->skeleton->find_bone(node->get_name());
             ERR_FAIL_COND_V(bone_index < 0, FAILED);
 
             skin->joint_i_to_bone_i.insert(joint_index, bone_index);
@@ -5329,7 +5326,7 @@ Error GLTFDocument::_create_skins(Ref<GLTFState> state) {
             }
         }
 
-        gltf_skin->godot_skin = skin;
+        gltf_skin->skin = skin;
     }
 
     // Purge the duplicates!
@@ -5337,7 +5334,7 @@ Error GLTFDocument::_create_skins(Ref<GLTFState> state) {
 
     // Create unique names now, after removing duplicates
     for (GLTFSkinIndex skin_i = 0; skin_i < state->skins.size(); ++skin_i) {
-        Ref<Skin> skin = state->skins.write[skin_i]->godot_skin;
+        Ref<Skin> skin = state->skins.write[skin_i]->skin;
         if (skin->get_name().empty()) {
             // Make a unique name, no gltf node represents this skin
             skin->set_name(_gen_unique_name(state, "Skin"));
@@ -5377,12 +5374,12 @@ bool GLTFDocument::_skins_are_same(
 void GLTFDocument::_remove_duplicate_skins(Ref<GLTFState> state) {
     for (int i = 0; i < state->skins.size(); ++i) {
         for (int j = i + 1; j < state->skins.size(); ++j) {
-            const Ref<Skin> skin_i = state->skins[i]->godot_skin;
-            const Ref<Skin> skin_j = state->skins[j]->godot_skin;
+            const Ref<Skin> skin_i = state->skins[i]->skin;
+            const Ref<Skin> skin_j = state->skins[j]->skin;
 
             if (_skins_are_same(skin_i, skin_j)) {
                 // replace it and delete the old
-                state->skins.write[j]->godot_skin = skin_i;
+                state->skins.write[j]->skin = skin_i;
             }
         }
     }
@@ -5452,7 +5449,7 @@ Error GLTFDocument::_serialize_cameras(Ref<GLTFState> state) {
             d["type"]         = "orthographic";
         } else if (camera->get_perspective()) {
             Dictionary ppt;
-            // GLTF spec is in radians, Godot's camera is in degrees.
+            // GLTF spec is in radians, Rebel's camera is in degrees.
             ppt["yfov"]      = Math::deg2rad(camera->get_fov_size());
             ppt["zfar"]      = camera->get_zfar();
             ppt["znear"]     = camera->get_znear();
@@ -5547,7 +5544,7 @@ Error GLTFDocument::_parse_cameras(Ref<GLTFState> state) {
             camera->set_perspective(false);
             if (d.has("orthographic")) {
                 const Dictionary& og = d["orthographic"];
-                // GLTF spec is in radians, Godot's camera is in degrees.
+                // GLTF spec is in radians, Rebel's camera is in degrees.
                 camera->set_fov_size(Math::rad2deg(real_t(og["ymag"])));
                 camera->set_zfar(og["zfar"]);
                 camera->set_znear(og["znear"]);
@@ -5558,7 +5555,7 @@ Error GLTFDocument::_parse_cameras(Ref<GLTFState> state) {
             camera->set_perspective(true);
             if (d.has("perspective")) {
                 const Dictionary& ppt = d["perspective"];
-                // GLTF spec is in radians, Godot's camera is in degrees.
+                // GLTF spec is in radians, Rebel's camera is in degrees.
                 camera->set_fov_size(Math::rad2deg(real_t(ppt["yfov"])));
                 camera->set_zfar(ppt["zfar"]);
                 camera->set_znear(ppt["znear"]);
@@ -6043,27 +6040,27 @@ GLTFMeshIndex GLTFDocument::_convert_mesh_to_gltf(
     }
     Ref<ArrayMesh> import_mesh;
     import_mesh.instance();
-    Ref<Mesh> godot_mesh = p_mesh_instance->get_mesh();
-    if (godot_mesh.is_null()) {
+    Ref<Mesh> mesh = p_mesh_instance->get_mesh();
+    if (mesh.is_null()) {
         return -1;
     }
-    int32_t blend_count = godot_mesh->get_blend_shape_count();
+    int32_t blend_count = mesh->get_blend_shape_count();
     Vector<float> blend_weights;
     blend_weights.resize(blend_count);
-    Ref<ArrayMesh> am = godot_mesh;
+    Ref<ArrayMesh> am = mesh;
     if (am != nullptr) {
         import_mesh = am;
     } else {
-        for (int32_t surface_i = 0; surface_i < godot_mesh->get_surface_count();
+        for (int32_t surface_i = 0; surface_i < mesh->get_surface_count();
              surface_i++) {
             Mesh::PrimitiveType primitive_type =
-                godot_mesh->surface_get_primitive_type(surface_i);
-            Array arrays      = godot_mesh->surface_get_arrays(surface_i);
-            Ref<Material> mat = godot_mesh->surface_get_material(surface_i);
-            Ref<ArrayMesh> godot_array_mesh = godot_mesh;
+                mesh->surface_get_primitive_type(surface_i);
+            Array arrays              = mesh->surface_get_arrays(surface_i);
+            Ref<Material> mat         = mesh->surface_get_material(surface_i);
+            Ref<ArrayMesh> array_mesh = mesh;
             String surface_name;
-            if (godot_array_mesh.is_valid()) {
-                surface_name = godot_array_mesh->surface_get_name(surface_i);
+            if (array_mesh.is_valid()) {
+                surface_name = array_mesh->surface_get_name(surface_i);
             }
             if (p_mesh_instance->get_surface_material(surface_i).is_valid()) {
                 mat = p_mesh_instance->get_surface_material(surface_i);
@@ -6255,8 +6252,8 @@ GLTFLightIndex GLTFDocument::_convert_light(
         l->type                 = "directional";
         DirectionalLight* light = cast_to<DirectionalLight>(p_light);
         l->intensity = light->get_param(DirectionalLight::PARAM_ENERGY);
-        l->range =
-            FLT_MAX; // Range for directional lights is infinite in Godot.
+        // Range for directional lights is infinite in Rebel Engine.
+        l->range     = FLT_MAX;
     } else if (cast_to<OmniLight>(p_light)) {
         l->type           = "point";
         OmniLight* light  = cast_to<OmniLight>(p_light);
@@ -6351,7 +6348,7 @@ void GLTFDocument::_convert_scene_node(
             p_gltf_root,
             gltf_node
         );
-        // We ignore the Godot Engine node that is the skeleton.
+        // We ignore the node that is the skeleton.
         return;
     } else if (cast_to<MultiMeshInstance>(p_current)) {
         MultiMeshInstance* multi = cast_to<MultiMeshInstance>(p_current);
@@ -6664,8 +6661,8 @@ void GLTFDocument::_convert_skeleton_to_gltf(
     // GLTFSkeleton is only used to hold internal state data. It will not be
     // written to the document.
     //
-    gltf_skeleton->godot_skeleton = skeleton;
-    GLTFSkeletonIndex skeleton_i  = state->skeletons.size();
+    gltf_skeleton->skeleton      = skeleton;
+    GLTFSkeletonIndex skeleton_i = state->skeletons.size();
     state->skeleton3d_to_gltf_skeleton[skeleton->get_instance_id()] =
         skeleton_i;
     state->skeletons.push_back(gltf_skeleton);
@@ -6694,10 +6691,10 @@ void GLTFDocument::_convert_skeleton_to_gltf(
         if (skeleton->get_bone_parent(bone_i) == -1) {
             gltf_skeleton->roots.push_back(current_node_i);
         }
-        gltf_skeleton->godot_bone_node.insert(bone_i, current_node_i);
+        gltf_skeleton->bone_node.insert(bone_i, current_node_i);
     }
     for (BoneId bone_i = 0; bone_i < bone_count; bone_i++) {
-        GLTFNodeIndex current_node_i = gltf_skeleton->godot_bone_node[bone_i];
+        GLTFNodeIndex current_node_i = gltf_skeleton->bone_node[bone_i];
         BoneId parent_bone_id        = skeleton->get_bone_parent(bone_i);
         if (parent_bone_id == -1) {
             if (p_parent_node_index != -1) {
@@ -6709,7 +6706,7 @@ void GLTFDocument::_convert_skeleton_to_gltf(
             }
         } else {
             GLTFNodeIndex parent_node_i =
-                gltf_skeleton->godot_bone_node[parent_bone_id];
+                gltf_skeleton->bone_node[parent_bone_id];
             state->nodes.write[current_node_i]->parent = parent_node_i;
             state->nodes.write[parent_node_i]->children.push_back(current_node_i
             );
@@ -6869,7 +6866,7 @@ void GLTFDocument::_generate_skeleton_bone_node(
 
     Spatial* current_node = nullptr;
 
-    Skeleton* skeleton = state->skeletons[gltf_node->skeleton]->godot_skeleton;
+    Skeleton* skeleton = state->skeletons[gltf_node->skeleton]->skeleton;
     // In this case, this node is already a bone in skeleton.
     const bool is_skinned_mesh = (gltf_node->skin >= 0 && gltf_node->mesh >= 0);
     const bool requires_extra_node =
@@ -7208,7 +7205,7 @@ void GLTFDocument::_import_animation(
 
         if (gltf_node->skeleton >= 0) {
             const Skeleton* sk =
-                state->skeletons[gltf_node->skeleton]->godot_skeleton;
+                state->skeletons[gltf_node->skeleton]->skeleton;
             ERR_FAIL_COND(sk == nullptr);
 
             const String path   = ap->get_parent()->get_path_to(sk);
@@ -7305,7 +7302,7 @@ void GLTFDocument::_import_animation(
                     xform.origin = pos;
 
                     const Skeleton* skeleton =
-                        state->skeletons[gltf_node->skeleton]->godot_skeleton;
+                        state->skeletons[gltf_node->skeleton]->skeleton;
                     const int bone_idx =
                         skeleton->find_bone(gltf_node->get_name());
                     xform = skeleton->get_bone_rest(bone_idx).affine_inverse()
@@ -7353,7 +7350,7 @@ void GLTFDocument::_import_animation(
             animation->track_set_path(track_idx, blend_path);
 
             // Only LINEAR and STEP (NEAREST) can be supported out of the box by
-            // Godot's Animation, the other modes have to be baked.
+            // Rebel's Animation, the other modes have to be baked.
             GLTFAnimation::Interpolation gltf_interp =
                 track.weight_tracks[i].interpolation;
             if (gltf_interp == GLTFAnimation::INTERP_LINEAR
@@ -7432,21 +7429,12 @@ void GLTFDocument::_convert_mesh_instances(Ref<GLTFState> state) {
         gltf_skin.instance();
         Array json_joints;
 
-        NodePath skeleton_path   = mi->get_skeleton_path();
-        Node* skel_node          = mi->get_node_or_null(skeleton_path);
-        Skeleton* godot_skeleton = nullptr;
-        if (skel_node != nullptr) {
-            godot_skeleton = cast_to<Skeleton>(skel_node);
-        }
-        if (godot_skeleton != nullptr
-            && state->skeleton3d_to_gltf_skeleton.has(
-                godot_skeleton->get_instance_id()
+        if (state->skeleton3d_to_gltf_skeleton.has(skeleton->get_instance_id()
             )) {
             // This is a skinned mesh. If the mesh has no ARRAY_WEIGHTS or
             // ARRAY_BONES, it will be invisible.
             const GLTFSkeletonIndex skeleton_gltf_i =
-                state->skeleton3d_to_gltf_skeleton[godot_skeleton
-                                                       ->get_instance_id()];
+                state->skeleton3d_to_gltf_skeleton[skeleton->get_instance_id()];
             Ref<GLTFSkeleton> gltf_skeleton = state->skeletons[skeleton_gltf_i];
             int bone_cnt                    = skeleton->get_bone_count();
             ERR_FAIL_COND(bone_cnt != gltf_skeleton->joints.size());
@@ -7455,7 +7443,7 @@ void GLTFDocument::_convert_mesh_instances(Ref<GLTFState> state) {
             if (skin.is_valid()) {
                 gltf_skin_key = skin->get_instance_id();
             }
-            ObjectID gltf_skel_key    = godot_skeleton->get_instance_id();
+            ObjectID gltf_skel_key    = skeleton->get_instance_id();
             GLTFSkinIndex skin_gltf_i = -1;
             GLTFNodeIndex root_gltf_i = -1;
             if (!gltf_skeleton->roots.empty()) {
@@ -7475,11 +7463,10 @@ void GLTFDocument::_convert_mesh_instances(Ref<GLTFState> state) {
                     skin = skeleton->register_skin(nullptr)->get_skin();
                 }
                 gltf_skin.instance();
-                gltf_skin->godot_skin = skin;
+                gltf_skin->skin = skin;
                 gltf_skin->set_name(skin->get_name());
                 gltf_skin->skeleton  = skeleton_gltf_i;
                 gltf_skin->skin_root = root_gltf_i;
-                // gltf_state->godot_to_gltf_node[skel_node]
                 HashMap<StringName, int> bone_name_to_idx;
                 for (int bone_i = 0; bone_i < bone_cnt; bone_i++) {
                     bone_name_to_idx[skeleton->get_bone_name(bone_i)] = bone_i;
@@ -7588,7 +7575,7 @@ void GLTFDocument::_process_mesh_instances(
             const GLTFSkeletonIndex skel_i =
                 state->skins.write[node->skin]->skeleton;
             Ref<GLTFSkeleton> gltf_skeleton = state->skeletons.write[skel_i];
-            Skeleton* skeleton              = gltf_skeleton->godot_skeleton;
+            Skeleton* skeleton              = gltf_skeleton->skeleton;
             ERR_CONTINUE_MSG(
                 skeleton == nullptr,
                 vformat(
@@ -7602,7 +7589,7 @@ void GLTFDocument::_process_mesh_instances(
             skeleton->add_child(mi);
             mi->set_owner(skeleton->get_owner());
 
-            mi->set_skin(state->skins.write[skin_i]->godot_skin);
+            mi->set_skin(state->skins.write[skin_i]->skin);
             mi->set_skeleton_path(mi->get_path_to(skeleton));
             mi->set_transform(Transform());
         }
@@ -8062,18 +8049,17 @@ void GLTFDocument::_convert_animation(
             // Process skeleton
             const Vector<String> node_suffix =
                 String(orig_track_path).split(":");
-            const String node        = node_suffix[0];
-            const NodePath node_path = node;
+            const NodePath node_path = node_suffix[0];
             const String suffix      = node_suffix[1];
-            Node* godot_node   = ap->get_parent()->get_node_or_null(node_path);
+            Node* node         = ap->get_parent()->get_node_or_null(node_path);
             Skeleton* skeleton = nullptr;
             GLTFSkeletonIndex skeleton_gltf_i = -1;
             for (GLTFSkeletonIndex skeleton_i = 0;
                  skeleton_i < state->skeletons.size();
                  skeleton_i++) {
-                if (state->skeletons[skeleton_i]->godot_skeleton
-                    == cast_to<Skeleton>(godot_node)) {
-                    skeleton = state->skeletons[skeleton_i]->godot_skeleton;
+                if (state->skeletons[skeleton_i]->skeleton
+                    == cast_to<Skeleton>(node)) {
+                    skeleton        = state->skeletons[skeleton_i]->skeleton;
                     skeleton_gltf_i = skeleton_i;
                     ERR_CONTINUE(!skeleton);
                     Ref<GLTFSkeleton> skeleton_gltf =
@@ -8081,10 +8067,10 @@ void GLTFDocument::_convert_animation(
                     int32_t bone = skeleton->find_bone(suffix);
                     ERR_CONTINUE(bone == -1);
                     Transform xform = skeleton->get_bone_rest(bone);
-                    if (!skeleton_gltf->godot_bone_node.has(bone)) {
+                    if (!skeleton_gltf->bone_node.has(bone)) {
                         continue;
                     }
-                    GLTFNodeIndex node_i = skeleton_gltf->godot_bone_node[bone];
+                    GLTFNodeIndex node_i = skeleton_gltf->bone_node[bone];
                     Map<int, GLTFAnimation::Track>::Element* property_track_i =
                         gltf_animation->get_tracks().find(node_i);
                     GLTFAnimation::Track track;
@@ -8308,7 +8294,7 @@ Dictionary GLTFDocument::_serialize_texture_transform_uv2(
         scale[0]                           = mat->get_uv2_scale().x;
         scale[1]                           = mat->get_uv2_scale().y;
         texture_transform["scale"]         = scale;
-        // Godot doesn't support texture rotation
+        // Rebel doesn't support texture rotation
         extension["KHR_texture_transform"] = texture_transform;
     }
     return extension;
@@ -8330,7 +8316,7 @@ Dictionary GLTFDocument::_serialize_texture_transform_uv1(
         scale[0]                           = p_material->get_uv1_scale().x;
         scale[1]                           = p_material->get_uv1_scale().y;
         texture_transform["scale"]         = scale;
-        // Godot doesn't support texture rotation
+        // Rebel doesn't support texture rotation
         extension["KHR_texture_transform"] = texture_transform;
     }
     return extension;

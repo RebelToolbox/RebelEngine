@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_RID_H
-#define GODOT_RID_H
+#ifndef GDNATIVE_RID_H
+#define GDNATIVE_RID_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,14 +13,14 @@ extern "C" {
 
 #include <stdint.h>
 
-#define GODOT_RID_SIZE sizeof(void*)
+#define REBEL_RID_SIZE sizeof(void*)
 
-#ifndef GODOT_CORE_API_GODOT_RID_TYPE_DEFINED
-#define GODOT_CORE_API_GODOT_RID_TYPE_DEFINED
+#ifndef REBEL_CORE_API_REBEL_RID_TYPE_DEFINED
+#define REBEL_CORE_API_REBEL_RID_TYPE_DEFINED
 
 typedef struct {
-    uint8_t _dont_touch_that[GODOT_RID_SIZE];
-} godot_rid;
+    uint8_t _dont_touch_that[REBEL_RID_SIZE];
+} rebel_rid;
 #endif
 
 // reduce extern "C" nesting for VS2013
@@ -34,21 +34,21 @@ typedef struct {
 extern "C" {
 #endif
 
-void GDAPI godot_rid_new(godot_rid* r_dest);
+void GDAPI rebel_rid_new(rebel_rid* r_dest);
 
-godot_int GDAPI godot_rid_get_id(const godot_rid* p_self);
+rebel_int GDAPI rebel_rid_get_id(const rebel_rid* p_self);
 
 void GDAPI
-godot_rid_new_with_resource(godot_rid* r_dest, const godot_object* p_from);
+rebel_rid_new_with_resource(rebel_rid* r_dest, const rebel_object* p_from);
 
-godot_bool GDAPI
-godot_rid_operator_equal(const godot_rid* p_self, const godot_rid* p_b);
+rebel_bool GDAPI
+rebel_rid_operator_equal(const rebel_rid* p_self, const rebel_rid* p_b);
 
-godot_bool GDAPI
-godot_rid_operator_less(const godot_rid* p_self, const godot_rid* p_b);
+rebel_bool GDAPI
+rebel_rid_operator_less(const rebel_rid* p_self, const rebel_rid* p_b);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // GODOT_RID_H
+#endif // GDNATIVE_RID_H

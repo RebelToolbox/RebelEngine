@@ -13,7 +13,7 @@ StreamPeerGDNative::StreamPeerGDNative() {
 StreamPeerGDNative::~StreamPeerGDNative() {}
 
 void StreamPeerGDNative::set_native_stream_peer(
-    const godot_net_stream_peer* p_interface
+    const rebel_net_stream_peer* p_interface
 ) {
     interface = p_interface;
 }
@@ -65,9 +65,9 @@ int StreamPeerGDNative::get_available_bytes() const {
 
 extern "C" {
 
-void GDAPI godot_net_bind_stream_peer(
-    godot_object* p_obj,
-    const godot_net_stream_peer* p_interface
+void GDAPI rebel_net_bind_stream_peer(
+    rebel_object* p_obj,
+    const rebel_net_stream_peer* p_interface
 ) {
     ((StreamPeerGDNative*)p_obj)->set_native_stream_peer(p_interface);
 }

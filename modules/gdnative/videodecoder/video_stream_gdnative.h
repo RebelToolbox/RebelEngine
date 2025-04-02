@@ -13,14 +13,14 @@
 #include "scene/resources/video_stream.h"
 
 struct VideoDecoderGDNative {
-    const godot_videodecoder_interface_gdnative* interface;
+    const rebel_videodecoder_interface_gdnative* interface;
     String plugin_name;
     Vector<String> supported_extensions;
 
     VideoDecoderGDNative() : interface(nullptr), plugin_name("none") {}
 
     VideoDecoderGDNative(
-        const godot_videodecoder_interface_gdnative* p_interface
+        const rebel_videodecoder_interface_gdnative* p_interface
     ) :
         interface(p_interface),
         plugin_name(p_interface->get_plugin_name()) {
@@ -56,7 +56,7 @@ public:
     }
 
     void register_decoder_interface(
-        const godot_videodecoder_interface_gdnative* p_interface
+        const rebel_videodecoder_interface_gdnative* p_interface
     ) {
         VideoDecoderGDNative* decoder =
             memnew(VideoDecoderGDNative(p_interface));
@@ -117,14 +117,14 @@ protected:
 
     FileAccess* file;
 
-    const godot_videodecoder_interface_gdnative* interface;
+    const rebel_videodecoder_interface_gdnative* interface;
     void* data_struct;
 
 public:
     VideoStreamPlaybackGDNative();
     ~VideoStreamPlaybackGDNative();
 
-    void set_interface(const godot_videodecoder_interface_gdnative* p_interface
+    void set_interface(const rebel_videodecoder_interface_gdnative* p_interface
     );
 
     bool open_file(const String& p_file);

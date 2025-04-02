@@ -17,8 +17,8 @@ const int AUX_BUFFER_SIZE = 1024; // Buffer 1024 samples.
 
 // NOTE: Callbacks for the GDNative libraries.
 extern "C" {
-godot_int GDAPI
-godot_videodecoder_file_read(void* ptr, uint8_t* buf, int buf_size) {
+rebel_int GDAPI
+rebel_videodecoder_file_read(void* ptr, uint8_t* buf, int buf_size) {
     // ptr is a FileAccess
     FileAccess* file = reinterpret_cast<FileAccess*>(ptr);
 
@@ -30,7 +30,7 @@ godot_videodecoder_file_read(void* ptr, uint8_t* buf, int buf_size) {
     return -1;
 }
 
-int64_t GDAPI godot_videodecoder_file_seek(void* ptr, int64_t pos, int whence) {
+int64_t GDAPI rebel_videodecoder_file_seek(void* ptr, int64_t pos, int whence) {
     // file
     FileAccess* file = reinterpret_cast<FileAccess*>(ptr);
 
@@ -71,8 +71,8 @@ int64_t GDAPI godot_videodecoder_file_seek(void* ptr, int64_t pos, int whence) {
     return -1;
 }
 
-void GDAPI godot_videodecoder_register_decoder(
-    const godot_videodecoder_interface_gdnative* p_interface
+void GDAPI rebel_videodecoder_register_decoder(
+    const rebel_videodecoder_interface_gdnative* p_interface
 ) {
     decoder_server.register_decoder_interface(p_interface);
 }
@@ -89,7 +89,7 @@ bool VideoStreamPlaybackGDNative::open_file(const String& p_file) {
         num_channels = interface->get_channels(data_struct);
         mix_rate     = interface->get_mix_rate(data_struct);
 
-        godot_vector2 vec = interface->get_texture_size(data_struct);
+        rebel_vector2 vec = interface->get_texture_size(data_struct);
         texture_size      = *(Vector2*)&vec;
         // Only do memset if num_channels > 0 otherwise it will crash.
         if (num_channels > 0) {
@@ -225,14 +225,14 @@ void VideoStreamPlaybackGDNative::cleanup() {
 }
 
 void VideoStreamPlaybackGDNative::set_interface(
-    const godot_videodecoder_interface_gdnative* p_interface
+    const rebel_videodecoder_interface_gdnative* p_interface
 ) {
     ERR_FAIL_COND(p_interface == nullptr);
     if (interface != nullptr) {
         cleanup();
     }
     interface   = p_interface;
-    data_struct = interface->constructor((godot_object*)this);
+    data_struct = interface->constructor((rebel_object*)this);
 }
 
 // controls

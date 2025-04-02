@@ -246,8 +246,8 @@ Node* EditorSceneImporterFBX::import_scene(
         } else {
             ERR_PRINT(vformat(
                 "Cannot import FBX file: %s. It uses file format %d which is "
-                "unsupported by Godot. Please re-export it or convert it to a "
-                "newer format.",
+                "unsupported. Please re-export it, or convert it to a newer "
+                "format.",
                 p_path,
                 doc.FBXVersion()
             ));
@@ -458,7 +458,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
     state.root->set_owner(scene_root);
 
     state.fbx_root_node.instance();
-    state.fbx_root_node->godot_node = state.root;
+    state.fbx_root_node->rebel_node = state.root;
 
     // Size relative to cm.
     const real_t fbx_unit_scale =
@@ -483,7 +483,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
     root_node->pivot_transform = pivot_transform;
     root_node->node_name       = "root node";
     root_node->current_node_id = 0;
-    root_node->godot_node      = state.root;
+    root_node->rebel_node      = state.root;
 
     // cache this node onto the fbx_target map.
     state.fbx_target_map.insert(0, root_node);
@@ -670,10 +670,10 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
             material.instance();
             material->set_imported_material(mat);
 
-            Ref<SpatialMaterial> godot_material =
+            Ref<SpatialMaterial> rebel_material =
                 material->import_material(state);
 
-            state.cached_materials.insert(material_id, godot_material);
+            state.cached_materials.insert(material_id, rebel_material);
         }
     }
 
@@ -788,7 +788,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
              skin_mesh = skin_mesh->next()) {}
     }
 
-    // build godot node tree
+    // Build node tree.
     if (state.fbx_node_list.size() > 0) {
         for (List<Ref<FBXNode>>::Element* node_element =
                  state.fbx_node_list.front();
@@ -861,31 +861,31 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
 
             if (node_skeleton.is_valid()) {
                 Skeleton* skel       = node_skeleton->skeleton;
-                fbx_node->godot_node = skel;
+                fbx_node->rebel_node = skel;
             } else if (mesh_node == nullptr) {
-                fbx_node->godot_node = memnew(Spatial);
+                fbx_node->rebel_node = memnew(Spatial);
             } else {
-                fbx_node->godot_node = mesh_node;
+                fbx_node->rebel_node = mesh_node;
             }
 
-            fbx_node->godot_node->set_name(fbx_node->node_name);
+            fbx_node->rebel_node->set_name(fbx_node->node_name);
 
             // assign parent if valid
             if (fbx_node->fbx_parent.is_valid()) {
-                fbx_node->fbx_parent->godot_node->add_child(fbx_node->godot_node
+                fbx_node->fbx_parent->rebel_node->add_child(fbx_node->rebel_node
                 );
-                fbx_node->godot_node->set_owner(state.root_owner);
+                fbx_node->rebel_node->set_owner(state.root_owner);
             }
 
             // Node Transform debug, set local xform data.
-            fbx_node->godot_node->set_transform(get_unscaled_transform(
+            fbx_node->rebel_node->set_transform(get_unscaled_transform(
                 fbx_node->pivot_transform->LocalTransform,
                 state.scale
             ));
 
             // populate our mesh node reference
             if (mesh_node != nullptr && mesh_data_precached.is_valid()) {
-                mesh_data_precached->godot_mesh_instance = mesh_node;
+                mesh_data_precached->rebel_mesh_instance = mesh_node;
             }
         }
     }
@@ -988,7 +988,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
          mesh_data = mesh_data->next()) {
         Ref<FBXMeshData> mesh       = mesh_data->value();
         const uint64_t mesh_id      = mesh_data->key();
-        MeshInstance* mesh_instance = mesh->godot_mesh_instance;
+        MeshInstance* mesh_instance = mesh->rebel_mesh_instance;
         const int mesh_weights      = mesh->max_weight_count;
         Ref<FBXSkeleton> skeleton;
         const bool valid_armature = mesh->valid_armature_id;
@@ -1137,7 +1137,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
 
                     // first thing to do here is that i need to first get the
                     // animcurvenode to a Vector3 we now need to put this into
-                    // the track information for godot. to do this we need to
+                    // the track information. to do this we need to
                     // know which track is what?
 
                     // target id, [ track name, [time index, vector] ]
@@ -1231,7 +1231,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                         // tracks.
 
                         // We are not ordered here, we don't care about
-                        // ordering, this happens automagically by godot when we
+                        // ordering, this happens automagically when we
                         // insert with the key time :), so order is unimportant
                         // because the insertion will happen at a time index
                         // good to know: we do not need a list of these in
@@ -1278,7 +1278,6 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
 
                         // extra const required by C++11 colon/Range operator
                         // note: do not use C++17 syntax here for dicts.
-                        // this is banned in Godot.
                         for (std::pair<
                                  const std::string,
                                  const FBXDocParser::AnimationCurve*>& kvp :
@@ -1295,7 +1294,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                                 print_error(
                                     "(FBX spec changed?) We found a duplicate "
                                     "curve being used for an alternative node "
-                                    "- report to godot issue tracker"
+                                    "- Please log an issue."
                                 );
                             } else {
                                 CheckForDuplication.insert(curve_id, curve);
@@ -1399,7 +1398,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                                 bone_path +=
                                     ":"
                                     + fbx_skeleton->skeleton->get_bone_name(
-                                        bone->godot_bone_id
+                                        bone->rebel_bone_id
                                     );
                                 print_verbose(
                                     "[doc] track bone path: " + bone_path
@@ -1413,9 +1412,9 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                             Ref<FBXNode> target_node =
                                 state.fbx_target_map[target_id];
                             if (target_node.is_valid()
-                                && target_node->godot_node != nullptr) {
+                                && target_node->rebel_node != nullptr) {
                                 String node_path = state.root->get_path_to(
-                                    target_node->godot_node
+                                    target_node->rebel_node
                                 );
                                 NodePath path = node_path;
                                 animation->track_set_path(track_idx, path);
@@ -1586,7 +1585,7 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                         if (state.fbx_bone_map.has(target_id)) {
                             if (bone.is_valid()
                                 && bone->fbx_skeleton.is_valid()) {
-                                skeleton_bone = bone->godot_bone_id;
+                                skeleton_bone = bone->rebel_bone_id;
                                 if (skeleton_bone >= 0) {
                                     bone_rest =
                                         bone->fbx_skeleton->skeleton

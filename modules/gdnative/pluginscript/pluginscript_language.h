@@ -7,7 +7,7 @@
 #ifndef PLUGINSCRIPT_LANGUAGE_H
 #define PLUGINSCRIPT_LANGUAGE_H
 
-// Godot imports
+// Rebel imports
 #include "core/io/resource_loader.h"
 #include "core/io/resource_saver.h"
 #include "core/map.h"
@@ -16,7 +16,7 @@
 // PluginScript imports
 #include "pluginscript_loader.h"
 
-#include <pluginscript/godot_pluginscript.h>
+#include <pluginscript/rebel_pluginscript.h>
 
 class PluginScript;
 class PluginScriptInstance;
@@ -27,8 +27,8 @@ class PluginScriptLanguage : public ScriptLanguage {
 
     Ref<ResourceFormatLoaderPluginScript> _resource_loader;
     Ref<ResourceFormatSaverPluginScript> _resource_saver;
-    const godot_pluginscript_language_desc _desc;
-    godot_pluginscript_language_data* _data;
+    const rebel_pluginscript_language_desc _desc;
+    rebel_pluginscript_language_data* _data;
 
     Mutex _lock;
     SelfList<PluginScript>::List _script_list;
@@ -177,7 +177,7 @@ public:
     void lock();
     void unlock();
 
-    PluginScriptLanguage(const godot_pluginscript_language_desc* desc);
+    PluginScriptLanguage(const rebel_pluginscript_language_desc* desc);
 
     virtual ~PluginScriptLanguage() {}
 };

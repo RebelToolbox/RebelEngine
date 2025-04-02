@@ -20,8 +20,8 @@ Basis ImportUtils::EulerToBasis(
 ) {
     Basis ret;
 
-    // FBX is using intrinsic euler, we can convert intrinsic to extrinsic (the
-    // one used in godot by simply invert its order:
+    // FBX is using intrinsic euler, we can convert intrinsic to extrinsic by
+    // simply invert its order:
     // https://www.cs.utexas.edu/~theshark/courses/cs354/lectures/cs354-14.pdf
     switch (mode) {
         case FBXDocParser::Model::RotOrder_EulerXYZ:
@@ -71,8 +71,8 @@ Vector3 ImportUtils::BasisToEuler(
     FBXDocParser::Model::RotOrder mode,
     const Basis& p_rotation
 ) {
-    // FBX is using intrinsic euler, we can convert intrinsic to extrinsic (the
-    // one used in godot by simply invert its order:
+    // FBX is using intrinsic euler, we can convert intrinsic to extrinsic by
+    // simply invert its order:
     // https://www.cs.utexas.edu/~theshark/courses/cs354/lectures/cs354-14.pdf
     switch (mode) {
         case FBXDocParser::Model::RotOrder_EulerXYZ:

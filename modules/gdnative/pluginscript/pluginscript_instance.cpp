@@ -6,7 +6,7 @@
 
 #include "pluginscript_instance.h"
 
-// Godot imports
+// Rebel imports
 #include "core/os/os.h"
 #include "core/variant.h"
 
@@ -21,15 +21,15 @@ bool PluginScriptInstance::set(
     String name = String(p_name);
     return _desc->set_prop(
         _data,
-        (const godot_string*)&name,
-        (const godot_variant*)&p_value
+        (const rebel_string*)&name,
+        (const rebel_variant*)&p_value
     );
 }
 
 bool PluginScriptInstance::get(const StringName& p_name, Variant& r_ret) const {
     String name = String(p_name);
     return _desc
-        ->get_prop(_data, (const godot_string*)&name, (godot_variant*)&r_ret);
+        ->get_prop(_data, (const rebel_string*)&name, (rebel_variant*)&r_ret);
 }
 
 Ref<Script> PluginScriptInstance::get_script() const {
@@ -75,17 +75,17 @@ Variant PluginScriptInstance::call(
     int p_argcount,
     Variant::CallError& r_error
 ) {
-    // TODO: optimize when calling a Godot method from Godot to avoid param
-    // conversion ?
-    godot_variant ret = _desc->call_method(
+    // TODO: Optimize when calling a Rebel method from Rebel Engine to avoid
+    // parameter conversion.
+    rebel_variant ret = _desc->call_method(
         _data,
-        (godot_string_name*)&p_method,
-        (const godot_variant**)p_args,
+        (rebel_string_name*)&p_method,
+        (const rebel_variant**)p_args,
         p_argcount,
-        (godot_variant_call_error*)&r_error
+        (rebel_variant_call_error*)&r_error
     );
     Variant var_ret = *(Variant*)&ret;
-    godot_variant_destroy(&ret);
+    rebel_variant_destroy(&ret);
     return var_ret;
 }
 
@@ -126,7 +126,7 @@ bool PluginScriptInstance::init(PluginScript* p_script, Object* p_owner) {
     _owner_variant = Variant(p_owner);
     _script        = Ref<PluginScript>(p_script);
     _desc          = &p_script->_desc->instance_desc;
-    _data          = _desc->init(p_script->_data, (godot_object*)p_owner);
+    _data          = _desc->init(p_script->_data, (rebel_object*)p_owner);
     ERR_FAIL_COND_V(_data == nullptr, false);
     p_owner->set_script_instance(this);
     return true;

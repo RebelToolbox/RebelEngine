@@ -9,21 +9,21 @@
 
 #include "core/io/networked_multiplayer_peer.h"
 #include "modules/gdnative/gdnative.h"
-#include "modules/gdnative/include/net/godot_net.h"
+#include "modules/gdnative/include/net/rebel_net.h"
 
 class MultiplayerPeerGDNative : public NetworkedMultiplayerPeer {
     GDCLASS(MultiplayerPeerGDNative, NetworkedMultiplayerPeer);
 
 protected:
     static void _bind_methods();
-    const godot_net_multiplayer_peer* interface;
+    const rebel_net_multiplayer_peer* interface;
 
 public:
     MultiplayerPeerGDNative();
     ~MultiplayerPeerGDNative();
 
     /* Sets the interface implementation from GDNative */
-    void set_native_multiplayer_peer(const godot_net_multiplayer_peer* p_impl);
+    void set_native_multiplayer_peer(const rebel_net_multiplayer_peer* p_impl);
 
     /* Specific to PacketPeer */
     virtual Error get_packet(const uint8_t** r_buffer, int& r_buffer_size);

@@ -14,101 +14,101 @@ extern "C" {
 #endif
 
 static_assert(
-    sizeof(godot_node_path) == sizeof(NodePath),
+    sizeof(rebel_node_path) == sizeof(NodePath),
     "NodePath size mismatch"
 );
 
 void GDAPI
-godot_node_path_new(godot_node_path* r_dest, const godot_string* p_from) {
+rebel_node_path_new(rebel_node_path* r_dest, const rebel_string* p_from) {
     NodePath* dest     = (NodePath*)r_dest;
     const String* from = (const String*)p_from;
     memnew_placement(dest, NodePath(*from));
 }
 
-void GDAPI godot_node_path_new_copy(
-    godot_node_path* r_dest,
-    const godot_node_path* p_src
+void GDAPI rebel_node_path_new_copy(
+    rebel_node_path* r_dest,
+    const rebel_node_path* p_src
 ) {
     NodePath* dest      = (NodePath*)r_dest;
     const NodePath* src = (const NodePath*)p_src;
     memnew_placement(dest, NodePath(*src));
 }
 
-void GDAPI godot_node_path_destroy(godot_node_path* p_self) {
+void GDAPI rebel_node_path_destroy(rebel_node_path* p_self) {
     NodePath* self = (NodePath*)p_self;
     self->~NodePath();
 }
 
-godot_string GDAPI godot_node_path_as_string(const godot_node_path* p_self) {
-    godot_string ret;
+rebel_string GDAPI rebel_node_path_as_string(const rebel_node_path* p_self) {
+    rebel_string ret;
     const NodePath* self = (const NodePath*)p_self;
     memnew_placement(&ret, String(*self));
     return ret;
 }
 
-godot_bool GDAPI godot_node_path_is_absolute(const godot_node_path* p_self) {
+rebel_bool GDAPI rebel_node_path_is_absolute(const rebel_node_path* p_self) {
     const NodePath* self = (const NodePath*)p_self;
     return self->is_absolute();
 }
 
-godot_int GDAPI godot_node_path_get_name_count(const godot_node_path* p_self) {
+rebel_int GDAPI rebel_node_path_get_name_count(const rebel_node_path* p_self) {
     const NodePath* self = (const NodePath*)p_self;
     return self->get_name_count();
 }
 
-godot_string GDAPI
-godot_node_path_get_name(const godot_node_path* p_self, const godot_int p_idx) {
-    godot_string dest;
+rebel_string GDAPI
+rebel_node_path_get_name(const rebel_node_path* p_self, const rebel_int p_idx) {
+    rebel_string dest;
     const NodePath* self = (const NodePath*)p_self;
 
     memnew_placement(&dest, String(self->get_name(p_idx)));
     return dest;
 }
 
-godot_int GDAPI godot_node_path_get_subname_count(const godot_node_path* p_self
+rebel_int GDAPI rebel_node_path_get_subname_count(const rebel_node_path* p_self
 ) {
     const NodePath* self = (const NodePath*)p_self;
     return self->get_subname_count();
 }
 
-godot_string GDAPI godot_node_path_get_subname(
-    const godot_node_path* p_self,
-    const godot_int p_idx
+rebel_string GDAPI rebel_node_path_get_subname(
+    const rebel_node_path* p_self,
+    const rebel_int p_idx
 ) {
-    godot_string dest;
+    rebel_string dest;
     const NodePath* self = (const NodePath*)p_self;
 
     memnew_placement(&dest, String(self->get_subname(p_idx)));
     return dest;
 }
 
-godot_string GDAPI
-godot_node_path_get_concatenated_subnames(const godot_node_path* p_self) {
-    godot_string dest;
+rebel_string GDAPI
+rebel_node_path_get_concatenated_subnames(const rebel_node_path* p_self) {
+    rebel_string dest;
     const NodePath* self = (const NodePath*)p_self;
     memnew_placement(&dest, String(self->get_concatenated_subnames()));
     return dest;
 }
 
-godot_bool GDAPI godot_node_path_is_empty(const godot_node_path* p_self) {
+rebel_bool GDAPI rebel_node_path_is_empty(const rebel_node_path* p_self) {
     const NodePath* self = (const NodePath*)p_self;
     return self->is_empty();
 }
 
-godot_bool GDAPI godot_node_path_operator_equal(
-    const godot_node_path* p_self,
-    const godot_node_path* p_b
+rebel_bool GDAPI rebel_node_path_operator_equal(
+    const rebel_node_path* p_self,
+    const rebel_node_path* p_b
 ) {
     const NodePath* self = (const NodePath*)p_self;
     const NodePath* b    = (const NodePath*)p_b;
     return *self == *b;
 }
 
-godot_node_path godot_node_path_get_as_property_path(
-    const godot_node_path* p_self
+rebel_node_path rebel_node_path_get_as_property_path(
+    const rebel_node_path* p_self
 ) {
     const NodePath* self = (const NodePath*)p_self;
-    godot_node_path res;
+    rebel_node_path res;
     NodePath* val = (NodePath*)&res;
     memnew_placement(val, NodePath);
     *val = self->get_as_property_path();

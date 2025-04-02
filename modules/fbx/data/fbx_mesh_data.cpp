@@ -440,9 +440,9 @@ MeshInstance* FBXMeshData::create_fbx_mesh(
         in_mesh_surface_id += 1;
     }
 
-    MeshInstance* godot_mesh = memnew(MeshInstance);
-    godot_mesh->set_mesh(mesh);
-    return godot_mesh;
+    MeshInstance* rebel_mesh = memnew(MeshInstance);
+    rebel_mesh->set_mesh(mesh);
+    return rebel_mesh;
 }
 
 void FBXMeshData::sanitize_vertex_weights(const ImportState& state) {
@@ -467,7 +467,7 @@ void FBXMeshData::sanitize_vertex_weights(const ImportState& state) {
                 + uitos(cluster->TargetNode()->ID()) + "."
         );
         Ref<FBXBone> bone = state.fbx_bone_map[cluster->TargetNode()->ID()];
-        skeleton_to_skin_bind_id.insert(bone->godot_bone_id, bind_id);
+        skeleton_to_skin_bind_id.insert(bone->rebel_bone_id, bind_id);
         bind_id++;
     }
 
@@ -490,9 +490,9 @@ void FBXMeshData::sanitize_vertex_weights(const ImportState& state) {
             for (int i = 0; i < vm->weights.size(); i += 1) {
                 // At this point this is not possible because the skeleton is
                 // already initialized.
-                CRASH_COND(bones_ref_ptr[i]->godot_bone_id == -2);
+                CRASH_COND(bones_ref_ptr[i]->rebel_bone_id == -2);
                 bones_ptr[i] =
-                    skeleton_to_skin_bind_id[bones_ref_ptr[i]->godot_bone_id];
+                    skeleton_to_skin_bind_id[bones_ref_ptr[i]->rebel_bone_id];
             }
 
             // From this point on the data is no more valid.

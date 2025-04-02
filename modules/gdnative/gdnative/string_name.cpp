@@ -16,61 +16,61 @@ extern "C" {
 #endif
 
 static_assert(
-    sizeof(godot_string_name) == sizeof(StringName),
+    sizeof(rebel_string_name) == sizeof(StringName),
     "StringName size mismatch"
 );
 
 void GDAPI
-godot_string_name_new(godot_string_name* r_dest, const godot_string* p_name) {
+rebel_string_name_new(rebel_string_name* r_dest, const rebel_string* p_name) {
     StringName* dest   = (StringName*)r_dest;
     const String* name = (const String*)p_name;
     memnew_placement(dest, StringName(*name));
 }
 
 void GDAPI
-godot_string_name_new_data(godot_string_name* r_dest, const char* p_name) {
+rebel_string_name_new_data(rebel_string_name* r_dest, const char* p_name) {
     StringName* dest = (StringName*)r_dest;
     memnew_placement(dest, StringName(p_name));
 }
 
-godot_string GDAPI godot_string_name_get_name(const godot_string_name* p_self) {
-    godot_string ret;
+rebel_string GDAPI rebel_string_name_get_name(const rebel_string_name* p_self) {
+    rebel_string ret;
     const StringName* self = (const StringName*)p_self;
     memnew_placement(&ret, String(*self));
     return ret;
 }
 
-uint32_t GDAPI godot_string_name_get_hash(const godot_string_name* p_self) {
+uint32_t GDAPI rebel_string_name_get_hash(const rebel_string_name* p_self) {
     const StringName* self = (const StringName*)p_self;
     return self->hash();
 }
 
-const void GDAPI* godot_string_name_get_data_unique_pointer(
-    const godot_string_name* p_self
+const void GDAPI* rebel_string_name_get_data_unique_pointer(
+    const rebel_string_name* p_self
 ) {
     const StringName* self = (const StringName*)p_self;
     return self->data_unique_pointer();
 }
 
-godot_bool GDAPI godot_string_name_operator_equal(
-    const godot_string_name* p_self,
-    const godot_string_name* p_other
+rebel_bool GDAPI rebel_string_name_operator_equal(
+    const rebel_string_name* p_self,
+    const rebel_string_name* p_other
 ) {
     const StringName* self  = (const StringName*)p_self;
     const StringName* other = (const StringName*)p_other;
     return self == other;
 }
 
-godot_bool GDAPI godot_string_name_operator_less(
-    const godot_string_name* p_self,
-    const godot_string_name* p_other
+rebel_bool GDAPI rebel_string_name_operator_less(
+    const rebel_string_name* p_self,
+    const rebel_string_name* p_other
 ) {
     const StringName* self  = (const StringName*)p_self;
     const StringName* other = (const StringName*)p_other;
     return self < other;
 }
 
-void GDAPI godot_string_name_destroy(godot_string_name* p_self) {
+void GDAPI rebel_string_name_destroy(rebel_string_name* p_self) {
     StringName* self = (StringName*)p_self;
     self->~StringName();
 }

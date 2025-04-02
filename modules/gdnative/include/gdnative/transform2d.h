@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_TRANSFORM2D_H
-#define GODOT_TRANSFORM2D_H
+#ifndef GDNATIVE_TRANSFORM2D_H
+#define GDNATIVE_TRANSFORM2D_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,14 +13,14 @@ extern "C" {
 
 #include <stdint.h>
 
-#define GODOT_TRANSFORM2D_SIZE 24
+#define REBEL_TRANSFORM2D_SIZE 24
 
-#ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
-#define GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
+#ifndef REBEL_CORE_API_REBEL_TRANSFORM2D_TYPE_DEFINED
+#define REBEL_CORE_API_REBEL_TRANSFORM2D_TYPE_DEFINED
 
 typedef struct {
-    uint8_t _dont_touch_that[GODOT_TRANSFORM2D_SIZE];
-} godot_transform2d;
+    uint8_t _dont_touch_that[REBEL_TRANSFORM2D_SIZE];
+} rebel_transform2d;
 #endif
 
 // reduce extern "C" nesting for VS2013
@@ -36,103 +36,103 @@ typedef struct {
 extern "C" {
 #endif
 
-void GDAPI godot_transform2d_new(
-    godot_transform2d* r_dest,
-    const godot_real p_rot,
-    const godot_vector2* p_pos
+void GDAPI rebel_transform2d_new(
+    rebel_transform2d* r_dest,
+    const rebel_real p_rot,
+    const rebel_vector2* p_pos
 );
-void GDAPI godot_transform2d_new_axis_origin(
-    godot_transform2d* r_dest,
-    const godot_vector2* p_x_axis,
-    const godot_vector2* p_y_axis,
-    const godot_vector2* p_origin
-);
-
-godot_string GDAPI godot_transform2d_as_string(const godot_transform2d* p_self);
-
-godot_transform2d GDAPI
-godot_transform2d_inverse(const godot_transform2d* p_self);
-
-godot_transform2d GDAPI
-godot_transform2d_affine_inverse(const godot_transform2d* p_self);
-
-godot_real GDAPI godot_transform2d_get_rotation(const godot_transform2d* p_self
+void GDAPI rebel_transform2d_new_axis_origin(
+    rebel_transform2d* r_dest,
+    const rebel_vector2* p_x_axis,
+    const rebel_vector2* p_y_axis,
+    const rebel_vector2* p_origin
 );
 
-godot_vector2 GDAPI godot_transform2d_get_origin(const godot_transform2d* p_self
+rebel_string GDAPI rebel_transform2d_as_string(const rebel_transform2d* p_self);
+
+rebel_transform2d GDAPI
+rebel_transform2d_inverse(const rebel_transform2d* p_self);
+
+rebel_transform2d GDAPI
+rebel_transform2d_affine_inverse(const rebel_transform2d* p_self);
+
+rebel_real GDAPI rebel_transform2d_get_rotation(const rebel_transform2d* p_self
 );
 
-godot_vector2 GDAPI godot_transform2d_get_scale(const godot_transform2d* p_self
+rebel_vector2 GDAPI rebel_transform2d_get_origin(const rebel_transform2d* p_self
 );
 
-godot_transform2d GDAPI
-godot_transform2d_orthonormalized(const godot_transform2d* p_self);
-
-godot_transform2d GDAPI godot_transform2d_rotated(
-    const godot_transform2d* p_self,
-    const godot_real p_phi
+rebel_vector2 GDAPI rebel_transform2d_get_scale(const rebel_transform2d* p_self
 );
 
-godot_transform2d GDAPI godot_transform2d_scaled(
-    const godot_transform2d* p_self,
-    const godot_vector2* p_scale
+rebel_transform2d GDAPI
+rebel_transform2d_orthonormalized(const rebel_transform2d* p_self);
+
+rebel_transform2d GDAPI rebel_transform2d_rotated(
+    const rebel_transform2d* p_self,
+    const rebel_real p_phi
 );
 
-godot_transform2d GDAPI godot_transform2d_translated(
-    const godot_transform2d* p_self,
-    const godot_vector2* p_offset
+rebel_transform2d GDAPI rebel_transform2d_scaled(
+    const rebel_transform2d* p_self,
+    const rebel_vector2* p_scale
 );
 
-godot_vector2 GDAPI godot_transform2d_xform_vector2(
-    const godot_transform2d* p_self,
-    const godot_vector2* p_v
+rebel_transform2d GDAPI rebel_transform2d_translated(
+    const rebel_transform2d* p_self,
+    const rebel_vector2* p_offset
 );
 
-godot_vector2 GDAPI godot_transform2d_xform_inv_vector2(
-    const godot_transform2d* p_self,
-    const godot_vector2* p_v
+rebel_vector2 GDAPI rebel_transform2d_xform_vector2(
+    const rebel_transform2d* p_self,
+    const rebel_vector2* p_v
 );
 
-godot_vector2 GDAPI godot_transform2d_basis_xform_vector2(
-    const godot_transform2d* p_self,
-    const godot_vector2* p_v
+rebel_vector2 GDAPI rebel_transform2d_xform_inv_vector2(
+    const rebel_transform2d* p_self,
+    const rebel_vector2* p_v
 );
 
-godot_vector2 GDAPI godot_transform2d_basis_xform_inv_vector2(
-    const godot_transform2d* p_self,
-    const godot_vector2* p_v
+rebel_vector2 GDAPI rebel_transform2d_basis_xform_vector2(
+    const rebel_transform2d* p_self,
+    const rebel_vector2* p_v
 );
 
-godot_transform2d GDAPI godot_transform2d_interpolate_with(
-    const godot_transform2d* p_self,
-    const godot_transform2d* p_m,
-    const godot_real p_c
+rebel_vector2 GDAPI rebel_transform2d_basis_xform_inv_vector2(
+    const rebel_transform2d* p_self,
+    const rebel_vector2* p_v
 );
 
-godot_bool GDAPI godot_transform2d_operator_equal(
-    const godot_transform2d* p_self,
-    const godot_transform2d* p_b
+rebel_transform2d GDAPI rebel_transform2d_interpolate_with(
+    const rebel_transform2d* p_self,
+    const rebel_transform2d* p_m,
+    const rebel_real p_c
 );
 
-godot_transform2d GDAPI godot_transform2d_operator_multiply(
-    const godot_transform2d* p_self,
-    const godot_transform2d* p_b
+rebel_bool GDAPI rebel_transform2d_operator_equal(
+    const rebel_transform2d* p_self,
+    const rebel_transform2d* p_b
 );
 
-void GDAPI godot_transform2d_new_identity(godot_transform2d* r_dest);
-
-godot_rect2 GDAPI godot_transform2d_xform_rect2(
-    const godot_transform2d* p_self,
-    const godot_rect2* p_v
+rebel_transform2d GDAPI rebel_transform2d_operator_multiply(
+    const rebel_transform2d* p_self,
+    const rebel_transform2d* p_b
 );
 
-godot_rect2 GDAPI godot_transform2d_xform_inv_rect2(
-    const godot_transform2d* p_self,
-    const godot_rect2* p_v
+void GDAPI rebel_transform2d_new_identity(rebel_transform2d* r_dest);
+
+rebel_rect2 GDAPI rebel_transform2d_xform_rect2(
+    const rebel_transform2d* p_self,
+    const rebel_rect2* p_v
+);
+
+rebel_rect2 GDAPI rebel_transform2d_xform_inv_rect2(
+    const rebel_transform2d* p_self,
+    const rebel_rect2* p_v
 );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // GODOT_TRANSFORM2D_H
+#endif // GDNATIVE_TRANSFORM2D_H

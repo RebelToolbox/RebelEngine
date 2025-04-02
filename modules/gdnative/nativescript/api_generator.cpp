@@ -145,9 +145,7 @@ struct ConstantAPIComparator {
     }
 };
 
-/*
- * Reads the entire Godot API to a list
- */
+// Read the entire Rebel Engine API to a list.
 List<ClassAPI> generate_c_api_classes() {
     List<ClassAPI> api;
 
@@ -636,10 +634,7 @@ static List<String> generate_c_api_json(const List<ClassAPI>& p_api) {
 
 #endif
 
-/*
- * Saves the whole Godot API to a JSON file located at
- *  p_path
- */
+// Save the whole Rebel Eninge API to a JSON file located at p_path
 Error generate_c_api(const String& p_path) {
 #ifndef TOOLS_ENABLED
     return ERR_BUG;

@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-JNIEnv* GDAPI godot_android_get_env() {
+JNIEnv* GDAPI rebel_android_get_env() {
 #ifdef __ANDROID__
     return get_jni_env();
 #else
@@ -31,7 +31,7 @@ JNIEnv* GDAPI godot_android_get_env() {
 #endif
 }
 
-jobject GDAPI godot_android_get_activity() {
+jobject GDAPI rebel_android_get_activity() {
 #ifdef __ANDROID__
     AndroidOS* android_os = (AndroidOS*)OS::get_singleton();
     return android_os->get_android_jni_os()->get_activity();
@@ -40,7 +40,7 @@ jobject GDAPI godot_android_get_activity() {
 #endif
 }
 
-jobject GDAPI godot_android_get_surface() {
+jobject GDAPI rebel_android_get_surface() {
 #ifdef __ANDROID__
     AndroidOS* android_os = (AndroidOS*)OS::get_singleton();
     return android_os->get_android_jni_os()->get_surface();
@@ -49,7 +49,7 @@ jobject GDAPI godot_android_get_surface() {
 #endif
 }
 
-bool GDAPI godot_android_is_activity_resumed() {
+bool GDAPI rebel_android_is_activity_resumed() {
 #ifdef __ANDROID__
     AndroidOS* android_os = (AndroidOS*)OS::get_singleton();
     return android_os->get_android_jni_os()->is_activity_resumed();

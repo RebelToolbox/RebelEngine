@@ -123,7 +123,7 @@ env_thirdparty.CommandNoCache(
     weights_out_path, weights_in_path, resource_to_cpp.tza_to_cpp
 )
 
-# Godot source files
+# Rebel source files
 
 module_obj = []
 
