@@ -418,13 +418,13 @@ jobs:
           # Add universal binaries to iOS Tempate.
           cp -r tools/dist/ios_xcode .
           cp bin/librebel.ios.opt.arm64.a                                                  \
-          ios_xcode/libgodot.ios.release.xcframework/ios-arm64/librebel.a
+          ios_xcode/librebel.ios.release.xcframework/ios-arm64/librebel.a
           cp bin/librebel.ios.opt.debug.arm64.a                                            \
-          ios_xcode/libgodot.ios.debug.xcframework/ios-arm64/librebel.a
+          ios_xcode/librebel.ios.debug.xcframework/ios-arm64/librebel.a
           cp bin/librebel.ios.opt.x86_64.simulator.a                                       \
-          ios_xcode/libgodot.ios.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          ios_xcode/librebel.ios.release.xcframework/ios-arm64_x86_64-simulator/librebel.a
           cp bin/librebel.ios.opt.debug.x86_64.simulator.a                                 \
-          ios_xcode/libgodot.ios.debug.xcframework/ios-arm64_x86_64-simulator/librebel.a
+          ios_xcode/librebel.ios.debug.xcframework/ios-arm64_x86_64-simulator/librebel.a
           cd ios_xcode/
           echo "::group::Zip iOS Template."
           zip -r ../ios-template.zip .
