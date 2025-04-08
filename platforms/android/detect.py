@@ -56,7 +56,7 @@ def get_android_ndk_root():
 
 def get_ndk_version():
     # Also update platforms/android/project/app/config.gradle ndkVersion
-    return "26.3.11579264"
+    return "27.2.12479018"
 
 
 def get_flags():
