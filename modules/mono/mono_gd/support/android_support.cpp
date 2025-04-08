@@ -95,7 +95,7 @@ String app_native_lib_dir_cache;
 String determine_app_native_lib_dir() {
     // The JNI code is the equivalent of:
     //
-    // return godotActivity.getApplicationInfo().nativeLibraryDir;
+    // return rebelActivity.getApplicationInfo().nativeLibraryDir;
 
     JNIEnv* env = get_jni_env();
 
@@ -167,7 +167,7 @@ const char* mono_so_name = GD_MONO_SO_NAME;
 const char* lib_so_name  = "librebel_android.so";
 
 void* mono_dl_handle  = NULL;
-void* godot_dl_handle = NULL;
+void* rebel_dl_handle = NULL;
 
 void* _try_dlopen_file_path(const String& p_so_path, int p_flags) {
     if (!FileAccess::exists(p_so_path)) {
@@ -296,12 +296,12 @@ void* gd_mono_android_dlsym(
         return sym_addr;
     }
 
-    if (p_handle == mono_dl_handle && godot_dl_handle) {
+    if (p_handle == mono_dl_handle && rebel_dl_handle) {
         // Looking up for '__Internal' P/Invoke. We want to search in both the
-        // Mono and Godot shared libraries. This is needed to resolve the
+        // Mono and Rebel shared libraries. This is needed to resolve the
         // monodroid P/Invoke functions that are defined at the bottom of the
         // file.
-        sym_addr = dlsym(godot_dl_handle, p_name);
+        sym_addr = dlsym(rebel_dl_handle, p_name);
 
         if (sym_addr) {
             return sym_addr;
@@ -518,9 +518,9 @@ void initialize() {
     String app_native_lib_dir = get_app_native_lib_dir();
     String so_path            = path::join(app_native_lib_dir, lib_so_name);
 
-    godot_dl_handle =
+    rebel_dl_handle =
         try_dlopen(so_path, gd_mono_convert_dl_flags(MONO_DL_LAZY));
-    ERR_FAIL_COND_MSG(!godot_dl_handle, "Failed to load Godot native library");
+    ERR_FAIL_COND_MSG(!rebel_dl_handle, "Failed to load Rebel native library");
 }
 
 void cleanup() {
@@ -530,8 +530,8 @@ void cleanup() {
         gd_mono_android_dlclose(mono_dl_handle, NULL);
     }
 
-    if (godot_dl_handle) {
-        gd_mono_android_dlclose(godot_dl_handle, NULL);
+    if (rebel_dl_handle) {
+        gd_mono_android_dlclose(rebel_dl_handle, NULL);
     }
 
     JNIEnv* env = get_jni_env();

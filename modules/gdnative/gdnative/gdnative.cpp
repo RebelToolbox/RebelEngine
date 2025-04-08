@@ -18,33 +18,33 @@
 extern "C" {
 #endif
 
-void GDAPI godot_object_destroy(godot_object* p_o) {
+void GDAPI rebel_object_destroy(rebel_object* p_o) {
     memdelete((Object*)p_o);
 }
 
 // Singleton API
 
-godot_object GDAPI* godot_global_get_singleton(char* p_name) {
-    return (godot_object*)Engine::get_singleton()->get_singleton_object(
+rebel_object GDAPI* rebel_global_get_singleton(char* p_name) {
+    return (rebel_object*)Engine::get_singleton()->get_singleton_object(
         String(p_name)
     );
 } // result shouldn't be freed
 
 // MethodBind API
 
-godot_method_bind GDAPI* godot_method_bind_get_method(
+rebel_method_bind GDAPI* rebel_method_bind_get_method(
     const char* p_classname,
     const char* p_methodname
 ) {
     MethodBind* mb =
         ClassDB::get_method(StringName(p_classname), StringName(p_methodname));
     // MethodBind *mb = ClassDB::get_method("Node", "get_name");
-    return (godot_method_bind*)mb;
+    return (rebel_method_bind*)mb;
 }
 
-void GDAPI godot_method_bind_ptrcall(
-    godot_method_bind* p_method_bind,
-    godot_object* p_instance,
+void GDAPI rebel_method_bind_ptrcall(
+    rebel_method_bind* p_method_bind,
+    rebel_object* p_instance,
     const void** p_args,
     void* p_ret
 ) {
@@ -53,19 +53,19 @@ void GDAPI godot_method_bind_ptrcall(
     mb->ptrcall(o, p_args, p_ret);
 }
 
-godot_variant GDAPI godot_method_bind_call(
-    godot_method_bind* p_method_bind,
-    godot_object* p_instance,
-    const godot_variant** p_args,
+rebel_variant GDAPI rebel_method_bind_call(
+    rebel_method_bind* p_method_bind,
+    rebel_object* p_instance,
+    const rebel_variant** p_args,
     const int p_arg_count,
-    godot_variant_call_error* p_call_error
+    rebel_variant_call_error* p_call_error
 ) {
     MethodBind* mb       = (MethodBind*)p_method_bind;
     Object* o            = (Object*)p_instance;
     const Variant** args = (const Variant**)p_args;
 
-    godot_variant ret;
-    godot_variant_new_nil(&ret);
+    rebel_variant ret;
+    rebel_variant_new_nil(&ret);
 
     Variant* ret_val = (Variant*)&ret;
 
@@ -73,27 +73,27 @@ godot_variant GDAPI godot_method_bind_call(
     *ret_val = mb->call(o, args, p_arg_count, r_error);
 
     if (p_call_error) {
-        p_call_error->error    = (godot_variant_call_error_error)r_error.error;
+        p_call_error->error    = (rebel_variant_call_error_error)r_error.error;
         p_call_error->argument = r_error.argument;
-        p_call_error->expected = (godot_variant_type)r_error.expected;
+        p_call_error->expected = (rebel_variant_type)r_error.expected;
     }
 
     return ret;
 }
 
-godot_class_constructor GDAPI
-godot_get_class_constructor(const char* p_classname) {
+rebel_class_constructor GDAPI
+rebel_get_class_constructor(const char* p_classname) {
     ClassDB::ClassInfo* class_info =
         ClassDB::classes.getptr(StringName(p_classname));
     if (class_info) {
-        return (godot_class_constructor)class_info->creation_func;
+        return (rebel_class_constructor)class_info->creation_func;
     }
     return nullptr;
 }
 
-godot_dictionary GDAPI godot_get_global_constants() {
-    godot_dictionary constants;
-    godot_dictionary_new(&constants);
+rebel_dictionary GDAPI rebel_get_global_constants() {
+    rebel_dictionary constants;
+    rebel_dictionary_new(&constants);
     Dictionary* p_constants   = (Dictionary*)&constants;
     const int constants_count = GlobalConstants::get_global_constant_count();
     for (int i = 0; i < constants_count; ++i) {
@@ -105,7 +105,7 @@ godot_dictionary GDAPI godot_get_global_constants() {
 }
 
 // System functions
-void GDAPI godot_register_native_call_type(
+void GDAPI rebel_register_native_call_type(
     const char* p_call_type,
     native_call_cb p_callback
 ) {
@@ -115,19 +115,19 @@ void GDAPI godot_register_native_call_type(
     );
 }
 
-void GDAPI* godot_alloc(int p_bytes) {
+void GDAPI* rebel_alloc(int p_bytes) {
     return memalloc(p_bytes);
 }
 
-void GDAPI* godot_realloc(void* p_ptr, int p_bytes) {
+void GDAPI* rebel_realloc(void* p_ptr, int p_bytes) {
     return memrealloc(p_ptr, p_bytes);
 }
 
-void GDAPI godot_free(void* p_ptr) {
+void GDAPI rebel_free(void* p_ptr) {
     memfree(p_ptr);
 }
 
-void GDAPI godot_print_error(
+void GDAPI rebel_print_error(
     const char* p_description,
     const char* p_function,
     const char* p_file,
@@ -142,7 +142,7 @@ void GDAPI godot_print_error(
     );
 }
 
-void GDAPI godot_print_warning(
+void GDAPI rebel_print_warning(
     const char* p_description,
     const char* p_function,
     const char* p_file,
@@ -157,15 +157,15 @@ void GDAPI godot_print_warning(
     );
 }
 
-void GDAPI godot_print(const godot_string* p_message) {
+void GDAPI rebel_print(const rebel_string* p_message) {
     print_line(*(String*)p_message);
 }
 
 void _gdnative_report_version_mismatch(
-    const godot_object* p_library,
+    const rebel_object* p_library,
     const char* p_ext,
-    godot_gdnative_api_version p_want,
-    godot_gdnative_api_version p_have
+    rebel_gdnative_api_version p_want,
+    rebel_gdnative_api_version p_have
 ) {
     String message           = "Error loading GDNative file ";
     GDNativeLibrary* library = (GDNativeLibrary*)p_library;
@@ -194,7 +194,7 @@ void _gdnative_report_version_mismatch(
 }
 
 void _gdnative_report_loading_error(
-    const godot_object* p_library,
+    const rebel_object* p_library,
     const char* p_what
 ) {
     String message           = "Error loading GDNative file ";
@@ -210,22 +210,22 @@ void _gdnative_report_loading_error(
     );
 }
 
-bool GDAPI godot_is_instance_valid(const godot_object* p_object) {
+bool GDAPI rebel_is_instance_valid(const rebel_object* p_object) {
     return ObjectDB::instance_validate((Object*)p_object);
 }
 
-godot_object GDAPI* godot_instance_from_id(godot_int p_instance_id) {
-    return (godot_object*)ObjectDB::get_instance((ObjectID)p_instance_id);
+rebel_object GDAPI* rebel_instance_from_id(rebel_int p_instance_id) {
+    return (rebel_object*)ObjectDB::get_instance((ObjectID)p_instance_id);
 }
 
-void* godot_get_class_tag(const godot_string_name* p_class) {
+void* rebel_get_class_tag(const rebel_string_name* p_class) {
     StringName class_name          = *(StringName*)p_class;
     ClassDB::ClassInfo* class_info = ClassDB::classes.getptr(class_name);
     return class_info ? class_info->class_ptr : nullptr;
 }
 
-godot_object* godot_object_cast_to(
-    const godot_object* p_object,
+rebel_object* rebel_object_cast_to(
+    const rebel_object* p_object,
     void* p_class_tag
 ) {
     if (!p_object) {
@@ -233,7 +233,7 @@ godot_object* godot_object_cast_to(
     }
     Object* o = (Object*)p_object;
 
-    return o->is_class_ptr(p_class_tag) ? (godot_object*)o : nullptr;
+    return o->is_class_ptr(p_class_tag) ? (rebel_object*)o : nullptr;
 }
 
 #ifdef __cplusplus

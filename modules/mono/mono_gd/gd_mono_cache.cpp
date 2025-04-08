@@ -91,8 +91,8 @@ void CachedData::clear_corlib_cache() {
     class_KeyNotFoundException = NULL;
 }
 
-void CachedData::clear_godot_api_cache() {
-    godot_api_cache_updated = false;
+void CachedData::clear_rebel_api_cache() {
+    rebel_api_cache_updated = false;
 
     rawclass_Dictionary = NULL;
 
@@ -108,8 +108,8 @@ void CachedData::clear_godot_api_cache() {
     class_Plane                  = NULL;
     class_NodePath               = NULL;
     class_RID                    = NULL;
-    class_GodotObject            = NULL;
-    class_GodotResource          = NULL;
+    class_RebelObject            = NULL;
+    class_RebelResource          = NULL;
     class_Node                   = NULL;
     class_Control                = NULL;
     class_Spatial                = NULL;
@@ -137,20 +137,20 @@ void CachedData::clear_godot_api_cache() {
     class_RemoteSyncAttribute             = NULL;
     class_MasterSyncAttribute             = NULL;
     class_PuppetSyncAttribute             = NULL;
-    class_GodotMethodAttribute            = NULL;
-    field_GodotMethodAttribute_methodName = NULL;
+    class_RebelMethodAttribute            = NULL;
+    field_RebelMethodAttribute_methodName = NULL;
 
-    field_GodotObject_ptr = NULL;
+    field_RebelObject_ptr = NULL;
     field_NodePath_ptr    = NULL;
     field_Image_ptr       = NULL;
     field_RID_ptr         = NULL;
 
-    methodthunk_GodotObject_Dispose.nullify();
+    methodthunk_RebelObject_Dispose.nullify();
     methodthunk_Array_GetPtr.nullify();
     methodthunk_Dictionary_GetPtr.nullify();
     methodthunk_SignalAwaiter_SignalCallback.nullify();
     methodthunk_SignalAwaiter_FailureCallback.nullify();
-    methodthunk_GodotTaskScheduler_Activate.nullify();
+    methodthunk_RebelTaskScheduler_Activate.nullify();
 
     // Start of MarshalUtils methods
 
@@ -173,12 +173,12 @@ void CachedData::clear_godot_api_cache() {
     task_scheduler_handle = Ref<MonoGCHandle>();
 }
 
-#define GODOT_API_CLASS(m_class)                                               \
+#define REBEL_API_CLASS(m_class)                                               \
     (GDMono::get_singleton()->get_core_api_assembly()->get_class(              \
         BINDINGS_NAMESPACE,                                                    \
         #m_class                                                               \
     ))
-#define GODOT_API_NS_CLASS(m_ns, m_class)                                      \
+#define REBEL_API_NS_CLASS(m_ns, m_class)                                      \
     (GDMono::get_singleton()->get_core_api_assembly()->get_class(              \
         m_ns,                                                                  \
         #m_class                                                               \
@@ -336,45 +336,45 @@ void update_corlib_cache() {
     cached_data.corlib_cache_updated = true;
 }
 
-void update_godot_api_cache() {
-    CACHE_CLASS_AND_CHECK(Vector2, GODOT_API_CLASS(Vector2));
-    CACHE_CLASS_AND_CHECK(Rect2, GODOT_API_CLASS(Rect2));
-    CACHE_CLASS_AND_CHECK(Transform2D, GODOT_API_CLASS(Transform2D));
-    CACHE_CLASS_AND_CHECK(Vector3, GODOT_API_CLASS(Vector3));
-    CACHE_CLASS_AND_CHECK(Basis, GODOT_API_CLASS(Basis));
-    CACHE_CLASS_AND_CHECK(Quat, GODOT_API_CLASS(Quat));
-    CACHE_CLASS_AND_CHECK(Transform, GODOT_API_CLASS(Transform));
-    CACHE_CLASS_AND_CHECK(AABB, GODOT_API_CLASS(AABB));
-    CACHE_CLASS_AND_CHECK(Color, GODOT_API_CLASS(Color));
-    CACHE_CLASS_AND_CHECK(Plane, GODOT_API_CLASS(Plane));
-    CACHE_CLASS_AND_CHECK(NodePath, GODOT_API_CLASS(NodePath));
-    CACHE_CLASS_AND_CHECK(RID, GODOT_API_CLASS(RID));
-    CACHE_CLASS_AND_CHECK(GodotObject, GODOT_API_CLASS(Object));
-    CACHE_CLASS_AND_CHECK(GodotResource, GODOT_API_CLASS(Resource));
-    CACHE_CLASS_AND_CHECK(Node, GODOT_API_CLASS(Node));
-    CACHE_CLASS_AND_CHECK(Control, GODOT_API_CLASS(Control));
-    CACHE_CLASS_AND_CHECK(Spatial, GODOT_API_CLASS(Spatial));
-    CACHE_CLASS_AND_CHECK(WeakRef, GODOT_API_CLASS(WeakRef));
+void update_rebel_api_cache() {
+    CACHE_CLASS_AND_CHECK(Vector2, REBEL_API_CLASS(Vector2));
+    CACHE_CLASS_AND_CHECK(Rect2, REBEL_API_CLASS(Rect2));
+    CACHE_CLASS_AND_CHECK(Transform2D, REBEL_API_CLASS(Transform2D));
+    CACHE_CLASS_AND_CHECK(Vector3, REBEL_API_CLASS(Vector3));
+    CACHE_CLASS_AND_CHECK(Basis, REBEL_API_CLASS(Basis));
+    CACHE_CLASS_AND_CHECK(Quat, REBEL_API_CLASS(Quat));
+    CACHE_CLASS_AND_CHECK(Transform, REBEL_API_CLASS(Transform));
+    CACHE_CLASS_AND_CHECK(AABB, REBEL_API_CLASS(AABB));
+    CACHE_CLASS_AND_CHECK(Color, REBEL_API_CLASS(Color));
+    CACHE_CLASS_AND_CHECK(Plane, REBEL_API_CLASS(Plane));
+    CACHE_CLASS_AND_CHECK(NodePath, REBEL_API_CLASS(NodePath));
+    CACHE_CLASS_AND_CHECK(RID, REBEL_API_CLASS(RID));
+    CACHE_CLASS_AND_CHECK(RebelObject, REBEL_API_CLASS(Object));
+    CACHE_CLASS_AND_CHECK(RebelResource, REBEL_API_CLASS(Resource));
+    CACHE_CLASS_AND_CHECK(Node, REBEL_API_CLASS(Node));
+    CACHE_CLASS_AND_CHECK(Control, REBEL_API_CLASS(Control));
+    CACHE_CLASS_AND_CHECK(Spatial, REBEL_API_CLASS(Spatial));
+    CACHE_CLASS_AND_CHECK(WeakRef, REBEL_API_CLASS(WeakRef));
     CACHE_CLASS_AND_CHECK(
         Array,
-        GODOT_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Array)
+        REBEL_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Array)
     );
     CACHE_CLASS_AND_CHECK(
         Dictionary,
-        GODOT_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Dictionary)
+        REBEL_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Dictionary)
     );
-    CACHE_CLASS_AND_CHECK(MarshalUtils, GODOT_API_CLASS(MarshalUtils));
+    CACHE_CLASS_AND_CHECK(MarshalUtils, REBEL_API_CLASS(MarshalUtils));
     CACHE_CLASS_AND_CHECK(
         ISerializationListener,
-        GODOT_API_CLASS(ISerializationListener)
+        REBEL_API_CLASS(ISerializationListener)
     );
 
 #ifdef DEBUG_ENABLED
-    CACHE_CLASS_AND_CHECK(DebuggingUtils, GODOT_API_CLASS(DebuggingUtils));
+    CACHE_CLASS_AND_CHECK(DebuggingUtils, REBEL_API_CLASS(DebuggingUtils));
 #endif
 
     // Attributes
-    CACHE_CLASS_AND_CHECK(ExportAttribute, GODOT_API_CLASS(ExportAttribute));
+    CACHE_CLASS_AND_CHECK(ExportAttribute, REBEL_API_CLASS(ExportAttribute));
     CACHE_FIELD_AND_CHECK(
         ExportAttribute,
         hint,
@@ -385,39 +385,39 @@ void update_godot_api_cache() {
         hintString,
         CACHED_CLASS(ExportAttribute)->get_field("hintString")
     );
-    CACHE_CLASS_AND_CHECK(SignalAttribute, GODOT_API_CLASS(SignalAttribute));
-    CACHE_CLASS_AND_CHECK(ToolAttribute, GODOT_API_CLASS(ToolAttribute));
-    CACHE_CLASS_AND_CHECK(RemoteAttribute, GODOT_API_CLASS(RemoteAttribute));
-    CACHE_CLASS_AND_CHECK(SyncAttribute, GODOT_API_CLASS(SyncAttribute));
-    CACHE_CLASS_AND_CHECK(MasterAttribute, GODOT_API_CLASS(MasterAttribute));
-    CACHE_CLASS_AND_CHECK(PuppetAttribute, GODOT_API_CLASS(PuppetAttribute));
-    CACHE_CLASS_AND_CHECK(SlaveAttribute, GODOT_API_CLASS(SlaveAttribute));
+    CACHE_CLASS_AND_CHECK(SignalAttribute, REBEL_API_CLASS(SignalAttribute));
+    CACHE_CLASS_AND_CHECK(ToolAttribute, REBEL_API_CLASS(ToolAttribute));
+    CACHE_CLASS_AND_CHECK(RemoteAttribute, REBEL_API_CLASS(RemoteAttribute));
+    CACHE_CLASS_AND_CHECK(SyncAttribute, REBEL_API_CLASS(SyncAttribute));
+    CACHE_CLASS_AND_CHECK(MasterAttribute, REBEL_API_CLASS(MasterAttribute));
+    CACHE_CLASS_AND_CHECK(PuppetAttribute, REBEL_API_CLASS(PuppetAttribute));
+    CACHE_CLASS_AND_CHECK(SlaveAttribute, REBEL_API_CLASS(SlaveAttribute));
     CACHE_CLASS_AND_CHECK(
         RemoteSyncAttribute,
-        GODOT_API_CLASS(RemoteSyncAttribute)
+        REBEL_API_CLASS(RemoteSyncAttribute)
     );
     CACHE_CLASS_AND_CHECK(
         MasterSyncAttribute,
-        GODOT_API_CLASS(MasterSyncAttribute)
+        REBEL_API_CLASS(MasterSyncAttribute)
     );
     CACHE_CLASS_AND_CHECK(
         PuppetSyncAttribute,
-        GODOT_API_CLASS(PuppetSyncAttribute)
+        REBEL_API_CLASS(PuppetSyncAttribute)
     );
     CACHE_CLASS_AND_CHECK(
-        GodotMethodAttribute,
-        GODOT_API_CLASS(GodotMethodAttribute)
+        RebelMethodAttribute,
+        REBEL_API_CLASS(RebelMethodAttribute)
     );
     CACHE_FIELD_AND_CHECK(
-        GodotMethodAttribute,
+        RebelMethodAttribute,
         methodName,
-        CACHED_CLASS(GodotMethodAttribute)->get_field("methodName")
+        CACHED_CLASS(RebelMethodAttribute)->get_field("methodName")
     );
 
     CACHE_FIELD_AND_CHECK(
-        GodotObject,
+        RebelObject,
         ptr,
-        CACHED_CLASS(GodotObject)->get_field(BINDINGS_PTR_FIELD)
+        CACHED_CLASS(RebelObject)->get_field(BINDINGS_PTR_FIELD)
     );
     CACHE_FIELD_AND_CHECK(
         NodePath,
@@ -431,36 +431,36 @@ void update_godot_api_cache() {
     );
 
     CACHE_METHOD_THUNK_AND_CHECK(
-        GodotObject,
+        RebelObject,
         Dispose,
-        CACHED_CLASS(GodotObject)->get_method("Dispose", 0)
+        CACHED_CLASS(RebelObject)->get_method("Dispose", 0)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         Array,
         GetPtr,
-        GODOT_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Array)
+        REBEL_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Array)
             ->get_method("GetPtr", 0)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         Dictionary,
         GetPtr,
-        GODOT_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Dictionary)
+        REBEL_API_NS_CLASS(BINDINGS_NAMESPACE_COLLECTIONS, Dictionary)
             ->get_method("GetPtr", 0)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         SignalAwaiter,
         SignalCallback,
-        GODOT_API_CLASS(SignalAwaiter)->get_method("SignalCallback", 1)
+        REBEL_API_CLASS(SignalAwaiter)->get_method("SignalCallback", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         SignalAwaiter,
         FailureCallback,
-        GODOT_API_CLASS(SignalAwaiter)->get_method("FailureCallback", 0)
+        REBEL_API_CLASS(SignalAwaiter)->get_method("FailureCallback", 0)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
-        GodotTaskScheduler,
+        RebelTaskScheduler,
         Activate,
-        GODOT_API_CLASS(GodotTaskScheduler)->get_method("Activate", 0)
+        REBEL_API_CLASS(RebelTaskScheduler)->get_method("Activate", 0)
     );
 
     // Start of MarshalUtils methods
@@ -468,61 +468,61 @@ void update_godot_api_cache() {
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         TypeIsGenericArray,
-        GODOT_API_CLASS(MarshalUtils)->get_method("TypeIsGenericArray", 1)
+        REBEL_API_CLASS(MarshalUtils)->get_method("TypeIsGenericArray", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         TypeIsGenericDictionary,
-        GODOT_API_CLASS(MarshalUtils)->get_method("TypeIsGenericDictionary", 1)
+        REBEL_API_CLASS(MarshalUtils)->get_method("TypeIsGenericDictionary", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         TypeIsSystemGenericList,
-        GODOT_API_CLASS(MarshalUtils)->get_method("TypeIsSystemGenericList", 1)
+        REBEL_API_CLASS(MarshalUtils)->get_method("TypeIsSystemGenericList", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         TypeIsSystemGenericDictionary,
-        GODOT_API_CLASS(MarshalUtils)
+        REBEL_API_CLASS(MarshalUtils)
             ->get_method("TypeIsSystemGenericDictionary", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         TypeIsGenericIEnumerable,
-        GODOT_API_CLASS(MarshalUtils)->get_method("TypeIsGenericIEnumerable", 1)
+        REBEL_API_CLASS(MarshalUtils)->get_method("TypeIsGenericIEnumerable", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         TypeIsGenericICollection,
-        GODOT_API_CLASS(MarshalUtils)->get_method("TypeIsGenericICollection", 1)
+        REBEL_API_CLASS(MarshalUtils)->get_method("TypeIsGenericICollection", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         TypeIsGenericIDictionary,
-        GODOT_API_CLASS(MarshalUtils)->get_method("TypeIsGenericIDictionary", 1)
+        REBEL_API_CLASS(MarshalUtils)->get_method("TypeIsGenericIDictionary", 1)
     );
 
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         ArrayGetElementType,
-        GODOT_API_CLASS(MarshalUtils)->get_method("ArrayGetElementType", 2)
+        REBEL_API_CLASS(MarshalUtils)->get_method("ArrayGetElementType", 2)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         DictionaryGetKeyValueTypes,
-        GODOT_API_CLASS(MarshalUtils)
+        REBEL_API_CLASS(MarshalUtils)
             ->get_method("DictionaryGetKeyValueTypes", 3)
     );
 
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         MakeGenericArrayType,
-        GODOT_API_CLASS(MarshalUtils)->get_method("MakeGenericArrayType", 1)
+        REBEL_API_CLASS(MarshalUtils)->get_method("MakeGenericArrayType", 1)
     );
     CACHE_METHOD_THUNK_AND_CHECK(
         MarshalUtils,
         MakeGenericDictionaryType,
-        GODOT_API_CLASS(MarshalUtils)
+        REBEL_API_CLASS(MarshalUtils)
             ->get_method("MakeGenericDictionaryType", 2)
     );
 
@@ -532,23 +532,23 @@ void update_godot_api_cache() {
     CACHE_METHOD_THUNK_AND_CHECK(
         DebuggingUtils,
         GetStackFrameInfo,
-        GODOT_API_CLASS(DebuggingUtils)->get_method("GetStackFrameInfo", 4)
+        REBEL_API_CLASS(DebuggingUtils)->get_method("GetStackFrameInfo", 4)
     );
 #endif
 
     // TODO Move to CSharpLanguage::init() and do handle disposal
     MonoObject* task_scheduler = mono_object_new(
         mono_domain_get(),
-        GODOT_API_CLASS(GodotTaskScheduler)->get_mono_ptr()
+        REBEL_API_CLASS(RebelTaskScheduler)->get_mono_ptr()
     );
     GDMonoUtils::runtime_object_init(
         task_scheduler,
-        GODOT_API_CLASS(GodotTaskScheduler)
+        REBEL_API_CLASS(RebelTaskScheduler)
     );
     cached_data.task_scheduler_handle =
         MonoGCHandle::create_strong(task_scheduler);
 
-    cached_data.godot_api_cache_updated = true;
+    cached_data.rebel_api_cache_updated = true;
 }
 
 } // namespace GDMonoCache

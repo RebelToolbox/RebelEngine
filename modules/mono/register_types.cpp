@@ -13,16 +13,16 @@ CSharpLanguage* script_language_cs = NULL;
 Ref<ResourceFormatLoaderCSharpScript> resource_loader_cs;
 Ref<ResourceFormatSaverCSharpScript> resource_saver_cs;
 
-_GodotSharp* _godotsharp = NULL;
+_RebelSharp* _rebelsharp = NULL;
 
 void register_mono_types() {
     ClassDB::register_class<CSharpScript>();
 
-    _godotsharp = memnew(_GodotSharp);
+    _rebelsharp = memnew(_RebelSharp);
 
-    ClassDB::register_class<_GodotSharp>();
+    ClassDB::register_class<_RebelSharp>();
     Engine::get_singleton()->add_singleton(
-        Engine::Singleton("GodotSharp", _GodotSharp::get_singleton())
+        Engine::Singleton("RebelSharp", _RebelSharp::get_singleton())
     );
 
     script_language_cs = memnew(CSharpLanguage);
@@ -49,7 +49,7 @@ void unregister_mono_types() {
     ResourceSaver::remove_resource_format_saver(resource_saver_cs);
     resource_saver_cs.unref();
 
-    if (_godotsharp) {
-        memdelete(_godotsharp);
+    if (_rebelsharp) {
+        memdelete(_rebelsharp);
     }
 }

@@ -12,14 +12,14 @@
 #include "modules/gdnative/nativescript/nativescript.h"
 #include "webrtc_data_channel_gdnative.h"
 
-const godot_net_webrtc_library* WebRTCPeerConnectionGDNative::default_library =
+const rebel_net_webrtc_library* WebRTCPeerConnectionGDNative::default_library =
     nullptr;
 
 Error WebRTCPeerConnectionGDNative::set_default_library(
-    const godot_net_webrtc_library* p_lib
+    const rebel_net_webrtc_library* p_lib
 ) {
     if (default_library) {
-        const godot_net_webrtc_library* old = default_library;
+        const rebel_net_webrtc_library* old = default_library;
         default_library                     = nullptr;
         old->unregistered();
     }
@@ -57,7 +57,7 @@ WebRTCPeerConnectionGDNative::~WebRTCPeerConnectionGDNative() {}
 Error WebRTCPeerConnectionGDNative::initialize(Dictionary p_config) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
     return (Error
-    )interface->initialize(interface->data, (const godot_dictionary*)&p_config);
+    )interface->initialize(interface->data, (const rebel_dictionary*)&p_config);
 }
 
 Ref<WebRTCDataChannel> WebRTCPeerConnectionGDNative::create_data_channel(
@@ -68,7 +68,7 @@ Ref<WebRTCDataChannel> WebRTCPeerConnectionGDNative::create_data_channel(
     return (WebRTCDataChannel*)interface->create_data_channel(
         interface->data,
         p_label.utf8().get_data(),
-        (const godot_dictionary*)&p_options
+        (const rebel_dictionary*)&p_options
     );
 }
 
@@ -132,7 +132,7 @@ WebRTCPeerConnection::ConnectionState WebRTCPeerConnectionGDNative::
 }
 
 void WebRTCPeerConnectionGDNative::set_native_webrtc_peer_connection(
-    const godot_net_webrtc_peer_connection* p_impl
+    const rebel_net_webrtc_peer_connection* p_impl
 ) {
     interface = p_impl;
 }

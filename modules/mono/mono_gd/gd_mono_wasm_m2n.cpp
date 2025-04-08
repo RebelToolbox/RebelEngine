@@ -10,15 +10,15 @@
 
 #include "core/oa_hash_map.h"
 
-typedef mono_bool (*GodotMonoM2nIcallTrampolineDispatch)(
+typedef mono_bool (*RebelMonoM2nIcallTrampolineDispatch)(
     const char* cookie,
     void* target_func,
     Mono_InterpMethodArguments* margs
 );
 
 // This extern function is implemented in our patched version of Mono
-MONO_API void godot_mono_register_m2n_icall_trampoline_dispatch_hook(
-    GodotMonoM2nIcallTrampolineDispatch hook
+MONO_API void rebel_mono_register_m2n_icall_trampoline_dispatch_hook(
+    RebelMonoM2nIcallTrampolineDispatch hook
 );
 
 namespace GDMonoWasmM2n {
@@ -66,7 +66,7 @@ void lazy_initialize() {
     // Doesn't need to be thread safe
     if (!initialized) {
         initialized = true;
-        godot_mono_register_m2n_icall_trampoline_dispatch_hook(
+        rebel_mono_register_m2n_icall_trampoline_dispatch_hook(
             &trampoline_dispatch_hook
         );
     }

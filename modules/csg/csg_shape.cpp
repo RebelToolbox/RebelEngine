@@ -318,15 +318,12 @@ void CSGShape::mikktSetTSpaceDefault(
 ) {
     ShapeUpdateSurface& surface = *((ShapeUpdateSurface*)pContext->m_pUserData);
 
-    int i             = iFace * 3 + iVert;
-    Vector3 normal    = surface.normalsw[i];
-    Vector3 tangent   = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
-    Vector3 bitangent = Vector3(
-        -fvBiTangent[0],
-        -fvBiTangent[1],
-        -fvBiTangent[2]
-    ); // for some reason these are reversed, something with the coordinate
-       // system in Godot
+    int i           = iFace * 3 + iVert;
+    Vector3 normal  = surface.normalsw[i];
+    Vector3 tangent = Vector3(fvTangent[0], fvTangent[1], fvTangent[2]);
+    // Bitangent values are reversed in Rebel Engine.
+    Vector3 bitangent =
+        Vector3(-fvBiTangent[0], -fvBiTangent[1], -fvBiTangent[2]);
     float d = bitangent.dot(normal.cross(tangent));
 
     i                  *= 4;

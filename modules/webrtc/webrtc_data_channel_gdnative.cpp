@@ -91,7 +91,7 @@ int WebRTCDataChannelGDNative::get_buffered_amount() const {
     ERR_FAIL_COND_V(interface == nullptr, 0);
     ERR_FAIL_COND_V(interface->next == nullptr, 0);
 
-    return ((godot_net_webrtc_data_channel_ext*)interface->next)
+    return ((rebel_net_webrtc_data_channel_ext*)interface->next)
         ->get_buffered_amount(interface->data);
 }
 
@@ -124,7 +124,7 @@ int WebRTCDataChannelGDNative::get_available_packet_count() const {
 }
 
 void WebRTCDataChannelGDNative::set_native_webrtc_data_channel(
-    const godot_net_webrtc_data_channel* p_impl
+    const rebel_net_webrtc_data_channel* p_impl
 ) {
     interface = p_impl;
 }

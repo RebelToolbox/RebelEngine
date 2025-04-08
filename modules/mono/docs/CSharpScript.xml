@@ -14,7 +14,7 @@ SPDX-License-Identifier: MIT
 	</brief_description>
 	<description>
 		This class represents a C# script. It is the C# equivalent of the [GDScript] class and is only available in Mono-enabled Rebel builds.
-		See also [GodotSharp].
+		See also [RebelSharp].
 	</description>
 	<tutorials>
 		<link>https://docs.rebeltoolbox.com/en/latest/tutorials/scripting/c_sharp/index.html</link>

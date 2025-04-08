@@ -12,10 +12,6 @@
 #include "scene/resources/mesh_library.h"
 #include "scene/resources/multimesh.h"
 
-// heh heh, godotsphir!! this shares no code and the design is completely
-// different with previous projects i've done.. should scale better with
-// hardware that supports instancing
-
 class GridMap : public Spatial {
     GDCLASS(GridMap, Spatial);
 

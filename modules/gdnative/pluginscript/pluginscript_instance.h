@@ -7,11 +7,11 @@
 #ifndef PLUGINSCRIPT_INSTANCE_H
 #define PLUGINSCRIPT_INSTANCE_H
 
-// Godot imports
+// Rebel imports
 #include "core/script_language.h"
 
 // PluginScript imports
-#include <pluginscript/godot_pluginscript.h>
+#include <pluginscript/rebel_pluginscript.h>
 
 class PluginScript;
 
@@ -22,8 +22,8 @@ private:
     Ref<PluginScript> _script;
     Object* _owner;
     Variant _owner_variant;
-    godot_pluginscript_instance_data* _data;
-    const godot_pluginscript_instance_desc* _desc;
+    rebel_pluginscript_instance_data* _data;
+    const rebel_pluginscript_instance_desc* _desc;
 
 public:
     _FORCE_INLINE_ Object* get_owner() {

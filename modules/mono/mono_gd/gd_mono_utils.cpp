@@ -86,7 +86,7 @@ MonoObject* unmanaged_get_managed(Object* unmanaged) {
     CRASH_COND(script_binding.wrapper_class == NULL);
 #endif
 
-    MonoObject* mono_object = GDMonoUtils::create_managed_for_godot_object(
+    MonoObject* mono_object = GDMonoUtils::create_managed_for_rebel_object(
         script_binding.wrapper_class,
         script_binding.type_name,
         unmanaged
@@ -105,7 +105,7 @@ MonoObject* unmanaged_get_managed(Object* unmanaged) {
         // Unsafe refcount increment. The managed instance also counts as a
         // reference. This way if the unmanaged world has no references to our
         // owner but the managed instance is alive, the refcount will be 1
-        // instead of 0. See: godot_icall_Reference_Dtor(MonoObject *p_obj,
+        // instead of 0. See: rebel_icall_Reference_Dtor(MonoObject *p_obj,
         // Object *p_ptr)
         ref->reference();
         CSharpLanguage::get_singleton()->post_unsafe_reference(ref);
@@ -182,9 +182,9 @@ GDMonoClass* type_get_proxy_class(const StringName& p_type) {
         );
 
     if (klass && klass->is_static()) {
-        // A static class means this is a Godot singleton class. If an instance
-        // is needed we use Godot.Object.
-        return GDMonoCache::cached_data.class_GodotObject;
+        // A static class means this is a Rebel singleton class. If an instance
+        // is needed we use Rebel.Object.
+        return GDMonoCache::cached_data.class_RebelObject;
     }
 
 #ifdef TOOLS_ENABLED
@@ -217,7 +217,7 @@ GDMonoClass* get_class_native_base(GDMonoClass* p_class) {
     return NULL;
 }
 
-MonoObject* create_managed_for_godot_object(
+MonoObject* create_managed_for_rebel_object(
     GDMonoClass* p_class,
     const StringName& p_native,
     Object* p_object
@@ -236,7 +236,7 @@ MonoObject* create_managed_for_godot_object(
         mono_object_new(mono_domain_get(), p_class->get_mono_ptr());
     ERR_FAIL_NULL_V(mono_object, NULL);
 
-    CACHED_FIELD(GodotObject, ptr)->set_value_raw(mono_object, p_object);
+    CACHED_FIELD(RebelObject, ptr)->set_value_raw(mono_object, p_object);
 
     // Construct
     GDMonoUtils::runtime_object_init(mono_object, p_class);
@@ -383,7 +383,7 @@ String get_exception_name_and_message(MonoException* p_exc) {
     MonoProperty* prop = mono_class_get_property_from_name(klass, "Message");
     MonoString* msg =
         (MonoString*)property_get_value(prop, (MonoObject*)p_exc, NULL, NULL);
-    res += GDMonoMarshal::mono_string_to_godot(msg);
+    res += GDMonoMarshal::mono_string_to_rebel(msg);
 
     return res;
 }
@@ -391,7 +391,7 @@ String get_exception_name_and_message(MonoException* p_exc) {
 void set_exception_message(MonoException* p_exc, String message) {
     MonoClass* klass   = mono_object_get_class((MonoObject*)p_exc);
     MonoProperty* prop = mono_class_get_property_from_name(klass, "Message");
-    MonoString* msg    = GDMonoMarshal::mono_string_from_godot(message);
+    MonoString* msg    = GDMonoMarshal::mono_string_from_rebel(message);
     void* params[1]    = {msg};
     property_set_value(prop, (MonoObject*)p_exc, params, NULL);
 }
@@ -609,7 +609,7 @@ uint64_t unbox_enum_value(
 }
 
 void dispose(MonoObject* p_mono_object, MonoException** r_exc) {
-    CACHED_METHOD_THUNK(GodotObject, Dispose).invoke(p_mono_object, r_exc);
+    CACHED_METHOD_THUNK(RebelObject, Dispose).invoke(p_mono_object, r_exc);
 }
 
 namespace Marshal {
@@ -618,7 +618,7 @@ namespace Marshal {
 #ifdef TOOLS_ENABLED
 #define NO_GLUE_RET(m_ret)                                                     \
     {                                                                          \
-        if (!GDMonoCache::cached_data.godot_api_cache_updated) return m_ret;   \
+        if (!GDMonoCache::cached_data.rebel_api_cache_updated) return m_ret;   \
     }
 #else
 #define NO_GLUE_RET(m_ret)                                                     \

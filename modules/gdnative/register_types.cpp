@@ -257,12 +257,12 @@ static void editor_init_callback() {
 
 #endif
 
-static godot_variant cb_standard_varcall(
+static rebel_variant cb_standard_varcall(
     void* p_procedure_handle,
-    godot_array* p_args
+    rebel_array* p_args
 ) {
-    godot_gdnative_procedure_fn proc;
-    proc = (godot_gdnative_procedure_fn)p_procedure_handle;
+    rebel_gdnative_procedure_fn proc;
+    proc = (rebel_gdnative_procedure_fn)p_procedure_handle;
 
     return proc(p_args);
 }

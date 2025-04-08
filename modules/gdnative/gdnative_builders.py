@@ -13,13 +13,13 @@ def _spaced(e):
 
 def _build_gdnative_api_struct_header(api):
     gdnative_api_init_macro = [
-        "\textern const godot_gdnative_core_api_struct *_gdnative_wrapper_api_struct;"
+        "\textern const rebel_gdnative_core_api_struct *_gdnative_wrapper_api_struct;"
     ]
 
     for ext in api["extensions"]:
         name = ext["name"]
         gdnative_api_init_macro.append(
-            "\textern const godot_gdnative_ext_{0}_api_struct *_gdnative_wrapper_{0}_api_struct;".format(
+            "\textern const rebel_gdnative_ext_{0}_api_struct *_gdnative_wrapper_{0}_api_struct;".format(
                 name
             )
         )
@@ -38,7 +38,7 @@ def _build_gdnative_api_struct_header(api):
         name = ext["name"]
         gdnative_api_init_macro.append("\t\t\tcase GDNATIVE_EXT_%s:" % ext["type"])
         gdnative_api_init_macro.append(
-            "\t\t\t\t_gdnative_wrapper_{0}_api_struct = (godot_gdnative_ext_{0}_api_struct *)"
+            "\t\t\t\t_gdnative_wrapper_{0}_api_struct = (rebel_gdnative_ext_{0}_api_struct *)"
             " _gdnative_wrapper_api_struct->extensions[i];".format(name)
         )
         gdnative_api_init_macro.append("\t\t\t\tbreak;")
@@ -47,16 +47,16 @@ def _build_gdnative_api_struct_header(api):
 
     out = [
         "/* THIS FILE IS GENERATED DO NOT EDIT */",
-        "#ifndef GODOT_GDNATIVE_API_STRUCT_H",
-        "#define GODOT_GDNATIVE_API_STRUCT_H",
+        "#ifndef GDNATIVE_API_STRUCT_H",
+        "#define GDNATIVE_API_STRUCT_H",
         "",
         "#include <gdnative/gdnative.h>",
-        "#include <android/godot_android.h>",
-        "#include <arvr/godot_arvr.h>",
-        "#include <nativescript/godot_nativescript.h>",
-        "#include <net/godot_net.h>",
-        "#include <pluginscript/godot_pluginscript.h>",
-        "#include <videodecoder/godot_videodecoder.h>",
+        "#include <android/rebel_android.h>",
+        "#include <arvr/rebel_arvr.h>",
+        "#include <nativescript/rebel_nativescript.h>",
+        "#include <net/rebel_net.h>",
+        "#include <pluginscript/rebel_pluginscript.h>",
+        "#include <videodecoder/rebel_videodecoder.h>",
         "",
         "#define GDNATIVE_API_INIT(options) do {  \\\n"
         + "  \\\n".join(gdnative_api_init_macro)
@@ -81,7 +81,7 @@ def _build_gdnative_api_struct_header(api):
             ret_val += generate_extension_struct(name, ext["next"])
 
         ret_val += [
-            "typedef struct godot_gdnative_ext_"
+            "typedef struct rebel_gdnative_ext_"
             + name
             + (
                 ""
@@ -92,8 +92,8 @@ def _build_gdnative_api_struct_header(api):
             )
             + "_api_struct {",
             "\tunsigned int type;",
-            "\tgodot_gdnative_api_version version;",
-            "\tconst godot_gdnative_api_struct *next;",
+            "\trebel_gdnative_api_version version;",
+            "\tconst rebel_gdnative_api_struct *next;",
         ]
 
         for funcdef in ext["api"]:
@@ -106,7 +106,7 @@ def _build_gdnative_api_struct_header(api):
             )
 
         ret_val += [
-            "} godot_gdnative_ext_"
+            "} rebel_gdnative_ext_"
             + name
             + (
                 ""
@@ -127,12 +127,12 @@ def _build_gdnative_api_struct_header(api):
             ret_val += generate_core_extension_struct(core["next"])
 
         ret_val += [
-            "typedef struct godot_gdnative_core_"
+            "typedef struct rebel_gdnative_core_"
             + ("{0}_{1}".format(core["version"]["major"], core["version"]["minor"]))
             + "_api_struct {",
             "\tunsigned int type;",
-            "\tgodot_gdnative_api_version version;",
-            "\tconst godot_gdnative_api_struct *next;",
+            "\trebel_gdnative_api_version version;",
+            "\tconst rebel_gdnative_api_struct *next;",
         ]
 
         for funcdef in core["api"]:
@@ -145,7 +145,7 @@ def _build_gdnative_api_struct_header(api):
             )
 
         ret_val += [
-            "} godot_gdnative_core_"
+            "} rebel_gdnative_core_"
             + "{0}_{1}".format(core["version"]["major"], core["version"]["minor"])
             + "_api_struct;",
             "",
@@ -161,12 +161,12 @@ def _build_gdnative_api_struct_header(api):
         out += generate_core_extension_struct(api["core"]["next"])
 
     out += [
-        "typedef struct godot_gdnative_core_api_struct {",
+        "typedef struct rebel_gdnative_core_api_struct {",
         "\tunsigned int type;",
-        "\tgodot_gdnative_api_version version;",
-        "\tconst godot_gdnative_api_struct *next;",
+        "\trebel_gdnative_api_version version;",
+        "\tconst rebel_gdnative_api_struct *next;",
         "\tunsigned int num_extensions;",
-        "\tconst godot_gdnative_api_struct **extensions;",
+        "\tconst rebel_gdnative_api_struct **extensions;",
     ]
 
     for funcdef in api["core"]["api"]:
@@ -176,13 +176,13 @@ def _build_gdnative_api_struct_header(api):
         )
 
     out += [
-        "} godot_gdnative_core_api_struct;",
+        "} rebel_gdnative_core_api_struct;",
         "",
         "#ifdef __cplusplus",
         "}",
         "#endif",
         "",
-        "#endif // GODOT_GDNATIVE_API_STRUCT_H",
+        "#endif // GDNATIVE_API_STRUCT_H",
         "",
     ]
     return "\n".join(out)
@@ -198,7 +198,7 @@ def _build_gdnative_api_struct_source(api):
 
     def get_extension_struct_name(name, ext, include_version=True):
         return (
-            "godot_gdnative_ext_"
+            "rebel_gdnative_ext_"
             + name
             + (
                 ""
@@ -247,7 +247,7 @@ def _build_gdnative_api_struct_source(api):
                 "NULL"
                 if not ext["next"]
                 else (
-                    "(const godot_gdnative_api_struct *)&"
+                    "(const rebel_gdnative_api_struct *)&"
                     + get_extension_struct_instance_name(name, ext["next"])
                 )
             )
@@ -268,7 +268,7 @@ def _build_gdnative_api_struct_source(api):
             ret_val += get_core_struct_definition(core["next"])
 
         ret_val += [
-            "extern const godot_gdnative_core_"
+            "extern const rebel_gdnative_core_"
             + (
                 "{0}_{1}_api_struct api_{0}_{1}".format(
                     core["version"]["major"], core["version"]["minor"]
@@ -286,7 +286,7 @@ def _build_gdnative_api_struct_source(api):
                 "NULL"
                 if not core["next"]
                 else (
-                    "(const godot_gdnative_api_struct *)& api_{0}_{1}".format(
+                    "(const rebel_gdnative_api_struct *)& api_{0}_{1}".format(
                         core["next"]["version"]["major"],
                         core["next"]["version"]["minor"],
                     )
@@ -306,11 +306,11 @@ def _build_gdnative_api_struct_source(api):
         name = ext["name"]
         out += get_extension_struct_definition(name, ext, False)
 
-    out += ["", "const godot_gdnative_api_struct *gdnative_extensions_pointers[] = {"]
+    out += ["", "const rebel_gdnative_api_struct *gdnative_extensions_pointers[] = {"]
 
     for ext in api["extensions"]:
         name = ext["name"]
-        out += ["\t(godot_gdnative_api_struct *)&api_extension_" + name + "_struct,"]
+        out += ["\t(rebel_gdnative_api_struct *)&api_extension_" + name + "_struct,"]
 
     out += ["};\n"]
 
@@ -318,14 +318,14 @@ def _build_gdnative_api_struct_source(api):
         out += get_core_struct_definition(api["core"]["next"])
 
     out += [
-        "extern const godot_gdnative_core_api_struct api_struct = {",
+        "extern const rebel_gdnative_core_api_struct api_struct = {",
         "\tGDNATIVE_" + api["core"]["type"] + ",",
         "\t{"
         + str(api["core"]["version"]["major"])
         + ", "
         + str(api["core"]["version"]["minor"])
         + "},",
-        "\t(const godot_gdnative_api_struct *)&api_1_1,",
+        "\t(const rebel_gdnative_api_struct *)&api_1_1,",
         "\t" + str(len(api["extensions"])) + ",",
         "\tgdnative_extensions_pointers,",
     ]
@@ -353,10 +353,10 @@ def _build_gdnative_wrapper_code(api):
         "/* THIS FILE IS GENERATED DO NOT EDIT */",
         "",
         "#include <gdnative/gdnative.h>",
-        "#include <nativescript/godot_nativescript.h>",
-        "#include <pluginscript/godot_pluginscript.h>",
-        "#include <arvr/godot_arvr.h>",
-        "#include <videodecoder/godot_videodecoder.h>",
+        "#include <nativescript/rebel_nativescript.h>",
+        "#include <pluginscript/rebel_pluginscript.h>",
+        "#include <arvr/rebel_arvr.h>",
+        "#include <videodecoder/rebel_videodecoder.h>",
         "",
         "#include <gdnative_api_struct.gen.h>",
         "",
@@ -364,13 +364,13 @@ def _build_gdnative_wrapper_code(api):
         'extern "C" {',
         "#endif",
         "",
-        "godot_gdnative_core_api_struct *_gdnative_wrapper_api_struct = 0;",
+        "rebel_gdnative_core_api_struct *_gdnative_wrapper_api_struct = 0;",
     ]
 
     for ext in api["extensions"]:
         name = ext["name"]
         out.append(
-            "godot_gdnative_ext_"
+            "rebel_gdnative_ext_"
             + name
             + "_api_struct *_gdnative_wrapper_"
             + name

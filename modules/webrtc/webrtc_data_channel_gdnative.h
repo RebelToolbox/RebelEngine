@@ -9,7 +9,7 @@
 
 #ifdef WEBRTC_GDNATIVE_ENABLED
 
-#include "modules/gdnative/include/net/godot_net.h"
+#include "modules/gdnative/include/net/rebel_net.h"
 #include "webrtc_data_channel.h"
 
 class WebRTCDataChannelGDNative : public WebRTCDataChannel {
@@ -19,11 +19,11 @@ protected:
     static void _bind_methods();
 
 private:
-    const godot_net_webrtc_data_channel* interface;
+    const rebel_net_webrtc_data_channel* interface;
 
 public:
     void set_native_webrtc_data_channel(
-        const godot_net_webrtc_data_channel* p_impl
+        const rebel_net_webrtc_data_channel* p_impl
     );
 
     virtual void set_write_mode(WriteMode mode);

@@ -19,7 +19,7 @@
 #include "modules/gdnative/gdnative.h"
 #include "scene/main/node.h"
 
-#include <nativescript/godot_nativescript.h>
+#include <nativescript/rebel_nativescript.h>
 
 #ifndef NO_THREADS
 #include "core/os/mutex.h"
@@ -27,15 +27,15 @@
 
 struct NativeScriptDesc {
     struct Method {
-        godot_instance_method method;
+        rebel_instance_method method;
         MethodInfo info;
         int rpc_mode;
         String documentation;
     };
 
     struct Property {
-        godot_property_set_func setter;
-        godot_property_get_func getter;
+        rebel_property_set_func setter;
+        rebel_property_get_func getter;
         PropertyInfo info;
         Variant default_value;
         int rset_mode;
@@ -53,8 +53,8 @@ struct NativeScriptDesc {
     StringName base;
     StringName base_native_type;
     NativeScriptDesc* base_data;
-    godot_instance_create_func create_func;
-    godot_instance_destroy_func destroy_func;
+    rebel_instance_create_func create_func;
+    rebel_instance_destroy_func destroy_func;
 
     String documentation;
 
@@ -70,8 +70,8 @@ struct NativeScriptDesc {
         base_native_type(),
         documentation(),
         type_tag(nullptr) {
-        memset(&create_func, 0, sizeof(godot_instance_create_func));
-        memset(&destroy_func, 0, sizeof(godot_instance_destroy_func));
+        memset(&create_func, 0, sizeof(rebel_instance_create_func));
+        memset(&destroy_func, 0, sizeof(rebel_instance_destroy_func));
     }
 };
 
@@ -261,7 +261,7 @@ private:
 
     void call_libraries_cb(const StringName& name);
 
-    Vector<Pair<bool, godot_instance_binding_functions>> binding_functions;
+    Vector<Pair<bool, rebel_instance_binding_functions>> binding_functions;
     Set<Vector<void*>*> binding_instances;
 
     Map<int, HashMap<StringName, const void*>> global_type_tags;
@@ -414,7 +414,7 @@ public:
     );
 
     int register_binding_functions(
-        godot_instance_binding_functions p_binding_functions
+        rebel_instance_binding_functions p_binding_functions
     );
     void unregister_binding_functions(int p_idx);
 

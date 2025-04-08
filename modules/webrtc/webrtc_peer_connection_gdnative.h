@@ -9,7 +9,7 @@
 
 #ifdef WEBRTC_GDNATIVE_ENABLED
 
-#include "modules/gdnative/include/net/godot_net.h"
+#include "modules/gdnative/include/net/rebel_net.h"
 #include "webrtc_peer_connection.h"
 
 class WebRTCPeerConnectionGDNative : public WebRTCPeerConnection {
@@ -20,18 +20,18 @@ protected:
     static WebRTCPeerConnection* _create();
 
 private:
-    static const godot_net_webrtc_library* default_library;
-    const godot_net_webrtc_peer_connection* interface;
+    static const rebel_net_webrtc_library* default_library;
+    const rebel_net_webrtc_peer_connection* interface;
 
 public:
-    static Error set_default_library(const godot_net_webrtc_library* p_library);
+    static Error set_default_library(const rebel_net_webrtc_library* p_library);
 
     static void make_default() {
         WebRTCPeerConnection::_create = WebRTCPeerConnectionGDNative::_create;
     }
 
     void set_native_webrtc_peer_connection(
-        const godot_net_webrtc_peer_connection* p_impl
+        const rebel_net_webrtc_peer_connection* p_impl
     );
 
     virtual ConnectionState get_connection_state() const;

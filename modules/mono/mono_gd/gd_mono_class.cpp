@@ -24,7 +24,7 @@ String GDMonoClass::get_full_name(MonoClass* p_mono_class) {
         GDMonoUtils::object_to_string((MonoObject*)type_obj, &exc);
     UNHANDLED_EXCEPTION(exc);
 
-    return GDMonoMarshal::mono_string_to_godot(str);
+    return GDMonoMarshal::mono_string_to_rebel(str);
 }
 
 MonoType* GDMonoClass::get_mono_type(MonoClass* p_mono_class) {
@@ -153,9 +153,9 @@ void GDMonoClass::fetch_attributes() {
     attrs_fetched = true;
 }
 
-void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base
+void GDMonoClass::fetch_methods_with_rebel_api_checks(GDMonoClass* p_native_base
 ) {
-    CRASH_COND(!CACHED_CLASS(GodotObject)->is_assignable_from(this));
+    CRASH_COND(!CACHED_CLASS(RebelObject)->is_assignable_from(this));
 
     if (methods_fetched) {
         return;
@@ -177,7 +177,7 @@ void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base
                             + "(" + method->get_signature_desc(true) + ")";
             WARN_PRINT(
                 "Method '" + fullname
-                + "' is hidden by Godot API method. Should be '"
+                + "' is hidden by Rebel API method. Should be '"
                 + method->get_full_name_no_class() + "'. In class '"
                 + namespace_name + "." + class_name + "'."
             );
@@ -210,7 +210,7 @@ void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base
                     break;
                 }
 
-                if (native_top == CACHED_CLASS(GodotObject)) {
+                if (native_top == CACHED_CLASS(RebelObject)) {
                     break;
                 }
 
@@ -225,8 +225,8 @@ void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base
             continue;
         }
 
-        // Virtual method of Godot Object derived type, let's try to find
-        // GodotMethod attribute
+        // Virtual method of Rebel Object derived type, let's try to find
+        // RebelMethod attribute
 
         GDMonoClass* top = p_native_base;
 
@@ -235,24 +235,24 @@ void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base
                 top->get_method(name, method->get_parameters_count());
 
             if (base_method
-                && base_method->has_attribute(CACHED_CLASS(GodotMethodAttribute)
+                && base_method->has_attribute(CACHED_CLASS(RebelMethodAttribute)
                 )) {
-                // Found base method with GodotMethod attribute.
+                // Found base method with RebelMethod attribute.
                 // We get the original API method name from this attribute.
                 // This name must point to the virtual method.
 
                 MonoObject* attr =
-                    base_method->get_attribute(CACHED_CLASS(GodotMethodAttribute
+                    base_method->get_attribute(CACHED_CLASS(RebelMethodAttribute
                     ));
 
-                StringName godot_method_name =
-                    CACHED_FIELD(GodotMethodAttribute, methodName)
+                StringName rebel_method_name =
+                    CACHED_FIELD(RebelMethodAttribute, methodName)
                         ->get_string_value(attr);
 #ifdef DEBUG_ENABLED
-                CRASH_COND(godot_method_name == StringName());
+                CRASH_COND(rebel_method_name == StringName());
 #endif
                 MethodKey key = MethodKey(
-                    godot_method_name,
+                    rebel_method_name,
                     method->get_parameters_count()
                 );
                 GDMonoMethod** existing_method = methods.getptr(key);
@@ -264,7 +264,7 @@ void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass* p_native_base
                 break;
             }
 
-            if (top == CACHED_CLASS(GodotObject)) {
+            if (top == CACHED_CLASS(RebelObject)) {
                 break;
             }
 
@@ -597,7 +597,7 @@ GDMonoClass::~GDMonoClass() {
     {
         // Ugly workaround...
         // We may have duplicated values, because we redirect snake_case methods
-        // to PascalCasel (only Godot API methods). This way, we end with both
+        // to PascalCasel (only Rebel API methods). This way, we end with both
         // the snake_case name and the PascalCasel name paired with the same
         // method. Therefore, we must avoid deleting the same pointer twice.
 

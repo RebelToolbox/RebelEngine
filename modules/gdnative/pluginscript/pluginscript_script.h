@@ -7,12 +7,12 @@
 #ifndef PLUGINSCRIPT_SCRIPT_H
 #define PLUGINSCRIPT_SCRIPT_H
 
-// Godot imports
+// Rebel imports
 #include "core/script_language.h"
 // PluginScript imports
 #include "pluginscript_language.h"
 
-#include <pluginscript/godot_pluginscript.h>
+#include <pluginscript/rebel_pluginscript.h>
 
 class PluginScript : public Script {
     GDCLASS(PluginScript, Script);
@@ -21,8 +21,8 @@ class PluginScript : public Script {
     friend class PluginScriptLanguage;
 
 private:
-    godot_pluginscript_script_data* _data;
-    const godot_pluginscript_script_desc* _desc;
+    rebel_pluginscript_script_data* _data;
+    const rebel_pluginscript_script_desc* _desc;
     PluginScriptLanguage* _language;
     bool _tool;
     bool _valid;

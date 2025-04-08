@@ -24,8 +24,8 @@ struct FBXBone : public Reference {
         return !valid_parent;
     }
 
-    // Godot specific data
-    int godot_bone_id = -2; // godot internal bone id assigned after import
+    // Bone id assigned after import.
+    int rebel_bone_id = -2;
 
     // if a bone / armature is the root then FBX skeleton will contain the bone
     // not any other skeleton. this is to support joints by themselves in scenes

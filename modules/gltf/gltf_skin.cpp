@@ -61,11 +61,8 @@ void GLTFSkin::_bind_methods() {
         D_METHOD("set_joint_i_to_name", "joint_i_to_name"),
         &GLTFSkin::set_joint_i_to_name
     );
-    ClassDB::bind_method(D_METHOD("get_godot_skin"), &GLTFSkin::get_godot_skin);
-    ClassDB::bind_method(
-        D_METHOD("set_godot_skin", "godot_skin"),
-        &GLTFSkin::set_godot_skin
-    );
+    ClassDB::bind_method(D_METHOD("get_skin"), &GLTFSkin::get_skin);
+    ClassDB::bind_method(D_METHOD("set_skin", "skin"), &GLTFSkin::set_skin);
 
     ADD_PROPERTY(
         PropertyInfo(Variant::INT, "skin_root"),
@@ -131,9 +128,9 @@ void GLTFSkin::_bind_methods() {
         "get_joint_i_to_name"
     ); // Map<int,
     ADD_PROPERTY(
-        PropertyInfo(Variant::OBJECT, "godot_skin"),
-        "set_godot_skin",
-        "get_godot_skin"
+        PropertyInfo(Variant::OBJECT, "skin"),
+        "set_skin",
+        "get_skin"
     ); // Ref<Skin>
 }
 
@@ -219,10 +216,10 @@ void GLTFSkin::set_joint_i_to_name(Dictionary p_joint_i_to_name) {
     }
 }
 
-Ref<Skin> GLTFSkin::get_godot_skin() {
-    return godot_skin;
+Ref<Skin> GLTFSkin::get_skin() {
+    return skin;
 }
 
-void GLTFSkin::set_godot_skin(Ref<Skin> p_godot_skin) {
-    godot_skin = p_godot_skin;
+void GLTFSkin::set_skin(Ref<Skin> p_skin) {
+    skin = p_skin;
 }

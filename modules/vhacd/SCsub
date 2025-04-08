@@ -13,7 +13,7 @@ thirdparty_dir = "#thirdparty/vhacd/"
 
 env_vhacd.Prepend(CPPPATH=[thirdparty_dir + "include"])
 
-# Godot source files
+# Rebel source files
 
 module_obj = []
 

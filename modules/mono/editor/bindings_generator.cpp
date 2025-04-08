@@ -9,8 +9,8 @@
 #if defined(DEBUG_METHODS_ENABLED) && defined(TOOLS_ENABLED)
 
 #include "../glue/cs_glue_version.gen.h"
-#include "../godotsharp_defs.h"
 #include "../mono_gd/gd_mono_marshal.h"
+#include "../rebelsharp_defs.h"
 #include "../utils/path_utils.h"
 #include "../utils/string_utils.h"
 #include "core/engine.h"
@@ -49,14 +49,14 @@
 #define CS_METHOD_CALL         "Call"
 
 #define GLUE_HEADER_FILE       "glue_header.h"
-#define ICALL_PREFIX           "godot_icall_"
+#define ICALL_PREFIX           "rebel_icall_"
 #define SINGLETON_ICALL_SUFFIX "_get_singleton"
 #define ICALL_GET_METHODBIND   ICALL_PREFIX "Object_ClassDB_get_method"
 
 #define C_LOCAL_RET              "ret"
 #define C_LOCAL_VARARG_RET       "vararg_ret"
 #define C_LOCAL_PTRCALL_ARGS     "call_args"
-#define C_MACRO_OBJECT_CONSTRUCT "GODOTSHARP_INSTANCE_OBJECT"
+#define C_MACRO_OBJECT_CONSTRUCT "REBELSHARP_INSTANCE_OBJECT"
 
 #define C_NS_MONOUTILS     "GDMonoUtils"
 #define C_NS_MONOINTERNALS "GDMonoInternals"
@@ -68,8 +68,8 @@
 #define C_METHOD_MANAGED_TO_VARIANT C_NS_MONOMARSHAL "::mono_object_to_variant"
 #define C_METHOD_MANAGED_FROM_VARIANT                                          \
     C_NS_MONOMARSHAL "::variant_to_mono_object"
-#define C_METHOD_MONOSTR_TO_GODOT   C_NS_MONOMARSHAL "::mono_string_to_godot"
-#define C_METHOD_MONOSTR_FROM_GODOT C_NS_MONOMARSHAL "::mono_string_from_godot"
+#define C_METHOD_MONOSTR_TO_REBEL   C_NS_MONOMARSHAL "::mono_string_to_rebel"
+#define C_METHOD_MONOSTR_FROM_REBEL C_NS_MONOMARSHAL "::mono_string_from_rebel"
 #define C_METHOD_MONOARRAY_TO(m_type)                                          \
     C_NS_MONOMARSHAL "::mono_array_to_" #m_type
 #define C_METHOD_MONOARRAY_FROM(m_type)                                        \
@@ -306,7 +306,7 @@ String BindingsGenerator::bbcode_to_xml(
                         if (target_itype) {
                             OS::get_singleton()->print(
                                 "Cannot resolve method reference for "
-                                "non-Godot.Object type in documentation: %s\n",
+                                "non-Rebel.Object type in documentation: %s\n",
                                 link_target.utf8().get_data()
                             );
                         } else {
@@ -341,7 +341,7 @@ String BindingsGenerator::bbcode_to_xml(
                         if (target_itype) {
                             OS::get_singleton()->print(
                                 "Cannot resolve member reference for "
-                                "non-Godot.Object type in documentation: %s\n",
+                                "non-Rebel.Object type in documentation: %s\n",
                                 link_target.utf8().get_data()
                             );
                         } else {
@@ -415,7 +415,7 @@ String BindingsGenerator::bbcode_to_xml(
                         if (target_itype) {
                             OS::get_singleton()->print(
                                 "Cannot resolve constant reference for "
-                                "non-Godot.Object type in documentation: %s\n",
+                                "non-Rebel.Object type in documentation: %s\n",
                                 link_target.utf8().get_data()
                             );
                         } else {
@@ -856,7 +856,7 @@ void BindingsGenerator::_generate_method_icalls(const TypeInterface& p_itype) {
             i++;
         }
 
-        // godot_icall_{argc}_{icallcount}
+        // rebel_icall_{argc}_{icallcount}
         String icall_method  = ICALL_PREFIX;
         icall_method        += itos(imethod.arguments.size());
         icall_method        += "_";
@@ -1037,10 +1037,10 @@ Error BindingsGenerator::generate_cs_core_project(const String& p_proj_dir) {
 
     da->change_dir(p_proj_dir);
     da->make_dir("Generated");
-    da->make_dir("Generated/GodotObjects");
+    da->make_dir("Generated/RebelObjects");
 
     String base_gen_dir          = path::join(p_proj_dir, "Generated");
-    String godot_objects_gen_dir = path::join(base_gen_dir, "GodotObjects");
+    String rebel_objects_gen_dir = path::join(base_gen_dir, "RebelObjects");
 
     Vector<String> compile_items;
 
@@ -1071,7 +1071,7 @@ Error BindingsGenerator::generate_cs_core_project(const String& p_proj_dir) {
         }
 
         String output_file =
-            path::join(godot_objects_gen_dir, itype.proxy_name + ".cs");
+            path::join(rebel_objects_gen_dir, itype.proxy_name + ".cs");
         Error err = _generate_cs_type(itype, output_file);
 
         if (err == ERR_SKIP) {
@@ -1100,7 +1100,7 @@ Error BindingsGenerator::generate_cs_core_project(const String& p_proj_dir) {
                              "\n" INDENT1 OPEN_BLOCK);
 
     cs_icalls_content.append(MEMBER_BEGIN
-                             "internal static ulong godot_api_hash = ");
+                             "internal static ulong rebel_api_hash = ");
     cs_icalls_content.append(
         String::num_uint64(GDMono::get_singleton()->get_api_core_hash()) + ";\n"
     );
@@ -1196,10 +1196,10 @@ Error BindingsGenerator::generate_cs_editor_project(const String& p_proj_dir) {
 
     da->change_dir(p_proj_dir);
     da->make_dir("Generated");
-    da->make_dir("Generated/GodotObjects");
+    da->make_dir("Generated/RebelObjects");
 
     String base_gen_dir          = path::join(p_proj_dir, "Generated");
-    String godot_objects_gen_dir = path::join(base_gen_dir, "GodotObjects");
+    String rebel_objects_gen_dir = path::join(base_gen_dir, "RebelObjects");
 
     Vector<String> compile_items;
 
@@ -1214,7 +1214,7 @@ Error BindingsGenerator::generate_cs_editor_project(const String& p_proj_dir) {
         }
 
         String output_file =
-            path::join(godot_objects_gen_dir, itype.proxy_name + ".cs");
+            path::join(rebel_objects_gen_dir, itype.proxy_name + ".cs");
         Error err = _generate_cs_type(itype, output_file);
 
         if (err == ERR_SKIP) {
@@ -1241,7 +1241,7 @@ Error BindingsGenerator::generate_cs_editor_project(const String& p_proj_dir) {
                 "\n" INDENT1 OPEN_BLOCK
     );
 
-    cs_icalls_content.append(INDENT2 "internal static ulong godot_api_hash = ");
+    cs_icalls_content.append(INDENT2 "internal static ulong rebel_api_hash = ");
     cs_icalls_content.append(
         String::num_uint64(GDMono::get_singleton()->get_api_editor_hash())
         + ";\n"
@@ -1340,7 +1340,7 @@ Error BindingsGenerator::generate_cs_api(const String& p_output_dir) {
 
     Error proj_err;
 
-    // Generate GodotSharp source files
+    // Generate RebelSharp source files
 
     String core_proj_dir = output_dir.plus_file(CORE_API_ASSEMBLY_NAME);
 
@@ -1350,7 +1350,7 @@ Error BindingsGenerator::generate_cs_api(const String& p_output_dir) {
         return proj_err;
     }
 
-    // Generate GodotSharpEditor source files
+    // Generate RebelSharpEditor source files
 
     String editor_proj_dir = output_dir.plus_file(EDITOR_API_ASSEMBLY_NAME);
 
@@ -1360,7 +1360,7 @@ Error BindingsGenerator::generate_cs_api(const String& p_output_dir) {
         return proj_err;
     }
 
-    _log("The Godot API sources were successfully generated\n");
+    _log("The Rebel API sources were successfully generated\n");
 
     return OK;
 }
@@ -1385,7 +1385,7 @@ Error BindingsGenerator::_generate_cs_type(
     bool is_derived_type = itype.base_name != StringName();
 
     if (!is_derived_type) {
-        // Some Godot.Object assertions
+        // Some Rebel.Object assertions
         CRASH_COND(itype.cname != name_cache.type_Object);
         CRASH_COND(!itype.is_instantiable);
         CRASH_COND(itype.api_type != ClassDB::API_CORE);
@@ -1584,9 +1584,9 @@ Error BindingsGenerator::_generate_cs_type(
     if (itype.is_singleton) {
         // Add the type name and the singleton pointer as static fields
 
-        output.append(MEMBER_BEGIN "private static Godot.Object singleton;\n");
+        output.append(MEMBER_BEGIN "private static Rebel.Object singleton;\n");
         output.append(MEMBER_BEGIN
-                      "public static Godot.Object Singleton\n" INDENT2
+                      "public static Rebel.Object Singleton\n" INDENT2
                       "{\n" INDENT3 "get\n" INDENT3 "{\n" INDENT4
                       "if (singleton == null)\n" INDENT5
                       "singleton = Engine.GetSingleton(typeof(");
@@ -2046,7 +2046,7 @@ Error BindingsGenerator::_generate_cs_method(
         }
 
         if (!p_imethod.is_internal) {
-            p_output.append(MEMBER_BEGIN "[GodotMethod(\"");
+            p_output.append(MEMBER_BEGIN "[RebelMethod(\"");
             p_output.append(p_imethod.name);
             p_output.append("\")]");
         }
@@ -2078,7 +2078,7 @@ Error BindingsGenerator::_generate_cs_method(
         p_output.append(arguments_sig + ")\n" OPEN_BLOCK_L2);
 
         if (p_imethod.is_virtual) {
-            // Godot virtual method must be overridden, therefore we return a
+            // Rebel virtual method must be overridden, therefore we return a
             // default value by default.
 
             if (return_type->cname == name_cache.type_void) {
@@ -2093,7 +2093,7 @@ Error BindingsGenerator::_generate_cs_method(
         }
 
         if (p_imethod.requires_object_call) {
-            // Fallback to Godot's object.Call(string, params)
+            // Fallback to Rebel's object.Call(string, params)
 
             p_output.append(CS_METHOD_CALL "(\"");
             p_output.append(p_imethod.name);
@@ -2257,7 +2257,7 @@ Error BindingsGenerator::generate_glue(const String& p_output_dir) {
         }
     }
 
-    output.append("namespace GodotSharpBindings\n" OPEN_BLOCK "\n");
+    output.append("namespace RebelSharpBindings\n" OPEN_BLOCK "\n");
 
     output.append("uint64_t get_core_api_hash() { return ");
     output.append(
@@ -2282,7 +2282,7 @@ Error BindingsGenerator::generate_glue(const String& p_output_dir) {
     output.append(String::num_uint64(CS_GLUE_VERSION) + "; }\n");
 
     output.append("\nvoid register_generated_icalls() " OPEN_BLOCK);
-    output.append("\tgodot_register_glue_header_icalls();\n");
+    output.append("\trebel_register_glue_header_icalls();\n");
 
 #define ADD_INTERNAL_CALL_REGISTRATION(m_icall)                                \
     {                                                                          \
@@ -2353,7 +2353,7 @@ Error BindingsGenerator::generate_glue(const String& p_output_dir) {
 
 #undef ADD_INTERNAL_CALL_REGISTRATION
 
-    output.append(CLOSE_BLOCK "\n} // namespace GodotSharpBindings\n");
+    output.append(CLOSE_BLOCK "\n} // namespace RebelSharpBindings\n");
 
     output.append("\n#endif // MONO_GLUE_ENABLED\n");
 
@@ -2952,7 +2952,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
                 // A virtual method without the virtual flag. This is a special
                 // case.
 
-                // There is no method bind, so let's fallback to Godot's
+                // There is no method bind, so let's fallback to Rebel's
                 // object.Call(string, params)
                 imethod.requires_object_call = true;
 
@@ -3544,8 +3544,8 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
     itype.name        = "String";
     itype.cname       = itype.name;
     itype.proxy_name  = "string";
-    itype.c_in        = "\t%0 %1_in = " C_METHOD_MONOSTR_TO_GODOT "(%1);\n";
-    itype.c_out       = "\treturn " C_METHOD_MONOSTR_FROM_GODOT "(%1);\n";
+    itype.c_in        = "\t%0 %1_in = " C_METHOD_MONOSTR_TO_REBEL "(%1);\n";
+    itype.c_out       = "\treturn " C_METHOD_MONOSTR_FROM_REBEL "(%1);\n";
     itype.c_arg_in    = "&%s_in";
     itype.c_type      = itype.name;
     itype.c_type_in   = "MonoString*";
@@ -3915,7 +3915,7 @@ void BindingsGenerator::handle_cmdline_args(const List<String>& p_cmdline_args
 
     int options_left = NUM_OPTIONS;
 
-    bool exit_godot = false;
+    bool exit_rebel = false;
 
     const List<String>::Element* elem = p_cmdline_args.front();
 
@@ -3927,8 +3927,8 @@ void BindingsGenerator::handle_cmdline_args(const List<String>& p_cmdline_args
                 glue_dir_path = path_elem->get();
                 elem          = elem->next();
             } else {
-                ERR_PRINT(generate_all_glue_option + ": No output directory specified (expected path to '{GODOT_ROOT}/modules/mono/glue').");
-                exit_godot = true;
+                ERR_PRINT(generate_all_glue_option + ": No output directory specified (expected path to '{REBEL_ROOT}/modules/mono/glue').");
+                exit_rebel = true;
             }
 
             --options_left;
@@ -3942,7 +3942,7 @@ void BindingsGenerator::handle_cmdline_args(const List<String>& p_cmdline_args
                 ERR_PRINT(
                     generate_cs_glue_option + ": No output directory specified."
                 );
-                exit_godot = true;
+                exit_rebel = true;
             }
 
             --options_left;
@@ -3957,7 +3957,7 @@ void BindingsGenerator::handle_cmdline_args(const List<String>& p_cmdline_args
                     generate_cpp_glue_option
                     + ": No output directory specified."
                 );
-                exit_godot = true;
+                exit_rebel = true;
             }
 
             --options_left;
@@ -3969,10 +3969,10 @@ void BindingsGenerator::handle_cmdline_args(const List<String>& p_cmdline_args
     if (glue_dir_path.length() || cs_dir_path.length()
         || cpp_dir_path.length()) {
         handle_cmdline_options(glue_dir_path, cs_dir_path, cpp_dir_path);
-        exit_godot = true;
+        exit_rebel = true;
     }
 
-    if (exit_godot) {
+    if (exit_rebel) {
         // Exit once done
         Main::cleanup(true);
         ::exit(0);

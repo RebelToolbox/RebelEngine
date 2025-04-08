@@ -17,10 +17,7 @@ void GLTFSkeleton::_bind_methods() {
         D_METHOD("set_roots", "roots"),
         &GLTFSkeleton::set_roots
     );
-    ClassDB::bind_method(
-        D_METHOD("get_godot_skeleton"),
-        &GLTFSkeleton::get_godot_skeleton
-    );
+    ClassDB::bind_method(D_METHOD("get_skeleton"), &GLTFSkeleton::get_skeleton);
     ClassDB::bind_method(
         D_METHOD("get_unique_names"),
         &GLTFSkeleton::get_unique_names
@@ -30,12 +27,12 @@ void GLTFSkeleton::_bind_methods() {
         &GLTFSkeleton::set_unique_names
     );
     ClassDB::bind_method(
-        D_METHOD("get_godot_bone_node"),
-        &GLTFSkeleton::get_godot_bone_node
+        D_METHOD("get_bone_node"),
+        &GLTFSkeleton::get_bone_node
     );
     ClassDB::bind_method(
-        D_METHOD("set_godot_bone_node", "godot_bone_node"),
-        &GLTFSkeleton::set_godot_bone_node
+        D_METHOD("set_bone_node", "bone_node"),
+        &GLTFSkeleton::set_bone_node
     );
     ClassDB::bind_method(
         D_METHOD("get_bone_attachment_count"),
@@ -71,14 +68,14 @@ void GLTFSkeleton::_bind_methods() {
     ADD_PROPERTY(
         PropertyInfo(
             Variant::DICTIONARY,
-            "godot_bone_node",
+            "bone_node",
             PROPERTY_HINT_NONE,
             "",
             PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL
                 | PROPERTY_USAGE_EDITOR
         ),
-        "set_godot_bone_node",
-        "get_godot_bone_node"
+        "set_bone_node",
+        "get_bone_node"
     ); // Map<int32_t,
 }
 
@@ -98,8 +95,8 @@ void GLTFSkeleton::set_roots(PoolVector<GLTFNodeIndex> p_roots) {
     roots = p_roots;
 }
 
-Skeleton* GLTFSkeleton::get_godot_skeleton() {
-    return godot_skeleton;
+Skeleton* GLTFSkeleton::get_skeleton() {
+    return skeleton;
 }
 
 Array GLTFSkeleton::get_unique_names() {
@@ -110,12 +107,12 @@ void GLTFSkeleton::set_unique_names(Array p_unique_names) {
     GLTFDocument::set_from_array(unique_names, p_unique_names);
 }
 
-Dictionary GLTFSkeleton::get_godot_bone_node() {
-    return GLTFDocument::to_dict(godot_bone_node);
+Dictionary GLTFSkeleton::get_bone_node() {
+    return GLTFDocument::to_dict(bone_node);
 }
 
-void GLTFSkeleton::set_godot_bone_node(Dictionary p_indict) {
-    GLTFDocument::set_from_dict(godot_bone_node, p_indict);
+void GLTFSkeleton::set_bone_node(Dictionary p_indict) {
+    GLTFDocument::set_from_dict(bone_node, p_indict);
 }
 
 BoneAttachment* GLTFSkeleton::get_bone_attachment(int idx) {

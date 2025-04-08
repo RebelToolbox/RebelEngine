@@ -6,7 +6,7 @@
 
 #include "gd_mono_assembly.h"
 
-#include "../godotsharp_dirs.h"
+#include "../rebelsharp_dirs.h"
 #include "core/io/file_access_pack.h"
 #include "core/list.h"
 #include "core/os/file_access.h"
@@ -42,7 +42,7 @@ void GDMonoAssembly::fill_search_dirs(
 
 #if !defined(TOOLS_ENABLED)
     String data_game_assemblies_dir =
-        GodotSharpDirs::get_data_game_assemblies_dir();
+        RebelSharpDirs::get_data_game_assemblies_dir();
     if (!data_game_assemblies_dir.empty()) {
         r_search_dirs.push_back(data_game_assemblies_dir);
     }
@@ -50,36 +50,36 @@ void GDMonoAssembly::fill_search_dirs(
 
     if (p_custom_config.length()) {
         r_search_dirs.push_back(
-            GodotSharpDirs::get_res_temp_assemblies_base_dir().plus_file(
+            RebelSharpDirs::get_res_temp_assemblies_base_dir().plus_file(
                 p_custom_config
             )
         );
     } else {
-        r_search_dirs.push_back(GodotSharpDirs::get_res_temp_assemblies_dir());
+        r_search_dirs.push_back(RebelSharpDirs::get_res_temp_assemblies_dir());
     }
 
     if (p_custom_config.empty()) {
-        r_search_dirs.push_back(GodotSharpDirs::get_res_assemblies_dir());
+        r_search_dirs.push_back(RebelSharpDirs::get_res_assemblies_dir());
     } else {
         String api_config =
             p_custom_config == "ExportRelease" ? "Release" : "Debug";
         r_search_dirs.push_back(
-            GodotSharpDirs::get_res_assemblies_base_dir().plus_file(api_config)
+            RebelSharpDirs::get_res_assemblies_base_dir().plus_file(api_config)
         );
     }
 
-    r_search_dirs.push_back(GodotSharpDirs::get_res_assemblies_base_dir());
+    r_search_dirs.push_back(RebelSharpDirs::get_res_assemblies_base_dir());
     r_search_dirs.push_back(OS::get_singleton()->get_resource_dir());
     r_search_dirs.push_back(
         OS::get_singleton()->get_executable_path().get_base_dir()
     );
 
 #ifdef TOOLS_ENABLED
-    r_search_dirs.push_back(GodotSharpDirs::get_data_editor_tools_dir());
+    r_search_dirs.push_back(RebelSharpDirs::get_data_editor_tools_dir());
 
-    // For GodotTools to find the api assemblies
+    // For RebelTools to find the api assemblies
     r_search_dirs.push_back(
-        GodotSharpDirs::get_data_editor_prebuilt_api_dir().plus_file("Debug")
+        RebelSharpDirs::get_data_editor_prebuilt_api_dir().plus_file("Debug")
     );
 #endif
 }
@@ -516,7 +516,7 @@ GDMonoClass* GDMonoAssembly::get_object_derived_class(const StringName& p_class
                 mono_class_get(image, (i + 1) | MONO_TOKEN_TYPE_DEF);
 
             if (!mono_class_is_assignable_from(
-                    CACHED_CLASS_RAW(GodotObject),
+                    CACHED_CLASS_RAW(RebelObject),
                     mono_class
                 )) {
                 continue;

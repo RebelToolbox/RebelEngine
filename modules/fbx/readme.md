@@ -47,9 +47,9 @@ Bones in FBX are nodes, they initially have the Model:: Type, then have links to
 is part of the skin there is also an explicit Skin link, which then links to the geometry using OO links in the
 document.
 
-# Rotation Order in FBX compared to Godot
+# Rotation Order in FBX compared to Rebel Engine
 
-**Godot uses the rotation order:** YXZ
+**Rebel Engine uses the rotation order:** YXZ
 
 **FBX has dynamic rotation order to prevent gimbal lock with complex animations**
 
@@ -133,7 +133,7 @@ enum TransformInheritance {
 
 # Axis in FBX
 
-Godot has one format for the declared axis
+Rebel Engine has one format for the declared axis
 
 AXIS X, AXIS Y, -AXIS Z
 

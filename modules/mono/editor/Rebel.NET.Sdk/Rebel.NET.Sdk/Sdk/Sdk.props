@@ -1,0 +1,116 @@
+<Project>
+  <PropertyGroup>
+    <!-- Determines if we should import Microsoft.NET.Sdk, if it wasn't already imported. -->
+    <RebelSdkImportsMicrosoftNetSdk Condition=" '$(UsingMicrosoftNETSdk)' != 'true' ">true</RebelSdkImportsMicrosoftNetSdk>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Configurations>Debug;ExportDebug;ExportRelease</Configurations>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+
+    <RebelProjectDir Condition=" '$(SolutionDir)' != '' ">$(SolutionDir)</RebelProjectDir>
+    <RebelProjectDir Condition=" '$(SolutionDir)' == '' ">$(MSBuildProjectDirectory)</RebelProjectDir>
+    <RebelProjectDir>$([MSBuild]::EnsureTrailingSlash('$(RebelProjectDir)'))</RebelProjectDir>
+
+    <!-- Custom output paths for Rebel projects. In brief, 'bin\' and 'obj\' are moved to '$(RebelProjectDir)\.mono\temp\'. -->
+    <BaseOutputPath>$(RebelProjectDir).mono\temp\bin\</BaseOutputPath>
+    <OutputPath>$(RebelProjectDir).mono\temp\bin\$(Configuration)\</OutputPath>
+    <!--
+    Use custom IntermediateOutputPath and BaseIntermediateOutputPath only if it wasn't already set.
+    Otherwise the old values may have already been changed by MSBuild which can cause problems with NuGet.
+    -->
+    <IntermediateOutputPath Condition=" '$(IntermediateOutputPath)' == '' ">$(RebelProjectDir).mono\temp\obj\$(Configuration)\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition=" '$(BaseIntermediateOutputPath)' == '' ">$(RebelProjectDir).mono\temp\obj\</BaseIntermediateOutputPath>
+
+    <!-- Do not append the target framework name to the output path. -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" Condition=" '$(RebelSdkImportsMicrosoftNetSdk)' == 'true' " />
+
+  <PropertyGroup>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+  </PropertyGroup>
+
+  <!--
+  The Microsoft.NET.Sdk only understands of the Debug and Release configurations.
+  We need to set the following properties manually for ExportDebug and ExportRelease.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' or '$(Configuration)' == 'ExportDebug' ">
+    <DebugSymbols Condition=" '$(DebugSymbols)' == '' ">true</DebugSymbols>
+    <Optimize Condition=" '$(Optimize)' == '' ">false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'ExportRelease' ">
+    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RebelApiConfiguration Condition=" '$(Configuration)' != 'ExportRelease' ">Debug</RebelApiConfiguration>
+    <RebelApiConfiguration Condition=" '$(Configuration)' == 'ExportRelease' ">Release</RebelApiConfiguration>
+  </PropertyGroup>
+
+  <!-- Auto-detect the target Rebel platform if it was not specified. -->
+  <PropertyGroup Condition=" '$(RebelTargetPlatform)' == '' ">
+    <RebelTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(Linux))' ">linux</RebelTargetPlatform>
+    <RebelTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(FreeBSD))' ">linux</RebelTargetPlatform>
+    <RebelTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(MacOS))' ">macos</RebelTargetPlatform>
+    <RebelTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(Windows))' ">windows</RebelTargetPlatform>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RebelRealTIsDouble Condition=" '$(RebelRealTIsDouble)' == '' ">false</RebelRealTIsDouble>
+  </PropertyGroup>
+
+  <!-- Rebel DefineConstants. -->
+  <PropertyGroup>
+    <!-- Define constant to identify Rebel builds. -->
+    <RebelDefineConstants>REBEL</RebelDefineConstants>
+
+    <!--
+    Define constant to determine the target Rebel platform. This includes the
+    recognized platform names and the platform category (PC, MOBILE or WEB).
+    -->
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'windows' ">REBEL_WINDOWS;REBEL_PC</RebelPlatformConstants>
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'linux' ">REBEL_LINUX;REBEL_PC</RebelPlatformConstants>
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'macos' ">REBEL_MACOS;REBEL_PC</RebelPlatformConstants>
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'server' ">REBEL_SERVER;REBEL_PC</RebelPlatformConstants>
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'uwp' ">REBEL_UWP;REBEL_PC</RebelPlatformConstants>
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'android' ">REBEL_ANDROID;REBEL_MOBILE</RebelPlatformConstants>
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'ios' ">REBEL_IPHONE;REBEL_IOS;REBEL_MOBILE</RebelPlatformConstants>
+    <RebelPlatformConstants Condition=" '$(RebelTargetPlatform)' == 'web' ">REBEL_WASM;REBEL_WEB</RebelPlatformConstants>
+
+    <RebelDefineConstants>$(RebelDefineConstants);$(RebelPlatformConstants)</RebelDefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- ExportDebug also defines DEBUG like Debug does. -->
+    <DefineConstants Condition=" '$(Configuration)' == 'ExportDebug' ">$(DefineConstants);DEBUG</DefineConstants>
+    <!-- Debug defines TOOLS to differentiate between Debug and ExportDebug configurations. -->
+    <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">$(DefineConstants);TOOLS</DefineConstants>
+
+    <DefineConstants>$(RebelDefineConstants);$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+    TODO:
+    We should consider a nuget package for reference assemblies. This is difficult because the
+    Rebel scripting API is continuaslly breaking backwards compatibility even in patch releases.
+    -->
+    <Reference Include="RebelSharp">
+      <Private>false</Private>
+      <HintPath>$(RebelProjectDir).mono\assemblies\$(RebelApiConfiguration)\RebelSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="RebelSharpEditor" Condition=" '$(Configuration)' == 'Debug' ">
+      <Private>false</Private>
+      <HintPath>$(RebelProjectDir).mono\assemblies\$(RebelApiConfiguration)\RebelSharpEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(AutomaticallyUseReferenceAssemblyPackages)' == '' and '$(MicrosoftNETFrameworkReferenceAssembliesLatestPackageVersion)' == '' ">
+    <!-- Old 'Microsoft.NET.Sdk' so we reference the 'Microsoft.NETFramework.ReferenceAssemblies' package ourselves. -->
+    <AutomaticallyUseReferenceAssemblyPackages>true</AutomaticallyUseReferenceAssemblyPackages>
+    <MicrosoftNETFrameworkReferenceAssembliesLatestPackageVersion>1.0.0</MicrosoftNETFrameworkReferenceAssembliesLatestPackageVersion>
+    <RebelUseNETFrameworkRefAssemblies>true</RebelUseNETFrameworkRefAssemblies>
+  </PropertyGroup>
+</Project>

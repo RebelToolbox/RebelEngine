@@ -143,7 +143,7 @@ Variant::Type managed_to_variant_type(const ManagedType& p_type) {
 
             GDMonoClass* array_type_class =
                 GDMono::get_singleton()->get_class(elem_class);
-            if (CACHED_CLASS(GodotObject)
+            if (CACHED_CLASS(RebelObject)
                     ->is_assignable_from(array_type_class)) {
                 return Variant::ARRAY;
             }
@@ -152,8 +152,8 @@ Variant::Type managed_to_variant_type(const ManagedType& p_type) {
         case MONO_TYPE_CLASS: {
             GDMonoClass* type_class = p_type.type_class;
 
-            // GodotObject
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+            // RebelObject
+            if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                 return Variant::OBJECT;
             }
 
@@ -194,12 +194,12 @@ Variant::Type managed_to_variant_type(const ManagedType& p_type) {
                 p_type.type_class->get_mono_type()
             );
 
-            // Godot.Collections.Dictionary<TKey, TValue>
+            // Rebel.Collections.Dictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_generic_dictionary(reftype)) {
                 return Variant::DICTIONARY;
             }
 
-            // Godot.Collections.Array<T>
+            // Rebel.Collections.Array<T>
             if (GDMonoUtils::Marshal::type_is_generic_array(reftype)) {
                 return Variant::ARRAY;
             }
@@ -226,9 +226,9 @@ Variant::Type managed_to_variant_type(const ManagedType& p_type) {
                 return Variant::ARRAY;
             }
 
-            // GodotObject
+            // RebelObject
             GDMonoClass* type_class = p_type.type_class;
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+            if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                 return Variant::OBJECT;
             }
         } break;
@@ -442,7 +442,7 @@ MonoObject* variant_to_mono_object(
                 return NULL; // Otherwise, Variant -> String would return the
                              // string "Null"
             }
-            return (MonoObject*)mono_string_from_godot(p_var->operator String()
+            return (MonoObject*)mono_string_from_rebel(p_var->operator String()
             );
         } break;
 
@@ -672,7 +672,7 @@ MonoObject* variant_to_mono_object(
 
             GDMonoClass* array_type_class =
                 GDMono::get_singleton()->get_class(array_type->eklass);
-            if (CACHED_CLASS(GodotObject)
+            if (CACHED_CLASS(RebelObject)
                     ->is_assignable_from(array_type_class)) {
                 return (MonoObject*)Array_to_mono_array(
                     p_var->operator Array(),
@@ -690,8 +690,8 @@ MonoObject* variant_to_mono_object(
         case MONO_TYPE_CLASS: {
             GDMonoClass* type_class = p_type.type_class;
 
-            // GodotObject
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+            // RebelObject
+            if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                 return GDMonoUtils::unmanaged_get_managed(
                     p_var->operator Object*()
                 );
@@ -707,7 +707,7 @@ MonoObject* variant_to_mono_object(
                 return GDMonoUtils::create_managed_from(p_var->operator RID());
             }
 
-            // Godot.Collections.Dictionary or IDictionary
+            // Rebel.Collections.Dictionary or IDictionary
             if (CACHED_CLASS(Dictionary) == type_class
                 || CACHED_CLASS(System_Collections_IDictionary) == type_class) {
                 return GDMonoUtils::create_managed_from(
@@ -716,7 +716,7 @@ MonoObject* variant_to_mono_object(
                 );
             }
 
-            // Godot.Collections.Array or ICollection or IEnumerable
+            // Rebel.Collections.Array or ICollection or IEnumerable
             if (CACHED_CLASS(Array) == type_class
                 || CACHED_CLASS(System_Collections_ICollection) == type_class
                 || CACHED_CLASS(System_Collections_IEnumerable) == type_class) {
@@ -747,7 +747,7 @@ MonoObject* variant_to_mono_object(
 #endif
                 }
                 case Variant::STRING:
-                    return (MonoObject*)mono_string_from_godot(
+                    return (MonoObject*)mono_string_from_rebel(
                         p_var->operator String()
                     );
                 case Variant::VECTOR2: {
@@ -903,7 +903,7 @@ MonoObject* variant_to_mono_object(
                     p_type.type_class->get_mono_type()
                 );
 
-                // Godot.Collections.Dictionary<TKey, TValue>
+                // Rebel.Collections.Dictionary<TKey, TValue>
                 if (GDMonoUtils::Marshal::type_is_generic_dictionary(reftype)) {
                     return GDMonoUtils::create_managed_from(
                         p_var->operator Dictionary(),
@@ -911,7 +911,7 @@ MonoObject* variant_to_mono_object(
                     );
                 }
 
-                // Godot.Collections.Array<T>
+                // Rebel.Collections.Array<T>
                 if (GDMonoUtils::Marshal::type_is_generic_array(reftype)) {
                     return GDMonoUtils::create_managed_from(
                         p_var->operator Array(),
@@ -963,7 +963,7 @@ MonoObject* variant_to_mono_object(
                         &key_reftype,
                         &value_reftype
                     );
-                    GDMonoClass* godot_dict_class =
+                    GDMonoClass* rebel_dict_class =
                         GDMonoUtils::Marshal::make_generic_dictionary_type(
                             key_reftype,
                             value_reftype
@@ -971,7 +971,7 @@ MonoObject* variant_to_mono_object(
 
                     return GDMonoUtils::create_managed_from(
                         p_var->operator Dictionary(),
-                        godot_dict_class
+                        rebel_dict_class
                     );
                 }
 
@@ -984,20 +984,20 @@ MonoObject* variant_to_mono_object(
                         reftype,
                         &elem_reftype
                     );
-                    GDMonoClass* godot_array_class =
+                    GDMonoClass* rebel_array_class =
                         GDMonoUtils::Marshal::make_generic_array_type(
                             elem_reftype
                         );
 
                     return GDMonoUtils::create_managed_from(
                         p_var->operator Array(),
-                        godot_array_class
+                        rebel_array_class
                     );
                 }
 
-                // GodotObject
+                // RebelObject
                 GDMonoClass* type_class = p_type.type_class;
-                if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+                if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                     return GDMonoUtils::unmanaged_get_managed(
                         p_var->operator Object*()
                     );
@@ -1055,7 +1055,7 @@ Variant mono_object_to_variant_impl(
             if (p_obj == NULL) {
                 return Variant(); // NIL
             }
-            return mono_string_to_godot_not_null((MonoString*)p_obj);
+            return mono_string_to_rebel_not_null((MonoString*)p_obj);
         } break;
 
         case MONO_TYPE_VALUETYPE: {
@@ -1183,7 +1183,7 @@ Variant mono_object_to_variant_impl(
 
             GDMonoClass* array_type_class =
                 GDMono::get_singleton()->get_class(array_type->eklass);
-            if (CACHED_CLASS(GodotObject)
+            if (CACHED_CLASS(RebelObject)
                     ->is_assignable_from(array_type_class)) {
                 return mono_array_to_Array((MonoArray*)p_obj);
             }
@@ -1202,10 +1202,10 @@ Variant mono_object_to_variant_impl(
         case MONO_TYPE_CLASS: {
             GDMonoClass* type_class = p_type.type_class;
 
-            // GodotObject
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+            // RebelObject
+            if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                 Object* ptr = unbox<Object*>(
-                    CACHED_FIELD(GodotObject, ptr)->get_value(p_obj)
+                    CACHED_FIELD(RebelObject, ptr)->get_value(p_obj)
                 );
                 if (ptr != NULL) {
                     Reference* ref = Object::cast_to<Reference>(ptr);
@@ -1227,7 +1227,7 @@ Variant mono_object_to_variant_impl(
                 return ptr ? Variant(*ptr) : Variant();
             }
 
-            // Godot.Collections.Dictionary
+            // Rebel.Collections.Dictionary
             if (CACHED_CLASS(Dictionary) == type_class) {
                 MonoException* exc = NULL;
                 Dictionary* ptr =
@@ -1236,7 +1236,7 @@ Variant mono_object_to_variant_impl(
                 return ptr ? Variant(*ptr) : Variant();
             }
 
-            // Godot.Collections.Array
+            // Rebel.Collections.Array
             if (CACHED_CLASS(Array) == type_class) {
                 MonoException* exc = NULL;
                 Array* ptr =
@@ -1252,7 +1252,7 @@ Variant mono_object_to_variant_impl(
                 p_type.type_class->get_mono_type()
             );
 
-            // Godot.Collections.Dictionary<TKey, TValue>
+            // Rebel.Collections.Dictionary<TKey, TValue>
             if (GDMonoUtils::Marshal::type_is_generic_dictionary(reftype)) {
                 MonoException* exc = NULL;
                 MonoObject* ret    = p_type.type_class->get_method("GetPtr")
@@ -1261,7 +1261,7 @@ Variant mono_object_to_variant_impl(
                 return *unbox<Dictionary*>(ret);
             }
 
-            // Godot.Collections.Array<T>
+            // Rebel.Collections.Array<T>
             if (GDMonoUtils::Marshal::type_is_generic_array(reftype)) {
                 MonoException* exc = NULL;
                 MonoObject* ret    = p_type.type_class->get_method("GetPtr")
@@ -1302,11 +1302,11 @@ Variant mono_object_to_variant_impl(
                 );
             }
 
-            // GodotObject
+            // RebelObject
             GDMonoClass* type_class = p_type.type_class;
-            if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+            if (CACHED_CLASS(RebelObject)->is_assignable_from(type_class)) {
                 Object* ptr = unbox<Object*>(
-                    CACHED_FIELD(GodotObject, ptr)->get_value(p_obj)
+                    CACHED_FIELD(RebelObject, ptr)->get_value(p_obj)
                 );
                 if (ptr != NULL) {
                     Reference* ref = Object::cast_to<Reference>(ptr);
@@ -1383,7 +1383,7 @@ String mono_object_to_variant_string(MonoObject* p_obj, MonoException** r_exc) {
             return String();
         }
 
-        return GDMonoMarshal::mono_string_to_godot(mono_str);
+        return GDMonoMarshal::mono_string_to_rebel(mono_str);
     } else {
         return var.operator String();
     }
@@ -1405,15 +1405,15 @@ MonoObject* Dictionary_to_system_generic_dict(
         mono_object_new(mono_domain_get(), p_class->get_mono_ptr());
     ERR_FAIL_NULL_V(mono_object, nullptr);
 
-    GDMonoClass* godot_dict_class =
+    GDMonoClass* rebel_dict_class =
         GDMonoUtils::Marshal::make_generic_dictionary_type(
             p_key_reftype,
             p_value_reftype
         );
-    MonoObject* godot_dict =
-        GDMonoUtils::create_managed_from(p_dict, godot_dict_class);
+    MonoObject* rebel_dict =
+        GDMonoUtils::create_managed_from(p_dict, rebel_dict_class);
 
-    void* ctor_args[1] = {godot_dict};
+    void* ctor_args[1] = {rebel_dict};
 
     MonoException* exc = nullptr;
     ctor->invoke_raw(mono_object, ctor_args, &exc);
@@ -1428,7 +1428,7 @@ Dictionary system_generic_dict_to_Dictionary(
     MonoReflectionType* p_key_reftype,
     MonoReflectionType* p_value_reftype
 ) {
-    GDMonoClass* godot_dict_class =
+    GDMonoClass* rebel_dict_class =
         GDMonoUtils::Marshal::make_generic_dictionary_type(
             p_key_reftype,
             p_value_reftype
@@ -1436,23 +1436,23 @@ Dictionary system_generic_dict_to_Dictionary(
     String ctor_desc = ":.ctor(System.Collections.Generic.IDictionary`2<"
                      + GDMonoUtils::get_type_desc(p_key_reftype) + ", "
                      + GDMonoUtils::get_type_desc(p_value_reftype) + ">)";
-    GDMonoMethod* godot_dict_ctor =
-        godot_dict_class->get_method_with_desc(ctor_desc, true);
-    CRASH_COND(godot_dict_ctor == nullptr);
+    GDMonoMethod* rebel_dict_ctor =
+        rebel_dict_class->get_method_with_desc(ctor_desc, true);
+    CRASH_COND(rebel_dict_ctor == nullptr);
 
-    MonoObject* godot_dict =
-        mono_object_new(mono_domain_get(), godot_dict_class->get_mono_ptr());
-    ERR_FAIL_NULL_V(godot_dict, Dictionary());
+    MonoObject* rebel_dict =
+        mono_object_new(mono_domain_get(), rebel_dict_class->get_mono_ptr());
+    ERR_FAIL_NULL_V(rebel_dict, Dictionary());
 
     void* ctor_args[1] = {p_obj};
 
     MonoException* exc = nullptr;
-    godot_dict_ctor->invoke_raw(godot_dict, ctor_args, &exc);
+    rebel_dict_ctor->invoke_raw(rebel_dict, ctor_args, &exc);
     UNHANDLED_EXCEPTION(exc);
 
     exc = nullptr;
     MonoObject* ret =
-        godot_dict_class->get_method("GetPtr")->invoke(godot_dict, &exc);
+        rebel_dict_class->get_method("GetPtr")->invoke(rebel_dict, &exc);
     UNHANDLED_EXCEPTION(exc);
 
     return *unbox<Dictionary*>(ret);
@@ -1474,12 +1474,12 @@ MonoObject* Array_to_system_generic_list(
         mono_object_new(mono_domain_get(), p_class->get_mono_ptr());
     ERR_FAIL_NULL_V(mono_object, nullptr);
 
-    GDMonoClass* godot_array_class =
+    GDMonoClass* rebel_array_class =
         GDMonoUtils::Marshal::make_generic_array_type(p_elem_reftype);
-    MonoObject* godot_array =
-        GDMonoUtils::create_managed_from(p_array, godot_array_class);
+    MonoObject* rebel_array =
+        GDMonoUtils::create_managed_from(p_array, rebel_array_class);
 
-    void* ctor_args[1] = {godot_array};
+    void* ctor_args[1] = {rebel_array};
 
     MonoException* exc = nullptr;
     ctor->invoke_raw(mono_object, ctor_args, &exc);
@@ -1666,7 +1666,7 @@ MonoArray* PoolStringArray_to_mono_array(const PoolStringArray& p_array) {
     );
 
     for (int i = 0; i < p_array.size(); i++) {
-        MonoString* boxed = mono_string_from_godot(r[i]);
+        MonoString* boxed = mono_string_from_rebel(r[i]);
         mono_array_setref(ret, i, boxed);
     }
 
@@ -1684,7 +1684,7 @@ PoolStringArray mono_array_to_PoolStringArray(MonoArray* p_array) {
 
     for (int i = 0; i < length; i++) {
         MonoString* elem = mono_array_get(p_array, MonoString*, i);
-        w[i]             = mono_string_to_godot(elem);
+        w[i]             = mono_string_to_rebel(elem);
     }
 
     return ret;

@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_NODE_PATH_H
-#define GODOT_NODE_PATH_H
+#ifndef GDNATIVE_NODE_PATH_H
+#define GDNATIVE_NODE_PATH_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,14 +13,14 @@ extern "C" {
 
 #include <stdint.h>
 
-#define GODOT_NODE_PATH_SIZE sizeof(void*)
+#define REBEL_NODE_PATH_SIZE sizeof(void*)
 
-#ifndef GODOT_CORE_API_GODOT_NODE_PATH_TYPE_DEFINED
-#define GODOT_CORE_API_GODOT_NODE_PATH_TYPE_DEFINED
+#ifndef REBEL_CORE_API_REBEL_NODE_PATH_TYPE_DEFINED
+#define REBEL_CORE_API_REBEL_NODE_PATH_TYPE_DEFINED
 
 typedef struct {
-    uint8_t _dont_touch_that[GODOT_NODE_PATH_SIZE];
-} godot_node_path;
+    uint8_t _dont_touch_that[REBEL_NODE_PATH_SIZE];
+} rebel_node_path;
 #endif
 
 // reduce extern "C" nesting for VS2013
@@ -36,44 +36,44 @@ extern "C" {
 #endif
 
 void GDAPI
-godot_node_path_new(godot_node_path* r_dest, const godot_string* p_from);
+rebel_node_path_new(rebel_node_path* r_dest, const rebel_string* p_from);
 void GDAPI
-godot_node_path_new_copy(godot_node_path* r_dest, const godot_node_path* p_src);
-void GDAPI godot_node_path_destroy(godot_node_path* p_self);
+rebel_node_path_new_copy(rebel_node_path* r_dest, const rebel_node_path* p_src);
+void GDAPI rebel_node_path_destroy(rebel_node_path* p_self);
 
-godot_string GDAPI godot_node_path_as_string(const godot_node_path* p_self);
+rebel_string GDAPI rebel_node_path_as_string(const rebel_node_path* p_self);
 
-godot_bool GDAPI godot_node_path_is_absolute(const godot_node_path* p_self);
+rebel_bool GDAPI rebel_node_path_is_absolute(const rebel_node_path* p_self);
 
-godot_int GDAPI godot_node_path_get_name_count(const godot_node_path* p_self);
+rebel_int GDAPI rebel_node_path_get_name_count(const rebel_node_path* p_self);
 
-godot_string GDAPI
-godot_node_path_get_name(const godot_node_path* p_self, const godot_int p_idx);
+rebel_string GDAPI
+rebel_node_path_get_name(const rebel_node_path* p_self, const rebel_int p_idx);
 
-godot_int GDAPI godot_node_path_get_subname_count(const godot_node_path* p_self
+rebel_int GDAPI rebel_node_path_get_subname_count(const rebel_node_path* p_self
 );
 
-godot_string GDAPI godot_node_path_get_subname(
-    const godot_node_path* p_self,
-    const godot_int p_idx
+rebel_string GDAPI rebel_node_path_get_subname(
+    const rebel_node_path* p_self,
+    const rebel_int p_idx
 );
 
-godot_string GDAPI
-godot_node_path_get_concatenated_subnames(const godot_node_path* p_self);
+rebel_string GDAPI
+rebel_node_path_get_concatenated_subnames(const rebel_node_path* p_self);
 
-godot_bool GDAPI godot_node_path_is_empty(const godot_node_path* p_self);
+rebel_bool GDAPI rebel_node_path_is_empty(const rebel_node_path* p_self);
 
-godot_bool GDAPI godot_node_path_operator_equal(
-    const godot_node_path* p_self,
-    const godot_node_path* p_b
+rebel_bool GDAPI rebel_node_path_operator_equal(
+    const rebel_node_path* p_self,
+    const rebel_node_path* p_b
 );
 
-godot_node_path godot_node_path_get_as_property_path(
-    const godot_node_path* p_self
+rebel_node_path rebel_node_path_get_as_property_path(
+    const rebel_node_path* p_self
 );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // GODOT_NODE_PATH_H
+#endif // GDNATIVE_NODE_PATH_H

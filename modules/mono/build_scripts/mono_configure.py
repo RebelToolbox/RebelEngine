@@ -520,7 +520,7 @@ def copy_mono_root_files(env, mono_root, mono_bcl):
         raise RuntimeError("Mono installation directory not found")
 
     output_dir = Dir("#bin").abspath
-    editor_mono_root_dir = os.path.join(output_dir, "GodotSharp", "Mono")
+    editor_mono_root_dir = os.path.join(output_dir, "RebelSharp", "Mono")
 
     if os.path.isdir(editor_mono_root_dir):
         rmtree(editor_mono_root_dir)  # Clean first
