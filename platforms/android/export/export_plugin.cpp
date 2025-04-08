@@ -215,7 +215,7 @@ static const char* AAB_ASSETS_DIRECTORY =
 // - minSdk
 // - targetSdk
 static const int DEFAULT_MIN_SDK_VERSION    = 21;
-static const int DEFAULT_TARGET_SDK_VERSION = 34;
+static const int DEFAULT_TARGET_SDK_VERSION = 36;
 
 const String SDK_VERSION_RANGE = vformat(
     "%s,%s,1,or_greater,or_lesser",
