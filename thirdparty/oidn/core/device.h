@@ -41,13 +41,6 @@ namespace oidn {
     ErrorFunction errorFunc = nullptr;
     void* errorUserPtr = nullptr;
 
-// -- GODOT start --
-//    // Tasking
-//    std::shared_ptr<tbb::task_arena> arena;
-//    std::shared_ptr<PinningObserver> observer;
-//    std::shared_ptr<ThreadAffinity> affinity;
-// -- GODOT end --
-
     // Parameters
     int numThreads = 0; // autodetect by default
     bool setAffinity = true;
@@ -68,20 +61,6 @@ namespace oidn {
 
     void commit();
 
-// -- GODOT start --
-//    template<typename F>
-//    void executeTask(F& f)
-//    {
-//      arena->execute(f);
-//    }
-
-//    template<typename F>
-//    void executeTask(const F& f)
-//    {
-//      arena->execute(f);
-//    }
-// -- GODOT end --
-
     Ref<Buffer> newBuffer(size_t byteSize);
     Ref<Buffer> newBuffer(void* ptr, size_t byteSize);
     Ref<Filter> newFilter(const std::string& type);
@@ -90,10 +69,7 @@ namespace oidn {
     __forceinline std::mutex& getMutex() { return mutex; }
 
   private:
-// -- GODOT start --
-  //bool isCommitted() const { return bool(arena); }
-  bool isCommitted() const { return false; }
-// -- GODOT end --
+    bool isCommitted() const { return false; }
     void checkCommitted();
 
     void print();

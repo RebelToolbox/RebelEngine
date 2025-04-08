@@ -17,9 +17,8 @@
 #include "upsample.h"
 #include "weights_reorder.h"
 #include "network.h"
-// -- GODOT start -- 
+
 #include <cstring>
-// -- GODOT end --
 
 namespace oidn {
 

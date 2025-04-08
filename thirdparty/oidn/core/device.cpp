@@ -29,9 +29,6 @@ namespace oidn {
 
   Device::~Device()
   {
-    // -- GODOT start --
-    //observer.reset();
-    // -- GODOT end --
   }
 
   void Device::setError(Device* device, Error code, const std::string& message)
@@ -143,29 +140,8 @@ namespace oidn {
     if (isCommitted())
       throw Exception(Error::InvalidOperation, "device can be committed only once");
 
-    // -- GODOT start --
-    #if 0
-    // -- GODOT end --
-    // Get the optimal thread affinities
-    if (setAffinity)
-    {
-      affinity = std::make_shared<ThreadAffinity>(1, verbose); // one thread per core
-      if (affinity->getNumThreads() == 0)
-        affinity.reset();
-    }
-
-    // Create the task arena
-    const int maxNumThreads = affinity ? affinity->getNumThreads() : tbb::this_task_arena::max_concurrency();
-    numThreads = (numThreads > 0) ? min(numThreads, maxNumThreads) : maxNumThreads;
-    arena = std::make_shared<tbb::task_arena>(numThreads);
-
-    // Automatically set the thread affinities
-    if (affinity)
-      observer = std::make_shared<PinningObserver>(affinity, *arena);
-    // -- GODOT start --
-    #endif
     numThreads = 1;
-    // -- GODOT end --
+
     dirty = false;
 
     if (isVerbose())
@@ -199,17 +175,7 @@ namespace oidn {
 
     Ref<Filter> filter;
 
-// -- GODOT start --
-// Godot doesn't need Raytracing filters. Removing them saves space in the weights files.
-#if 0
-// -- GODOT end --
-    if (type == "RT")
-      filter = makeRef<RTFilter>(Ref<Device>(this));
-// -- GODOT start --
-// Godot doesn't need Raytracing filters. Removing them saves space in the weights files.
-#endif
     if (type == "RTLightmap")
-// -- GODOT end --
       filter = makeRef<RTLightmapFilter>(Ref<Device>(this));
     else
       throw Exception(Error::InvalidArgument, "unknown filter type");
@@ -226,12 +192,6 @@ namespace oidn {
     std::cout << "  Build   : " << getBuildName() << std::endl;
     std::cout << "  Platform: " << getPlatformName() << std::endl;
 
-// -- GODOT start --
-//    std::cout << "  Tasking :";
-//    std::cout << " TBB" << TBB_VERSION_MAJOR << "." << TBB_VERSION_MINOR;
-//    std::cout << " TBB_header_interface_" << TBB_INTERFACE_VERSION << " TBB_lib_interface_" << tbb::TBB_runtime_interface_version();
-//    std::cout << std::endl;
-// -- GODOT end --
     std::cout << std::endl;
   }
 
