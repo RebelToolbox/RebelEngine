@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build-linux:
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-latest"
     name: ${{ matrix.name }}
     strategy:
       fail-fast: false
@@ -53,9 +53,21 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update
-          sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev \
-              libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev \
-              libdbus-1-dev libudev-dev libxi-dev libxrandr-dev yasm xvfb wget unzip
+          sudo apt-get install \
+            libasound2-dev \
+            libdbus-1-dev \
+            libgl1-mesa-dev \
+            libglu-dev \
+            libmonosgen-2.0-dev \
+            libx11-dev \
+            libxcursor-dev \
+            libxi-dev \
+            libxinerama-dev \
+            libxrandr-dev \
+            libpulse-dev \
+            libudev-dev \
+            mono-devel \
+            yasm
 
       - name: Setup build cache
         uses: ./.github/actions/build-cache

@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   web-template:
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-latest"
     name: Template (target=release, tools=no)
 
     steps:
