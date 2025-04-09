@@ -299,14 +299,13 @@ uint32_t UnixFileAccess::_get_unix_permissions(const String& p_file) {
     struct stat flags;
     int err = stat(file.utf8().get_data(), &flags);
 
-    if (!err) {
-        return flags.st_mode & 0x7FF; // only permissions
-    } else {
-        ERR_FAIL_V_MSG(
-            0,
-            "Failed to get unix permissions for: " + p_file + "."
-        );
-    };
+    ERR_FAIL_COND_V_MSG(
+        err != 0,
+        0,
+        "Failed to get unix permissions for " + p_file
+    );
+
+    return flags.st_mode & 0x7FF;
 }
 
 Error UnixFileAccess::_set_unix_permissions(
