@@ -22013,7 +22013,7 @@ msgstr "用C＃编程语言实现的脚本（仅启用Mono的版本）。"
 msgid ""
 "This class represents a C# script. It is the C# equivalent of the [GDScript] "
 "class and is only available in Mono-enabled Rebel builds.\n"
-"See also [GodotSharp]."
+"See also [RebelSharp]."
 msgstr ""
 "此类表示C＃脚本。它与[GDScript]类的C＃等效，并且仅在启用了Mono的Godot版本中可"
 "用。\n"
@@ -29865,10 +29865,11 @@ msgstr ""
 "[b]注意：[/b] 单例库不能是[member reloadable]。"
 
 #: modules/gdnative/docs/GDNativeLibrary.xml
+#, fuzzy
 msgid ""
 "The prefix this library's entry point functions begin with. For example, a "
 "GDNativeLibrary would declare its [code]gdnative_init[/code] function as "
-"[code]godot_gdnative_init[/code] by default.\n"
+"[code]rebel_gdnative_init[/code] by default.\n"
 "On platforms that require statically linking libraries (currently only iOS), "
 "each library must have a different [code]symbol_prefix[/code]."
 msgstr ""
@@ -31456,88 +31457,6 @@ msgid ""
 "loading and saving is [i]not[/i] available in exported projects. References "
 "to [GLTFTexture] within a script will cause an error in an exported project."
 msgstr ""
-
-#: modules/mono/docs/GodotSharp.xml
-#, fuzzy
-msgid ""
-"Bridge between Rebel Engine and the Mono runtime (Mono-enabled builds only)."
-msgstr "Godot和Mono运行时之间的桥梁（仅支持Mono的构建）。"
-
-#: modules/mono/docs/GodotSharp.xml
-#, fuzzy
-msgid ""
-"This class is a bridge between Rebel Engine and the Mono runtime. It exposes "
-"several low-level operations and is only available in Mono-enabled Rebel "
-"builds.\n"
-"See also [CSharpScript]."
-msgstr ""
-"该类是连接Godot和Mono运行时的桥梁。它暴露了一些低级别的操作，只在支持Mono的"
-"Godot构建中可用。\n"
-"参阅[CSharpScript] 。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid "Attaches the current thread to the Mono runtime."
-msgstr "将当前线程连接到Mono运行时。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid "Detaches the current thread from the Mono runtime."
-msgstr "将当前线程从Mono运行时中分离出来。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns the current MonoDomain ID.\n"
-"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
-"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
-"initialized at the time this method is called, the engine will crash."
-msgstr ""
-"返回当前的MonoDomain ID。\n"
-"[b]注意：[/b] Mono运行时必须被初始化，这个方法才能工作（使用 [method "
-"is_runtime_initialized] 来检查）。如果在调用这个方法的时候，Mono运行时没有被"
-"初始化，引擎将崩溃。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns the scripts MonoDomain's ID. This will be the same MonoDomain ID as "
-"[method get_domain_id], unless the scripts domain isn't loaded.\n"
-"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
-"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
-"initialized at the time this method is called, the engine will crash."
-msgstr ""
-"返回scripts MonoDomain的ID。这将是与 [method get_domain_id] 相同的MonoDomain "
-"ID，除非scripts domain没有被加载。\n"
-"[b]注意：[/b] Mono运行时必须被初始化，这个方法才能工作（使用 [method "
-"is_runtime_initialized] 来检查）。如果在调用这个方法的时候，Mono运行时没有被"
-"初始化，引擎将会崩溃。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the domain is being finalized, [code]false[/"
-"code] otherwise."
-msgstr ""
-"如果域正在被最终确定，返回 [code]true[/code] ，否则返回 [code]false[/code] 。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the Mono runtime is initialized, [code]false[/"
-"code] otherwise."
-msgstr ""
-"如果Mono运行时被初始化，返回 [code]true[/code] ，否则返回 [code]false[/"
-"code] 。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the Mono runtime is shutting down, [code]false[/"
-"code] otherwise."
-msgstr ""
-"如果Mono运行时正在关闭，返回 [code]true[/code] ，否则返回 [code]false[/"
-"code] 。"
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the scripts domain is loaded, [code]false[/"
-"code] otherwise."
-msgstr ""
-"如果脚本域被加载，返回 [code]true[/code] ，否则返回 [code]false[/code] 。"
 
 #: docs/Gradient.xml
 msgid ""
@@ -42476,33 +42395,37 @@ msgstr ""
 "[method try_lock]，它也必须调用相同次数的[method unlock]才能正确解锁."
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_class_documentation[/code]."
+"[code]rebel_nativescript_set_class_documentation[/code]."
 msgstr ""
 "返回之前用[code]godot_nativescript_set_class_documentation[/code]设置的文档字"
 "符串。"
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_method_documentation[/code]."
+"[code]rebel_nativescript_set_method_documentation[/code]."
 msgstr ""
 "返回之前用[code]godot_nativescript_set_method_documentation[/code]设置的文档"
 "字符串。"
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_property_documentation[/code]."
+"[code]rebel_nativescript_set_property_documentation[/code]."
 msgstr ""
 "返回之前用[code]godot_nativescript_set_property_documentation[/code]设置的文"
 "档字符串。"
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_signal_documentation[/code]."
+"[code]rebel_nativescript_set_signal_documentation[/code]."
 msgstr ""
 "返回之前用[code]godot_nativescript_set_signal_documentation[/code]设置的文档"
 "字符串。"
@@ -59147,6 +59070,88 @@ msgid ""
 msgstr ""
 "二维碰撞的射线形状。射线并不是真正的碰撞体；相反，它试图将自己与接触其远端的"
 "任何东西分开。它通常对角色很有用。"
+
+#: modules/mono/docs/RebelSharp.xml
+#, fuzzy
+msgid ""
+"Bridge between Rebel Engine and the Mono runtime (Mono-enabled builds only)."
+msgstr "Godot和Mono运行时之间的桥梁（仅支持Mono的构建）。"
+
+#: modules/mono/docs/RebelSharp.xml
+#, fuzzy
+msgid ""
+"This class is a bridge between Rebel Engine and the Mono runtime. It exposes "
+"several low-level operations and is only available in Mono-enabled Rebel "
+"builds.\n"
+"See also [CSharpScript]."
+msgstr ""
+"该类是连接Godot和Mono运行时的桥梁。它暴露了一些低级别的操作，只在支持Mono的"
+"Godot构建中可用。\n"
+"参阅[CSharpScript] 。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid "Attaches the current thread to the Mono runtime."
+msgstr "将当前线程连接到Mono运行时。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid "Detaches the current thread from the Mono runtime."
+msgstr "将当前线程从Mono运行时中分离出来。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns the current MonoDomain ID.\n"
+"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
+"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
+"initialized at the time this method is called, the engine will crash."
+msgstr ""
+"返回当前的MonoDomain ID。\n"
+"[b]注意：[/b] Mono运行时必须被初始化，这个方法才能工作（使用 [method "
+"is_runtime_initialized] 来检查）。如果在调用这个方法的时候，Mono运行时没有被"
+"初始化，引擎将崩溃。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns the scripts MonoDomain's ID. This will be the same MonoDomain ID as "
+"[method get_domain_id], unless the scripts domain isn't loaded.\n"
+"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
+"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
+"initialized at the time this method is called, the engine will crash."
+msgstr ""
+"返回scripts MonoDomain的ID。这将是与 [method get_domain_id] 相同的MonoDomain "
+"ID，除非scripts domain没有被加载。\n"
+"[b]注意：[/b] Mono运行时必须被初始化，这个方法才能工作（使用 [method "
+"is_runtime_initialized] 来检查）。如果在调用这个方法的时候，Mono运行时没有被"
+"初始化，引擎将会崩溃。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the domain is being finalized, [code]false[/"
+"code] otherwise."
+msgstr ""
+"如果域正在被最终确定，返回 [code]true[/code] ，否则返回 [code]false[/code] 。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the Mono runtime is initialized, [code]false[/"
+"code] otherwise."
+msgstr ""
+"如果Mono运行时被初始化，返回 [code]true[/code] ，否则返回 [code]false[/"
+"code] 。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the Mono runtime is shutting down, [code]false[/"
+"code] otherwise."
+msgstr ""
+"如果Mono运行时正在关闭，返回 [code]true[/code] ，否则返回 [code]false[/"
+"code] 。"
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the scripts domain is loaded, [code]false[/"
+"code] otherwise."
+msgstr ""
+"如果脚本域被加载，返回 [code]true[/code] ，否则返回 [code]false[/code] 。"
 
 #: docs/Rect2.xml
 msgid "2D axis-aligned bounding box."

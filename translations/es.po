@@ -23446,7 +23446,7 @@ msgstr ""
 msgid ""
 "This class represents a C# script. It is the C# equivalent of the [GDScript] "
 "class and is only available in Mono-enabled Rebel builds.\n"
-"See also [GodotSharp]."
+"See also [RebelSharp]."
 msgstr ""
 "Esta clase representa un guión de C#. Es el equivalente en C# de la clase "
 "[GDScript] y sólo está disponible en construcciones Godot habilitadas para "
@@ -31755,10 +31755,11 @@ msgstr ""
 "reloadable]."
 
 #: modules/gdnative/docs/GDNativeLibrary.xml
+#, fuzzy
 msgid ""
 "The prefix this library's entry point functions begin with. For example, a "
 "GDNativeLibrary would declare its [code]gdnative_init[/code] function as "
-"[code]godot_gdnative_init[/code] by default.\n"
+"[code]rebel_gdnative_init[/code] by default.\n"
 "On platforms that require statically linking libraries (currently only iOS), "
 "each library must have a different [code]symbol_prefix[/code]."
 msgstr ""
@@ -33505,95 +33506,6 @@ msgid ""
 "loading and saving is [i]not[/i] available in exported projects. References "
 "to [GLTFTexture] within a script will cause an error in an exported project."
 msgstr ""
-
-#: modules/mono/docs/GodotSharp.xml
-#, fuzzy
-msgid ""
-"Bridge between Rebel Engine and the Mono runtime (Mono-enabled builds only)."
-msgstr ""
-"Puente entre Godot y el Mono runtime (sólo builds habilitadas para Mono)."
-
-#: modules/mono/docs/GodotSharp.xml
-#, fuzzy
-msgid ""
-"This class is a bridge between Rebel Engine and the Mono runtime. It exposes "
-"several low-level operations and is only available in Mono-enabled Rebel "
-"builds.\n"
-"See also [CSharpScript]."
-msgstr ""
-"Esta clase es un puente entre Godot y el Mono runtime. Expone varias "
-"operaciones de bajo nivel y sólo está disponible en builds de Godot en "
-"mono.\n"
-" Ver también [CSharpScript]."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid "Attaches the current thread to the Mono runtime."
-msgstr "Adjunta el hilo actual al Mono runtime."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid "Detaches the current thread from the Mono runtime."
-msgstr "Desconecta el hilo actual del Mono runtime."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns the current MonoDomain ID.\n"
-"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
-"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
-"initialized at the time this method is called, the engine will crash."
-msgstr ""
-"Devuelve el actual ID del MonoDominio.\n"
-"[b]Nota:[/b] El tiempo de ejecución de Mono debe ser inicializado para que "
-"este método funcione (use [method is_runtime_initialized] para comprobarlo). "
-"Si el tiempo de ejecución Mono no está inicializado en el momento en que se "
-"llama a este método, el motor se bloqueará."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns the scripts MonoDomain's ID. This will be the same MonoDomain ID as "
-"[method get_domain_id], unless the scripts domain isn't loaded.\n"
-"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
-"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
-"initialized at the time this method is called, the engine will crash."
-msgstr ""
-"Devuelve el ID de MonoDominio de los guiones. Este será el mismo ID de "
-"MonoDominio que [method get_domain_id], a menos que el dominio de los "
-"scripts no esté cargado.\n"
-"[b]Nota:[/b] El tiempo de ejecución de Mono debe ser inicializado para que "
-"este método funcione (usa [method is_runtime_initialized] para comprobarlo). "
-"Si el tiempo de ejecución de Mono no está inicializado en el momento en que "
-"se llama a este método, el motor se bloqueará."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the domain is being finalized, [code]false[/"
-"code] otherwise."
-msgstr ""
-"Devuelve [code]true[/code] si el dominio esta siendo finalizado, "
-"[code]false[/code] en caso contrario."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the Mono runtime is initialized, [code]false[/"
-"code] otherwise."
-msgstr ""
-"Devuelve [code]true[/code] si el Mono runtime está inicializado, "
-"[code]false[/code] en caso contrario."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the Mono runtime is shutting down, [code]false[/"
-"code] otherwise."
-msgstr ""
-"Devuelve [code]true[/code] si el Mono runtime se está apagando, [code]false[/"
-"code] en caso contrario."
-
-#: modules/mono/docs/GodotSharp.xml
-msgid ""
-"Returns [code]true[/code] if the scripts domain is loaded, [code]false[/"
-"code] otherwise."
-msgstr ""
-"Devuelve [code]true[/code] si los scripts de dominio están cargados, "
-"[code]false[/code] en caso contrario."
 
 #: docs/Gradient.xml
 msgid ""
@@ -45361,33 +45273,37 @@ msgid ""
 msgstr ""
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_class_documentation[/code]."
+"[code]rebel_nativescript_set_class_documentation[/code]."
 msgstr ""
 "Devuelve la string de documentación que se estableció previamente con "
 "[code]godot_nativescript_set_class_documentation[/code]."
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_method_documentation[/code]."
+"[code]rebel_nativescript_set_method_documentation[/code]."
 msgstr ""
 "Devuelve la string de documentación que se estableció previamente con "
 "[code]godot_nativescript_set_method_documentation[/code]."
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_property_documentation[/code]."
+"[code]rebel_nativescript_set_property_documentation[/code]."
 msgstr ""
 "Devuelve la string de documentación que se estableció previamente con "
 "[code]godot_nativescript_set_property_documentation[/code]."
 
 #: modules/gdnative/docs/NativeScript.xml
+#, fuzzy
 msgid ""
 "Returns the documentation string that was previously set with "
-"[code]godot_nativescript_set_signal_documentation[/code]."
+"[code]rebel_nativescript_set_signal_documentation[/code]."
 msgstr ""
 "Devuelve la string de documentación que se estableció previamente con "
 "[code]godot_nativescript_set_signal_documentation[/code]."
@@ -63011,6 +62927,95 @@ msgstr ""
 "Forma de rayo para colisiones en 2D. Un rayo no es realmente un cuerpo de "
 "colisión, sino que intenta separarse de lo que está tocando su punto final "
 "lejano. A menudo es útil para los personajes."
+
+#: modules/mono/docs/RebelSharp.xml
+#, fuzzy
+msgid ""
+"Bridge between Rebel Engine and the Mono runtime (Mono-enabled builds only)."
+msgstr ""
+"Puente entre Godot y el Mono runtime (sólo builds habilitadas para Mono)."
+
+#: modules/mono/docs/RebelSharp.xml
+#, fuzzy
+msgid ""
+"This class is a bridge between Rebel Engine and the Mono runtime. It exposes "
+"several low-level operations and is only available in Mono-enabled Rebel "
+"builds.\n"
+"See also [CSharpScript]."
+msgstr ""
+"Esta clase es un puente entre Godot y el Mono runtime. Expone varias "
+"operaciones de bajo nivel y sólo está disponible en builds de Godot en "
+"mono.\n"
+" Ver también [CSharpScript]."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid "Attaches the current thread to the Mono runtime."
+msgstr "Adjunta el hilo actual al Mono runtime."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid "Detaches the current thread from the Mono runtime."
+msgstr "Desconecta el hilo actual del Mono runtime."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns the current MonoDomain ID.\n"
+"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
+"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
+"initialized at the time this method is called, the engine will crash."
+msgstr ""
+"Devuelve el actual ID del MonoDominio.\n"
+"[b]Nota:[/b] El tiempo de ejecución de Mono debe ser inicializado para que "
+"este método funcione (use [method is_runtime_initialized] para comprobarlo). "
+"Si el tiempo de ejecución Mono no está inicializado en el momento en que se "
+"llama a este método, el motor se bloqueará."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns the scripts MonoDomain's ID. This will be the same MonoDomain ID as "
+"[method get_domain_id], unless the scripts domain isn't loaded.\n"
+"[b]Note:[/b] The Mono runtime must be initialized for this method to work "
+"(use [method is_runtime_initialized] to check). If the Mono runtime isn't "
+"initialized at the time this method is called, the engine will crash."
+msgstr ""
+"Devuelve el ID de MonoDominio de los guiones. Este será el mismo ID de "
+"MonoDominio que [method get_domain_id], a menos que el dominio de los "
+"scripts no esté cargado.\n"
+"[b]Nota:[/b] El tiempo de ejecución de Mono debe ser inicializado para que "
+"este método funcione (usa [method is_runtime_initialized] para comprobarlo). "
+"Si el tiempo de ejecución de Mono no está inicializado en el momento en que "
+"se llama a este método, el motor se bloqueará."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the domain is being finalized, [code]false[/"
+"code] otherwise."
+msgstr ""
+"Devuelve [code]true[/code] si el dominio esta siendo finalizado, "
+"[code]false[/code] en caso contrario."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the Mono runtime is initialized, [code]false[/"
+"code] otherwise."
+msgstr ""
+"Devuelve [code]true[/code] si el Mono runtime está inicializado, "
+"[code]false[/code] en caso contrario."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the Mono runtime is shutting down, [code]false[/"
+"code] otherwise."
+msgstr ""
+"Devuelve [code]true[/code] si el Mono runtime se está apagando, [code]false[/"
+"code] en caso contrario."
+
+#: modules/mono/docs/RebelSharp.xml
+msgid ""
+"Returns [code]true[/code] if the scripts domain is loaded, [code]false[/"
+"code] otherwise."
+msgstr ""
+"Devuelve [code]true[/code] si los scripts de dominio están cargados, "
+"[code]false[/code] en caso contrario."
 
 #: docs/Rect2.xml
 #, fuzzy
