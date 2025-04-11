@@ -192,7 +192,7 @@ struct CSGBrushOperation {
         Plane plane;
         Transform to_2D;
         Transform to_3D;
-        float vertex_snap2;
+        float vertex_snap2 = 0.0f;
 
         inline int _get_point_idx(const Vector2& p_point);
         inline int _add_vertex(const Vertex2D& p_vertex);
