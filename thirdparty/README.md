@@ -465,10 +465,8 @@ Files extracted from upstream source:
 - `include`
 - `LICENSE`
 
-Some downstream changes have been made and are identified by
-`// -- GODOT start --` and `// -- GODOT end --` comments.
-They can be reapplied using the patches included in the `vhacd`
-folder.
+Note: Includes the patches in the patches/ folder that have been applied
+upstream, but are not part of version 4.1.
 
 
 ## wslay
