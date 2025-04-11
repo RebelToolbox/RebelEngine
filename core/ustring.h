@@ -26,6 +26,8 @@ class CharProxy {
         _cowdata(cowdata) {}
 
 public:
+    CharProxy(const CharProxy<T>& p_other) = default;
+
     _FORCE_INLINE_ operator T() const {
         if (unlikely(_index == _cowdata.size())) {
             return _null;
