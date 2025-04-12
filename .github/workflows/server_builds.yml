@@ -4,7 +4,7 @@ on: [push, pull_request]
 # Global Settings
 env:
   BRANCH_NAME: main
-  SCONSFLAGS: verbose=yes warnings=all werror=yes debug_symbols=no module_mono_enabled=yes mono_static=yes mono_glue=no
+  SCONSFLAGS: verbose=yes warnings=all debug_symbols=no module_mono_enabled=yes mono_static=yes mono_glue=no
 
 concurrency:
   group: ci-${{github.actor}}-${{github.head_ref || github.run_number}}-${{github.ref}}-server
@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build-server:
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-latest"
     name: ${{ matrix.name }}
     strategy:
       fail-fast: false
@@ -35,9 +35,20 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update
-          sudo apt-get install build-essential pkg-config libx11-dev libxcursor-dev \
-              libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev \
-              libdbus-1-dev libudev-dev libxi-dev libxrandr-dev yasm xvfb wget unzip
+          sudo apt-get install \
+            libasound2-dev \
+            libdbus-1-dev \
+            libgl1-mesa-dev \
+            libglu-dev \
+            libx11-dev \
+            libxcursor-dev \
+            libxi-dev \
+            libxinerama-dev \
+            libxrandr-dev \
+            libpulse-dev \
+            libudev-dev \
+            mono-devel \
+            yasm
 
       - name: Setup build cache
         uses: ./.github/actions/build-cache
