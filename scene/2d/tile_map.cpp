@@ -1517,14 +1517,15 @@ void TileMap::_set_tile_data(const PoolVector<int>& p_data) {
     int c                   = p_data.size();
     PoolVector<int>::Read r = p_data.read();
 
-    int offset = (format == FORMAT_2) ? 3 : 2;
+    const int data_size = (format == FORMAT_2) ? 12 : 8;
+    const int offset    = (format == FORMAT_2) ? 3 : 2;
     ERR_FAIL_COND_MSG(c % offset != 0, "Corrupted tile data.");
 
     clear();
     for (int i = 0; i < c; i += offset) {
         const uint8_t* ptr = (const uint8_t*)&r[i];
         uint8_t local[12];
-        for (int j = 0; j < ((format == FORMAT_2) ? 12 : 8); j++) {
+        for (int j = 0; j < data_size; j++) {
             local[j] = ptr[j];
         }
 
