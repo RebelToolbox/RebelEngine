@@ -46,16 +46,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine class reference\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2021-12-16 12:44+0000\n"
-"Last-Translator: Rémi Verschelde <remi@godotengine.org>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/godot-engine/"
-"godot-class-reference/de/>\n"
+"PO-Revision-Date: 2025-04-17 01:01+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/rebel-toolbox/"
+"rebel-engine-api/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 5.11.1-dev\n"
 
 #: tools/scripts/rst_from_xml.py
 msgid "Description"
@@ -67422,7 +67422,7 @@ msgstr ""
 
 #: docs/VisualServer.xml
 msgid "Modulates all colors in the given canvas."
-msgstr ""
+msgstr "Moduliert alle Farben in der angegebenen Leinwand."
 
 #: docs/VisualServer.xml
 msgid ""
@@ -73228,7 +73228,7 @@ msgstr ""
 
 #: docs/XMLParser.xml
 msgid "CDATA content."
-msgstr ""
+msgstr "CDATA-Inhalt."
 
 #: docs/XMLParser.xml
 msgid "Unknown node."
