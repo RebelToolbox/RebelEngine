@@ -88,12 +88,16 @@ Error PacketPeerUDP::get_packet(const uint8_t** r_buffer, int& r_buffer_size) {
         return ERR_UNAVAILABLE;
     }
 
-    uint32_t size = 0;
     uint8_t ipv6[16];
+    uint8_t packet_port_bytes[4]{};
+    uint8_t size_bytes[4]{};
+    uint32_t size = 0;
     rb.read(ipv6, 16, true);
     packet_ip.set_ipv6(ipv6);
-    rb.read((uint8_t*)&packet_port, 4, true);
-    rb.read((uint8_t*)&size, 4, true);
+    rb.read(packet_port_bytes, 4, true);
+    memcpy(&packet_port, packet_port_bytes, 4);
+    rb.read(size_bytes, 4, true);
+    memcpy(&size, size_bytes, 4);
     rb.read(packet_buffer, size, true);
     --queue_count;
     *r_buffer     = packet_buffer;
