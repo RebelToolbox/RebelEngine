@@ -60,6 +60,8 @@ obj/
 # Python generated
 __pycache__/
 
+# Temporary files
+*.tmp
 
 # 3. IDE and tool specific
 #    #####################
