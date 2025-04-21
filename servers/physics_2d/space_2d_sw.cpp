@@ -201,9 +201,9 @@ bool Physics2DDirectSpaceStateSW::intersect_ray(
 
     bool collided = false;
     Vector2 res_point, res_normal;
-    int res_shape;
-    const CollisionObject2DSW* res_obj;
-    real_t min_d = 1e10;
+    int res_shape                      = 0;
+    const CollisionObject2DSW* res_obj = nullptr;
+    real_t min_d                       = 1e10;
 
     for (int i = 0; i < amount; i++) {
         if (!_can_collide_with(
@@ -265,7 +265,7 @@ bool Physics2DDirectSpaceStateSW::intersect_ray(
         }
     }
 
-    if (!collided) {
+    if (!collided || res_obj == nullptr) {
         return false;
     }
 
