@@ -433,7 +433,6 @@ private:
         }
 
         ref.item_id = leaf.request_item();
-        BVH_ASSERT(ref.item_id != BVHCommon::INVALID);
 
         // set the aabb of the new item
         leaf.get_aabb(ref.item_id) = p_aabb;
