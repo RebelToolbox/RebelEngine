@@ -85,12 +85,10 @@ public:
     }
 
     uint32_t request_item() {
-        if (num_items < MAX_ITEMS) {
-            uint32_t id = num_items;
-            num_items++;
-            return id;
-        }
-        return -1;
+        CRASH_COND_MSG(num_items >= MAX_ITEMS, "BVH leaf is full");
+        uint32_t id = num_items;
+        num_items++;
+        return id;
     }
 };
 
