@@ -1470,8 +1470,8 @@ public:
 
         struct MipMaps {
             struct Size {
-                GLuint fbo;
-                GLuint color;
+                GLuint fbo   = 0;
+                GLuint color = 0;
                 int width;
                 int height;
             };

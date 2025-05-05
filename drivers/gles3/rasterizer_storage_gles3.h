@@ -1609,7 +1609,7 @@ public:
         struct Effects {
             struct MipMaps {
                 struct Size {
-                    GLuint fbo;
+                    GLuint fbo = 0;
                     int width;
                     int height;
                 };
