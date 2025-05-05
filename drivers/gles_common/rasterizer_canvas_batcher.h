@@ -823,7 +823,7 @@ protected:
 public:
     Batch* _batch_request_new(bool p_blank = true) {
         Batch* batch = bdata.batches.request();
-        if (!batch) {
+        while (!batch) {
             // grow the batches
             bdata.batches.grow();
 
@@ -833,7 +833,6 @@ public:
 
             // this should always succeed after growing
             batch = bdata.batches.request();
-            RAST_DEBUG_ASSERT(batch);
         }
 
         if (p_blank) {
