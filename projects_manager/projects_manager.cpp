@@ -238,6 +238,14 @@ void ProjectsManager::_bind_methods() {
         DEFVAL(Variant())
     );
     ClassDB::bind_method(
+        "_on_import_button_pressed",
+        &ProjectsManager::_on_import_button_pressed
+    );
+    ClassDB::bind_method(
+        "_on_import_godot_project",
+        &ProjectsManager::_on_import_godot_project
+    );
+    ClassDB::bind_method(
         "_on_install_asset",
         &ProjectsManager::_on_install_asset
     );
@@ -383,6 +391,16 @@ Control* ProjectsManager::_create_buttons() {
     add_button->connect("pressed", this, "_on_add_button_pressed");
     buttons_container->add_child(add_button);
 
+    Button* import_button = memnew(Button);
+    import_button->set_text(TTR("Import"));
+    import_button->set_shortcut(ED_SHORTCUT(
+        "projects_manager/import_project",
+        TTR("Import non-Rebel project"),
+        KEY_MASK_CMD | KEY_I
+    ));
+    import_button->connect("pressed", this, "_on_import_button_pressed");
+    buttons_container->add_child(import_button);
+
     Button* search_button = memnew(Button);
     search_button->set_text(TTR("Search"));
     search_button->set_shortcut(ED_SHORTCUT(
@@ -467,6 +485,7 @@ void ProjectsManager::_create_dialogs() {
     add_child(_create_no_settings_file_error());
 
     add_child(_create_add_project_dialog());
+    add_child(_create_import_project_dialog());
     add_child(_create_extract_zip_file_dialog());
     add_child(_create_new_project_dialog());
     add_child(_create_rename_project_dialog());
@@ -517,6 +536,13 @@ Control* ProjectsManager::_create_extract_zip_file_dialog() {
     extract_zip_file_dialog
         ->connect("project_added", this, "_on_project_added");
     return extract_zip_file_dialog;
+}
+
+Control* ProjectsManager::_create_import_project_dialog() {
+    import_project_dialog = memnew(ImportProjectDialog);
+    import_project_dialog
+        ->connect("import_godot_project", this, "_on_import_godot_project");
+    return import_project_dialog;
 }
 
 Control* ProjectsManager::_create_language_options() {
@@ -924,6 +950,19 @@ void ProjectsManager::_on_global_menu_action(
             OS::get_singleton()->execute(exec, args, false, &pid);
         }
     }
+}
+
+void ProjectsManager::_on_import_button_pressed() {
+    import_project_dialog->show_dialog();
+}
+
+void ProjectsManager::_on_import_godot_project(
+    const String& p_project_file,
+    const String& p_destination_folder
+) {
+    print_line(
+        vformat("Importing: %s to %s", p_project_file, p_destination_folder)
+    );
 }
 
 void ProjectsManager::_on_install_asset(
