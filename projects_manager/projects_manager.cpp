@@ -20,6 +20,7 @@
 #include "editor/editor_scale.h"
 #include "editor/editor_settings.h"
 #include "editor/editor_themes.h"
+#include "projects_manager/import_project.h"
 #include "projects_manager/projects_list_item.h"
 #include "scene/gui/center_container.h"
 #include "scene/gui/line_edit.h"
@@ -960,9 +961,11 @@ void ProjectsManager::_on_import_godot_project(
     const String& p_project_file,
     const String& p_destination_folder
 ) {
-    print_line(
-        vformat("Importing: %s to %s", p_project_file, p_destination_folder)
-    );
+    ERR_FAIL_COND(!ImportProject::import_godot_project(
+        p_project_file,
+        p_destination_folder
+    ));
+    _add_project(p_destination_folder);
 }
 
 void ProjectsManager::_on_install_asset(
