@@ -93,11 +93,12 @@ ProjectsList::ProjectsList() {
 }
 
 void ProjectsList::add_project(const String& project_key) {
-    if (_has_project(project_key)) {
-        print_line(vformat("Ignoring existing project key %s", project_key));
-        return;
+    // Check if project already exists.
+    ProjectsListItem* item = _get_item(project_key);
+    if (!item) {
+        item = _create_item(project_key);
     }
-    ProjectsListItem* item = _create_item(project_key);
+    // Select the new (or existing) project.
     search_box->clear();
     _refresh_projects_list();
     _select_index(item->get_index());
@@ -389,13 +390,13 @@ void ProjectsList::_filter_projects() {
     update_dock_menu();
 }
 
-bool ProjectsList::_has_project(const String& project_key) {
-    for (int i = 0; i < projects.size(); i++) {
-        if (projects[i]->project_key == project_key) {
-            return true;
+ProjectsListItem* ProjectsList::_get_item(const String& project_key) {
+    for (int index = 0; index < projects.size(); index++) {
+        if (projects[index]->project_key == project_key) {
+            return projects[index];
         }
     }
-    return false;
+    return nullptr;
 }
 
 void ProjectsList::_load_project_icon(int p_index) {

@@ -72,7 +72,7 @@ private:
     );
     void _ensure_item_visible(int p_index);
     void _filter_projects();
-    bool _has_project(const String& project_key);
+    ProjectsListItem* _get_item(const String& project_key);
     void _load_project_icon(int p_index);
     void _load_projects();
     void _on_item_double_clicked();
