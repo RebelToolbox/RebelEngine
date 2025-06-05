@@ -36,7 +36,7 @@ private:
     TextureRect* project_file_error_icon;
 
     void _check_file(const String& p_file);
-    void _on_browse_buton_pressed();
+    void _on_browse_button_pressed();
     void _on_file_selected(const String& p_path);
     void _on_project_file_text_changed(const String& p_text);
 };
