@@ -41,7 +41,7 @@ AddProjectDialog::AddProjectDialog() {
 
     Button* browse_button = memnew(Button);
     browse_button->set_text(TTR("Browse"));
-    browse_button->connect("pressed", this, "_on_browse_buton_pressed");
+    browse_button->connect("pressed", this, "_on_browse_button_pressed");
     project_file_container->add_child(browse_button);
 
     error_message_label = memnew(Label);
@@ -79,8 +79,8 @@ void AddProjectDialog::show_dialog() {
 
 void AddProjectDialog::_bind_methods() {
     ClassDB::bind_method(
-        "_on_browse_buton_pressed",
-        &AddProjectDialog::_on_browse_buton_pressed
+        "_on_browse_button_pressed",
+        &AddProjectDialog::_on_browse_button_pressed
     );
     ClassDB::bind_method(
         "_on_file_selected",
@@ -131,7 +131,7 @@ void AddProjectDialog::_check_file(const String& p_file) {
     set_size(Size2(500, 0) * EDSCALE);
 }
 
-void AddProjectDialog::_on_browse_buton_pressed() {
+void AddProjectDialog::_on_browse_button_pressed() {
     file_dialog->set_current_dir(project_file_line_edit->get_text());
     file_dialog->set_mode(FileDialog::MODE_OPEN_FILE);
     file_dialog->clear_filters();
