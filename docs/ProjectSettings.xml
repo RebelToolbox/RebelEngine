@@ -120,7 +120,7 @@ SPDX-License-Identifier: MIT
                 Returns [code]true[/code] if the specified property exists and its initial value differs from the current value.
             </description>
         </method>
-        <method name="property_get_revert">
+        <method name="property_get_revert" qualifiers="const">
             <return type="Variant" />
             <argument index="0" name="name" type="String" />
             <description>

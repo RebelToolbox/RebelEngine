@@ -1033,7 +1033,7 @@ Error EditorExportPlatform::export_project_files(
 
     // save config!
 
-    Vector<String> custom_list;
+    Vector<String> custom_features;
 
     if (p_preset->get_custom_features() != String()) {
         Vector<String> tmp_custom_list =
@@ -1042,12 +1042,12 @@ Error EditorExportPlatform::export_project_files(
         for (int i = 0; i < tmp_custom_list.size(); i++) {
             String f = tmp_custom_list[i].strip_edges();
             if (f != String()) {
-                custom_list.push_back(f);
+                custom_features.push_back(f);
             }
         }
     }
 
-    ProjectSettings::CustomMap custom_map;
+    ProjectSettings::CustomSettings custom_settings;
     if (path_remaps.size()) {
         if (true) { // new remap mode, use always as it's friendlier with
                     // multiple .pck exports
@@ -1071,7 +1071,7 @@ Error EditorExportPlatform::export_project_files(
         } else {
             // old remap mode, will still work, but it's unused because it's not
             // multiple pck export friendly
-            custom_map["path_remap/remapped_paths"] = path_remaps;
+            custom_settings["path_remap/remapped_paths"] = path_remaps;
         }
     }
 
@@ -1102,7 +1102,7 @@ Error EditorExportPlatform::export_project_files(
             "tmp" + config_file
         );
     ProjectSettings::get_singleton()
-        ->save_custom(engine_cfb, custom_map, custom_list);
+        ->save_custom(engine_cfb, custom_settings, custom_features);
     Vector<uint8_t> data = FileAccess::get_file_as_array(engine_cfb);
     DirAccess::remove_file_or_error(engine_cfb);
 

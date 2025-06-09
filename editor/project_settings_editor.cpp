@@ -1131,7 +1131,7 @@ void ProjectSettingsEditor::_item_del() {
     }
 
     if (ProjectSettings::get_singleton()->get_order(property)
-        < ProjectSettings::NO_BUILTIN_ORDER_BASE) {
+        < ProjectSettings::CUSTOM_SETTINGS_START) {
         EditorNode::get_singleton()->show_warning(vformat(
             TTR("Setting '%s' is internal, and it can't be deleted."),
             property

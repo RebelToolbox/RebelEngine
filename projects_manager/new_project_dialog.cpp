@@ -21,7 +21,7 @@
 namespace {
 bool create_project(
     const String& project_folder,
-    const ProjectSettings::CustomMap& project_settings
+    const ProjectSettings::CustomSettings& project_settings
 ) {
     Error error = ProjectSettings::get_singleton()->save_custom(
         project_folder.plus_file("project.rebel"),
@@ -260,7 +260,7 @@ void NewProjectDialog::ok_pressed() {
         return;
     }
 
-    ProjectSettings::CustomMap project_settings;
+    ProjectSettings::CustomSettings project_settings;
     project_settings["application/config/name"] = project_name;
     if (renderer_button_group->get_pressed_button()->get_meta("driver_name")
         == "GLES3") {
