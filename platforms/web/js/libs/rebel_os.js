@@ -54,7 +54,7 @@ const RebelConfig = {
 		},
 
 		locate_file: function (file) {
-			return Module['locateFile'](file); // eslint-disable-line no-undef
+			return Module['locateFile'](file);
 		},
 		clear: function () {
 			RebelConfig.canvas = null;

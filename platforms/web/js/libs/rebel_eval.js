@@ -260,10 +260,10 @@ const RebelEval = {
 		try {
 			if (p_use_global_ctx) {
 				// indirect eval call grants global execution context
-				const global_eval = eval; // eslint-disable-line no-eval
+				const global_eval = eval;
 				eval_ret = global_eval(js_code);
 			} else {
-				eval_ret = eval(js_code); // eslint-disable-line no-eval
+				eval_ret = eval(js_code);
 			}
 		} catch (e) {
 			RebelRuntime.error(e);

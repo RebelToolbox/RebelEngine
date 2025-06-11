@@ -216,7 +216,7 @@ const RebelDisplayScreen = {
 			return 0;
 		},
 		_updateGL: function () {
-			const gl_context_handle = _emscripten_webgl_get_current_context(); // eslint-disable-line no-undef
+			const gl_context_handle = _emscripten_webgl_get_current_context();
 			const gl = GL.getContext(gl_context_handle);
 			if (gl) {
 				GL.resizeOffscreenFramebuffer(gl);
@@ -301,7 +301,7 @@ const RebelDisplay = {
 	rebel_js_display_glGetBufferSubData__sig: 'viiii',
 	rebel_js_display_glGetBufferSubData__deps: ['$GL', 'emscripten_webgl_get_current_context'],
 	rebel_js_display_glGetBufferSubData: function (target, offset, size, data) {
-		const gl_context_handle = _emscripten_webgl_get_current_context(); // eslint-disable-line no-undef
+		const gl_context_handle = _emscripten_webgl_get_current_context();
 		const gl = GL.getContext(gl_context_handle);
 		if (gl) {
 			gl.GLctx['getBufferSubData'](target, offset, HEAPU8, data, size);
@@ -320,7 +320,7 @@ const RebelDisplay = {
 
 	rebel_js_display_alert__sig: 'vi',
 	rebel_js_display_alert: function (p_text) {
-		window.alert(RebelRuntime.parseString(p_text)); // eslint-disable-line no-alert
+		window.alert(RebelRuntime.parseString(p_text));
 	},
 
 	rebel_js_display_screen_dpi_get__sig: 'i',
@@ -569,7 +569,7 @@ const RebelDisplay = {
 			ev.preventDefault();
 		}, false);
 		RebelEventListeners.add(canvas, 'webglcontextlost', function (ev) {
-			alert('WebGL context lost, please reload the page'); // eslint-disable-line no-alert
+			alert('WebGL context lost, please reload the page');
 			ev.preventDefault();
 		}, false);
 		RebelDisplayScreen.hidpi = !!p_hidpi;
