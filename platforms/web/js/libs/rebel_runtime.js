@@ -10,37 +10,37 @@ const RebelRuntime = {
 		 * Functions
 		 */
 		get_func: function (ptr) {
-			return wasmTable.get(ptr); // eslint-disable-line no-undef
+			return wasmTable.get(ptr);
 		},
 
 		/*
 		 * Prints
 		 */
 		error: function () {
-			err.apply(null, Array.from(arguments)); // eslint-disable-line no-undef
+			err.apply(null, Array.from(arguments));
 		},
 
 		print: function () {
-			out.apply(null, Array.from(arguments)); // eslint-disable-line no-undef
+			out.apply(null, Array.from(arguments));
 		},
 
 		/*
 		 * Memory
 		 */
 		malloc: function (p_size) {
-			return _malloc(p_size); // eslint-disable-line no-undef
+			return _malloc(p_size);
 		},
 
 		free: function (p_ptr) {
-			_free(p_ptr); // eslint-disable-line no-undef
+			_free(p_ptr);
 		},
 
 		getHeapValue: function (p_ptr, p_type) {
-			return getValue(p_ptr, p_type); // eslint-disable-line no-undef
+			return getValue(p_ptr, p_type);
 		},
 
 		setHeapValue: function (p_ptr, p_value, p_type) {
-			setValue(p_ptr, p_value, p_type); // eslint-disable-line no-undef
+			setValue(p_ptr, p_value, p_type);
 		},
 
 		heapSub: function (p_heap, p_ptr, p_len) {
@@ -62,7 +62,7 @@ const RebelRuntime = {
 		 * Strings
 		 */
 		parseString: function (p_ptr) {
-			return UTF8ToString(p_ptr); // eslint-disable-line no-undef
+			return UTF8ToString(p_ptr);
 		},
 
 		parseStringArray: function (p_ptr, p_size) {
@@ -75,13 +75,13 @@ const RebelRuntime = {
 		},
 
 		strlen: function (p_str) {
-			return lengthBytesUTF8(p_str); // eslint-disable-line no-undef
+			return lengthBytesUTF8(p_str);
 		},
 
 		allocString: function (p_str) {
 			const length = RebelRuntime.strlen(p_str) + 1;
 			const c_str = RebelRuntime.malloc(length);
-			stringToUTF8(p_str, c_str, length); // eslint-disable-line no-undef
+			stringToUTF8(p_str, c_str, length);
 			return c_str;
 		},
 
@@ -102,7 +102,7 @@ const RebelRuntime = {
 		},
 
 		stringToHeap: function (p_str, p_ptr, p_len) {
-			return stringToUTF8Array(p_str, HEAP8, p_ptr, p_len); // eslint-disable-line no-undef
+			return stringToUTF8Array(p_str, HEAP8, p_ptr, p_len);
 		},
 	},
 };

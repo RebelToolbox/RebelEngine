@@ -26,7 +26,7 @@ const Engine = (function () {
 	 * @constructor
 	 * @param {EngineConfig} initConfig The initial config for this instance.
 	 */
-	function Engine(initConfig) { // eslint-disable-line no-shadow
+	function Engine(initConfig) {
 		this.config = new InternalConfig(initConfig);
 		this.rtenv = null;
 	}

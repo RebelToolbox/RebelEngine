@@ -1,4 +1,4 @@
-const Preloader = /** @constructor */ function () { // eslint-disable-line no-unused-vars
+const Preloader = /** @constructor */ function () {
 	function getTrackedResponse(response, load_status) {
 		function onloadprogress(reader, controller) {
 			return reader.read().then(function (result) {
