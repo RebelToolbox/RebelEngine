@@ -1014,35 +1014,24 @@ void EditorData::script_class_save_icon_paths() {
     List<StringName> keys;
     _script_class_icon_paths.get_key_list(&keys);
 
-    Dictionary d;
+    Dictionary new_paths;
     for (List<StringName>::Element* E = keys.front(); E; E = E->next()) {
         if (ScriptServer::is_global_class(E->get())) {
-            d[E->get()] = _script_class_icon_paths[E->get()];
+            new_paths[E->get()] = _script_class_icon_paths[E->get()];
         }
     }
 
-    Dictionary old;
-    if (ProjectSettings::get_singleton()->has_setting(
-            "_global_script_class_icons"
-        )) {
-        old =
-            ProjectSettings::get_singleton()->get("_global_script_class_icons");
+    Dictionary old_paths;
+    ProjectSettings* settings = ProjectSettings::get_singleton();
+    if (settings->has_setting("_global_script_class_icons")) {
+        old_paths = settings->get("_global_script_class_icons");
     }
-    if ((!old.empty() || d.empty()) && d.hash() == old.hash()) {
+
+    if (new_paths.hash() == old_paths.hash()) {
         return;
     }
-
-    if (d.empty()) {
-        if (ProjectSettings::get_singleton()->has_setting(
-                "_global_script_class_icons"
-            )) {
-            ProjectSettings::get_singleton()->clear("_global_script_class_icons"
-            );
-        }
-    } else {
-        ProjectSettings::get_singleton()->set("_global_script_class_icons", d);
-    }
-    ProjectSettings::get_singleton()->save();
+    settings->set("_global_script_class_icons", new_paths);
+    settings->save();
 }
 
 void EditorData::script_class_load_icon_paths() {
