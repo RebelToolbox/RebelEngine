@@ -290,37 +290,30 @@ void ScriptServer::get_global_class_list(List<StringName>* r_global_classes) {
 }
 
 void ScriptServer::save_global_classes() {
-    List<StringName> gc;
-    get_global_class_list(&gc);
-    Array gcarr;
-    for (List<StringName>::Element* E = gc.front(); E; E = E->next()) {
-        Dictionary d;
-        d["class"]    = E->get();
-        d["language"] = global_classes[E->get()].language;
-        d["path"]     = global_classes[E->get()].path;
-        d["base"]     = global_classes[E->get()].base;
-        gcarr.push_back(d);
+    List<StringName> class_names;
+    get_global_class_list(&class_names);
+
+    Array new_classes;
+    for (List<StringName>::Element* E = class_names.front(); E; E = E->next()) {
+        Dictionary class_data;
+        class_data["class"]    = E->get();
+        class_data["language"] = global_classes[E->get()].language;
+        class_data["path"]     = global_classes[E->get()].path;
+        class_data["base"]     = global_classes[E->get()].base;
+        new_classes.push_back(class_data);
     }
 
-    Array old;
-    if (ProjectSettings::get_singleton()->has_setting("_global_script_classes"
-        )) {
-        old = ProjectSettings::get_singleton()->get("_global_script_classes");
+    Array old_classes;
+    ProjectSettings* settings = ProjectSettings::get_singleton();
+    if (settings->has_setting("_global_script_classes")) {
+        old_classes = settings->get("_global_script_classes");
     }
-    if ((!old.empty() || gcarr.empty()) && gcarr.hash() == old.hash()) {
+
+    if (new_classes.hash() == old_classes.hash()) {
         return;
     }
-
-    if (gcarr.empty()) {
-        if (ProjectSettings::get_singleton()->has_setting(
-                "_global_script_classes"
-            )) {
-            ProjectSettings::get_singleton()->clear("_global_script_classes");
-        }
-    } else {
-        ProjectSettings::get_singleton()->set("_global_script_classes", gcarr);
-    }
-    ProjectSettings::get_singleton()->save();
+    settings->set("_global_script_classes", new_classes);
+    settings->save();
 }
 
 ////////////////////

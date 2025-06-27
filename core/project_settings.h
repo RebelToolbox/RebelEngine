@@ -71,7 +71,7 @@ public:
     bool is_using_datapack() const;
     bool has_custom_feature(const String& feature) const;
 
-    void clear(const String& name);
+    void clear();
     void set_initial_value(const String& name, const Variant& value);
     void set_restart_if_changed(const String& name, bool restart_required);
     void set_disable_feature_overrides(bool disable);
