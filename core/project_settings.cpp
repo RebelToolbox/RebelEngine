@@ -492,12 +492,10 @@ bool ProjectSettings::has_custom_feature(const String& feature) const {
     return custom_features.has(feature);
 }
 
-void ProjectSettings::clear(const String& name) {
-    ERR_FAIL_COND_MSG(
-        !settings.has(name),
-        "Cannot clear unknown project setting: " + name
-    );
-    settings.erase(name);
+void ProjectSettings::clear() {
+    settings.clear();
+    custom_property_info.clear();
+    feature_overrides.clear();
 }
 
 void ProjectSettings::set_initial_value(
@@ -733,7 +731,6 @@ void ProjectSettings::_bind_methods() {
         D_METHOD("add_property_info", "hint"),
         &ProjectSettings::_add_property_info
     );
-    ClassDB::bind_method(D_METHOD("clear", "name"), &ProjectSettings::clear);
     ClassDB::bind_method(
         D_METHOD("get_order", "name"),
         &ProjectSettings::get_order
