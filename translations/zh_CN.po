@@ -54651,10 +54651,6 @@ msgstr ""
 "[/codeblock]"
 
 #: docs/ProjectSettings.xml
-msgid "Clears the whole configuration (not recommended, may break things)."
-msgstr "清除整个配置（不推荐，可能会弄坏东西）。"
-
-#: docs/ProjectSettings.xml
 msgid ""
 "Returns the order of a configuration value (influences when saved to the "
 "config file)."
