@@ -52,14 +52,17 @@ private:
     Label* project_name_label;
     TextureButton* favorite_button;
     TextureRect* icon_texture;
+    VBoxContainer* project_details_container;
 
     bool hover = false;
 
+    void _configure_item();
     void _extract_project_values();
     void _on_draw();
     void _on_gui_input(const Ref<InputEvent>& p_input_event);
     void _on_favorite_pressed();
     void _on_show_folder_pressed(const String& p_folder);
+    void _reset_item();
 };
 
 class ProjectsListItemComparator {
