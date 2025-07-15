@@ -29,7 +29,6 @@ public:
 
     void add_project(const String& project_key);
     int get_project_count() const;
-    const Set<String>& get_selected_project_keys() const;
     Vector<ProjectsListItem*> get_selected_project_items() const;
     bool is_any_project_missing() const;
     bool key_pressed(Ref<InputEventKey> key_event);
@@ -46,7 +45,6 @@ protected:
 
 private:
     int first_selected_project_index = -1;
-    Set<String> selected_project_keys;
 
     Label* loading_label;
 
@@ -60,6 +58,7 @@ private:
     VBoxContainer* projects_container;
 
     Vector<ProjectsListItem*> projects;
+    Vector<ProjectsListItem*> selected_projects;
 
     int icon_load_index = 0;
 
@@ -85,7 +84,7 @@ private:
     void _on_sort_order_selected(int p_index);
     void _on_item_updated(const Node* p_node);
     void _refresh_projects_list();
-    void _remove_project(int p_index, bool p_update_settings);
+    void _remove_project(ProjectsListItem* item);
     void _select_index(int p_index);
     void _select_range(ProjectsListItem* p_to_item);
     void _sort_projects();

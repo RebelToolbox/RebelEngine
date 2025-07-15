@@ -109,24 +109,8 @@ int ProjectsList::get_project_count() const {
     return projects.size();
 }
 
-const Set<String>& ProjectsList::get_selected_project_keys() const {
-    // Faster if that's all you need
-    return selected_project_keys;
-}
-
 Vector<ProjectsListItem*> ProjectsList::get_selected_project_items() const {
-    Vector<ProjectsListItem*> items;
-    if (selected_project_keys.empty()) {
-        return items;
-    }
-
-    for (int i = 0; i < projects.size(); ++i) {
-        ProjectsListItem* item = projects[i];
-        if (selected_project_keys.has(item->project_key)) {
-            items.push_back(item);
-        }
-    }
-    return items;
+    return selected_projects;
 }
 
 bool ProjectsList::is_any_project_missing() const {
@@ -176,7 +160,7 @@ bool ProjectsList::key_pressed(Ref<InputEventKey> key_event) {
 }
 
 void ProjectsList::refresh_selected_projects() {
-    if (selected_project_keys.empty()) {
+    if (selected_projects.empty()) {
         return;
     }
 
@@ -199,8 +183,10 @@ void ProjectsList::remove_missing_projects() {
     }
 
     for (int i = projects.size() - 1; i >= 0; i--) {
-        if (projects[i]->missing) {
-            _remove_project(i, true);
+        ProjectsListItem* item = projects[i];
+        if (item->missing) {
+            selected_projects.erase(item);
+            _remove_project(item);
         }
     }
 
@@ -208,20 +194,20 @@ void ProjectsList::remove_missing_projects() {
 }
 
 void ProjectsList::remove_selected_projects(bool p_delete_project_folder) {
-    if (selected_project_keys.empty()) {
+    if (selected_projects.empty()) {
         return;
     }
 
-    for (int i = projects.size() - 1; i >= 0; i--) {
-        const ProjectsListItem* item = projects[i];
-        if (selected_project_keys.has(item->project_key)
-            && item->is_visible()) {
+    for (int i = 0; i < selected_projects.size(); i++) {
+        ProjectsListItem* item = selected_projects[i];
+        if (item->is_visible()) {
             if (p_delete_project_folder) {
                 OS::get_singleton()->move_to_trash(item->project_folder);
             }
-            _remove_project(i, true);
+            _remove_project(item);
         }
     }
+    selected_projects.clear();
 
     EditorSettings::get_singleton()->save();
     update_dock_menu();
@@ -326,13 +312,13 @@ void ProjectsList::_notification(int p_what) {
 }
 
 void ProjectsList::_add_item_to_selection(ProjectsListItem* p_item) {
-    selected_project_keys.insert(p_item->project_key);
+    selected_projects.push_back(p_item);
     p_item->selected = true;
     p_item->update();
 }
 
 void ProjectsList::_clear_selection() {
-    selected_project_keys.clear();
+    selected_projects.clear();
     for (int index = 0; index < projects.size(); index++) {
         projects[index]->selected = false;
         projects[index]->update();
@@ -513,26 +499,18 @@ void ProjectsList::_refresh_projects_list() {
     _update_icons_async();
 }
 
-void ProjectsList::_remove_project(int p_index, bool p_update_settings) {
-    ProjectsListItem* item = projects[p_index];
-
-    selected_project_keys.erase(item->project_key);
-
+void ProjectsList::_remove_project(ProjectsListItem* item) {
     if (item->get_index() == first_selected_project_index) {
         first_selected_project_index = -1;
     }
 
-    if (p_update_settings) {
-        EditorSettings::get_singleton()->erase("projects/" + item->project_key);
-        EditorSettings::get_singleton()->erase(
-            "favorite_projects/" + item->project_key
-        );
-        // Don't save the file, because there may be more changes.
-    }
+    EditorSettings::get_singleton()->erase("projects/" + item->project_key);
+    EditorSettings::get_singleton()->erase(
+        "favorite_projects/" + item->project_key
+    );
 
-    projects.remove(p_index);
+    projects.erase(item);
     memdelete(item);
-
     update_dock_menu();
 }
 
@@ -561,39 +539,34 @@ void ProjectsList::_select_index(int p_index) {
 }
 
 void ProjectsList::_select_range(ProjectsListItem* p_to_item) {
-    if (first_selected_project_index == -1) {
-        _select_index(p_to_item->get_index());
+    int selected_index = p_to_item->get_index();
+    if (first_selected_project_index == -1
+        || selected_index == first_selected_project_index) {
+        _select_index(selected_index);
         return;
     }
 
     _clear_selection();
-    int last_selected_project_index = p_to_item->get_index();
-
-    bool select = false;
+    bool inside_range = false;
     for (int index = 0; index < projects.size(); index++) {
         ProjectsListItem* item = projects[index];
-        if (item->get_index() == first_selected_project_index) {
+        int item_index         = item->get_index();
+        if (item_index == first_selected_project_index
+            || item_index == selected_index) {
             _add_item_to_selection(item);
-            select = !select;
-        }
-        if (item->get_index() == last_selected_project_index) {
-            _add_item_to_selection(item);
-            select = !select;
-        }
-        if (select) {
+            inside_range = !inside_range;
+        } else if (inside_range) {
             _add_item_to_selection(item);
         }
     }
 }
 
 void ProjectsList::_toggle_item_selected(ProjectsListItem* p_item) {
-    const String& project_key = p_item->project_key;
+    p_item->selected = !p_item->selected;
     if (p_item->selected) {
-        p_item->selected = false;
-        selected_project_keys.erase(project_key);
+        selected_projects.push_back(p_item);
     } else {
-        p_item->selected = true;
-        selected_project_keys.insert(project_key);
+        selected_projects.erase(p_item);
     }
     p_item->update();
 }
