@@ -18,11 +18,8 @@ ProjectsListItem::ProjectsListItem(
 ) :
     project_key(p_project_key),
     favorite(p_favorite) {
-    _extract_project_values();
-
     set_theme(create_custom_theme());
     set_focus_mode(FocusMode::FOCUS_ALL);
-    set_tooltip(description);
     add_constant_override("separation", 10 * EDSCALE);
 
     Ref<Texture> favorite_icon = get_icon("Favorites", "EditorIcons");
@@ -47,20 +44,13 @@ ProjectsListItem::ProjectsListItem(
     // Project icons are loaded asynchronously; so use the project loading icon.
     icon_texture->set_texture(get_icon("ProjectIconLoading", "EditorIcons"));
     icon_texture->set_v_size_flags(SIZE_SHRINK_CENTER);
-    if (missing) {
-        icon_texture->set_modulate(Color(1, 1, 1, 0.5));
-    }
     add_child(icon_texture);
 
-    VBoxContainer* project_details_container = memnew(VBoxContainer);
-    if (disabled) {
-        project_details_container->set_modulate(Color(1, 1, 1, 0.5));
-    }
+    project_details_container = memnew(VBoxContainer);
     project_details_container->set_h_size_flags(SIZE_EXPAND_FILL);
     add_child(project_details_container);
 
-    project_name_label =
-        memnew(Label(missing ? TTR("Missing project") : project_name));
+    project_name_label = memnew(Label());
     project_name_label->add_font_override(
         "font",
         get_font("title", "EditorFonts")
@@ -74,44 +64,21 @@ ProjectsListItem::ProjectsListItem(
     project_details_container->add_child(project_folder_container);
 
     show_folder_button = memnew(Button);
-    show_folder_button->set_icon(
-        get_icon(!missing ? "Load" : "FileBroken", "EditorIcons")
-    );
-    if (missing) {
-        show_folder_button->set_icon(get_icon("FileBroken", "EditorIcons"));
-        show_folder_button->set_tooltip(TTR("Error: Project settings not found")
-        );
-    } else {
-        show_folder_button->set_icon(get_icon("Load", "EditorIcons"));
-        show_folder_button->set_tooltip(TTR("Show in File Manager"));
-        show_folder_button->connect(
-            "pressed",
-            this,
-            "_on_show_folder_pressed",
-            varray(project_folder)
-        );
-    }
-    if (!disabled) {
-        // The entire container for disabled projects is already grayed.
-        show_folder_button->set_modulate(Color(1, 1, 1, 0.5));
-    }
     project_folder_container->add_child(show_folder_button);
 
-    project_folder_label = memnew(Label(project_folder));
+    project_folder_label = memnew(Label());
     project_folder_label->set_h_size_flags(SIZE_EXPAND_FILL);
     project_folder_label->set_modulate(Color(1, 1, 1, 0.5));
     project_folder_label->add_color_override("font_color", font_color);
     project_folder_label->set_clip_text(true);
     project_folder_container->add_child(project_folder_label);
+
+    _configure_item();
 }
 
 void ProjectsListItem::refresh_item() {
-    _extract_project_values();
-    project_name_label->set_text(
-        missing ? TTR("Missing project") : project_name
-    );
-    project_folder_label->set_text(project_folder);
-    set_tooltip(description);
+    _reset_item();
+    _configure_item();
 }
 
 void ProjectsListItem::set_icon_texture(const Ref<Texture>& new_icon_texture) {
@@ -152,6 +119,40 @@ void ProjectsListItem::_notification(int p_what) {
         case NOTIFICATION_DRAW: {
             _on_draw();
         } break;
+    }
+}
+
+void ProjectsListItem::_configure_item() {
+    _extract_project_values();
+
+    project_folder_label->set_text(project_folder);
+    set_tooltip(description);
+
+    if (disabled) {
+        show_folder_button->set_modulate(Color(1, 1, 1, 1));
+        project_details_container->set_modulate(Color(1, 1, 1, 0.5));
+    } else {
+        show_folder_button->set_modulate(Color(1, 1, 1, 0.5));
+        project_details_container->set_modulate(Color(1, 1, 1, 1));
+    }
+
+    if (missing) {
+        project_name_label->set_text(TTR("Missing project"));
+        icon_texture->set_modulate(Color(1, 1, 1, 0.5));
+        show_folder_button->set_icon(get_icon("FileBroken", "EditorIcons"));
+        show_folder_button->set_tooltip(TTR("Error: Project settings not found")
+        );
+    } else {
+        project_name_label->set_text(project_name);
+        icon_texture->set_modulate(Color(1, 1, 1, 1));
+        show_folder_button->set_icon(get_icon("Load", "EditorIcons"));
+        show_folder_button->set_tooltip(TTR("Show in File Manager"));
+        show_folder_button->connect(
+            "pressed",
+            this,
+            "_on_show_folder_pressed",
+            varray(project_folder)
+        );
     }
 }
 
@@ -260,6 +261,17 @@ void ProjectsListItem::_on_favorite_pressed() {
 
 void ProjectsListItem::_on_show_folder_pressed(const String& p_folder) {
     OS::get_singleton()->shell_open(String("file://") + p_folder);
+}
+
+void ProjectsListItem::_reset_item() {
+    icon_loaded = false;
+    disabled    = false;
+    missing     = false;
+    if (show_folder_button
+            ->is_connected("pressed", this, "_on_show_folder_pressed")) {
+        show_folder_button
+            ->disconnect("pressed", this, "_on_show_folder_pressed");
+    }
 }
 
 // operator<
