@@ -43538,10 +43538,6 @@ msgid ""
 msgstr ""
 
 #: docs/ProjectSettings.xml
-msgid "Clears the whole configuration (not recommended, may break things)."
-msgstr ""
-
-#: docs/ProjectSettings.xml
 msgid ""
 "Returns the order of a configuration value (influences when saved to the "
 "config file)."
