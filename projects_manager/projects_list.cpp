@@ -102,7 +102,7 @@ void ProjectsList::add_project(const String& project_key) {
     // Select the project.
     search_box->clear();
     _refresh_projects_list();
-    _select_index(item->get_index());
+    _select_item(item);
 }
 
 int ProjectsList::get_project_count() const {
@@ -125,27 +125,29 @@ bool ProjectsList::is_any_project_missing() const {
 bool ProjectsList::key_pressed(Ref<InputEventKey> key_event) {
     switch (key_event->get_scancode()) {
         case KEY_HOME: {
-            if (get_project_count() > 0) {
-                _select_index(0);
+            if (!projects.empty()) {
+                _select_item(projects[0]);
                 return true;
             }
         } break;
         case KEY_END: {
-            if (get_project_count() > 0) {
-                _select_index(get_project_count() - 1);
+            if (!projects.empty()) {
+                _select_item(projects[projects.size() - 1]);
                 return true;
             }
         } break;
         case KEY_UP: {
-            if (first_selected_project_index > 0 && !key_event->get_shift()) {
-                _select_index(first_selected_project_index - 1);
+            int first_selected_item_index = first_selected_item->get_index();
+            if (first_selected_item_index > 0 && !key_event->get_shift()) {
+                _select_item(projects[first_selected_item_index - 1]);
                 return true;
             }
         } break;
         case KEY_DOWN: {
-            if (first_selected_project_index < get_project_count() - 2
+            int first_selected_item_index = first_selected_item->get_index();
+            if (first_selected_item_index < projects.size() - 1
                 && !key_event->get_shift()) {
-                _select_index(first_selected_project_index + 1);
+                _select_item(projects[first_selected_item_index + 1]);
                 return true;
             }
         } break;
@@ -164,16 +166,13 @@ void ProjectsList::refresh_selected_projects() {
         return;
     }
 
-    Vector<ProjectsListItem*> selected_project_items =
-        get_selected_project_items();
-    for (int i = 0; i < selected_project_items.size(); ++i) {
-        selected_project_items[i]->refresh_item();
-        selected_project_items[i]->icon_loaded = false;
+    for (int i = 0; i < selected_projects.size(); ++i) {
+        selected_projects[i]->refresh_item();
     }
 
     _sort_projects();
     _update_icons_async();
-    _ensure_item_visible(selected_project_items[0]->get_index());
+    _ensure_item_visible(selected_projects[0]);
     update_dock_menu();
 }
 
@@ -344,11 +343,8 @@ ProjectsListItem* ProjectsList::_create_item(
     return item;
 }
 
-void ProjectsList::_ensure_item_visible(int p_index) {
-    scroll_container->call_deferred(
-        "ensure_control_visible",
-        projects[p_index]
-    );
+void ProjectsList::_ensure_item_visible(const ProjectsListItem* p_item) {
+    scroll_container->call_deferred("ensure_control_visible", p_item);
 }
 
 void ProjectsList::_filter_projects() {
@@ -460,7 +456,7 @@ void ProjectsList::_on_selection_changed(
     } else if (p_control_pressed) {
         _toggle_item_selected(item);
     } else {
-        _select_index(item->get_index());
+        _select_item(item);
     }
 
     emit_signal("selection_changed");
@@ -484,12 +480,7 @@ void ProjectsList::_on_item_updated(const Node* p_node) {
 
     const ProjectsListItem* item = Object::cast_to<ProjectsListItem>(p_node);
     if (item->favorite) {
-        for (int i = 0; i < projects.size(); ++i) {
-            if (projects[i]->project_key == item->project_key) {
-                _ensure_item_visible(i);
-                break;
-            }
-        }
+        _ensure_item_visible(item);
     }
 }
 
@@ -500,8 +491,8 @@ void ProjectsList::_refresh_projects_list() {
 }
 
 void ProjectsList::_remove_project(ProjectsListItem* item) {
-    if (item->get_index() == first_selected_project_index) {
-        first_selected_project_index = -1;
+    if (item == first_selected_item) {
+        first_selected_item = nullptr;
     }
 
     EditorSettings::get_singleton()->erase("projects/" + item->project_key);
@@ -531,18 +522,16 @@ void ProjectsList::_sort_projects() {
     update_dock_menu();
 }
 
-void ProjectsList::_select_index(int p_index) {
+void ProjectsList::_select_item(ProjectsListItem* p_item) {
     _clear_selection();
-    _add_item_to_selection(projects[p_index]);
-    first_selected_project_index = p_index;
-    _ensure_item_visible(p_index);
+    _add_item_to_selection(p_item);
+    first_selected_item = p_item;
+    _ensure_item_visible(p_item);
 }
 
-void ProjectsList::_select_range(ProjectsListItem* p_to_item) {
-    int selected_index = p_to_item->get_index();
-    if (first_selected_project_index == -1
-        || selected_index == first_selected_project_index) {
-        _select_index(selected_index);
+void ProjectsList::_select_range(ProjectsListItem* p_selected_item) {
+    if (!first_selected_item || p_selected_item == first_selected_item) {
+        _select_item(p_selected_item);
         return;
     }
 
@@ -550,9 +539,7 @@ void ProjectsList::_select_range(ProjectsListItem* p_to_item) {
     bool inside_range = false;
     for (int index = 0; index < projects.size(); index++) {
         ProjectsListItem* item = projects[index];
-        int item_index         = item->get_index();
-        if (item_index == first_selected_project_index
-            || item_index == selected_index) {
+        if (item == first_selected_item || item == p_selected_item) {
             _add_item_to_selection(item);
             inside_range = !inside_range;
         } else if (inside_range) {

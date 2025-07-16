@@ -44,8 +44,6 @@ protected:
     void _notification(int p_what);
 
 private:
-    int first_selected_project_index = -1;
-
     Label* loading_label;
 
     LineEdit* search_box;
@@ -59,17 +57,17 @@ private:
 
     Vector<ProjectsListItem*> projects;
     Vector<ProjectsListItem*> selected_projects;
+    ProjectsListItem* first_selected_item = nullptr;
 
     int icon_load_index = 0;
 
     void _add_item_to_selection(ProjectsListItem* p_item);
-
     void _clear_selection();
     ProjectsListItem* _create_item(
         const String& project_key,
         bool favorite = false
     );
-    void _ensure_item_visible(int p_index);
+    void _ensure_item_visible(const ProjectsListItem* p_item);
     void _filter_projects();
     ProjectsListItem* _get_item(const String& project_key);
     void _load_project_icon(int p_index);
@@ -85,8 +83,8 @@ private:
     void _on_item_updated(const Node* p_node);
     void _refresh_projects_list();
     void _remove_project(ProjectsListItem* item);
-    void _select_index(int p_index);
-    void _select_range(ProjectsListItem* p_to_item);
+    void _select_item(ProjectsListItem* p_item);
+    void _select_range(ProjectsListItem* p_selected_item);
     void _sort_projects();
     void _toggle_item_selected(ProjectsListItem* p_item);
     void _update_icons_async();
