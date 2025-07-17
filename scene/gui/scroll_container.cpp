@@ -245,7 +245,7 @@ void ScrollContainer::_gui_focus_changed(Control* p_control) {
     }
 }
 
-void ScrollContainer::ensure_control_visible(Control* p_control) {
+void ScrollContainer::ensure_control_visible(const Control* p_control) {
     ERR_FAIL_COND_MSG(
         !is_a_parent_of(p_control),
         "Must be a parent of the control."
