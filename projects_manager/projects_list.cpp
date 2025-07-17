@@ -358,7 +358,10 @@ ProjectsListItem* ProjectsList::_create_item(
 }
 
 void ProjectsList::_ensure_item_visible(int p_index) {
-    scroll_container->ensure_control_visible(projects[p_index]);
+    scroll_container->call_deferred(
+        "ensure_control_visible",
+        projects[p_index]
+    );
 }
 
 void ProjectsList::_filter_projects() {
