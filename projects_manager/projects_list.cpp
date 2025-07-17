@@ -93,12 +93,13 @@ ProjectsList::ProjectsList() {
 }
 
 void ProjectsList::add_project(const String& project_key) {
-    // Check if project already exists.
     ProjectsListItem* item = _get_item(project_key);
-    if (!item) {
+    if (item) {
+        item->refresh_item();
+    } else {
         item = _create_item(project_key);
     }
-    // Select the new (or existing) project.
+    // Select the project.
     search_box->clear();
     _refresh_projects_list();
     _select_index(item->get_index());
