@@ -73,7 +73,7 @@ public:
 
     HScrollBar* get_h_scrollbar();
     VScrollBar* get_v_scrollbar();
-    void ensure_control_visible(Control* p_control);
+    void ensure_control_visible(const Control* p_control);
 
     virtual bool clips_input() const;
 
