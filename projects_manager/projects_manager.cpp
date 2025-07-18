@@ -850,14 +850,14 @@ void ProjectsManager::_edit_selected_projects() {
 }
 
 void ProjectsManager::_edit_selected_projects_requested() {
-    const Set<String>& selected_project_keys =
-        projects_list->get_selected_project_keys();
+    const Vector<ProjectsListItem*> selected_project_items =
+        projects_list->get_selected_project_items();
 
-    if (selected_project_keys.empty()) {
+    if (selected_project_items.empty()) {
         return;
     }
 
-    if (selected_project_keys.size() == 1) {
+    if (selected_project_items.size() == 1) {
         _edit_selected_projects();
         return;
     }
@@ -975,18 +975,18 @@ void ProjectsManager::_on_rename_button_pressed() {
 }
 
 void ProjectsManager::_on_remove_button_pressed() {
-    const Set<String>& selected_project_keys =
-        projects_list->get_selected_project_keys();
+    const Vector<ProjectsListItem*> selected_project_items =
+        projects_list->get_selected_project_items();
 
-    if (selected_project_keys.empty()) {
+    if (selected_project_items.empty()) {
         return;
     }
 
     String confirm_message;
-    if (selected_project_keys.size() > 1) {
+    if (selected_project_items.size() > 1) {
         confirm_message = vformat(
             TTR("Remove %d projects from the list?"),
-            selected_project_keys.size()
+            selected_project_items.size()
         );
     } else {
         confirm_message = TTR("Remove selected project from the list?");
@@ -1025,17 +1025,17 @@ void ProjectsManager::_on_restart_confirmed() {
 }
 
 void ProjectsManager::_on_run_button_pressed() {
-    const Set<String>& selected_project_keys =
-        projects_list->get_selected_project_keys();
+    const Vector<ProjectsListItem*> selected_project_items =
+        projects_list->get_selected_project_items();
 
-    if (selected_project_keys.empty()) {
+    if (selected_project_items.empty()) {
         return;
     }
 
-    if (selected_project_keys.size() > 1) {
+    if (selected_project_items.size() > 1) {
         run_multiple_confirmation->set_text(vformat(
             TTR("Are you sure to run %d projects at once?"),
-            selected_project_keys.size()
+            selected_project_items.size()
         ));
         run_multiple_confirmation->popup_centered_minsize();
     } else {
