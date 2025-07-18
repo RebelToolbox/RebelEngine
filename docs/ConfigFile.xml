@@ -152,7 +152,7 @@ SPDX-License-Identifier: MIT
                 Returns one of the [enum Error] code constants ([code]OK[/code] on success).
             </description>
         </method>
-        <method name="save">
+        <method name="save" qualifiers="const">
             <return type="int" enum="Error" />
             <argument index="0" name="path" type="String" />
             <description>
@@ -160,7 +160,7 @@ SPDX-License-Identifier: MIT
                 Returns one of the [enum Error] code constants ([code]OK[/code] on success).
             </description>
         </method>
-        <method name="save_encrypted">
+        <method name="save_encrypted" qualifiers="const">
             <return type="int" enum="Error" />
             <argument index="0" name="path" type="String" />
             <argument index="1" name="key" type="PoolByteArray" />
@@ -169,7 +169,7 @@ SPDX-License-Identifier: MIT
                 Returns one of the [enum Error] code constants ([code]OK[/code] on success).
             </description>
         </method>
-        <method name="save_encrypted_pass">
+        <method name="save_encrypted_pass" qualifiers="const">
             <return type="int" enum="Error" />
             <argument index="0" name="path" type="String" />
             <argument index="1" name="password" type="String" />
