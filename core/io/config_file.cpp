@@ -93,7 +93,9 @@ void save_file_access(
         if (section != values.front()) {
             file->store_string("\n");
         }
-        file->store_string(vformat("[%s]\n\n", section.key()));
+        if (!section.key().empty()) {
+            file->store_string(vformat("[%s]\n\n", section.key()));
+        }
 
         for (auto key = section.get().front(); key; key = key.next()) {
             String value;
