@@ -6,6 +6,8 @@
 
 #include "android_plugin_config.h"
 
+#include "core/os/file_access.h"
+
 const char* AndroidPluginConfig::PLUGIN_CONFIG_EXT = ".gdap";
 
 const char* AndroidPluginConfig::CONFIG_SECTION         = "config";
