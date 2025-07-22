@@ -7,7 +7,7 @@ ext.versions = [
     targetSdk          : 36,
     javaVersion        : 17,
     // Also update platforms/android/detect.py get_ndk_version()
-    ndkVersion         : '27.2.12479018'
+    ndkVersion         : '28.2.13676358'
 ]
 
 ext.stringProperty = { String property, String defaultValue ->
