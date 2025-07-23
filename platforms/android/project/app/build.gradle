@@ -45,8 +45,8 @@ configurations.implementation {
 }
 
 android {
-    namespace 'com.rebeltoolbox.rebelapp'
-    compileSdk versions.compileSdk
+    namespace = 'com.rebeltoolbox.rebelapp'
+    compileSdk = versions.compileSdk
 
     compileOptions {
         sourceCompatibility versions.javaVersion
@@ -63,7 +63,7 @@ android {
         // The default ignore pattern for the 'assets' directory includes
         // hidden files and directories that are used by Rebel projects.
         aaptOptions {
-            ignoreAssetsPattern "!.svn:!.git:!.gitignore:!.ds_store:!*.scc:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
+            ignoreAssetsPattern = "!.svn:!.git:!.gitignore:!.ds_store:!*.scc:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
         }
 
         ndk {
@@ -75,14 +75,14 @@ android {
 
         manifestPlaceholders.editorVersion = stringProperty("editor_version", buildVersion())
 
-        applicationId stringProperty("export_package_name", "com.rebeltoolbox.rebelapp")
-        versionName stringProperty("export_version_name", "1.0")
-        versionCode integerProperty("export_version_code", 1)
-        minSdk integerProperty("export_version_min_sdk", versions.minSdk)
-        targetSdk integerProperty("export_version_target_sdk", versions.targetSdk)
+        applicationId = stringProperty("export_package_name", "com.rebeltoolbox.rebelapp")
+        versionName = stringProperty("export_version_name", "1.0")
+        versionCode = integerProperty("export_version_code", 1)
+        minSdk = integerProperty("export_version_min_sdk", versions.minSdk)
+        targetSdk = integerProperty("export_version_target_sdk", versions.targetSdk)
     }
 
-    ndkVersion versions.ndkVersion
+    ndkVersion = versions.ndkVersion
 
     packagingOptions {
         resources {
@@ -120,19 +120,19 @@ android {
 
     buildTypes {
         debug {
-            signingConfig project.hasProperty("perform_signing")
+            signingConfig = project.hasProperty("perform_signing")
                 ? signingConfigs.debug
                 : null
         }
         release {
-            signingConfig project.hasProperty("perform_signing")
+            signingConfig = project.hasProperty("perform_signing")
                 ? signingConfigs.release
                 : null
         }
     }
 
     lint {
-        abortOnError false
+        abortOnError = false
         disable 'MissingTranslation', 'UnusedResources'
     }
 
