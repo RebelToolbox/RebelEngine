@@ -24,22 +24,22 @@ def templateBuildTasks = {
 }
 
 tasks.register('createAndroidTemplates') {
-    group "Rebel"
-    description "Creates the Rebel Engine Android templates for each previously built build type and architecture."
+    group = "Rebel"
+    description = "Creates the Rebel Engine Android templates for each previously built build type and architecture."
     dependsOn templateBuildTasks
     finalizedBy 'createCustomBuildTemplate'
 }
 
 tasks.register('createDevelopmentAndroidTemplates') {
-    group "Rebel"
-    description "Creates development Android templates for each previously built build type and architecture."
+    group = "Rebel"
+    description = "Creates development Android templates for each previously built build type and architecture."
     gradle.startParameter.projectProperties += [doNotStrip: true]
     finalizedBy 'createAndrdoidTempates'
 }
 
 tasks.register('cleanAndroidTemplates', Delete) {
-    group "Rebel"
-    description "Cleans and deletes all the Rebel Engine Android libraries and templates."
+    group = "Rebel"
+    description = "Cleans and deletes all the Rebel Engine Android libraries and templates."
     delete "app/libs"
     delete "app/src/debug"
     delete "app/src/release"
