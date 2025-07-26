@@ -16,13 +16,13 @@ configurations.implementation {
 }
 
 android {
-    namespace 'com.rebeltoolbox.rebelengine'
-    compileSdk versions.compileSdk
-    ndkVersion versions.ndkVersion
+    namespace = 'com.rebeltoolbox.rebelengine'
+    compileSdk = versions.compileSdk
+    ndkVersion = versions.ndkVersion
 
     defaultConfig {
-        minSdk versions.minSdk
-        targetSdk versions.targetSdk
+        minSdk = versions.minSdk
+        targetSdk = versions.targetSdk
         manifestPlaceholders.libraryVersion = buildVersion()
     }
 
@@ -41,13 +41,13 @@ android {
     }
 
     lint {
-        abortOnError false
+        abortOnError = false
         disable 'MissingTranslation', 'UnusedResources'
     }
 
     buildFeatures {
-        aidl true
-        buildConfig true
+        aidl = true
+        buildConfig = true
     }
 
     // Provides access to the Rebel source files.
