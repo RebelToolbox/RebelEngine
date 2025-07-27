@@ -33252,7 +33252,7 @@ msgstr ""
 #: docs/JNISingleton.xml
 #, fuzzy
 msgid ""
-"https://docs.rebeltoolbox.com/en/latest/tutorials/platform/android/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/platforms/android/"
 "android_plugin.html"
 msgstr ""
 "https://docs.rebeltoolbox.com/ja/latest/tutorials/plugins/editor/"
