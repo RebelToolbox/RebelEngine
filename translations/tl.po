@@ -30303,7 +30303,7 @@ msgstr ""
 
 #: docs/JNISingleton.xml
 msgid ""
-"https://docs.rebeltoolbox.com/en/latest/tutorials/platform/android/"
+"https://docs.rebeltoolbox.com/en/latest/tutorials/platforms/android/"
 "android_plugin.html"
 msgstr ""
 
