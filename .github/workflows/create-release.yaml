@@ -231,7 +231,6 @@ jobs:
     needs: builds
     runs-on: ubuntu-latest
     env:
-      ndk_version: 23.2.8568313
       java_version: 17
 
     steps:
@@ -249,10 +248,16 @@ jobs:
         run: |
           # Configure Dependencies
           # Android NDK
-          echo "Installing Android NDK v$ndk_version"
+          NDK_VERSION=$(python3 -c "
+          import sys
+          sys.path.insert(0,'./platforms/android')
+          import detect
+          print(detect.get_ndk_version())
+          ")
+          echo "Installing Android NDK v$NDK_VERSION"
           sdkmanager="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
-          $sdkmanager "ndk;$ndk_version"
-          echo "ANDROID_NDK_ROOT=$ANDROID_SDK_ROOT/ndk/$ndk_version" >> $GITHUB_ENV
+          $sdkmanager "ndk;$NDK_VERSION"
+          echo "ANDROID_NDK_ROOT=$ANDROID_SDK_ROOT/ndk/$NDK_VERSION" >> $GITHUB_ENV
           # Java JDK
           echo Android builds require Java version $java_version.
           java_home_variable="JAVA_HOME_${java_version}_X64"
@@ -264,7 +269,7 @@ jobs:
           # Copy Android libraries to project's jniLibs folders
           # For each library identify the correct build and architecture folder.
           project_src_dir=platforms/android/project/engine/src
-          stl_lib_src_dir=$ANDROID_NDK_ROOT/sources/cxx-stl/llvm-libc++/libs
+          stl_lib_src_dir=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/
           rebel_lib_file=librebel_android.so
           for library in `ls -1 bin/librebel.android.*`; do
             case $library in
@@ -281,13 +286,21 @@ jobs:
             esac
             case $arch_id in
               armv7 )
-                arch="armeabi-v7a" ;;
+                arch="armeabi-v7a"
+                triple="arm-linux-androideabi"
+                ;;
               armv8 )
-                arch="arm64-v8a" ;;
+                arch="arm64-v8a"
+                triple="aarch64-linux-android"
+                ;;
               x86 )
-                arch="x86" ;;
+                arch="x86"
+                triple="i686-linux-android"
+                ;;
               x86_64 )
-                arch="x86_64" ;;
+                arch="x86_64"
+                triple="x86_64-linux-android"
+                ;;
             esac
             # Copy $arch_id $build Rebel Engine library to $build/jniLibs/$arch/$rebel_lib_file
             target=$project_src_dir/$build/jniLibs/$arch
@@ -296,7 +309,7 @@ jobs:
             echo "Copying $library to $target"
             cp $library $target
             # Copy $arch_id stl_lib into main/jniLibs/$arch folder
-            stl_lib=$stl_lib_src_dir/$arch/libc++_shared.so
+            stl_lib=$stl_lib_src_dir/$triple/libc++_shared.so
             target=$project_src_dir/main/jniLibs/$arch
             mkdir -p $target
             echo "Copying $stl_lib into $target"
