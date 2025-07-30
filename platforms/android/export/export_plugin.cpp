@@ -3920,7 +3920,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
                           ->globalize_path(export_path)
                           .simplify_path();
 
-        copy_args.push_back("-Pexport_path=file:" + export_path);
+        copy_args.push_back("-Pexport_path=" + export_path);
         copy_args.push_back("-Pexport_filename=" + export_filename);
 
         print_verbose(
