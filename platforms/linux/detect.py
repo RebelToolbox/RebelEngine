@@ -234,18 +234,6 @@ def configure(env):
     env.Append(CCFLAGS=["-pipe"])
     env.Append(LINKFLAGS=["-pipe"])
 
-    # Check for gcc version >= 6 before adding -no-pie
-    version = get_compiler_version(env) or [-1, -1]
-    if using_gcc(env):
-        if version[0] >= 6:
-            env.Append(CCFLAGS=["-fpie"])
-            env.Append(LINKFLAGS=["-no-pie"])
-    # Do the same for clang should be fine with Clang 4 and higher
-    if using_clang(env):
-        if version[0] >= 4:
-            env.Append(CCFLAGS=["-fpie"])
-            env.Append(LINKFLAGS=["-no-pie"])
-
     ## Dependencies
 
     env.ParseConfig("pkg-config x11 --cflags --libs")
