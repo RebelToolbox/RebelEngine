@@ -24,17 +24,17 @@ CryptoCore::MD5Context::~MD5Context() {
 }
 
 Error CryptoCore::MD5Context::start() {
-    int ret = mbedtls_md5_starts_ret((mbedtls_md5_context*)ctx);
+    int ret = mbedtls_md5_starts((mbedtls_md5_context*)ctx);
     return ret ? FAILED : OK;
 }
 
 Error CryptoCore::MD5Context::update(const uint8_t* p_src, size_t p_len) {
-    int ret = mbedtls_md5_update_ret((mbedtls_md5_context*)ctx, p_src, p_len);
+    int ret = mbedtls_md5_update((mbedtls_md5_context*)ctx, p_src, p_len);
     return ret ? FAILED : OK;
 }
 
 Error CryptoCore::MD5Context::finish(unsigned char r_hash[16]) {
-    int ret = mbedtls_md5_finish_ret((mbedtls_md5_context*)ctx, r_hash);
+    int ret = mbedtls_md5_finish((mbedtls_md5_context*)ctx, r_hash);
     return ret ? FAILED : OK;
 }
 
@@ -50,17 +50,17 @@ CryptoCore::SHA1Context::~SHA1Context() {
 }
 
 Error CryptoCore::SHA1Context::start() {
-    int ret = mbedtls_sha1_starts_ret((mbedtls_sha1_context*)ctx);
+    int ret = mbedtls_sha1_starts((mbedtls_sha1_context*)ctx);
     return ret ? FAILED : OK;
 }
 
 Error CryptoCore::SHA1Context::update(const uint8_t* p_src, size_t p_len) {
-    int ret = mbedtls_sha1_update_ret((mbedtls_sha1_context*)ctx, p_src, p_len);
+    int ret = mbedtls_sha1_update((mbedtls_sha1_context*)ctx, p_src, p_len);
     return ret ? FAILED : OK;
 }
 
 Error CryptoCore::SHA1Context::finish(unsigned char r_hash[20]) {
-    int ret = mbedtls_sha1_finish_ret((mbedtls_sha1_context*)ctx, r_hash);
+    int ret = mbedtls_sha1_finish((mbedtls_sha1_context*)ctx, r_hash);
     return ret ? FAILED : OK;
 }
 
@@ -76,18 +76,17 @@ CryptoCore::SHA256Context::~SHA256Context() {
 }
 
 Error CryptoCore::SHA256Context::start() {
-    int ret = mbedtls_sha256_starts_ret((mbedtls_sha256_context*)ctx, 0);
+    int ret = mbedtls_sha256_starts((mbedtls_sha256_context*)ctx, 0);
     return ret ? FAILED : OK;
 }
 
 Error CryptoCore::SHA256Context::update(const uint8_t* p_src, size_t p_len) {
-    int ret =
-        mbedtls_sha256_update_ret((mbedtls_sha256_context*)ctx, p_src, p_len);
+    int ret = mbedtls_sha256_update((mbedtls_sha256_context*)ctx, p_src, p_len);
     return ret ? FAILED : OK;
 }
 
 Error CryptoCore::SHA256Context::finish(unsigned char r_hash[32]) {
-    int ret = mbedtls_sha256_finish_ret((mbedtls_sha256_context*)ctx, r_hash);
+    int ret = mbedtls_sha256_finish((mbedtls_sha256_context*)ctx, r_hash);
     return ret ? FAILED : OK;
 }
 
@@ -217,7 +216,7 @@ Error CryptoCore::md5(
     int p_src_len,
     unsigned char r_hash[16]
 ) {
-    int ret = mbedtls_md5_ret(p_src, p_src_len, r_hash);
+    int ret = mbedtls_md5(p_src, p_src_len, r_hash);
     return ret ? FAILED : OK;
 }
 
@@ -226,7 +225,7 @@ Error CryptoCore::sha1(
     int p_src_len,
     unsigned char r_hash[20]
 ) {
-    int ret = mbedtls_sha1_ret(p_src, p_src_len, r_hash);
+    int ret = mbedtls_sha1(p_src, p_src_len, r_hash);
     return ret ? FAILED : OK;
 }
 
@@ -235,6 +234,6 @@ Error CryptoCore::sha256(
     int p_src_len,
     unsigned char r_hash[32]
 ) {
-    int ret = mbedtls_sha256_ret(p_src, p_src_len, r_hash, 0);
+    int ret = mbedtls_sha256(p_src, p_src_len, r_hash, 0);
     return ret ? FAILED : OK;
 }

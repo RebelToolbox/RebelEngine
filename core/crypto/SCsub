@@ -8,17 +8,14 @@ is_builtin = env["builtin_mbedtls"]
 has_module = env["module_mbedtls_enabled"]
 thirdparty_obj = []
 
+# If we're using the builtin thirdparty Mbed TLS library,
+# but we're not using the full Mbed TLS module,
+# we need to include the path to the Mbed TLS header files.
 if is_builtin or not has_module:
-    # Use our headers for builtin or if the module is not going to be compiled.
-    # We decided not to depend on system mbedtls just for these few files that can
-    # be easily extracted.
     env_crypto.Prepend(CPPPATH=["#thirdparty/mbedtls/include"])
 
-# MbedTLS core functions (for CryptoCore).
-# If the mbedtls module is compiled we don't need to add the .c files with our
-# custom config since they will be built by the module itself.
-# Only if the module is not enabled, we must compile here the required sources
-# to make a "light" build with only the necessary mbedtls files.
+# If we're not using the full Mbed TLS module,
+# we need to create a custom build of a subset of the Mbed TLS library.
 if not has_module:
     env_thirdparty = env_crypto.Clone()
     env_thirdparty.disable_warnings()
@@ -27,7 +24,7 @@ if not has_module:
         CPPDEFINES=[
             (
                 "MBEDTLS_CONFIG_FILE",
-                '\\"thirdparty/mbedtls/include/rebel_mbedtls_config.h\\"',
+                '\\"core/crypto/mbedtls_config.h\\"',
             )
         ]
     )
@@ -39,11 +36,11 @@ if not has_module:
         "md5.c",
         "sha1.c",
         "sha256.c",
-        "rebel_mbedtls_platform.c",
     ]
     thirdparty_mbedtls_sources = [
         thirdparty_mbedtls_dir + file for file in thirdparty_mbedtls_sources
     ]
+    thirdparty_mbedtls_sources.append("mbedtls_platform_util.c")
     env_thirdparty.add_source_files(thirdparty_obj, thirdparty_mbedtls_sources)
     env.core_sources += thirdparty_obj
 

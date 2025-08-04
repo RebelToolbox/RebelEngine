@@ -12,7 +12,6 @@
 #include "core/reference.h"
 #include "crypto_mbedtls.h"
 
-#include <mbedtls/config.h>
 #include <mbedtls/ctr_drbg.h>
 #include <mbedtls/debug.h>
 #include <mbedtls/entropy.h>
