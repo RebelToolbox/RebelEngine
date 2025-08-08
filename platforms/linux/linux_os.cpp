@@ -9,7 +9,6 @@
 #include "core/os/dir_access.h"
 #include "core/print_string.h"
 #include "core/version.h"
-#include "detect_prime.h"
 #include "drivers/gles2/rasterizer_gles2.h"
 #include "drivers/gles3/rasterizer_gles3.h"
 #include "linux_key_mapping.h"
@@ -224,54 +223,6 @@ Error LinuxOS::initialize(
 
 // maybe contextgl wants to be in charge of creating the window
 #if defined(OPENGL_ENABLED)
-    if (getenv("DRI_PRIME") == nullptr) {
-        int use_prime = -1;
-
-        if (getenv("PRIMUS_DISPLAY") || getenv("PRIMUS_libGLd")
-            || getenv("PRIMUS_libGLa") || getenv("PRIMUS_libGL")
-            || getenv("PRIMUS_LOAD_GLOBAL") || getenv("BUMBLEBEE_SOCKET")) {
-            print_verbose("Optirun/primusrun detected. Skipping GPU detection");
-            use_prime = 0;
-        }
-
-        // Some tools use fake libGL libraries and have them override the real
-        // one using LD_LIBRARY_PATH, so we skip them. *But* Steam also sets
-        // LD_LIBRARY_PATH for its runtime and includes system `/lib` and
-        // `/lib64`... so ignore Steam.
-        if (use_prime == -1 && getenv("LD_LIBRARY_PATH")
-            && !getenv("STEAM_RUNTIME_LIBRARY_PATH")) {
-            String ld_library_path(getenv("LD_LIBRARY_PATH"));
-            Vector<String> libraries = ld_library_path.split(":");
-
-            for (int i = 0; i < libraries.size(); ++i) {
-                if (FileAccess::exists(libraries[i] + "/libGL.so.1")
-                    || FileAccess::exists(libraries[i] + "/libGL.so")) {
-                    print_verbose(
-                        "Custom libGL override detected. Skipping GPU detection"
-                    );
-                    use_prime = 0;
-                }
-            }
-        }
-
-        if (use_prime == -1) {
-            print_verbose(
-                "Detecting GPUs, set DRI_PRIME in the environment to override "
-                "GPU detection logic."
-            );
-            use_prime = detect_prime();
-        }
-
-        if (use_prime) {
-            print_line("Found discrete GPU, setting DRI_PRIME=1 to use it.");
-            print_line(
-                "Note: Set DRI_PRIME=0 in the environment to disable Rebel "
-                "from using the discrete GPU."
-            );
-            setenv("DRI_PRIME", "1", 1);
-        }
-    }
-
     LinuxGLContext::ContextType opengl_api_type =
         LinuxGLContext::GLES_3_0_COMPATIBLE;
 
