@@ -52,6 +52,21 @@
 #define MIN_FOV 0.01
 #define MAX_FOV 179
 
+namespace {
+constexpr real_t lerp_weight_from_inertia(real_t inertia, real_t delta) {
+    // A higher inertia should increase lag, which requires a lower lerp weight.
+    // An inertia of zero should produce instant movement: a lerp weight of 1.
+    if (inertia == 0.0) {
+        return 1.0;
+    }
+    double weight = delta / inertia;
+    if (weight > 1.0) {
+        return 1.0;
+    }
+    return weight;
+}
+} // namespace
+
 void ViewportRotationControl::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {
         axis_menu_options.clear();
@@ -264,92 +279,55 @@ void SpatialEditorViewport::_update_camera(float p_interp_delta) {
     camera_cursor            = cursor;
 
     if (p_interp_delta > 0) {
-        //-------
-        // Perform smoothing
+        // Perform smoothing.
+        const real_t orbit_weight = lerp_weight_from_inertia(
+            EDITOR_GET("editors/3d/navigation_feel/orbit_inertia"),
+            p_interp_delta
+        );
+        camera_cursor.x_rot =
+            Math::lerp(old_camera_cursor.x_rot, cursor.x_rot, orbit_weight);
+        camera_cursor.y_rot =
+            Math::lerp(old_camera_cursor.y_rot, cursor.y_rot, orbit_weight);
+        if (Math::abs(camera_cursor.x_rot - cursor.x_rot) < 0.1) {
+            camera_cursor.x_rot = cursor.x_rot;
+        }
+        if (Math::abs(camera_cursor.y_rot - cursor.y_rot) < 0.1) {
+            camera_cursor.y_rot = cursor.y_rot;
+        }
 
         if (is_freelook_active()) {
-            // Higher inertia should increase "lag" (lerp with factor between 0
-            // and 1) Inertia of zero should produce instant movement (lerp with
-            // factor of 1) in this case it returns a really high value and gets
-            // clamped to 1.
-            const real_t inertia =
-                EDITOR_GET("editors/3d/freelook/freelook_inertia");
-            real_t factor = (1.0 / inertia) * p_interp_delta;
-
-            // We interpolate a different point here, because in freelook mode
-            // the focus point (cursor.pos) orbits around eye_pos
+            // In freelook mode the focus point orbits around eye_pos.
+            const real_t freelook_weight = lerp_weight_from_inertia(
+                EDITOR_GET("editors/3d/freelook/freelook_inertia"),
+                p_interp_delta
+            );
             camera_cursor.eye_pos =
                 old_camera_cursor.eye_pos.linear_interpolate(
                     cursor.eye_pos,
-                    CLAMP(factor, 0, 1)
+                    freelook_weight
                 );
-
-            const float orbit_inertia =
-                EDITOR_GET("editors/3d/navigation_feel/orbit_inertia");
-            camera_cursor.x_rot = Math::lerp(
-                old_camera_cursor.x_rot,
-                cursor.x_rot,
-                MIN(1.f, p_interp_delta * (1 / orbit_inertia))
-            );
-            camera_cursor.y_rot = Math::lerp(
-                old_camera_cursor.y_rot,
-                cursor.y_rot,
-                MIN(1.f, p_interp_delta * (1 / orbit_inertia))
-            );
-
-            if (Math::abs(camera_cursor.x_rot - cursor.x_rot) < 0.1) {
-                camera_cursor.x_rot = cursor.x_rot;
-            }
-            if (Math::abs(camera_cursor.y_rot - cursor.y_rot) < 0.1) {
-                camera_cursor.y_rot = cursor.y_rot;
-            }
-
             Vector3 forward = to_camera_transform(camera_cursor)
                                   .basis.xform(Vector3(0, 0, -1));
             camera_cursor.pos =
                 camera_cursor.eye_pos + forward * camera_cursor.distance;
-
         } else {
-            const float orbit_inertia =
-                EDITOR_GET("editors/3d/navigation_feel/orbit_inertia");
-            const float translation_inertia =
-                EDITOR_GET("editors/3d/navigation_feel/translation_inertia");
-            const float zoom_inertia =
-                EDITOR_GET("editors/3d/navigation_feel/zoom_inertia");
-
-            camera_cursor.x_rot = Math::lerp(
-                old_camera_cursor.x_rot,
-                cursor.x_rot,
-                MIN(1.f, p_interp_delta * (1 / orbit_inertia))
+            const real_t translation_weight = lerp_weight_from_inertia(
+                EDITOR_GET("editors/3d/navigation_feel/translation_inertia"),
+                p_interp_delta
             );
-            camera_cursor.y_rot = Math::lerp(
-                old_camera_cursor.y_rot,
-                cursor.y_rot,
-                MIN(1.f, p_interp_delta * (1 / orbit_inertia))
-            );
-
-            if (Math::abs(camera_cursor.x_rot - cursor.x_rot) < 0.1) {
-                camera_cursor.x_rot = cursor.x_rot;
-            }
-            if (Math::abs(camera_cursor.y_rot - cursor.y_rot) < 0.1) {
-                camera_cursor.y_rot = cursor.y_rot;
-            }
-
             camera_cursor.pos = old_camera_cursor.pos.linear_interpolate(
                 cursor.pos,
-                MIN(1.f, p_interp_delta * (1 / translation_inertia))
+                translation_weight
             );
             camera_cursor.distance = Math::lerp(
                 old_camera_cursor.distance,
                 cursor.distance,
-                MIN(1.f, p_interp_delta * (1 / zoom_inertia))
+                translation_weight
             );
         }
     }
 
-    //-------
     // Apply camera transform
-
     real_t tolerance = 0.001;
     bool equal       = true;
     if (!Math::is_equal_approx(
