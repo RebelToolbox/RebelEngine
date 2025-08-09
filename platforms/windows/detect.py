@@ -82,7 +82,7 @@ def get_opts():
         BoolVariable("use_llvm", "Use the LLVM compiler", False),
         BoolVariable("use_thinlto", "Use ThinLTO", False),
         BoolVariable(
-            "use_static_cpp", "Link MinGW/MSVC C++ runtime libraries statically", True
+            "use_static_cpp", "Link MSVC C++ runtime libraries statically", True
         ),
         BoolVariable("use_asan", "Use address sanitizer (ASAN)", False),
     ]
@@ -394,14 +394,7 @@ def configure_mingw(env):
         else:  # default to 64-bit on Linux
             env["bits"] = "64"
 
-    if env["bits"] == "32":
-        if env["use_static_cpp"]:
-            env.Append(LINKFLAGS=["-static"])
-            env.Append(LINKFLAGS=["-static-libgcc"])
-            env.Append(LINKFLAGS=["-static-libstdc++"])
-    else:
-        if env["use_static_cpp"]:
-            env.Append(LINKFLAGS=["-static"])
+    env.Append(LINKFLAGS=["-static"])
 
     env["x86_libtheora_opt_gcc"] = True
 

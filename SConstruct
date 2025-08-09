@@ -424,7 +424,6 @@ if selected_platform in platform_list:
         env["warnings"] = ARGUMENTS.get("warnings", "extra")
         env["werror"] = methods.get_cmdline_bool("werror", True)
     if env["production"]:
-        env["use_static_cpp"] = methods.get_cmdline_bool("use_static_cpp", True)
         env["use_lto"] = methods.get_cmdline_bool("use_lto", True)
         print("use_lto is: " + str(env["use_lto"]))
         env["debug_symbols"] = methods.get_cmdline_bool("debug_symbols", False)
