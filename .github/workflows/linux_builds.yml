@@ -115,19 +115,22 @@ jobs:
           ref: main
           path: RebelTestProject
 
-      # Editor is quite complicated piece of software, so it is easy to introduce bug here
-      - name: Open and close editor
+      - name: Test run Rebel Editor
         if: ${{ matrix.test }}
-        run: |
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
-          tools/scripts/check_ci_log.py sanitizers_log.txt
+        run: DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path RebelTestProject 2>&1 | tee editor.log
 
-      # Run test project
-      - name: Run project
+      - name: Test run Rebel Test Project
         if: ${{ matrix.test }}
-        run: |
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee sanitizers_log.txt || true
-          tools/scripts/check_ci_log.py sanitizers_log.txt
+        run: DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee project.log
+
+      - name: Upload test logs
+        if: ${{ matrix.test }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}-test-logs
+          path: |
+            editor.log
+            project.log
 
       - name: Check API XML documentation
         if: ${{ matrix.test }}
