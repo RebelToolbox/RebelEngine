@@ -23,207 +23,174 @@ jobs:
             os: ubuntu-22.04
             artifact: linux-editor
             build-options: production=yes target=release_debug
-            rebel-executable: rebel.linux.opt.tools.64
 
           - name: Windows Editor
             os: windows-latest
             artifact: windows-editor
             build-options: production=yes target=release_debug
-            rebel-executable: rebel.windows.opt.tools.64.msvc.exe
 
           - name: macOS Editor x86 64 bit
             os: macos-latest
             artifact: macos-editor-x86-64
             build-options: production=yes target=release_debug
-            rebel-executable: rebel.macos.opt.tools.64
 
           - name: macOS Editor armv8 64 bit
             os: macos-latest
             artifact: macos-editor-arm64
             build-options: production=yes target=release_debug arch=arm64
-            rebel-executable: rebel.macos.opt.tools.arm64
 
           # Rebel Engine Linux builds
           - name: Linux Engine 64 bit
             os: ubuntu-22.04
             artifact: linux-engine-x86-64
             build-options: production=yes tools=no target=release
-            rebel-executable: rebel.linux.opt.64
 
           - name: Linux Engine 64 bit Debug
             os: ubuntu-22.04
             artifact: linux-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
-            rebel-executable: rebel.linux.opt.debug.64
 
           # Rebel Engine Windows builds
           - name: Windows Engine 64 bit
             os: windows-latest
             artifact: windows-engine-x86-64
             build-options: production=yes tools=no target=release
-            rebel-executable: rebel.windows.opt.64.msvc.exe
 
           - name: Windows Engine 64 bit Debug
             os: windows-latest
             artifact: windows-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
-            rebel-executable: rebel.windows.opt.debug.64.msvc.exe
 
           - name: Windows Engine 32 bit
             os: windows-latest
             artifact: windows-engine-x86-32
             build-options: production=yes tools=no target=release bits=32
-            rebel-executable: rebel.windows.opt.32.msvc.exe
 
           - name: Windows Engine 32 bit Debug
             os: windows-latest
             artifact: windows-engine-x86-32-debug
             build-options: production=yes tools=no target=release_debug bits=32
-            rebel-executable: rebel.windows.opt.debug.32.msvc.exe
 
           # Rebel Engine macOS builds
           - name: macOS Engine x86 64 bit
             os: macos-latest
             artifact: macos-engine-x86-64
             build-options: production=yes tools=no target=release
-            rebel-executable: rebel.macos.opt.64
 
           - name: macOS Engine x86 64 bit Debug
             os: macos-latest
             artifact: macos-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
-            rebel-executable: rebel.macos.opt.debug.64
 
           - name: macOS Engine armv8 64 bit
             os: macos-latest
             artifact: macos-engine-arm64
             build-options: production=yes tools=no target=release arch=arm64
-            rebel-executable: rebel.macos.opt.arm64
 
           - name: macOS Engine armv8 64 bit Debug
             os: macos-latest
             artifact: macos-engine-arm64-debug
             build-options: production=yes tools=no target=release_debug arch=arm64
-            rebel-executable: rebel.macos.opt.debug.arm64
 
           # Rebel Engine Android Library builds
           - name: Android Engine Library armv8 64 bit
             os: ubuntu-latest
             artifact: android-engine-library-arm64
             build-options: platform=android production=yes tools=no target=release
-            rebel-executable: librebel.android.opt.armv8.so
 
           - name: Android Engine Library armv8 64 bit Debug
             os: ubuntu-latest
             artifact: android-engine-library-arm64-debug
             build-options: platform=android production=yes tools=no target=release_debug
-            rebel-executable: librebel.android.opt.debug.armv8.so
 
           - name: Android Engine Library armv7 Neon
             os: ubuntu-latest
             artifact: android-engine-library-arm-neon
             build-options: platform=android production=yes tools=no target=release android_arch=armv7
-            rebel-executable: librebel.android.opt.armv7.neon.so
 
           - name: Android Engine Library armv7 Neon Debug
             os: ubuntu-latest
             artifact: android-engine-library-arm-neon-debug
             build-options: platform=android production=yes tools=no target=release_debug android_arch=armv7
-            rebel-executable: librebel.android.opt.debug.armv7.neon.so
 
           - name: Android Engine Library x86 64 bit
             os: ubuntu-latest
             artifact: android-engine-library-x86-64
             build-options: platform=android production=yes tools=no target=release android_arch=x86_64
-            rebel-executable: librebel.android.opt.x86_64.so
 
           - name: Android Engine Library x86 64 bit Debug
             os: ubuntu-latest
             artifact: android-engine-library-x86-64-debug
             build-options: platform=android production=yes tools=no target=release_debug android_arch=x86_64
-            rebel-executable: librebel.android.opt.debug.x86_64.so
 
           - name: Android Engine Library x86 32 bit
             os: ubuntu-latest
             artifact: android-engine-library-x86-32
             build-options: platform=android production=yes tools=no target=release android_arch=x86
-            rebel-executable: librebel.android.opt.x86.so
 
           - name: Android Engine Library x86 32 bit Debug
             os: ubuntu-latest
             artifact: android-engine-library-x86-32-debug
             build-options: platform=android production=yes tools=no target=release_debug android_arch=x86
-            rebel-executable: librebel.android.opt.debug.x86.so
 
           # Rebel Engine iOS Library builds
           - name: iOS Engine Library arm 64 bit
             os: macos-latest
             artifact: ios-engine-library-arm64
             build-options: platform=ios production=yes tools=no target=release
-            rebel-executable: librebel.ios.opt.arm64.a
 
           - name: iOS Engine Library arm 64 bit Debug
             os: macos-latest
             artifact: ios-engine-library-arm64-debug
             build-options: platform=ios production=yes tools=no target=release_debug
-            rebel-executable: librebel.ios.opt.debug.arm64.a
 
           - name: iOS Engine Library x86 64 bit Simulator
             os: macos-latest
             artifact: ios-engine-library-x86-64
             build-options: platform=ios production=yes tools=no ios_simulator=yes target=release arch=x86_64
-            rebel-executable: librebel.ios.opt.x86_64.simulator.a
 
           - name: iOS Engine Library x86 64 bit Simulator Debug
             os: macos-latest
             artifact: ios-engine-library-x86-64-debug
             build-options: platform=ios production=yes tools=no ios_simulator=yes target=release_debug arch=x86_64
-            rebel-executable: librebel.ios.opt.debug.x86_64.simulator.a
 
           # Rebel Engine Web builds
           - name: Web Engine
             os: ubuntu-latest
             artifact: web-engine
             build-options: platform=web production=yes tools=no target=release
-            rebel-executable: rebel.web.opt.zip
 
           - name: Web Engine Debug
             os: ubuntu-latest
             artifact: web-engine-debug
             build-options: platform=web production=yes tools=no target=release_debug
-            rebel-executable: rebel.web.opt.debug.zip
 
           - name: Web Engine Threads
             os: ubuntu-latest
             artifact: web-engine-threads
             build-options: platform=web production=yes tools=no threads_enabled=yes target=release
-            rebel-executable: rebel.web.opt.threads.zip
 
           - name: Web Engine Threads Debug
             os: ubuntu-latest
             artifact: web-engine-threads-debug
             build-options: platform=web production=yes tools=no threads_enabled=yes target=release_debug
-            rebel-executable: rebel.web.opt.debug.threads.zip
 
           - name: Web Engine GDNative
             os: ubuntu-latest
             artifact: web-engine-gdnative
             build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release
-            rebel-executable: rebel.web.opt.gdnative.zip
 
           - name: Web Engine GDNative Debug
             os: ubuntu-latest
             artifact: web-engine-gdnative-debug
             build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release_debug
-            rebel-executable: rebel.web.opt.debug.gdnative.zip
 
     steps:
       - name: Build Rebel
-        uses: RebelToolbox/RebelBuildAction@v3
+        uses: RebelToolbox/RebelBuildAction@v4
         with:
           artifact: ${{ matrix.artifact }}
           build-options: ${{ matrix.build-options }}
-          rebel-executable: ${{ matrix.rebel-executable }}
           use-build-cache: false
 
   android-templates:
