@@ -90,7 +90,7 @@ jobs:
       - name: Generate Mono glue code
         if: ${{ matrix.build-mono }}
         run: |
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --generate-mono-glue modules/mono/glue || true
+          xvfb-run ${{ matrix.bin }} --generate-mono-glue modules/mono/glue || true
 
       # Rebuild with mono
       - name: Build (mono_glue=yes)
@@ -117,11 +117,11 @@ jobs:
 
       - name: Test run Rebel Editor
         if: ${{ matrix.test }}
-        run: DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path RebelTestProject 2>&1 | tee editor.log
+        run: xvfb-run ${{ matrix.bin }} --audio-driver Dummy -e -q --path RebelTestProject 2>&1 | tee editor.log
 
       - name: Test run Rebel Test Project
         if: ${{ matrix.test }}
-        run: DRI_PRIME=0 xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee project.log
+        run: xvfb-run ${{ matrix.bin }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee project.log
 
       - name: Upload test logs
         if: ${{ matrix.test }}
@@ -139,7 +139,7 @@ jobs:
           echo "If a diff is created, the API XML documentation changes are incomplete."
           echo "Update the API XML documentation with --generate-docs."
           echo
-          DRI_PRIME=0 xvfb-run ${{ matrix.bin }} --generate-docs 2>&1 > /dev/null || true
+          xvfb-run ${{ matrix.bin }} --generate-docs 2>&1 > /dev/null || true
           git diff --color --exit-code && ! git ls-files --others --exclude-standard | sed -e 's/^/New doc file missing in PR: /' | grep 'xml$'
 
       - name: Prepare artifact
