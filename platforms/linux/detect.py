@@ -68,11 +68,6 @@ def get_opts():
         BoolVariable("use_lld", "Use the LLD linker", False),
         BoolVariable("use_thinlto", "Use ThinLTO", False),
         BoolVariable(
-            "use_static_cpp",
-            "Link libgcc and libstdc++ statically for better portability",
-            True,
-        ),
-        BoolVariable(
             "use_ubsan",
             "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)",
             False,
@@ -451,12 +446,5 @@ def configure(env):
         env.Append(CCFLAGS=["-m64"])
         env.Append(LINKFLAGS=["-m64", "-L/usr/lib/i686-linux-gnu"])
 
-    # Link those statically for portability
-    if env["use_static_cpp"]:
-        env.Append(LINKFLAGS=["-static-libgcc", "-static-libstdc++"])
-        if env["use_llvm"] and platform.system() != "FreeBSD":
-            env["LINKCOM"] = env["LINKCOM"] + " -l:libatomic.a"
-
-    else:
-        if env["use_llvm"] and platform.system() != "FreeBSD":
-            env.Append(LIBS=["atomic"])
+    if env["use_llvm"] and platform.system() != "FreeBSD":
+        env.Append(LIBS=["atomic"])

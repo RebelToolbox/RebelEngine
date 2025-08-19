@@ -33,11 +33,6 @@ def get_opts():
     return [
         BoolVariable("use_llvm", "Use the LLVM compiler", False),
         BoolVariable(
-            "use_static_cpp",
-            "Link libgcc and libstdc++ statically for better portability",
-            True,
-        ),
-        BoolVariable(
             "use_ubsan",
             "Use LLVM/GCC compiler undefined behavior sanitizer (UBSAN)",
             False,
@@ -304,12 +299,6 @@ def configure(env):
     if env["execinfo"]:
         env.Append(LIBS=["execinfo"])
 
-    if platform.system() != "Darwin":
-        # Link those statically for portability
-        if env["use_static_cpp"]:
-            env.Append(LINKFLAGS=["-static-libgcc", "-static-libstdc++"])
-            if env["use_llvm"] and platform.system() != "FreeBSD":
-                env["LINKCOM"] = env["LINKCOM"] + " -l:libatomic.a"
-        else:
-            if env["use_llvm"] and platform.system() != "FreeBSD":
-                env.Append(LIBS=["atomic"])
+    if platform.system() != "Darwin" and platform.system() != "FreeBSD":
+        if env["use_llvm"]:
+            env.Append(LIBS=["atomic"])
