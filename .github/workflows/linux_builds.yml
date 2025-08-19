@@ -127,7 +127,7 @@ jobs:
         if: ${{ matrix.test }}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact }}-test-logs
+          name: ${{ matrix.cache-name }}-test-logs
           path: |
             editor.log
             project.log
