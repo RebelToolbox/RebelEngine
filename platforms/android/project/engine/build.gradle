@@ -80,55 +80,55 @@ def allCompileRebelEngineTasks = { buildType ->
 }
 
 tasks.register('buildRebelEngine') {
-    group "Rebel"
-    description "Builds all the Rebel Engine libraries for all supported architectures."
+    group = "Rebel"
+    description = "Builds all the Rebel Engine libraries for all supported architectures."
     dependsOn 'compileDebugRebelEngine'
     dependsOn 'compileReleaseRebelEngine'
     finalizedBy 'build'
 }
 
 tasks.register('compileDebugRebelEngine') {
-    group "Rebel Debug"
-    description "Builds the debug Rebel Engine libraries for all supported architectures."
+    group = "Rebel Debug"
+    description = "Builds the debug Rebel Engine libraries for all supported architectures."
     dependsOn allCompileRebelEngineTasks('Debug')
     finalizedBy 'build'
 }
 
 tasks.register('compileReleaseRebelEngine') {
-    group "Rebel Release"
-    description "Builds the release Rebel Engine libraries for all supported architectures."
+    group = "Rebel Release"
+    description = "Builds the release Rebel Engine libraries for all supported architectures."
     dependsOn allCompileRebelEngineTasks('Release')
     finalizedBy 'build'
 }
 
 // Compile Rebel Engine debug libraries
 tasks.register('compileArmv7DebugRebelEngine', Exec) {
-    group "Rebel Debug"
-    description "Builds the debug Rebel Engine libraries for 32 bit Arm v7."
+    group = "Rebel Debug"
+    description = "Builds the debug Rebel Engine libraries for 32 bit Arm v7."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=armv7"
     finalizedBy 'build'
 }
 
 tasks.register('compileArm64v8DebugRebelEngine', Exec) {
-    group "Rebel Debug"
-    description "Builds the debug Rebel Engine libraries for 64 bit Arm v8."
+    group = "Rebel Debug"
+    description = "Builds the debug Rebel Engine libraries for 64 bit Arm v8."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=arm64v8"
     finalizedBy 'build'
 }
 
 tasks.register('compileX86DebugRebelEngine', Exec) {
-    group "Rebel Debug"
-    description "Builds the debug Rebel Engine libraries for 32 bit x86."
+    group = "Rebel Debug"
+    description = "Builds the debug Rebel Engine libraries for 32 bit x86."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=x86"
     finalizedBy 'build'
 }
 
 tasks.register('compileX86_64DebugRebelEngine', Exec) {
-    group "Rebel Debug"
-    description "Builds the debug Rebel Engine libraries for 64 bit x86."
+    group = "Rebel Debug"
+    description = "Builds the debug Rebel Engine libraries for 64 bit x86."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release_debug", "android_arch=x86_64"
     finalizedBy 'build'
@@ -136,32 +136,32 @@ tasks.register('compileX86_64DebugRebelEngine', Exec) {
 
 // Compile Rebel Engine release libraries
 tasks.register('compileArmv7ReleaseRebelEngine', Exec) {
-    group "Rebel Release"
-    description "Builds the release Rebel Engine libraries for 32 bit Arm v7."
+    group = "Rebel Release"
+    description = "Builds the release Rebel Engine libraries for 32 bit Arm v7."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=armv7"
     finalizedBy 'build'
 }
 
 tasks.register('compileArm64v8ReleaseRebelEngine', Exec) {
-    group "Rebel Release"
-    description "Builds the release Rebel Engine libraries for 64 bit Arm v8."
+    group = "Rebel Release"
+    description = "Builds the release Rebel Engine libraries for 64 bit Arm v8."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=arm64v8"
     finalizedBy 'build'
 }
 
 tasks.register('compileX86ReleaseRebelEngine', Exec) {
-    group "Rebel Release"
-    description "Builds the release Rebel Engine libraries for 32 bit x86."
+    group = "Rebel Release"
+    description = "Builds the release Rebel Engine libraries for 32 bit x86."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=x86"
     finalizedBy 'build'
 }
 
 tasks.register('compileX86_64ReleaseRebelEngine', Exec) {
-    group "Rebel Release"
-    description "Builds the release Rebel Engine libraries for 64 bit x86."
+    group = "Rebel Release"
+    description = "Builds the release Rebel Engine libraries for 64 bit x86."
     executable scons
     args "-j${processors}", "--directory=${sourceDir}", "platform=android", "target=release", "android_arch=x86_64"
     finalizedBy 'build'
