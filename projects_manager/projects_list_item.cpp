@@ -157,7 +157,8 @@ void ProjectsListItem::_configure_item() {
 }
 
 void ProjectsListItem::_extract_project_values() {
-    project_folder = project_key.replace("::", "/");
+    project_folder = project_key.replace(":::", ":/");
+    project_folder = project_folder.replace("::", "/");
 
     Ref<ConfigFile> settings_file = memnew(ConfigFile);
     String settings_file_name     = project_folder.plus_file("project.rebel");
