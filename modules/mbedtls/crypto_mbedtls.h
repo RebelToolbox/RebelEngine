@@ -19,6 +19,8 @@ class SSLContextMbedTLS;
 
 class CryptoKeyMbedTLS : public CryptoKey {
 private:
+    mbedtls_entropy_context entropy_context;
+    mbedtls_ctr_drbg_context ctr_drbg_context;
     mbedtls_pk_context pkey;
     int locks        = 0;
     bool public_only = true;
@@ -43,14 +45,8 @@ public:
         return public_only;
     };
 
-    CryptoKeyMbedTLS() {
-        mbedtls_pk_init(&pkey);
-        locks = 0;
-    }
-
-    ~CryptoKeyMbedTLS() {
-        mbedtls_pk_free(&pkey);
-    }
+    CryptoKeyMbedTLS();
+    ~CryptoKeyMbedTLS();
 
     _FORCE_INLINE_ void lock() {
         locks++;

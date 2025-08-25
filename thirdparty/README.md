@@ -238,19 +238,14 @@ changes are marked with `// -- REBEL --` comments.
 ## mbedtls
 
 - Upstream: https://github.com/Mbed-TLS/mbedtls
-- Version: 2.18.1 (dd79db10014d85b26d11fe57218431f2e5ede6f2, 2022)
+- Version: 3.6.4 (c765c831e5c2a0971410692f92f7a81d6ec65ec2, 2025)
 - License: Apache 2.0
 
 File extracted from upstream release tarball:
 
-- All `*.h` from `include/mbedtls/` to `thirdparty/mbedtls/include/mbedtls/` except `config_psa.h` and `psa_util.h`.
-- All `*.c` and `*.h` from `library/` to `thirdparty/mbedtls/library/` except those starting with `psa_*`.
+- All `*.h` from `include/`
+- All `*.c` and `*.h` from `library/`
 - The `LICENSE` file.
-- Applied the patch in `patches/1453.diff` (upstream PR:
-  https://github.com/ARMmbed/mbedtls/pull/1453).
-- Added 2 files `rebel_mbedtls_platform.c` and `rebel_mbedtls_config.h`
-  providing configuration for light bundling with core.
-
 
 ## minimp3
 

@@ -55,7 +55,9 @@ Error CryptoKeyMbedTLS::load(String p_path, bool p_public_only) {
             out.read().ptr(),
             out.size(),
             nullptr,
-            0
+            0,
+            mbedtls_ctr_drbg_random,
+            &ctr_drbg_context
         );
     }
     // We MUST zeroize the memory for safety!
@@ -116,7 +118,9 @@ Error CryptoKeyMbedTLS::load_from_string(
             (unsigned char*)p_string_key.utf8().get_data(),
             p_string_key.utf8().size(),
             nullptr,
-            0
+            0,
+            mbedtls_ctr_drbg_random,
+            &ctr_drbg_context
         );
     }
     ERR_FAIL_COND_V_MSG(ret, FAILED, "Error parsing key '" + itos(ret) + "'.");
@@ -141,6 +145,31 @@ String CryptoKeyMbedTLS::save_to_string(bool p_public_only) {
     }
     String s = String::utf8((char*)w);
     return s;
+}
+
+CryptoKeyMbedTLS::CryptoKeyMbedTLS() {
+    mbedtls_entropy_init(&entropy_context);
+    mbedtls_ctr_drbg_init(&ctr_drbg_context);
+    int ret = mbedtls_ctr_drbg_seed(
+        &ctr_drbg_context,
+        mbedtls_entropy_func,
+        &entropy_context,
+        nullptr,
+        0
+    );
+    if (ret != 0) {
+        ERR_PRINT(
+            " failed\n  ! mbedtls_ctr_drbg_seed returned an error" + itos(ret)
+        );
+    }
+    mbedtls_pk_init(&pkey);
+    locks = 0;
+}
+
+CryptoKeyMbedTLS::~CryptoKeyMbedTLS() {
+    mbedtls_pk_free(&pkey);
+    mbedtls_ctr_drbg_free(&ctr_drbg_context);
+    mbedtls_entropy_free(&entropy_context);
 }
 
 X509Certificate* X509CertificateMbedTLS::create() {
@@ -582,7 +611,7 @@ Vector<uint8_t> CryptoMbedTLS::sign(
         "Invalid key provided. Cannot sign with public_only keys."
     );
     size_t sig_size = 0;
-    unsigned char buf[MBEDTLS_MPI_MAX_SIZE];
+    unsigned char buf[MBEDTLS_PK_SIGNATURE_MAX_SIZE];
     Vector<uint8_t> out;
     int ret = mbedtls_pk_sign(
         &(key->pkey),
@@ -590,6 +619,7 @@ Vector<uint8_t> CryptoMbedTLS::sign(
         p_hash.ptr(),
         size,
         buf,
+        MBEDTLS_PK_SIGNATURE_MAX_SIZE,
         &sig_size,
         mbedtls_ctr_drbg_random,
         &ctr_drbg
