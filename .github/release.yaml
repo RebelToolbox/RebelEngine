@@ -1,6 +1,7 @@
 changelog:
   exclude:
     authors:
+      - dependabot
       - github-actions
   categories:
     - title: Exciting New Features ✨
