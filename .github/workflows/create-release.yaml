@@ -235,7 +235,7 @@ jobs:
 
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download Android build artifacts
         uses: actions/download-artifact@v5
@@ -350,7 +350,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download macOS build artifacts
         uses: actions/download-artifact@v5
@@ -417,7 +417,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download iOS build artifacts
         uses: actions/download-artifact@v5
@@ -455,7 +455,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download Artifacts
         uses: actions/download-artifact@v5
@@ -529,7 +529,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set Version
         run: |
