@@ -48,9 +48,9 @@ Python style checks to all Python and SCons files.
 ## `pre-commit-style-check`
 
 To standardise the style checks,
-both `pre-commit-clang-format` and `pre-commit-black` call `pre-commit-style-check`.
-
-`pre-commit-style-check` takes six optional parameters:
+both `pre-commit-clang-format` and `pre-commit-black` call `pre-commit-style-check` using [`.`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#dot).
+`.` is used to make the caller's variables available in `pre-commit-style-check`.
+`pre-commit-style-check` uses six variables:
 - `application_name`: The style check application to run.
 - `options`: The options passed to the style check application.
 - `include_files`: A list of specific filenames to be included.

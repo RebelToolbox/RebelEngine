@@ -1,23 +1,22 @@
-#!/usr/bin/env bash
-
+#!/bin/sh
 # Runs an application style check.
 # Features:
 #  - Aborts commit when the commit does not comply with the style guidelines.
 #  - Creates a patch with the proposed style changes.
-
-application_name="$1"
-options="$2"
-include_files="$3"
-include_extensions="$4"
-exclude_directories="$5"
-exclude_file_patterns="$6"
+# Uses six variables:
+# `application_name`: The style check application to run.
+# `options`: The options passed to the style check application.
+# `include_files`: A list of specific filenames to be included.
+# `include_extensions`: A list of filename extensions to be included.
+# `exclude_directories`: A list of directories to be excluded.
+# `exclude_file_patterns`: A list of file patterns to be exclued.
 
 # Get full paths to applications.
-application=$(which "$application_name" 2>/dev/null)
-zenity=$(which zenity 2>/dev/null)
-xmessage=$(which xmessage 2>/dev/null)
-powershell=$(which powershell 2>/dev/null)
-pygmentize=$(which pygmentize 2>/dev/null)
+application=$(command -v "$application_name" 2>/dev/null)
+zenity=$(command -v zenity 2>/dev/null)
+xmessage=$(command -v xmessage 2>/dev/null)
+powershell=$(command -v powershell 2>/dev/null)
+pygmentize=$(command -v pygmentize 2>/dev/null)
 
 # Set exit on error.
 set -e
@@ -42,24 +41,26 @@ include_file() {
 
     # Exclude files in exclude_directories.
     for exclude_directory in $exclude_directories; do
-        [[ "$directory" = $exclude_directory* ]] && return 1
+        case $directory in $exclude_directory*)
+            return 1;;
+        esac
     done
 
     # Exclude files which match exclude_file_patterns.
     for exclude_file_pattern in $exclude_file_patterns; do
-        if grep -q "$exclude_file_pattern" <<< "$filename"; then
-            return 1
-        fi
+        case $filename in *$exclude_file_pattern*)
+            return 1;;
+        esac
     done
 
     # Include files that match include_files.
     for include_file in $include_files; do
-        [[ "$include_file" = "$filename" ]] && return 0
+        [ "$include_file" = "$filename" ] && return 0
     done
 
     # Include extensions that match include_extensions.
     for include_extension in $include_extensions; do
-        [[ "$include_extension" = "$extension" ]] && return 0
+        [ "$include_extension" = "$extension" ] && return 0
     done
     return 1
 }

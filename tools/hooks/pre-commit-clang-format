@@ -1,9 +1,8 @@
-#!/usr/bin/env bash
-
-# git pre-commit hook that runs a clang-format style check.
+#!/bin/sh
+# Git pre-commit hook that runs a clang-format style check.
 
 # The application and options.
-application="clang-format"
+application_name="clang-format"
 options="--Wno-error=unknown"
 
 # File extensions to parse.
@@ -25,29 +24,30 @@ recommended_clang_format_major_version="17"
 clang_format_version="$(clang-format --version | sed "s/[^0-9\.]*\([0-9\.]*\).*/\1/")"
 clang_format_major_version="$(echo "$clang_format_version" | cut -d. -f1)"
 
-if [[ "$clang_format_major_version" -lt "$required_clang_format_major_version" ]]; then
+if [ "$clang_format_major_version" -lt "$required_clang_format_major_version" ]; then
     echo "Error: Your version of clang-format is $clang_format_version."
     echo "The minimum required version of clang-format is $required_clang_format_major_version."
     echo "Please upgrade clang-format to ensure formatting is applied correctly."
     exit 1
 fi
 
-if [[ "$clang_format_major_version" -lt "$recommended_clang_format_major_version" ]]; then
+if [ "$clang_format_major_version" -lt "$recommended_clang_format_major_version" ]; then
     echo "Warning: Your version of clang-format is $clang_format_version."
     echo "The recommended version of clang-format is $recommended_clang_format_major_version."
     echo "Consider upgrading clang-format as formatting may not be applied correctly."
 fi
 
-if [[ "$clang_format_major_version" -gt "$recommended_clang_format_major_version" ]]; then
+if [ "$clang_format_major_version" -gt "$recommended_clang_format_major_version" ]; then
     echo "Warning: Your version of clang-format is $clang_format_version."
     echo "The maximum tested version of clang-format is $recommended_clang_format_major_version."
     echo "Consider downgrading clang-format as formatting may not be applied correctly."
 fi
 
-. "$(dirname -- "$0")/pre-commit-style-check" \
-    "$application"                            \
-    "$options"                                \
-    "$include_files"                          \
-    "$include_extensions"                     \
-    "$exclude_directories"                    \
-    "$exclude_file_patterns"                  \
+# `pre-commit-style-check` uses six variables:
+# `application_name`: The style check application to run.
+# `options`: The options passed to the style check application.
+# `include_files`: A list of specific filenames to be included.
+# `include_extensions`: A list of filename extensions to be included.
+# `exclude_directories`: A list of directories to be excluded.
+# `exclude_file_patterns`: A list of file patterns to be exclued.
+. "$(dirname -- "$0")/pre-commit-style-check"
