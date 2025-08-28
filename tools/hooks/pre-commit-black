@@ -1,9 +1,8 @@
-#!/usr/bin/env bash
-
-# git pre-commit hook that runs a black Python style check.
+#!/bin/sh
+# Git pre-commit hook that runs a black Python style check.
 
 # The application and options.
-application="black"
+application_name="black"
 options=""
 
 # Files and file extensions to parse.
@@ -13,10 +12,11 @@ include_extensions=".py"
 # Directories to ignore.
 exclude_directories="thirdparty"
 
-. "$(dirname -- "$0")/pre-commit-style-check" \
-    "$application"                            \
-    "$options"                                \
-    "$include_files"                          \
-    "$include_extensions"                     \
-    "$exclude_directories"                    \
-    "$exclude_file_patterns"                  \
+# `pre-commit-style-check` uses six variables:
+# `application_name`: The style check application to run.
+# `options`: The options passed to the style check application.
+# `include_files`: A list of specific filenames to be included.
+# `include_extensions`: A list of filename extensions to be included.
+# `exclude_directories`: A list of directories to be excluded.
+# `exclude_file_patterns`: A list of file patterns to be exclued.
+. "$(dirname -- "$0")/pre-commit-style-check"

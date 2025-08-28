@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-
+#!/bin/sh
 # Git pre-commit hook that checks the API XML documentation spelling and syntax.
 
 # Set exit on error.
