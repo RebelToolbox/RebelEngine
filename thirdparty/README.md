@@ -163,13 +163,12 @@ Files extracted from upstream source:
 ## libpng
 
 - Upstream: http://libpng.org/pub/png/libpng.html
-- Version: 1.6.37 (a40189cf881e9f0db80511c382292a5604c3c3d1, 2019)
+- Version: 1.6.50 (2025)
 - License: libpng/zlib
 
 Files extracted from upstream source:
 
-- all .c and .h files of the main directory, except from
-  `example.c` and `pngtest.c`
+- all .c and .h files of the main directory, except `example.c` and `pngtest.c`
 - the arm/ folder
 - `scripts/pnglibconf.h.prebuilt` as `pnglibconf.h`
 - `LICENSE`
