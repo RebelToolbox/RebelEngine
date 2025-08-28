@@ -283,16 +283,21 @@ https://github.com/miniupnp/miniupnp/commit/3a08dd4b89af2e9effa22a136bac86f2f306
 ## minizip
 
 - Upstream: https://www.zlib.net
-- Version: 1.2.12 (zlib contrib, 2022)
+- Version: 1.3.1 (2024)
 - License: zlib
 
 Files extracted from the upstream source:
+- contrib/minizip/crypt.h
+- contrib/minizip/ioapi.c
+- contrib/minizip/ioapi.h
+- contrib/minizip/unzip.c
+- contrib/minizip/unzip.h
+- contrib/minizip/zip.c
+- contrib/minizip/zip.h
 
-- contrib/minizip/{crypt.h,ioapi.{c,h},unzip.{c,h},zip.{c,h}}
-
-Important: Some files have Godot-made changes for use in core/io.
-They are marked with `/* GODOT start */` and `/* GODOT end */`
-comments and a patch is provided in the `patches` folder.
+Note: Includes changes required to support additional Rebel functionality.
+They are marked with `// Rebel changes start.` and `// Rebel changes end.`
+Patch files for the changes are included in the patches folder.
 
 
 ## misc
@@ -491,12 +496,12 @@ Files extracted from upstream source:
 ## zlib
 
 - Upstream: https://www.zlib.net
-- Version: 1.2.12 (2022)
+- Version: 1.3.1 (2024)
 - License: zlib
 
 Files extracted from upstream source:
 
-- all .c and .h files
+- all .c and .h files from the root directory
 
 
 ## zstd
