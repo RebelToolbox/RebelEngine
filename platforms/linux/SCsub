@@ -6,7 +6,6 @@ from platform_methods import run_in_subprocess
 import platform_linux_builders
 
 linux_files = [
-    "detect_prime.cpp",
     "linux_crash_handler.cpp",
     "linux_gl_context.cpp",
     "linux_joypad.cpp",
