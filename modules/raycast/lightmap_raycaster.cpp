@@ -64,11 +64,7 @@ void LightmapRaycasterEmbree::filter_function(
 }
 
 bool LightmapRaycasterEmbree::intersect(Ray& r_ray) {
-    RTCIntersectContext context;
-
-    rtcInitIntersectContext(&context);
-
-    rtcIntersect1(embree_scene, &context, (RTCRayHit*)&r_ray);
+    rtcIntersect1(embree_scene, (RTCRayHit*)&r_ray);
     return r_ray.geomID != RTC_INVALID_GEOMETRY_ID;
 }
 

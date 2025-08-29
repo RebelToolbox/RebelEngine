@@ -264,7 +264,7 @@ def configure(env):
         and (is64 and platform.machine() == "x86_64")
     ):
         # No pkgconfig file so far, hardcode expected lib name.
-        env.Append(LIBS=["embree3"])
+        env.Append(LIBS=["embree4"])
 
     ## Flags
 

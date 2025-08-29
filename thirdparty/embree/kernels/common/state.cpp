@@ -16,19 +16,22 @@ namespace embree
   State::ErrorHandler::~ErrorHandler()
   {
     Lock<MutexSys> lock(errors_mutex);
-    for (size_t i=0; i<thread_errors.size(); i++)
+    for (size_t i=0; i<thread_errors.size(); i++) {
       delete thread_errors[i];
+    }
     destroyTls(thread_error);
     thread_errors.clear();
   }
 
-  RTCError* State::ErrorHandler::error() 
+  RTCErrorMessage* State::ErrorHandler::error()
   {
-    RTCError* stored_error = (RTCError*) getTls(thread_error);
-    if (stored_error) return stored_error;
+    RTCErrorMessage* stored_error = (RTCErrorMessage*) getTls(thread_error);
+    if (stored_error) {
+      return stored_error;
+    }
 
     Lock<MutexSys> lock(errors_mutex);
-    stored_error = new RTCError(RTC_ERROR_NONE);
+    stored_error = new RTCErrorMessage(RTC_ERROR_NONE, "");
     thread_errors.push_back(stored_error);
     setTls(thread_error,stored_error);
     return stored_error;
@@ -83,6 +86,8 @@ namespace embree
 
     max_spatial_split_replications = 1.2f;
     useSpatialPreSplits = false;
+
+    max_triangles_per_leaf = inf;
 
     tessellation_cache_size = 128*1024*1024;
 
@@ -144,7 +149,20 @@ namespace embree
   }
 
   bool State::checkISASupport() {
+#if defined(__ARM_NEON)
+    /*
+     * NEON CPU type is a mixture of NEON and SSE2
+     */
+
+    bool hasSSE2 = (getCPUFeatures() & enabled_cpu_features) & CPU_FEATURE_SSE2;
+
+    /* this will be true when explicitly initialize Device with `isa=neon` config */
+    bool hasNEON = (getCPUFeatures() & enabled_cpu_features) & CPU_FEATURE_NEON;
+
+    return hasSSE2 || hasNEON;
+#else
     return (getCPUFeatures() & enabled_cpu_features) == enabled_cpu_features;
+#endif
   }
   
   void State::verify()
@@ -157,7 +175,9 @@ namespace embree
      * functions */
 #if defined(DEBUG)
 #if defined(EMBREE_TARGET_SSE2)
+#if !defined(__ARM_NEON)
     assert(sse2::getISA() <= SSE2);
+#endif
 #endif
 #if defined(EMBREE_TARGET_SSE42)
     assert(sse42::getISA() <= SSE42);
@@ -177,10 +197,11 @@ namespace embree
   const char* symbols[3] = { "=", ",", "|" };
 
   bool State::parseFile(const FileName& fileName)
-  {
-    FILE* f = fopen(fileName.c_str(),"r");
-    if (!f) return false;
-    Ref<Stream<int> > file = new FileStream(f,fileName);
+  { 
+    Ref<Stream<int> > file;
+    // Rebel changes start.
+    file = new FileStream(fileName);
+    // Rebel changes end.
     
     std::vector<std::string> syms;
     for (size_t i=0; i<sizeof(symbols)/sizeof(void*); i++) 
@@ -378,7 +399,7 @@ namespace embree
         grid_accel = cin->get().Identifier();
       else if (tok == Token::Id("grid_accel_mb") && cin->trySymbol("="))
         grid_accel_mb = cin->get().Identifier();
-      
+
       else if (tok == Token::Id("verbose") && cin->trySymbol("="))
         verbose = cin->get().Int();
       else if (tok == Token::Id("benchmark") && cin->trySymbol("="))
@@ -404,9 +425,12 @@ namespace embree
           } while (cin->trySymbol("|"));
         }
       }
-      
+
       else if (tok == Token::Id("max_spatial_split_replications") && cin->trySymbol("="))
         max_spatial_split_replications = cin->get().Float();
+
+      else if (tok == Token::Id("max_triangles_per_leaf") && cin->trySymbol("="))
+        max_triangles_per_leaf = cin->get().Float();
 
       else if (tok == Token::Id("presplits") && cin->trySymbol("="))
         useSpatialPreSplits = cin->get().Int() != 0 ? true : false;
