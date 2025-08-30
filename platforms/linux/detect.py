@@ -338,7 +338,7 @@ def configure(env):
     # Embree is only used in tools build on x86_64 and aarch64.
     if env["tools"] and not env["builtin_embree"] and is64:
         # No pkgconfig file so far, hardcode expected lib name.
-        env.Append(LIBS=["embree3"])
+        env.Append(LIBS=["embree4"])
 
     ## Flags
 

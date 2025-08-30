@@ -40,22 +40,21 @@ Files extracted from upstream source:
 
 ## embree
 
-- Upstream: https://github.com/embree/embree
-- Version: 3.13.0 (7c53133eb21424f7f0ae1e25bf357e358feaf6ab, 2021)
+- Upstream: https://github.com/RenderKit/embree
+- Version: 4.4.0 (ff9381774dc99fea81a932ad276677aad6a3d4dd, 2025)
 - License: Apache 2.0
 
 Files extracted from upstream:
 
-- All cpp files listed in `modules/raycast/godot_update_embree.py`
-- All header files in the directories listed in `modules/raycast/godot_update_embree.py`
+- All cpp files listed in `modules/raycast/update_embree.py`
+- All header files in the directories listed in `modules/raycast/update_embree.py`
 
-The `modules/raycast/godot_update_embree.py` script can be used to pull the
+The `modules/raycast/update_embree.py` script is used to pull the
 relevant files from the latest Embree release and apply some automatic changes.
 
-Some changes have been made in order to remove exceptions and fix minor build errors.
-They are marked with `// -- GODOT start --` and `// -- GODOT end --`
-comments. Apply the patches in the `patches/` folder when syncing on newer upstream
-commits.
+Note: Includes changes required to remove exceptions and fix minor build errors.
+They are marked with `// Rebel changes start.` and `// Rebel changes end.`
+Patch files for the changes are included in the patches folder.
 
 
 ## enet

@@ -8,7 +8,7 @@
 #include "scene/3d/lightmapper.h"
 #include "scene/resources/mesh.h"
 
-#include <embree3/rtcore.h>
+#include <embree4/rtcore.h>
 
 class LightmapRaycasterEmbree : public LightmapRaycaster {
     GDCLASS(LightmapRaycasterEmbree, LightmapRaycaster);
