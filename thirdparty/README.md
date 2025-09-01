@@ -84,12 +84,13 @@ Rebel Enet patch file and additional Rebel socket implementation files:
 
 Files extracted from upstream source:
 
-- all .cpp and .h files in EtcLib/
-- README.md, LICENSE, AUTHORS
+- All .cpp and .h files from EtcLib/Etc/ and EtcLib/EtcCodec/
+- EtcFile.cpp, EtcFile.h, EtcFileHeader.cpp, EtcFileHeader.h from EtcTool/
+- LICENSE
 
-Important: Some files have Godot-made changes.
-They are marked with `// -- GODOT start --` and `// -- GODOT end --`
-comments.
+Note: Includes two fixes.
+They are marked with `// Rebel changes start.` and `// Rebel changes end.`
+Patch files for the changes are included in the patches folder.
 
 
 ## fonts
