@@ -508,7 +508,9 @@ namespace Etc
 		int iMaxRed1 = iColor1Red + (int)a_uiRadius;
 		if (iMaxRed1 > 15)
 		{
+			// Rebel changes start.
 			iMaxRed1 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinGreen1 = iColor1Green - (int)a_uiRadius;
@@ -519,7 +521,9 @@ namespace Etc
 		int iMaxGreen1 = iColor1Green + (int)a_uiRadius;
 		if (iMaxGreen1 > 15)
 		{
+			// Rebel changes start.
 			iMaxGreen1 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinBlue1 = iColor1Blue - (int)a_uiRadius;
@@ -530,7 +534,9 @@ namespace Etc
 		int iMaxBlue1 = iColor1Blue + (int)a_uiRadius;
 		if (iMaxBlue1 > 15)
 		{
+			// Rebel changes start.
 			iMaxBlue1 = 15;
+			// Rebel changes end.
 		}
 
 		int iColor2Red = m_frgbaOriginalColor2_TAndH.IntRed(15.0f);
@@ -545,7 +551,9 @@ namespace Etc
 		int iMaxRed2 = iColor2Red + (int)a_uiRadius;
 		if (iMaxRed2 > 15)
 		{
+			// Rebel changes start.
 			iMaxRed2 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinGreen2 = iColor2Green - (int)a_uiRadius;
@@ -556,7 +564,9 @@ namespace Etc
 		int iMaxGreen2 = iColor2Green + (int)a_uiRadius;
 		if (iMaxGreen2 > 15)
 		{
+			// Rebel changes start.
 			iMaxGreen2 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinBlue2 = iColor2Blue - (int)a_uiRadius;
@@ -567,7 +577,9 @@ namespace Etc
 		int iMaxBlue2 = iColor2Blue + (int)a_uiRadius;
 		if (iMaxBlue2 > 15)
 		{
+			// Rebel changes start.
 			iMaxBlue2 = 15;
+			// Rebel changes end.
 		}
 
 		for (unsigned int uiDistance = 0; uiDistance < TH_DISTANCES; uiDistance++)
@@ -761,7 +773,9 @@ namespace Etc
 		int iMaxRed1 = iColor1Red + (int)a_uiRadius;
 		if (iMaxRed1 > 15)
 		{
+			// Rebel changes start.
 			iMaxRed1 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinGreen1 = iColor1Green - (int)a_uiRadius;
@@ -772,7 +786,9 @@ namespace Etc
 		int iMaxGreen1 = iColor1Green + (int)a_uiRadius;
 		if (iMaxGreen1 > 15)
 		{
+			// Rebel changes start.
 			iMaxGreen1 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinBlue1 = iColor1Blue - (int)a_uiRadius;
@@ -783,7 +799,9 @@ namespace Etc
 		int iMaxBlue1 = iColor1Blue + (int)a_uiRadius;
 		if (iMaxBlue1 > 15)
 		{
+			// Rebel changes start.
 			iMaxBlue1 = 15;
+			// Rebel changes end.
 		}
 
 		int iColor2Red = m_frgbaOriginalColor2_TAndH.IntRed(15.0f);
@@ -798,7 +816,9 @@ namespace Etc
 		int iMaxRed2 = iColor2Red + (int)a_uiRadius;
 		if (iMaxRed2 > 15)
 		{
+			// Rebel changes start.
 			iMaxRed2 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinGreen2 = iColor2Green - (int)a_uiRadius;
@@ -809,7 +829,9 @@ namespace Etc
 		int iMaxGreen2 = iColor2Green + (int)a_uiRadius;
 		if (iMaxGreen2 > 15)
 		{
+			// Rebel changes start.
 			iMaxGreen2 = 15;
+			// Rebel changes end.
 		}
 
 		int iMinBlue2 = iColor2Blue - (int)a_uiRadius;
@@ -820,7 +842,9 @@ namespace Etc
 		int iMaxBlue2 = iColor2Blue + (int)a_uiRadius;
 		if (iMaxBlue2 > 15)
 		{
+			// Rebel changes start.
 			iMaxBlue2 = 15;
+			// Rebel changes end.
 		}
 
 		for (unsigned int uiDistance = 0; uiDistance < TH_DISTANCES; uiDistance++)

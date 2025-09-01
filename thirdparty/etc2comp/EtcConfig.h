@@ -53,12 +53,12 @@ typedef double	f64;
 // Keep asserts enabled in release builds during development
 #undef NDEBUG
 
-// 0=disable. stb_image can be used if you need to compress
+// 0=disable. stb_image can be used if you need to compress 
 //other image formats like jpg
-#define USE_STB_IMAGE_LOAD 0
+#define USE_STB_IMAGE_LOAD 0	
 
 #if ETC_WINDOWS
-#include <sdkddkver.h>
+#include <SDKDDKVer.h>
 #define _CRT_SECURE_NO_WARNINGS (1)
 #include <tchar.h>
 #endif
