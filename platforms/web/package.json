@@ -7,7 +7,7 @@
   "private": true,
   "devDependencies": {
     "eslint": "^9.35.0",
-    "globals": "^16.3.0",
+    "globals": "^16.4.0",
     "jsdoc": "^4.0.4"
   },
   "scripts": {
