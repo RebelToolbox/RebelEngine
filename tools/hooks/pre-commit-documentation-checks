@@ -1,6 +1,12 @@
 #!/bin/sh
 # Git pre-commit hook that checks the API XML documentation spelling and syntax.
 
+if ! command -v codespell > /dev/null; then
+	echo "Error: 'codespell' executable not found."
+    echo "Please install codespell, and try again."
+	exit 1
+fi
+
 # Set exit on error.
 set -e
 

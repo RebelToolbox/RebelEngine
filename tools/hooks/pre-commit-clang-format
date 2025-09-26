@@ -1,6 +1,12 @@
 #!/bin/sh
 # Git pre-commit hook that runs a clang-format style check.
 
+if ! command -v clang-format > /dev/null; then
+	echo "Error: 'clang-format' executable not found."
+    echo "Please install clang-format, and try again."
+	exit 1
+fi
+
 # The application and options.
 application_name="clang-format"
 options="--Wno-error=unknown"
