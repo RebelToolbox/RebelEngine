@@ -1,9 +1,12 @@
+import json
 import os
 import re
 import glob
 import subprocess
 from collections import OrderedDict
 from compat import iteritems, isbasestring, open_utf8, decode_utf8, qualname
+from shutil import which
+
 
 from SCons import Node
 from SCons.Script import ARGUMENTS
@@ -689,6 +692,39 @@ def glob_recursive(pattern, node="."):
     return results
 
 
+def is_msvc_installed():
+    vswhere = which("vswhere")
+    if not vswhere:
+        vswhere = os.path.join("Microsoft Visual Studio", "Installer", "vswhere.exe")
+        if "ProgramFiles(x86)" in os.environ:
+            vswhere = os.path.join(os.environ["ProgramFiles(x86)"], vswhere)
+        elif "ProgramFiles" in os.environ:
+            vswhere = os.path.join(os.environ["ProgramFiles"], vswhere)
+    if not os.path.exists(vswhere):
+        return False
+    try:
+        output = (
+            subprocess.check_output(
+                [
+                    vswhere,
+                    "-requires",
+                    "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+                    "-format",
+                    "json",
+                ]
+            )
+            .decode("utf-8")
+            .strip()
+        )
+        result = json.loads(output)
+    except (subprocess.CalledProcessError, json.JSONDecodeError):
+        print("Error: vswhere found, but failed to provide JSON output!")
+        return False
+    if len(result) == 0:
+        return False
+    return True
+
+
 def add_to_vs_project(env, sources):
     for x in sources:
         if type(x) == type(""):
@@ -873,8 +909,9 @@ def get_compiler_version(env):
                 subprocess.check_output([env.subst(env["CXX"]), "--version"]).strip()
             )
         except (subprocess.CalledProcessError, OSError):
-            print("Couldn't parse CXX environment variable to infer compiler version.")
-            return None
+            print("Couldn't find the compiler:", env["CXX"])
+            print("Please ensure it is installed and available in the PATH")
+            exit(1)
     else:  # TODO: Implement for MSVC
         return None
     match = re.search("[0-9]+\.[0-9.]+", version)

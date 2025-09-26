@@ -479,6 +479,10 @@ def configure(env):
         ] = os.environ  # this makes build less repeatable, but simplifies some things
         env["ENV"]["TMP"] = os.environ["TMP"]
 
+    if not "MSVC_VERSION" in env and not env["use_mingw"]:
+        print("Couldn't find Microsoft Visual C++ compiler")
+        env["use_mingw"] = True
+
     if env["use_mingw"] or (os.name == "posix"):
         setup_mingw(env)
         configure_mingw(env)
