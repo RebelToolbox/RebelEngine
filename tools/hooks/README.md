@@ -6,9 +6,10 @@ These hooks help Rebel Engine contributors comply with the Rebel Engine style gu
 ## Installation
 
 Ensure that
-[`clang-format`](https://clang.llvm.org/docs/ClangFormat.html)
-and
+[`clang-format`](https://clang.llvm.org/docs/ClangFormat.html),
 [`black`](https://pypi.org/project/black/)
+and
+[`codespell`](https://pypi.org/project/codespell/)
 are installed and available in the system `path`.
 Copy all the files from this folder into your `.git/hooks` folder.
 Confirm that all the scripts are executable.
@@ -42,8 +43,10 @@ Python style checks to all Python and SCons files.
 
 ## `pre-commit-documentation-checks`
 
-`pre-commit-make-documentation-checks` checks the API XML documentation syntax.
-`pre-commit-make-documentation-checks` performs a dry run of `tools/scripts/rst_from_xml.py`.
+`pre-commit-make-documentation-checks` runs
+[`codespell`](https://pypi.org/project/codespell/)
+on all documentaton files.
+It then performs a dry run of `tools/scripts/rst_from_xml.py`.
 
 ## `pre-commit-style-check`
 
