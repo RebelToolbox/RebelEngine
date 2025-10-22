@@ -15,112 +15,122 @@
 #include "servers/audio_server.h"
 
 class AudioDriverPulseAudio : public AudioDriver {
-    Thread thread;
-    Mutex mutex;
-
-    pa_mainloop* pa_ml;
-    pa_context* pa_ctx;
-    pa_stream* pa_str;
-    pa_stream* pa_rec_str;
-    pa_channel_map pa_map;
-    pa_channel_map pa_rec_map;
-
-    String device_name;
-    String new_device;
-    String default_device;
-
-    String capture_device_name;
-    String capture_new_device;
-    String capture_default_device;
-
-    Vector<int32_t> samples_in;
-    Vector<int16_t> samples_out;
-
-    unsigned int mix_rate;
-    unsigned int buffer_frames;
-    unsigned int pa_buffer_size;
-    int channels;
-    int pa_ready;
-    int pa_status;
-    Array pa_devices;
-    Array pa_rec_devices;
-
-    bool active;
-    bool thread_exited;
-    mutable bool exit_thread;
-
-    float latency;
-
-    static void pa_state_cb(pa_context* c, void* userdata);
-    static void pa_sink_info_cb(
-        pa_context* c,
-        const pa_sink_info* l,
-        int eol,
-        void* userdata
-    );
-    static void pa_source_info_cb(
-        pa_context* c,
-        const pa_source_info* l,
-        int eol,
-        void* userdata
-    );
-    static void pa_server_info_cb(
-        pa_context* c,
-        const pa_server_info* i,
-        void* userdata
-    );
-    static void pa_sinklist_cb(
-        pa_context* c,
-        const pa_sink_info* l,
-        int eol,
-        void* userdata
-    );
-    static void pa_sourcelist_cb(
-        pa_context* c,
-        const pa_source_info* l,
-        int eol,
-        void* userdata
-    );
-
-    Error init_device();
-    void finish_device();
-
-    Error capture_init_device();
-    void capture_finish_device();
-
-    Error detect_channels(bool capture = false);
-
-    static void thread_func(void* p_udata);
-
 public:
-    const char* get_name() const {
-        return "PulseAudio";
-    };
+    Error init() override;
+    void start() override;
 
-    virtual Error init();
-    virtual void start();
-    virtual int get_mix_rate() const;
-    virtual SpeakerMode get_speaker_mode() const;
+    const char* get_name() const override;
 
-    virtual Array get_device_list();
-    virtual String get_device();
-    virtual void set_device(String device);
+    String get_device() override;
+    void set_device(String device_name) override;
+    Array get_device_list() override;
 
-    virtual Array capture_get_device_list();
-    virtual void capture_set_device(const String& p_name);
-    virtual String capture_get_device();
+    String capture_get_device() override;
+    void capture_set_device(const String& device_name) override;
+    Array capture_get_device_list() override;
 
-    virtual void lock();
-    virtual void unlock();
-    virtual void finish();
+    float get_latency() override;
+    int get_mix_rate() const override;
+    SpeakerMode get_speaker_mode() const override;
 
-    virtual float get_latency();
+    Error capture_start() override;
+    Error capture_stop() override;
 
-    virtual Error capture_start();
-    virtual Error capture_stop();
+    void lock() override;
+    void unlock() override;
+    void finish() override;
 
-    AudioDriverPulseAudio();
-    ~AudioDriverPulseAudio();
+private:
+    Mutex mutex;
+    Thread thread;
+
+    Vector<int32_t> internal_buffer;
+    Vector<int16_t> output_buffer;
+
+    Array output_devices;
+    Array input_devices;
+
+    String output_device_name{"Default"};
+    String new_output_device_name{"Default"};
+    String default_output_device;
+    String input_device_name;
+    String new_input_device_name;
+    String default_input_device;
+
+    pa_channel_map output_channel_map = {};
+    pa_channel_map input_channel_map  = {};
+    pa_mainloop* mainloop             = nullptr;
+    pa_context* context               = nullptr;
+    pa_stream* output_stream          = nullptr;
+    pa_stream* input_stream           = nullptr;
+
+    size_t available_bytes = 0;
+    size_t write_offset    = 0;
+    int channels           = 0;
+    int mix_rate           = 0;
+    int pa_ready           = 0;
+    int pa_status          = 0;
+    float latency          = 0.f;
+
+    bool active        = false;
+    bool thread_exited = false;
+    bool exit_thread   = false;
+
+    Error initialize_output_device();
+    Error initialize_input_device();
+
+    Error detect_output_channels();
+    Error detect_input_channels();
+
+    void disconnect_output_device();
+    void disconnect_input_device();
+
+    Error get_default_device_names();
+
+    size_t playback_sound();
+    void get_output_bytes();
+    void clear_output_buffer();
+    void fill_internal_buffer();
+    void copy_internal_buffer_to_output_buffer();
+    void apply_pulse_audio_updates() const;
+    size_t stream_output_bytes();
+    size_t record_sound();
+    Error change_output_device();
+    Error change_input_device();
+    Error check_default_device();
+
+    static void thread_function(void* user_data);
+
+    static void context_state_callback(pa_context* context, void* user_data);
+    static void get_server_info_callback(
+        pa_context* context,
+        const pa_server_info* server_info,
+        void* user_data
+    );
+    static void get_sink_info_list_callback(
+        pa_context* context,
+        const pa_sink_info* sink_info,
+        int eol,
+        void* user_data
+    );
+    static void get_source_info_list_callback(
+        pa_context* context,
+        const pa_source_info* source_info,
+        int eol,
+        void* user_data
+    );
+    static void get_sink_info_by_name_callback(
+        pa_context* context,
+        const pa_sink_info* sink_info,
+        int eol,
+        void* user_data
+    );
+    static void get_source_info_by_name_callback(
+        pa_context* context,
+        const pa_source_info* source_info,
+        int eol,
+        void* user_data
+    );
 };
 
 #endif // PULSEAUDIO_ENABLED
