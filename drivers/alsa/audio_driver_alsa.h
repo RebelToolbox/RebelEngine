@@ -15,52 +15,56 @@
 #include "servers/audio_server.h"
 
 class AudioDriverALSA : public AudioDriver {
-    Thread thread;
-    Mutex mutex;
-
-    snd_pcm_t* pcm_handle;
-
-    String device_name;
-    String new_device;
-
-    Vector<int32_t> samples_in;
-    Vector<int16_t> samples_out;
-
-    Error init_device();
-    void finish_device();
-
-    static void thread_func(void* p_udata);
-
-    unsigned int mix_rate;
-    SpeakerMode speaker_mode;
-
-    snd_pcm_uframes_t buffer_frames;
-    snd_pcm_uframes_t buffer_size;
-    snd_pcm_uframes_t period_size;
-    int channels;
-
-    bool active;
-    bool thread_exited;
-    mutable bool exit_thread;
-
 public:
-    const char* get_name() const {
-        return "ALSA";
-    };
+    Error init() override;
+    void start() override;
 
-    virtual Error init();
-    virtual void start();
-    virtual int get_mix_rate() const;
-    virtual SpeakerMode get_speaker_mode() const;
-    virtual Array get_device_list();
-    virtual String get_device();
-    virtual void set_device(String device);
-    virtual void lock();
-    virtual void unlock();
-    virtual void finish();
+    const char* get_name() const override;
 
-    AudioDriverALSA();
-    ~AudioDriverALSA();
+    String get_device() override;
+    void set_device(String new_name) override;
+    Array get_device_list() override;
+
+    int get_mix_rate() const override;
+    SpeakerMode get_speaker_mode() const override;
+
+    void lock() override;
+    void unlock() override;
+    void finish() override;
+
+private:
+    Mutex mutex;
+    Thread thread;
+
+    Vector<int32_t> internal_buffer;
+    Vector<int16_t> output_buffer;
+
+    String device_name{"Default"};
+    String new_device_name{"Default"};
+
+    snd_pcm_t* pcm_handle = nullptr;
+    int buffer_frames     = 0;
+    int buffer_size       = 0;
+    int period_size       = 0;
+    int channels          = 0;
+    int mix_rate          = 0;
+
+    bool active         = false;
+    bool thread_running = false;
+
+    Error initialize_device();
+    Error initialize_error(int status, const String& message);
+    void disconnect_device();
+
+    void playback_sound();
+    void get_output_bytes();
+    void clear_output_buffer();
+    void fill_internal_buffer();
+    void copy_internal_buffer_to_output_buffer();
+    void write_output_bytes();
+    Error change_output_device();
+
+    static void thread_function(void* user_data);
 };
 
 #endif // ALSA_ENABLED
