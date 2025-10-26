@@ -125,7 +125,7 @@ jobs:
 
       - name: Upload test logs
         if: ${{ matrix.test }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.cache-name }}-test-logs
           path: |
