@@ -84,7 +84,15 @@ Error AudioDriverPulseAudio::init() {
         return ERR_CANT_OPEN;
     }
 
-    initialize_output_device();
+    Error error = initialize_output_device();
+    if (error != OK) {
+        ERR_PRINT(
+            "PulseAudio: Failed to initialize the output "
+            "device!"
+        );
+        return error;
+    }
+
     thread.start(thread_function, this);
     return OK;
 }
