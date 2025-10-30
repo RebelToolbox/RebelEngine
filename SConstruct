@@ -58,14 +58,18 @@ methods.save_active_platforms(active_platforms, active_platform_ids)
 custom_tools = ["default"]
 
 platform_arg = ARGUMENTS.get("platform", ARGUMENTS.get("p", False))
-use_mingw = ARGUMENTS.get("use_mingw", False)
-
+msvc_installed = methods.is_msvc_installed()
+use_mingw = (
+    ARGUMENTS.get("use_mingw", False)
+    or (os.name == "nt" and not msvc_installed)
+    or (os.name == "posix" and platform_arg == "windows")
+)
 if platform_arg == "android":
     custom_tools = ["clang", "clang++", "as", "ar", "link"]
 elif platform_arg == "web":
     # Use generic POSIX build toolchain for Emscripten.
     custom_tools = ["cc", "c++", "ar", "link", "textfile", "zip"]
-elif use_mingw or (os.name == "posix" and platform_arg == "windows"):
+elif use_mingw:
     custom_tools = ["mingw"]
 
 # We let SCons build its default ENV as it includes OS-specific things which we don't
