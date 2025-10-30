@@ -291,21 +291,21 @@ jobs:
           cd ../../..
 
       - name: Upload Android Release APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: android-release-apk
           path: bin/android_release.apk
           retention-days: 1
 
       - name: Upload Android Debug APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: android-debug-apk
           path: bin/android_debug.apk
           retention-days: 1
 
       - name: Upload Android Project Template
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: android-template
           path: bin/android_template.zip
@@ -365,14 +365,14 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload macOS Editor App
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: macos-editor-app
           path: rebel-editor-macos-universal.zip
           retention-days: 1
 
       - name: Upload macOS Template App
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: macos-engine-app
           path: rebel-engine-macos-universal.zip
@@ -411,7 +411,7 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload iOS Template
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ios-template
           path: ios-template.zip
@@ -485,7 +485,7 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload Templates Zip File
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: rebel-templates
           path: rebel-templates.zip
@@ -538,7 +538,7 @@ jobs:
           cp artifacts/rebel-templates.zip release/rebel-templates-$version.tpz
 
       - name: Upload release ${{ env.version }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: rebel-${{ env.version }}
           path: release
