@@ -237,7 +237,7 @@ changes are marked with `// -- REBEL --` comments.
 ## mbedtls
 
 - Upstream: https://github.com/Mbed-TLS/mbedtls
-- Version: 3.6.4 (c765c831e5c2a0971410692f92f7a81d6ec65ec2, 2025)
+- Version: 3.6.5 (e185d7fd85499c8ce5ca2a54f5cf8fe7dbe3f8df, 2025)
 - License: Apache 2.0
 
 File extracted from upstream release tarball:
