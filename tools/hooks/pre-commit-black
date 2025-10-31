@@ -1,6 +1,12 @@
 #!/bin/sh
 # Git pre-commit hook that runs a black Python style check.
 
+if ! command -v black > /dev/null; then
+	echo "Error: 'black' executable not found."
+    echo "Please install black, and try again."
+	exit 1
+fi
+
 # The application and options.
 application_name="black"
 options=""
