@@ -397,9 +397,9 @@ no_pdb:
     if (need_manual_load_hook) {
         // For some reason if an assembly survived domain reloading (maybe
         // because it's referenced somewhere else), the mono internal search
-        // hook don't detect it, yet mono_image_open_from_data_with_name re-uses
-        // the image and assembly, and mono_assembly_load_from_full doesn't call
-        // the load hook. We need to call it manually.
+        // hook doesn't detect it, yet mono_image_open_from_data_with_name
+        // reuses the image and assembly, and mono_assembly_load_from_full
+        // doesn't call the load hook. We need to call it manually.
         String name = String::utf8(
             mono_assembly_name_get_name(mono_assembly_get_name(assembly))
         );
