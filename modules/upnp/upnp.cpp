@@ -6,9 +6,9 @@
 
 #include "upnp.h"
 
-#include <miniupnpc/miniwget.h>
-#include <miniupnpc/upnpcommands.h>
+#include <miniwget.h>
 #include <stdlib.h>
+#include <upnpcommands.h>
 
 bool UPNP::is_common_device(const String& dev) const {
     return dev.empty() || dev.find("InternetGatewayDevice") >= 0
@@ -136,8 +136,9 @@ void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev* devlist) {
         return;
     }
 
-    char addr[16];
-    int i = UPNP_GetValidIGD(devlist, urls, &data, (char*)&addr, 16);
+    char lan_addr[16];
+    char wan_addr[16];
+    int i = UPNP_GetValidIGD(devlist, urls, &data, lan_addr, 16, wan_addr, 16);
 
     if (i != 1) {
         FreeUPNPUrls(urls);
@@ -147,9 +148,12 @@ void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev* devlist) {
                 dev->set_igd_status(UPNPDevice::IGD_STATUS_NO_IGD);
                 return;
             case 2:
-                dev->set_igd_status(UPNPDevice::IGD_STATUS_DISCONNECTED);
+                dev->set_igd_status(UPNPDevice::IGD_STATUS_UNROUTABLE);
                 return;
             case 3:
+                dev->set_igd_status(UPNPDevice::IGD_STATUS_DISCONNECTED);
+                return;
+            case 4:
                 dev->set_igd_status(UPNPDevice::IGD_STATUS_UNKNOWN_DEVICE);
                 return;
             default:
@@ -166,7 +170,7 @@ void UPNP::parse_igd(Ref<UPNPDevice> dev, UPNPDev* devlist) {
 
     dev->set_igd_control_url(urls->controlURL);
     dev->set_igd_service_type(data.first.servicetype);
-    dev->set_igd_our_addr(addr);
+    dev->set_igd_our_addr(lan_addr);
     dev->set_igd_status(UPNPDevice::IGD_STATUS_OK);
 
     FreeUPNPUrls(urls);

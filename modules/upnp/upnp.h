@@ -4,13 +4,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_UPNP_H
-#define GODOT_UPNP_H
+#ifndef UPNP_H
+#define UPNP_H
 
 #include "core/reference.h"
 #include "upnp_device.h"
 
-#include <miniupnpc/miniupnpc.h>
+#include <miniupnpc.h>
 
 class UPNP : public Reference {
     GDCLASS(UPNP, Reference);
@@ -107,4 +107,4 @@ public:
 
 VARIANT_ENUM_CAST(UPNP::UPNPResult)
 
-#endif // GODOT_UPNP_H
+#endif // UPNP_H

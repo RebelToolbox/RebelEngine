@@ -10,27 +10,25 @@ env_upnp = env_modules.Clone()
 thirdparty_obj = []
 
 if env["builtin_miniupnpc"]:
-    thirdparty_dir = "#thirdparty/miniupnpc/"
+    thirdparty_dir = "#thirdparty/miniupnp/miniupnpc/"
     thirdparty_sources = [
+        "addr_is_reserved.c",
+        "connecthostport.c",
         "igd_desc_parse.c",
-        "miniupnpc.c",
-        "minixml.c",
         "minisoap.c",
         "minissdpc.c",
+        "miniupnpc.c",
         "miniwget.c",
+        "minixml.c",
+        "portlistingparse.c",
+        "receivedata.c",
         "upnpcommands.c",
         "upnpdev.c",
         "upnpreplyparse.c",
-        "connecthostport.c",
-        "portlistingparse.c",
-        "receivedata.c",
-        "addr_is_reserved.c",
     ]
-    thirdparty_sources = [
-        thirdparty_dir + "miniupnpc/" + file for file in thirdparty_sources
-    ]
+    thirdparty_sources = [thirdparty_dir + "src/" + file for file in thirdparty_sources]
 
-    env_upnp.Prepend(CPPPATH=[thirdparty_dir])
+    env_upnp.Prepend(CPPPATH=[thirdparty_dir + "include/"])
     env_upnp.Append(CPPDEFINES=["MINIUPNP_STATICLIB"])
     env_upnp.Append(CPPDEFINES=["MINIUPNPC_SET_SOCKET_TIMEOUT"])
 

@@ -4,8 +4,8 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef GODOT_UPNP_DEVICE_H
-#define GODOT_UPNP_DEVICE_H
+#ifndef UPNP_DEVICE_H
+#define UPNP_DEVICE_H
 
 #include "core/reference.h"
 
@@ -19,6 +19,7 @@ public:
         IGD_STATUS_HTTP_EMPTY,
         IGD_STATUS_NO_URLS,
         IGD_STATUS_NO_IGD,
+        IGD_STATUS_UNROUTABLE,
         IGD_STATUS_DISCONNECTED,
         IGD_STATUS_UNKNOWN_DEVICE,
         IGD_STATUS_INVALID_CONTROL,
@@ -72,4 +73,4 @@ private:
 
 VARIANT_ENUM_CAST(UPNPDevice::IGDStatus)
 
-#endif // GODOT_UPNP_DEVICE_H
+#endif // UPNP_DEVICE_H
