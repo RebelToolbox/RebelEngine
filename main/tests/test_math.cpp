@@ -107,7 +107,8 @@ class GetClassAndNamespace {
                                     error_str = "Unterminated comment";
                                     error     = true;
                                     return TK_ERROR;
-                                } else if (code[idx] == '*' && code[idx + 1] == '/') {
+                                } else if (code[idx] == '*'
+                                           && code[idx + 1] == '/') {
                                     idx += 2;
                                     break;
                                 } else if (code[idx] == '\n') {
@@ -225,7 +226,9 @@ class GetClassAndNamespace {
                         value          = number;
                         return TK_NUMBER;
 
-                    } else if ((code[idx] >= 'A' && code[idx] <= 'Z') || (code[idx] >= 'a' && code[idx] <= 'z') || code[idx] > 127) {
+                    } else if ((code[idx] >= 'A' && code[idx] <= 'Z')
+                               || (code[idx] >= 'a' && code[idx] <= 'z')
+                               || code[idx] > 127) {
                         String id;
 
                         while ((code[idx] >= 'A' && code[idx] <= 'Z')

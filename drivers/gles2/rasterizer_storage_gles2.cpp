@@ -3714,7 +3714,8 @@ void RasterizerStorageGLES2::multimesh_allocate(
 
     if (multimesh->custom_data_format == VS::MULTIMESH_CUSTOM_DATA_8BIT) {
         multimesh->custom_data_floats = 1;
-    } else if (multimesh->custom_data_format == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
+    } else if (multimesh->custom_data_format
+               == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
         multimesh->custom_data_floats = 4;
     } else {
         multimesh->custom_data_floats = 0;
@@ -3782,7 +3783,8 @@ void RasterizerStorageGLES2::multimesh_allocate(
 
             cu.colu                                         = 0;
             multimesh->data.write[i + custom_data_from + 0] = cu.colf;
-        } else if (multimesh->custom_data_format == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
+        } else if (multimesh->custom_data_format
+                   == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
             multimesh->data.write[i + custom_data_from + 0] = 0.0;
             multimesh->data.write[i + custom_data_from + 1] = 0.0;
             multimesh->data.write[i + custom_data_from + 2] = 0.0;
@@ -3967,7 +3969,8 @@ void RasterizerStorageGLES2::multimesh_instance_set_custom_data(
         data8[2]       = CLAMP(p_custom_data.b * 255.0, 0, 255);
         data8[3]       = CLAMP(p_custom_data.a * 255.0, 0, 255);
 
-    } else if (multimesh->custom_data_format == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
+    } else if (multimesh->custom_data_format
+               == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
         dataptr[0] = p_custom_data.r;
         dataptr[1] = p_custom_data.g;
         dataptr[2] = p_custom_data.b;
@@ -4125,7 +4128,8 @@ Color RasterizerStorageGLES2::multimesh_instance_get_custom_data(
 
         return Color::hex(BSWAP32(cu.colu));
 
-    } else if (multimesh->custom_data_format == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
+    } else if (multimesh->custom_data_format
+               == VS::MULTIMESH_CUSTOM_DATA_FLOAT) {
         Color c;
         c.r = dataptr[0];
         c.g = dataptr[1];

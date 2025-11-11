@@ -721,10 +721,12 @@ public class RebelFragment
                 }
             } else if (command_line[i].equals("--use_apk_expansion")) {
                 use_apk_expansion = true;
-            } else if (has_extra && command_line[i].equals("--apk_expansion_md5")) {
+            } else if (has_extra
+                       && command_line[i].equals("--apk_expansion_md5")) {
                 main_pack_md5 = command_line[i + 1];
                 i++;
-            } else if (has_extra && command_line[i].equals("--apk_expansion_key")) {
+            } else if (has_extra
+                       && command_line[i].equals("--apk_expansion_key")) {
                 main_pack_key           = command_line[i + 1];
                 SharedPreferences prefs = activity.getSharedPreferences(
                     "app_data_keys",

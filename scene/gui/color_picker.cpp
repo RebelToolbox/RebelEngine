@@ -565,7 +565,8 @@ void ColorPicker::_uv_input(const Ref<InputEvent>& p_event) {
             if (!deferred_mode_enabled) {
                 emit_signal("color_changed", color);
             }
-        } else if (deferred_mode_enabled && !bev->is_pressed() && bev->get_button_index() == BUTTON_LEFT) {
+        } else if (deferred_mode_enabled && !bev->is_pressed()
+                   && bev->get_button_index() == BUTTON_LEFT) {
             emit_signal("color_changed", color);
             changing_color = false;
         } else {
@@ -616,7 +617,8 @@ void ColorPicker::_w_input(const Ref<InputEvent>& p_event) {
         _update_color();
         if (!deferred_mode_enabled) {
             emit_signal("color_changed", color);
-        } else if (!bev->is_pressed() && bev->get_button_index() == BUTTON_LEFT) {
+        } else if (!bev->is_pressed()
+                   && bev->get_button_index() == BUTTON_LEFT) {
             emit_signal("color_changed", color);
         }
     }
@@ -660,7 +662,8 @@ void ColorPicker::_preset_input(const Ref<InputEvent>& p_event) {
             set_pick_color(presets[index]);
             _update_color();
             emit_signal("color_changed", color);
-        } else if (bev->is_pressed() && bev->get_button_index() == BUTTON_RIGHT && presets_enabled) {
+        } else if (bev->is_pressed() && bev->get_button_index() == BUTTON_RIGHT
+                   && presets_enabled) {
             index =
                 bev->get_position().x / (preset->get_size().x / presets.size());
             Color clicked_preset = presets[index];

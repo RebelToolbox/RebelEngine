@@ -1008,7 +1008,10 @@ Error MacOSEditorExportPlatform::export_project(
     String pkg_name;
     if (p_preset->get("application/name") != "") {
         pkg_name = p_preset->get("application/name"); // app_name
-    } else if (String(ProjectSettings::get_singleton()->get("application/config/name")) != "") {
+    } else if (String(ProjectSettings::get_singleton()->get(
+                   "application/config/name"
+               ))
+               != "") {
         pkg_name = String(
             ProjectSettings::get_singleton()->get("application/config/name")
         );

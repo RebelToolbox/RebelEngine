@@ -860,7 +860,8 @@ void EditorAssetLibrary::_image_update(
                 image->copy_internals_from(
                     Image::_png_mem_loader_func(r.ptr(), len)
                 );
-            } else if ((memcmp(&r[0], &jpg_signature[0], 3) == 0) && Image::_jpg_mem_loader_func) {
+            } else if ((memcmp(&r[0], &jpg_signature[0], 3) == 0)
+                       && Image::_jpg_mem_loader_func) {
                 image->copy_internals_from(
                     Image::_jpg_mem_loader_func(r.ptr(), len)
                 );

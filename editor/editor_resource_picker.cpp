@@ -646,7 +646,8 @@ bool EditorResourcePicker::_is_drop_valid(const Dictionary& p_drag_data) const {
         if (se) {
             res = se->get_edited_resource();
         }
-    } else if (drag_data.has("type") && String(drag_data["type"]) == "resource") {
+    } else if (drag_data.has("type")
+               && String(drag_data["type"]) == "resource") {
         res = drag_data["resource"];
     }
 
@@ -742,7 +743,8 @@ void EditorResourcePicker::drop_data_fw(
         if (se) {
             dropped_resource = se->get_edited_resource();
         }
-    } else if (drag_data.has("type") && String(drag_data["type"]) == "resource") {
+    } else if (drag_data.has("type")
+               && String(drag_data["type"]) == "resource") {
         dropped_resource = drag_data["resource"];
     }
 
@@ -1014,10 +1016,10 @@ void EditorResourcePicker::set_base_type(const String& p_base_type) {
             String class_str =
                 (custom_class == StringName() ? edited_resource->get_class()
                                               : vformat(
-                                                  "%s (%s)",
-                                                  custom_class,
-                                                  edited_resource->get_class()
-                                              ));
+                                                    "%s (%s)",
+                                                    custom_class,
+                                                    edited_resource->get_class()
+                                                ));
             WARN_PRINT(vformat(
                 "Value mismatch between the new base type of this "
                 "EditorResourcePicker, '%s', and the type of the value it "

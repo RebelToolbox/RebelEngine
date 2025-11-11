@@ -402,7 +402,9 @@ void TileMapEditor::_set_cell(
                    == TileSet::ATLAS_TILE)) {
         if (current != -1) {
             node->set_cell_autotile_coord(p_pos.x, p_pos.y, position);
-        } else if (node->get_tileset()->tile_get_tile_mode(p_value) == TileSet::ATLAS_TILE && priority_atlastile) {
+        } else if (node->get_tileset()->tile_get_tile_mode(p_value)
+                       == TileSet::ATLAS_TILE
+                   && priority_atlastile) {
             // BIND_CENTER is used to indicate that bitmask should not update
             // for this tile cell.
             node->get_tileset()->autotile_set_bitmask(
@@ -1014,7 +1016,8 @@ void TileMapEditor::_draw_cell(
     if (compatibility_mode_enabled && !centered_texture) {
         if (node->get_tile_origin() == TileMap::TILE_ORIGIN_TOP_LEFT) {
             rect.position += tile_ofs;
-        } else if (node->get_tile_origin() == TileMap::TILE_ORIGIN_BOTTOM_LEFT) {
+        } else if (node->get_tile_origin()
+                   == TileMap::TILE_ORIGIN_BOTTOM_LEFT) {
             rect.position += tile_ofs;
 
             if (p_transpose) {

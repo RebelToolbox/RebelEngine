@@ -451,7 +451,10 @@ bool CustomPropertyEditor::edit(
                 updating = false;
                 return false;
 
-            } else if (hint == PROPERTY_HINT_LAYERS_2D_PHYSICS || hint == PROPERTY_HINT_LAYERS_2D_RENDER || hint == PROPERTY_HINT_LAYERS_3D_PHYSICS || hint == PROPERTY_HINT_LAYERS_3D_RENDER) {
+            } else if (hint == PROPERTY_HINT_LAYERS_2D_PHYSICS
+                       || hint == PROPERTY_HINT_LAYERS_2D_RENDER
+                       || hint == PROPERTY_HINT_LAYERS_3D_PHYSICS
+                       || hint == PROPERTY_HINT_LAYERS_3D_RENDER) {
                 String basename;
                 switch (hint) {
                     case PROPERTY_HINT_LAYERS_2D_RENDER:
@@ -602,7 +605,8 @@ bool CustomPropertyEditor::edit(
                 names.push_back(TTR("Clear"));
                 config_action_buttons(names);
 
-            } else if (hint == PROPERTY_HINT_DIR || hint == PROPERTY_HINT_GLOBAL_DIR) {
+            } else if (hint == PROPERTY_HINT_DIR
+                       || hint == PROPERTY_HINT_GLOBAL_DIR) {
                 List<String> names;
                 names.push_back(TTR("Dir..."));
                 names.push_back(TTR("Clear"));
@@ -1349,7 +1353,8 @@ void CustomPropertyEditor::_action_pressed(int p_which) {
             if (hint == PROPERTY_HINT_MULTILINE_TEXT) {
                 hide();
 
-            } else if (hint == PROPERTY_HINT_FILE || hint == PROPERTY_HINT_GLOBAL_FILE) {
+            } else if (hint == PROPERTY_HINT_FILE
+                       || hint == PROPERTY_HINT_GLOBAL_FILE) {
                 if (p_which == 0) {
                     if (hint == PROPERTY_HINT_FILE) {
                         file->set_access(EditorFileDialog::ACCESS_RESOURCES);
@@ -1384,7 +1389,8 @@ void CustomPropertyEditor::_action_pressed(int p_which) {
                     hide();
                 }
 
-            } else if (hint == PROPERTY_HINT_DIR || hint == PROPERTY_HINT_GLOBAL_DIR) {
+            } else if (hint == PROPERTY_HINT_DIR
+                       || hint == PROPERTY_HINT_GLOBAL_DIR) {
                 if (p_which == 0) {
                     if (hint == PROPERTY_HINT_DIR) {
                         file->set_access(EditorFileDialog::ACCESS_RESOURCES);

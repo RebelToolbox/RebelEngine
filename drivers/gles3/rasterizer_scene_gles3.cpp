@@ -1628,7 +1628,8 @@ void RasterizerSceneGLES3::_setup_geometry(
                 // rebind shader
                 state.scene_shader.bind();
 #ifdef DEBUG_ENABLED
-            } else if (state.debug_draw == VS::VIEWPORT_DEBUG_DRAW_WIREFRAME && s->array_wireframe_id) {
+            } else if (state.debug_draw == VS::VIEWPORT_DEBUG_DRAW_WIREFRAME
+                       && s->array_wireframe_id) {
                 glBindVertexArray(s->array_wireframe_id
                 ); // everything is so easy nowadays
 #endif
@@ -3441,7 +3442,8 @@ void RasterizerSceneGLES3::_add_geometry_with_material(
         == RasterizerStorageGLES3::Shader::Spatial::CULL_MODE_DISABLED) {
         no_cull = true;
         mirror  = false;
-    } else if (p_material->shader->spatial.cull_mode == RasterizerStorageGLES3::Shader::Spatial::CULL_MODE_FRONT) {
+    } else if (p_material->shader->spatial.cull_mode
+               == RasterizerStorageGLES3::Shader::Spatial::CULL_MODE_FRONT) {
         mirror = !mirror;
     }
 
@@ -4021,7 +4023,8 @@ void RasterizerSceneGLES3::_setup_directional_light(
                     y += height;
                 }
 
-            } else if (li->light_ptr->directional_shadow_mode == VS::LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
+            } else if (li->light_ptr->directional_shadow_mode
+                       == VS::LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
                 height /= 2;
 
                 if (j != 0) {
@@ -6857,7 +6860,9 @@ void RasterizerSceneGLES3::render_scene(
     if (state.debug_draw == VS::VIEWPORT_DEBUG_DRAW_OVERDRAW) {
         clear_color                  = Color(0, 0, 0, 0);
         storage->frame.clear_request = false;
-    } else if (!probe && storage->frame.current_rt->flags[RasterizerStorage::RENDER_TARGET_TRANSPARENT]) {
+    } else if (!probe
+               && storage->frame.current_rt
+                      ->flags[RasterizerStorage::RENDER_TARGET_TRANSPARENT]) {
         clear_color                  = Color(0, 0, 0, 0);
         storage->frame.clear_request = false;
 
@@ -6986,7 +6991,8 @@ void RasterizerSceneGLES3::render_scene(
                             true
                         );
 
-                    } else if (feed->get_datatype() == CameraFeed::FEED_YCBCR_SEP) {
+                    } else if (feed->get_datatype()
+                               == CameraFeed::FEED_YCBCR_SEP) {
                         RID camera_Y =
                             feed->get_texture(CameraServer::FEED_Y_IMAGE);
                         RID camera_CbCr =
@@ -7514,7 +7520,8 @@ void RasterizerSceneGLES3::render_shadow(
                 y += height;
             }
 
-        } else if (light->directional_shadow_mode == VS::LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
+        } else if (light->directional_shadow_mode
+                   == VS::LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
             height /= 2;
 
             if (p_pass == 0) {

@@ -6854,7 +6854,8 @@ Control* VisualShaderNodePluginDefault::create_editor(
             Object::cast_to<EditorPropertyResource>(prop)
                 ->set_use_sub_inspector(false);
             prop->set_custom_minimum_size(Size2(100 * EDSCALE, 0));
-        } else if (Object::cast_to<EditorPropertyTransform>(prop) || Object::cast_to<EditorPropertyVector3>(prop)) {
+        } else if (Object::cast_to<EditorPropertyTransform>(prop)
+                   || Object::cast_to<EditorPropertyVector3>(prop)) {
             prop->set_custom_minimum_size(Size2(250 * EDSCALE, 0));
         } else if (Object::cast_to<EditorPropertyFloat>(prop)) {
             prop->set_custom_minimum_size(Size2(100 * EDSCALE, 0));

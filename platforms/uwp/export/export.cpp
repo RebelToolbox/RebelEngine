@@ -991,8 +991,8 @@ class EditorExportPlatformUWP : public EditorExportPlatform {
             "$display_name$",
             String(p_preset->get("package/display_name")).empty()
                 ? (String)ProjectSettings::get_singleton()->get(
-                    "application/config/name"
-                )
+                      "application/config/name"
+                  )
                 : String(p_preset->get("package/display_name"))
         );
 
@@ -1120,44 +1120,46 @@ class EditorExportPlatformUWP : public EditorExportPlatform {
             image = p_preset->get("images/store_logo").is_zero()
                       ? nullptr
                       : Object::cast_to<StreamTexture>(
-                          ((Object*)p_preset->get("images/store_logo"))
-                      );
+                            ((Object*)p_preset->get("images/store_logo"))
+                        );
         } else if (p_path.find("Square44x44Logo") != -1) {
             image = p_preset->get("images/square44x44_logo").is_zero()
                       ? nullptr
                       : Object::cast_to<StreamTexture>(
-                          ((Object*)p_preset->get("images/square44x44_logo"))
-                      );
+                            ((Object*)p_preset->get("images/square44x44_logo"))
+                        );
         } else if (p_path.find("Square71x71Logo") != -1) {
             image = p_preset->get("images/square71x71_logo").is_zero()
                       ? nullptr
                       : Object::cast_to<StreamTexture>(
-                          ((Object*)p_preset->get("images/square71x71_logo"))
-                      );
+                            ((Object*)p_preset->get("images/square71x71_logo"))
+                        );
         } else if (p_path.find("Square150x150Logo") != -1) {
-            image = p_preset->get("images/square150x150_logo").is_zero()
-                      ? nullptr
-                      : Object::cast_to<StreamTexture>(
+            image =
+                p_preset->get("images/square150x150_logo").is_zero()
+                    ? nullptr
+                    : Object::cast_to<StreamTexture>(
                           ((Object*)p_preset->get("images/square150x150_logo"))
                       );
         } else if (p_path.find("Square310x310Logo") != -1) {
-            image = p_preset->get("images/square310x310_logo").is_zero()
-                      ? nullptr
-                      : Object::cast_to<StreamTexture>(
+            image =
+                p_preset->get("images/square310x310_logo").is_zero()
+                    ? nullptr
+                    : Object::cast_to<StreamTexture>(
                           ((Object*)p_preset->get("images/square310x310_logo"))
                       );
         } else if (p_path.find("Wide310x150Logo") != -1) {
             image = p_preset->get("images/wide310x150_logo").is_zero()
                       ? nullptr
                       : Object::cast_to<StreamTexture>(
-                          ((Object*)p_preset->get("images/wide310x150_logo"))
-                      );
+                            ((Object*)p_preset->get("images/wide310x150_logo"))
+                        );
         } else if (p_path.find("SplashScreen") != -1) {
             image = p_preset->get("images/splash_screen").is_zero()
                       ? nullptr
                       : Object::cast_to<StreamTexture>(
-                          ((Object*)p_preset->get("images/splash_screen"))
-                      );
+                            ((Object*)p_preset->get("images/splash_screen"))
+                        );
         } else {
             ERR_PRINT("Unable to load logo");
         }

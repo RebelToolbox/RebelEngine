@@ -2920,7 +2920,8 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> state) {
                     }
                     attributes["WEIGHTS_0"] =
                         _encode_accessor_as_weights(state, attribs, true);
-                } else if ((a.size() / (JOINT_GROUP_SIZE * 2)) >= vertex_array.size()) {
+                } else if ((a.size() / (JOINT_GROUP_SIZE * 2))
+                           >= vertex_array.size()) {
                     int32_t vertex_count = vertex_array.size();
                     Vector<Color> weights_0;
                     weights_0.resize(vertex_count);
@@ -3667,7 +3668,8 @@ Error GLTFDocument::_parse_images(
                 if (texture.is_valid()) {
                     state->images.push_back(texture);
                     continue;
-                } else if (mimetype == "image/png" || mimetype == "image/jpeg") {
+                } else if (mimetype == "image/png"
+                           || mimetype == "image/jpeg") {
                     // Fallback to loading as byte array.
                     // This enables us to support the spec's requirement that we
                     // honor mimetype regardless of file URI.
@@ -4020,11 +4022,17 @@ Error GLTFDocument::_serialize_materials(Ref<GLTFState> state) {
                                     TEXTURE_CHANNEL_RED
                                 == ao_channel) {
                                 c.r = ao_image->get_pixel(w, h).r;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_GREEN == ao_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_GREEN
+                                       == ao_channel) {
                                 c.r = ao_image->get_pixel(w, h).g;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_BLUE == ao_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_BLUE
+                                       == ao_channel) {
                                 c.r = ao_image->get_pixel(w, h).b;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_ALPHA == ao_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_ALPHA
+                                       == ao_channel) {
                                 c.r = ao_image->get_pixel(w, h).a;
                             }
                             ao_image->lock();
@@ -4035,11 +4043,17 @@ Error GLTFDocument::_serialize_materials(Ref<GLTFState> state) {
                                     TEXTURE_CHANNEL_RED
                                 == roughness_channel) {
                                 c.g = roughness_image->get_pixel(w, h).r;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_GREEN == roughness_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_GREEN
+                                       == roughness_channel) {
                                 c.g = roughness_image->get_pixel(w, h).g;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_BLUE == roughness_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_BLUE
+                                       == roughness_channel) {
                                 c.g = roughness_image->get_pixel(w, h).b;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_ALPHA == roughness_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_ALPHA
+                                       == roughness_channel) {
                                 c.g = roughness_image->get_pixel(w, h).a;
                             }
                             roughness_image->unlock();
@@ -4050,11 +4064,17 @@ Error GLTFDocument::_serialize_materials(Ref<GLTFState> state) {
                                     TEXTURE_CHANNEL_RED
                                 == metalness_channel) {
                                 c.b = metallness_image->get_pixel(w, h).r;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_GREEN == metalness_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_GREEN
+                                       == metalness_channel) {
                                 c.b = metallness_image->get_pixel(w, h).g;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_BLUE == metalness_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_BLUE
+                                       == metalness_channel) {
                                 c.b = metallness_image->get_pixel(w, h).b;
-                            } else if (SpatialMaterial::TextureChannel::TEXTURE_CHANNEL_ALPHA == metalness_channel) {
+                            } else if (SpatialMaterial::TextureChannel::
+                                           TEXTURE_CHANNEL_ALPHA
+                                       == metalness_channel) {
                                 c.b = metallness_image->get_pixel(w, h).a;
                             }
                             metallness_image->unlock();
@@ -6615,7 +6635,8 @@ void GLTFDocument::_convert_mult_mesh_instance_to_gltf(
                     Vector3(scale.x, 0, scale.y)
                 );
                 transform = p_multi_mesh_instance->get_transform() * transform;
-            } else if (multi_mesh->get_transform_format() == MultiMesh::TRANSFORM_3D) {
+            } else if (multi_mesh->get_transform_format()
+                       == MultiMesh::TRANSFORM_3D) {
                 transform = p_multi_mesh_instance->get_transform()
                           * multi_mesh->get_instance_transform(instance_i);
             }
@@ -7611,9 +7632,11 @@ GLTFAnimation::Track GLTFDocument::_convert_animation_track(
         GLTFAnimation::INTERP_LINEAR;
     if (interpolation == Animation::InterpolationType::INTERPOLATION_LINEAR) {
         gltf_interpolation = GLTFAnimation::INTERP_LINEAR;
-    } else if (interpolation == Animation::InterpolationType::INTERPOLATION_NEAREST) {
+    } else if (interpolation
+               == Animation::InterpolationType::INTERPOLATION_NEAREST) {
         gltf_interpolation = GLTFAnimation::INTERP_STEP;
-    } else if (interpolation == Animation::InterpolationType::INTERPOLATION_CUBIC) {
+    } else if (interpolation
+               == Animation::InterpolationType::INTERPOLATION_CUBIC) {
         gltf_interpolation = GLTFAnimation::INTERP_CUBIC_SPLINE;
     }
     Animation::TrackType track_type = p_animation->track_get_type(p_track_i);
@@ -8016,9 +8039,13 @@ void GLTFDocument::_convert_animation(
                     if (interpolation
                         == Animation::InterpolationType::INTERPOLATION_LINEAR) {
                         gltf_interpolation = GLTFAnimation::INTERP_LINEAR;
-                    } else if (interpolation == Animation::InterpolationType::INTERPOLATION_NEAREST) {
+                    } else if (interpolation
+                               == Animation::InterpolationType::
+                                   INTERPOLATION_NEAREST) {
                         gltf_interpolation = GLTFAnimation::INTERP_STEP;
-                    } else if (interpolation == Animation::InterpolationType::INTERPOLATION_CUBIC) {
+                    } else if (interpolation
+                               == Animation::InterpolationType::
+                                   INTERPOLATION_CUBIC) {
                         gltf_interpolation = GLTFAnimation::INTERP_CUBIC_SPLINE;
                     }
                     int32_t key_count =

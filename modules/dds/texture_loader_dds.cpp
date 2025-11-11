@@ -161,36 +161,65 @@ RES ResourceFormatDDS::load(
 
     if (format_flags & DDPF_FOURCC && format_fourcc == PF_FOURCC("DXT1")) {
         dds_format = DDS_DXT1;
-    } else if (format_flags & DDPF_FOURCC && format_fourcc == PF_FOURCC("DXT3")) {
+    } else if (format_flags & DDPF_FOURCC
+               && format_fourcc == PF_FOURCC("DXT3")) {
         dds_format = DDS_DXT3;
 
-    } else if (format_flags & DDPF_FOURCC && format_fourcc == PF_FOURCC("DXT5")) {
+    } else if (format_flags & DDPF_FOURCC
+               && format_fourcc == PF_FOURCC("DXT5")) {
         dds_format = DDS_DXT5;
-    } else if (format_flags & DDPF_FOURCC && format_fourcc == PF_FOURCC("ATI1")) {
+    } else if (format_flags & DDPF_FOURCC
+               && format_fourcc == PF_FOURCC("ATI1")) {
         dds_format = DDS_ATI1;
-    } else if (format_flags & DDPF_FOURCC && format_fourcc == PF_FOURCC("ATI2")) {
+    } else if (format_flags & DDPF_FOURCC
+               && format_fourcc == PF_FOURCC("ATI2")) {
         dds_format = DDS_ATI2;
-    } else if (format_flags & DDPF_FOURCC && format_fourcc == PF_FOURCC("A2XY")) {
+    } else if (format_flags & DDPF_FOURCC
+               && format_fourcc == PF_FOURCC("A2XY")) {
         dds_format = DDS_A2XY;
 
-    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS && format_rgb_bits == 32 && format_red_mask == 0xff0000 && format_green_mask == 0xff00 && format_blue_mask == 0xff && format_alpha_mask == 0xff000000) {
+    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS
+               && format_rgb_bits == 32 && format_red_mask == 0xff0000
+               && format_green_mask == 0xff00 && format_blue_mask == 0xff
+               && format_alpha_mask == 0xff000000) {
         dds_format = DDS_BGRA8;
-    } else if (format_flags & DDPF_RGB && !(format_flags & DDPF_ALPHAPIXELS) && format_rgb_bits == 24 && format_red_mask == 0xff0000 && format_green_mask == 0xff00 && format_blue_mask == 0xff) {
+    } else if (format_flags & DDPF_RGB && !(format_flags & DDPF_ALPHAPIXELS)
+               && format_rgb_bits == 24 && format_red_mask == 0xff0000
+               && format_green_mask == 0xff00 && format_blue_mask == 0xff) {
         dds_format = DDS_BGR8;
-    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS && format_rgb_bits == 32 && format_red_mask == 0xff && format_green_mask == 0xff00 && format_blue_mask == 0xff0000 && format_alpha_mask == 0xff000000) {
+    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS
+               && format_rgb_bits == 32 && format_red_mask == 0xff
+               && format_green_mask == 0xff00 && format_blue_mask == 0xff0000
+               && format_alpha_mask == 0xff000000) {
         dds_format = DDS_RGBA8;
-    } else if (format_flags & DDPF_RGB && !(format_flags & DDPF_ALPHAPIXELS) && format_rgb_bits == 24 && format_red_mask == 0xff && format_green_mask == 0xff00 && format_blue_mask == 0xff0000) {
+    } else if (format_flags & DDPF_RGB && !(format_flags & DDPF_ALPHAPIXELS)
+               && format_rgb_bits == 24 && format_red_mask == 0xff
+               && format_green_mask == 0xff00 && format_blue_mask == 0xff0000) {
         dds_format = DDS_RGB8;
 
-    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS && format_rgb_bits == 16 && format_red_mask == 0x00007c00 && format_green_mask == 0x000003e0 && format_blue_mask == 0x0000001f && format_alpha_mask == 0x00008000) {
+    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS
+               && format_rgb_bits == 16 && format_red_mask == 0x00007c00
+               && format_green_mask == 0x000003e0
+               && format_blue_mask == 0x0000001f
+               && format_alpha_mask == 0x00008000) {
         dds_format = DDS_BGR5A1;
-    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS && format_rgb_bits == 32 && format_red_mask == 0x3ff00000 && format_green_mask == 0xffc00 && format_blue_mask == 0x3ff && format_alpha_mask == 0xc0000000) {
+    } else if (format_flags & DDPF_RGB && format_flags & DDPF_ALPHAPIXELS
+               && format_rgb_bits == 32 && format_red_mask == 0x3ff00000
+               && format_green_mask == 0xffc00 && format_blue_mask == 0x3ff
+               && format_alpha_mask == 0xc0000000) {
         dds_format = DDS_BGR10A2;
-    } else if (format_flags & DDPF_RGB && !(format_flags & DDPF_ALPHAPIXELS) && format_rgb_bits == 16 && format_red_mask == 0x0000f800 && format_green_mask == 0x000007e0 && format_blue_mask == 0x0000001f) {
+    } else if (format_flags & DDPF_RGB && !(format_flags & DDPF_ALPHAPIXELS)
+               && format_rgb_bits == 16 && format_red_mask == 0x0000f800
+               && format_green_mask == 0x000007e0
+               && format_blue_mask == 0x0000001f) {
         dds_format = DDS_BGR565;
-    } else if (!(format_flags & DDPF_ALPHAPIXELS) && format_rgb_bits == 8 && format_red_mask == 0xff && format_green_mask == 0xff && format_blue_mask == 0xff) {
+    } else if (!(format_flags & DDPF_ALPHAPIXELS) && format_rgb_bits == 8
+               && format_red_mask == 0xff && format_green_mask == 0xff
+               && format_blue_mask == 0xff) {
         dds_format = DDS_LUMINANCE;
-    } else if ((format_flags & DDPF_ALPHAPIXELS) && format_rgb_bits == 16 && format_red_mask == 0xff && format_green_mask == 0xff && format_blue_mask == 0xff && format_alpha_mask == 0xff00) {
+    } else if ((format_flags & DDPF_ALPHAPIXELS) && format_rgb_bits == 16
+               && format_red_mask == 0xff && format_green_mask == 0xff
+               && format_blue_mask == 0xff && format_alpha_mask == 0xff00) {
         dds_format = DDS_LUMINANCE_ALPHA;
     } else if (format_flags & DDPF_INDEXED && format_rgb_bits == 8) {
         dds_format = DDS_BGR565;

@@ -176,7 +176,8 @@ PoolStringArray get_code_completion(
                         directories.push_back(
                             dir_access->get_current_dir().plus_file(filename)
                         );
-                    } else if (filename.ends_with(".tscn") || filename.ends_with(".scn")) {
+                    } else if (filename.ends_with(".tscn")
+                               || filename.ends_with(".scn")) {
                         suggestions.push_back(quoted(
                             dir_access->get_current_dir().plus_file(filename)
                         ));

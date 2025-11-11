@@ -57,7 +57,10 @@ void GroupDialog::_load_nodes(Node* p_current) {
         } else {
             keep = false;
         }
-    } else if (keep && add_filter->get_text().is_subsequence_ofi(String(p_current->get_name()))) {
+    } else if (keep
+               && add_filter->get_text().is_subsequence_ofi(
+                   String(p_current->get_name())
+               )) {
         node = nodes_to_add->create_item(add_node_root);
         keep = true;
     } else {

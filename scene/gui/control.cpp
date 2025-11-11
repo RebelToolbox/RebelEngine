@@ -2997,11 +2997,14 @@ void Control::get_argument_options(
         if (pf == "add_color_override" || pf == "has_color"
             || pf == "has_color_override" || pf == "get_color") {
             Theme::get_default()->get_color_list(get_class(), &sn);
-        } else if (pf == "add_style_override" || pf == "has_style" || pf == "has_style_override" || pf == "get_style") {
+        } else if (pf == "add_style_override" || pf == "has_style"
+                   || pf == "has_style_override" || pf == "get_style") {
             Theme::get_default()->get_stylebox_list(get_class(), &sn);
-        } else if (pf == "add_font_override" || pf == "has_font" || pf == "has_font_override" || pf == "get_font") {
+        } else if (pf == "add_font_override" || pf == "has_font"
+                   || pf == "has_font_override" || pf == "get_font") {
             Theme::get_default()->get_font_list(get_class(), &sn);
-        } else if (pf == "add_constant_override" || pf == "has_constant" || pf == "has_constant_override" || pf == "get_constant") {
+        } else if (pf == "add_constant_override" || pf == "has_constant"
+                   || pf == "has_constant_override" || pf == "get_constant") {
             Theme::get_default()->get_constant_list(get_class(), &sn);
         }
 

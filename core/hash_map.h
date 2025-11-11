@@ -126,7 +126,9 @@ private:
                 new_hash_table_power++;
             }
 
-        } else if ((hash_table_power > (int)MIN_HASH_TABLE_POWER) && ((int)elements < ((1 << (hash_table_power - 1)) * RELATIONSHIP))) {
+        } else if ((hash_table_power > (int)MIN_HASH_TABLE_POWER)
+                   && ((int)elements
+                       < ((1 << (hash_table_power - 1)) * RELATIONSHIP))) {
             /* rehash down */
             new_hash_table_power = hash_table_power - 1;
 

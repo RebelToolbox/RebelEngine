@@ -98,8 +98,7 @@ bool JavaClass::_call_method(
                                 // could be faster
                                 jclass c           = env->FindClass(E->get()
                                                               .param_sigs[i]
-                                                              .
-                                                              operator String()
+                                                              .operator String()
                                                               .utf8()
                                                               .get_data());
                                 if (!c || !env->IsInstanceOf(jo->instance, c)) {

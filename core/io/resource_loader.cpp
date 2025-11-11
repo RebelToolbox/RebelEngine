@@ -120,8 +120,7 @@ public:
     Ref<Resource> resource;
 
     virtual void set_local_path(const String& p_local_path
-    ) { /*scene->set_filename(p_local_path);*/
-    }
+    ) { /*scene->set_filename(p_local_path);*/ }
 
     virtual Ref<Resource> get_resource() {
         return resource;

@@ -514,7 +514,8 @@ ShaderLanguage::Token ShaderLanguage::_get_token() {
                                 );
                             }
                         } else if (hexa_found && _is_hex(GETCHAR(i))) {
-                        } else if ((GETCHAR(i) == '-' || GETCHAR(i) == '+') && exponent_found) {
+                        } else if ((GETCHAR(i) == '-' || GETCHAR(i) == '+')
+                                   && exponent_found) {
                             if (sign_found) {
                                 return _make_token(
                                     TK_ERROR,
@@ -541,7 +542,8 @@ ShaderLanguage::Token ShaderLanguage::_get_token() {
                                 "Invalid (hexadecimal) numeric constant"
                             );
                         }
-                    } else if (period_found || exponent_found || float_suffix_found) {
+                    } else if (period_found || exponent_found
+                               || float_suffix_found) {
                         // floats
                         if (period_found) {
                             if (float_suffix_found) {
@@ -1110,13 +1112,16 @@ bool ShaderLanguage::_validate_operator(
             } else if (na == TYPE_FLOAT && nb == TYPE_MAT4) {
                 valid    = true;
                 ret_type = TYPE_MAT4;
-            } else if (p_op->op == OP_MUL && na == TYPE_VEC2 && nb == TYPE_MAT2) {
+            } else if (p_op->op == OP_MUL && na == TYPE_VEC2
+                       && nb == TYPE_MAT2) {
                 valid    = true;
                 ret_type = TYPE_VEC2;
-            } else if (p_op->op == OP_MUL && na == TYPE_VEC3 && nb == TYPE_MAT3) {
+            } else if (p_op->op == OP_MUL && na == TYPE_VEC3
+                       && nb == TYPE_MAT3) {
                 valid    = true;
                 ret_type = TYPE_VEC3;
-            } else if (p_op->op == OP_MUL && na == TYPE_VEC4 && nb == TYPE_MAT4) {
+            } else if (p_op->op == OP_MUL && na == TYPE_VEC4
+                       && nb == TYPE_MAT4) {
                 valid    = true;
                 ret_type = TYPE_VEC4;
             }
@@ -1289,13 +1294,16 @@ bool ShaderLanguage::_validate_operator(
             } else if (na == TYPE_MAT4 && nb == TYPE_FLOAT) {
                 valid    = true;
                 ret_type = TYPE_MAT4;
-            } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC2 && nb == TYPE_MAT2) {
+            } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC2
+                       && nb == TYPE_MAT2) {
                 valid    = true;
                 ret_type = TYPE_VEC2;
-            } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC3 && nb == TYPE_MAT3) {
+            } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC3
+                       && nb == TYPE_MAT3) {
                 valid    = true;
                 ret_type = TYPE_VEC3;
-            } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC4 && nb == TYPE_MAT4) {
+            } else if (p_op->op == OP_ASSIGN_MUL && na == TYPE_VEC4
+                       && nb == TYPE_MAT4) {
                 valid    = true;
                 ret_type = TYPE_VEC4;
             }
@@ -1394,7 +1402,7 @@ bool ShaderLanguage::_validate_operator(
 }
 
 const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
-  // constructors
+    // constructors
     {"bool",             TYPE_BOOL,  {TYPE_BOOL, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"bvec2",            TYPE_BVEC2, {TYPE_BOOL, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"bvec2",            TYPE_BVEC2, {TYPE_BOOL, TYPE_BOOL, TYPE_VOID},                                  TAG_GLOBAL, false},
@@ -1518,7 +1526,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"mat3",             TYPE_MAT3,  {TYPE_FLOAT, TYPE_VOID},                                            TAG_GLOBAL, false},
     {"mat4",             TYPE_MAT4,  {TYPE_FLOAT, TYPE_VOID},                                            TAG_GLOBAL, false},
 
- // conversion scalars
+    // conversion scalars
 
     {"int",              TYPE_INT,   {TYPE_BOOL, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"int",              TYPE_INT,   {TYPE_INT, TYPE_VOID},                                              TAG_GLOBAL, false},
@@ -1540,7 +1548,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"bool",             TYPE_BOOL,  {TYPE_UINT, TYPE_VOID},                                             TAG_GLOBAL, true },
     {"bool",             TYPE_BOOL,  {TYPE_FLOAT, TYPE_VOID},                                            TAG_GLOBAL, false},
 
- // conversion vectors
+    // conversion vectors
 
     {"ivec2",            TYPE_IVEC2, {TYPE_BVEC2, TYPE_VOID},                                            TAG_GLOBAL, false},
     {"ivec2",            TYPE_IVEC2, {TYPE_IVEC2, TYPE_VOID},                                            TAG_GLOBAL, false},
@@ -1602,7 +1610,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"bvec4",            TYPE_BVEC4, {TYPE_UVEC4, TYPE_VOID},                                            TAG_GLOBAL, true },
     {"bvec4",            TYPE_BVEC4, {TYPE_VEC4, TYPE_VOID},                                             TAG_GLOBAL, false},
 
- // conversion between matrixes
+    // conversion between matrixes
 
     {"mat2",             TYPE_MAT2,  {TYPE_MAT3, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"mat2",             TYPE_MAT2,  {TYPE_MAT4, TYPE_VOID},                                             TAG_GLOBAL, false},
@@ -1611,7 +1619,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"mat4",             TYPE_MAT4,  {TYPE_MAT2, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"mat4",             TYPE_MAT4,  {TYPE_MAT3, TYPE_VOID},                                             TAG_GLOBAL, false},
 
- // builtins - trigonometry
+    // builtins - trigonometry
 
     {"radians",          TYPE_FLOAT, {TYPE_FLOAT, TYPE_VOID},                                            TAG_GLOBAL, false},
     {"radians",          TYPE_VEC2,  {TYPE_VEC2, TYPE_VOID},                                             TAG_GLOBAL, false},
@@ -1688,7 +1696,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"atanh",            TYPE_VEC3,  {TYPE_VEC3, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"atanh",            TYPE_VEC4,  {TYPE_VEC4, TYPE_VOID},                                             TAG_GLOBAL, false},
 
- // builtins - exponential
+    // builtins - exponential
     {"pow",              TYPE_FLOAT, {TYPE_FLOAT, TYPE_FLOAT, TYPE_VOID},                                TAG_GLOBAL, false},
     {"pow",              TYPE_VEC2,  {TYPE_VEC2, TYPE_VEC2, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"pow",              TYPE_VEC3,  {TYPE_VEC3, TYPE_VEC3, TYPE_VOID},                                  TAG_GLOBAL, false},
@@ -1717,7 +1725,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"inversesqrt",      TYPE_VEC2,  {TYPE_VEC2, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"inversesqrt",      TYPE_VEC3,  {TYPE_VEC3, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"inversesqrt",      TYPE_VEC4,  {TYPE_VEC4, TYPE_VOID},                                             TAG_GLOBAL, false},
- // builtins - common
+    // builtins - common
     {"abs",              TYPE_FLOAT, {TYPE_FLOAT, TYPE_VOID},                                            TAG_GLOBAL, false},
     {"abs",              TYPE_VEC2,  {TYPE_VEC2, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"abs",              TYPE_VEC3,  {TYPE_VEC3, TYPE_VOID},                                             TAG_GLOBAL, false},
@@ -1981,7 +1989,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"uintBitsToFloat",  TYPE_VEC3,  {TYPE_UVEC3, TYPE_VOID},                                            TAG_GLOBAL, true },
     {"uintBitsToFloat",  TYPE_VEC4,  {TYPE_UVEC4, TYPE_VOID},                                            TAG_GLOBAL, true },
 
- // builtins - geometric
+    // builtins - geometric
     {"length",           TYPE_FLOAT, {TYPE_VEC2, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"length",           TYPE_FLOAT, {TYPE_VEC3, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"length",           TYPE_FLOAT, {TYPE_VEC4, TYPE_VOID},                                             TAG_GLOBAL, false},
@@ -2246,7 +2254,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"not",              TYPE_BVEC3, {TYPE_BVEC3, TYPE_VOID},                                            TAG_GLOBAL, false},
     {"not",              TYPE_BVEC4, {TYPE_BVEC4, TYPE_VOID},                                            TAG_GLOBAL, false},
 
- // builtins - texture
+    // builtins - texture
     {"textureSize",
      TYPE_IVEC2,                     {TYPE_SAMPLER2D, TYPE_INT, TYPE_VOID},
      TAG_GLOBAL,                                                                                                     true },
@@ -2545,9 +2553,9 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"fwidth",           TYPE_VEC3,  {TYPE_VEC3, TYPE_VOID},                                             TAG_GLOBAL, true },
     {"fwidth",           TYPE_VEC4,  {TYPE_VEC4, TYPE_VOID},                                             TAG_GLOBAL, true },
 
- // sub-functions
+    // sub-functions
 
-  // array
+    // array
     {"length",           TYPE_INT,   {TYPE_VOID},                                                        TAG_ARRAY,  true },
 
     {nullptr,            TYPE_VOID,  {TYPE_VOID},                                                        TAG_GLOBAL, false}
@@ -2555,7 +2563,7 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
 
 const ShaderLanguage::BuiltinFuncOutArgs
     ShaderLanguage::builtin_func_out_args[] = {
-  // constructors
+        // constructors
         {"modf",  1},
         {nullptr, 0}
 };
@@ -2574,8 +2582,7 @@ bool ShaderLanguage::_validate_function_call(
     ERR_FAIL_COND_V(p_func->arguments[0]->type != Node::TYPE_VARIABLE, false);
 
     StringName name = static_cast<VariableNode*>(p_func->arguments[0])
-                          ->name.
-                          operator String();
+                          ->name.operator String();
 
     for (int i = 1; i < p_func->arguments.size(); i++) {
         args.push_back(p_func->arguments[i]->get_datatype());
@@ -3922,8 +3929,8 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                             + (n->get_datatype() == TYPE_STRUCT
                                                    ? n->get_datatype_name()
                                                    : get_datatype_name(
-                                                       n->get_datatype()
-                                                   ))
+                                                         n->get_datatype()
+                                                     ))
                                             + "' to '"
                                             + (type == TYPE_STRUCT
                                                    ? struct_name
@@ -3937,10 +3944,14 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                     if (tk.type == TK_COMMA) {
                                         an->initializer.push_back(n);
                                         continue;
-                                    } else if (!auto_size && tk.type == TK_PARENTHESIS_CLOSE) {
+                                    } else if (!auto_size
+                                               && tk.type
+                                                      == TK_PARENTHESIS_CLOSE) {
                                         an->initializer.push_back(n);
                                         break;
-                                    } else if (auto_size && tk.type == TK_CURLY_BRACKET_CLOSE) {
+                                    } else if (auto_size
+                                               && tk.type
+                                                      == TK_CURLY_BRACKET_CLOSE) {
                                         an->initializer.push_back(n);
                                         break;
                                     } else {
@@ -3977,12 +3988,12 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                     nexpr->get_datatype() == TYPE_STRUCT
                                         ? nexpr->get_datatype_name()
                                         : get_datatype_name(nexpr->get_datatype(
-                                        ));
+                                          ));
                                 String type_name2 =
                                     node->get_datatype() == TYPE_STRUCT
                                         ? node->get_datatype_name()
                                         : get_datatype_name(node->get_datatype()
-                                        );
+                                          );
                                 _set_error(
                                     "Invalid assignment of '" + type_name
                                     + "' to '" + type_name2 + "'"
@@ -4101,14 +4112,16 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                         if (n->type == Node::TYPE_CONSTANT
                                             || n->type == Node::TYPE_OPERATOR) {
                                             error = true;
-                                        } else if (n->type == Node::TYPE_ARRAY) {
+                                        } else if (n->type
+                                                   == Node::TYPE_ARRAY) {
                                             ArrayNode* an =
                                                 static_cast<ArrayNode*>(n);
                                             if (an->call_expression != nullptr
                                                 || an->is_const) {
                                                 error = true;
                                             }
-                                        } else if (n->type == Node::TYPE_VARIABLE) {
+                                        } else if (n->type
+                                                   == Node::TYPE_VARIABLE) {
                                             VariableNode* vn =
                                                 static_cast<VariableNode*>(n);
                                             if (vn->is_const) {
@@ -4384,7 +4397,9 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
             }
         } else if (tk.type == TK_OP_ADD) {
             continue; // this one does nothing
-        } else if (tk.type == TK_OP_SUB || tk.type == TK_OP_NOT || tk.type == TK_OP_BIT_INVERT || tk.type == TK_OP_INCREMENT || tk.type == TK_OP_DECREMENT) {
+        } else if (tk.type == TK_OP_SUB || tk.type == TK_OP_NOT
+                   || tk.type == TK_OP_BIT_INVERT || tk.type == TK_OP_INCREMENT
+                   || tk.type == TK_OP_DECREMENT) {
             Expression e;
             e.is_op = true;
 
@@ -4862,7 +4877,8 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                     return nullptr;
                 }
 
-            } else if (tk.type == TK_OP_INCREMENT || tk.type == TK_OP_DECREMENT) {
+            } else if (tk.type == TK_OP_INCREMENT
+                       || tk.type == TK_OP_DECREMENT) {
                 OperatorNode* op = alloc_node<OperatorNode>();
                 op->op = tk.type == TK_OP_DECREMENT ? OP_POST_DECREMENT
                                                     : OP_POST_INCREMENT;
@@ -5482,7 +5498,8 @@ Error ShaderLanguage::_parse_block(
 
             return OK;
 
-        } else if (tk.type == TK_CONST || is_token_precision(tk.type) || is_token_nonvoid_datatype(tk.type) || is_struct) {
+        } else if (tk.type == TK_CONST || is_token_precision(tk.type)
+                   || is_token_nonvoid_datatype(tk.type) || is_struct) {
             String struct_name = "";
             if (is_struct) {
                 struct_name = tk.text;
@@ -5804,8 +5821,8 @@ Error ShaderLanguage::_parse_block(
                                         + (n->get_datatype() == TYPE_STRUCT
                                                ? n->get_datatype_name()
                                                : get_datatype_name(
-                                                   n->get_datatype()
-                                               ))
+                                                     n->get_datatype()
+                                                 ))
                                         + "' to '"
                                         + (var.type == TYPE_STRUCT
                                                ? struct_name
@@ -5819,10 +5836,13 @@ Error ShaderLanguage::_parse_block(
                                 if (tk.type == TK_COMMA) {
                                     decl.initializer.push_back(n);
                                     continue;
-                                } else if (!curly && tk.type == TK_PARENTHESIS_CLOSE) {
+                                } else if (!curly
+                                           && tk.type == TK_PARENTHESIS_CLOSE) {
                                     decl.initializer.push_back(n);
                                     break;
-                                } else if (curly && tk.type == TK_CURLY_BRACKET_CLOSE) {
+                                } else if (curly
+                                           && tk.type
+                                                  == TK_CURLY_BRACKET_CLOSE) {
                                     decl.initializer.push_back(n);
                                     break;
                                 } else {
@@ -5837,7 +5857,8 @@ Error ShaderLanguage::_parse_block(
                             if (unknown_size) {
                                 decl.size      = decl.initializer.size();
                                 var.array_size = decl.initializer.size();
-                            } else if (decl.initializer.size() != var.array_size) {
+                            } else if (decl.initializer.size()
+                                       != var.array_size) {
                                 _set_error("Array size mismatch");
                                 return ERR_PARSE_ERROR;
                             }
@@ -6396,8 +6417,8 @@ Error ShaderLanguage::_parse_block(
                         + (return_struct_name != ""
                                ? return_struct_name
                                : get_datatype_name(
-                                   b->parent_function->return_type
-                               ))
+                                     b->parent_function->return_type
+                                 ))
                         + "'"
                     );
                     return ERR_PARSE_ERROR;
@@ -6417,8 +6438,8 @@ Error ShaderLanguage::_parse_block(
                         + (return_struct_name != ""
                                ? return_struct_name
                                : get_datatype_name(
-                                   b->parent_function->return_type
-                               ))
+                                     b->parent_function->return_type
+                                 ))
                         + "'"
                     );
                     return ERR_PARSE_ERROR;
@@ -7274,7 +7295,8 @@ Error ShaderLanguage::_parse_shader(
                             if (tk.type == TK_BRACKET_CLOSE) {
                                 unknown_size = true;
                                 tk           = _get_token();
-                            } else if (tk.type == TK_INT_CONSTANT && ((int)tk.constant) > 0) {
+                            } else if (tk.type == TK_INT_CONSTANT
+                                       && ((int)tk.constant) > 0) {
                                 constant.array_size = (int)tk.constant;
                                 tk                  = _get_token();
                                 if (tk.type != TK_BRACKET_CLOSE) {
@@ -7499,14 +7521,14 @@ Error ShaderLanguage::_parse_shader(
                                                            == TYPE_STRUCT
                                                        ? n->get_datatype_name()
                                                        : get_datatype_name(
-                                                           n->get_datatype()
-                                                       ))
+                                                             n->get_datatype()
+                                                         ))
                                                 + "' to '"
                                                 + (is_struct
                                                        ? String(struct_name)
                                                        : get_datatype_name(
-                                                           constant.type
-                                                       ))
+                                                             constant.type
+                                                         ))
                                                 + "'"
                                             );
                                             return ERR_PARSE_ERROR;
@@ -7516,10 +7538,14 @@ Error ShaderLanguage::_parse_shader(
                                         if (tk.type == TK_COMMA) {
                                             decl.initializer.push_back(n);
                                             continue;
-                                        } else if (!curly && tk.type == TK_PARENTHESIS_CLOSE) {
+                                        } else if (!curly
+                                                   && tk.type
+                                                          == TK_PARENTHESIS_CLOSE) {
                                             decl.initializer.push_back(n);
                                             break;
-                                        } else if (curly && tk.type == TK_CURLY_BRACKET_CLOSE) {
+                                        } else if (curly
+                                                   && tk.type
+                                                          == TK_CURLY_BRACKET_CLOSE) {
                                             decl.initializer.push_back(n);
                                             break;
                                         } else {
@@ -7537,7 +7563,8 @@ Error ShaderLanguage::_parse_shader(
                                         decl.size = decl.initializer.size();
                                         constant.array_size =
                                             decl.initializer.size();
-                                    } else if (decl.initializer.size() != constant.array_size) {
+                                    } else if (decl.initializer.size()
+                                               != constant.array_size) {
                                         _set_error("Array size mismatch");
                                         return ERR_PARSE_ERROR;
                                     }
@@ -7583,8 +7610,8 @@ Error ShaderLanguage::_parse_shader(
                                         + (expr->get_datatype() == TYPE_STRUCT
                                                ? expr->get_datatype_name()
                                                : get_datatype_name(
-                                                   expr->get_datatype()
-                                               ))
+                                                     expr->get_datatype()
+                                                 ))
                                         + "' to '"
                                         + (is_struct ? String(struct_name)
                                                      : get_datatype_name(type))

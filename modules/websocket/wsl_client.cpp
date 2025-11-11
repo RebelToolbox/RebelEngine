@@ -301,7 +301,8 @@ void WSLClient::poll() {
                 }
                 if (ssl->get_status() == StreamPeerSSL::STATUS_HANDSHAKING) {
                     return; // Need more polling.
-                } else if (ssl->get_status() != StreamPeerSSL::STATUS_CONNECTED) {
+                } else if (ssl->get_status()
+                           != StreamPeerSSL::STATUS_CONNECTED) {
                     disconnect_from_host();
                     _on_error();
                     return; // Error.

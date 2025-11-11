@@ -786,7 +786,9 @@ void ScriptTextEditor::_validate_script() {
             if (safe_lines.has(i + 1)) {
                 te->set_line_as_safe(i, true);
                 last_is_safe = true;
-            } else if (last_is_safe && (te->is_line_comment(i) || te->get_line(i).strip_edges().empty())) {
+            } else if (last_is_safe
+                       && (te->is_line_comment(i)
+                           || te->get_line(i).strip_edges().empty())) {
                 te->set_line_as_safe(i, true);
             } else {
                 te->set_line_as_safe(i, false);
@@ -1122,7 +1124,15 @@ void ScriptTextEditor::_lookup_symbol(
             EditorNode::get_singleton()->load_resource(p_symbol);
         }
 
-    } else if (script->get_language()->lookup_code(code_editor->get_text_edit()->get_text_for_lookup_completion(), p_symbol, script->get_path(), base, result) == OK) {
+    } else if (script->get_language()->lookup_code(
+                   code_editor->get_text_edit()->get_text_for_lookup_completion(
+                   ),
+                   p_symbol,
+                   script->get_path(),
+                   base,
+                   result
+               )
+               == OK) {
         _goto_line(p_row);
 
         result.class_name = result.class_name.trim_prefix("_");

@@ -957,7 +957,8 @@ void SpaceBullet::check_ghost_overlaps() {
                          ->is_monitorable()) {
                     continue;
                 }
-            } else if (overlapped_bt_co->getUserIndex() != CollisionObjectBullet::TYPE_RIGID_BODY) {
+            } else if (overlapped_bt_co->getUserIndex()
+                       != CollisionObjectBullet::TYPE_RIGID_BODY) {
                 continue;
             }
 
@@ -1058,7 +1059,7 @@ void SpaceBullet::check_ghost_overlaps() {
                     }
 
                 } // ~For each other object shape
-            }     // ~For each area shape
+            } // ~For each area shape
 
         collision_found:
             if (!hasOverlap) {
@@ -1770,7 +1771,12 @@ bool SpaceBullet::recover_from_penetration(
                 otherObject->activate(
                 ); // Force activation of hitten rigid, soft body
                 continue;
-            } else if (!p_body->get_bt_collision_object()->checkCollideWith(otherObject) || !otherObject->checkCollideWith(p_body->get_bt_collision_object())) {
+            } else if (!p_body->get_bt_collision_object()->checkCollideWith(
+                           otherObject
+                       )
+                       || !otherObject->checkCollideWith(
+                           p_body->get_bt_collision_object()
+                       )) {
                 continue;
             }
 
@@ -2127,7 +2133,12 @@ int SpaceBullet::recover_from_penetration_ray(
                 otherObject->activate(
                 ); // Force activation of hitten rigid, soft body
                 continue;
-            } else if (!p_body->get_bt_collision_object()->checkCollideWith(otherObject) || !otherObject->checkCollideWith(p_body->get_bt_collision_object())) {
+            } else if (!p_body->get_bt_collision_object()->checkCollideWith(
+                           otherObject
+                       )
+                       || !otherObject->checkCollideWith(
+                           p_body->get_bt_collision_object()
+                       )) {
                 continue;
             }
 

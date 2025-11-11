@@ -2078,7 +2078,9 @@ Variant VisualScriptInstance::_call_internal(
             if (p_resuming_yield) {
                 start_mode = VisualScriptNodeInstance::START_MODE_RESUME_YIELD;
                 p_resuming_yield = false; // should resume only the first time
-            } else if (flow_stack && (flow_stack[flow_stack_pos] & VisualScriptNodeInstance::FLOW_STACK_PUSHED_BIT)) {
+            } else if (flow_stack
+                       && (flow_stack[flow_stack_pos]
+                           & VisualScriptNodeInstance::FLOW_STACK_PUSHED_BIT)) {
                 // if there is a push bit, it means we are continuing a sequence
                 start_mode =
                     VisualScriptNodeInstance::START_MODE_CONTINUE_SEQUENCE;
@@ -2363,15 +2365,19 @@ Variant VisualScriptInstance::_call_internal(
                 error_str    += "Cannot convert argument " + itos(errorarg + 1)
                            + " to " + Variant::get_type_name(r_error.expected)
                            + ".";
-            } else if (r_error.error == Variant::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS) {
+            } else if (r_error.error
+                       == Variant::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS) {
                 error_str +=
                     "Expected " + itos(r_error.argument) + " arguments.";
-            } else if (r_error.error == Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS) {
+            } else if (r_error.error
+                       == Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS) {
                 error_str +=
                     "Expected " + itos(r_error.argument) + " arguments.";
-            } else if (r_error.error == Variant::CallError::CALL_ERROR_INVALID_METHOD) {
+            } else if (r_error.error
+                       == Variant::CallError::CALL_ERROR_INVALID_METHOD) {
                 error_str += "Invalid Call.";
-            } else if (r_error.error == Variant::CallError::CALL_ERROR_INSTANCE_IS_NULL) {
+            } else if (r_error.error
+                       == Variant::CallError::CALL_ERROR_INSTANCE_IS_NULL) {
                 error_str += "Base Instance is null";
             }
         }

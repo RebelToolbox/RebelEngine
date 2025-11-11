@@ -211,7 +211,10 @@ Ref<Resource> Resource::duplicate(bool p_subresources) const {
         if ((p.get_type() == Variant::DICTIONARY
              || p.get_type() == Variant::ARRAY)) {
             r->set(E->get().name, p.duplicate(p_subresources));
-        } else if (p.get_type() == Variant::OBJECT && (p_subresources || (E->get().usage & PROPERTY_USAGE_DO_NOT_SHARE_ON_DUPLICATE))) {
+        } else if (p.get_type() == Variant::OBJECT
+                   && (p_subresources
+                       || (E->get().usage
+                           & PROPERTY_USAGE_DO_NOT_SHARE_ON_DUPLICATE))) {
             RES sr = p;
             if (sr.is_valid()) {
                 r->set(E->get().name, sr->duplicate(p_subresources));

@@ -1047,9 +1047,9 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
                 GDMonoAssembly* tools_assembly = gdmono->get_tools_assembly();
                 script_class =
                     (tools_assembly ? tools_assembly->get_class(
-                         class_namespace,
-                         class_name
-                     )
+                                          class_namespace,
+                                          class_name
+                                      )
                                     : NULL);
             }
 #endif
@@ -2987,7 +2987,8 @@ bool CSharpScript::_get_member_export(
 
     if (p_member->get_member_type() == IMonoClassMember::MEMBER_TYPE_FIELD) {
         type = static_cast<GDMonoField*>(p_member)->get_type();
-    } else if (p_member->get_member_type() == IMonoClassMember::MEMBER_TYPE_PROPERTY) {
+    } else if (p_member->get_member_type()
+               == IMonoClassMember::MEMBER_TYPE_PROPERTY) {
         type = static_cast<GDMonoProperty*>(p_member)->get_type();
     } else {
         CRASH_NOW();
@@ -3172,7 +3173,9 @@ int CSharpScript::_try_get_member_export_hint(
             // editor is changed to not display values.
             r_hint_string = name_only_hint_string;
         }
-    } else if (p_variant_type == Variant::OBJECT && CACHED_CLASS(RebelResource)->is_assignable_from(p_type.type_class)) {
+    } else if (p_variant_type == Variant::OBJECT
+               && CACHED_CLASS(RebelResource)
+                      ->is_assignable_from(p_type.type_class)) {
         GDMonoClass* field_native_class =
             GDMonoUtils::get_class_native_base(p_type.type_class);
         CRASH_COND(field_native_class == NULL);

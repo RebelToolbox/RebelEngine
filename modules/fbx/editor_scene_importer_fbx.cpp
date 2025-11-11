@@ -757,7 +757,8 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                     "level: "
                     + fbx_skeleton_inst->fbx_node->node_name
                 );
-            } else if (!state.fbx_target_map.has(armature_id) && !fbx_skeleton_inst->fbx_node->has_model()) {
+            } else if (!state.fbx_target_map.has(armature_id)
+                       && !fbx_skeleton_inst->fbx_node->has_model()) {
                 print_error(
                     "bones are not mapped to an armature node for armature id: "
                     + itos(armature_id) + " bone: " + bone->bone_name
@@ -1606,11 +1607,11 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                         const Quat def_rot =
                             rotation_keys.has_default
                                 ? ImportUtils::EulerToQuaternion(
-                                    quat_rotation_order,
-                                    ImportUtils::deg2rad(
-                                        rotation_keys.default_value
-                                    )
-                                )
+                                      quat_rotation_order,
+                                      ImportUtils::deg2rad(
+                                          rotation_keys.default_value
+                                      )
+                                  )
                                 : bone_rest.basis.get_rotation_quat();
                         const Vector3 def_scale =
                             scale_keys.has_default

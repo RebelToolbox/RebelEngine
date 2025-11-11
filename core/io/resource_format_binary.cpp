@@ -573,7 +573,8 @@ Error ResourceInteractiveLoaderBinary::parse_variant(Variant& r_v) {
                 if (encoding == IMAGE_ENCODING_LOSSY && Image::webp_unpacker) {
                     image = Image::webp_unpacker(data
                     ); // IMAGE_ENCODING_LOSSY always meant WebP
-                } else if (encoding == IMAGE_ENCODING_LOSSLESS && Image::png_unpacker) {
+                } else if (encoding == IMAGE_ENCODING_LOSSLESS
+                           && Image::png_unpacker) {
                     image = Image::png_unpacker(data
                     ); // IMAGE_ENCODING_LOSSLESS always meant png
                 }
@@ -826,7 +827,8 @@ void ResourceInteractiveLoaderBinary::open(FileAccess* p_f) {
         }
         f = fac;
 
-    } else if (header[0] != 'R' || header[1] != 'S' || header[2] != 'R' || header[3] != 'C') {
+    } else if (header[0] != 'R' || header[1] != 'S' || header[2] != 'R'
+               || header[3] != 'C') {
         // Not normal.
         error = ERR_FILE_UNRECOGNIZED;
         f->close();
@@ -938,7 +940,8 @@ String ResourceInteractiveLoaderBinary::recognize(FileAccess* p_f) {
         }
         f = fac;
 
-    } else if (header[0] != 'R' || header[1] != 'S' || header[2] != 'R' || header[3] != 'C') {
+    } else if (header[0] != 'R' || header[1] != 'S' || header[2] != 'R'
+               || header[3] != 'C') {
         // Not normal.
         error = ERR_FILE_UNRECOGNIZED;
         f->close();
@@ -1106,7 +1109,8 @@ Error ResourceFormatLoaderBinary::rename_dependencies(
 
         fw = facw;
 
-    } else if (header[0] != 'R' || header[1] != 'S' || header[2] != 'R' || header[3] != 'C') {
+    } else if (header[0] != 'R' || header[1] != 'S' || header[2] != 'R'
+               || header[3] != 'C') {
         // Not normal.
         memdelete(f);
         ERR_FAIL_V_MSG(

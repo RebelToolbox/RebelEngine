@@ -991,9 +991,9 @@ void RasterizerCanvasBaseGLES3::render_rect_nvidia_workaround(
         }
         Rect2 src_rect = (p_rect->flags & CANVAS_RECT_REGION)
                            ? Rect2(
-                               p_rect->source.position * texpixel_size,
-                               p_rect->source.size * texpixel_size
-                           )
+                                 p_rect->source.position * texpixel_size,
+                                 p_rect->source.size * texpixel_size
+                             )
                            : Rect2(0, 0, 1, 1);
 
         Vector2 uvs[4] = {

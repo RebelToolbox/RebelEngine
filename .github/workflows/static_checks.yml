@@ -1,8 +1,5 @@
 name: 📊 Static Checks
 on: [push, pull_request]
-env:
-  CLANG_FORMAT_VERSION: "17"
-  BLACK_VERSION: "23.10"
 
 jobs:
   static-checks:
@@ -15,18 +12,13 @@ jobs:
       - name: Install dependencies
         run: |
           #Install dependencies
-          sudo wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key |
-              sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
-          sudo add-apt-repository 'deb http://apt.llvm.org/jammy/  llvm-toolchain-jammy-${{ env.CLANG_FORMAT_VERSION }} main'
           sudo apt-get update
           sudo apt-get install -y \
           recode \
           dos2unix \
           codespell \
-          clang-format-${{ env.CLANG_FORMAT_VERSION }}
-          sudo update-alternatives --remove-all clang-format
-          sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${{ env.CLANG_FORMAT_VERSION }} 100
-          python3 -m pip install black==${{ env.BLACK_VERSION }}
+          clang-format
+          python3 -m pip install black
 
       - name: File formatting checks (file_format.sh)
         run: |

@@ -721,18 +721,22 @@ bool LinuxOS::refresh_device_info() {
                     abs_x_min     = class_info->min;
                     abs_x_max     = class_info->max;
                     absolute_mode = true;
-                } else if (class_info->number == VALUATOR_ABSY && class_info->mode == XIModeAbsolute) {
+                } else if (class_info->number == VALUATOR_ABSY
+                           && class_info->mode == XIModeAbsolute) {
                     resolution_y  = class_info->resolution;
                     abs_y_min     = class_info->min;
                     abs_y_max     = class_info->max;
                     absolute_mode = true;
-                } else if (class_info->number == VALUATOR_PRESSURE && class_info->mode == XIModeAbsolute) {
+                } else if (class_info->number == VALUATOR_PRESSURE
+                           && class_info->mode == XIModeAbsolute) {
                     pressure_min = class_info->min;
                     pressure_max = class_info->max;
-                } else if (class_info->number == VALUATOR_TILTX && class_info->mode == XIModeAbsolute) {
+                } else if (class_info->number == VALUATOR_TILTX
+                           && class_info->mode == XIModeAbsolute) {
                     tilt_x_min = class_info->min;
                     tilt_x_max = class_info->max;
-                } else if (class_info->number == VALUATOR_TILTY && class_info->mode == XIModeAbsolute) {
+                } else if (class_info->number == VALUATOR_TILTY
+                           && class_info->mode == XIModeAbsolute) {
                     tilt_y_min = class_info->min;
                     tilt_y_max = class_info->max;
                 }
@@ -2485,12 +2489,13 @@ Atom LinuxOS::_process_selection_request_target(
             0
         );
         return p_property;
-    } else if (p_target == XInternAtom(x11_display, "UTF8_STRING", 0) ||
-            p_target == XInternAtom(x11_display, "COMPOUND_TEXT", 0) ||
-            p_target == XInternAtom(x11_display, "TEXT", 0) ||
-            p_target == XA_STRING ||
-            p_target == XInternAtom(x11_display, "text/plain;charset=utf-8", 0) ||
-            p_target == XInternAtom(x11_display, "text/plain", 0)) {
+    } else if (p_target == XInternAtom(x11_display, "UTF8_STRING", 0)
+               || p_target == XInternAtom(x11_display, "COMPOUND_TEXT", 0)
+               || p_target == XInternAtom(x11_display, "TEXT", 0)
+               || p_target == XA_STRING
+               || p_target
+                      == XInternAtom(x11_display, "text/plain;charset=utf-8", 0)
+               || p_target == XInternAtom(x11_display, "text/plain", 0)) {
         // Directly using internal clipboard because we know our window
         // is the owner during a selection request.
         CharString clip = OS::get_clipboard().utf8();
@@ -3165,7 +3170,8 @@ void LinuxOS::process_xevents() {
                             mb->set_doubleclick(true);
                         }
 
-                    } else if (mb->get_button_index() < 4 || mb->get_button_index() > 7) {
+                    } else if (mb->get_button_index() < 4
+                               || mb->get_button_index() > 7) {
                         last_click_button_index = mb->get_button_index();
                     }
 
@@ -3373,7 +3379,8 @@ void LinuxOS::process_xevents() {
                         MainLoop::NOTIFICATION_WM_QUIT_REQUEST
                     );
 
-                } else if ((unsigned int)event.xclient.message_type == (unsigned int)xdnd_enter) {
+                } else if ((unsigned int)event.xclient.message_type
+                           == (unsigned int)xdnd_enter) {
                     // File(s) have been dragged over the window, check for
                     // supported target (text/uri-list)
                     xdnd_version     = (event.xclient.data.l[1] >> 24);
@@ -3398,7 +3405,8 @@ void LinuxOS::process_xevents() {
                             event.xclient.data.l[4]
                         );
                     }
-                } else if ((unsigned int)event.xclient.message_type == (unsigned int)xdnd_position) {
+                } else if ((unsigned int)event.xclient.message_type
+                           == (unsigned int)xdnd_position) {
                     // xdnd position event, reply with an XDND status message
                     // just depending on type of data for now
                     XClientMessageEvent m;
@@ -3422,7 +3430,8 @@ void LinuxOS::process_xevents() {
                         (XEvent*)&m
                     );
                     XFlush(x11_display);
-                } else if ((unsigned int)event.xclient.message_type == (unsigned int)xdnd_drop) {
+                } else if ((unsigned int)event.xclient.message_type
+                           == (unsigned int)xdnd_drop) {
                     if (requested != None) {
                         xdnd_source_window = event.xclient.data.l[0];
                         if (xdnd_version >= 1) {

@@ -1627,7 +1627,8 @@ void Variant::set_named(
                 && p_index == CoreStringNames::singleton->basis) {
                 _data._transform->basis = *p_value._data._basis;
                 valid                   = true;
-            } else if (p_value.type == Variant::VECTOR3 && p_index == CoreStringNames::singleton->origin) {
+            } else if (p_value.type == Variant::VECTOR3
+                       && p_index == CoreStringNames::singleton->origin) {
                 _data._transform->origin =
                     *reinterpret_cast<const Vector3*>(p_value._data._mem);
                 valid = true;
@@ -2083,7 +2084,8 @@ void Variant::set(
                     v->elements[index] = p_value;
                     return;
                 }
-            } else if (p_index.get_type() == Variant::STRING && p_value.get_type() == Variant::VECTOR2) {
+            } else if (p_index.get_type() == Variant::STRING
+                       && p_value.get_type() == Variant::VECTOR2) {
                 // scalar name
                 const String* str =
                     reinterpret_cast<const String*>(p_index._data._mem);

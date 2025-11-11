@@ -20,7 +20,7 @@ exclude_file_patterns="\-so_wrap\."
 
 # To get consistent formatting, use the same clang-format version as CI.
 required_clang_format_major_version="16"
-recommended_clang_format_major_version="17"
+recommended_clang_format_major_version="18"
 
 # Determine the major version of clang-format being used.
 # The returned string can be inconsistent depending on where clang-format comes from.

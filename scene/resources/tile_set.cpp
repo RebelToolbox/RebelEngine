@@ -1498,7 +1498,8 @@ void TileSet::_tile_set_shapes(int p_id, const Array& p_shapes) {
             if (d.has("shape_transform")
                 && d["shape_transform"].get_type() == Variant::TRANSFORM2D) {
                 s.shape_transform = d["shape_transform"];
-            } else if (d.has("shape_offset") && d["shape_offset"].get_type() == Variant::VECTOR2) {
+            } else if (d.has("shape_offset")
+                       && d["shape_offset"].get_type() == Variant::VECTOR2) {
                 s.shape_transform = Transform2D(0, (Vector2)d["shape_offset"]);
             } else {
                 s.shape_transform = default_transform;

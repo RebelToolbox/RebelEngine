@@ -495,7 +495,8 @@ void EditorNavigationMeshGenerator::_build_recast_navigation_mesh(
             cfg.minRegionArea,
             cfg.mergeRegionArea
         ));
-    } else if (p_nav_mesh->get_sample_partition_type() == NavigationMesh::SAMPLE_PARTITION_MONOTONE) {
+    } else if (p_nav_mesh->get_sample_partition_type()
+               == NavigationMesh::SAMPLE_PARTITION_MONOTONE) {
         ERR_FAIL_COND(!rcBuildRegionsMonotone(
             &ctx,
             *chf,

@@ -1190,7 +1190,8 @@ BakedLightmap::BakeError BakedLightmap::bake(
             VoxelLightBaker::BakeQuality::BAKE_QUALITY_HIGH;
         if (capture_quality == BakedLightmap::BakeQuality::BAKE_QUALITY_LOW) {
             capt_quality = VoxelLightBaker::BakeQuality::BAKE_QUALITY_LOW;
-        } else if (capture_quality == BakedLightmap::BakeQuality::BAKE_QUALITY_MEDIUM) {
+        } else if (capture_quality
+                   == BakedLightmap::BakeQuality::BAKE_QUALITY_MEDIUM) {
             capt_quality = VoxelLightBaker::BakeQuality::BAKE_QUALITY_MEDIUM;
         }
 
@@ -1667,14 +1668,14 @@ Ref<Image> BakedLightmap::_get_irradiance_map(
         }
         case Environment::BG_CLEAR_COLOR:
         case Environment::BG_COLOR: {
-            Color c =
-                bg_mode == Environment::BG_CLEAR_COLOR ? Color(
-                    GLOBAL_GET("rendering/environment/default_clear_color")
-                )
-                                                       : p_env->get_bg_color();
-            c.r *= p_env->get_bg_energy();
-            c.g *= p_env->get_bg_energy();
-            c.b *= p_env->get_bg_energy();
+            Color c  = bg_mode == Environment::BG_CLEAR_COLOR
+                         ? Color(GLOBAL_GET(
+                              "rendering/environment/default_clear_color"
+                          ))
+                         : p_env->get_bg_color();
+            c.r     *= p_env->get_bg_energy();
+            c.g     *= p_env->get_bg_energy();
+            c.b     *= p_env->get_bg_energy();
 
             Ref<Image> ret;
             ret.instance();

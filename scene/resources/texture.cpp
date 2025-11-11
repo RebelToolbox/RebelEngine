@@ -3044,7 +3044,8 @@ Error TextureLayered::load(const String& p_path) {
             memdelete(f);
             ERR_FAIL_V(ERR_INVALID_DATA);
         }
-    } else if (header[0] == 'G' && header[1] == 'D' && header[2] == 'A' && header[3] == 'T') {
+    } else if (header[0] == 'G' && header[1] == 'D' && header[2] == 'A'
+               && header[3] == 'T') {
         if (!Object::cast_to<TextureArray>(this)) {
             f->close();
             memdelete(f);

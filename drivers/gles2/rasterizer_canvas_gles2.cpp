@@ -617,10 +617,10 @@ void RasterizerCanvasGLES2::render_batches(
                                     Rect2 src_rect =
                                         (r->flags & CANVAS_RECT_REGION)
                                             ? Rect2(
-                                                r->source.position
-                                                    * texpixel_size,
-                                                r->source.size * texpixel_size
-                                            )
+                                                  r->source.position
+                                                      * texpixel_size,
+                                                  r->source.size * texpixel_size
+                                              )
                                             : Rect2(0, 0, 1, 1);
 
                                     Vector2 uvs[4] = {
@@ -838,10 +838,10 @@ void RasterizerCanvasGLES2::render_batches(
                                     Rect2 src_rect =
                                         (r->flags & CANVAS_RECT_REGION)
                                             ? Rect2(
-                                                r->source.position
-                                                    * texpixel_size,
-                                                r->source.size * texpixel_size
-                                            )
+                                                  r->source.position
+                                                      * texpixel_size,
+                                                  r->source.size * texpixel_size
+                                              )
                                             : Rect2(0, 0, 1, 1);
 
                                     Rect2 dst_rect =
@@ -1813,7 +1813,7 @@ void RasterizerCanvasGLES2::render_batches(
                                             pline->line_colors.size() == 1
                                                 ? pline->line_colors.ptr()
                                                 : &pline->line_colors.ptr(
-                                                )[offset],
+                                                  )[offset],
                                             pline->line_colors.size() == 1
                                         );
                                         todo   -= to_draw;
@@ -2401,8 +2401,8 @@ bool RasterizerCanvasGLES2::try_join_item(
 
                 } // if not batch broken already (no point in doing expensive
                   // overlap tests if not needed)
-            }     // if bitfields don't match
-        }         // if do light joining
+            } // if bitfields don't match
+        } // if do light joining
 
         if (!light_allow_join) {
             // can't join
@@ -2766,11 +2766,11 @@ void RasterizerCanvasGLES2::_legacy_canvas_render_item(
     state.uniforms.final_modulate =
         unshaded ? p_ci->final_modulate
                  : Color(
-                     p_ci->final_modulate.r * r_ris.item_group_modulate.r,
-                     p_ci->final_modulate.g * r_ris.item_group_modulate.g,
-                     p_ci->final_modulate.b * r_ris.item_group_modulate.b,
-                     p_ci->final_modulate.a * r_ris.item_group_modulate.a
-                 );
+                       p_ci->final_modulate.r * r_ris.item_group_modulate.r,
+                       p_ci->final_modulate.g * r_ris.item_group_modulate.g,
+                       p_ci->final_modulate.b * r_ris.item_group_modulate.b,
+                       p_ci->final_modulate.a * r_ris.item_group_modulate.a
+                   );
 
     state.uniforms.modelview_matrix = p_ci->final_transform;
     state.uniforms.extra_matrix     = Transform2D();

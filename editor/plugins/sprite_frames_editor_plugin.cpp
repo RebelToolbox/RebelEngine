@@ -230,7 +230,8 @@ void SpriteFramesEditor::_sheet_scroll_input(const Ref<InputEvent>& p_event) {
             _sheet_zoom_in();
             // Don't scroll up after zooming in.
             accept_event();
-        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN && mb->is_pressed() && mb->get_control()) {
+        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN
+                   && mb->is_pressed() && mb->get_control()) {
             _sheet_zoom_out();
             // Don't scroll down after zooming out.
             accept_event();
@@ -910,7 +911,8 @@ void SpriteFramesEditor::_tree_input(const Ref<InputEvent>& p_event) {
             _zoom_in();
             // Don't scroll up after zooming in.
             accept_event();
-        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN && mb->is_pressed() && mb->get_control()) {
+        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN
+                   && mb->is_pressed() && mb->get_control()) {
             _zoom_out();
             // Don't scroll down after zooming out.
             accept_event();

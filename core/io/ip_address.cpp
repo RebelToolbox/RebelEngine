@@ -93,7 +93,8 @@ void IP_Address::_parse_ipv6(const String& p_string) {
         } else if (c == '.') {
             part_ipv4 = true;
 
-        } else if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')) {
+        } else if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')
+                   || (c >= 'A' && c <= 'F')) {
             if (!part_found) {
                 parts[parts_idx++] = i;
                 part_found         = true;

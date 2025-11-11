@@ -136,7 +136,8 @@ void SpinBox::_gui_input(const Ref<InputEvent>& p_event) {
             set_value(
                 CLAMP(drag.base_val + get_step() * diff_y, get_min(), get_max())
             );
-        } else if (drag.allowed && drag.capture_pos.distance_to(mm->get_position()) > 2) {
+        } else if (drag.allowed
+                   && drag.capture_pos.distance_to(mm->get_position()) > 2) {
             Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
             drag.enabled  = true;
             drag.base_val = get_value();

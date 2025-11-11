@@ -560,7 +560,8 @@ TreeItem* EditorHelpSearch::Runner::_create_class_item(
     Ref<Texture> icon = empty_icon;
     if (ui_service->has_icon(p_doc->name, "EditorIcons")) {
         icon = ui_service->get_icon(p_doc->name, "EditorIcons");
-    } else if (ClassDB::class_exists(p_doc->name) && ClassDB::is_parent_class(p_doc->name, "Object")) {
+    } else if (ClassDB::class_exists(p_doc->name)
+               && ClassDB::is_parent_class(p_doc->name, "Object")) {
         icon = ui_service->get_icon("Object", "EditorIcons");
     }
     String tooltip = p_doc->brief_description.strip_edges();

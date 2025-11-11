@@ -1139,8 +1139,7 @@ void Node::_generate_serial_child_name(const Node* p_child, StringName& name)
         // expected to be in PascalCase.
         switch (ProjectSettings::get_singleton()
                     ->get("node/name_casing")
-                    .
-                    operator int()) {
+                    .operator int()) {
             case NAME_CASING_PASCAL_CASE:
                 break;
             case NAME_CASING_CAMEL_CASE: {
@@ -2131,7 +2130,8 @@ Node* Node::_duplicate(int p_flags, Map<const Node*, Node*>* r_duplimap) const {
         nip->set_instance_path(ip->get_instance_path());
         node = nip;
 
-    } else if ((p_flags & DUPLICATE_USE_INSTANCING) && get_filename() != String()) {
+    } else if ((p_flags & DUPLICATE_USE_INSTANCING)
+               && get_filename() != String()) {
         Ref<PackedScene> res = ResourceLoader::load(get_filename());
         ERR_FAIL_COND_V(res.is_null(), nullptr);
         PackedScene::GenEditState ges = PackedScene::GEN_EDIT_STATE_DISABLED;
@@ -3548,8 +3548,7 @@ void Node::_bind_methods() {
 String Node::_get_name_num_separator() {
     switch (ProjectSettings::get_singleton()
                 ->get("node/name_num_separator")
-                .
-                operator int()) {
+                .operator int()) {
         case 0:
             return "";
         case 1:

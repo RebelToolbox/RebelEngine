@@ -167,7 +167,9 @@ Error VariantParser::get_token(
                     if (p_stream->is_eof()) {
                         r_token.type = TK_EOF;
                         return OK;
-                    } else if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F')) {
+                    } else if ((ch >= '0' && ch <= '9')
+                               || (ch >= 'a' && ch <= 'f')
+                               || (ch >= 'A' && ch <= 'F')) {
                         color_str += ch;
 
                     } else {
@@ -337,7 +339,8 @@ Error VariantParser::get_token(
                                 if (c >= '0' && c <= '9') {
                                     exp_beg = true;
 
-                                } else if ((c == '-' || c == '+') && !exp_sign && !exp_beg) {
+                                } else if ((c == '-' || c == '+') && !exp_sign
+                                           && !exp_beg) {
                                     exp_sign = true;
 
                                 } else {
@@ -364,7 +367,8 @@ Error VariantParser::get_token(
                     }
                     return OK;
 
-                } else if ((cchar >= 'A' && cchar <= 'Z') || (cchar >= 'a' && cchar <= 'z') || cchar == '_') {
+                } else if ((cchar >= 'A' && cchar <= 'Z')
+                           || (cchar >= 'a' && cchar <= 'z') || cchar == '_') {
                     StringBuffer<> id;
                     bool first = true;
 
@@ -837,7 +841,8 @@ Error VariantParser::parse_value(
                     at_key     = true;
                 }
             }
-        } else if (id == "Resource" || id == "SubResource" || id == "ExtResource") {
+        } else if (id == "Resource" || id == "SubResource"
+                   || id == "ExtResource") {
             get_token(p_stream, token, line, r_err_str);
             if (token.type != TK_PARENTHESIS_OPEN) {
                 r_err_str = "Expected '('";
@@ -858,7 +863,8 @@ Error VariantParser::parse_value(
                 }
 
                 value = res;
-            } else if (p_res_parser && id == "ExtResource" && p_res_parser->ext_func) {
+            } else if (p_res_parser && id == "ExtResource"
+                       && p_res_parser->ext_func) {
                 RES res;
                 Error err = p_res_parser->ext_func(
                     p_res_parser->userdata,
@@ -872,7 +878,8 @@ Error VariantParser::parse_value(
                 }
 
                 value = res;
-            } else if (p_res_parser && id == "SubResource" && p_res_parser->sub_func) {
+            } else if (p_res_parser && id == "SubResource"
+                       && p_res_parser->sub_func) {
                 RES res;
                 Error err = p_res_parser->sub_func(
                     p_res_parser->userdata,

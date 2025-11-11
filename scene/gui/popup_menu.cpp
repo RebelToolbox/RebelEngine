@@ -1339,7 +1339,8 @@ void PopupMenu::activate_item(int p_item) {
                 || !pop->is_hide_on_multistate_item_selection()) {
                 break;
             }
-        } else if (!hide_on_item_selection || !pop->is_hide_on_item_selection()) {
+        } else if (!hide_on_item_selection
+                   || !pop->is_hide_on_item_selection()) {
             break;
         }
 

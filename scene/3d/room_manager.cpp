@@ -2568,7 +2568,7 @@ void RoomManager::_merge_meshes_in_room(Room* p_room) {
                     bf.set_bit(c, true);
                 }
             } // if not merged already
-        }     // for c through secondary mesh
+        } // for c through secondary mesh
 
         // only merge if more than 1
         if (merge_list.size() > 1) {

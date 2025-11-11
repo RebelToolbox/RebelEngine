@@ -77,7 +77,8 @@ void EditorSpinSlider::_gui_input(const Ref<InputEvent>& p_event) {
                     grabbing_spinner_attempt = false;
                 }
             }
-        } else if (mb->get_button_index() == BUTTON_WHEEL_UP || mb->get_button_index() == BUTTON_WHEEL_DOWN) {
+        } else if (mb->get_button_index() == BUTTON_WHEEL_UP
+                   || mb->get_button_index() == BUTTON_WHEEL_DOWN) {
             if (grabber->is_visible()) {
                 call_deferred("update");
             }

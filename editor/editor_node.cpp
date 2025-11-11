@@ -423,7 +423,8 @@ void EditorNode::_unhandled_input(const Ref<InputEvent>& p_event) {
             _editor_select(EDITOR_SCRIPT);
         } else if (ED_IS_SHORTCUT("editor/editor_help", p_event)) {
             emit_signal("request_help_search", "");
-        } else if (ED_IS_SHORTCUT("editor/editor_assetlib", p_event) && StreamPeerSSL::is_available()) {
+        } else if (ED_IS_SHORTCUT("editor/editor_assetlib", p_event)
+                   && StreamPeerSSL::is_available()) {
             _editor_select(EDITOR_ASSETLIB);
         } else if (ED_IS_SHORTCUT("editor/editor_next", p_event)) {
             _editor_select_next();
@@ -2616,7 +2617,11 @@ void EditorNode::_edit_current() {
                 }
             }
 
-            else if (main_plugin != editor_plugin_screen && (!ScriptEditor::get_singleton() || !ScriptEditor::get_singleton()->is_visible_in_tree() || ScriptEditor::get_singleton()->can_take_away_focus())) {
+            else if (main_plugin != editor_plugin_screen
+                     && (!ScriptEditor::get_singleton()
+                         || !ScriptEditor::get_singleton()->is_visible_in_tree()
+                         || ScriptEditor::get_singleton()->can_take_away_focus()
+                     )) {
                 // update screen main_plugin
                 _editor_select(plugin_index);
                 main_plugin->edit(current_obj);
@@ -3724,7 +3729,8 @@ void EditorNode::_discard_changes(const String& p_str) {
                 } else {
                     _menu_option_confirm(current_option, false);
                 }
-            } else if (current_option == FILE_CLOSE_OTHERS || current_option == FILE_CLOSE_RIGHT) {
+            } else if (current_option == FILE_CLOSE_OTHERS
+                       || current_option == FILE_CLOSE_RIGHT) {
                 if (editor_data.get_edited_scene_count() == 1
                     || (current_option == FILE_CLOSE_RIGHT
                         && editor_data.get_edited_scene_count()
@@ -3734,7 +3740,8 @@ void EditorNode::_discard_changes(const String& p_str) {
                 } else {
                     _menu_option_confirm(current_option, false);
                 }
-            } else if (current_option == FILE_CLOSE_ALL && editor_data.get_edited_scene_count() > 0) {
+            } else if (current_option == FILE_CLOSE_ALL
+                       && editor_data.get_edited_scene_count() > 0) {
                 _menu_option_confirm(current_option, false);
             } else {
                 current_option = -1;
@@ -6432,7 +6439,7 @@ Variant EditorNode::drag_files_and_dirs(
         p_paths.size() > max_rows
             ? max_rows - 1
             : p_paths.size(
-            ); // Don't waste a row to say "1 more file" - list it instead.
+              ); // Don't waste a row to say "1 more file" - list it instead.
     VBoxContainer* vbox = memnew(VBoxContainer);
     for (int i = 0; i < num_rows; i++) {
         HBoxContainer* hbox = memnew(HBoxContainer);
@@ -7287,8 +7294,7 @@ EditorNode::EditorNode() {
     EditorFileDialog::set_default_display_mode(
         (EditorFileDialog::DisplayMode)EditorSettings::get_singleton()
             ->get("filesystem/file_dialog/display_mode")
-            .
-            operator int()
+            .operator int()
     );
     ResourceLoader::set_error_notify_func(this, _load_error_notify);
     ResourceLoader::set_dependency_error_notify_func(

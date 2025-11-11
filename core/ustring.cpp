@@ -630,7 +630,8 @@ signed char String::naturalnocasecmp_to(const String& p_str) const {
                 if (_find_upper(*this_str)
                     < _find_upper(*that_str)) { // more than
                     return -1;
-                } else if (_find_upper(*this_str) > _find_upper(*that_str)) { // less than
+                } else if (_find_upper(*this_str)
+                           > _find_upper(*that_str)) { // less than
                     return 1;
                 }
 
@@ -3779,27 +3780,34 @@ static _FORCE_INLINE_ int _xml_unescape(
                 if (p_dst) {
                     *p_dst = c;
                 }
-            } else if (p_src_len >= 4 && p_src[1] == 'g' && p_src[2] == 't' && p_src[3] == ';') {
+            } else if (p_src_len >= 4 && p_src[1] == 'g' && p_src[2] == 't'
+                       && p_src[3] == ';') {
                 if (p_dst) {
                     *p_dst = '>';
                 }
                 eat = 4;
-            } else if (p_src_len >= 4 && p_src[1] == 'l' && p_src[2] == 't' && p_src[3] == ';') {
+            } else if (p_src_len >= 4 && p_src[1] == 'l' && p_src[2] == 't'
+                       && p_src[3] == ';') {
                 if (p_dst) {
                     *p_dst = '<';
                 }
                 eat = 4;
-            } else if (p_src_len >= 5 && p_src[1] == 'a' && p_src[2] == 'm' && p_src[3] == 'p' && p_src[4] == ';') {
+            } else if (p_src_len >= 5 && p_src[1] == 'a' && p_src[2] == 'm'
+                       && p_src[3] == 'p' && p_src[4] == ';') {
                 if (p_dst) {
                     *p_dst = '&';
                 }
                 eat = 5;
-            } else if (p_src_len >= 6 && p_src[1] == 'q' && p_src[2] == 'u' && p_src[3] == 'o' && p_src[4] == 't' && p_src[5] == ';') {
+            } else if (p_src_len >= 6 && p_src[1] == 'q' && p_src[2] == 'u'
+                       && p_src[3] == 'o' && p_src[4] == 't'
+                       && p_src[5] == ';') {
                 if (p_dst) {
                     *p_dst = '"';
                 }
                 eat = 6;
-            } else if (p_src_len >= 6 && p_src[1] == 'a' && p_src[2] == 'p' && p_src[3] == 'o' && p_src[4] == 's' && p_src[5] == ';') {
+            } else if (p_src_len >= 6 && p_src[1] == 'a' && p_src[2] == 'p'
+                       && p_src[3] == 'o' && p_src[4] == 's'
+                       && p_src[5] == ';') {
                 if (p_dst) {
                     *p_dst = '\'';
                 }
@@ -4001,7 +4009,8 @@ bool String::is_valid_float() const {
             exponent_found = true;
         } else if (!period_found && !exponent_found && operator[](i) == '.') {
             period_found = true;
-        } else if ((operator[](i) == '-' || operator[](i) == '+') && exponent_found && !exponent_values_found && !sign_found) {
+        } else if ((operator[](i) == '-' || operator[](i) == '+')
+                   && exponent_found && !exponent_values_found && !sign_found) {
             sign_found = true;
         } else {
             return false; // no start with number plz
@@ -4570,7 +4579,8 @@ String String::sprintf(const Array& values, bool* error) const {
                                    "maximum";
                         }
                         str = chr(values[value_index]);
-                    } else if (values[value_index].get_type() == Variant::STRING) {
+                    } else if (values[value_index].get_type()
+                               == Variant::STRING) {
                         str = values[value_index];
                         if (str.length() != 1) {
                             return "%c requires number or single-character "

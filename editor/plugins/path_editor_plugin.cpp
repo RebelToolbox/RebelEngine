@@ -489,7 +489,11 @@ bool PathEditorPlugin::forward_spatial_gui_input(
                 // add new at pos
             }
 
-        } else if (mb->is_pressed() && ((mb->get_button_index() == BUTTON_LEFT && curve_del->is_pressed()) || (mb->get_button_index() == BUTTON_RIGHT && curve_edit->is_pressed()))) {
+        } else if (mb->is_pressed()
+                   && ((mb->get_button_index() == BUTTON_LEFT
+                        && curve_del->is_pressed())
+                       || (mb->get_button_index() == BUTTON_RIGHT
+                           && curve_edit->is_pressed()))) {
             for (int i = 0; i < c->get_point_count(); i++) {
                 real_t dist_to_p =
                     p_camera

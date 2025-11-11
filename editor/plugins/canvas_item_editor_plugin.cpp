@@ -436,7 +436,10 @@ Point2 CanvasItemEditor::snap_point(
                     SNAP_TARGET_PARENT,
                     rotation
                 );
-            } else if (const CanvasItem *parent_ci = Object::cast_to<CanvasItem>(p_self_canvas_item->get_parent())) {
+            } else if (const CanvasItem* parent_ci =
+                           Object::cast_to<CanvasItem>(
+                               p_self_canvas_item->get_parent()
+                           )) {
                 if (parent_ci->_edit_use_rect()) {
                     Point2 begin =
                         p_self_canvas_item->get_transform()
@@ -752,7 +755,9 @@ void CanvasItemEditor::_unhandled_key_input(const Ref<InputEvent>& p_ev) {
             // Multiply the grid size
             grid_step_multiplier = MIN(grid_step_multiplier + 1, 12);
             viewport->update();
-        } else if ((grid_snap_active || show_grid) && divide_grid_step_shortcut.is_valid() && divide_grid_step_shortcut->is_shortcut(p_ev)) {
+        } else if ((grid_snap_active || show_grid)
+                   && divide_grid_step_shortcut.is_valid()
+                   && divide_grid_step_shortcut->is_shortcut(p_ev)) {
             // Divide the grid size
             Point2 new_grid_step =
                 grid_step * Math::pow(2.0, grid_step_multiplier - 1);
@@ -2935,7 +2940,8 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent>& p_event) {
             if (drag_type == DRAG_LEFT || drag_type == DRAG_TOP_LEFT
                 || drag_type == DRAG_BOTTOM_LEFT) {
                 current_begin.x = MIN(drag_begin.x, max_begin.x);
-            } else if (drag_type == DRAG_RIGHT || drag_type == DRAG_TOP_RIGHT || drag_type == DRAG_BOTTOM_RIGHT) {
+            } else if (drag_type == DRAG_RIGHT || drag_type == DRAG_TOP_RIGHT
+                       || drag_type == DRAG_BOTTOM_RIGHT) {
                 current_end.x = MAX(drag_end.x, min_end.x);
             }
 
@@ -2943,7 +2949,8 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent>& p_event) {
             if (drag_type == DRAG_TOP || drag_type == DRAG_TOP_LEFT
                 || drag_type == DRAG_TOP_RIGHT) {
                 current_begin.y = MIN(drag_begin.y, max_begin.y);
-            } else if (drag_type == DRAG_BOTTOM || drag_type == DRAG_BOTTOM_LEFT || drag_type == DRAG_BOTTOM_RIGHT) {
+            } else if (drag_type == DRAG_BOTTOM || drag_type == DRAG_BOTTOM_LEFT
+                       || drag_type == DRAG_BOTTOM_RIGHT) {
                 current_end.y = MAX(drag_end.y, min_end.y);
             }
 
@@ -2987,13 +2994,17 @@ bool CanvasItemEditor::_gui_input_resize(const Ref<InputEvent>& p_event) {
                 if (drag_type == DRAG_LEFT || drag_type == DRAG_TOP_LEFT
                     || drag_type == DRAG_BOTTOM_LEFT) {
                     current_end.x = 2.0 * center.x - current_begin.x;
-                } else if (drag_type == DRAG_RIGHT || drag_type == DRAG_TOP_RIGHT || drag_type == DRAG_BOTTOM_RIGHT) {
+                } else if (drag_type == DRAG_RIGHT
+                           || drag_type == DRAG_TOP_RIGHT
+                           || drag_type == DRAG_BOTTOM_RIGHT) {
                     current_begin.x = 2.0 * center.x - current_end.x;
                 }
                 if (drag_type == DRAG_TOP || drag_type == DRAG_TOP_LEFT
                     || drag_type == DRAG_TOP_RIGHT) {
                     current_end.y = 2.0 * center.y - current_begin.y;
-                } else if (drag_type == DRAG_BOTTOM || drag_type == DRAG_BOTTOM_LEFT || drag_type == DRAG_BOTTOM_RIGHT) {
+                } else if (drag_type == DRAG_BOTTOM
+                           || drag_type == DRAG_BOTTOM_LEFT
+                           || drag_type == DRAG_BOTTOM_RIGHT) {
                     current_begin.y = 2.0 * center.y - current_end.y;
                 }
             }
@@ -4621,14 +4632,10 @@ void CanvasItemEditor::_draw_ruler_tool() {
                 viewport->get_rect().size.x - angle_text_width
             );
             v_angle_text_pos.y = begin.y < end.y
-                                   ? MIN(
-                                       text_pos2.y - 2 * text_height,
-                                       begin.y - text_height * 0.5
-                                   )
-                                   : MAX(
-                                       text_pos2.y + text_height * 3,
-                                       begin.y + text_height * 1.5
-                                   );
+                                   ? MIN(text_pos2.y - 2 * text_height,
+                                         begin.y - text_height * 0.5)
+                                   : MAX(text_pos2.y + text_height * 3,
+                                         begin.y + text_height * 1.5);
             viewport->draw_string(
                 font,
                 v_angle_text_pos,
@@ -4636,14 +4643,11 @@ void CanvasItemEditor::_draw_ruler_tool() {
                 font_secondary_color
             );
 
-            text_pos2 = text_pos;
-            text_pos2.y =
-                end.y < text_pos.y
-                    ? MIN(text_pos.y - text_height * 2, end.y - text_height / 2)
-                    : MAX(
-                        text_pos.y + text_height * 2,
-                        end.y - text_height / 2
-                    );
+            text_pos2   = text_pos;
+            text_pos2.y = end.y < text_pos.y ? MIN(text_pos.y - text_height * 2,
+                                                   end.y - text_height / 2)
+                                             : MAX(text_pos.y + text_height * 2,
+                                                   end.y - text_height / 2);
             viewport->draw_string(
                 font,
                 text_pos2,
@@ -4764,10 +4768,8 @@ void CanvasItemEditor::_draw_ruler_tool() {
                 text_pos2.x =
                     begin.x < text_pos.x
                         ? MIN(text_pos.x - text_width, begin.x - text_width / 2)
-                        : MAX(
-                            text_pos.x + text_width,
-                            begin.x - text_width / 2
-                        );
+                        : MAX(text_pos.x + text_width,
+                              begin.x - text_width / 2);
                 viewport->draw_string(
                     font,
                     text_pos2,
@@ -4777,14 +4779,10 @@ void CanvasItemEditor::_draw_ruler_tool() {
 
                 text_pos2   = text_pos;
                 text_pos2.y = end.y < text_pos.y
-                                ? MIN(
-                                    text_pos.y - text_height * 2,
-                                    end.y + text_height / 2
-                                )
-                                : MAX(
-                                    text_pos.y + text_height * 2,
-                                    end.y + text_height / 2
-                                );
+                                ? MIN(text_pos.y - text_height * 2,
+                                      end.y + text_height / 2)
+                                : MAX(text_pos.y + text_height * 2,
+                                      end.y + text_height / 2);
                 viewport->draw_string(
                     font,
                     text_pos2,
@@ -9601,14 +9599,12 @@ bool CanvasItemEditorViewport::can_drop_data(
                         continue;
                     }
                     memdelete(instanced_scene);
-                } else if (type == "Texture" ||
-                        type == "ImageTexture" ||
-                        type == "ViewportTexture" ||
-                        type == "CurveTexture" ||
-                        type == "GradientTexture" ||
-                        type == "StreamTexture" ||
-                        type == "AtlasTexture" ||
-                        type == "LargeTexture") {
+                } else if (type == "Texture" || type == "ImageTexture"
+                           || type == "ViewportTexture"
+                           || type == "CurveTexture"
+                           || type == "GradientTexture"
+                           || type == "StreamTexture" || type == "AtlasTexture"
+                           || type == "LargeTexture") {
                     Ref<Texture> texture =
                         Ref<Texture>(Object::cast_to<Texture>(*res));
                     if (!texture.is_valid()) {

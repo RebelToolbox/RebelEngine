@@ -704,7 +704,8 @@ void VisualServerCanvas::canvas_item_add_polyline(
         pline->line_colors = p_colors;
         if (pline->line_colors.size() == 0) {
             pline->line_colors.push_back(Color(1, 1, 1, 1));
-        } else if (pline->line_colors.size() > 1 && pline->line_colors.size() != pline->lines.size()) {
+        } else if (pline->line_colors.size() > 1
+                   && pline->line_colors.size() != pline->lines.size()) {
             pline->line_colors.resize(1);
         }
     } else {
@@ -793,7 +794,8 @@ void VisualServerCanvas::canvas_item_add_multiline(
     pline->line_colors = p_colors;
     if (pline->line_colors.size() == 0) {
         pline->line_colors.push_back(Color(1, 1, 1, 1));
-    } else if (pline->line_colors.size() > 1 && pline->line_colors.size() != pline->lines.size()) {
+    } else if (pline->line_colors.size() > 1
+               && pline->line_colors.size() != pline->lines.size()) {
         pline->line_colors.resize(1);
     }
 

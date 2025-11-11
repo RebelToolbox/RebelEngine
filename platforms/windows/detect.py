@@ -474,9 +474,9 @@ def configure(env):
     print("Configuring for Windows: target=%s, bits=%s" % (env["target"], env["bits"]))
 
     if os.name == "nt":
-        env[
-            "ENV"
-        ] = os.environ  # this makes build less repeatable, but simplifies some things
+        env["ENV"] = (
+            os.environ
+        )  # this makes build less repeatable, but simplifies some things
         env["ENV"]["TMP"] = os.environ["TMP"]
 
     if not "MSVC_VERSION" in env and not env["use_mingw"]:

@@ -1311,7 +1311,8 @@ void AnimationBezierTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
                      * (moving_handle_right * scale).length())
                     / scale;
 
-            } else if (handle_mode_option->get_selected() == HANDLE_MODE_MIRROR) {
+            } else if (handle_mode_option->get_selected()
+                       == HANDLE_MODE_MIRROR) {
                 moving_handle_right = -moving_handle_left;
             }
         }
@@ -1328,7 +1329,8 @@ void AnimationBezierTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
                     (-(moving_handle_right * scale).normalized()
                      * (moving_handle_left * scale).length())
                     / scale;
-            } else if (handle_mode_option->get_selected() == HANDLE_MODE_MIRROR) {
+            } else if (handle_mode_option->get_selected()
+                       == HANDLE_MODE_MIRROR) {
                 moving_handle_left = -moving_handle_right;
             }
         }

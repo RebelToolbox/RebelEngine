@@ -125,7 +125,7 @@ void _split_leaf_sort_groups_simple(
                 }
             }
         } // if there was a split!
-    }     // if the longest axis wasn't a good split
+    } // if the longest axis wasn't a good split
 
     // special case, none crossed threshold
     if (!num_b) {

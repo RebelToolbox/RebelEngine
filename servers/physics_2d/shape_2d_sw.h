@@ -818,16 +818,14 @@ public:
         const Transform2D& p_transform,
         real_t& r_min,
         real_t& r_max
-    ) const { /*project_range(p_normal,p_transform,r_min,r_max);*/
-    }
+    ) const { /*project_range(p_normal,p_transform,r_min,r_max);*/ }
 
     virtual void project_range(
         const Vector2& p_normal,
         const Transform2D& p_transform,
         real_t& r_min,
         real_t& r_max
-    ) const { /*project_range(p_normal,p_transform,r_min,r_max);*/
-    }
+    ) const { /*project_range(p_normal,p_transform,r_min,r_max);*/ }
 
     virtual void get_supports(
         const Vector2& p_normal,

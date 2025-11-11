@@ -200,11 +200,12 @@ void Button::_notification(int p_what) {
             }
 
             Point2 icon_ofs =
-                !_icon.is_null() ? Point2(
-                    icon_region.size.width + get_constant("hseparation"),
-                    0
-                )
-                                 : Point2();
+                !_icon.is_null()
+                    ? Point2(
+                          icon_region.size.width + get_constant("hseparation"),
+                          0
+                      )
+                    : Point2();
             int text_clip =
                 size.width - style->get_minimum_size().width - icon_ofs.width;
             if (_internal_margin[MARGIN_LEFT] > 0) {

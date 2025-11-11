@@ -3157,13 +3157,16 @@ Error Image::decompress() {
     if (format >= FORMAT_DXT1 && format <= FORMAT_RGTC_RG
         && _image_decompress_bc) {
         _image_decompress_bc(this);
-    } else if (format >= FORMAT_BPTC_RGBA && format <= FORMAT_BPTC_RGBFU && _image_decompress_bptc) {
+    } else if (format >= FORMAT_BPTC_RGBA && format <= FORMAT_BPTC_RGBFU
+               && _image_decompress_bptc) {
         _image_decompress_bptc(this);
-    } else if (format >= FORMAT_PVRTC2 && format <= FORMAT_PVRTC4A && _image_decompress_pvrtc) {
+    } else if (format >= FORMAT_PVRTC2 && format <= FORMAT_PVRTC4A
+               && _image_decompress_pvrtc) {
         _image_decompress_pvrtc(this);
     } else if (format == FORMAT_ETC && _image_decompress_etc1) {
         _image_decompress_etc1(this);
-    } else if (format >= FORMAT_ETC2_R11 && format <= FORMAT_ETC2_RGB8A1 && _image_decompress_etc2) {
+    } else if (format >= FORMAT_ETC2_R11 && format <= FORMAT_ETC2_RGB8A1
+               && _image_decompress_etc2) {
         _image_decompress_etc2(this);
     } else {
         return ERR_UNAVAILABLE;

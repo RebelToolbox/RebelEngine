@@ -686,7 +686,8 @@ void LightmapperCPU::_plot_triangle(
                     line.push_back(v1);
                     line.push_back(v2);
                     middle_vertex = 0;
-                } else if (SGN(edgeFunction(v1, v1 + perpendicular, v0)) != SGN(edgeFunction(v1, v1 + perpendicular, v2))) {
+                } else if (SGN(edgeFunction(v1, v1 + perpendicular, v0))
+                           != SGN(edgeFunction(v1, v1 + perpendicular, v2))) {
                     line.push_back(v0);
                     line.push_back(v2);
                     middle_vertex = 1;

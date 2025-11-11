@@ -2013,7 +2013,8 @@ void KinematicBody::_set_collision_direction(
             floor_normal   = p_collision.normal;
             on_floor_body  = p_collision.collider_rid;
             floor_velocity = p_collision.collider_vel;
-        } else if (Math::acos(p_collision.normal.dot(-p_up_direction)) <= p_floor_max_angle + FLOOR_ANGLE_THRESHOLD) { // ceiling
+        } else if (Math::acos(p_collision.normal.dot(-p_up_direction))
+                   <= p_floor_max_angle + FLOOR_ANGLE_THRESHOLD) { // ceiling
             on_ceiling = true;
         } else {
             on_wall = true;

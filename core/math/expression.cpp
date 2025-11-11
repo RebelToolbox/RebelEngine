@@ -1141,7 +1141,8 @@ Error Expression::_get_token(Token& r_token) {
                                 if (_is_number(c)) {
                                     exp_beg = true;
 
-                                } else if ((c == '-' || c == '+') && !exp_sign && !exp_beg) {
+                                } else if ((c == '-' || c == '+') && !exp_sign
+                                           && !exp_beg) {
                                     exp_sign = true;
 
                                 } else {
@@ -1173,7 +1174,8 @@ Error Expression::_get_token(Token& r_token) {
                     }
                     return OK;
 
-                } else if ((cchar >= 'A' && cchar <= 'Z') || (cchar >= 'a' && cchar <= 'z') || cchar == '_') {
+                } else if ((cchar >= 'A' && cchar <= 'Z')
+                           || (cchar >= 'a' && cchar <= 'z') || cchar == '_') {
                     String id;
                     bool first = true;
 

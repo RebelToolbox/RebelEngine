@@ -3025,7 +3025,10 @@ bool EditorInspectorDefaultPlugin::parse_property(
                 editor->setup(options);
                 add_property_editor(p_path, editor);
 
-            } else if (p_hint == PROPERTY_HINT_LAYERS_2D_PHYSICS || p_hint == PROPERTY_HINT_LAYERS_2D_RENDER || p_hint == PROPERTY_HINT_LAYERS_3D_PHYSICS || p_hint == PROPERTY_HINT_LAYERS_3D_RENDER) {
+            } else if (p_hint == PROPERTY_HINT_LAYERS_2D_PHYSICS
+                       || p_hint == PROPERTY_HINT_LAYERS_2D_RENDER
+                       || p_hint == PROPERTY_HINT_LAYERS_3D_PHYSICS
+                       || p_hint == PROPERTY_HINT_LAYERS_3D_RENDER) {
                 EditorPropertyLayers::LayerType lt =
                     EditorPropertyLayers::LAYER_RENDER_2D;
                 switch (p_hint) {
@@ -3172,7 +3175,11 @@ bool EditorInspectorDefaultPlugin::parse_property(
                     memnew(EditorPropertyClassName);
                 editor->setup("Object", p_hint_text);
                 add_property_editor(p_path, editor);
-            } else if (p_hint == PROPERTY_HINT_DIR || p_hint == PROPERTY_HINT_FILE || p_hint == PROPERTY_HINT_SAVE_FILE || p_hint == PROPERTY_HINT_GLOBAL_DIR || p_hint == PROPERTY_HINT_GLOBAL_FILE) {
+            } else if (p_hint == PROPERTY_HINT_DIR
+                       || p_hint == PROPERTY_HINT_FILE
+                       || p_hint == PROPERTY_HINT_SAVE_FILE
+                       || p_hint == PROPERTY_HINT_GLOBAL_DIR
+                       || p_hint == PROPERTY_HINT_GLOBAL_FILE) {
                 Vector<String> extensions = p_hint_text.split(",");
                 bool global               = p_hint == PROPERTY_HINT_GLOBAL_DIR
                            || p_hint == PROPERTY_HINT_GLOBAL_FILE;
@@ -3185,7 +3192,14 @@ bool EditorInspectorDefaultPlugin::parse_property(
                     editor->set_save_mode();
                 }
                 add_property_editor(p_path, editor);
-            } else if (p_hint == PROPERTY_HINT_METHOD_OF_VARIANT_TYPE || p_hint == PROPERTY_HINT_METHOD_OF_BASE_TYPE || p_hint == PROPERTY_HINT_METHOD_OF_INSTANCE || p_hint == PROPERTY_HINT_METHOD_OF_SCRIPT || p_hint == PROPERTY_HINT_PROPERTY_OF_VARIANT_TYPE || p_hint == PROPERTY_HINT_PROPERTY_OF_BASE_TYPE || p_hint == PROPERTY_HINT_PROPERTY_OF_INSTANCE || p_hint == PROPERTY_HINT_PROPERTY_OF_SCRIPT) {
+            } else if (p_hint == PROPERTY_HINT_METHOD_OF_VARIANT_TYPE
+                       || p_hint == PROPERTY_HINT_METHOD_OF_BASE_TYPE
+                       || p_hint == PROPERTY_HINT_METHOD_OF_INSTANCE
+                       || p_hint == PROPERTY_HINT_METHOD_OF_SCRIPT
+                       || p_hint == PROPERTY_HINT_PROPERTY_OF_VARIANT_TYPE
+                       || p_hint == PROPERTY_HINT_PROPERTY_OF_BASE_TYPE
+                       || p_hint == PROPERTY_HINT_PROPERTY_OF_INSTANCE
+                       || p_hint == PROPERTY_HINT_PROPERTY_OF_SCRIPT) {
                 EditorPropertyMember* editor = memnew(EditorPropertyMember);
 
                 EditorPropertyMember::Type type =

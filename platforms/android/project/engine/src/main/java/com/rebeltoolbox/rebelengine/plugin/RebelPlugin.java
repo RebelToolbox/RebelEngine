@@ -415,7 +415,8 @@ public abstract class RebelPlugin {
                 if (!signalParamTypes[i].isInstance(signalArgs[i])) {
                     throw new IllegalArgumentException(
                         "Invalid type for argument #" + i
-                        + ". Should be of type " + signalParamTypes[i].getName()
+                        + ". Should be of type "
+                        + signalParamTypes[i].getName()
                     );
                 }
             }

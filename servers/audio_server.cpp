@@ -462,7 +462,8 @@ void AudioServer::_mix_step() {
                 if (MAX(peak.r, peak.l)
                     > Math::db2linear(channel_disable_threshold_db)) {
                     bus->channels.write[k].last_mix_with_audio = mix_frames;
-                } else if (mix_frames - bus->channels[k].last_mix_with_audio > channel_disable_frames) {
+                } else if (mix_frames - bus->channels[k].last_mix_with_audio
+                           > channel_disable_frames) {
                     bus->channels.write[k].active = false;
                     continue; // went inactive, don't mix.
                 }

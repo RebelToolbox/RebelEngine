@@ -1740,7 +1740,8 @@ void TextEdit::_notification(int p_what) {
                                             ),
                                             cache.current_line_color
                                         );
-                                } else if ((char_ofs + char_margin) > xmargin_beg) {
+                                } else if ((char_ofs + char_margin)
+                                           > xmargin_beg) {
                                     // Char next to margin is skipped.
                                     VisualServer::get_singleton()
                                         ->canvas_item_add_rect(
@@ -3618,7 +3619,10 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                             selection.from_column = cursor.column;
                             selection.from_line   = cursor.line;
 
-                        } else if (cursor.line > selection.selecting_line || (cursor.line == selection.selecting_line && cursor.column > selection.selecting_column)) {
+                        } else if (cursor.line > selection.selecting_line
+                                   || (cursor.line == selection.selecting_line
+                                       && cursor.column
+                                              > selection.selecting_column)) {
                             if (!selection.shiftclick_left) {
                                 SWAP(
                                     selection.from_column,
@@ -4214,7 +4218,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                                            == "//")) {
                                 should_indent = true;
                                 break;
-                            } else if (indent_char_found && !_is_whitespace(c)) {
+                            } else if (indent_char_found
+                                       && !_is_whitespace(c)) {
                                 should_indent     = false;
                                 indent_char_found = false;
                             }
@@ -4341,7 +4346,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                                     update();
                                 }
                             }
-                        } else if (cc == 0 && line.length() > 0 && line[0] == '\t') {
+                        } else if (cc == 0 && line.length() > 0
+                                   && line[0] == '\t') {
                             _remove_text(cursor.line, 0, cursor.line, 1);
                             update();
                         }
@@ -4412,7 +4418,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                             break;
                         } else if (only_char && !is_text_char) {
                             break;
-                        } else if (only_symbols && (is_whitespace || is_text_char)) {
+                        } else if (only_symbols
+                                   && (is_whitespace || is_text_char)) {
                             break;
                         }
                         column--;
@@ -4452,7 +4459,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
             case KEY_LEFT: {
                 if (k->get_shift()) {
                     _pre_shift_selection();
-                } else if (had_selection && !k->get_command() && !k->get_alt()) {
+                } else if (had_selection && !k->get_command()
+                           && !k->get_alt()) {
                     cursor_set_line(selection.from_line);
                     cursor_set_column(selection.from_column);
                     deselect();
@@ -4544,7 +4552,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
             case KEY_RIGHT: {
                 if (k->get_shift()) {
                     _pre_shift_selection();
-                } else if (had_selection && !k->get_command() && !k->get_alt()) {
+                } else if (had_selection && !k->get_command()
+                           && !k->get_alt()) {
                     cursor_set_line(selection.to_line);
                     cursor_set_column(selection.to_column);
                     deselect();
@@ -4764,7 +4773,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                 if (k->get_alt()) {
                     scancode_handled = false;
                     break;
-                } else if (k->get_command() && cursor.column < curline_len - 1) {
+                } else if (k->get_command()
+                           && cursor.column < curline_len - 1) {
 #endif
 
                     int line   = cursor.line;
@@ -4797,7 +4807,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                             break;
                         } else if (only_char && !is_text_char) {
                             break;
-                        } else if (only_symbols && (is_whitespace || is_text_char)) {
+                        } else if (only_symbols
+                                   && (is_whitespace || is_text_char)) {
                             break;
                         }
                         column++;
@@ -5834,7 +5845,8 @@ void TextEdit::adjust_viewport_to_cursor() {
         || (cur_line == first_vis_line && cur_wrap < first_vis_wrap)) {
         // Cursor is above screen.
         set_line_as_first_visible(cur_line, cur_wrap);
-    } else if (cur_line > last_vis_line || (cur_line == last_vis_line && cur_wrap > last_vis_wrap)) {
+    } else if (cur_line > last_vis_line
+               || (cur_line == last_vis_line && cur_wrap > last_vis_wrap)) {
         // Cursor is below screen.
         set_line_as_last_visible(cur_line, cur_wrap);
     }
@@ -6768,7 +6780,8 @@ int TextEdit::_is_line_in_region(int p_line) {
                 if (!cri.end) {
                     in_region = cri.region;
                 }
-            } else if (in_region == cri.region && !_get_color_region(cri.region).line_only) {
+            } else if (in_region == cri.region
+                       && !_get_color_region(cri.region).line_only) {
                 if (cri.end || _get_color_region(cri.region).eq) {
                     in_region = -1;
                 }
@@ -7187,7 +7200,8 @@ int TextEdit::_get_column_pos_of_word(
 
                 if (col > 0 && _is_text_char(p_search[col - 1])) {
                     col = -1;
-                } else if ((col + p_key.length()) < p_search.length() && _is_text_char(p_search[col + p_key.length()])) {
+                } else if ((col + p_key.length()) < p_search.length()
+                           && _is_text_char(p_search[col + p_key.length()])) {
                     col = -1;
                 }
             }
@@ -7308,7 +7322,8 @@ bool TextEdit::search(
                 // Validate for whole words.
                 if (pos > 0 && _is_text_char(text_line[pos - 1])) {
                     is_match = false;
-                } else if (pos + p_key.length() < text_line.length() && _is_text_char(text_line[pos + p_key.length()])) {
+                } else if (pos + p_key.length() < text_line.length()
+                           && _is_text_char(text_line[pos + p_key.length()])) {
                     is_match = false;
                 }
             }
@@ -8470,7 +8485,9 @@ void TextEdit::query_code_comple() {
             && (inquote || _is_completable(l[ofs - 1])
                 || completion_prefixes.has(String::chr(l[ofs - 1])))) {
             emit_signal("request_completion");
-        } else if (ofs > 1 && l[ofs - 1] == ' ' && completion_prefixes.has(String::chr(l[ofs - 2]))) { // Make it work with a space too, it's good enough.
+        } else if (ofs > 1 && l[ofs - 1] == ' '
+                   && completion_prefixes.has(String::chr(l[ofs - 2])
+                   )) { // Make it work with a space too, it's good enough.
             emit_signal("request_completion");
         }
     }
@@ -9778,7 +9795,9 @@ Map<int, TextEdit::HighlighterInfo> TextEdit::_get_line_syntax_highlighting(
                 if (!cri.end) {
                     in_region = cri.region;
                 }
-            } else if (in_region == cri.region && !color_regions[cri.region].line_only) { // Ignore otherwise.
+            } else if (in_region == cri.region
+                       && !color_regions[cri.region]
+                               .line_only) { // Ignore otherwise.
                 if (cri.end || color_regions[cri.region].eq) {
                     deregion = color_regions[cri.region].eq
                                  ? color_regions[cri.region].begin_key.length()

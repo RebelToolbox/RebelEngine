@@ -458,7 +458,8 @@ void ResourceImporterTexture::_save_stex(
                 Image::CompressSource csource = Image::COMPRESS_SOURCE_GENERIC;
                 if (p_force_normal) {
                     csource = Image::COMPRESS_SOURCE_NORMAL;
-                } else if (p_texture_flags & VS::TEXTURE_FLAG_CONVERT_TO_LINEAR) {
+                } else if (p_texture_flags
+                           & VS::TEXTURE_FLAG_CONVERT_TO_LINEAR) {
                     csource = Image::COMPRESS_SOURCE_SRGB;
                 }
 

@@ -753,8 +753,9 @@ Error Main::setup(
                 goto error;
             }
 #ifndef SERVER_ENABLED
-        } else if (I->get() == "-f" || I->get() == "--fullscreen") { // force
-                                                                     // fullscreen
+        } else if (I->get() == "-f"
+                   || I->get() == "--fullscreen") { // force
+                                                    // fullscreen
 
             init_fullscreen = true;
         } else if (I->get() == "-m" || I->get() == "--maximized") { // force
@@ -769,9 +770,10 @@ Error Main::setup(
                                                                    // window
 
             init_windowed = true;
-        } else if (I->get() == "-t" || I->get() == "--always-on-top") { // force
-                                                                        // always-on-top
-                                                                        // window
+        } else if (I->get() == "-t"
+                   || I->get() == "--always-on-top") { // force
+                                                       // always-on-top
+                                                       // window
 
             init_always_on_top = true;
         } else if (I->get() == "--resolution") { // force resolution
@@ -966,7 +968,8 @@ Error Main::setup(
             // handling itself is not done in this function
             main_args.push_back(I->get());
 #endif
-        } else if (I->get() == "--export" || I->get() == "--export-debug" || I->get() == "--export-pack") { // Export project
+        } else if (I->get() == "--export" || I->get() == "--export-debug"
+                   || I->get() == "--export-pack") { // Export project
 
             editor = true;
             main_args.push_back(I->get());
@@ -1014,8 +1017,9 @@ Error Main::setup(
 #ifdef TOOLS_ENABLED
             editor = true;
 #endif
-        } else if (I->get() == "-b" || I->get() == "--breakpoints") { // add
-                                                                      // breakpoints
+        } else if (I->get() == "-b"
+                   || I->get() == "--breakpoints") { // add
+                                                     // breakpoints
 
             if (I->next()) {
                 String bplist = I->next()->get();
@@ -2130,7 +2134,8 @@ bool Main::start() {
         } else if (args[i] == "-p" || args[i] == "--projects-manager") {
             projects_manager = true;
 #endif
-        } else if (args[i].length() && args[i][0] != '-' && positional_arg == "") {
+        } else if (args[i].length() && args[i][0] != '-'
+                   && positional_arg == "") {
             positional_arg = args[i];
 
             if (args[i].ends_with(".scn") || args[i].ends_with(".tscn")
@@ -2817,8 +2822,7 @@ bool Main::start() {
             Crypto::load_default_certificates(
                 EditorSettings::get_singleton()
                     ->get_setting("network/ssl/editor_ssl_certificates")
-                    .
-                    operator String()
+                    .operator String()
             );
         }
 #endif

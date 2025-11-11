@@ -14,7 +14,7 @@ struct _XTranslatePair {
 };
 
 static _XTranslatePair _xkeysym_to_keycode[] = {
-  // misc keys
+    // misc keys
 
     {XK_Escape,               KEY_ESCAPE       },
     {XK_Tab,                  KEY_TAB          },
@@ -66,8 +66,8 @@ static _XTranslatePair _xkeysym_to_keycode[] = {
     {XK_Begin,                KEY_CLEAR        },
     {XK_Insert,               KEY_INSERT       },
     {XK_Delete,               KEY_DELETE       },
- //{ XK_KP_Equal,                KEY_EQUAL   },
-  //{ XK_KP_Separator,            KEY_COMMA   },
+    //{ XK_KP_Equal,                KEY_EQUAL   },
+    //{ XK_KP_Separator,            KEY_COMMA   },
     {XK_KP_Decimal,           KEY_KP_PERIOD    },
     {XK_KP_Delete,            KEY_KP_PERIOD    },
     {XK_KP_Multiply,          KEY_KP_MULTIPLY  },
@@ -84,7 +84,7 @@ static _XTranslatePair _xkeysym_to_keycode[] = {
     {XK_KP_7,                 KEY_KP_7         },
     {XK_KP_8,                 KEY_KP_8         },
     {XK_KP_9,                 KEY_KP_9         },
- // same but with numlock
+    // same but with numlock
     {XK_KP_Insert,            KEY_KP_0         },
     {XK_KP_End,               KEY_KP_1         },
     {XK_KP_Down,              KEY_KP_2         },
@@ -112,7 +112,7 @@ static _XTranslatePair _xkeysym_to_keycode[] = {
     {XK_F15,                  KEY_F15          },
     {XK_F16,                  KEY_F16          },
 
- // media keys
+    // media keys
     {XF86XK_Back,             KEY_BACK         },
     {XF86XK_Forward,          KEY_FORWARD      },
     {XF86XK_Stop,             KEY_STOP         },
@@ -131,7 +131,7 @@ static _XTranslatePair _xkeysym_to_keycode[] = {
     {XF86XK_AudioNext,        KEY_MEDIANEXT    },
     {XF86XK_AudioRecord,      KEY_MEDIARECORD  },
 
- // launch keys
+    // launch keys
     {XF86XK_Mail,             KEY_LAUNCHMAIL   },
     {XF86XK_MyComputer,       KEY_LAUNCH0      },
     {XF86XK_Calculator,       KEY_LAUNCH1      },
@@ -245,7 +245,7 @@ static _TranslatePair _scancode_to_keycode[] = {
     {KEY_KP_3,        0x59},
     {KEY_KP_0,        0x5A},
     {KEY_KP_PERIOD,   0x5B},
- //{ KEY_???, 0x5E }, //NON US BACKSLASH
+    //{ KEY_???, 0x5E }, //NON US BACKSLASH
     {KEY_F11,         0x5F},
     {KEY_F12,         0x60},
     {KEY_KP_ENTER,    0x68},

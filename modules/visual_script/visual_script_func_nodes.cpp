@@ -111,7 +111,8 @@ Node* VisualScriptFunctionCall::_get_base_node() const {
 StringName VisualScriptFunctionCall::_get_base_type() const {
     if (call_mode == CALL_MODE_SELF && get_visual_script().is_valid()) {
         return get_visual_script()->get_instance_base_type();
-    } else if (call_mode == CALL_MODE_NODE_PATH && get_visual_script().is_valid()) {
+    } else if (call_mode == CALL_MODE_NODE_PATH
+               && get_visual_script().is_valid()) {
         Node* path = _get_base_node();
         if (path) {
             return path->get_class();
@@ -599,7 +600,8 @@ void VisualScriptFunctionCall::_validate_property(PropertyInfo& property
             property.hint        = PROPERTY_HINT_METHOD_OF_VARIANT_TYPE;
             property.hint_string = Variant::get_type_name(basic_type);
 
-        } else if (call_mode == CALL_MODE_SELF && get_visual_script().is_valid()) {
+        } else if (call_mode == CALL_MODE_SELF
+                   && get_visual_script().is_valid()) {
             property.hint        = PROPERTY_HINT_METHOD_OF_SCRIPT;
             property.hint_string = itos(get_visual_script()->get_instance_id());
         } else if (call_mode == CALL_MODE_SINGLETON) {
@@ -1181,7 +1183,8 @@ Node* VisualScriptPropertySet::_get_base_node() const {
 StringName VisualScriptPropertySet::_get_base_type() const {
     if (call_mode == CALL_MODE_SELF && get_visual_script().is_valid()) {
         return get_visual_script()->get_instance_base_type();
-    } else if (call_mode == CALL_MODE_NODE_PATH && get_visual_script().is_valid()) {
+    } else if (call_mode == CALL_MODE_NODE_PATH
+               && get_visual_script().is_valid()) {
         Node* path = _get_base_node();
         if (path) {
             return path->get_class();
@@ -1578,7 +1581,8 @@ void VisualScriptPropertySet::_validate_property(PropertyInfo& property) const {
             property.hint        = PROPERTY_HINT_PROPERTY_OF_VARIANT_TYPE;
             property.hint_string = Variant::get_type_name(basic_type);
 
-        } else if (call_mode == CALL_MODE_SELF && get_visual_script().is_valid()) {
+        } else if (call_mode == CALL_MODE_SELF
+                   && get_visual_script().is_valid()) {
             property.hint        = PROPERTY_HINT_PROPERTY_OF_SCRIPT;
             property.hint_string = itos(get_visual_script()->get_instance_id());
         } else if (call_mode == CALL_MODE_INSTANCE) {
@@ -2163,7 +2167,8 @@ Node* VisualScriptPropertyGet::_get_base_node() const {
 StringName VisualScriptPropertyGet::_get_base_type() const {
     if (call_mode == CALL_MODE_SELF && get_visual_script().is_valid()) {
         return get_visual_script()->get_instance_base_type();
-    } else if (call_mode == CALL_MODE_NODE_PATH && get_visual_script().is_valid()) {
+    } else if (call_mode == CALL_MODE_NODE_PATH
+               && get_visual_script().is_valid()) {
         Node* path = _get_base_node();
         if (path) {
             return path->get_class();
@@ -2494,7 +2499,8 @@ void VisualScriptPropertyGet::_validate_property(PropertyInfo& property) const {
             property.hint        = PROPERTY_HINT_PROPERTY_OF_VARIANT_TYPE;
             property.hint_string = Variant::get_type_name(basic_type);
 
-        } else if (call_mode == CALL_MODE_SELF && get_visual_script().is_valid()) {
+        } else if (call_mode == CALL_MODE_SELF
+                   && get_visual_script().is_valid()) {
             property.hint        = PROPERTY_HINT_PROPERTY_OF_SCRIPT;
             property.hint_string = itos(get_visual_script()->get_instance_id());
         } else if (call_mode == CALL_MODE_INSTANCE) {

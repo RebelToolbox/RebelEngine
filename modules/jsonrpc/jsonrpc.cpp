@@ -147,7 +147,8 @@ Variant JSONRPC::process_action(
                 ret = make_response(call_ret, id);
             }
         }
-    } else if (p_action.get_type() == Variant::ARRAY && p_process_arr_elements) {
+    } else if (p_action.get_type() == Variant::ARRAY
+               && p_process_arr_elements) {
         Array arr = p_action;
         int size  = arr.size();
         if (size) {

@@ -101,7 +101,8 @@ void TabContainer::_gui_input(const Ref<InputEvent>& p_event) {
                     update();
                 }
                 return;
-            } else if (pos.x > size.width - increment->get_width() - decrement->get_width() - popup_ofs) {
+            } else if (pos.x > size.width - increment->get_width()
+                                   - decrement->get_width() - popup_ofs) {
                 if (first_tab_cache > 0) {
                     first_tab_cache -= 1;
                     update();
@@ -181,7 +182,8 @@ void TabContainer::_gui_input(const Ref<InputEvent>& p_event) {
                 highlight_arrow = 1;
                 update();
             }
-        } else if (pos.x >= size.width - increment->get_width() - decrement->get_width() - popup_ofs) {
+        } else if (pos.x >= size.width - increment->get_width()
+                                - decrement->get_width() - popup_ofs) {
             if (highlight_arrow != 0) {
                 highlight_arrow = 0;
                 update();

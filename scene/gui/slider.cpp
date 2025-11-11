@@ -60,7 +60,8 @@ void Slider::_gui_input(Ref<InputEvent> p_event) {
             if (mb->is_pressed() && mb->get_button_index() == BUTTON_WHEEL_UP) {
                 grab_focus();
                 set_value(get_value() + get_step());
-            } else if (mb->is_pressed() && mb->get_button_index() == BUTTON_WHEEL_DOWN) {
+            } else if (mb->is_pressed()
+                       && mb->get_button_index() == BUTTON_WHEEL_DOWN) {
                 grab_focus();
                 set_value(get_value() - get_step());
             }

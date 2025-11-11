@@ -1592,7 +1592,8 @@ void RichTextLabel::_gui_input(Ref<InputEvent> p_event) {
                         }
                     }
                 }
-            } else if (b->is_pressed() && b->is_doubleclick() && selection.enabled) {
+            } else if (b->is_pressed() && b->is_doubleclick()
+                       && selection.enabled) {
                 // doubleclick: select word
                 int line   = 0;
                 Item* item = nullptr;

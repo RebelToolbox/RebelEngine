@@ -306,7 +306,7 @@ void PortalRoomsBSP::build(
                         split_plane = plane;
                     }
                 } // for b through rooms
-            }     // for a through rooms
+            } // for a through rooms
 
             if (best_room_a != -1) {
                 split_found = true;

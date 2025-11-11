@@ -1319,13 +1319,15 @@ void AnimationTreePlayerEditor::_filter_edited() {
             ed->get_metadata(0),
             ed->is_checked(0)
         );
-    } else if (anim_tree->node_get_type(edited_node) == AnimationTreePlayer::NODE_BLEND2) {
+    } else if (anim_tree->node_get_type(edited_node)
+               == AnimationTreePlayer::NODE_BLEND2) {
         anim_tree->blend2_node_set_filter_path(
             edited_node,
             ed->get_metadata(0),
             ed->is_checked(0)
         );
-    } else if (anim_tree->node_get_type(edited_node) == AnimationTreePlayer::NODE_ANIMATION) {
+    } else if (anim_tree->node_get_type(edited_node)
+               == AnimationTreePlayer::NODE_ANIMATION) {
         anim_tree->animation_node_set_filter_path(
             edited_node,
             ed->get_metadata(0),
@@ -1392,12 +1394,14 @@ void AnimationTreePlayerEditor::_edit_filters() {
                 0,
                 anim_tree->oneshot_node_is_path_filtered(edited_node, E->get())
             );
-        } else if (anim_tree->node_get_type(edited_node) == AnimationTreePlayer::NODE_BLEND2) {
+        } else if (anim_tree->node_get_type(edited_node)
+                   == AnimationTreePlayer::NODE_BLEND2) {
             it->set_checked(
                 0,
                 anim_tree->blend2_node_is_path_filtered(edited_node, E->get())
             );
-        } else if (anim_tree->node_get_type(edited_node) == AnimationTreePlayer::NODE_ANIMATION) {
+        } else if (anim_tree->node_get_type(edited_node)
+                   == AnimationTreePlayer::NODE_ANIMATION) {
             it->set_checked(
                 0,
                 anim_tree

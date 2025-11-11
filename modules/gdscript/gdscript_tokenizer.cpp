@@ -122,7 +122,7 @@ struct _bit {
 // built in types
 
 static const _bit _type_list[] = {
-  // types
+    // types
     {Variant::BOOL,               "bool"            },
     {Variant::INT,                "int"             },
     {Variant::REAL,               "float"           },
@@ -158,12 +158,12 @@ struct _kws {
 };
 
 static const _kws _keyword_list[] = {
-  // ops
+    // ops
     {GDScriptTokenizer::TK_OP_IN,         "in"        },
     {GDScriptTokenizer::TK_OP_NOT,        "not"       },
     {GDScriptTokenizer::TK_OP_OR,         "or"        },
     {GDScriptTokenizer::TK_OP_AND,        "and"       },
- // func
+    // func
     {GDScriptTokenizer::TK_PR_FUNCTION,   "func"      },
     {GDScriptTokenizer::TK_PR_CLASS,      "class"     },
     {GDScriptTokenizer::TK_PR_CLASS_NAME, "class_name"},
@@ -192,7 +192,7 @@ static const _kws _keyword_list[] = {
     {GDScriptTokenizer::TK_PR_PUPPETSYNC, "puppetsync"},
     {GDScriptTokenizer::TK_PR_CONST,      "const"     },
     {GDScriptTokenizer::TK_PR_ENUM,       "enum"      },
- // controlflow
+    // controlflow
     {GDScriptTokenizer::TK_CF_IF,         "if"        },
     {GDScriptTokenizer::TK_CF_ELIF,       "elif"      },
     {GDScriptTokenizer::TK_CF_ELSE,       "else"      },
@@ -509,7 +509,8 @@ void GDScriptTokenizerText::_advance() {
                 } else if (comment_content.begins_with("warning-ignore-all:")) {
                     String code = comment_content.get_slice(":", 1);
                     warning_global_skips.insert(code.strip_edges().to_lower());
-                } else if (comment_content.strip_edges() == "warnings-disable") {
+                } else if (comment_content.strip_edges()
+                           == "warnings-disable") {
                     ignore_warnings = true;
                 }
 #endif // DEBUG_ENABLED
@@ -744,14 +745,20 @@ void GDScriptTokenizerText::_advance() {
                     if (CharType(GETCHAR(i)) == 0) {
                         _make_error("Unterminated String");
                         return;
-                    } else if (string_mode == STRING_DOUBLE_QUOTE && CharType(GETCHAR(i)) == '"') {
+                    } else if (string_mode == STRING_DOUBLE_QUOTE
+                               && CharType(GETCHAR(i)) == '"') {
                         break;
-                    } else if (string_mode == STRING_SINGLE_QUOTE && CharType(GETCHAR(i)) == '\'') {
+                    } else if (string_mode == STRING_SINGLE_QUOTE
+                               && CharType(GETCHAR(i)) == '\'') {
                         break;
-                    } else if (string_mode == STRING_MULTILINE && CharType(GETCHAR(i)) == '\"' && CharType(GETCHAR(i + 1)) == '\"' && CharType(GETCHAR(i + 2)) == '\"') {
+                    } else if (string_mode == STRING_MULTILINE
+                               && CharType(GETCHAR(i)) == '\"'
+                               && CharType(GETCHAR(i + 1)) == '\"'
+                               && CharType(GETCHAR(i + 2)) == '\"') {
                         i += 2;
                         break;
-                    } else if (string_mode != STRING_MULTILINE && CharType(GETCHAR(i)) == '\n') {
+                    } else if (string_mode != STRING_MULTILINE
+                               && CharType(GETCHAR(i)) == '\n') {
                         _make_error("Unexpected EOL at String.");
                         return;
                     } else if (CharType(GETCHAR(i)) == 0xFFFF) {
@@ -926,7 +933,8 @@ void GDScriptTokenizerText::_advance() {
                             // all ok
 
                         } else if (bin_found && _is_bin(GETCHAR(i))) {
-                        } else if ((GETCHAR(i) == '-' || GETCHAR(i) == '+') && exponent_found) {
+                        } else if ((GETCHAR(i) == '-' || GETCHAR(i) == '+')
+                                   && exponent_found) {
                             if (sign_found) {
                                 _make_error("Invalid numeric constant at '-'");
                                 return;

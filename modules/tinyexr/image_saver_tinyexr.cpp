@@ -199,7 +199,8 @@ Error save_exr(
                     dst_wp[i] = src_rp[channel_index + i * channel_count];
                 }
 
-            } else if (src_pixel_type == SRC_HALF && target_pixel_type == TINYEXR_PIXELTYPE_HALF) {
+            } else if (src_pixel_type == SRC_HALF
+                       && target_pixel_type == TINYEXR_PIXELTYPE_HALF) {
                 CRASH_COND(
                     src_data.size()
                     < pixel_count * channel_count * target_pixel_type_size
@@ -212,7 +213,8 @@ Error save_exr(
                     dst_wp[i] = src_rp[channel_index + i * channel_count];
                 }
 
-            } else if (src_pixel_type == SRC_BYTE && target_pixel_type == TINYEXR_PIXELTYPE_HALF) {
+            } else if (src_pixel_type == SRC_BYTE
+                       && target_pixel_type == TINYEXR_PIXELTYPE_HALF) {
                 CRASH_COND(src_data.size() < pixel_count * channel_count);
 
                 const uint8_t* src_rp = (uint8_t*)src_r.ptr();

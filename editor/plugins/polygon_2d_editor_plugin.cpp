@@ -951,7 +951,9 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
                         undo_redo->add_do_method(uv_edit_draw, "update");
                         undo_redo->add_undo_method(uv_edit_draw, "update");
                         undo_redo->commit_action();
-                    } else if (uv_edit_mode[1]->is_pressed() && uv_move_current == UV_MODE_EDIT_POINT) { // Edit polygon.
+                    } else if (uv_edit_mode[1]->is_pressed()
+                               && uv_move_current
+                                      == UV_MODE_EDIT_POINT) { // Edit polygon.
                         undo_redo->create_action(TTR("Transform Polygon"));
                         undo_redo->add_do_method(
                             node,
@@ -997,11 +999,13 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
 
             uv_edit_draw->update();
 
-        } else if (mb->get_button_index() == BUTTON_WHEEL_UP && mb->is_pressed()) {
+        } else if (mb->get_button_index() == BUTTON_WHEEL_UP
+                   && mb->is_pressed()) {
             uv_zoom->set_value(
                 uv_zoom->get_value() / (1 - (0.1 * mb->get_factor()))
             );
-        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN && mb->is_pressed()) {
+        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN
+                   && mb->is_pressed()) {
             uv_zoom->set_value(
                 uv_zoom->get_value() * (1 - (0.1 * mb->get_factor()))
             );
@@ -1160,7 +1164,8 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
                 Vector2(mm->get_position().x, mm->get_position().y)
             );
             uv_edit_draw->update();
-        } else if (uv_mode == UV_MODE_PAINT_WEIGHT || uv_mode == UV_MODE_CLEAR_WEIGHT) {
+        } else if (uv_mode == UV_MODE_PAINT_WEIGHT
+                   || uv_mode == UV_MODE_CLEAR_WEIGHT) {
             bone_paint_pos =
                 Vector2(mm->get_position().x, mm->get_position().y);
             uv_edit_draw->update();

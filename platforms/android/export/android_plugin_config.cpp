@@ -68,9 +68,9 @@ AndroidPluginConfig AndroidPluginConfig::resolve_prebuilt_plugin(
     resolved.binary =
         resolved.binary_type == AndroidPluginConfig::BINARY_TYPE_LOCAL
             ? resolve_local_dependency_path(
-                plugin_config_dir,
-                prebuilt_plugin.binary
-            )
+                  plugin_config_dir,
+                  prebuilt_plugin.binary
+              )
             : prebuilt_plugin.binary;
     if (!prebuilt_plugin.local_dependencies.empty()) {
         resolved.local_dependencies.clear();
@@ -170,9 +170,9 @@ AndroidPluginConfig AndroidPluginConfig::load_plugin_config(
                 plugin_config.binary_type
                         == AndroidPluginConfig::BINARY_TYPE_LOCAL
                     ? resolve_local_dependency_path(
-                        config_base_dir,
-                        binary_path
-                    )
+                          config_base_dir,
+                          binary_path
+                      )
                     : binary_path;
 
             if (config_file->has_section(

@@ -821,7 +821,8 @@ bool GridMapEditor::forward_spatial_input_event(
             }
 
             return true; // Eaten.
-        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN && (mb->get_command() || mb->get_shift())) {
+        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN
+                   && (mb->get_command() || mb->get_shift())) {
             if (mb->is_pressed()) {
                 floor->set_value(floor->get_value() - mb->get_factor());
             }
@@ -833,8 +834,7 @@ bool GridMapEditor::forward_spatial_input_event(
                 (SpatialEditorViewport::NavigationScheme
                 )EditorSettings::get_singleton()
                     ->get("editors/3d/navigation/navigation_scheme")
-                    .
-                    operator int();
+                    .operator int();
             if ((nav_scheme == SpatialEditorViewport::NAVIGATION_MAYA
                  || nav_scheme == SpatialEditorViewport::NAVIGATION_MODO)
                 && mb->get_alt()) {

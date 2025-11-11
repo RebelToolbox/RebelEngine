@@ -475,7 +475,8 @@ Error VisualScriptExpression::_get_token(Token& r_token) {
                                 if (c >= '0' && c <= '9') {
                                     exp_beg = true;
 
-                                } else if ((c == '-' || c == '+') && !exp_sign && !exp_beg) {
+                                } else if ((c == '-' || c == '+') && !exp_sign
+                                           && !exp_beg) {
                                     if (c == '-') {
                                         is_float = true;
                                     }
@@ -505,7 +506,8 @@ Error VisualScriptExpression::_get_token(Token& r_token) {
                     }
                     return OK;
 
-                } else if ((cchar >= 'A' && cchar <= 'Z') || (cchar >= 'a' && cchar <= 'z') || cchar == '_') {
+                } else if ((cchar >= 'A' && cchar <= 'Z')
+                           || (cchar >= 'a' && cchar <= 'z') || cchar == '_') {
                     String id;
                     bool first = true;
 

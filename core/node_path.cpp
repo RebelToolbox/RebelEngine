@@ -310,7 +310,9 @@ void NodePath::simplify() {
         if (data->path[i].operator String() == ".") {
             data->path.remove(i);
             i--;
-        } else if (data->path[i].operator String() == ".." && i > 0 && data->path[i - 1].operator String() != "." && data->path[i - 1].operator String() != "..") {
+        } else if (data->path[i].operator String() == ".." && i > 0
+                   && data->path[i - 1].operator String() != "."
+                   && data->path[i - 1].operator String() != "..") {
             // remove both
             data->path.remove(i - 1);
             data->path.remove(i - 1);

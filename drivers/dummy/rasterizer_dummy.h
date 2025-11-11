@@ -74,7 +74,7 @@ public:
         float p_sky_contribution = 0.0
     ) {}
 
-    void environment_set_camera_feed_id(RID p_env, int p_camera_feed_id){};
+    void environment_set_camera_feed_id(RID p_env, int p_camera_feed_id) {};
 
     void environment_set_dof_blur_near(
         RID p_env,
@@ -1615,8 +1615,8 @@ public:
 
     void light_internal_free(RID p_rid) {}
 
-    void canvas_begin(){};
-    void canvas_end(){};
+    void canvas_begin() {};
+    void canvas_end() {};
 
     void canvas_render_items(
         Item* p_item_list,
@@ -1624,8 +1624,8 @@ public:
         const Color& p_modulate,
         Light* p_light,
         const Transform2D& p_transform
-    ){};
-    void canvas_debug_viewport_shadows(Light* p_lights_with_shadow){};
+    ) {};
+    void canvas_debug_viewport_shadows(Light* p_lights_with_shadow) {};
 
     void canvas_light_shadow_buffer_update(
         RID p_buffer,

@@ -246,9 +246,9 @@ bool LightOccluder2D::_edit_is_selected_on_click(
 ) const {
     return occluder_polygon.is_valid()
              ? occluder_polygon->_edit_is_selected_on_click(
-                 p_point,
-                 p_tolerance
-             )
+                   p_point,
+                   p_tolerance
+               )
              : false;
 }
 #endif

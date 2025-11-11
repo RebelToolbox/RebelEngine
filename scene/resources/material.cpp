@@ -1068,7 +1068,10 @@ void SpatialMaterial::_update_shader() {
         code += "\tALBEDO *= 1.0 - ref_amount;\n";
         code += "\tALPHA = 1.0;\n";
 
-    } else if (features[FEATURE_TRANSPARENT] || flags[FLAG_USE_ALPHA_SCISSOR] || flags[FLAG_USE_SHADOW_TO_OPACITY] || (distance_fade == DISTANCE_FADE_PIXEL_ALPHA) || proximity_fade_enabled) {
+    } else if (features[FEATURE_TRANSPARENT] || flags[FLAG_USE_ALPHA_SCISSOR]
+               || flags[FLAG_USE_SHADOW_TO_OPACITY]
+               || (distance_fade == DISTANCE_FADE_PIXEL_ALPHA)
+               || proximity_fade_enabled) {
         code += "\tALPHA = albedo.a * albedo_tex.a;\n";
     }
 
