@@ -15,6 +15,7 @@
 #include "editor/plugins/asset_library_editor_plugin.h"
 #include "projects_manager/add_project_dialog.h"
 #include "projects_manager/extract_zip_file_dialog.h"
+#include "projects_manager/import_project_dialog.h"
 #include "projects_manager/new_project_dialog.h"
 #include "projects_manager/projects_list.h"
 #include "projects_manager/rename_project_dialog.h"
@@ -65,6 +66,7 @@ private:
 
     AddProjectDialog* add_project_dialog;
     ExtractZipFileDialog* extract_zip_file_dialog;
+    ImportProjectDialog* import_project_dialog;
     NewProjectDialog* new_project_dialog;
     RenameProjectDialog* rename_project_dialog;
 
@@ -91,6 +93,7 @@ private:
     Control* _create_add_project_dialog();
     Control* _create_edit_multiple_confirmation();
     Control* _create_extract_zip_file_dialog();
+    Control* _create_import_project_dialog();
     Control* _create_language_options();
     Control* _create_new_project_dialog();
     Control* _create_newer_settings_file_version_error();
@@ -127,6 +130,11 @@ private:
     void _on_extract_zip_file(const String& p_zip_file_path);
     void _on_files_dropped(const PoolStringArray& p_files, int);
     void _on_global_menu_action(const Variant& p_id, const Variant& p_meta);
+    void _on_import_button_pressed();
+    void _on_import_godot_project(
+        const String& p_project_file,
+        const String& p_destination_folder
+    );
     void _on_install_asset(const String& p_zip_path, const String& p_title);
     void _on_item_double_clicked();
     void _on_language_selected(int p_id);
