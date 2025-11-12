@@ -58,7 +58,7 @@ typedef double	f64;
 #define USE_STB_IMAGE_LOAD 0	
 
 #if ETC_WINDOWS
-#include <SDKDDKVer.h>
+#include <sdkddkver.h>
 #define _CRT_SECURE_NO_WARNINGS (1)
 #include <tchar.h>
 #endif
