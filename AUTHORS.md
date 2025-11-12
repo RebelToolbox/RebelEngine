@@ -7,5 +7,10 @@ We aim to recognise all contributors, not just those that write code.
 
 ## Rebel Contributors
 
-    Marcel Admiraal (madmiraal)
+    cyanjiang
     Daniela Ortner (DanielaOrtner)
+    Ettore Atalan (Atalanttore)
+    Marcel Admiraal (madmiraal)
+    Ricky Tigg (Ricky-Tigg)
+    Silvério Santos (SantosSi)
+    (TamilNeram · ஐயா) தமிழ் நேரம்
