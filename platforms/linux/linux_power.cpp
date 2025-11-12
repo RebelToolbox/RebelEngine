@@ -496,7 +496,8 @@ bool LinuxPower::GetPowerInfo_Linux_sys_class_power_supply(
             st = OS::POWERSTATE_CHARGING;
         } else if (String(str) == "Discharging\n") {
             st = OS::POWERSTATE_ON_BATTERY;
-        } else if ((String(str) == "Full\n") || (String(str) == "Not charging\n")) {
+        } else if ((String(str) == "Full\n")
+                   || (String(str) == "Not charging\n")) {
             st = OS::POWERSTATE_CHARGED;
         } else {
             st = OS::POWERSTATE_UNKNOWN; /* uh oh */

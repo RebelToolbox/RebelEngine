@@ -405,7 +405,8 @@ void* VisualServerScene::_instance_pair(
         geom->lighting_dirty = true;
 
         return E; // this element should make freeing faster
-    } else if (B->base_type == VS::INSTANCE_REFLECTION_PROBE && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
+    } else if (B->base_type == VS::INSTANCE_REFLECTION_PROBE
+               && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
         InstanceReflectionProbeData* reflection_probe =
             static_cast<InstanceReflectionProbeData*>(B->base_data);
         InstanceGeometryData* geom =
@@ -421,7 +422,8 @@ void* VisualServerScene::_instance_pair(
         geom->reflection_dirty = true;
 
         return E; // this element should make freeing faster
-    } else if (B->base_type == VS::INSTANCE_LIGHTMAP_CAPTURE && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
+    } else if (B->base_type == VS::INSTANCE_LIGHTMAP_CAPTURE
+               && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
         InstanceLightmapCaptureData* lightmap_capture =
             static_cast<InstanceLightmapCaptureData*>(B->base_data);
         InstanceGeometryData* geom =
@@ -437,7 +439,8 @@ void* VisualServerScene::_instance_pair(
             ->_instance_queue_update(A, false, false); // need to update capture
 
         return E; // this element should make freeing faster
-    } else if (B->base_type == VS::INSTANCE_GI_PROBE && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
+    } else if (B->base_type == VS::INSTANCE_GI_PROBE
+               && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
         InstanceGIProbeData* gi_probe =
             static_cast<InstanceGIProbeData*>(B->base_data);
         InstanceGeometryData* geom =
@@ -454,7 +457,8 @@ void* VisualServerScene::_instance_pair(
 
         return E; // this element should make freeing faster
 
-    } else if (B->base_type == VS::INSTANCE_GI_PROBE && A->base_type == VS::INSTANCE_LIGHT) {
+    } else if (B->base_type == VS::INSTANCE_GI_PROBE
+               && A->base_type == VS::INSTANCE_LIGHT) {
         InstanceGIProbeData* gi_probe =
             static_cast<InstanceGIProbeData*>(B->base_data);
         return gi_probe->lights.insert(A);
@@ -501,7 +505,8 @@ void VisualServerScene::_instance_unpair(
         }
         geom->lighting_dirty = true;
 
-    } else if (B->base_type == VS::INSTANCE_REFLECTION_PROBE && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
+    } else if (B->base_type == VS::INSTANCE_REFLECTION_PROBE
+               && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
         InstanceReflectionProbeData* reflection_probe =
             static_cast<InstanceReflectionProbeData*>(B->base_data);
         InstanceGeometryData* geom =
@@ -515,7 +520,8 @@ void VisualServerScene::_instance_unpair(
         reflection_probe->geometries.erase(E);
 
         geom->reflection_dirty = true;
-    } else if (B->base_type == VS::INSTANCE_LIGHTMAP_CAPTURE && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
+    } else if (B->base_type == VS::INSTANCE_LIGHTMAP_CAPTURE
+               && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
         InstanceLightmapCaptureData* lightmap_capture =
             static_cast<InstanceLightmapCaptureData*>(B->base_data);
         InstanceGeometryData* geom =
@@ -530,7 +536,8 @@ void VisualServerScene::_instance_unpair(
         ((VisualServerScene*)p_self)
             ->_instance_queue_update(A, false, false); // need to update capture
 
-    } else if (B->base_type == VS::INSTANCE_GI_PROBE && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
+    } else if (B->base_type == VS::INSTANCE_GI_PROBE
+               && ((1 << A->base_type) & VS::INSTANCE_GEOMETRY_MASK)) {
         InstanceGIProbeData* gi_probe =
             static_cast<InstanceGIProbeData*>(B->base_data);
         InstanceGeometryData* geom =
@@ -546,7 +553,8 @@ void VisualServerScene::_instance_unpair(
 
         geom->gi_probes_dirty = true;
 
-    } else if (B->base_type == VS::INSTANCE_GI_PROBE && A->base_type == VS::INSTANCE_LIGHT) {
+    } else if (B->base_type == VS::INSTANCE_GI_PROBE
+               && A->base_type == VS::INSTANCE_LIGHT) {
         InstanceGIProbeData* gi_probe =
             static_cast<InstanceGIProbeData*>(B->base_data);
         Set<Instance*>::Element* E =
@@ -1151,10 +1159,9 @@ void VisualServerScene::instance_set_visible(RID p_instance, bool p_visible) {
                     instance->spatial_partition_id,
                     p_visible,
                     1 << VS::INSTANCE_GI_PROBE,
-                    p_visible
-                        ? (VS::INSTANCE_GEOMETRY_MASK
-                           | (1 << VS::INSTANCE_LIGHT))
-                        : 0
+                    p_visible ? (VS::INSTANCE_GEOMETRY_MASK
+                                 | (1 << VS::INSTANCE_LIGHT))
+                              : 0
                 );
             }
 
@@ -3639,7 +3646,8 @@ void VisualServerScene::_prepare_scene(
                     light_cull_count++;
                 }
             }
-        } else if (ins->base_type == VS::INSTANCE_REFLECTION_PROBE && ins->visible) {
+        } else if (ins->base_type == VS::INSTANCE_REFLECTION_PROBE
+                   && ins->visible) {
             if (reflection_probe_cull_count < MAX_REFLECTION_PROBES_CULLED) {
                 InstanceReflectionProbeData* reflection_probe =
                     static_cast<InstanceReflectionProbeData*>(ins->base_data);
@@ -3686,7 +3694,10 @@ void VisualServerScene::_prepare_scene(
                 gi_probe_update_list.add(&gi_probe->update_element);
             }
 
-        } else if (((1 << ins->base_type) & VS::INSTANCE_GEOMETRY_MASK) && ins->visible && ins->cast_shadows != VS::SHADOW_CASTING_SETTING_SHADOWS_ONLY) {
+        } else if (((1 << ins->base_type) & VS::INSTANCE_GEOMETRY_MASK)
+                   && ins->visible
+                   && ins->cast_shadows
+                          != VS::SHADOW_CASTING_SETTING_SHADOWS_ONLY) {
             keep = true;
 
             InstanceGeometryData* geom =
@@ -5057,7 +5068,8 @@ void VisualServerScene::_bake_gi_probe(Instance* p_gi_probe) {
                 mipmapw[mm_ofs + 3] = uint8_t(MIN(a, 255));
             }
         }
-    } else if (probe_data->dynamic.compression == RasterizerStorage::GI_PROBE_S3TC) {
+    } else if (probe_data->dynamic.compression
+               == RasterizerStorage::GI_PROBE_S3TC) {
         int mipmap_count = probe_data->dynamic.mipmaps_3d.size();
 
         for (int mmi = 0; mmi < mipmap_count; mmi++) {
@@ -5509,9 +5521,9 @@ void VisualServerScene::_update_dirty_instance(Instance* p_instance) {
                                 p_instance->materials[i].is_valid()
                                     ? p_instance->materials[i]
                                     : VSG::storage->mesh_surface_get_material(
-                                        mesh,
-                                        i
-                                    );
+                                          mesh,
+                                          i
+                                      );
 
                             if (!mat.is_valid()) {
                                 cast_shadows = true;

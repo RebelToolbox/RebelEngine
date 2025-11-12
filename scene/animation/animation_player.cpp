@@ -343,9 +343,15 @@ void AnimationPlayer::_ensure_node_caches(
                                == SceneStringNames::get_singleton()
                                       ->transform_pos) {
                         pa.special = SP_NODE2D_POS;
-                    } else if (leftover_path.size() == 1 && leftover_path[0] == SceneStringNames::get_singleton()->transform_rot) {
+                    } else if (leftover_path.size() == 1
+                               && leftover_path[0]
+                                      == SceneStringNames::get_singleton()
+                                             ->transform_rot) {
                         pa.special = SP_NODE2D_ROT;
-                    } else if (leftover_path.size() == 1 && leftover_path[0] == SceneStringNames::get_singleton()->transform_scale) {
+                    } else if (leftover_path.size() == 1
+                               && leftover_path[0]
+                                      == SceneStringNames::get_singleton()
+                                             ->transform_scale) {
                         pa.special = SP_NODE2D_SCALE;
                     }
                 }
@@ -1440,7 +1446,9 @@ void AnimationPlayer::play(
         if (p_from_end && c.current.pos == 0) {
             // Animation reset BUT played backwards, set position to the end
             c.current.pos = c.current.from->animation->get_length();
-        } else if (!p_from_end && c.current.pos == c.current.from->animation->get_length()) {
+        } else if (!p_from_end
+                   && c.current.pos
+                          == c.current.from->animation->get_length()) {
             // Animation resumed but already ended, set position to the
             // beginning
             c.current.pos = 0;

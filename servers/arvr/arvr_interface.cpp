@@ -163,7 +163,7 @@ bool ARVRInterface::get_anchor_detection_is_enabled() const {
     return false;
 };
 
-void ARVRInterface::set_anchor_detection_is_enabled(bool p_enable){
+void ARVRInterface::set_anchor_detection_is_enabled(bool p_enable) {
     // don't do anything here, this needs to be implemented on AR interface to
     // enable/disable things like plane detection etc.
 };

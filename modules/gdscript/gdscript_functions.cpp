@@ -1100,7 +1100,9 @@ void GDScriptFunctions::call(
                 if (!obj) {
                     r_ret = Variant();
 
-                } else if (!obj->get_script_instance() || obj->get_script_instance()->get_language() != GDScriptLanguage::get_singleton()) {
+                } else if (!obj->get_script_instance()
+                           || obj->get_script_instance()->get_language()
+                                  != GDScriptLanguage::get_singleton()) {
                     r_error.error =
                         Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
                     r_error.argument = 0;

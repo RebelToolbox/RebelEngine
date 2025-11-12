@@ -1240,7 +1240,8 @@ LRESULT WindowsOS::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                         // do something with each touch input entry
                         if (ti.dwFlags & TOUCHEVENTF_MOVE) {
                             _drag_event(touch_pos.x, touch_pos.y, ti.dwID);
-                        } else if (ti.dwFlags & (TOUCHEVENTF_UP | TOUCHEVENTF_DOWN)) {
+                        } else if (ti.dwFlags
+                                   & (TOUCHEVENTF_UP | TOUCHEVENTF_DOWN)) {
                             _touch_event(
                                 ti.dwFlags & TOUCHEVENTF_DOWN,
                                 touch_pos.x,
@@ -1440,7 +1441,7 @@ static int QueryDpiForMonitor(
     if (Shcore == NULL) {
         Shcore           = LoadLibraryW(L"Shcore.dll");
         getDPIForMonitor = Shcore ? (GetDPIForMonitor_t
-                           )GetProcAddress(Shcore, "GetDpiForMonitor")
+                                    )GetProcAddress(Shcore, "GetDpiForMonitor")
                                   : NULL;
 
         if ((Shcore == NULL) || (getDPIForMonitor == NULL)) {

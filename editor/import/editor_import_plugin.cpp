@@ -186,8 +186,7 @@ Error EditorImportPlugin::import(
                         platform_variants,
                         gen_files
                     )
-                    .
-                    operator int64_t();
+                    .operator int64_t();
 
     for (int i = 0; i < platform_variants.size(); i++) {
         r_platform_variants->push_back(platform_variants[i]);

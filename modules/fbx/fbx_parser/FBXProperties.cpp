@@ -83,25 +83,26 @@ PropertyPtr ReadTypedProperty(const ElementPtr element) {
         return new TypedProperty<std::string>(ParseTokenAsString(tok[4]));
     } else if (!strcmp(cs, "bool") || !strcmp(cs, "Bool")) {
         return new TypedProperty<bool>(ParseTokenAsInt(tok[4]) != 0);
-    } else if (!strcmp(cs, "int") || !strcmp(cs, "Int") || !strcmp(cs, "enum") || !strcmp(cs, "Enum")) {
+    } else if (!strcmp(cs, "int") || !strcmp(cs, "Int") || !strcmp(cs, "enum")
+               || !strcmp(cs, "Enum")) {
         return new TypedProperty<int>(ParseTokenAsInt(tok[4]));
     } else if (!strcmp(cs, "ULongLong")) {
         return new TypedProperty<uint64_t>(ParseTokenAsID(tok[4]));
     } else if (!strcmp(cs, "KTime")) {
         return new TypedProperty<int64_t>(ParseTokenAsInt64(tok[4]));
-    } else if (!strcmp(cs, "Vector3D") ||
-            !strcmp(cs, "ColorRGB") ||
-            !strcmp(cs, "Vector") ||
-            !strcmp(cs, "Color") ||
-            !strcmp(cs, "Lcl Translation") ||
-            !strcmp(cs, "Lcl Rotation") ||
-            !strcmp(cs, "Lcl Scaling")) {
+    } else if (!strcmp(cs, "Vector3D") || !strcmp(cs, "ColorRGB")
+               || !strcmp(cs, "Vector") || !strcmp(cs, "Color")
+               || !strcmp(cs, "Lcl Translation") || !strcmp(cs, "Lcl Rotation")
+               || !strcmp(cs, "Lcl Scaling")) {
         return new TypedProperty<Vector3>(Vector3(
             ParseTokenAsFloat(tok[4]),
             ParseTokenAsFloat(tok[5]),
             ParseTokenAsFloat(tok[6])
         ));
-    } else if (!strcmp(cs, "double") || !strcmp(cs, "Number") || !strcmp(cs, "Float") || !strcmp(cs, "float") || !strcmp(cs, "FieldOfView") || !strcmp(cs, "UnitScaleFactor")) {
+    } else if (!strcmp(cs, "double") || !strcmp(cs, "Number")
+               || !strcmp(cs, "Float") || !strcmp(cs, "float")
+               || !strcmp(cs, "FieldOfView")
+               || !strcmp(cs, "UnitScaleFactor")) {
         return new TypedProperty<float>(ParseTokenAsFloat(tok[4]));
     }
 

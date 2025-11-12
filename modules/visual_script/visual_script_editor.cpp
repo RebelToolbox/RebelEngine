@@ -1117,7 +1117,8 @@ void VisualScriptEditor::_update_graph(int p_only_id) {
                                 "_draw_color_over_button",
                                 varray(button, value)
                             );
-                        } else if (left_type == Variant::OBJECT && Ref<Resource>(value).is_valid()) {
+                        } else if (left_type == Variant::OBJECT
+                                   && Ref<Resource>(value).is_valid()) {
                             Ref<Resource> res = value;
                             Array arr;
                             arr.push_back(button->get_instance_id());
@@ -1130,7 +1131,8 @@ void VisualScriptEditor::_update_graph(int p_only_id) {
                                     arr
                                 );
 
-                        } else if (pi.type == Variant::INT && pi.hint == PROPERTY_HINT_ENUM) {
+                        } else if (pi.type == Variant::INT
+                                   && pi.hint == PROPERTY_HINT_ENUM) {
                             button->set_text(
                                 pi.hint_string.get_slice(",", value)
                             );
@@ -2828,7 +2830,8 @@ Variant VisualScriptEditor::get_drag_data_fw(
         } else if (it->get_parent() == root->get_children()->get_next()) {
             dd["type"]     = "visual_script_variable_drag";
             dd["variable"] = type;
-        } else if (it->get_parent() == root->get_children()->get_next()->get_next()) {
+        } else if (it->get_parent()
+                   == root->get_children()->get_next()->get_next()) {
             dd["type"]   = "visual_script_signal_drag";
             dd["signal"] = type;
 
@@ -4639,7 +4642,8 @@ void VisualScriptEditor::_move_nodes_with_rescan(
         if (!nodes_to_move.has(E->get().from_node)
             && nodes_to_move.has(E->get().to_node)) {
             seqext.push_back(E->get());
-        } else if (nodes_to_move.has(E->get().from_node) && !nodes_to_move.has(E->get().to_node)) {
+        } else if (nodes_to_move.has(E->get().from_node)
+                   && !nodes_to_move.has(E->get().to_node)) {
             seqext.push_back(E->get());
         }
     }
@@ -4654,7 +4658,8 @@ void VisualScriptEditor::_move_nodes_with_rescan(
         if (!nodes_to_move.has(E->get().from_node)
             && nodes_to_move.has(E->get().to_node)) {
             dataext.push_back(E->get());
-        } else if (nodes_to_move.has(E->get().from_node) && !nodes_to_move.has(E->get().to_node)) {
+        } else if (nodes_to_move.has(E->get().from_node)
+                   && !nodes_to_move.has(E->get().to_node)) {
             dataext.push_back(E->get());
         }
     }
@@ -5399,8 +5404,14 @@ void VisualScriptEditor::connect_seq(
             pass_port,
             new_id
         );
-    } else if (vnode_old->get_output_value_port_info(port_action_output).name == String("return") &&
-            !script->get_output_sequence_ports_connected(func, port_action_node).has(return_port)) {
+    } else if (vnode_old->get_output_value_port_info(port_action_output).name
+                   == String("return")
+               && !script
+                       ->get_output_sequence_ports_connected(
+                           func,
+                           port_action_node
+                       )
+                       .has(return_port)) {
         undo_redo->add_do_method(
             script.ptr(),
             "sequence_connect",
@@ -6005,9 +6016,11 @@ void VisualScriptEditor::_menu_option(int p_what) {
                             && nodes.has(E->get().to_node)) {
                             seqmove.insert(E->get());
                             nodes_from.insert(E->get().from_node);
-                        } else if (nodes.has(E->get().from_node) && !nodes.has(E->get().to_node)) {
+                        } else if (nodes.has(E->get().from_node)
+                                   && !nodes.has(E->get().to_node)) {
                             seqext.insert(E->get());
-                        } else if (!nodes.has(E->get().from_node) && nodes.has(E->get().to_node)) {
+                        } else if (!nodes.has(E->get().from_node)
+                                   && nodes.has(E->get().to_node)) {
                             if (start_node == -1) {
                                 seqext.insert(E->get());
                                 start_node = E->get().to_node;
@@ -6057,7 +6070,8 @@ void VisualScriptEditor::_menu_option(int p_what) {
                     if (nodes.has(E->get().from_node)
                         && nodes.has(E->get().to_node)) {
                         datamove.insert(E->get());
-                    } else if (!nodes.has(E->get().from_node) && nodes.has(E->get().to_node)) {
+                    } else if (!nodes.has(E->get().from_node)
+                               && nodes.has(E->get().to_node)) {
                         // add all these as inputs for the Function
                         Ref<VisualScriptNode> node =
                             script->get_node(function, E->get().to_node);
@@ -6072,7 +6086,8 @@ void VisualScriptEditor::_menu_option(int p_what) {
                                 E->get().to_port
                             ));
                         }
-                    } else if (nodes.has(E->get().from_node) && !nodes.has(E->get().to_node)) {
+                    } else if (nodes.has(E->get().from_node)
+                               && !nodes.has(E->get().to_node)) {
                         dataext.insert(E->get());
                     }
                 }

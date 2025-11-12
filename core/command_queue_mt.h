@@ -272,7 +272,7 @@ class CommandQueueMT {
 
     struct CommandBase {
         virtual void call() = 0;
-        virtual void post(){};
+        virtual void post() {};
         virtual ~CommandBase(){};
     };
 

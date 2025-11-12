@@ -900,7 +900,9 @@ static bool _guess_expression_type(
                         r_type.type.builtin_type = tn->vtype;
                         found                    = true;
                         break;
-                    } else if (op->arguments[0]->type == GDScriptParser::Node::TYPE_BUILT_IN_FUNCTION) {
+                    } else if (op->arguments[0]->type
+                               == GDScriptParser::Node::
+                                   TYPE_BUILT_IN_FUNCTION) {
                         const GDScriptParser::BuiltInFunctionNode* bin =
                             static_cast<
                                 const GDScriptParser::BuiltInFunctionNode*>(
@@ -911,7 +913,10 @@ static bool _guess_expression_type(
                         r_type = _type_from_property(mi.return_val);
                         found  = true;
                         break;
-                    } else if (op->arguments.size() >= 2 && op->arguments[1]->type == GDScriptParser::Node::TYPE_IDENTIFIER) {
+                    } else if (op->arguments.size() >= 2
+                               && op->arguments[1]->type
+                                      == GDScriptParser::Node::
+                                          TYPE_IDENTIFIER) {
                         StringName id =
                             static_cast<const GDScriptParser::IdentifierNode*>(
                                 op->arguments[1]
@@ -1271,7 +1276,10 @@ static bool _guess_expression_type(
                         dn = static_cast<const GDScriptParser::DictionaryNode*>(
                             op->arguments[0]
                         );
-                    } else if (base.assigned_expression && base.assigned_expression->type == GDScriptParser::Node::TYPE_DICTIONARY) {
+                    } else if (base.assigned_expression
+                               && base.assigned_expression->type
+                                      == GDScriptParser::Node::
+                                          TYPE_DICTIONARY) {
                         dn = static_cast<const GDScriptParser::DictionaryNode*>(
                             base.assigned_expression
                         );
@@ -1344,7 +1352,10 @@ static bool _guess_expression_type(
                         dn = static_cast<const GDScriptParser::DictionaryNode*>(
                             op->arguments[0]
                         );
-                    } else if (base.assigned_expression && base.assigned_expression->type == GDScriptParser::Node::TYPE_DICTIONARY) {
+                    } else if (base.assigned_expression
+                               && base.assigned_expression->type
+                                      == GDScriptParser::Node::
+                                          TYPE_DICTIONARY) {
                         dn = static_cast<const GDScriptParser::DictionaryNode*>(
                             base.assigned_expression
                         );
@@ -1382,7 +1393,9 @@ static bool _guess_expression_type(
                             an = static_cast<const GDScriptParser::ArrayNode*>(
                                 op->arguments[0]
                             );
-                        } else if (base.assigned_expression && base.assigned_expression->type == GDScriptParser::Node::TYPE_ARRAY) {
+                        } else if (base.assigned_expression
+                                   && base.assigned_expression->type
+                                          == GDScriptParser::Node::TYPE_ARRAY) {
                             an = static_cast<const GDScriptParser::ArrayNode*>(
                                 base.assigned_expression
                             );
@@ -1410,7 +1423,9 @@ static bool _guess_expression_type(
                             id,
                             r_type
                         );
-                    } else if (!found && index.type.kind == GDScriptParser::DataType::BUILTIN) {
+                    } else if (!found
+                               && index.type.kind
+                                      == GDScriptParser::DataType::BUILTIN) {
                         Variant::CallError err;
                         Variant base_val = Variant::construct(
                             base.type.builtin_type,
@@ -1503,20 +1518,20 @@ static bool _guess_expression_type(
                                      && p1.value.get_type() != Variant::OBJECT;
                     Variant v1        = (v1_use_value) ? p1.value
                                                        : Variant::construct(
-                                                    p1.type.builtin_type,
-                                                    nullptr,
-                                                    0,
-                                                    ce
-                                                );
+                                                      p1.type.builtin_type,
+                                                      nullptr,
+                                                      0,
+                                                      ce
+                                                  );
                     bool v2_use_value = p2.value.get_type() != Variant::NIL
                                      && p2.value.get_type() != Variant::OBJECT;
                     Variant v2 = (v2_use_value) ? p2.value
                                                 : Variant::construct(
-                                                    p2.type.builtin_type,
-                                                    nullptr,
-                                                    0,
-                                                    ce
-                                                );
+                                                      p2.type.builtin_type,
+                                                      nullptr,
+                                                      0,
+                                                      ce
+                                                  );
                     // avoid potential invalid ops
                     if ((vop == Variant::OP_DIVIDE || vop == Variant::OP_MODULE)
                         && v2.get_type() == Variant::INT) {
@@ -2386,7 +2401,8 @@ static String _make_arguments_hint(
                                 assign->arguments[1]
                             );
                         def_val = cn->value.get_construct_string();
-                    } else if (assign->arguments[1]->type == GDScriptParser::Node::TYPE_IDENTIFIER) {
+                    } else if (assign->arguments[1]->type
+                               == GDScriptParser::Node::TYPE_IDENTIFIER) {
                         const GDScriptParser::IdentifierNode* id =
                             static_cast<const GDScriptParser::IdentifierNode*>(
                                 assign->arguments[1]
@@ -3092,8 +3108,8 @@ static void _find_call_arguments(
                     for (int i = 0; i < base_type.class_type->_signals.size();
                          i++) {
                         ScriptCodeCompletionOption option(
-                            base_type.class_type->_signals[i].name.
-                            operator String(),
+                            base_type.class_type->_signals[i]
+                                .name.operator String(),
                             ScriptCodeCompletionOption::KIND_SIGNAL
                         );
                         option.insert_text =
@@ -3730,8 +3746,7 @@ Error GDScriptLanguage::complete_code(
             bool use_type_hint =
                 EditorSettings::get_singleton()
                     ->get_setting("text_editor/completion/add_type_hints")
-                    .
-                    operator bool();
+                    .operator bool();
 
             List<MethodInfo> virtual_methods;
             ClassDB::get_virtual_methods(class_name, &virtual_methods);
@@ -3779,7 +3794,8 @@ Error GDScriptLanguage::complete_code(
                     method_hint += " -> ";
                     if (mi.return_val.type == Variant::NIL) {
                         method_hint += "void";
-                    } else if (mi.return_val.type == Variant::OBJECT && mi.return_val.class_name != StringName()) {
+                    } else if (mi.return_val.type == Variant::OBJECT
+                               && mi.return_val.class_name != StringName()) {
                         method_hint +=
                             mi.return_val.class_name.operator String();
                     } else {
@@ -3814,8 +3830,8 @@ Error GDScriptLanguage::complete_code(
                              i < base_type.class_type->_signals.size();
                              i++) {
                             ScriptCodeCompletionOption option(
-                                base_type.class_type->_signals[i].name.
-                                operator String(),
+                                base_type.class_type->_signals[i]
+                                    .name.operator String(),
                                 ScriptCodeCompletionOption::KIND_SIGNAL
                             );
                             option.insert_text =
@@ -4080,8 +4096,7 @@ Error GDScriptLanguage::complete_code(
                                     != StringName()) {
                                     ScriptCodeCompletionOption option(
                                         base_type.class_type->subclasses[i]
-                                            ->name.
-                                            operator String(),
+                                            ->name.operator String(),
                                         ScriptCodeCompletionOption::KIND_CLASS
                                     );
                                     options.insert(option.display, option);

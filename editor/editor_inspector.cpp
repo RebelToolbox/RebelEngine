@@ -1880,7 +1880,8 @@ void EditorInspector::update_tree() {
 
             continue;
 
-        } else if (!(p.usage & PROPERTY_USAGE_EDITOR) || _is_property_disabled_by_feature_profile(p.name)) {
+        } else if (!(p.usage & PROPERTY_USAGE_EDITOR)
+                   || _is_property_disabled_by_feature_profile(p.name)) {
             continue;
         }
 

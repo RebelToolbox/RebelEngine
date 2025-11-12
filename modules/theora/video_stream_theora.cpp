@@ -234,7 +234,8 @@ void VideoStreamPlaybackTheora::set_file(const String& p_file) {
                 /* it is theora */
                 memcpy(&to, &test, sizeof(test));
                 theora_p = 1;
-            } else if (!vorbis_p && vorbis_synthesis_headerin(&vi, &vc, &op) >= 0) {
+            } else if (!vorbis_p
+                       && vorbis_synthesis_headerin(&vi, &vc, &op) >= 0) {
                 /* it is vorbis */
                 if (audio_track_skip) {
                     vorbis_info_clear(&vi);
@@ -626,7 +627,7 @@ bool VideoStreamPlaybackTheora::is_paused() const {
     return paused;
 };
 
-void VideoStreamPlaybackTheora::set_loop(bool p_enable){
+void VideoStreamPlaybackTheora::set_loop(bool p_enable) {
 
 };
 

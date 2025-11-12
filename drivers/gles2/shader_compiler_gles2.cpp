@@ -950,7 +950,8 @@ String ShaderCompilerGLES2::_dump_node_code(
                                 || op_node->arguments[1]->get_datatype()
                                        == SL::TYPE_SAMPLEREXT) {
                                 code += "texture2D";
-                            } else if (op_node->arguments[1]->get_datatype() == SL::TYPE_SAMPLERCUBE) {
+                            } else if (op_node->arguments[1]->get_datatype()
+                                       == SL::TYPE_SAMPLERCUBE) {
                                 code += "textureCube";
                             }
 
@@ -960,7 +961,8 @@ String ShaderCompilerGLES2::_dump_node_code(
                             if (op_node->arguments[1]->get_datatype()
                                 == SL::TYPE_SAMPLER2D) {
                                 code += "texture2DLod";
-                            } else if (op_node->arguments[1]->get_datatype() == SL::TYPE_SAMPLERCUBE) {
+                            } else if (op_node->arguments[1]->get_datatype()
+                                       == SL::TYPE_SAMPLERCUBE) {
                                 code += "textureCubeLod";
                             }
 

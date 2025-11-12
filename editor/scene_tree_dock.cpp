@@ -1051,7 +1051,8 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
                             TTR("Delete the root node \"%s\"?"),
                             node->get_name()
                         );
-                    } else if (node->get_filename() == "" && node->get_child_count() > 0) {
+                    } else if (node->get_filename() == ""
+                               && node->get_child_count() > 0) {
                         // Display this message only for non-instanced scenes
                         msg = vformat(
                             TTR("Delete node \"%s\" and its children?"),
@@ -3752,8 +3753,7 @@ void SceneTreeDock::attach_script_to_selected(bool p_extend) {
                     && EDITOR_GET(
                            "interface/editors/derive_script_globals_by_name"
                     )
-                           .
-                           operator bool()) {
+                           .operator bool()) {
                     inherits = name;
                 } else if (l->can_inherit_from_file()) {
                     inherits = "\"" + existing->get_path() + "\"";

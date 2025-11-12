@@ -1438,7 +1438,9 @@ static void _add_text_to_rt(const String& p_bbcode, RichTextLabel* p_rt) {
             p_rt->add_text("[");
             pos = brk_pos + 1;
 
-        } else if (tag.begins_with("method ") || tag.begins_with("member ") || tag.begins_with("signal ") || tag.begins_with("enum ") || tag.begins_with("constant ")) {
+        } else if (tag.begins_with("method ") || tag.begins_with("member ")
+                   || tag.begins_with("signal ") || tag.begins_with("enum ")
+                   || tag.begins_with("constant ")) {
             int tag_end = tag.find(" ");
 
             String link_tag = tag.substr(0, tag_end);

@@ -25,7 +25,8 @@ void WorldEnvironment::_notification(int p_what) {
             );
         }
 
-    } else if (p_what == Spatial::NOTIFICATION_EXIT_WORLD || p_what == Spatial::NOTIFICATION_EXIT_TREE) {
+    } else if (p_what == Spatial::NOTIFICATION_EXIT_WORLD
+               || p_what == Spatial::NOTIFICATION_EXIT_TREE) {
         if (environment.is_valid()
             && get_viewport()->find_world()->get_environment() == environment) {
             get_viewport()->find_world()->set_environment(Ref<Environment>());

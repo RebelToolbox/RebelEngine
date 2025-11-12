@@ -1359,8 +1359,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
                 NavigationScheme nav_scheme =
                     (NavigationScheme)EditorSettings::get_singleton()
                         ->get("editors/3d/navigation/navigation_scheme")
-                        .
-                        operator int();
+                        .operator int();
 
                 if (b->is_pressed() && _edit.gizmo.is_valid()) {
                     // restore
@@ -1469,8 +1468,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
                     NavigationScheme nav_scheme =
                         (NavigationScheme)EditorSettings::get_singleton()
                             ->get("editors/3d/navigation/navigation_scheme")
-                            .
-                            operator int();
+                            .operator int();
                     if ((nav_scheme == NAVIGATION_MAYA
                          || nav_scheme == NAVIGATION_MODO)
                         && b->get_alt()) {
@@ -1736,8 +1734,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
         NavigationScheme nav_scheme =
             (NavigationScheme)EditorSettings::get_singleton()
                 ->get("editors/3d/navigation/navigation_scheme")
-                .
-                operator int();
+                .operator int();
         NavigationMode nav_mode = NAVIGATION_NONE;
 
         if (_edit.gizmo.is_valid()) {
@@ -1750,9 +1747,11 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
         } else if (m->get_button_mask() & BUTTON_MASK_LEFT) {
             if (nav_scheme == NAVIGATION_MAYA && m->get_alt()) {
                 nav_mode = NAVIGATION_ORBIT;
-            } else if (nav_scheme == NAVIGATION_MODO && m->get_alt() && m->get_shift()) {
+            } else if (nav_scheme == NAVIGATION_MODO && m->get_alt()
+                       && m->get_shift()) {
                 nav_mode = NAVIGATION_PAN;
-            } else if (nav_scheme == NAVIGATION_MODO && m->get_alt() && m->get_control()) {
+            } else if (nav_scheme == NAVIGATION_MODO && m->get_alt()
+                       && m->get_control()) {
                 nav_mode = NAVIGATION_ZOOM;
             } else if (nav_scheme == NAVIGATION_MODO && m->get_alt()) {
                 nav_mode = NAVIGATION_ORBIT;
@@ -2324,7 +2323,8 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
                 }
             }
 
-        } else if ((m->get_button_mask() & BUTTON_MASK_RIGHT) || freelook_active) {
+        } else if ((m->get_button_mask() & BUTTON_MASK_RIGHT)
+                   || freelook_active) {
             if (nav_scheme == NAVIGATION_MAYA && m->get_alt()) {
                 nav_mode = NAVIGATION_ZOOM;
             } else if (freelook_active) {
@@ -2341,9 +2341,16 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
                         "editors/3d/navigation/pan_modifier"
                     )) {
                     nav_mode = NAVIGATION_PAN;
-                } else if (mod == _get_key_modifier_setting("editors/3d/navigation/zoom_modifier")) {
+                } else if (mod
+                           == _get_key_modifier_setting(
+                               "editors/3d/navigation/zoom_modifier"
+                           )) {
                     nav_mode = NAVIGATION_ZOOM;
-                } else if (mod == KEY_ALT || mod == _get_key_modifier_setting("editors/3d/navigation/orbit_modifier")) {
+                } else if (mod == KEY_ALT
+                           || mod
+                                  == _get_key_modifier_setting(
+                                      "editors/3d/navigation/orbit_modifier"
+                                  )) {
                     // Always allow Alt as a modifier to better support graphic
                     // tablets.
                     nav_mode = NAVIGATION_ORBIT;
@@ -2370,9 +2377,16 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
                         "editors/3d/navigation/pan_modifier"
                     )) {
                     nav_mode = NAVIGATION_PAN;
-                } else if (mod == _get_key_modifier_setting("editors/3d/navigation/zoom_modifier")) {
+                } else if (mod
+                           == _get_key_modifier_setting(
+                               "editors/3d/navigation/zoom_modifier"
+                           )) {
                     nav_mode = NAVIGATION_ZOOM;
-                } else if (mod == KEY_ALT || mod == _get_key_modifier_setting("editors/3d/navigation/orbit_modifier")) {
+                } else if (mod == KEY_ALT
+                           || mod
+                                  == _get_key_modifier_setting(
+                                      "editors/3d/navigation/orbit_modifier"
+                                  )) {
                     // Always allow Alt as a modifier to better support graphic
                     // tablets.
                     nav_mode = NAVIGATION_ORBIT;
@@ -2420,8 +2434,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
         NavigationScheme nav_scheme =
             (NavigationScheme)EditorSettings::get_singleton()
                 ->get("editors/3d/navigation/navigation_scheme")
-                .
-                operator int();
+                .operator int();
         NavigationMode nav_mode = NAVIGATION_NONE;
 
         if (nav_scheme == NAVIGATION_REBEL) {
@@ -2432,9 +2445,16 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
                     "editors/3d/navigation/pan_modifier"
                 )) {
                 nav_mode = NAVIGATION_PAN;
-            } else if (mod == _get_key_modifier_setting("editors/3d/navigation/zoom_modifier")) {
+            } else if (mod
+                       == _get_key_modifier_setting(
+                           "editors/3d/navigation/zoom_modifier"
+                       )) {
                 nav_mode = NAVIGATION_ZOOM;
-            } else if (mod == KEY_ALT || mod == _get_key_modifier_setting("editors/3d/navigation/orbit_modifier")) {
+            } else if (mod == KEY_ALT
+                       || mod
+                              == _get_key_modifier_setting(
+                                  "editors/3d/navigation/orbit_modifier"
+                              )) {
                 // Always allow Alt as a modifier to better support graphic
                 // tablets.
                 nav_mode = NAVIGATION_ORBIT;
@@ -2627,8 +2647,7 @@ void SpatialEditorViewport::_nav_pan(
     const NavigationScheme nav_scheme =
         (NavigationScheme)EditorSettings::get_singleton()
             ->get("editors/3d/navigation/navigation_scheme")
-            .
-            operator int();
+            .operator int();
 
     real_t pan_speed       = 1 / 150.0;
     int pan_speed_modifier = 10;
@@ -2664,8 +2683,7 @@ void SpatialEditorViewport::_nav_zoom(
     const NavigationScheme nav_scheme =
         (NavigationScheme)EditorSettings::get_singleton()
             ->get("editors/3d/navigation/navigation_scheme")
-            .
-            operator int();
+            .operator int();
 
     real_t zoom_speed       = 1 / 80.0;
     int zoom_speed_modifier = 10;
@@ -2676,8 +2694,7 @@ void SpatialEditorViewport::_nav_zoom(
     NavigationZoomStyle zoom_style =
         (NavigationZoomStyle)EditorSettings::get_singleton()
             ->get("editors/3d/navigation/zoom_style")
-            .
-            operator int();
+            .operator int();
     if (zoom_style == NAVIGATION_ZOOM_HORIZONTAL) {
         if (p_relative.x > 0) {
             scale_cursor_distance(1 - p_relative.x * zoom_speed);
@@ -2901,8 +2918,7 @@ void SpatialEditorViewport::_update_freelook(real_t delta) {
     const FreelookNavigationScheme navigation_scheme =
         (FreelookNavigationScheme)EditorSettings::get_singleton()
             ->get("editors/3d/freelook/freelook_navigation_scheme")
-            .
-            operator int();
+            .operator int();
 
     Vector3 forward;
     if (navigation_scheme == FREELOOK_FULLY_AXIS_LOCKED) {
@@ -5089,7 +5105,8 @@ bool SpatialEditorViewport::can_drop_data_fw(
                             continue;
                         }
                         memdelete(instanced_scene);
-                    } else if (type == "Mesh" || type == "ArrayMesh" || type == "PrimitiveMesh") {
+                    } else if (type == "Mesh" || type == "ArrayMesh"
+                               || type == "PrimitiveMesh") {
                         Ref<Mesh> mesh = ResourceLoader::load(files[i]);
                         if (!mesh.is_valid()) {
                             continue;
@@ -9610,9 +9627,9 @@ void EditorSpatialGizmoPlugin::create_handle_material(
     Ref<Texture> handle_t = p_icon != nullptr
                               ? p_icon
                               : SpatialEditor::get_singleton()->get_icon(
-                                  "Editor3DHandle",
-                                  "EditorIcons"
-                              );
+                                    "Editor3DHandle",
+                                    "EditorIcons"
+                                );
     handle_material->set_point_size(handle_t->get_width());
     handle_material->set_texture(SpatialMaterial::TEXTURE_ALBEDO, handle_t);
     handle_material->set_albedo(Color(1, 1, 1));

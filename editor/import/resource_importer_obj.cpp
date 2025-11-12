@@ -359,7 +359,9 @@ static Error _parse_obj(
             } else {
                 surf_tool->add_smooth_group(true);
             }
-        } else if (/*l.begins_with("g ") ||*/ l.begins_with("usemtl ") || (l.begins_with("o ") || f->eof_reached())) { // commit group to mesh
+        } else if (/*l.begins_with("g ") ||*/ l.begins_with("usemtl ")
+                   || (l.begins_with("o ") || f->eof_reached()
+                   )) { // commit group to mesh
             // groups are too annoying
             if (surf_tool->get_vertex_array().size()) {
                 // another group going on, commit it

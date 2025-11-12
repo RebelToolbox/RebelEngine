@@ -472,7 +472,8 @@ bool HTTPRequest::_update_connection() {
                     );
                     return true;
                 }
-            } else if (client->get_status() == HTTPClient::STATUS_DISCONNECTED) {
+            } else if (client->get_status()
+                       == HTTPClient::STATUS_DISCONNECTED) {
                 // We read till EOF, with no errors. Request is done.
                 call_deferred(
                     "_request_done",

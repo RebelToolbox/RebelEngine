@@ -1342,7 +1342,8 @@ HashMap<int, R> FBXMeshData::extract_per_vertex_data(
                         {polygon_id, value}
                     );
                 }
-            } else if (p_mapping_data.ref_type == FBXDocParser::MeshGeometry::ReferenceType::direct) {
+            } else if (p_mapping_data.ref_type
+                       == FBXDocParser::MeshGeometry::ReferenceType::direct) {
                 // The data are mapped per polygon vertex directly.
                 ERR_FAIL_COND_V_MSG(
                     (int)p_mesh_indices.size()
@@ -1809,7 +1810,8 @@ HashMap<int, T> FBXMeshData::extract_per_polygon(
                         aggregate_polygon_data[polygon_index].push_back(value);
                     }
                 }
-            } else if (p_fbx_data.ref_type == FBXDocParser::MeshGeometry::ReferenceType::direct) {
+            } else if (p_fbx_data.ref_type
+                       == FBXDocParser::MeshGeometry::ReferenceType::direct) {
                 // The data are mapped per polygon directly.
                 ERR_FAIL_COND_V_MSG(
                     polygon_count != (int)p_fbx_data.data.size(),

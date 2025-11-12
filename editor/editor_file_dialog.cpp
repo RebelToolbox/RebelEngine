@@ -72,8 +72,7 @@ void EditorFileDialog::_notification(int p_what) {
         }
         set_display_mode((DisplayMode)EditorSettings::get_singleton()
                              ->get("filesystem/file_dialog/display_mode")
-                             .
-                             operator int());
+                             .operator int());
 
         // Update icons.
         mode_thumbnails->set_icon(get_icon("FileThumbnail", "EditorIcons"));

@@ -206,7 +206,10 @@ Map<int, TextEdit::HighlighterInfo> GDScriptSyntaxHighlighter::
 
             if (str[k] == '(') {
                 in_function_name = true;
-            } else if (previous_text == GDScriptTokenizer::get_token_name(GDScriptTokenizer::TK_PR_VAR)) {
+            } else if (previous_text
+                       == GDScriptTokenizer::get_token_name(
+                           GDScriptTokenizer::TK_PR_VAR
+                       )) {
                 in_variable_declaration = true;
             }
         }

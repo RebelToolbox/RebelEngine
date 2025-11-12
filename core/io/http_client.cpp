@@ -422,7 +422,8 @@ Error HTTPClient::poll() {
                             ip_candidates.clear();
                             status = STATUS_CONNECTED;
                             return OK;
-                        } else if (ssl->get_status() != StreamPeerSSL::STATUS_HANDSHAKING) {
+                        } else if (ssl->get_status()
+                                   != StreamPeerSSL::STATUS_HANDSHAKING) {
                             // Handshake has failed
                             close();
                             status = STATUS_SSL_HANDSHAKE_ERROR;
@@ -464,7 +465,8 @@ Error HTTPClient::poll() {
                     status = STATUS_CONNECTION_ERROR;
                     return ERR_CONNECTION_ERROR;
                 }
-            } else if (tcp_connection->get_status() != StreamPeerTCP::STATUS_CONNECTED) {
+            } else if (tcp_connection->get_status()
+                       != StreamPeerTCP::STATUS_CONNECTED) {
                 status = STATUS_CONNECTION_ERROR;
                 return ERR_CONNECTION_ERROR;
             }

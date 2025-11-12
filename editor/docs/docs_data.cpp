@@ -172,7 +172,8 @@ static void return_doc_from_retinfo(
         p_method.return_type = p_retinfo.class_name;
     } else if (p_retinfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {
         p_method.return_type = p_retinfo.hint_string;
-    } else if (p_retinfo.type == Variant::NIL && p_retinfo.usage & PROPERTY_USAGE_NIL_IS_VARIANT) {
+    } else if (p_retinfo.type == Variant::NIL
+               && p_retinfo.usage & PROPERTY_USAGE_NIL_IS_VARIANT) {
         p_method.return_type = "Variant";
     } else if (p_retinfo.type == Variant::NIL) {
         p_method.return_type = "void";
@@ -383,7 +384,9 @@ void DocsData::generate(bool p_basic_types) {
                         prop.type = retinfo.class_name;
                     } else if (retinfo.hint == PROPERTY_HINT_RESOURCE_TYPE) {
                         prop.type = retinfo.hint_string;
-                    } else if (retinfo.type == Variant::NIL && retinfo.usage & PROPERTY_USAGE_NIL_IS_VARIANT) {
+                    } else if (retinfo.type == Variant::NIL
+                               && retinfo.usage
+                                      & PROPERTY_USAGE_NIL_IS_VARIANT) {
                         prop.type = "Variant";
                     } else if (retinfo.type == Variant::NIL) {
                         prop.type = "void";
@@ -859,7 +862,9 @@ static Error _parse_methods(
                             }
                         }
 
-                    } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == element) {
+                    } else if (parser->get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser->get_node_name() == element) {
                         break;
                     }
                 }
@@ -873,7 +878,8 @@ static Error _parse_methods(
                 );
             }
 
-        } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == section) {
+        } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser->get_node_name() == section) {
             break;
         }
     }
@@ -1002,7 +1008,9 @@ Error DocsData::_load(Ref<XMLParser> parser) {
                                     "Invalid tag in doc file: " + name3 + "."
                                 );
                             }
-                        } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "tutorials") {
+                        } else if (parser->get_node_type()
+                                       == XMLParser::NODE_ELEMENT_END
+                                   && parser->get_node_name() == "tutorials") {
                             break; // End of <tutorials>.
                         }
                     }
@@ -1062,7 +1070,9 @@ Error DocsData::_load(Ref<XMLParser> parser) {
                                 );
                             }
 
-                        } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "members") {
+                        } else if (parser->get_node_type()
+                                       == XMLParser::NODE_ELEMENT_END
+                                   && parser->get_node_name() == "members") {
                             break; // End of <members>.
                         }
                     }
@@ -1110,7 +1120,10 @@ Error DocsData::_load(Ref<XMLParser> parser) {
                                 );
                             }
 
-                        } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "theme_items") {
+                        } else if (parser->get_node_type()
+                                       == XMLParser::NODE_ELEMENT_END
+                                   && parser->get_node_name()
+                                          == "theme_items") {
                             break; // End of <theme_items>.
                         }
                     }
@@ -1156,7 +1169,9 @@ Error DocsData::_load(Ref<XMLParser> parser) {
                                 );
                             }
 
-                        } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "constants") {
+                        } else if (parser->get_node_type()
+                                       == XMLParser::NODE_ELEMENT_END
+                                   && parser->get_node_name() == "constants") {
                             break; // End of <constants>.
                         }
                     }
@@ -1168,7 +1183,8 @@ Error DocsData::_load(Ref<XMLParser> parser) {
                     );
                 }
 
-            } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END && parser->get_node_name() == "class") {
+            } else if (parser->get_node_type() == XMLParser::NODE_ELEMENT_END
+                       && parser->get_node_name() == "class") {
                 break; // End of <class>.
             }
         }

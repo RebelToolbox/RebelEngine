@@ -99,7 +99,8 @@ Ref<Texture> EditorTexturePreviewPlugin::generate(
         if (img->decompress() != OK) {
             return Ref<Texture>();
         }
-    } else if (img->get_format() != Image::FORMAT_RGB8 && img->get_format() != Image::FORMAT_RGBA8) {
+    } else if (img->get_format() != Image::FORMAT_RGB8
+               && img->get_format() != Image::FORMAT_RGBA8) {
         img->convert(Image::FORMAT_RGBA8);
     }
 
@@ -146,7 +147,8 @@ Ref<Texture> EditorImagePreviewPlugin::generate(
         if (img->decompress() != OK) {
             return Ref<Image>();
         }
-    } else if (img->get_format() != Image::FORMAT_RGB8 && img->get_format() != Image::FORMAT_RGBA8) {
+    } else if (img->get_format() != Image::FORMAT_RGB8
+               && img->get_format() != Image::FORMAT_RGBA8) {
         img->convert(Image::FORMAT_RGBA8);
     }
 
@@ -222,7 +224,8 @@ Ref<Texture> EditorBitmapPreviewPlugin::generate(
         if (img->decompress() != OK) {
             return Ref<Texture>();
         }
-    } else if (img->get_format() != Image::FORMAT_RGB8 && img->get_format() != Image::FORMAT_RGBA8) {
+    } else if (img->get_format() != Image::FORMAT_RGB8
+               && img->get_format() != Image::FORMAT_RGBA8) {
         img->convert(Image::FORMAT_RGBA8);
     }
 

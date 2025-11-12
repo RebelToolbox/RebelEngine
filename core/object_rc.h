@@ -43,7 +43,7 @@ public:
     }
 
     _FORCE_INLINE_ ObjectRC(Object* p_object) :
-        instance_id(p_object->get_instance_id()) {
+        instance_id(p_object -> get_instance_id()) {
         // 1 (the Object) + 1 (the first user)
         _users.store(2, std::memory_order_relaxed);
         _ptr.store(p_object, std::memory_order_release);

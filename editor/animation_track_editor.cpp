@@ -2714,9 +2714,11 @@ void AnimationTrackEdit::_notification(int p_what) {
                 if (animation->track_get_type(track)
                     == Animation::TYPE_METHOD) {
                     text = TTR("Functions:");
-                } else if (animation->track_get_type(track) == Animation::TYPE_AUDIO) {
+                } else if (animation->track_get_type(track)
+                           == Animation::TYPE_AUDIO) {
                     text = TTR("Audio Clips:");
-                } else if (animation->track_get_type(track) == Animation::TYPE_ANIMATION) {
+                } else if (animation->track_get_type(track)
+                           == Animation::TYPE_ANIMATION) {
                     text = TTR("Anim Clips:");
                 } else {
                     text += path.get_concatenated_subnames();
@@ -2886,7 +2888,8 @@ void AnimationTrackEdit::_notification(int p_what) {
                     );
                     update_mode_rect.size.x += down_icon->get_width();
                     bezier_edit_rect         = Rect2();
-                } else if (animation->track_get_type(track) == Animation::TYPE_BEZIER) {
+                } else if (animation->track_get_type(track)
+                           == Animation::TYPE_BEZIER) {
                     Ref<Texture> bezier_icon =
                         get_icon("EditBezier", "EditorIcons");
                     update_mode_rect.size.x += down_icon->get_width();
@@ -4250,8 +4253,7 @@ AnimationTrackEdit* AnimationTrackEditPlugin::create_value_track_edit(
                     6,
                     ce
                 )
-                .
-                operator Object*()
+                .operator Object*()
         );
     }
     return nullptr;
@@ -4262,8 +4264,7 @@ AnimationTrackEdit* AnimationTrackEditPlugin::create_audio_track_edit() {
         return Object::cast_to<AnimationTrackEdit>(
             get_script_instance()
                 ->call("create_audio_track_edit")
-                .
-                operator Object*()
+                .operator Object*()
         );
     }
     return nullptr;
@@ -4276,8 +4277,7 @@ AnimationTrackEdit* AnimationTrackEditPlugin::create_animation_track_edit(
         return Object::cast_to<AnimationTrackEdit>(
             get_script_instance()
                 ->call("create_animation_track_edit", p_object)
-                .
-                operator Object*()
+                .operator Object*()
         );
     }
     return nullptr;

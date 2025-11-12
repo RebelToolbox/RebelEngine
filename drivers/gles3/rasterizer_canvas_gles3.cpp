@@ -314,7 +314,9 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
                 BLEND_MODE_DISABLED) {
             // re-enable it
             glEnable(GL_BLEND);
-        } else if (blend_mode == RasterizerStorageGLES3::Shader::CanvasItem::BLEND_MODE_DISABLED) {
+        } else if (blend_mode
+                   == RasterizerStorageGLES3::Shader::CanvasItem::
+                       BLEND_MODE_DISABLED) {
             // disable it
             glDisable(GL_BLEND);
         }
@@ -423,11 +425,11 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
     state.canvas_item_modulate =
         unshaded ? p_ci->final_modulate
                  : Color(
-                     p_ci->final_modulate.r * r_ris.item_group_modulate.r,
-                     p_ci->final_modulate.g * r_ris.item_group_modulate.g,
-                     p_ci->final_modulate.b * r_ris.item_group_modulate.b,
-                     p_ci->final_modulate.a * r_ris.item_group_modulate.a
-                 );
+                       p_ci->final_modulate.r * r_ris.item_group_modulate.r,
+                       p_ci->final_modulate.g * r_ris.item_group_modulate.g,
+                       p_ci->final_modulate.b * r_ris.item_group_modulate.b,
+                       p_ci->final_modulate.a * r_ris.item_group_modulate.a
+                   );
 
     state.final_transform = p_ci->final_transform;
     state.extra_matrix    = Transform2D();
@@ -920,7 +922,7 @@ void RasterizerCanvasGLES3::render_batches(
                                             pline->line_colors.size() == 1
                                                 ? pline->line_colors.ptr()
                                                 : &pline->line_colors.ptr(
-                                                )[offset],
+                                                  )[offset],
                                             pline->line_colors.size() == 1
                                         );
                                         todo   -= to_draw;
@@ -998,11 +1000,11 @@ void RasterizerCanvasGLES3::render_batches(
                                     Rect2 src_rect =
                                         (rect->flags & CANVAS_RECT_REGION)
                                             ? Rect2(
-                                                rect->source.position
-                                                    * texpixel_size,
-                                                rect->source.size
-                                                    * texpixel_size
-                                            )
+                                                  rect->source.position
+                                                      * texpixel_size,
+                                                  rect->source.size
+                                                      * texpixel_size
+                                              )
                                             : Rect2(0, 0, 1, 1);
                                     Rect2 dst_rect = Rect2(
                                         rect->rect.position,
@@ -2364,7 +2366,9 @@ void RasterizerCanvasGLES3::render_joined_item(
                 BLEND_MODE_DISABLED) {
             // re-enable it
             glEnable(GL_BLEND);
-        } else if (blend_mode == RasterizerStorageGLES3::Shader::CanvasItem::BLEND_MODE_DISABLED) {
+        } else if (blend_mode
+                   == RasterizerStorageGLES3::Shader::CanvasItem::
+                       BLEND_MODE_DISABLED) {
             // disable it
             glDisable(GL_BLEND);
         }
@@ -3169,8 +3173,8 @@ bool RasterizerCanvasGLES3::try_join_item(
 
                 } // if not batch broken already (no point in doing expensive
                   // overlap tests if not needed)
-            }     // if bitfields don't match
-        }         // if do light joining
+            } // if bitfields don't match
+        } // if do light joining
 
         if (!light_allow_join) {
             // can't join

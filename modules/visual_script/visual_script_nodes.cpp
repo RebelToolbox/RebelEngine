@@ -946,7 +946,7 @@ PropertyInfo VisualScriptOperator::get_input_value_port_info(int p_idx) const {
         {Variant::NIL,    Variant::NIL   }, // OP_LESS_EQUAL,
         {Variant::NIL,    Variant::NIL   }, // OP_GREATER,
         {Variant::NIL,    Variant::NIL   }, // OP_GREATER_EQUAL,
-  // mathematic
+                                            // mathematic
         {Variant::NIL,    Variant::NIL   }, // OP_ADD,
         {Variant::NIL,    Variant::NIL   }, // OP_SUBTRACT,
         {Variant::NIL,    Variant::NIL   }, // OP_MULTIPLY,
@@ -955,19 +955,19 @@ PropertyInfo VisualScriptOperator::get_input_value_port_info(int p_idx) const {
         {Variant::NIL,    Variant::NIL   }, // OP_POSITIVE,
         {Variant::INT,    Variant::INT   }, // OP_MODULE,
         {Variant::STRING, Variant::STRING}, // OP_STRING_CONCAT,
-  // bitwise
+                                            // bitwise
         {Variant::INT,    Variant::INT   }, // OP_SHIFT_LEFT,
         {Variant::INT,    Variant::INT   }, // OP_SHIFT_RIGHT,
         {Variant::INT,    Variant::INT   }, // OP_BIT_AND,
         {Variant::INT,    Variant::INT   }, // OP_BIT_OR,
         {Variant::INT,    Variant::INT   }, // OP_BIT_XOR,
         {Variant::INT,    Variant::INT   }, // OP_BIT_NEGATE,
-  // logic
+                                            // logic
         {Variant::BOOL,   Variant::BOOL  }, // OP_AND,
         {Variant::BOOL,   Variant::BOOL  }, // OP_OR,
         {Variant::BOOL,   Variant::BOOL  }, // OP_XOR,
         {Variant::BOOL,   Variant::BOOL  }, // OP_NOT,
-  // containment
+                                            // containment
         {Variant::NIL,    Variant::NIL   }  // OP_IN,
     };
 

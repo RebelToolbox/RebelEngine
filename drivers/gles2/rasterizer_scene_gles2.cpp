@@ -1392,7 +1392,8 @@ void RasterizerSceneGLES2::_add_geometry_with_material(
     if (p_material->shader->spatial.cull_mode
         == RasterizerStorageGLES2::Shader::Spatial::CULL_MODE_DISABLED) {
         mirror = false;
-    } else if (p_material->shader->spatial.cull_mode == RasterizerStorageGLES2::Shader::Spatial::CULL_MODE_FRONT) {
+    } else if (p_material->shader->spatial.cull_mode
+               == RasterizerStorageGLES2::Shader::Spatial::CULL_MODE_FRONT) {
         mirror = !mirror;
     }
 
@@ -2825,7 +2826,9 @@ void RasterizerSceneGLES2::_setup_light(
                             y += height;
                         }
 
-                    } else if (light_ptr->directional_shadow_mode == VS::LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
+                    } else if (light_ptr->directional_shadow_mode
+                               == VS::
+                                   LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
                         height /= 2;
 
                         if (k != 0) {
@@ -5236,12 +5239,15 @@ void RasterizerSceneGLES2::render_scene(
                ->flags[RasterizerStorage::RENDER_TARGET_TRANSPARENT]) {
         clear_color                  = Color(0, 0, 0, 0);
         storage->frame.clear_request = false;
-    } else if (!env || env->bg_mode == VS::ENV_BG_CLEAR_COLOR || env->bg_mode == VS::ENV_BG_SKY) {
+    } else if (!env || env->bg_mode == VS::ENV_BG_CLEAR_COLOR
+               || env->bg_mode == VS::ENV_BG_SKY) {
         if (storage->frame.clear_request) {
             clear_color                  = storage->frame.clear_request_color;
             storage->frame.clear_request = false;
         }
-    } else if (env->bg_mode == VS::ENV_BG_CANVAS || env->bg_mode == VS::ENV_BG_COLOR || env->bg_mode == VS::ENV_BG_COLOR_SKY) {
+    } else if (env->bg_mode == VS::ENV_BG_CANVAS
+               || env->bg_mode == VS::ENV_BG_COLOR
+               || env->bg_mode == VS::ENV_BG_COLOR_SKY) {
         clear_color                  = env->bg_color;
         storage->frame.clear_request = false;
     } else if (env->bg_mode == VS::ENV_BG_CAMERA_FEED) {
@@ -5342,7 +5348,8 @@ void RasterizerSceneGLES2::render_scene(
                             true
                         );
 
-                    } else if (feed->get_datatype() == CameraFeed::FEED_YCBCR_SEP) {
+                    } else if (feed->get_datatype()
+                               == CameraFeed::FEED_YCBCR_SEP) {
                         RID camera_Y =
                             feed->get_texture(CameraServer::FEED_Y_IMAGE);
                         RID camera_CbCr =
@@ -5751,7 +5758,8 @@ void RasterizerSceneGLES2::render_shadow(
                 y += height;
             }
 
-        } else if (light->directional_shadow_mode == VS::LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
+        } else if (light->directional_shadow_mode
+                   == VS::LIGHT_DIRECTIONAL_SHADOW_PARALLEL_2_SPLITS) {
             height /= 2;
 
             if (p_pass == 0) {

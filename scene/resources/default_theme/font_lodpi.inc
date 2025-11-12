@@ -2,7 +2,7 @@ static const int _lodpi_font_height            = 14;
 static const int _lodpi_font_ascent            = 11;
 static const int _lodpi_font_charcount         = 191;
 static const int _lodpi_font_charrects[191][8] = {
-  /* charidx , ofs_x, ofs_y, size_x, size_y, valign, halign, advance */
+    /* charidx , ofs_x, ofs_y, size_x, size_y, valign, halign, advance */
     {64,  72,         34,  10, 11, 1,  1,  12},
     {224, 85,         180, 5,  11, 0,  1,  7 },
     {192, 32,         16,  11, 13, -2, -1, 9 },

@@ -759,11 +759,18 @@ int SpaceSW::_cull_aabb_for_body(BodySW* p_body, const AABB& p_aabb) {
 
         if (intersection_query_results[i] == p_body) {
             keep = false;
-        } else if (intersection_query_results[i]->get_type() == CollisionObjectSW::TYPE_AREA) {
+        } else if (intersection_query_results[i]->get_type()
+                   == CollisionObjectSW::TYPE_AREA) {
             keep = false;
-        } else if ((static_cast<BodySW*>(intersection_query_results[i])->test_collision_mask(p_body)) == 0) {
+        } else if ((static_cast<BodySW*>(intersection_query_results[i])
+                        ->test_collision_mask(p_body))
+                   == 0) {
             keep = false;
-        } else if (static_cast<BodySW *>(intersection_query_results[i])->has_exception(p_body->get_self()) || p_body->has_exception(intersection_query_results[i]->get_self())) {
+        } else if (static_cast<BodySW*>(intersection_query_results[i])
+                       ->has_exception(p_body->get_self())
+                   || p_body->has_exception(
+                       intersection_query_results[i]->get_self()
+                   )) {
             keep = false;
         }
 

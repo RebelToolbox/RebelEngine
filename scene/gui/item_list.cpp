@@ -472,7 +472,9 @@ void ItemList::_gui_input(const Ref<InputEvent>& p_event) {
                 unselect(i);
                 emit_signal("multi_selected", i, false);
 
-            } else if (select_mode == SELECT_MULTI && mb->get_shift() && current >= 0 && current < items.size() && current != i) {
+            } else if (select_mode == SELECT_MULTI && mb->get_shift()
+                       && current >= 0 && current < items.size()
+                       && current != i) {
                 int from = current;
                 int to   = i;
                 if (i < current) {
@@ -684,7 +686,8 @@ void ItemList::_gui_input(const Ref<InputEvent>& p_event) {
             }
         } else if (p_event->is_action("ui_cancel")) {
             search_string = "";
-        } else if (p_event->is_action("ui_select") && select_mode == SELECT_MULTI) {
+        } else if (p_event->is_action("ui_select")
+                   && select_mode == SELECT_MULTI) {
             if (current >= 0 && current < items.size()) {
                 if (items[current].selectable && !items[current].disabled
                     && !items[current].selected) {
@@ -1180,7 +1183,7 @@ void ItemList::_notification(int p_what) {
                         int cs = j < ss ? font->get_char_size(
                                                   items[i].text[j],
                                                   items[i].text[j + 1]
-                                 )
+                                          )
                                               .x
                                         : 0;
                         if (ofs + cs > max_len || j == ss) {

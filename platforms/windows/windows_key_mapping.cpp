@@ -17,7 +17,7 @@ static _WinTranslatePair _vk_to_keycode[] = {
 
     {KEY_BACKSPACE,     VK_BACK               }, // (0x08) // backspace
     {KEY_TAB,           VK_TAB                }, //(0x09)
-  // VK_CLEAR (0x0C)
+                                               // VK_CLEAR (0x0C)
     {KEY_ENTER,         VK_RETURN             }, //(0x0D)
     {KEY_SHIFT,         VK_SHIFT              }, //(0x10)
     {KEY_CONTROL,       VK_CONTROL            }, //(0x11)
@@ -34,9 +34,9 @@ static _WinTranslatePair _vk_to_keycode[] = {
     {KEY_UP,            VK_UP                 }, //(0x26)
     {KEY_RIGHT,         VK_RIGHT              }, //(0x27)
     {KEY_DOWN,          VK_DOWN               }, // (0x28)
-  // VK_SELECT (0x29)
+                                               // VK_SELECT (0x29)
     {KEY_PRINT,         VK_PRINT              }, // (0x2A)
-  // VK_EXECUTE (0x2B)
+                                               // VK_EXECUTE (0x2B)
     {KEY_PRINT,         VK_SNAPSHOT           }, // (0x2C)
     {KEY_INSERT,        VK_INSERT             }, // (0x2D)
     {KEY_DELETE,        VK_DELETE             }, // (0x2E)
@@ -93,7 +93,7 @@ static _WinTranslatePair _vk_to_keycode[] = {
     {KEY_KP_9,          VK_NUMPAD9            }, //(0x69)
     {KEY_KP_MULTIPLY,   VK_MULTIPLY           }, // (0x6A)
     {KEY_KP_ADD,        VK_ADD                }, // (0x6B)
-  // VK_SEPARATOR (0x6C)
+                                               // VK_SEPARATOR (0x6C)
     {KEY_KP_SUBTRACT,   VK_SUBTRACT           }, // (0x6D)
     {KEY_KP_PERIOD,     VK_DECIMAL            }, // (0x6E)
     {KEY_KP_DIVIDE,     VK_DIVIDE             }, // (0x6F)
@@ -134,7 +134,7 @@ static _WinTranslatePair _vk_to_keycode[] = {
     {KEY_MEDIANEXT,     VK_MEDIA_NEXT_TRACK   }, // (0xB0)
     {KEY_MEDIAPREVIOUS, VK_MEDIA_PREV_TRACK   }, // (0xB1)
     {KEY_MEDIASTOP,     VK_MEDIA_STOP         }, // (0xB2)
-  // VK_MEDIA_PLAY_PAUSE (0xB3)
+                                               // VK_MEDIA_PLAY_PAUSE (0xB3)
     {KEY_LAUNCHMAIL,    VK_LAUNCH_MAIL        }, // (0xB4)
     {KEY_LAUNCHMEDIA,   VK_LAUNCH_MEDIA_SELECT}, // (0xB5)
     {KEY_LAUNCH0,       VK_LAUNCH_APP1        }, // (0xB6)
@@ -155,12 +155,12 @@ static _WinTranslatePair _vk_to_keycode[] = {
     {KEY_BACKSLASH,     VK_OEM_5              }, // (0xDC)
     {KEY_BRACKETRIGHT,  VK_OEM_6              }, // (0xDD)
     {KEY_APOSTROPHE,    VK_OEM_7              }, // (0xDE)
-  /*
-  {VK_OEM_8 (0xDF)
-  {VK_OEM_102 (0xE2) // Windows 2000/XP: Either the angle bracket key or the
-  backslash key on the RT 102-key keyboard
-  */
-  //{ KEY_PLAY, VK_PLAY},// (0xFA)
+                                  /*
+                                  {VK_OEM_8 (0xDF)
+                                  {VK_OEM_102 (0xE2) // Windows 2000/XP: Either the angle bracket key or the
+                                  backslash key on the RT 102-key keyboard
+                                  */
+                                  //{ KEY_PLAY, VK_PLAY},// (0xFA)
     {KEY_UNKNOWN,       0                     }
 };
 
@@ -256,7 +256,7 @@ static _WinTranslatePair _scancode_to_keycode[] = {
     {KEY_PAGEDOWN,    0x51},
     {KEY_INSERT,      0x52},
     {KEY_DELETE,      0x53},
- //{ KEY_???, 0x56 }, //NON US BACKSLASH
+    //{ KEY_???, 0x56 }, //NON US BACKSLASH
     {KEY_F11,         0x57},
     {KEY_F12,         0x58},
     {KEY_META,        0x5B},

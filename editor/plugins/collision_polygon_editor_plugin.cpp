@@ -151,7 +151,8 @@ bool Polygon3DEditor::forward_spatial_gui_input(
                             return true;
                         }
                     }
-                } else if (mb->get_button_index() == BUTTON_RIGHT && mb->is_pressed() && wip_active) {
+                } else if (mb->get_button_index() == BUTTON_RIGHT
+                           && mb->is_pressed() && wip_active) {
                     _wip_close();
                 }
 

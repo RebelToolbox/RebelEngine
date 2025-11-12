@@ -40,7 +40,8 @@ bool GDScriptParser::_end_statement() {
     if (tokenizer->get_token() == GDScriptTokenizer::TK_SEMICOLON) {
         tokenizer->advance();
         return true; // handle next
-    } else if (tokenizer->get_token() == GDScriptTokenizer::TK_NEWLINE || tokenizer->get_token() == GDScriptTokenizer::TK_EOF) {
+    } else if (tokenizer->get_token() == GDScriptTokenizer::TK_NEWLINE
+               || tokenizer->get_token() == GDScriptTokenizer::TK_EOF) {
         return true; // will be handled properly
     }
 
@@ -139,7 +140,11 @@ bool GDScriptParser::_parse_arguments(
             if (tokenizer->get_token() == GDScriptTokenizer::TK_CURSOR) {
                 _make_completable_call(argidx);
                 completion_node = p_parent;
-            } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CONSTANT && tokenizer->get_token_constant().get_type() == Variant::STRING && tokenizer->get_token(1) == GDScriptTokenizer::TK_CURSOR) {
+            } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CONSTANT
+                       && tokenizer->get_token_constant().get_type()
+                              == Variant::STRING
+                       && tokenizer->get_token(1)
+                              == GDScriptTokenizer::TK_CURSOR) {
                 // completing a string argument..
                 completion_cursor = tokenizer->get_token_constant();
 
@@ -649,7 +654,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
             SelfNode* self = alloc_node<SelfNode>();
             tokenizer->advance();
             expr = self;
-        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BUILT_IN_TYPE && tokenizer->get_token(1) == GDScriptTokenizer::TK_PERIOD) {
+        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BUILT_IN_TYPE
+                   && tokenizer->get_token(1) == GDScriptTokenizer::TK_PERIOD) {
             Variant::Type bi_type = tokenizer->get_token_type();
             tokenizer->advance(2);
 
@@ -735,7 +741,9 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                 expr         = cn;
             }
 
-        } else if (tokenizer->get_token(next_valid_offset) == GDScriptTokenizer::TK_PARENTHESIS_OPEN && tokenizer->is_token_literal()) {
+        } else if (tokenizer->get_token(next_valid_offset)
+                       == GDScriptTokenizer::TK_PARENTHESIS_OPEN
+                   && tokenizer->is_token_literal()) {
             // We check with is_token_literal, as this allows us to use
             // match/sync/etc. as a name
             // function or constructor
@@ -776,7 +784,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                     op->arguments.push_back(tn);
                     tokenizer->advance(2);
                 }
-            } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BUILT_IN_FUNC) {
+            } else if (tokenizer->get_token()
+                       == GDScriptTokenizer::TK_BUILT_IN_FUNC) {
                 BuiltInFunctionNode* bn = alloc_node<BuiltInFunctionNode>();
                 bn->function            = tokenizer->get_token_built_in_func();
                 op->arguments.push_back(bn);
@@ -984,7 +993,11 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                 expr               = id;
             }
 
-        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_OP_ADD || tokenizer->get_token() == GDScriptTokenizer::TK_OP_SUB || tokenizer->get_token() == GDScriptTokenizer::TK_OP_NOT || tokenizer->get_token() == GDScriptTokenizer::TK_OP_BIT_INVERT) {
+        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_OP_ADD
+                   || tokenizer->get_token() == GDScriptTokenizer::TK_OP_SUB
+                   || tokenizer->get_token() == GDScriptTokenizer::TK_OP_NOT
+                   || tokenizer->get_token()
+                          == GDScriptTokenizer::TK_OP_BIT_INVERT) {
             // single prefix operators like !expr +expr -expr ++expr --expr
             alloc_node<OperatorNode>();
             Expression e;
@@ -1025,7 +1038,9 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
             op->arguments.push_back(subexpr);
             expr=op;*/
 
-        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_PR_IS && tokenizer->get_token(1) == GDScriptTokenizer::TK_BUILT_IN_TYPE) {
+        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_PR_IS
+                   && tokenizer->get_token(1)
+                          == GDScriptTokenizer::TK_BUILT_IN_TYPE) {
             // 'is' operator with built-in type
             if (!expr) {
                 _set_error("Expected identifier before 'is' operator");
@@ -1043,7 +1058,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
             tokenizer->advance();
 
             expr = op;
-        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BRACKET_OPEN) {
+        } else if (tokenizer->get_token()
+                   == GDScriptTokenizer::TK_BRACKET_OPEN) {
             // array
             tokenizer->advance();
 
@@ -1055,12 +1071,15 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                     _set_error("Unterminated array");
                     return nullptr;
 
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BRACKET_CLOSE) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_BRACKET_CLOSE) {
                     tokenizer->advance();
                     break;
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_NEWLINE) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_NEWLINE) {
                     tokenizer->advance(); // ignore newline
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_COMMA) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_COMMA) {
                     if (!expecting_comma) {
                         _set_error("expression or ']' expected");
                         return nullptr;
@@ -1089,7 +1108,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
             }
 
             expr = arr;
-        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CURLY_BRACKET_OPEN) {
+        } else if (tokenizer->get_token()
+                   == GDScriptTokenizer::TK_CURLY_BRACKET_OPEN) {
             // array
             tokenizer->advance();
 
@@ -1112,7 +1132,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                     _set_error("Unterminated dictionary");
                     return nullptr;
 
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
                     if (expecting == DICT_EXPECT_COLON) {
                         _set_error("':' expected");
                         return nullptr;
@@ -1123,9 +1144,11 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                     }
                     tokenizer->advance();
                     break;
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_NEWLINE) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_NEWLINE) {
                     tokenizer->advance(); // ignore newline
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_COMMA) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_COMMA) {
                     if (expecting == DICT_EXPECT_KEY) {
                         _set_error("key or '}' expected");
                         return nullptr;
@@ -1142,7 +1165,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                     expecting = DICT_EXPECT_KEY;
                     tokenizer->advance(); // ignore newline
 
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_COLON) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_COLON) {
                     if (expecting == DICT_EXPECT_KEY) {
                         _set_error("key or '}' expected");
                         return nullptr;
@@ -1234,7 +1258,10 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
 
             expr = dict;
 
-        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_PERIOD && (tokenizer->is_token_literal(1) || tokenizer->get_token(1) == GDScriptTokenizer::TK_CURSOR)) {
+        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_PERIOD
+                   && (tokenizer->is_token_literal(1)
+                       || tokenizer->get_token(1)
+                              == GDScriptTokenizer::TK_CURSOR)) {
             // We check with is_token_literal, as this allows us to use
             // match/sync/etc. as a name parent call
 
@@ -1277,7 +1304,11 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
 
             expr = op;
 
-        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BUILT_IN_TYPE && expression.size() > 0 && expression[expression.size() - 1].is_op && expression[expression.size() - 1].op == OperatorNode::OP_IS) {
+        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BUILT_IN_TYPE
+                   && expression.size() > 0
+                   && expression[expression.size() - 1].is_op
+                   && expression[expression.size() - 1].op
+                          == OperatorNode::OP_IS) {
             Expression e = expression[expression.size() - 1];
             e.op         = OperatorNode::OP_IS_BUILTIN;
             expression.write[expression.size() - 1] = e;
@@ -1317,7 +1348,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                     // match/sync/etc. as a name
                     _set_error("Expected identifier as member");
                     return nullptr;
-                } else if (tokenizer->get_token(2) == GDScriptTokenizer::TK_PARENTHESIS_OPEN) {
+                } else if (tokenizer->get_token(2)
+                           == GDScriptTokenizer::TK_PARENTHESIS_OPEN) {
                     // call!!
                     OperatorNode* op = alloc_node<OperatorNode>();
                     op->op           = OperatorNode::OP_CALL;
@@ -1385,7 +1417,8 @@ GDScriptParser::Node* GDScriptParser::_parse_expression(
                     expr = op;
                 }
 
-            } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BRACKET_OPEN) {
+            } else if (tokenizer->get_token()
+                       == GDScriptTokenizer::TK_BRACKET_OPEN) {
                 // indexing using "[]"
                 OperatorNode* op = alloc_node<OperatorNode>();
                 op->op           = OperatorNode::OP_INDEX;
@@ -2468,7 +2501,8 @@ GDScriptParser::PatternNode* GDScriptParser::_parse_pattern(bool p_static) {
                                == GDScriptTokenizer::TK_BRACKET_CLOSE) {
                         tokenizer->advance(2);
                         break;
-                    } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BRACKET_CLOSE) {
+                    } else if (tokenizer->get_token()
+                               == GDScriptTokenizer::TK_BRACKET_CLOSE) {
                         tokenizer->advance(1);
                         break;
                     } else {
@@ -2490,7 +2524,8 @@ GDScriptParser::PatternNode* GDScriptParser::_parse_pattern(bool p_static) {
                 if (tokenizer->get_token() == GDScriptTokenizer::TK_COMMA) {
                     tokenizer->advance();
                     continue;
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_BRACKET_CLOSE) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_BRACKET_CLOSE) {
                     tokenizer->advance();
                     break;
                 } else {
@@ -2550,7 +2585,8 @@ GDScriptParser::PatternNode* GDScriptParser::_parse_pattern(bool p_static) {
                                == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
                         tokenizer->advance(2);
                         break;
-                    } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
+                    } else if (tokenizer->get_token()
+                               == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
                         tokenizer->advance(1);
                         break;
                     } else {
@@ -2596,7 +2632,8 @@ GDScriptParser::PatternNode* GDScriptParser::_parse_pattern(bool p_static) {
                 if (tokenizer->get_token() == GDScriptTokenizer::TK_COMMA) {
                     tokenizer->advance();
                     continue;
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
                     tokenizer->advance();
                     break;
                 } else {
@@ -2645,7 +2682,8 @@ GDScriptParser::PatternNode* GDScriptParser::_parse_pattern(bool p_static) {
                     return nullptr;
                 }
 
-            } else if (value->type != Node::TYPE_IDENTIFIER && value->type != Node::TYPE_CONSTANT) {
+            } else if (value->type != Node::TYPE_IDENTIFIER
+                       && value->type != Node::TYPE_CONSTANT) {
                 _set_error(
                     "Only constant expressions or variables allowed in a "
                     "pattern"
@@ -3513,7 +3551,8 @@ void GDScriptParser::_parse_block(BlockNode* p_block, bool p_static) {
                         all_have_return =
                             all_have_return && cf_else->body->has_return;
 
-                    } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CF_ELSE) {
+                    } else if (tokenizer->get_token()
+                               == GDScriptTokenizer::TK_CF_ELSE) {
                         if (indent_level.back()->get().indent
                             > current_level.indent) {
                             _set_error("Invalid indentation.");
@@ -4304,7 +4343,8 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                         return;
                     }
 
-                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CONSTANT) {
+                } else if (tokenizer->get_token()
+                           == GDScriptTokenizer::TK_CONSTANT) {
                     _set_error("The class icon must be separated by a comma.");
                     return;
                 }
@@ -4618,7 +4658,8 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                             == GDScriptTokenizer::TK_COMMA) {
                             tokenizer->advance();
                             continue;
-                        } else if (tokenizer->get_token() != GDScriptTokenizer::TK_PARENTHESIS_CLOSE) {
+                        } else if (tokenizer->get_token()
+                                   != GDScriptTokenizer::TK_PARENTHESIS_CLOSE) {
                             _set_error("Expected \",\" or \")\".");
                             return;
                         }
@@ -4693,7 +4734,9 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                                         == GDScriptTokenizer::TK_COMMA) {
                                         tokenizer->advance();
                                         continue;
-                                    } else if (tokenizer->get_token() != GDScriptTokenizer::TK_PARENTHESIS_CLOSE) {
+                                    } else if (tokenizer->get_token()
+                                               != GDScriptTokenizer::
+                                                   TK_PARENTHESIS_CLOSE) {
                                         _set_error("Expected \",\" or \")\".");
                                         return;
                                     }
@@ -4814,7 +4857,8 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                         if (tokenizer->get_token()
                             == GDScriptTokenizer::TK_COMMA) {
                             tokenizer->advance();
-                        } else if (tokenizer->get_token() != GDScriptTokenizer::TK_PARENTHESIS_CLOSE) {
+                        } else if (tokenizer->get_token()
+                                   != GDScriptTokenizer::TK_PARENTHESIS_CLOSE) {
                             _set_error(
                                 "Expected \",\" or \")\" after a \"signal\" "
                                 "parameter identifier."
@@ -5139,7 +5183,9 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                                             == GDScriptTokenizer::
                                                 TK_PARENTHESIS_CLOSE) {
                                             break;
-                                        } else if (tokenizer->get_token() != GDScriptTokenizer::TK_COMMA) {
+                                        } else if (tokenizer->get_token()
+                                                   != GDScriptTokenizer::
+                                                       TK_COMMA) {
                                             _set_error(
                                                 "Expected \")\" or \",\" in "
                                                 "the exponential range hint."
@@ -5347,7 +5393,9 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                                                 TK_PARENTHESIS_CLOSE) {
                                             current_export.hint =
                                                 PROPERTY_HINT_DIR;
-                                        } else if (tokenizer->get_token() == GDScriptTokenizer::TK_COMMA) {
+                                        } else if (tokenizer->get_token()
+                                                   == GDScriptTokenizer::
+                                                       TK_COMMA) {
                                             _ADVANCE_AND_CONSUME_NEWLINES;
 
                                             if (tokenizer->get_token()
@@ -5431,7 +5479,10 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                                                     == GDScriptTokenizer::
                                                         TK_PARENTHESIS_CLOSE) {
                                                     break;
-                                                } else if (tokenizer->get_token() == GDScriptTokenizer::TK_COMMA) {
+                                                } else if (tokenizer->get_token(
+                                                           )
+                                                           == GDScriptTokenizer::
+                                                               TK_COMMA) {
                                                     _ADVANCE_AND_CONSUME_NEWLINES;
                                                 } else {
                                                     _set_error(
@@ -5630,16 +5681,14 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
 
                                     current_export.hint_string +=
                                         E->get()
-                                            .
-                                            operator String()
+                                            .operator String()
                                             .capitalize()
                                             .xml_escape();
                                     if (!is_flags) {
                                         current_export.hint_string += ":";
                                         current_export.hint_string +=
                                             enum_values[E->get()]
-                                                .
-                                                operator String()
+                                                .operator String()
                                                 .xml_escape();
                                     }
                                 }
@@ -6359,7 +6408,8 @@ void GDScriptParser::_parse_class(ClassNode* p_class) {
                     if (tokenizer->get_token()
                         == GDScriptTokenizer::TK_NEWLINE) {
                         tokenizer->advance(); // Ignore newlines
-                    } else if (tokenizer->get_token() == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
+                    } else if (tokenizer->get_token()
+                               == GDScriptTokenizer::TK_CURLY_BRACKET_CLOSE) {
                         tokenizer->advance();
                         break; // End of enum
                     } else if (!tokenizer->is_token_literal(0, true)) {
@@ -7727,7 +7777,8 @@ GDScriptParser::DataType GDScriptParser::_reduce_node_type(Node* p_node) {
             } else if (id->name == "#match_value") {
                 // It's a special id just for the match statetement, ignore
                 break;
-            } else if (current_function && current_function->arguments.find(id->name) >= 0) {
+            } else if (current_function
+                       && current_function->arguments.find(id->name) >= 0) {
                 int idx   = current_function->arguments.find(id->name);
                 node_type = current_function->argument_types[idx];
             } else {
@@ -8086,8 +8137,8 @@ GDScriptParser::DataType GDScriptParser::_reduce_node_type(Node* p_node) {
                                     } else if (check_types) {
                                         _set_error(
                                             "Can't get index \""
-                                                + String(member_id->name.
-                                                         operator String())
+                                                + String(member_id->name
+                                                             .operator String())
                                                 + "\" on base \""
                                                 + base_type.to_string() + "\".",
                                             op->line
@@ -8270,7 +8321,10 @@ GDScriptParser::DataType GDScriptParser::_reduce_node_type(Node* p_node) {
                             } else {
                                 _mark_line_as_unsafe(op->line);
                             }
-                        } else if (!for_completion && (index_type.kind != DataType::BUILTIN || index_type.builtin_type != Variant::STRING)) {
+                        } else if (!for_completion
+                                   && (index_type.kind != DataType::BUILTIN
+                                       || index_type.builtin_type
+                                              != Variant::STRING)) {
                             _set_error(
                                 "Only strings can be used as an index in the "
                                 "base type \""

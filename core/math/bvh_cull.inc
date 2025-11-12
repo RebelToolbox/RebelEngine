@@ -541,7 +541,7 @@ bool _cull_convex_iterative(
                         }
                     }
                 }
-#endif        // BVH_CONVEX_CULL_OPTIMIZED
+#endif // BVH_CONVEX_CULL_OPTIMIZED
             } // if not fully within
         } else {
             for (int n = 0; n < tnode.num_children; n++) {

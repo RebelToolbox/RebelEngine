@@ -1325,7 +1325,8 @@ void SceneTree::_update_root_rect() {
         VisualServer::get_singleton()
             ->black_bars_set_margins(margin.x, 0, margin.x, 0);
         offset.x = Math::round(margin.x * viewport_size.y / screen_size.y);
-    } else if (stretch_aspect != STRETCH_ASPECT_EXPAND && screen_size.y < video_mode.y) {
+    } else if (stretch_aspect != STRETCH_ASPECT_EXPAND
+               && screen_size.y < video_mode.y) {
         margin.y = Math::round((video_mode.y - screen_size.y) / 2.0);
         VisualServer::get_singleton()
             ->black_bars_set_margins(0, margin.y, 0, margin.y);
@@ -2523,7 +2524,8 @@ void SceneTree::get_argument_options(
                     directories.push_back(
                         dir_access->get_current_dir().plus_file(filename)
                     );
-                } else if (filename.ends_with(".tscn") || filename.ends_with(".scn")) {
+                } else if (filename.ends_with(".tscn")
+                           || filename.ends_with(".scn")) {
                     r_options->push_back(
                         "\"" + dir_access->get_current_dir().plus_file(filename)
                         + "\""

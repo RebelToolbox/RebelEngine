@@ -89,7 +89,7 @@ void VSPortal::add_pvs_planes(
             }
 
         } // for pvB
-    }     // for pvA
+    } // for pvA
 }
 
 // typically we will end up with a bunch of duplicate planes being trying to be

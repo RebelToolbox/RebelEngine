@@ -311,7 +311,8 @@ Error JSON::_get_token(
                     r_token.value  = number;
                     return OK;
 
-                } else if ((p_str[index] >= 'A' && p_str[index] <= 'Z') || (p_str[index] >= 'a' && p_str[index] <= 'z')) {
+                } else if ((p_str[index] >= 'A' && p_str[index] <= 'Z')
+                           || (p_str[index] >= 'a' && p_str[index] <= 'z')) {
                     String id;
 
                     while ((p_str[index] >= 'A' && p_str[index] <= 'Z')

@@ -699,11 +699,11 @@ MacOSJoypad::MacOSJoypad() {
     };
     const size_t n_elements = sizeof(vals) / sizeof(vals[0]);
     CFArrayRef array        = okay ? CFArrayCreate(
-                           kCFAllocatorDefault,
-                           vals,
-                           n_elements,
-                           &kCFTypeArrayCallBacks
-                       )
+                                  kCFAllocatorDefault,
+                                  vals,
+                                  n_elements,
+                                  &kCFTypeArrayCallBacks
+                              )
                                    : NULL;
 
     for (size_t i = 0; i < n_elements; i++) {

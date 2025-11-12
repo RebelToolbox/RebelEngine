@@ -494,7 +494,8 @@ Rect2 AnimationTrackEditSpriteFrame::get_key_rect(
         if (vframes > 1) {
             size.y /= vframes;
         }
-    } else if (Object::cast_to<AnimatedSprite>(object) || Object::cast_to<AnimatedSprite3D>(object)) {
+    } else if (Object::cast_to<AnimatedSprite>(object)
+               || Object::cast_to<AnimatedSprite3D>(object)) {
         Ref<SpriteFrames> sf = object->call("get_sprite_frames");
         if (sf.is_null()) {
             return AnimationTrackEdit::get_key_rect(p_index, p_pixels_sec);
@@ -612,7 +613,8 @@ void AnimationTrackEditSpriteFrame::draw_key(
         region.position.x += region.size.x * coords.x;
         region.position.y += region.size.y * coords.y;
 
-    } else if (Object::cast_to<AnimatedSprite>(object) || Object::cast_to<AnimatedSprite3D>(object)) {
+    } else if (Object::cast_to<AnimatedSprite>(object)
+               || Object::cast_to<AnimatedSprite3D>(object)) {
         Ref<SpriteFrames> sf = object->call("get_sprite_frames");
         if (sf.is_null()) {
             AnimationTrackEdit::draw_key(
@@ -1261,7 +1263,8 @@ void AnimationTrackEditTypeAudio::drop_data(
         Dictionary drag_data = p_data;
         if (drag_data.has("type") && String(drag_data["type"]) == "resource") {
             stream = drag_data["resource"];
-        } else if (drag_data.has("type") && String(drag_data["type"]) == "files") {
+        } else if (drag_data.has("type")
+                   && String(drag_data["type"]) == "files") {
             Vector<String> files = drag_data["files"];
 
             if (files.size() == 1) {

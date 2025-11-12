@@ -1604,9 +1604,11 @@ void TileSetEditor::_on_workspace_draw() {
             Color c;
             if (tileset->tile_get_tile_mode(t_id) == TileSet::SINGLE_TILE) {
                 c = COLOR_SINGLE;
-            } else if (tileset->tile_get_tile_mode(t_id) == TileSet::AUTO_TILE) {
+            } else if (tileset->tile_get_tile_mode(t_id)
+                       == TileSet::AUTO_TILE) {
                 c = COLOR_AUTOTILE;
-            } else if (tileset->tile_get_tile_mode(t_id) == TileSet::ATLAS_TILE) {
+            } else if (tileset->tile_get_tile_mode(t_id)
+                       == TileSet::ATLAS_TILE) {
                 c = COLOR_ATLAS;
             }
             draw_tile_subdivision(t_id, COLOR_SUBDIVISION);
@@ -1650,9 +1652,11 @@ void TileSetEditor::_on_workspace_draw() {
             Color c;
             if (tileset->tile_get_tile_mode(t_id) == TileSet::SINGLE_TILE) {
                 c = COLOR_SINGLE;
-            } else if (tileset->tile_get_tile_mode(t_id) == TileSet::AUTO_TILE) {
+            } else if (tileset->tile_get_tile_mode(t_id)
+                       == TileSet::AUTO_TILE) {
                 c = COLOR_AUTOTILE;
-            } else if (tileset->tile_get_tile_mode(t_id) == TileSet::ATLAS_TILE) {
+            } else if (tileset->tile_get_tile_mode(t_id)
+                       == TileSet::ATLAS_TILE) {
                 c = COLOR_ATLAS;
             }
             workspace->draw_rect(region, c, false);
@@ -1701,9 +1705,11 @@ void TileSetEditor::_on_workspace_overlay_draw() {
             Color c;
             if (tileset->tile_get_tile_mode(t_id) == TileSet::SINGLE_TILE) {
                 c = COLOR_SINGLE;
-            } else if (tileset->tile_get_tile_mode(t_id) == TileSet::AUTO_TILE) {
+            } else if (tileset->tile_get_tile_mode(t_id)
+                       == TileSet::AUTO_TILE) {
                 c = COLOR_AUTOTILE;
-            } else if (tileset->tile_get_tile_mode(t_id) == TileSet::ATLAS_TILE) {
+            } else if (tileset->tile_get_tile_mode(t_id)
+                       == TileSet::ATLAS_TILE) {
                 c = COLOR_ATLAS;
             }
             String tile_id_name =
@@ -1780,7 +1786,8 @@ void TileSetEditor::_on_scroll_container_input(const Ref<InputEvent>& p_event) {
             _zoom_in();
             // Don't scroll up after zooming in.
             accept_event();
-        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN && mb->is_pressed() && mb->get_control()) {
+        } else if (mb->get_button_index() == BUTTON_WHEEL_DOWN
+                   && mb->is_pressed() && mb->get_control()) {
             _zoom_out();
             // Don't scroll down after zooming out.
             accept_event();
@@ -1856,13 +1863,15 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                     workspace_overlay->update();
                     return;
                 }
-            } else if (dragging && mb->is_pressed() && mb->get_button_index() == BUTTON_RIGHT) {
+            } else if (dragging && mb->is_pressed()
+                       && mb->get_button_index() == BUTTON_RIGHT) {
                 dragging      = false;
                 edited_region = Rect2();
                 workspace->update();
                 workspace_overlay->update();
                 return;
-            } else if (dragging && !mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT) {
+            } else if (dragging && !mb->is_pressed()
+                       && mb->get_button_index() == BUTTON_LEFT) {
                 dragging = false;
                 update_edited_region(mb->get_position());
                 edited_region.position -= WORKSPACE_MARGIN;
@@ -1926,7 +1935,12 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                                 "set_custom_minimum_size",
                                 workspace_minsize
                             );
-                        } else if (workspace_minsize.x > get_current_texture()->get_size().x + WORKSPACE_MARGIN.x * 2 || workspace_minsize.y > get_current_texture()->get_size().y + WORKSPACE_MARGIN.y * 2) {
+                        } else if (workspace_minsize.x
+                                       > get_current_texture()->get_size().x
+                                             + WORKSPACE_MARGIN.x * 2
+                                   || workspace_minsize.y
+                                          > get_current_texture()->get_size().y
+                                                + WORKSPACE_MARGIN.y * 2) {
                             undo_redo->add_do_method(
                                 this,
                                 "update_workspace_minsize"
@@ -2412,7 +2426,9 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                                     }
                                 }
                                 workspace->update();
-                            } else if (!mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT) {
+                            } else if (!mb->is_pressed()
+                                       && mb->get_button_index()
+                                              == BUTTON_LEFT) {
                                 if (edit_mode == EDITMODE_COLLISION) {
                                     if (dragging_point >= 0) {
                                         dragging_point = -1;
@@ -2590,7 +2606,9 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                                     current_shape.push_back(snap_point(pos));
                                     workspace->update();
                                 }
-                            } else if (mb->is_pressed() && mb->get_button_index() == BUTTON_RIGHT) {
+                            } else if (mb->is_pressed()
+                                       && mb->get_button_index()
+                                              == BUTTON_RIGHT) {
                                 if (creating_shape) {
                                     creating_shape = false;
                                     _select_edited_shape_coord();
@@ -2619,13 +2637,17 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                                 creating_shape = true;
                                 workspace->update();
                                 return;
-                            } else if (mb->is_pressed() && mb->get_button_index() == BUTTON_RIGHT) {
+                            } else if (mb->is_pressed()
+                                       && mb->get_button_index()
+                                              == BUTTON_RIGHT) {
                                 if (creating_shape) {
                                     creating_shape = false;
                                     _select_edited_shape_coord();
                                     workspace->update();
                                 }
-                            } else if (!mb->is_pressed() && mb->get_button_index() == BUTTON_LEFT) {
+                            } else if (!mb->is_pressed()
+                                       && mb->get_button_index()
+                                              == BUTTON_LEFT) {
                                 if (creating_shape) {
                                     // if the first two corners are within
                                     // grabbing distance of one another, expand
@@ -3028,7 +3050,8 @@ void TileSetEditor::_on_tool_clicked(int p_tool) {
                 }
             }
         }
-    } else if (p_tool == TOOL_SELECT || p_tool == SHAPE_NEW_POLYGON || p_tool == SHAPE_NEW_RECTANGLE) {
+    } else if (p_tool == TOOL_SELECT || p_tool == SHAPE_NEW_POLYGON
+               || p_tool == SHAPE_NEW_RECTANGLE) {
         if (creating_shape) {
             // Cancel Creation
             creating_shape = false;
@@ -3237,7 +3260,8 @@ void TileSetEditor::_select_next_tile() {
     }
     if (get_current_tile() == -1) {
         return;
-    } else if (tileset->tile_get_tile_mode(get_current_tile()) == TileSet::SINGLE_TILE) {
+    } else if (tileset->tile_get_tile_mode(get_current_tile())
+               == TileSet::SINGLE_TILE) {
         return;
     } else {
         switch (edit_mode) {
@@ -3271,7 +3295,8 @@ void TileSetEditor::_select_previous_tile() {
     }
     if (get_current_tile() == -1) {
         return;
-    } else if (tileset->tile_get_tile_mode(get_current_tile()) == TileSet::SINGLE_TILE) {
+    } else if (tileset->tile_get_tile_mode(get_current_tile())
+               == TileSet::SINGLE_TILE) {
         return;
     } else {
         switch (edit_mode) {
@@ -3345,7 +3370,8 @@ void TileSetEditor::_select_next_subtile() {
     if (tileset->tile_get_tile_mode(get_current_tile())
         == TileSet::SINGLE_TILE) {
         _select_next_tile();
-    } else if (edit_mode == EDITMODE_REGION || edit_mode == EDITMODE_BITMASK || edit_mode == EDITMODE_ICON) {
+    } else if (edit_mode == EDITMODE_REGION || edit_mode == EDITMODE_BITMASK
+               || edit_mode == EDITMODE_ICON) {
         _select_next_tile();
     } else {
         Vector2 cell_count = _get_subtiles_count(get_current_tile());
@@ -3371,7 +3397,8 @@ void TileSetEditor::_select_previous_subtile() {
     if (tileset->tile_get_tile_mode(get_current_tile())
         == TileSet::SINGLE_TILE) {
         _select_previous_tile();
-    } else if (edit_mode == EDITMODE_REGION || edit_mode == EDITMODE_BITMASK || edit_mode == EDITMODE_ICON) {
+    } else if (edit_mode == EDITMODE_REGION || edit_mode == EDITMODE_BITMASK
+               || edit_mode == EDITMODE_ICON) {
         _select_previous_tile();
     } else {
         Vector2 cell_count = _get_subtiles_count(get_current_tile());
@@ -5047,14 +5074,16 @@ void TileSetEditor::update_workspace_tile_mode() {
         tool_editmode[EDITMODE_BITMASK]->hide();
         tool_editmode[EDITMODE_PRIORITY]->hide();
         tool_editmode[EDITMODE_Z_INDEX]->hide();
-    } else if (tileset->tile_get_tile_mode(get_current_tile()) == TileSet::AUTO_TILE) {
+    } else if (tileset->tile_get_tile_mode(get_current_tile())
+               == TileSet::AUTO_TILE) {
         if (edit_mode == EDITMODE_ICON) {
             select_coord(tileset->autotile_get_icon_coordinate(get_current_tile(
             )));
         } else {
             _select_edited_shape_coord();
         }
-    } else if (tileset->tile_get_tile_mode(get_current_tile()) == TileSet::ATLAS_TILE) {
+    } else if (tileset->tile_get_tile_mode(get_current_tile())
+               == TileSet::ATLAS_TILE) {
         if (tool_editmode[EDITMODE_PRIORITY]->is_pressed()
             || tool_editmode[EDITMODE_BITMASK]->is_pressed()) {
             tool_editmode[EDITMODE_COLLISION]->set_pressed(true);

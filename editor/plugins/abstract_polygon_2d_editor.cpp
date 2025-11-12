@@ -407,7 +407,8 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
                         return true;
                     }
                 }
-            } else if (mb->get_button_index() == BUTTON_RIGHT && mb->is_pressed() && !edited_point.valid()) {
+            } else if (mb->get_button_index() == BUTTON_RIGHT
+                       && mb->is_pressed() && !edited_point.valid()) {
                 const PosVertex closest = closest_point(gpoint);
 
                 if (closest.valid()) {
@@ -469,7 +470,8 @@ bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
                         return true;
                     }
                 }
-            } else if (mb->get_button_index() == BUTTON_RIGHT && mb->is_pressed() && wip_active) {
+            } else if (mb->get_button_index() == BUTTON_RIGHT
+                       && mb->is_pressed() && wip_active) {
                 _wip_cancel();
             }
         }

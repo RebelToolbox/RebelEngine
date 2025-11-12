@@ -479,7 +479,9 @@ Error SceneState::_parse_node(
         editable_instances.push_back(p_owner->get_path_to(p_node));
         // Node is the root of an editable instance.
         is_editable_instance = true;
-    } else if (p_node->get_owner() && p_owner->is_a_parent_of(p_node->get_owner()) && p_owner->is_editable_instance(p_node->get_owner())) {
+    } else if (p_node->get_owner()
+               && p_owner->is_a_parent_of(p_node->get_owner())
+               && p_owner->is_editable_instance(p_node->get_owner())) {
         // Node is part of an editable instance.
         is_editable_instance = true;
     }
@@ -1547,7 +1549,8 @@ Ref<PackedScene> SceneState::get_node_instance(int p_idx) const {
         } else {
             return variants[nodes[p_idx].instance & FLAG_MASK];
         }
-    } else if (nodes[p_idx].parent < 0 || nodes[p_idx].parent == NO_PARENT_SAVED) {
+    } else if (nodes[p_idx].parent < 0
+               || nodes[p_idx].parent == NO_PARENT_SAVED) {
         if (base_scene_idx >= 0) {
             return variants[base_scene_idx];
         }

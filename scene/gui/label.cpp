@@ -471,7 +471,8 @@ void Label::regenerate_word_cache() {
                 wc->space_count   = space_count;
                 current_word_size = 0;
                 space_count       = 0;
-            } else if ((i == xl_text.length() || current == '\n') && last != nullptr && space_count != 0) {
+            } else if ((i == xl_text.length() || current == '\n')
+                       && last != nullptr && space_count != 0) {
                 // in case there are trailing white spaces we add a placeholder
                 // word cache with just the spaces
                 WordCache* wc = memnew(WordCache);
@@ -503,7 +504,8 @@ void Label::regenerate_word_cache() {
                     }
                     current_word_size += space_width;
                     line_width        += space_width;
-                } else if (line_width > 0 || last == nullptr || last->char_pos != WordCache::CHAR_WRAPLINE) {
+                } else if (line_width > 0 || last == nullptr
+                           || last->char_pos != WordCache::CHAR_WRAPLINE) {
                     space_count++;
                     line_width += space_width;
                 } else {

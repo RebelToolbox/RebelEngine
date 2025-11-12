@@ -4051,7 +4051,9 @@ ThemeEditor::ThemeEditor() {
 void ThemeEditorPlugin::edit(Object* p_node) {
     if (Object::cast_to<Theme>(p_node)) {
         theme_editor->edit(Object::cast_to<Theme>(p_node));
-    } else if (Object::cast_to<Font>(p_node) || Object::cast_to<StyleBox>(p_node) || Object::cast_to<Texture>(p_node)) {
+    } else if (Object::cast_to<Font>(p_node)
+               || Object::cast_to<StyleBox>(p_node)
+               || Object::cast_to<Texture>(p_node)) {
         // Do nothing, keep editing the existing theme.
     } else {
         theme_editor->edit(Ref<Theme>());

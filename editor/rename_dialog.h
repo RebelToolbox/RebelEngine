@@ -28,7 +28,7 @@ class RenameDialog : public ConfirmationDialog {
         rename();
     };
 
-    void _cancel_pressed(){};
+    void _cancel_pressed() {};
     void _features_toggled(bool pressed);
     void _insert_text(String text);
     void _update_substitute();
@@ -95,7 +95,7 @@ class RenameDialog : public ConfirmationDialog {
     bool has_errors;
 
 protected:
-    void _notification(int p_what){};
+    void _notification(int p_what) {};
     static void _bind_methods();
     virtual void _post_popup();
 

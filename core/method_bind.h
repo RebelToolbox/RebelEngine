@@ -394,7 +394,7 @@ public:
 #ifdef PTRCALL_ENABLED
     virtual void ptrcall(Object* p_object, const void** p_args, void* r_ret) {
         ERR_FAIL(); // can't call
-    }               // todo
+    } // todo
 #endif
 
     void set_method(NativeCall p_method) {

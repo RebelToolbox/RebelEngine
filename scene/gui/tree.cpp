@@ -1618,12 +1618,13 @@ int Tree::draw_item(
                 }
             }
 
-            Color col      = p_item->cells[i].custom_color
-                               ? p_item->cells[i].color
-                               : get_color(
-                              p_item->cells[i].selected ? "font_color_selected"
-                                                        : "font_color"
-                          );
+            Color col =
+                p_item->cells[i].custom_color
+                    ? p_item->cells[i].color
+                    : get_color(
+                          p_item->cells[i].selected ? "font_color_selected"
+                                                    : "font_color"
+                      );
             Color icon_col = p_item->cells[i].icon_color;
 
             Point2i text_pos = item_rect.position;
@@ -2016,7 +2017,8 @@ void Tree::select_single_item(
                 c.selected = false;
                 // p_current->deselected_signal.call(p_col);
             }
-        } else if (select_mode == SELECT_SINGLE || select_mode == SELECT_MULTI) {
+        } else if (select_mode == SELECT_SINGLE
+                   || select_mode == SELECT_MULTI) {
             if (!r_in_range && &selected_cell == &c) {
                 if (!selected_cell.selected || allow_reselect) {
                     selected_cell.selected = true;
@@ -2031,7 +2033,9 @@ void Tree::select_single_item(
                         emit_signal("item_selected");
                     }
 
-                } else if (select_mode == SELECT_MULTI && (selected_item != p_selected || selected_col != i)) {
+                } else if (select_mode == SELECT_MULTI
+                           && (selected_item != p_selected || selected_col != i
+                           )) {
                     selected_item = p_selected;
                     selected_col  = i;
                     emit_signal("cell_selected");
@@ -2813,14 +2817,16 @@ void Tree::_gui_input(Ref<InputEvent> p_event) {
             _go_left();
         }
 
-    } else if (p_event->is_action("ui_up") && p_event->is_pressed() && !is_command) {
+    } else if (p_event->is_action("ui_up") && p_event->is_pressed()
+               && !is_command) {
         if (!cursor_can_exit_tree) {
             accept_event();
         }
 
         _go_up();
 
-    } else if (p_event->is_action("ui_down") && p_event->is_pressed() && !is_command) {
+    } else if (p_event->is_action("ui_down") && p_event->is_pressed()
+               && !is_command) {
         if (!cursor_can_exit_tree) {
             accept_event();
         }
@@ -3388,7 +3394,8 @@ bool Tree::edit_selected() {
         popup_edited_item_col = col;
         return true;
 
-    } else if (c.mode == TreeItem::CELL_MODE_STRING || c.mode == TreeItem::CELL_MODE_RANGE) {
+    } else if (c.mode == TreeItem::CELL_MODE_STRING
+               || c.mode == TreeItem::CELL_MODE_RANGE) {
         Vector2 ofs(0, (text_editor->get_size().height - rect.size.height) / 2);
         Point2i textedpos = get_global_position() + rect.position - ofs;
         cache.text_editor_position = textedpos;
@@ -3572,7 +3579,8 @@ void Tree::_notification(int p_what) {
                  < ABS(mouse_position.x - get_size().width))
                 && (ABS(mouse_position.x) < cache.scroll_border)) {
                 point.x = mouse_position.x - cache.scroll_border;
-            } else if (ABS(mouse_position.x - get_size().width) < cache.scroll_border) {
+            } else if (ABS(mouse_position.x - get_size().width)
+                       < cache.scroll_border) {
                 point.x =
                     mouse_position.x - (get_size().width - cache.scroll_border);
             }
@@ -3581,7 +3589,8 @@ void Tree::_notification(int p_what) {
                  < ABS(mouse_position.y - get_size().height))
                 && (ABS(mouse_position.y) < cache.scroll_border)) {
                 point.y = mouse_position.y - cache.scroll_border;
-            } else if (ABS(mouse_position.y - get_size().height) < cache.scroll_border) {
+            } else if (ABS(mouse_position.y - get_size().height)
+                       < cache.scroll_border) {
                 point.y = mouse_position.y
                         - (get_size().height - cache.scroll_border);
             }
@@ -4189,7 +4198,8 @@ void Tree::scroll_to_item(TreeItem* p_item) {
 
     if (r.position.y <= v_scroll->get_value()) {
         v_scroll->set_value(r.position.y);
-    } else if (r.position.y + r.size.y + 2 * cache.vseparation > v_scroll->get_value() + get_size().y) {
+    } else if (r.position.y + r.size.y + 2 * cache.vseparation
+               > v_scroll->get_value() + get_size().y) {
         v_scroll->set_value(
             r.position.y + r.size.y + 2 * cache.vseparation - get_size().y
         );

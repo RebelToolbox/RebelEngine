@@ -547,7 +547,8 @@ Node* ResourceImporterScene::_fix_node(
             colshape->set_owner(sb->get_owner());
         }
 
-    } else if (_teststr(name, "rigid") && Object::cast_to<MeshInstance>(p_node)) {
+    } else if (_teststr(name, "rigid")
+               && Object::cast_to<MeshInstance>(p_node)) {
         if (isroot) {
             return p_node;
         }
@@ -576,7 +577,8 @@ Node* ResourceImporterScene::_fix_node(
             _add_shapes(rigid_body, shapes);
         }
 
-    } else if ((_teststr(name, "col") || (_teststr(name, "convcol"))) && Object::cast_to<MeshInstance>(p_node)) {
+    } else if ((_teststr(name, "col") || (_teststr(name, "convcol")))
+               && Object::cast_to<MeshInstance>(p_node)) {
         MeshInstance* mi = Object::cast_to<MeshInstance>(p_node);
 
         Ref<Mesh> mesh = mi->get_mesh();
@@ -617,7 +619,8 @@ Node* ResourceImporterScene::_fix_node(
             }
         }
 
-    } else if (_teststr(name, "navmesh") && Object::cast_to<MeshInstance>(p_node)) {
+    } else if (_teststr(name, "navmesh")
+               && Object::cast_to<MeshInstance>(p_node)) {
         if (isroot) {
             return p_node;
         }

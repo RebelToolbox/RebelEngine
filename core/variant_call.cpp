@@ -1629,7 +1629,9 @@ Variant Variant::construct(
 
     } else if (p_argcount == 1 && p_args[0]->type == p_type) {
         return *p_args[0]; // copy construct
-    } else if (p_argcount == 1 && (!p_strict || Variant::can_convert(p_args[0]->type, p_type))) {
+    } else if (p_argcount == 1
+               && (!p_strict || Variant::can_convert(p_args[0]->type, p_type)
+               )) {
         // near match construct
 
         switch (p_type) {

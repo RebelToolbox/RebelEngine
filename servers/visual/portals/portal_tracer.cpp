@@ -597,7 +597,7 @@ void PortalTracer::trace_recursive(
             }
 
         } // if a linked room exists
-    }     // for p through portals
+    } // for p through portals
 }
 
 int PortalTracer::occlusion_cull(

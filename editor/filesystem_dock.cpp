@@ -431,7 +431,9 @@ void FileSystemDock::_notification(int p_what) {
                     if ((String(dd["favorite"]) == "all")) {
                         tree->set_drop_mode_flags(Tree::DROP_MODE_INBETWEEN);
                     }
-                } else if ((String(dd["type"]) == "files") || (String(dd["type"]) == "files_and_dirs") || (String(dd["type"]) == "resource")) {
+                } else if ((String(dd["type"]) == "files")
+                           || (String(dd["type"]) == "files_and_dirs")
+                           || (String(dd["type"]) == "resource")) {
                     tree->set_drop_mode_flags(
                         Tree::DROP_MODE_ON_ITEM | Tree::DROP_MODE_INBETWEEN
                     );
@@ -1562,7 +1564,8 @@ void FileSystemDock::_update_project_settings_after_move(
                     E->get().name,
                     p_renames[autoload]
                 );
-            } else if (autoload.begins_with("*") && p_renames.has(autoload_singleton)) {
+            } else if (autoload.begins_with("*")
+                       && p_renames.has(autoload_singleton)) {
                 ProjectSettings::get_singleton()->set_setting(
                     E->get().name,
                     "*" + p_renames[autoload_singleton]
@@ -1622,8 +1625,10 @@ void FileSystemDock::_make_dir_confirm() {
     if (dir_name.length() == 0) {
         EditorNode::get_singleton()->show_warning(TTR("No name provided."));
         return;
-    } else if (dir_name.find("/") != -1 || dir_name.find("\\") != -1 || dir_name.find(":") != -1 || dir_name.find("*") != -1 ||
-            dir_name.find("|") != -1 || dir_name.find(">") != -1 || dir_name.ends_with(".") || dir_name.ends_with(" ")) {
+    } else if (dir_name.find("/") != -1 || dir_name.find("\\") != -1
+               || dir_name.find(":") != -1 || dir_name.find("*") != -1
+               || dir_name.find("|") != -1 || dir_name.find(">") != -1
+               || dir_name.ends_with(".") || dir_name.ends_with(" ")) {
         EditorNode::get_singleton()->show_warning(
             TTR("Provided name contains invalid characters.")
         );
@@ -1735,12 +1740,14 @@ void FileSystemDock::_rename_operation_confirm() {
     if (new_name.length() == 0) {
         EditorNode::get_singleton()->show_warning(TTR("No name provided."));
         return;
-    } else if (new_name.find("/") != -1 || new_name.find("\\") != -1 || new_name.find(":") != -1) {
+    } else if (new_name.find("/") != -1 || new_name.find("\\") != -1
+               || new_name.find(":") != -1) {
         EditorNode::get_singleton()->show_warning(
             TTR("Name contains invalid characters.")
         );
         return;
-    } else if (to_rename.is_file && old_name.get_extension() != new_name.get_extension()) {
+    } else if (to_rename.is_file
+               && old_name.get_extension() != new_name.get_extension()) {
         if (!EditorFileSystem::get_singleton()->get_valid_extensions().find(
                 new_name.get_extension()
             )) {
@@ -1811,7 +1818,8 @@ void FileSystemDock::_duplicate_operation_confirm() {
     if (new_name.length() == 0) {
         EditorNode::get_singleton()->show_warning(TTR("No name provided."));
         return;
-    } else if (new_name.find("/") != -1 || new_name.find("\\") != -1 || new_name.find(":") != -1) {
+    } else if (new_name.find("/") != -1 || new_name.find("\\") != -1
+               || new_name.find(":") != -1) {
         EditorNode::get_singleton()->show_warning(
             TTR("Name contains invalid characters.")
         );

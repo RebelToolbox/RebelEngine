@@ -286,7 +286,8 @@ Error ColladaImport::_create_scene(Collada::Node* p_node, Spatial* p_parent) {
                                 cd.z_far
                             );
 
-                        } else if (!cd.orthogonal.y_mag && cd.orthogonal.x_mag) {
+                        } else if (!cd.orthogonal.y_mag
+                                   && cd.orthogonal.x_mag) {
                             camera->set_keep_aspect_mode(Camera::KEEP_WIDTH);
                             camera->set_orthogonal(
                                 cd.orthogonal.x_mag * 2.0,
@@ -304,7 +305,8 @@ Error ColladaImport::_create_scene(Collada::Node* p_node, Spatial* p_parent) {
                                 cd.z_far
                             );
 
-                        } else if (!cd.perspective.y_fov && cd.perspective.x_fov) {
+                        } else if (!cd.perspective.y_fov
+                                   && cd.perspective.x_fov) {
                             camera->set_perspective(
                                 cd.perspective.x_fov / cd.aspect,
                                 cd.z_near,
@@ -1985,7 +1987,8 @@ void ColladaImport::create_animation(
                     ERR_CONTINUE(xf.op != Collada::Node::XForm::OP_ROTATE);
                     ERR_CONTINUE(xf.data.size() < 4);
                     xf.data.write[3] = data[0];
-                } else if (at.component == "X" || at.component == "Y" || at.component == "Z") {
+                } else if (at.component == "X" || at.component == "Y"
+                           || at.component == "Z") {
                     int cn2 = at.component[0] - 'X';
                     ERR_CONTINUE(cn2 >= xf.data.size());
                     ERR_CONTINUE(data.size() > 1);

@@ -266,7 +266,9 @@ String BindingsGenerator::bbcode_to_xml(
         } else if (code_tag) {
             xml_output.append("[");
             pos = brk_pos + 1;
-        } else if (tag.begins_with("method ") || tag.begins_with("member ") || tag.begins_with("signal ") || tag.begins_with("enum ") || tag.begins_with("constant ")) {
+        } else if (tag.begins_with("method ") || tag.begins_with("member ")
+                   || tag.begins_with("signal ") || tag.begins_with("enum ")
+                   || tag.begins_with("constant ")) {
             String link_target = tag.substr(tag.find(" ") + 1, tag.length());
             String link_tag    = tag.substr(0, tag.find(" "));
 
@@ -381,8 +383,8 @@ String BindingsGenerator::bbcode_to_xml(
                     !target_itype
                         ? target_cname
                         : StringName(
-                            target_itype->name + "." + (String)target_cname
-                        );
+                              target_itype->name + "." + (String)target_cname
+                          );
 
                 const Map<StringName, TypeInterface>::Element* enum_match =
                     enum_types.find(search_cname);
@@ -431,7 +433,8 @@ String BindingsGenerator::bbcode_to_xml(
                     xml_output.append("<c>");
                     xml_output.append(link_target);
                     xml_output.append("</c>");
-                } else if (!target_itype && target_cname == name_cache.type_at_GlobalScope) {
+                } else if (!target_itype
+                           && target_cname == name_cache.type_at_GlobalScope) {
                     String target_name = (String)target_cname;
 
                     // Try to find as a global constant
@@ -2974,7 +2977,8 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
                         + itype.name + "." + imethod.name + "'."
                     );
                 }
-            } else if (return_info.type == Variant::INT && return_info.usage & PROPERTY_USAGE_CLASS_IS_ENUM) {
+            } else if (return_info.type == Variant::INT
+                       && return_info.usage & PROPERTY_USAGE_CLASS_IS_ENUM) {
                 imethod.return_type.cname   = return_info.class_name;
                 imethod.return_type.is_enum = true;
             } else if (return_info.class_name != StringName()) {
@@ -2997,7 +3001,8 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
                 }
             } else if (return_info.hint == PROPERTY_HINT_RESOURCE_TYPE) {
                 imethod.return_type.cname = return_info.hint_string;
-            } else if (return_info.type == Variant::NIL && return_info.usage & PROPERTY_USAGE_NIL_IS_VARIANT) {
+            } else if (return_info.type == Variant::NIL
+                       && return_info.usage & PROPERTY_USAGE_NIL_IS_VARIANT) {
                 imethod.return_type.cname = name_cache.type_Variant;
             } else if (return_info.type == Variant::NIL) {
                 imethod.return_type.cname = name_cache.type_void;

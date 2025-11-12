@@ -990,7 +990,8 @@ String GDMono::update_api_assemblies_from_prebuilt(
     if (p_core_api_out_of_sync && p_editor_api_out_of_sync) {
         api_assemblies_out_of_sync =
             p_core_api_out_of_sync || p_editor_api_out_of_sync;
-    } else if (FileAccess::exists(core_assembly_path) && FileAccess::exists(editor_assembly_path)) {
+    } else if (FileAccess::exists(core_assembly_path)
+               && FileAccess::exists(editor_assembly_path)) {
         // Determine if they're out of sync
         if (!try_get_cached_api_hash_for(
                 dst_assemblies_dir,
@@ -1062,8 +1063,8 @@ bool GDMono::_load_core_api_assembly(
         !Main::is_projects_manager()
             ? RebelSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
             : RebelSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
-                p_config
-            );
+                  p_config
+              );
 
     String assembly_path =
         assembly_dir.plus_file(CORE_API_ASSEMBLY_NAME ".dll");
@@ -1121,8 +1122,8 @@ bool GDMono::_load_editor_api_assembly(
         !Main::is_projects_manager()
             ? RebelSharpDirs::get_res_assemblies_base_dir().plus_file(p_config)
             : RebelSharpDirs::get_data_editor_prebuilt_api_dir().plus_file(
-                p_config
-            );
+                  p_config
+              );
 
     String assembly_path =
         assembly_dir.plus_file(EDITOR_API_ASSEMBLY_NAME ".dll");

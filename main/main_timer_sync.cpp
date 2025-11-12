@@ -380,7 +380,8 @@ MainFrameTime MainTimerSync::advance_core(
         for (int i = CONTROL_STEPS - 1; i >= 0; --i) {
             if (typical_physics_steps[i] > accumulated_physics_steps[i]) {
                 typical_physics_steps[i] = accumulated_physics_steps[i];
-            } else if (typical_physics_steps[i] < accumulated_physics_steps[i] - 1) {
+            } else if (typical_physics_steps[i]
+                       < accumulated_physics_steps[i] - 1) {
                 typical_physics_steps[i] = accumulated_physics_steps[i] - 1;
             }
         }

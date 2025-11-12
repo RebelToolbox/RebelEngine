@@ -2,7 +2,7 @@ static const int _hidpi_font_height            = 25;
 static const int _hidpi_font_ascent            = 19;
 static const int _hidpi_font_charcount         = 191;
 static const int _hidpi_font_charrects[191][8] = {
-  /* charidx , ofs_x, ofs_y, size_x, size_y, valign, halign, advance */
+    /* charidx , ofs_x, ofs_y, size_x, size_y, valign, halign, advance */
     {192, 63,  23,  16, 23, -4, -1, 15},
     {224, 184, 182, 10, 19, 0,  1,  13},
     {64,  98,  2,   18, 19, 2,  1,  21},

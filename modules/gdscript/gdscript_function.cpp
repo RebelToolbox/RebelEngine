@@ -181,10 +181,12 @@ String GDScriptFunction::_get_call_error(
                      + Variant::get_type_name(argptrs[errorarg]->get_type())
                      + " to " + Variant::get_type_name(p_err.expected) + ".";
         }
-    } else if (p_err.error == Variant::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS) {
+    } else if (p_err.error
+               == Variant::CallError::CALL_ERROR_TOO_MANY_ARGUMENTS) {
         err_text = "Invalid call to " + p_where + ". Expected "
                  + itos(p_err.argument) + " arguments.";
-    } else if (p_err.error == Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS) {
+    } else if (p_err.error
+               == Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS) {
         err_text = "Invalid call to " + p_where + ". Expected "
                  + itos(p_err.argument) + " arguments.";
     } else if (p_err.error == Variant::CallError::CALL_ERROR_INVALID_METHOD) {
@@ -243,13 +245,10 @@ String GDScriptFunction::_get_call_error(
         &&OPCODE_END                                                           \
     };
 
-#define OPCODE(m_op)                                                           \
-    m_op:
+#define OPCODE(m_op) m_op:
 #define OPCODE_WHILE(m_test)
-#define OPCODES_END                                                            \
-    OPSEXIT:
-#define OPCODES_OUT                                                            \
-    OPSOUT:
+#define OPCODES_END           OPSEXIT:
+#define OPCODES_OUT           OPSOUT:
 #define DISPATCH_OPCODE       goto* switch_table_ops[_code_ptr[ip]]
 #define OPCODE_SWITCH(m_test) DISPATCH_OPCODE;
 #define OPCODE_BREAK          goto OPSEXIT
@@ -1256,7 +1255,8 @@ Variant GDScriptFunction::call(
                                 OPCODE_BREAK;
                             }
                         }
-                    } else if (methodstr == "call_recursive" && basestr == "TreeItem") {
+                    } else if (methodstr == "call_recursive"
+                               && basestr == "TreeItem") {
                         if (argc >= 1) {
                             methodstr = String(*argptrs[0])
                                       + " (via TreeItem.call_recursive)";

@@ -1484,7 +1484,8 @@ String ResourceFormatSaverTextInstance::_write_resource(const RES& res) {
     } else {
         if (internal_resources.has(res)) {
             return "SubResource( " + itos(internal_resources[res]) + " )";
-        } else if (res->get_path().length() && res->get_path().find("::") == -1) {
+        } else if (res->get_path().length()
+                   && res->get_path().find("::") == -1) {
             if (res->get_path() == local_path) { // circular reference attempt
                 return "null";
             }

@@ -1047,8 +1047,8 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
 
                 Vector3 sideImp = m_axle[wheel] * m_sideImpulse[wheel];
 
-#if defined                                                                    \
-    ROLLING_INFLUENCE_FIX // fix. It only worked if car's up was along Y - VT.
+#if defined ROLLING_INFLUENCE_FIX // fix. It only worked if car's up was along Y
+                                  // - VT.
                 Vector3 vChassisWorldUp = s->get_transform().basis.transposed(
                 )[1]; // getRigidBody()->getCenterOfMassTransform().getBasis().getColumn(m_indexUpAxis);
                 rel_pos -= vChassisWorldUp

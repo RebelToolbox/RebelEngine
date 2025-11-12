@@ -259,7 +259,8 @@ void Collada::_parse_asset(XMLParser& parser) {
                 COLLADA_PRINT("unit scale: " + rtos(state.unit_scale));
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "asset") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "asset") {
             break; // end of <asset>
         }
     }
@@ -320,7 +321,8 @@ void Collada::_parse_image(XMLParser& parser) {
                     parser.skip_section();
                 }
 
-            } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "image") {
+            } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                       && parser.get_node_name() == "image") {
                 break; // end of <asset>
             }
         }
@@ -353,7 +355,8 @@ void Collada::_parse_material(XMLParser& parser) {
                 && parser.get_node_name() == "instance_effect") {
                 material.instance_effect =
                     _uri_to_id(parser.get_attribute_value("url"));
-            } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "material") {
+            } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                       && parser.get_node_name() == "material") {
                 break; // end of <asset>
             }
         }
@@ -504,7 +507,9 @@ Variant Collada::_parse_param(XMLParser& parser) {
                                 data = parser.get_node_data();
                             }
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "sampler2D") {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == "sampler2D") {
                         break;
                     }
                 }
@@ -519,13 +524,16 @@ Variant Collada::_parse_param(XMLParser& parser) {
                                 data = parser.get_node_data();
                             }
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "surface") {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == "surface") {
                         break;
                     }
                 }
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == from) {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == from) {
             break;
         }
     }
@@ -564,10 +572,10 @@ void Collada::_parse_effect_material(
                 effect.params[name] = value;
                 COLLADA_PRINT("param: " + name + " value:" + String(value));
 
-            } else if (parser.get_node_name() == "constant" ||
-                    parser.get_node_name() == "lambert" ||
-                    parser.get_node_name() == "phong" ||
-                    parser.get_node_name() == "blinn") {
+            } else if (parser.get_node_name() == "constant"
+                       || parser.get_node_name() == "lambert"
+                       || parser.get_node_name() == "phong"
+                       || parser.get_node_name() == "blinn") {
                 COLLADA_PRINT("shade model: " + parser.get_node_name());
                 while (parser.read() == OK) {
                     if (parser.get_node_type() == XMLParser::NODE_ELEMENT) {
@@ -612,7 +620,8 @@ void Collada::_parse_effect_material(
                                             );
                                         }
 
-                                    } else if (parser.get_node_name() == "texture") {
+                                    } else if (parser.get_node_name()
+                                               == "texture") {
                                         String sampler =
                                             parser.get_attribute_value("texture"
                                             );
@@ -681,7 +690,9 @@ void Collada::_parse_effect_material(
                                         parser.skip_section();
                                     }
 
-                                } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == what) {
+                                } else if (parser.get_node_type()
+                                               == XMLParser::NODE_ELEMENT_END
+                                           && parser.get_node_name() == what) {
                                     break;
                                 }
                             }
@@ -689,11 +700,19 @@ void Collada::_parse_effect_material(
                         } else if (what == "shininess") {
                             effect.shininess = _parse_param(parser);
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && (parser.get_node_name() == "constant" || parser.get_node_name() == "lambert" || parser.get_node_name() == "phong" || parser.get_node_name() == "blinn")) {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && (parser.get_node_name() == "constant"
+                                   || parser.get_node_name() == "lambert"
+                                   || parser.get_node_name() == "phong"
+                                   || parser.get_node_name() == "blinn")) {
                         break;
                     }
                 }
-            } else if (parser.get_node_name() == "double_sided" || parser.get_node_name() == "show_double_sided") { // colladamax / google earth
+            } else if (parser.get_node_name() == "double_sided"
+                       || parser.get_node_name()
+                              == "show_double_sided") { // colladamax / google
+                                                        // earth
 
                 // 3DS Max / Google Earth double sided extension
                 parser.read();
@@ -751,7 +770,9 @@ void Collada::_parse_effect_material(
                             parser.skip_section();
                         }
 
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "bump") {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == "bump") {
                         break;
                     }
                 }
@@ -759,7 +780,11 @@ void Collada::_parse_effect_material(
             } else if (!parser.is_empty()) {
                 parser.skip_section();
             }
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && (parser.get_node_name() == "effect" || parser.get_node_name() == "profile_COMMON" || parser.get_node_name() == "technique" || parser.get_node_name() == "extra")) {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && (parser.get_node_name() == "effect"
+                       || parser.get_node_name() == "profile_COMMON"
+                       || parser.get_node_name() == "technique"
+                       || parser.get_node_name() == "extra")) {
             break;
         }
     }
@@ -834,7 +859,8 @@ void Collada::_parse_camera(XMLParser& parser) {
                 camera.z_far = parser.get_node_data().to_double();
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "camera") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "camera") {
             break; // end of <asset>
         }
     }
@@ -897,7 +923,8 @@ void Collada::_parse_light(XMLParser& parser) {
                 light.spot_exp = parser.get_node_data().to_double();
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "light") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "light") {
             break; // end of <asset>
         }
     }
@@ -996,7 +1023,9 @@ void Collada::_parse_curve_geometry(
                                 + " source: " + source
                             );
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == section) {
                         break;
                     }
                 }
@@ -1004,7 +1033,8 @@ void Collada::_parse_curve_geometry(
             } else if (!parser.is_empty()) {
                 parser.skip_section();
             }
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "spline") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "spline") {
             break;
         }
     }
@@ -1097,14 +1127,17 @@ void Collada::_parse_mesh_geometry(
                                 + " source: " + source
                             );
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == section) {
                         break;
                     }
                 }
 
                 meshdata.vertices[id] = vert;
 
-            } else if (section == "triangles" || section == "polylist" || section == "polygons") {
+            } else if (section == "triangles" || section == "polylist"
+                       || section == "polygons") {
                 bool polygons = (section == "polygons");
                 if (polygons) {
                     WARN_PRINT(
@@ -1178,7 +1211,8 @@ void Collada::_parse_mesh_geometry(
                                 "read " + itos(values.size()) + " index values"
                             );
 
-                        } else if (parser.get_node_name() == "vcount") { // primitive
+                        } else if (parser.get_node_name()
+                                   == "vcount") { // primitive
 
                             Vector<float> values = _read_float_array(parser);
                             prim.polygons        = values;
@@ -1187,7 +1221,9 @@ void Collada::_parse_mesh_geometry(
                                 + " polygon values"
                             );
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == section) {
                         break;
                     }
                 }
@@ -1207,7 +1243,8 @@ void Collada::_parse_mesh_geometry(
             } else if (!parser.is_empty()) {
                 parser.skip_section();
             }
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "mesh") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "mesh") {
             break;
         }
     }
@@ -1311,7 +1348,9 @@ void Collada::_parse_skin_controller(XMLParser& parser, String p_id) {
                                 + " source: " + source
                             );
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == section) {
                         break;
                     }
                 }
@@ -1354,7 +1393,8 @@ void Collada::_parse_skin_controller(XMLParser& parser, String p_id) {
                                 "read " + itos(values.size()) + " index values"
                             );
 
-                        } else if (parser.get_node_name() == "vcount") { // weightsitive
+                        } else if (parser.get_node_name()
+                                   == "vcount") { // weightsitive
 
                             Vector<float> values = _read_float_array(parser);
                             weights.sets         = values;
@@ -1363,7 +1403,9 @@ void Collada::_parse_skin_controller(XMLParser& parser, String p_id) {
                                 + " polygon values"
                             );
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == section) {
                         break;
                     }
                 }
@@ -1375,7 +1417,8 @@ void Collada::_parse_skin_controller(XMLParser& parser, String p_id) {
                 parser.skip_section();
             */
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "skin") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "skin") {
             break;
         }
     }
@@ -1497,7 +1540,9 @@ void Collada::_parse_morph_controller(XMLParser& parser, String p_id) {
                                 + " source: " + source
                             );
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == section) {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == section) {
                         break;
                     }
                 }
@@ -1507,7 +1552,8 @@ void Collada::_parse_morph_controller(XMLParser& parser, String p_id) {
                 parser.skip_section();
             */
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "morph") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "morph") {
             break;
         }
     }
@@ -1533,7 +1579,8 @@ void Collada::_parse_controller(XMLParser& parser) {
             } else if (section == "morph") {
                 _parse_morph_controller(parser, id);
             }
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "controller") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "controller") {
             break;
         }
     }
@@ -1571,7 +1618,8 @@ Collada::Node* Collada::_parse_visual_instance_geometry(XMLParser& parser) {
                 }
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == type) {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == type) {
             break;
         }
     }
@@ -1813,7 +1861,8 @@ Collada::Node* Collada::_parse_visual_scene_node(XMLParser& parser) {
                 children.push_back(child);
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "node") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "node") {
             break;
         }
     }
@@ -1868,7 +1917,8 @@ void Collada::_parse_visual_scene(XMLParser& parser) {
                 vscene.root_nodes.push_back(_parse_visual_scene_node(parser));
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "visual_scene") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "visual_scene") {
             break;
         }
     }
@@ -1956,7 +2006,8 @@ void Collada::_parse_animation(XMLParser& parser) {
                 channel_targets.push_back(parser.get_attribute_value("target"));
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "animation") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "animation") {
             break; // end of <asset>
         }
     }
@@ -2140,7 +2191,8 @@ void Collada::_parse_animation_clip(XMLParser& parser) {
                 clip.tracks.push_back(url);
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "animation_clip") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "animation_clip") {
             break; // end of <asset>
         }
     }
@@ -2165,7 +2217,8 @@ void Collada::_parse_scene(XMLParser& parser) {
                     _uri_to_id(parser.get_attribute_value("url"));
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "scene") {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name() == "scene") {
             break; // end of <asset>
         }
     }
@@ -2206,7 +2259,9 @@ void Collada::_parse_library(XMLParser& parser) {
                         } else if (!parser.is_empty()) {
                             parser.skip_section();
                         }
-                    } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name() == "geometry") {
+                    } else if (parser.get_node_type()
+                                   == XMLParser::NODE_ELEMENT_END
+                               && parser.get_node_name() == "geometry") {
                         break;
                     }
                 }
@@ -2224,7 +2279,8 @@ void Collada::_parse_library(XMLParser& parser) {
                 parser.skip_section();
             }
 
-        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END && parser.get_node_name().begins_with("library_")) {
+        } else if (parser.get_node_type() == XMLParser::NODE_ELEMENT_END
+                   && parser.get_node_name().begins_with("library_")) {
             break; // end of <asset>
         }
     }

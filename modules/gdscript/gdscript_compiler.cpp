@@ -777,7 +777,9 @@ int GDScriptCompiler::_parse_expression(
                             ); // arguments
                         }
 
-                    } else if (on->arguments[0]->type == GDScriptParser::Node::TYPE_BUILT_IN_FUNCTION) {
+                    } else if (on->arguments[0]->type
+                               == GDScriptParser::Node::
+                                   TYPE_BUILT_IN_FUNCTION) {
                         // built in function
 
                         ERR_FAIL_COND_V(on->arguments.size() < 1, -1);
@@ -1747,7 +1749,15 @@ int GDScriptCompiler::_parse_expression(
 
                         return retval;
 
-                    } else if (on->arguments[0]->type == GDScriptParser::Node::TYPE_IDENTIFIER && _is_class_member_property(codegen, static_cast<GDScriptParser::IdentifierNode *>(on->arguments[0])->name)) {
+                    } else if (on->arguments[0]->type
+                                   == GDScriptParser::Node::TYPE_IDENTIFIER
+                               && _is_class_member_property(
+                                   codegen,
+                                   static_cast<GDScriptParser::IdentifierNode*>(
+                                       on->arguments[0]
+                                   )
+                                       ->name
+                               )) {
                         // assignment to member property
 
                         int slevel = p_stack_level;

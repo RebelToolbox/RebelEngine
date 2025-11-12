@@ -83,8 +83,8 @@ void PVSBuilder::create_secondary_pvs(
                 _pvs->add_to_secondary_pvs(neigh_room_id);
                 room._secondary_pvs_size += 1;
             } // neighbor room has not been added yet
-        }     // go through the neighbors
-    }         // go through each room in the primary pvs
+        } // go through the neighbors
+    } // go through each room in the primary pvs
 }
 
 void PVSBuilder::calculate_pvs(

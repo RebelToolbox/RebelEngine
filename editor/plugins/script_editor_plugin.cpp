@@ -2375,7 +2375,8 @@ bool ScriptEditor::edit(
                     }
                     inside_quotes = !inside_quotes;
 
-                } else if (flags[i] == '\0' || (!inside_quotes && flags[i] == ' ')) {
+                } else if (flags[i] == '\0'
+                           || (!inside_quotes && flags[i] == ' ')) {
                     String arg = flags.substr(from, num_chars);
                     if (arg.find("{file}") != -1) {
                         has_file_flag = true;
@@ -2736,7 +2737,10 @@ void ScriptEditor::_editor_settings_changed() {
         current_theme =
             EditorSettings::get_singleton()->get("text_editor/theme/color_theme"
             );
-    } else if (current_theme != EditorSettings::get_singleton()->get("text_editor/theme/color_theme")) {
+    } else if (current_theme
+               != EditorSettings::get_singleton()->get(
+                   "text_editor/theme/color_theme"
+               )) {
         current_theme =
             EditorSettings::get_singleton()->get("text_editor/theme/color_theme"
             );

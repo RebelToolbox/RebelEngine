@@ -473,7 +473,7 @@ void light_compute(
     vec2 screen_uv,
 #endif
     vec4 color
-) {
+){
 
 #if defined(USE_LIGHT_SHADER_CODE)
 
@@ -481,7 +481,7 @@ void light_compute(
 
 LIGHT_SHADER_CODE
 
-    /* clang-format on */
+/* clang-format on */
 
 #endif
 }

@@ -354,7 +354,8 @@ bool SceneTreeEditor::_add_nodes(
         }
 
         item->set_tooltip(0, tooltip);
-    } else if (p_node != get_scene_node() && p_node->get_filename() != "" && can_open_instance) {
+    } else if (p_node != get_scene_node() && p_node->get_filename() != ""
+               && can_open_instance) {
         item->add_button(
             0,
             get_icon("InstanceOptions", "EditorIcons"),

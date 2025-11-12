@@ -442,12 +442,12 @@ public:
         }
 
         Rational128 dot(const Point64& b) const {
-            return (point.index >= 0)
-                     ? Rational128(point.dot(b))
-                     : Rational128(
-                         point128.x * b.x + point128.y * b.y + point128.z * b.z,
-                         point128.denominator
-                     );
+            return (point.index >= 0) ? Rational128(point.dot(b))
+                                      : Rational128(
+                                            point128.x * b.x + point128.y * b.y
+                                                + point128.z * b.z,
+                                            point128.denominator
+                                        );
         }
 
         real_t xvalue() const {
@@ -1297,7 +1297,10 @@ ConvexHullInternal::Edge* ConvexHullInternal::find_max_angle(
                     } else if ((cmp = cot.compare(p_min_cot)) < 0) {
                         p_min_cot = cot;
                         min_edge  = e;
-                    } else if ((cmp == 0) && (p_ccw == (get_orientation(min_edge, e, p_s, t) == COUNTER_CLOCKWISE))) {
+                    } else if ((cmp == 0)
+                               && (p_ccw
+                                   == (get_orientation(min_edge, e, p_s, t)
+                                       == COUNTER_CLOCKWISE))) {
                         min_edge = e;
                     }
                 }

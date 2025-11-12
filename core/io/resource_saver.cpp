@@ -25,8 +25,7 @@ Error ResourceFormatSaver::save(
     if (get_script_instance() && get_script_instance()->has_method("save")) {
         return (Error)get_script_instance()
             ->call("save", p_path, p_resource, p_flags)
-            .
-            operator int64_t();
+            .operator int64_t();
     }
 
     return ERR_METHOD_NOT_FOUND;

@@ -540,7 +540,10 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
                     material_info.features.push_back(
                         SpatialMaterial::Feature::FEATURE_EMISSION
                     );
-                } else if (vector_value && !vector_value->Value().is_equal_approx(Vector3(0, 0, 0))) {
+                } else if (vector_value
+                           && !vector_value->Value().is_equal_approx(
+                               Vector3(0, 0, 0)
+                           )) {
                     const Vector3& color = vector_value->Value();
                     Color c;
                     c[0] = color[0];
@@ -613,7 +616,9 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
                 state.cached_image_searches.insert(mapping.name, texture);
                 print_verbose("Created texture from loaded image file.");
 
-            } else if (mapping.texture != nullptr && mapping.texture->Media() != nullptr && mapping.texture->Media()->IsEmbedded()) {
+            } else if (mapping.texture != nullptr
+                       && mapping.texture->Media() != nullptr
+                       && mapping.texture->Media()->IsEmbedded()) {
                 // This is an embedded texture. Extract it.
                 Ref<Image> image;
                 image.instance();

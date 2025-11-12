@@ -303,9 +303,9 @@ if selected_platform in platform_opts:
 
 # Update the environment to take platform-specific options into account.
 opts.Update(env_base)
-env_base[
-    "platform"
-] = selected_platform  # Must always be re-set after calling opts.Update().
+env_base["platform"] = (
+    selected_platform  # Must always be re-set after calling opts.Update().
+)
 
 # Detect modules.
 modules_detected = OrderedDict()
@@ -358,9 +358,9 @@ methods.write_modules(modules_detected)
 
 # Update the environment again after all the module options are added.
 opts.Update(env_base)
-env_base[
-    "platform"
-] = selected_platform  # Must always be re-set after calling opts.Update().
+env_base["platform"] = (
+    selected_platform  # Must always be re-set after calling opts.Update().
+)
 Help(opts.GenerateHelpText(env_base))
 
 # add default include paths

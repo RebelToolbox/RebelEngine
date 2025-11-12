@@ -139,9 +139,10 @@ public final class RebelPluginRegistry {
                                 )) {
                                 Log.w(
                                     TAG,
-                                    "Meta-data plugin name does not match the value returned by the plugin handle: "
-                                        + rebelPluginName
-                                        + " =/= " + rebelPlugin.getPluginName()
+                                    "Meta-data plugin name does not match the "
+                                        + "value returned by the plugin "
+                                        + "handle: " + rebelPluginName + " =/= "
+                                        + rebelPlugin.getPluginName()
                                 );
                             }
                             registry.put(rebelPluginName, rebelPlugin);

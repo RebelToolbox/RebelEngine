@@ -96,7 +96,8 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                                 error_str = "Unterminated comment";
                                 error     = true;
                                 return TK_ERROR;
-                            } else if (code[idx] == '*' && code[idx + 1] == '/') {
+                            } else if (code[idx] == '*'
+                                       && code[idx + 1] == '/') {
                                 idx += 2;
                                 break;
                             } else if (code[idx] == '\n') {
@@ -221,7 +222,11 @@ ScriptClassParser::Token ScriptClassParser::get_token() {
                     value          = number;
                     return TK_NUMBER;
 
-                } else if ((code[idx] == '@' && code[idx + 1] != '"') || code[idx] == '_' || (code[idx] >= 'A' && code[idx] <= 'Z') || (code[idx] >= 'a' && code[idx] <= 'z') || code[idx] > 127) {
+                } else if ((code[idx] == '@' && code[idx + 1] != '"')
+                           || code[idx] == '_'
+                           || (code[idx] >= 'A' && code[idx] <= 'Z')
+                           || (code[idx] >= 'a' && code[idx] <= 'z')
+                           || code[idx] > 127) {
                     String id;
 
                     id += code[idx];
@@ -571,7 +576,8 @@ Error ScriptClassParser::parse(const String& p_code) {
                         if (err) {
                             return err;
                         }
-                    } else if (tk == TK_IDENTIFIER && String(value) == "where") {
+                    } else if (tk == TK_IDENTIFIER
+                               && String(value) == "where") {
                         Error err = _parse_type_constraints();
                         if (err) {
                             return err;

@@ -28,7 +28,7 @@ static const _WinLocale _win_locales[] = {
     {"ar_OM",    LANG_ARABIC,          SUBLANG_ARABIC_OMAN               },
     {"ar_QA",    LANG_ARABIC,          SUBLANG_ARABIC_QATAR              },
     {"ar_SA",    LANG_ARABIC,          SUBLANG_ARABIC_SAUDI_ARABIA       },
- // no sudan
+    // no sudan
     {"ar_SY",    LANG_ARABIC,          SUBLANG_ARABIC_SYRIA              },
     {"ar_TN",    LANG_ARABIC,          SUBLANG_ARABIC_TUNISIA            },
     {"ar_YE",    LANG_ARABIC,          SUBLANG_ARABIC_YEMEN              },
@@ -49,14 +49,14 @@ static const _WinLocale _win_locales[] = {
     {"de_LU",    LANG_GERMAN,          SUBLANG_GERMAN_LUXEMBOURG         },
     {"el",       LANG_GREEK,           SUBLANG_NEUTRAL                   },
     {"el_GR",    LANG_GREEK,           SUBLANG_GREEK_GREECE              },
- //{"en_029", LANG_ENGLISH,SUBLANG_ENGLISH_CARIBBEAN},
+    //{"en_029", LANG_ENGLISH,SUBLANG_ENGLISH_CARIBBEAN},
     {"en",       LANG_ENGLISH,         SUBLANG_NEUTRAL                   },
     {"en_AU",    LANG_ENGLISH,         SUBLANG_ENGLISH_AUS               },
     {"en_CA",    LANG_ENGLISH,         SUBLANG_ENGLISH_CAN               },
     {"en_GB",    LANG_ENGLISH,         SUBLANG_ENGLISH_UK                },
- //{"en_IE", LANG_ENGLISH,SUBLANG_ENGLISH_IRELAND},
+    //{"en_IE", LANG_ENGLISH,SUBLANG_ENGLISH_IRELAND},
     {"en_IN",    LANG_ENGLISH,         SUBLANG_ENGLISH_INDIA             },
- // MT
+    // MT
     {"en_NZ",    LANG_ENGLISH,         SUBLANG_ENGLISH_NZ                },
     {"en_PH",    LANG_ENGLISH,         SUBLANG_ENGLISH_PHILIPPINES       },
     {"en_SG",    LANG_ENGLISH,         SUBLANG_ENGLISH_SINGAPORE         },
@@ -115,7 +115,7 @@ static const _WinLocale _win_locales[] = {
     {"ko",       LANG_KOREAN,          SUBLANG_NEUTRAL                   },
     {"ko_KR",    LANG_KOREAN,          SUBLANG_KOREAN                    },
     {"lt",       LANG_LITHUANIAN,      SUBLANG_NEUTRAL                   },
- //{"lt_LT", LANG_LITHUANIAN,SUBLANG_LITHUANIAN_LITHUANIA},
+    //{"lt_LT", LANG_LITHUANIAN,SUBLANG_LITHUANIAN_LITHUANIA},
     {"lv",       LANG_LATVIAN,         SUBLANG_NEUTRAL                   },
     {"lv_LV",    LANG_LATVIAN,         SUBLANG_LATVIAN_LATVIA            },
     {"mk",       LANG_MACEDONIAN,      SUBLANG_NEUTRAL                   },

@@ -117,7 +117,7 @@ void PortalOcclusionCuller::prepare_generic(
                 }
             }
         } // sphere
-    }     // for o
+    } // for o
 
     // force the sphere closest distance to above zero to prevent
     // divide by zero in the quick reject

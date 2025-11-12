@@ -814,28 +814,24 @@ void IosEditorExportPlatform::_fix_config_file(
         {"center", "scaleAspectFit", "scaleAspectFill", "scaleToFill"};
     String dbg_sign_id =
         p_preset->get("application/code_sign_identity_debug")
-                .
-                operator String()
+                .operator String()
                 .empty()
             ? "iPhone Developer"
             : p_preset->get("application/code_sign_identity_debug");
     String rel_sign_id =
         p_preset->get("application/code_sign_identity_release")
-                .
-                operator String()
+                .operator String()
                 .empty()
             ? "iPhone Distribution"
             : p_preset->get("application/code_sign_identity_release");
     bool dbg_manual =
         !p_preset->get("application/provisioning_profile_uuid_debug")
-             .
-             operator String()
+             .operator String()
              .empty()
         || (dbg_sign_id != "iPhone Developer");
     bool rel_manual =
         !p_preset->get("application/provisioning_profile_uuid_release")
-             .
-             operator String()
+             .operator String()
              .empty()
         || (rel_sign_id != "iPhone Distribution");
     String str;
@@ -957,13 +953,13 @@ void IosEditorExportPlatform::_fix_config_file(
                     + "\n";
             }
         } else if (lines[i].find("$provisioning_profile_uuid") != -1) {
-            String uuid = p_debug
-                            ? p_preset->get(
-                                "application/provisioning_profile_uuid_debug"
-                            )
-                            : p_preset->get(
-                                "application/provisioning_profile_uuid_release"
-                            );
+            String uuid =
+                p_debug ? p_preset->get(
+                              "application/provisioning_profile_uuid_debug"
+                          )
+                        : p_preset->get(
+                              "application/provisioning_profile_uuid_release"
+                          );
             strnew +=
                 lines[i].replace("$provisioning_profile_uuid", uuid) + "\n";
         } else if (lines[i].find("$code_sign_identity_debug") != -1) {
@@ -1219,8 +1215,8 @@ void IosEditorExportPlatform::_fix_config_file(
             Color color     = use_custom
                                 ? p_preset->get("storyboard/custom_bg_color")
                                 : ProjectSettings::get_singleton()->get(
-                                "application/boot_splash/bg_color"
-                            );
+                                  "application/boot_splash/bg_color"
+                              );
             const String value_format =
                 "red=\"$red\" green=\"$green\" blue=\"$blue\" alpha=\"$alpha\"";
 
@@ -1767,20 +1763,18 @@ Error IosEditorExportPlatform::_codesign(String p_file, void* p_userdata) {
         if (data->debug) {
             sign_id =
                 data->preset->get("application/code_sign_identity_debug")
-                        .
-                        operator String()
+                        .operator String()
                         .empty()
                     ? "iPhone Developer"
                     : data->preset->get("application/code_sign_identity_debug");
         } else {
             sign_id =
                 data->preset->get("application/code_sign_identity_release")
-                        .
-                        operator String()
+                        .operator String()
                         .empty()
                     ? "iPhone Distribution"
                     : data->preset->get("application/code_sign_identity_release"
-                    );
+                      );
         }
 
         List<String> codesign_args;
@@ -2003,7 +1997,9 @@ Error IosEditorExportPlatform::_copy_asset(
         destination_dir  = p_out_dir.plus_file(asset_path);
         destination      = destination_dir.plus_file(file_name);
         create_framework = true;
-    } else if (p_is_framework && (p_asset.ends_with(".framework") || p_asset.ends_with(".xcframework"))) {
+    } else if (p_is_framework
+               && (p_asset.ends_with(".framework")
+                   || p_asset.ends_with(".xcframework"))) {
         asset_path = String("dylibs").plus_file(base_dir);
 
         String file_name;
@@ -2579,7 +2575,10 @@ Error IosEditorExportPlatform::export_project(
     String pkg_name;
     if (p_preset->get("application/name") != "") {
         pkg_name = p_preset->get("application/name"); // app_name
-    } else if (String(ProjectSettings::get_singleton()->get("application/config/name")) != "") {
+    } else if (String(ProjectSettings::get_singleton()->get(
+                   "application/config/name"
+               ))
+               != "") {
         pkg_name = String(
             ProjectSettings::get_singleton()->get("application/config/name")
         );
@@ -2771,9 +2770,9 @@ Error IosEditorExportPlatform::export_project(
             Error lib_copy_err =
                 dir_exists
                     ? tmp_app_path->copy_dir(
-                        static_lib_path,
-                        dest_lib_file_path
-                    )
+                          static_lib_path,
+                          dest_lib_file_path
+                      )
                     : tmp_app_path->copy(static_lib_path, dest_lib_file_path);
             if (lib_copy_err != OK) {
                 ERR_PRINT("Can't copy '" + static_lib_path + "'.");

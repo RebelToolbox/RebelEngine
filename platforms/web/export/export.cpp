@@ -732,8 +732,7 @@ Error WebEditorExportPlatform::_build_pwa(
     manifest["background_color"] =
         "#"
         + p_preset->get("progressive_web_app/background_color")
-              .
-              operator Color()
+              .operator Color()
               .to_html(false);
 
     Array icons_arr;
