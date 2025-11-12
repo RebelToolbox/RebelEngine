@@ -220,18 +220,19 @@ Files extracted from upstream source:
 
 ## libwebp
 
-- Upstream: https://chromium.googlesource.com/webm/libwebp/
-- Version: 1.1.0 (d7844e9762b61c9638c263657bd49e1690184832, 2020)
+- Upstream: https://github.com/webmproject/libwebp
+- Version: 1.6.0 (4fa21912338357f89e4fd51cf2368325b59e9bd9, 2025)
 - License: BSD-3-Clause
 
 Files extracted from upstream source:
 
-- `src/*` except from: .am, .rc and .in files
-- AUTHORS, COPYING, PATENTS
+- `sharpyuv/*` except `.am`, `.rc` and `.in` files
+- `src/*` except `.am`, `.rc` and `.in` files
+- `COPYING`, `PATENTS`
 
-Important: The files `utils/bit_reader_utils.{c,h}` have Rebel-made
-changes to ensure they build on the Web platform. Those
-changes are marked with `// -- REBEL --` comments.
+Note: Includes changes required to support the web platform.
+They are marked with `// Rebel changes start.` and `// Rebel changes end.`
+The patch files for the changes is included in the patches folder.
 
 
 ## mbedtls
