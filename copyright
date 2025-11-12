@@ -232,9 +232,9 @@ Comment: MiniMP3
 Copyright: lieff
 License: CC0-1.0
 
-Files: ./thirdparty/miniupnpc/
-Comment: MiniUPnPc
-Copyright: 2005-2021, Thomas Bernard
+Files: ./thirdparty/miniupnp/
+Comment: MiniUPnP
+Copyright: 2005-2025, Thomas Bernard
 License: BSD-3-clause
 
 Files: ./thirdparty/minizip/

@@ -61,7 +61,7 @@ SPDX-License-Identifier: MIT
         <member name="igd_service_type" type="String" setter="set_igd_service_type" getter="get_igd_service_type" default="&quot;&quot;">
             IGD service type.
         </member>
-        <member name="igd_status" type="int" setter="set_igd_status" getter="get_igd_status" enum="UPNPDevice.IGDStatus" default="9">
+        <member name="igd_status" type="int" setter="set_igd_status" getter="get_igd_status" enum="UPNPDevice.IGDStatus" default="10">
             IGD status. See [enum IGDStatus].
         </member>
         <member name="service_type" type="String" setter="set_service_type" getter="get_service_type" default="&quot;&quot;">
@@ -84,19 +84,19 @@ SPDX-License-Identifier: MIT
         <constant name="IGD_STATUS_NO_IGD" value="4" enum="IGDStatus">
             Not a valid IGD.
         </constant>
-        <constant name="IGD_STATUS_DISCONNECTED" value="5" enum="IGDStatus">
+        <constant name="IGD_STATUS_DISCONNECTED" value="6" enum="IGDStatus">
             Disconnected.
         </constant>
-        <constant name="IGD_STATUS_UNKNOWN_DEVICE" value="6" enum="IGDStatus">
+        <constant name="IGD_STATUS_UNKNOWN_DEVICE" value="7" enum="IGDStatus">
             Unknown device.
         </constant>
-        <constant name="IGD_STATUS_INVALID_CONTROL" value="7" enum="IGDStatus">
+        <constant name="IGD_STATUS_INVALID_CONTROL" value="8" enum="IGDStatus">
             Invalid control.
         </constant>
-        <constant name="IGD_STATUS_MALLOC_ERROR" value="8" enum="IGDStatus">
+        <constant name="IGD_STATUS_MALLOC_ERROR" value="9" enum="IGDStatus">
             Memory allocation error.
         </constant>
-        <constant name="IGD_STATUS_UNKNOWN_ERROR" value="9" enum="IGDStatus">
+        <constant name="IGD_STATUS_UNKNOWN_ERROR" value="10" enum="IGDStatus">
             Unknown error.
         </constant>
     </constants>
