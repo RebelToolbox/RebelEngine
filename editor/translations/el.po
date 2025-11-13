@@ -1866,6 +1866,8 @@ msgstr "Κάνε Τρέχων"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Εισαγωγή"
 
@@ -3687,6 +3689,7 @@ msgstr "Επιλέξτε κόμβους για εισαγωγή"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Περιήγηση"
@@ -13596,6 +13599,7 @@ msgid "Add & Edit"
 msgstr "Προσθήκη Σημείου"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Όνομα έργου:"
@@ -13662,9 +13666,45 @@ msgid "The project folder does not exist."
 msgstr "Η ορισμένη διαδρομή δεν υπάρχει."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Παρακαλούμε επιλέξτε έναν άδειο φάκελο."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Εξαγωγή έργου"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Όνομα έργου:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Εξαγωγή έργου"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Παρακαλούμε επιλέξτε ένα αρχείο «project.godot» ή «.zip»."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Μετονομασία καταλόγου:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Επιλέξτε πρώτα έναν βασικό κατάλογο."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Επιλέξτε πρώτα έναν βασικό κατάλογο."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13790,6 +13830,11 @@ msgstr "Δημιουργία νέου έργου"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Εισαγωγή υπαρκτού έργου"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Δημιουργία νέου έργου"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

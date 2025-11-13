@@ -1783,6 +1783,8 @@ msgstr ""
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Внасяне"
 
@@ -3477,6 +3479,7 @@ msgstr ""
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Разглеждане"
@@ -12893,6 +12896,7 @@ msgid "Add & Edit"
 msgstr "Добавяне на точка"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Име на проекта:"
@@ -12958,9 +12962,45 @@ msgid "The project folder does not exist."
 msgstr "Посоченият път не съществува."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Моля, изберете празна папка."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Изнасяне на проекта"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Име на проекта:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Редактиране на проекта"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Моля, изберете файл от тип „project.godot“ или „.zip“."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Създаване на папка"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Моля, първо изберете основна папка."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Моля, първо изберете основна папка."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13068,6 +13108,11 @@ msgstr "Създаване на нов проект"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Внасяне на съществуващ проект"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Създаване на нов проект"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

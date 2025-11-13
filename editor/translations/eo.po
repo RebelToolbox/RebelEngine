@@ -1838,6 +1838,8 @@ msgstr "Farigi aktuale"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Enporti"
 
@@ -3628,6 +3630,7 @@ msgstr "Selektu nodo(j)n por enporti"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Foliumi"
@@ -13244,6 +13247,7 @@ msgid "Add & Edit"
 msgstr "Aldoni punkton"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projekta nomo:"
@@ -13310,9 +13314,45 @@ msgid "The project folder does not exist."
 msgstr "La provizinta dosierindiko ne ekzistas."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Bonvolu, elektu malplenan dosierujon."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Doko de enporto"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projekta nomo:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Projekto"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Bonvolu elekti \"project.godot\" aŭ \".zip\" dosieron."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Renomas dosierujon:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Bonvolu selekti bazan dosierujon unue."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Bonvolu selekti bazan dosierujon unue."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13431,6 +13471,11 @@ msgstr "Krei novan projekton"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Enporti ekzistantan projekton"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Krei novan projekton"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

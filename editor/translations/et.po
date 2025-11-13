@@ -1818,6 +1818,8 @@ msgstr ""
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Impordi"
 
@@ -3512,6 +3514,7 @@ msgstr ""
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr ""
@@ -12931,6 +12934,7 @@ msgid "Add & Edit"
 msgstr "Lisa efekt"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projekt"
@@ -12994,9 +12998,44 @@ msgid "The project folder does not exist."
 msgstr "Faili ei ole olemas."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Uus projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please choose a \"project.godot\" file."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Loo kaust"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Palun valige kõigepealt baaskataloog."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Palun valige kõigepealt baaskataloog."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13105,6 +13144,11 @@ msgstr "Projekti ei saa käivitada"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Projekt"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Projekti ei saa käivitada"
 
 #: projects_manager/projects_manager.cpp
 msgid "Search for existing projects"

@@ -1857,6 +1857,8 @@ msgstr "Faceți Curent"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Importare"
 
@@ -3634,6 +3636,7 @@ msgstr "Selectează Nodul(rile) pentru Importare"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr ""
@@ -13494,6 +13497,7 @@ msgid "Add & Edit"
 msgstr "Adaugă punct"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Proiect"
@@ -13558,9 +13562,44 @@ msgid "The project folder does not exist."
 msgstr "Fișierul nu există."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Exportă Proiectul"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Proiect"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Exportă Proiectul"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please choose a \"project.godot\" file."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Redenumind directorul:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Vă rugăm să selectaţi mai întâi un director de bază."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Vă rugăm să selectaţi mai întâi un director de bază."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13670,6 +13709,11 @@ msgstr "Creați noduri noi."
 #, fuzzy
 msgid "Add existing project"
 msgstr "Proiect"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Creați noduri noi."
 
 #: projects_manager/projects_manager.cpp
 msgid "Search for existing projects"

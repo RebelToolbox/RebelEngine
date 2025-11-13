@@ -1848,6 +1848,8 @@ msgstr "Spraviť Aktuálny"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Import"
 
@@ -3641,6 +3643,7 @@ msgstr "Vyberte Node(y) pre Importovanie"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Vyhladať"
@@ -13418,6 +13421,7 @@ msgid "Add & Edit"
 msgstr "Pridať Bod"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projekt"
@@ -13482,9 +13486,44 @@ msgid "The project folder does not exist."
 msgstr "Súbor neexistuje."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Importovať Dock"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please choose a \"project.godot\" file."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Zostávajúce priečinky:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Najprv vyberte základný adresár."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Najprv vyberte základný adresár."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13595,6 +13634,11 @@ msgstr "Vytvoriť Nové Node-y."
 #, fuzzy
 msgid "Add existing project"
 msgstr "Všetky vybrané"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Vytvoriť Nové Node-y."
 
 #: projects_manager/projects_manager.cpp
 msgid "Search for existing projects"

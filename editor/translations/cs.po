@@ -1853,6 +1853,8 @@ msgstr "Zvolit jako aktuální"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Import"
 
@@ -3638,6 +3640,7 @@ msgstr "Vyberte uzly pro import"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Procházet"
@@ -13315,6 +13318,7 @@ msgid "Add & Edit"
 msgstr "Přidat bod"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Jméno projektu:"
@@ -13381,9 +13385,45 @@ msgid "The project folder does not exist."
 msgstr "Zadaná cesta neexistuje."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Zvolte prosím prázdnou složku."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Exportovat projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Jméno projektu:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Upravit projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Vyberte prosím soubor \"project.godot\" nebo \".zip\"."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Přejmenování složky:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Nejprve vyberte výchozí složku."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Nejprve vyberte výchozí složku."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13505,6 +13545,11 @@ msgstr "Vytvořit nový projekt"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Importovat existující projekt"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Vytvořit nový projekt"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

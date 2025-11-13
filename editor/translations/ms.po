@@ -1842,6 +1842,8 @@ msgstr "Buat Semasa"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "import"
 
@@ -3646,6 +3648,7 @@ msgstr "Pilih Nod(Nod-nod) untuk Diimport"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Layari"
@@ -13157,6 +13160,7 @@ msgid "Add & Edit"
 msgstr "Tambah Titik"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projek"
@@ -13220,9 +13224,44 @@ msgid "The project folder does not exist."
 msgstr ""
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Import Dok"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projek"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Projek"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please choose a \"project.godot\" file."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Menamakan semula folder:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Sila pilih direktori asas terlebih dahulu."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Sila pilih direktori asas terlebih dahulu."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13332,6 +13371,11 @@ msgstr "Cipta %s Baru"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Projek"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Cipta %s Baru"
 
 #: projects_manager/projects_manager.cpp
 msgid "Search for existing projects"

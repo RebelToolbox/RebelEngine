@@ -1918,6 +1918,8 @@ msgstr "Als aktuell auswählen"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Importieren"
 
@@ -3731,6 +3733,7 @@ msgstr "Selektiere Node(s) für den Import"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Durchsuchen"
@@ -13477,6 +13480,7 @@ msgid "Add & Edit"
 msgstr "Punkt hinzufügen"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projektname:"
@@ -13544,9 +13548,45 @@ msgid "The project folder does not exist."
 msgstr "Der angegebene Pfad existiert nicht."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Bitte einen leeren Ordner auswählen."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Projekt exportieren"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projektname:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Projekt bearbeiten"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Eine „project.godot” oder „.zip“-Datei auswählen."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Benenne Ordner um:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Zuerst ein Wurzelverzeichnis auswählen."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Zuerst ein Wurzelverzeichnis auswählen."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13669,6 +13709,11 @@ msgstr "Erstelle neues Projekt"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Existierendes Projekt importieren"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Erstelle neues Projekt"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

@@ -1857,6 +1857,8 @@ msgstr "Зробити поточним"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Імпорт"
 
@@ -3658,6 +3660,7 @@ msgstr "Виберіть вузол(вузли) для імпорту"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Вибрати"
@@ -13397,6 +13400,7 @@ msgid "Add & Edit"
 msgstr "Додати точку"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Назва проєкту:"
@@ -13463,9 +13467,45 @@ msgid "The project folder does not exist."
 msgstr "Вказаного шляху не існує."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Будь ласка, виберіть порожню теку."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Експортувати проєкт"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Назва проєкту:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Редагувати проєкт"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Будь ласка, виберіть файл «project.godot» або «.zip»."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Перейменування теки:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Будь ласка, виберіть спочатку базовий каталог."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Будь ласка, виберіть спочатку базовий каталог."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13587,6 +13627,11 @@ msgstr "Створити новий проєкт"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Імпортувати наявний проєкт"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Створити новий проєкт"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

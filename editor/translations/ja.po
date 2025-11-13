@@ -1861,6 +1861,8 @@ msgstr "使用する"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "インポート"
 
@@ -3654,6 +3656,7 @@ msgstr "インポートするノードを選択"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "参照"
@@ -13338,6 +13341,7 @@ msgid "Add & Edit"
 msgstr "ポイントを追加"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "プロジェクト名:"
@@ -13404,9 +13408,45 @@ msgid "The project folder does not exist."
 msgstr "指定されたパスは存在しません。"
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "空のフォルダーを選択してください。"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "プロジェクトのエクスポート"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "プロジェクト名:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "プロジェクトを編集"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "\"project.godot\"または\".zip\"ファイルを選択してください。"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "フォルダー名を変更:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "はじめにベースディレクトリを選択してください。"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "はじめにベースディレクトリを選択してください。"
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13528,6 +13568,11 @@ msgstr "新規プロジェクトを作成"
 #, fuzzy
 msgid "Add existing project"
 msgstr "既存のプロジェクトをインポート"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "新規プロジェクトを作成"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

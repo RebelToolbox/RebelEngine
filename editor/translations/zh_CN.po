@@ -1879,6 +1879,8 @@ msgstr "设为当前"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "导入"
 
@@ -3618,6 +3620,7 @@ msgstr "选择要导入的节点"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "浏览"
@@ -13124,6 +13127,7 @@ msgid "Add & Edit"
 msgstr "添加点"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "项目名称："
@@ -13190,9 +13194,45 @@ msgid "The project folder does not exist."
 msgstr "指定的路径不存在。"
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "请选择空文件夹。"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "导出项目"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "项目名称："
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "编辑项目"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "请选择 “project.godot” 或 “.zip” 文件。"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "重命名文件夹："
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "请先选择一个基础目录。"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "请先选择一个基础目录。"
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13311,6 +13351,11 @@ msgstr "新建项目"
 #, fuzzy
 msgid "Add existing project"
 msgstr "导入现有项目"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "新建项目"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

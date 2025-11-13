@@ -1843,6 +1843,8 @@ msgstr "Đặt làm hiện tại"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Nhập"
 
@@ -3608,6 +3610,7 @@ msgstr "Chọn Nút để Nhập"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Duyệt"
@@ -13365,6 +13368,7 @@ msgid "Add & Edit"
 msgstr "Thêm điểm"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Tên Dự án:"
@@ -13431,9 +13435,45 @@ msgid "The project folder does not exist."
 msgstr "Đường dẫn đã cho không tồn tại."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Hãy chọn một thư mục trống."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Xuất bản Dự án"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Tên Dự án:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Xuất bản Dự án"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Chọn tệp \"project.godot\" hoặc tệp \".zip\"."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Đổi tên thư mục:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Chọn thư mục cơ sở đầu tiên."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Chọn thư mục cơ sở đầu tiên."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13556,6 +13596,11 @@ msgstr "Tạo mới Dự án"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Nạp Dự án có sẵn"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Tạo mới Dự án"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy
