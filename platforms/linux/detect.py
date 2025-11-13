@@ -413,7 +413,7 @@ def configure(env):
             [env.subst(env["LINK"]), "-Wl,--version"]
         ).decode("utf-8")
         gnu_ld_version = re.search(
-            "^GNU ld [^$]*(\d+\.\d+)$", linker_version_str, re.MULTILINE
+            r"^GNU ld [^$]*(\d+\.\d+)$", linker_version_str, re.MULTILINE
         )
         if not gnu_ld_version:
             print(
