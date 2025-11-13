@@ -1847,6 +1847,8 @@ msgstr "Convertelo no Actual"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Importar"
 
@@ -3638,6 +3640,7 @@ msgstr "Selecciona o(s) Nodo(s) a Importar"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Examinar"
@@ -13245,6 +13248,7 @@ msgid "Add & Edit"
 msgstr "Engadir Punto"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Nome do Proxecto:"
@@ -13310,9 +13314,45 @@ msgid "The project folder does not exist."
 msgstr "O arquivo non existe."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Exportar Proxecto"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Nome do Proxecto:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Exportar Proxecto"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Por favor, elixa un arquivo de tipo 'project.godot' ou '.zip'."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Renomeando Cartafol:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Por favor, seleccione primeiro un directorio base."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Por favor, seleccione primeiro un directorio base."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13427,6 +13467,11 @@ msgstr "Crear Novo Proxecto"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Importar Proxecto Existente"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Crear Novo Proxecto"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

@@ -1861,6 +1861,8 @@ msgstr "Tegye jelenlegivé"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Importálás"
 
@@ -3651,6 +3653,7 @@ msgstr "Válassza ki az importálandó Node-okat"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Tallózás"
@@ -13205,6 +13208,7 @@ msgid "Add & Edit"
 msgstr "Pont hozzáadása"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projekt neve:"
@@ -13269,9 +13273,44 @@ msgid "The project folder does not exist."
 msgstr "A megadott útvonal nem létezik."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Projekt Exportálása"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projekt neve:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Projekt Exportálása"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please choose a \"project.godot\" file."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Mappa átnevezése:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Először válassza ki az alapkönyvtárat."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Először válassza ki az alapkönyvtárat."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13380,6 +13419,11 @@ msgstr "Új Projekt Létrehozása"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Meglévő Projekt Importálása"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Új Projekt Létrehozása"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

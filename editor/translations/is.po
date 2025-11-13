@@ -1809,6 +1809,8 @@ msgstr ""
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr ""
 
@@ -3484,6 +3486,7 @@ msgstr ""
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr ""
@@ -12926,6 +12929,7 @@ msgid "Add & Edit"
 msgstr "Stillið breyting á:"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Verkefna Stjóri"
@@ -12985,8 +12989,40 @@ msgid "The project folder does not exist."
 msgstr ""
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Fjarlægja val"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Verkefna Stjóri"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Verkefna Stjóri"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please choose a \"project.godot\" file."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Destination Folder:"
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please select a valid destination folder."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please select a valid project file."
 msgstr ""
 
 #: projects_manager/new_project_dialog.cpp
@@ -13094,6 +13130,11 @@ msgstr "Val á kvarða"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Verkefna Stjóri"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Val á kvarða"
 
 #: projects_manager/projects_manager.cpp
 msgid "Search for existing projects"

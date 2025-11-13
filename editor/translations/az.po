@@ -1853,6 +1853,8 @@ msgstr ""
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr ""
 
@@ -3518,6 +3520,7 @@ msgstr ""
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr ""
@@ -12848,6 +12851,7 @@ msgid "Add & Edit"
 msgstr ""
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 msgid "Project File:"
 msgstr ""
 
@@ -12905,8 +12909,40 @@ msgid "The project folder does not exist."
 msgstr ""
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Sil"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Project Type:"
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Əlaqəni redaktə edin:"
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please choose a \"project.godot\" file."
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Destination Folder:"
+msgstr ""
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Metod adı hökmlü identifikativ olmalıdır."
+
+#: projects_manager/import_project_dialog.cpp
+msgid "Please select a valid project file."
 msgstr ""
 
 #: projects_manager/new_project_dialog.cpp
@@ -13011,6 +13047,11 @@ msgstr "Yeni %s yarat"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Əlaqəni redaktə edin:"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Yeni %s yarat"
 
 #: projects_manager/projects_manager.cpp
 msgid "Search for existing projects"

@@ -1839,6 +1839,8 @@ msgstr "Aseta nykyiseksi"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Tuo"
 
@@ -3629,6 +3631,7 @@ msgstr "Valitse tuotavat solmut"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Selaa"
@@ -13334,6 +13337,7 @@ msgid "Add & Edit"
 msgstr "Lisää piste"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projektin nimi:"
@@ -13400,9 +13404,45 @@ msgid "The project folder does not exist."
 msgstr "Määritelty polku ei ole olemassa."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Ole hyvä ja valitse tyhjä kansio."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Vie projekti"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projektin nimi:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Muokkaa projektia"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Ole hyvä ja valitse \"project.godot\"- tai \".zip\"-tiedosto."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Nimetään kansio uudelleen:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Ole hyvä ja valitse ensin päähakemisto."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Ole hyvä ja valitse ensin päähakemisto."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13523,6 +13563,11 @@ msgstr "Luo uusi projekti"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Tuo olemassaoleva projekti"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Luo uusi projekti"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

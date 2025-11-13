@@ -1860,6 +1860,8 @@ msgstr "Gör till Nuvarande"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Importera"
 
@@ -3662,6 +3664,7 @@ msgstr "Välj Nod(er) att Importera"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Bläddra"
@@ -13485,6 +13488,7 @@ msgid "Add & Edit"
 msgstr "Lägg Till Node"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projektnamn:"
@@ -13550,9 +13554,45 @@ msgid "The project folder does not exist."
 msgstr "Sökvägen finns inte."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Välj en tom mapp."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Exportera Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projektnamn:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Exportera Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Välj en \"project.godot\" eller \".zip\" fil."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Byter namn på mappen:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Vänligen välj en baskatalog först."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Vänligen välj en baskatalog först."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13670,6 +13710,11 @@ msgstr "Skapa Nytt Projekt"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Importera Befintligt Projekt"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Skapa Nytt Projekt"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

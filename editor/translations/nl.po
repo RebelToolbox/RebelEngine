@@ -1885,6 +1885,8 @@ msgstr "Aktualiseren"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Importeren"
 
@@ -3694,6 +3696,7 @@ msgstr "Selecteer een of meer knopen om te importeren"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Bladeren"
@@ -13555,6 +13558,7 @@ msgid "Add & Edit"
 msgstr "Punt toevoegen"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Projectnaam:"
@@ -13621,9 +13625,45 @@ msgid "The project folder does not exist."
 msgstr "Dit pad bestaat niet."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Kies alstublieft een lege map."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Project Exporteren"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Projectnaam:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Project Exporteren"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Kies alstublieft een \"project.godot\" of \".zip\" bestand."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Mapnaam wijzigen:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Kies eerst een basismap."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Kies eerst een basismap."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13748,6 +13788,11 @@ msgstr "Creëer Nieuw Project"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Bestaand project importeren"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Creëer Nieuw Project"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

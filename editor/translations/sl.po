@@ -1909,6 +1909,8 @@ msgstr "Trenutno:"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Uvozi"
 
@@ -3743,6 +3745,7 @@ msgstr "Izberi Gradnik(e) za Uvoz"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Brskaj"
@@ -13756,6 +13759,7 @@ msgid "Add & Edit"
 msgstr "Dodaj točko"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Ime Projekta:"
@@ -13821,9 +13825,45 @@ msgid "The project folder does not exist."
 msgstr "Datoteka ne obstaja."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Izberite prazno mapo."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Izvozi Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Ime Projekta:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Izvozi Projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Izberite datoteko 'projekt.godot'."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Preimenovanje mape:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Najprej izberi osnovno mapo"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Najprej izberi osnovno mapo"
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13933,6 +13973,11 @@ msgstr "Ustvarite Nov Projekt"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Uvoz Obstoječega Projekta"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Ustvarite Nov Projekt"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

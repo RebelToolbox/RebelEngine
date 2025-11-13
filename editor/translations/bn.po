@@ -1893,6 +1893,8 @@ msgstr "বর্তমান:"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "ইম্পোর্ট"
 
@@ -3787,6 +3789,7 @@ msgstr "ইম্পোর্টের জন্য নোড(সমূহ) ন�
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "ব্রাউস"
@@ -14182,6 +14185,7 @@ msgid "Add & Edit"
 msgstr "ইনপুট যোগ করুন"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "প্রকল্পের নাম:"
@@ -14247,10 +14251,46 @@ msgid "The project folder does not exist."
 msgstr "ফাইলটি বিদ্যমান নয়।"
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 #, fuzzy
 msgid "Please choose an empty folder."
 msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "প্রকল্প এক্সপোর্ট করুন"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "প্রকল্পের নাম:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "প্রকল্প এক্সপোর্ট করুন"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "অনুগ্রহ করে প্রকল্পের ফোল্ডারের বাইরে এক্সপোর্ট করুন!"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "নোড পুনঃনামকরণ করুন"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "প্রথমে অনুগ্রহ করে দৃশ্যটি সংরক্ষণ করুন।"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "প্রথমে অনুগ্রহ করে দৃশ্যটি সংরক্ষণ করুন।"
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -14361,6 +14401,11 @@ msgstr "নতুন প্রকল্প তৈরি করুন"
 #, fuzzy
 msgid "Add existing project"
 msgstr "বিদ্যমান প্রকল্প ইম্পোর্ট করুন"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "নতুন প্রকল্প তৈরি করুন"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

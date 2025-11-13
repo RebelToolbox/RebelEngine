@@ -1876,6 +1876,8 @@ msgstr "Ustaw na bieżący"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "Zaimportuj"
 
@@ -3665,6 +3667,7 @@ msgstr "Wybierz węzły do importu"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "Przeglądaj"
@@ -13360,6 +13363,7 @@ msgid "Add & Edit"
 msgstr "Dodaj punkt"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "Nazwa projektu:"
@@ -13426,9 +13430,45 @@ msgid "The project folder does not exist."
 msgstr "Podana ścieżka nie istnieje."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "Proszę wybrać pusty folder."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "Wyeksportuj projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "Nazwa projektu:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "Edytuj projekt"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "Proszę wybrać plik \"project.godot\" lub \".zip\"."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "Zmiana nazwy folderu:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "Najpierw wybierz katalog podstawowy."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "Najpierw wybierz katalog podstawowy."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13550,6 +13590,11 @@ msgstr "Utwórz nowy projekt"
 #, fuzzy
 msgid "Add existing project"
 msgstr "Importuj istniejący projekt"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "Utwórz nowy projekt"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy

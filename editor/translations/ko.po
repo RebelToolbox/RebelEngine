@@ -1849,6 +1849,8 @@ msgstr "현재 프로필로 설정"
 
 #: editor/editor_feature_profile.cpp editor/editor_node.cpp
 #: editor/plugins/theme_editor_plugin.cpp
+#: projects_manager/import_project_dialog.cpp
+#: projects_manager/projects_manager.cpp
 msgid "Import"
 msgstr "가져오기"
 
@@ -3630,6 +3632,7 @@ msgstr "가져올 노드 선택"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Browse"
 msgstr "탐색"
@@ -13242,6 +13245,7 @@ msgid "Add & Edit"
 msgstr "점 추가"
 
 #: projects_manager/add_project_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #, fuzzy
 msgid "Project File:"
 msgstr "프로젝트 이름:"
@@ -13308,9 +13312,45 @@ msgid "The project folder does not exist."
 msgstr "지정한 경로가 없습니다."
 
 #: projects_manager/extract_zip_file_dialog.cpp
+#: projects_manager/import_project_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 msgid "Please choose an empty folder."
 msgstr "비어있는 폴더를 선택해주세요."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Import Project"
+msgstr "프로젝트 내보내기"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Project Type:"
+msgstr "프로젝트 이름:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Godot Project"
+msgstr "프로젝트 편집"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please choose a \"project.godot\" file."
+msgstr "\"project.godot\" 파일 또는 \".zip\" 파일을 선택해주세요."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Destination Folder:"
+msgstr "폴더 이름 바꾸기:"
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid destination folder."
+msgstr "먼저 기본 디렉토리를 선택해주세요."
+
+#: projects_manager/import_project_dialog.cpp
+#, fuzzy
+msgid "Please select a valid project file."
+msgstr "먼저 기본 디렉토리를 선택해주세요."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
@@ -13430,6 +13470,11 @@ msgstr "새 프로젝트 만들기"
 #, fuzzy
 msgid "Add existing project"
 msgstr "기존 프로젝트 가져오기"
+
+#: projects_manager/projects_manager.cpp
+#, fuzzy
+msgid "Import non-Rebel project"
+msgstr "새 프로젝트 만들기"
 
 #: projects_manager/projects_manager.cpp
 #, fuzzy
