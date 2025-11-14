@@ -1,0 +1,18 @@
+diff --git a/thirdparty/bullet/BulletDynamics/ConstraintSolver/btSolverBody.h b/thirdparty/bullet/BulletDynamics/ConstraintSolver/btSolverBody.h
+index 8d2f108f..4db7309e 100644
+--- a/thirdparty/bullet/BulletDynamics/ConstraintSolver/btSolverBody.h
++++ b/thirdparty/bullet/BulletDynamics/ConstraintSolver/btSolverBody.h
+@@ -51,12 +51,7 @@ struct btSimdScalar
+ 		int m_ints[4];
+ 		btScalar m_unusedPadding;
+ 	};
+-	SIMD_FORCE_INLINE __m128 get128()
+-	{
+-		return m_vec128;
+-	}
+-
+-	SIMD_FORCE_INLINE const __m128 get128() const
++	SIMD_FORCE_INLINE __m128 get128() const
+ 	{
+ 		return m_vec128;
+ 	}
