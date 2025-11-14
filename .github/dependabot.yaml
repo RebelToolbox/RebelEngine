@@ -1,22 +1,10 @@
 version: 2
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+multi-ecosystem-groups:
+  weekly-updates:
     schedule:
       interval: "weekly"
       day: "sunday"
       time: "00:00"
-    labels:
-      - "PR Type: Maintenance"
-    pull-request-branch-name:
-      separator: "-"
-
-  - package-ecosystem: "npm"
-    directory: "/platforms/web/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "01:00"
     labels:
       - "PR Type: Maintenance"
     pull-request-branch-name:
@@ -28,3 +16,16 @@ updates:
           update-types:
             - "minor"
             - "patch"
+
+updates:
+  - package-ecosystem: "github-actions"
+    multi-ecosystem-group: "weekly-updates"
+    directory: "/"
+
+  - package-ecosystem: "gradle"
+    multi-ecosystem-group: "weekly-updates"
+    directory: "/platforms/android/project"
+
+  - package-ecosystem: "npm"
+    multi-ecosystem-group: "weekly-updates"
+    directory: "/platforms/web/"
