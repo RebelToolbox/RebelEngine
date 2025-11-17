@@ -1054,6 +1054,34 @@ CharType String::char_lowercase(CharType p_char) {
     return _find_lower(p_char);
 }
 
+bool String::char_is_separable(const CharType& p_char) {
+    // Reference: https://en.wikipedia.org/wiki/Plane_(Unicode)
+    return
+        // CJK scripts and symbols.
+        (p_char >= 0x2E80 && p_char <= 0x9FFF) ||
+        // Hangul Syllables and Hangul Jamo Extended-B.
+        (p_char >= 0xAC00 && p_char <= 0xD7FF) ||
+        // CJK Compatibility Ideographs.
+        (p_char >= 0xF900 && p_char <= 0xFAFF) ||
+        // CJK Compatibility Forms.
+        (p_char >= 0xFE30 && p_char <= 0xFE4F) ||
+        // Halfwidth forms of katakana.
+        (p_char >= 0xFF65 && p_char <= 0xFF9F) ||
+        // Halfwidth forms of compatibility and jamo characters for Hangul.
+        (p_char >= 0xFFA0 && p_char <= 0xFFDC) ||
+#ifdef _WIN32
+        // On Windows CharType (wchar_t) is only two bytes.
+        // It doesn't support Unicode suplementary planes.
+        false;
+#else
+        // CJK Unified Ideographs Extension B ~ F and
+        // CJK Compatibility Ideographs Supplement.
+        (p_char >= 0x20000 && p_char <= 0x2FA1F) ||
+        // CJK Unified Ideographs Extension G.
+        (p_char >= 0x30000 && p_char <= 0x3134F);
+#endif // ! _WIN32
+}
+
 String String::to_upper() const {
     String upper = *this;
 
