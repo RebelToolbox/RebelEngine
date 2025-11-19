@@ -9,33 +9,12 @@
 #include "core/os/os.h"
 #include "core/project_settings.h"
 
-#include <functiondiscoverykeys.h>
-
-#ifndef PKEY_Device_FriendlyName
-
-#undef DEFINE_PROPERTYKEY
-#define DEFINE_PROPERTYKEY(id, a, b, c, d, e, f, g, h, i, j, k, l)             \
-    const PROPERTYKEY id = {                                                   \
-        {a, b, c, {d, e, f, g, h, i, j, k}},                                   \
-        l                                                                      \
-    };
-
-DEFINE_PROPERTYKEY(
-    PKEY_Device_FriendlyName,
-    0xa45c254e,
-    0xdf1c,
-    0x4efd,
-    0x80,
-    0x20,
-    0x67,
-    0xd1,
-    0x46,
-    0xa8,
-    0x50,
-    0xe0,
-    14
-);
-#endif
+// PKEY_Device_FriendlyName is not defined in ming64-w64's libuuid.a in versions
+// before 13.0.
+// Include initguid.h to correctly define PKEY_Device_FriendlyName here.
+#include <initguid.h>
+// <initguid.h> must be included before <functiondiscoverykeys_devpkey.h>.
+#include <functiondiscoverykeys_devpkey.h>
 
 const CLSID CLSID_MMDeviceEnumerator = __uuidof(MMDeviceEnumerator);
 const IID IID_IMMDeviceEnumerator    = __uuidof(IMMDeviceEnumerator);
