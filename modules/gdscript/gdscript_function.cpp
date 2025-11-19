@@ -1980,7 +1980,7 @@ void GDScriptFunction::debug_get_stack_member_state(
     }
 }
 
-GDScriptFunction::GDScriptFunction() : function_list(this) {
+GDScriptFunction::GDScriptFunction() {
     _stack_size = 0;
     _call_size  = 0;
     rpc_mode    = MultiplayerAPI::RPC_MODE_DISABLED;
@@ -2187,9 +2187,7 @@ void GDScriptFunctionState::_bind_methods() {
     ));
 }
 
-GDScriptFunctionState::GDScriptFunctionState() :
-    scripts_list(this),
-    instances_list(this) {
+GDScriptFunctionState::GDScriptFunctionState() {
     function = nullptr;
 }
 

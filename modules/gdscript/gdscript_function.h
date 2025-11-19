@@ -274,7 +274,7 @@ private:
 
     friend class GDScriptLanguage;
 
-    SelfList<GDScriptFunction> function_list;
+    SelfList<GDScriptFunction> function_list{this};
 #ifdef DEBUG_ENABLED
     CharString func_cname;
     const char* _func_cname;
@@ -390,8 +390,8 @@ class GDScriptFunctionState : public Reference {
     );
     Ref<GDScriptFunctionState> first_state;
 
-    SelfList<GDScriptFunctionState> scripts_list;
-    SelfList<GDScriptFunctionState> instances_list;
+    SelfList<GDScriptFunctionState> scripts_list{this};
+    SelfList<GDScriptFunctionState> instances_list{this};
 
 protected:
     static void _bind_methods();

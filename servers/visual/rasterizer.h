@@ -208,7 +208,7 @@ public:
 
         float depth; // used for sorting
 
-        SelfList<InstanceBase> dependency_item;
+        SelfList<InstanceBase> dependency_item{this};
 
         InstanceBase* lightmap_capture;
         RID lightmap;
@@ -222,7 +222,7 @@ public:
         virtual void base_removed()                              = 0;
         virtual void base_changed(bool p_aabb, bool p_materials) = 0;
 
-        InstanceBase() : dependency_item(this) {
+        InstanceBase() {
             base_type         = VS::INSTANCE_NONE;
             cast_shadows      = VS::SHADOW_CASTING_SETTING_ON;
             receive_shadows   = true;

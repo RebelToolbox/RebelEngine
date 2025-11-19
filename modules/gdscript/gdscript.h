@@ -93,7 +93,7 @@ class GDScript : public Script {
     String path;
     String name;
     String fully_qualified_name;
-    SelfList<GDScript> script_list;
+    SelfList<GDScript> script_list{this};
 
     SelfList<GDScriptFunctionState>::List pending_func_states;
     void _clear_pending_func_states();

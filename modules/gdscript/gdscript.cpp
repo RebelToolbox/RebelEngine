@@ -1038,7 +1038,7 @@ void GDScript::get_script_signal_list(List<MethodInfo>* r_signals) const {
 #endif
 }
 
-GDScript::GDScript() : script_list(this) {
+GDScript::GDScript() {
     valid          = false;
     subclass_count = 0;
     initializer    = nullptr;

@@ -263,8 +263,7 @@ void CollisionObject2DSW::_shape_changed() {
     _shapes_changed();
 }
 
-CollisionObject2DSW::CollisionObject2DSW(Type p_type) :
-    pending_shape_update_list(this) {
+CollisionObject2DSW::CollisionObject2DSW(Type p_type) {
     _static            = true;
     type               = p_type;
     space              = nullptr;

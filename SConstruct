@@ -528,7 +528,6 @@ if selected_platform in platform_list:
             "/wd4242",  # Level 3: Type conversion may result is loss of data.
             "/wd4266",  # Level 4: No override available for virtual member function: function is hidden.
             "/wd4296",  # Level 4: Expression is always false.
-            "/wd4355",  # Level 1: 'this' used in base member initializer list.
             "/wd4365",  # Level 4: Conversion from signed to unsigned.
             "/wd4388",  # Level 4: Operator comparing signed and unsigned variables.
             "/wd4435",  # Level 4: Object layout under /vd2 will change due to virtual base.

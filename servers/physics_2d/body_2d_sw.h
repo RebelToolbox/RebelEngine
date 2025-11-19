@@ -44,9 +44,9 @@ class Body2DSW : public CollisionObject2DSW {
     Vector2 applied_force;
     real_t applied_torque;
 
-    SelfList<Body2DSW> active_list;
-    SelfList<Body2DSW> inertia_update_list;
-    SelfList<Body2DSW> direct_state_query_list;
+    SelfList<Body2DSW> active_list{this};
+    SelfList<Body2DSW> inertia_update_list{this};
+    SelfList<Body2DSW> direct_state_query_list{this};
 
     VSet<RID> exceptions;
     Physics2DServer::CCDMode continuous_cd_mode;

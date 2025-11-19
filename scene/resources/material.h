@@ -345,7 +345,7 @@ private:
     static SelfList<SpatialMaterial>::List* dirty_materials;
     static ShaderNames* shader_names;
 
-    SelfList<SpatialMaterial> element;
+    SelfList<SpatialMaterial> element{this};
 
     void _update_shader();
     _FORCE_INLINE_ void _queue_shader_change();

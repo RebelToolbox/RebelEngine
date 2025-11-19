@@ -2433,7 +2433,7 @@ void ParticlesMaterial::_bind_methods() {
     BIND_ENUM_CONSTANT(EMISSION_SHAPE_MAX);
 }
 
-ParticlesMaterial::ParticlesMaterial() : element(this) {
+ParticlesMaterial::ParticlesMaterial() {
     set_direction(Vector3(1, 0, 0));
     set_spread(45);
     set_flatness(0);

@@ -464,7 +464,7 @@ public:
         uint32_t custom_code_id;
         uint32_t version;
 
-        SelfList<Shader> dirty_list;
+        SelfList<Shader> dirty_list{this};
 
         Map<StringName, RID> default_textures;
 
@@ -567,7 +567,7 @@ public:
         bool uses_vertex_time;
         bool uses_fragment_time;
 
-        Shader() : dirty_list(this) {
+        Shader() {
             shader         = nullptr;
             ubo_size       = 0;
             valid          = false;
@@ -621,8 +621,8 @@ public:
         GLuint ubo_id;
         uint32_t ubo_size;
         Map<StringName, Variant> params;
-        SelfList<Material> list;
-        SelfList<Material> dirty_list;
+        SelfList<Material> list{this};
+        SelfList<Material> dirty_list{this};
         Vector<bool> texture_is_3d;
         Vector<RID> textures;
         float line_width;
@@ -643,8 +643,6 @@ public:
             shader(nullptr),
             ubo_id(0),
             ubo_size(0),
-            list(this),
-            dirty_list(this),
             line_width(1.0),
             render_priority(0),
             last_pass(0),
@@ -911,8 +909,8 @@ public:
         VS::MultimeshCustomDataFormat custom_data_format;
         Vector<float> data;
         AABB aabb;
-        SelfList<MultiMesh> update_list;
-        SelfList<MultiMesh> mesh_list;
+        SelfList<MultiMesh> update_list{this};
+        SelfList<MultiMesh> mesh_list{this};
         GLuint buffer;
         int visible_instances;
 
@@ -928,8 +926,6 @@ public:
             transform_format(VS::MULTIMESH_TRANSFORM_2D),
             color_format(VS::MULTIMESH_COLOR_NONE),
             custom_data_format(VS::MULTIMESH_CUSTOM_DATA_NONE),
-            update_list(this),
-            mesh_list(this),
             buffer(0),
             visible_instances(-1),
             xform_floats(0),
@@ -1068,12 +1064,12 @@ public:
         int size;
         Vector<float> skel_texture;
         GLuint texture;
-        SelfList<Skeleton> update_list;
+        SelfList<Skeleton> update_list{this};
         Set<RasterizerScene::InstanceBase*>
             instances; // instances using skeleton
         Transform2D base_transform_2d;
 
-        Skeleton() : use_2d(false), size(0), texture(0), update_list(this) {}
+        Skeleton() : use_2d(false), size(0), texture(0) {}
     };
 
     mutable RID_Owner<Skeleton> skeleton_owner;
@@ -1399,9 +1395,9 @@ public:
         float energy;
         bool interior;
 
-        SelfList<LightmapCapture> update_list;
+        SelfList<LightmapCapture> update_list{this};
 
-        LightmapCapture() : update_list(this) {
+        LightmapCapture() {
             energy      = 1.0;
             cell_subdiv = 1;
             interior    = false;
@@ -1443,7 +1439,7 @@ public:
         bool particle_valid_histories[2];
         bool histories_enabled;
 
-        SelfList<Particles> particle_element;
+        SelfList<Particles> particle_element{this};
 
         float phase;
         float prev_phase;
@@ -1477,7 +1473,6 @@ public:
             use_local_coords(true),
             draw_order(VS::PARTICLES_DRAW_ORDER_INDEX),
             histories_enabled(false),
-            particle_element(this),
             prev_ticks(0),
             random_seed(0),
             cycle_number(0),

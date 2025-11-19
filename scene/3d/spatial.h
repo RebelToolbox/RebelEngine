@@ -45,7 +45,7 @@ private:
         DIRTY_GLOBAL  = 4
     };
 
-    mutable SelfList<Node> xform_change;
+    mutable SelfList<Node> xform_change{this};
 
     struct Data {
         // defined in Spatial::SpatialFlags

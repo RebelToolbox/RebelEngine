@@ -368,13 +368,13 @@ public:
         VisualServer::InstancePortalMode portal_mode;
 
         Scenario* scenario;
-        SelfList<Instance> scenario_item;
+        SelfList<Instance> scenario_item{this};
 
         // aabb stuff
         bool update_aabb;
         bool update_materials;
 
-        SelfList<Instance> update_item;
+        SelfList<Instance> update_item{this};
 
         AABB aabb;
         AABB transformed_aabb;
@@ -405,7 +405,7 @@ public:
             singleton->_instance_queue_update(this, p_aabb, p_materials);
         }
 
-        Instance() : scenario_item(this), update_item(this) {
+        Instance() {
             spatial_partition_id = 0;
             scenario             = nullptr;
 
@@ -486,12 +486,12 @@ public:
 
         RID instance;
         bool reflection_dirty;
-        SelfList<InstanceReflectionProbeData> update_list;
+        SelfList<InstanceReflectionProbeData> update_list{this};
 
         int render_step;
         int32_t previous_room_id_hint;
 
-        InstanceReflectionProbeData() : update_list(this) {
+        InstanceReflectionProbeData() {
             reflection_dirty      = true;
             render_step           = -1;
             previous_room_id_hint = -1;
@@ -618,9 +618,9 @@ public:
         bool invalid;
         uint32_t base_version;
 
-        SelfList<InstanceGIProbeData> update_element;
+        SelfList<InstanceGIProbeData> update_element{this};
 
-        InstanceGIProbeData() : update_element(this) {
+        InstanceGIProbeData() {
             invalid                = true;
             base_version           = 0;
             dynamic.updating_stage = GI_UPDATE_STAGE_CHECK;

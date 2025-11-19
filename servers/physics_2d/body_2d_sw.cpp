@@ -671,11 +671,7 @@ void Body2DSW::set_force_integration_callback(
     }
 }
 
-Body2DSW::Body2DSW() :
-    CollisionObject2DSW(TYPE_BODY),
-    active_list(this),
-    inertia_update_list(this),
-    direct_state_query_list(this) {
+Body2DSW::Body2DSW() : CollisionObject2DSW(TYPE_BODY) {
     mode                    = Physics2DServer::BODY_MODE_RIGID;
     active                  = true;
     angular_velocity        = 0;

@@ -3786,7 +3786,7 @@ void SpatialMaterial::_bind_methods() {
     BIND_ENUM_CONSTANT(DISTANCE_FADE_OBJECT_DITHER);
 }
 
-SpatialMaterial::SpatialMaterial() : element(this) {
+SpatialMaterial::SpatialMaterial() {
     // Initialize to the same values as the shader
     set_albedo(Color(1.0, 1.0, 1.0, 1.0));
     set_specular(0.5);

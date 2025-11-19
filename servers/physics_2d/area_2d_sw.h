@@ -34,8 +34,8 @@ class Area2DSW : public CollisionObject2DSW {
     ObjectID area_monitor_callback_id;
     StringName area_monitor_callback_method;
 
-    SelfList<Area2DSW> monitor_query_list;
-    SelfList<Area2DSW> moved_list;
+    SelfList<Area2DSW> monitor_query_list{this};
+    SelfList<Area2DSW> moved_list{this};
 
     struct BodyKey {
         RID rid;

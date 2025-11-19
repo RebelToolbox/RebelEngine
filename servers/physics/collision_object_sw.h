@@ -54,7 +54,7 @@ private:
     Transform inv_transform;
     bool _static;
 
-    SelfList<CollisionObjectSW> pending_shape_update_list;
+    SelfList<CollisionObjectSW> pending_shape_update_list{this};
 
     void _update_shapes();
     void _recheck_shapes();
