@@ -354,6 +354,7 @@ public:
 
     static CharType char_uppercase(CharType p_char);
     static CharType char_lowercase(CharType p_char);
+    static bool char_is_separable(const CharType& p_char);
     String to_upper() const;
     String to_lower() const;
 
