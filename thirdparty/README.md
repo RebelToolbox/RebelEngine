@@ -16,6 +16,9 @@ Files extracted from upstream source:
 - `src/*` apart from CMakeLists.txt and premake4.lua files
 - `LICENSE.txt`, and `VERSION` as `VERSION.txt`
 
+Note: Includes fixes sent upstream.
+Patch files for the changes are included in the patches folder.
+
 
 ## certs
 
