@@ -2577,7 +2577,7 @@ void WindowsOS::set_window_per_pixel_transparency_enabled(bool p_enabled) {
         if (p_enabled) {
             // enable per-pixel alpha
 
-            DWM_BLURBEHIND bb = {0};
+            DWM_BLURBEHIND bb = {};
             HRGN hRgn         = CreateRectRgn(0, 0, -1, -1);
             bb.dwFlags        = DWM_BB_ENABLE | DWM_BB_BLURREGION;
             bb.hRgnBlur       = hRgn;
@@ -2589,7 +2589,7 @@ void WindowsOS::set_window_per_pixel_transparency_enabled(bool p_enabled) {
             // disable per-pixel alpha
             layered_window = false;
 
-            DWM_BLURBEHIND bb = {0};
+            DWM_BLURBEHIND bb = {};
             HRGN hRgn         = CreateRectRgn(0, 0, -1, -1);
             bb.dwFlags        = DWM_BB_ENABLE | DWM_BB_BLURREGION;
             bb.hRgnBlur       = hRgn;
