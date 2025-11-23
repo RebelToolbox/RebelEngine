@@ -20,12 +20,15 @@ multi-ecosystem-groups:
 updates:
   - package-ecosystem: "github-actions"
     multi-ecosystem-group: "weekly-updates"
+    patterns: ["*"]
     directory: "/"
 
   - package-ecosystem: "gradle"
     multi-ecosystem-group: "weekly-updates"
+    patterns: ["*"]
     directory: "/platforms/android/project"
 
   - package-ecosystem: "npm"
     multi-ecosystem-group: "weekly-updates"
+    patterns: ["*"]
     directory: "/platforms/web/"
