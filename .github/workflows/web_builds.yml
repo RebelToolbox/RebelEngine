@@ -18,7 +18,7 @@ jobs:
     name: Template (target=release, tools=no)
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       # Additional cache for Emscripten generated system libraries
       - name: Load Emscripten cache

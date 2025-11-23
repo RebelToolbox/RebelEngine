@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install dependencies
         shell: bash
@@ -135,7 +135,7 @@ jobs:
 
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Pull updates from Weblate
         run: |
