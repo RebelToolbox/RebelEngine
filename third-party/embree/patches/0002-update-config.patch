@@ -1,0 +1,99 @@
+diff --git a/third-party/embree/include/embree4/rtcore_config.h b/third-party/embree/include/embree4/rtcore_config.h
+index eba96698..ef879b74 100644
+--- a/third-party/embree/include/embree4/rtcore_config.h
++++ b/third-party/embree/include/embree4/rtcore_config.h
+@@ -3,41 +3,42 @@
+ 
+ #pragma once
+ 
+-#if !defined(EMBREE_SYCL_SUPPORT)
+-#cmakedefine EMBREE_SYCL_SUPPORT
+-#endif
+-
+ #define RTC_VERSION_MAJOR 4
+ #define RTC_VERSION_MINOR 4
+ #define RTC_VERSION_PATCH 0
+ #define RTC_VERSION 40400
+ #define RTC_VERSION_STRING "4.4.0"
+ 
+-#define RTC_MAX_INSTANCE_LEVEL_COUNT @EMBREE_MAX_INSTANCE_LEVEL_COUNT@
++// Rebel changes start.
++#define RTC_MAX_INSTANCE_LEVEL_COUNT 1
++// Rebel changes end.
+ 
+-#cmakedefine EMBREE_GEOMETRY_INSTANCE_ARRAY
+ #if defined(EMBREE_GEOMETRY_INSTANCE_ARRAY)
+   #define RTC_GEOMETRY_INSTANCE_ARRAY
+ #endif
+ 
+-#cmakedefine01 EMBREE_SYCL_GEOMETRY_CALLBACK
++// Rebel changes start.
++#define EMBREE_MIN_WIDTH 0
++// Rebel changes end.
+ 
+-#cmakedefine01 EMBREE_MIN_WIDTH
+ #define RTC_MIN_WIDTH EMBREE_MIN_WIDTH
+ 
+ #if !defined(EMBREE_STATIC_LIB)
+-#cmakedefine EMBREE_STATIC_LIB
++  // Rebel changes start.
++  #define EMBREE_STATIC_LIB
++  // Rebel changes end.
+ #endif
+-#cmakedefine EMBREE_API_NAMESPACE
+ 
+ #if defined(EMBREE_API_NAMESPACE)
+-#  define RTC_NAMESPACE @EMBREE_API_NAMESPACE@
+-#  define RTC_NAMESPACE_BEGIN namespace @EMBREE_API_NAMESPACE@ {
++// Rebel changes start.
++#  define RTC_NAMESPACE
++#  define RTC_NAMESPACE_BEGIN namespace {
+ #  define RTC_NAMESPACE_END }
+-#  define RTC_NAMESPACE_USE using namespace @EMBREE_API_NAMESPACE@;
++#  define RTC_NAMESPACE_USE using namespace;
+ #  define RTC_API_EXTERN_C
+ #  define RTC_API_EXTERN_CPP
+ #  undef EMBREE_API_NAMESPACE
++// Rebel changes end.
+ #else
+ #  define RTC_NAMESPACE_BEGIN
+ #  define RTC_NAMESPACE_END
+diff --git a/third-party/embree/kernels/config.h b/third-party/embree/kernels/config.h
+index 1669c4af..bb39b590 100644
+--- a/third-party/embree/kernels/config.h
++++ b/third-party/embree/kernels/config.h
+@@ -3,27 +3,14 @@
+ 
+ #include "../include/embree4/rtcore_config.h"
+ 
+-#cmakedefine EMBREE_RAY_MASK
+-#cmakedefine EMBREE_STAT_COUNTERS
+-#cmakedefine EMBREE_BACKFACE_CULLING
+-#cmakedefine EMBREE_BACKFACE_CULLING_CURVES
+-#cmakedefine EMBREE_BACKFACE_CULLING_SPHERES
+-#cmakedefine EMBREE_FILTER_FUNCTION
+-#cmakedefine EMBREE_IGNORE_INVALID_RAYS
+-#cmakedefine EMBREE_GEOMETRY_TRIANGLE
+-#cmakedefine EMBREE_GEOMETRY_QUAD
+-#cmakedefine EMBREE_GEOMETRY_CURVE
+-#cmakedefine EMBREE_GEOMETRY_SUBDIVISION
+-#cmakedefine EMBREE_GEOMETRY_USER
+-#cmakedefine EMBREE_GEOMETRY_INSTANCE
++// Rebel changes start.
++#define EMBREE_FILTER_FUNCTION
++#define EMBREE_GEOMETRY_TRIANGLE
+ // EMBREE_GEOMETRY_INSTANCE_ARRAY is defined in rtcore_config.h
+-#cmakedefine EMBREE_GEOMETRY_GRID
+-#cmakedefine EMBREE_GEOMETRY_POINT
+-#cmakedefine EMBREE_RAY_PACKETS
+-#cmakedefine EMBREE_COMPACT_POLYS
+-
+-#define EMBREE_CURVE_SELF_INTERSECTION_AVOIDANCE_FACTOR @EMBREE_CURVE_SELF_INTERSECTION_AVOIDANCE_FACTOR@
+-#cmakedefine EMBREE_DISC_POINT_SELF_INTERSECTION_AVOIDANCE
++#define EMBREE_RAY_PACKETS
++#define EMBREE_CURVE_SELF_INTERSECTION_AVOIDANCE_FACTOR 2.0
++#define EMBREE_DISC_POINT_SELF_INTERSECTION_AVOIDANCE
++// Rebel changes end.
+ 
+ #if defined(EMBREE_GEOMETRY_TRIANGLE)
+   #define IF_ENABLED_TRIS(x) x

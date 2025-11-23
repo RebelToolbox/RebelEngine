@@ -9,7 +9,7 @@
 #include "core/pair.h"
 
 extern "C" {
-#include "thirdparty/misc/smaz.h"
+#include "third-party/misc/smaz.h"
 }
 
 struct _PHashTranslationCmp {

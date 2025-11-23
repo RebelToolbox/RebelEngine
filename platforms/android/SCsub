@@ -25,17 +25,17 @@ android_objects = []
 for x in android_files:
     android_objects.append(env_android.SharedObject(x))
 
-env_thirdparty = env_android.Clone()
-env_thirdparty.disable_warnings()
-thirdparty_obj = env_thirdparty.SharedObject("#thirdparty/misc/ifaddrs-android.cc")
-android_objects.append(thirdparty_obj)
+env_third_party = env_android.Clone()
+env_third_party.disable_warnings()
+third_party_obj = env_third_party.SharedObject("#third-party/misc/ifaddrs-android.cc")
+android_objects.append(third_party_obj)
 
 lib = env_android.add_shared_library(
     "#bin/librebel", [android_objects], SHLIBSUFFIX=env["SHLIBSUFFIX"]
 )
 
-# Needed to force rebuilding the platform files when the thirdparty code is updated.
-env.Depends(lib, thirdparty_obj)
+# Needed to force rebuilding the platform files when the third-party code is updated.
+env.Depends(lib, third_party_obj)
 
 arch_dir = ""
 if env["android_arch"] == "armv7":

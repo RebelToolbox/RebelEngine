@@ -9,7 +9,7 @@
 #include "core/local_vector.h"
 #include "scene/resources/mesh.h"
 #include "scene/resources/surface_tool.h"
-#include "thirdparty/misc/triangulator.h"
+#include "third-party/misc/triangulator.h"
 
 template <class T>
 T collect_first(const Vector<VertexData<T>>* p_data, T p_fall_back) {

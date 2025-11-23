@@ -5,13 +5,13 @@ Import("env_modules")
 
 env_theora = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["builtin_libtheora"]:
-    thirdparty_dir = "#thirdparty/libtheora/"
-    thirdparty_sources = [
+    third_party_dir = "#third-party/libtheora/"
+    third_party_sources = [
         # "analyze.c",
         # "apiwrapper.c",
         "bitpack.c",
@@ -41,7 +41,7 @@ if env["builtin_libtheora"]:
         # "tokenize.c",
     ]
 
-    thirdparty_sources_x86 = [
+    third_party_sources_x86 = [
         # "x86/mmxencfrag.c",
         # "x86/mmxfdct.c",
         "x86/mmxfrag.c",
@@ -52,7 +52,7 @@ if env["builtin_libtheora"]:
         "x86/x86state.c",
     ]
 
-    thirdparty_sources_x86_vc = [
+    third_party_sources_x86_vc = [
         # "x86_vc/mmxencfrag.c",
         # "x86_vc/mmxfdct.c",
         "x86_vc/mmxfrag.c",
@@ -63,28 +63,28 @@ if env["builtin_libtheora"]:
     ]
 
     if env["x86_libtheora_opt_gcc"]:
-        thirdparty_sources += thirdparty_sources_x86
+        third_party_sources += third_party_sources_x86
 
     if env["x86_libtheora_opt_vc"]:
-        thirdparty_sources += thirdparty_sources_x86_vc
+        third_party_sources += third_party_sources_x86_vc
 
     if env["x86_libtheora_opt_gcc"] or env["x86_libtheora_opt_vc"]:
         env_theora.Append(CPPDEFINES=["OC_X86_ASM"])
 
-    thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+    third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-    env_theora.Prepend(CPPPATH=[thirdparty_dir])
+    env_theora.Prepend(CPPPATH=[third_party_dir])
 
     # also requires libogg and libvorbis
     if env["builtin_libogg"]:
-        env_theora.Prepend(CPPPATH=["#thirdparty/libogg"])
+        env_theora.Prepend(CPPPATH=["#third-party/libogg"])
     if env["builtin_libvorbis"]:
-        env_theora.Prepend(CPPPATH=["#thirdparty/libvorbis"])
+        env_theora.Prepend(CPPPATH=["#third-party/libvorbis"])
 
-    env_thirdparty = env_theora.Clone()
-    env_thirdparty.disable_warnings()
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-    env.modules_sources += thirdparty_obj
+    env_third_party = env_theora.Clone()
+    env_third_party.disable_warnings()
+    env_third_party.add_source_files(third_party_obj, third_party_sources)
+    env.modules_sources += third_party_obj
 
 
 # Rebel source files
@@ -94,5 +94,5 @@ module_obj = []
 env_theora.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

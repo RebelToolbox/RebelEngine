@@ -14,7 +14,7 @@
     @author Daniel Ramirez <djrmuv@gmail.com>
 */
 
-// Forward declare and include thirdparty headers in .cpp.
+// Forward declare and include third-party headers in .cpp.
 struct NSVGrasterizer;
 struct NSVGimage;
 

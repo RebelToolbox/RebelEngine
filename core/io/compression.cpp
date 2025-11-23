@@ -8,7 +8,7 @@
 
 #include "core/io/zip_io.h"
 #include "core/project_settings.h"
-#include "thirdparty/misc/fastlz.h"
+#include "third-party/misc/fastlz.h"
 
 #include <zlib.h>
 #include <zstd.h>

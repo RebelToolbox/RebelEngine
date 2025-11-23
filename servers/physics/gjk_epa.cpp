@@ -6,7 +6,7 @@
 
 #include "gjk_epa.h"
 
-// Disabling clang-format for thirdparty code snippet
+// Disabling clang-format for third-party code snippet
 /* clang-format off */
 
 /*************** Bullet's GJK-EPA2 IMPLEMENTATION *******************/

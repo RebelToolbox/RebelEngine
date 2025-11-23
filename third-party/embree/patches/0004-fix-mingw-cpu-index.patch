@@ -1,0 +1,15 @@
+diff --git a/third-party/embree/common/sys/sysinfo.cpp b/third-party/embree/common/sys/sysinfo.cpp
+index 732cea64..9af4e565 100644
+--- a/third-party/embree/common/sys/sysinfo.cpp
++++ b/third-party/embree/common/sys/sysinfo.cpp
+@@ -295,7 +295,9 @@ namespace embree
+     if (nIds >= 1) __cpuid (cpuid_leaf_1,0x00000001);
+ #if _WIN32
+ #if _MSC_VER && (_MSC_FULL_VER < 160040219)
+-#else
++// Rebel changes start.
++#elif defined(_MSC_VER)
++// Rebel changes end.
+     if (nIds >= 7) __cpuidex(cpuid_leaf_7,0x00000007,0);
+ #endif
+ #else

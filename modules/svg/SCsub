@@ -5,20 +5,20 @@ Import("env_modules")
 
 env_svg = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
-thirdparty_dir = "#thirdparty/nanosvg/"
-thirdparty_sources = ["nanosvg.cc"]
-thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+third_party_dir = "#third-party/nanosvg/"
+third_party_sources = ["nanosvg.cc"]
+third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-env_svg.Prepend(CPPPATH=[thirdparty_dir])
+env_svg.Prepend(CPPPATH=[third_party_dir])
 
-env_thirdparty = env_svg.Clone()
-env_thirdparty.disable_warnings()
-env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-env.modules_sources += thirdparty_obj
+env_third_party = env_svg.Clone()
+env_third_party.disable_warnings()
+env_third_party.add_source_files(third_party_obj, third_party_sources)
+env.modules_sources += third_party_obj
 
 # Rebel source files
 
@@ -27,5 +27,5 @@ module_obj = []
 env_svg.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

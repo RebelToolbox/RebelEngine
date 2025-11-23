@@ -9,7 +9,7 @@ env_fbx = env_modules.Clone()
 env_fbx.Prepend(CPPPATH=["#modules/fbx/"])
 
 if env["builtin_zlib"]:
-    env_fbx.Prepend(CPPPATH=["#thirdparty/zlib/"])
+    env_fbx.Prepend(CPPPATH=["#third-party/zlib/"])
 
 # Rebel source files
 env_fbx.add_source_files(env.modules_sources, "tools/*.cpp")

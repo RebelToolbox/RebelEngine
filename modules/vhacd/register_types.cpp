@@ -9,7 +9,7 @@
 #include "register_types.h"
 
 #include "scene/resources/mesh.h"
-#include "thirdparty/vhacd/include/VHACD.h"
+#include "third-party/vhacd/include/VHACD.h"
 
 static Vector<PoolVector<Vector3>> convex_decompose(
     const real_t* p_vertices,

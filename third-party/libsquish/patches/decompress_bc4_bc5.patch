@@ -1,0 +1,84 @@
+diff --git a/third-party/libsquish/colourblock.cpp b/third-party/libsquish/colourblock.cpp
+index af8b9803..18ef5c11 100644
+--- a/third-party/libsquish/colourblock.cpp
++++ b/third-party/libsquish/colourblock.cpp
+@@ -23,6 +23,9 @@
+ 
+    -------------------------------------------------------------------------- */
+ 
++// -- REBEL start --
++#include "alpha.h"
++// -- REBEL end --
+ #include "colourblock.h"
+ 
+ namespace squish {
+@@ -211,4 +214,33 @@ void DecompressColour( u8* rgba, void const* block, bool isDxt1 )
+     }
+ }
+ 
++// -- REBEL start --
++void DecompressColourBc4( u8* rgba, void const* block)
++{
++    DecompressAlphaDxt5(rgba,block);
++    for ( int i = 0; i < 16; ++i ) {
++        rgba[i*4] = rgba[i*4 + 3];
++        rgba[i*4 + 1] = 0;
++        rgba[i*4 + 2] = 0;
++        rgba[i*4 + 3] = 255;
++    }
++}
++
++void DecompressColourBc5( u8* rgba, void const* block)
++{
++    void const* rblock = block;
++    void const* gblock = reinterpret_cast< u8 const* >( block ) + 8;
++    DecompressAlphaDxt5(rgba,rblock);
++    for ( int i = 0; i < 16; ++i ) {
++        rgba[i*4] = rgba[i*4 + 3];
++    }
++    DecompressAlphaDxt5(rgba,gblock);
++    for ( int i = 0; i < 16; ++i ) {
++        rgba[i*4 + 1] = rgba[i*4 + 3];
++        rgba[i*4 + 2] = 0;
++        rgba[i*4 + 3] = 255;
++    }
++}
++// -- REBEL end --
++
+ } // namespace squish
+diff --git a/third-party/libsquish/colourblock.h b/third-party/libsquish/colourblock.h
+index fee2cd7c..ccd3a0a4 100644
+--- a/third-party/libsquish/colourblock.h
++++ b/third-party/libsquish/colourblock.h
+@@ -35,6 +35,10 @@ void WriteColourBlock3( Vec3::Arg start, Vec3::Arg end, u8 const* indices, void*
+ void WriteColourBlock4( Vec3::Arg start, Vec3::Arg end, u8 const* indices, void* block );
+ 
+ void DecompressColour( u8* rgba, void const* block, bool isDxt1 );
++// -- REBEL start --
++void DecompressColourBc4( u8* rgba, void const* block );
++void DecompressColourBc5( u8* rgba, void const* block );
++// -- REBEL end --
+ 
+ } // namespace squish
+ 
+diff --git a/third-party/libsquish/squish.cpp b/third-party/libsquish/squish.cpp
+index 1d22a64a..a56fb35f 100644
+--- a/third-party/libsquish/squish.cpp
++++ b/third-party/libsquish/squish.cpp
+@@ -135,7 +135,15 @@ void Decompress( u8* rgba, void const* block, int flags )
+         colourBlock = reinterpret_cast< u8 const* >( block ) + 8;
+ 
+     // decompress colour
+-    DecompressColour( rgba, colourBlock, ( flags & kDxt1 ) != 0 );
++    // -- REBEL start --
++    //DecompressColour( rgba, colourBlock, ( flags & kDxt1 ) != 0 );
++    if(( flags & ( kBc4 ) ) != 0)
++        DecompressColourBc4( rgba, colourBlock);
++    else if(( flags & ( kBc5 ) ) != 0)
++        DecompressColourBc5( rgba, colourBlock);
++    else
++        DecompressColour( rgba, colourBlock, ( flags & kDxt1 ) != 0 );
++    // -- REBEL end --
+ 
+     // decompress alpha separately if necessary
+     if( ( flags & kDxt3 ) != 0 )

@@ -7,13 +7,13 @@ from compat import isbasestring
 
 env_freetype = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["builtin_freetype"]:
-    thirdparty_dir = "#thirdparty/freetype/"
-    thirdparty_sources = [
+    third_party_dir = "#third-party/freetype/"
+    third_party_sources = [
         # All modules have a single object source file
         # <module-name>.c or ft<module-name>.c,
         # which includes all the module's source files;
@@ -68,7 +68,7 @@ if env["builtin_freetype"]:
         "src/type42/type42.c",
         "src/winfonts/winfnt.c",
     ]
-    thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+    third_party_sources = [third_party_dir + file for file in third_party_sources]
 
     if env["platform"] == "uwp":
         # Include header for UWP to fix build issues
@@ -76,9 +76,9 @@ if env["builtin_freetype"]:
         # Globally too, as freetype is used in scene (see bottom)
         env.Append(CCFLAGS=["/FI", '"modules/freetype/uwpdef.h"'])
 
-    env_freetype.Prepend(CPPPATH=[thirdparty_dir + "/include"])
+    env_freetype.Prepend(CPPPATH=[third_party_dir + "/include"])
     # Also needed in main env for scene/
-    env.Prepend(CPPPATH=[thirdparty_dir + "/include"])
+    env.Prepend(CPPPATH=[third_party_dir + "/include"])
 
     env_freetype.Append(CPPDEFINES=["FT2_BUILD_LIBRARY", "FT_CONFIG_OPTION_USE_PNG"])
     if env["target"] == "debug":
@@ -86,12 +86,12 @@ if env["builtin_freetype"]:
 
     # Also requires libpng headers
     if env["builtin_libpng"]:
-        env_freetype.Prepend(CPPPATH=["#thirdparty/libpng"])
+        env_freetype.Prepend(CPPPATH=["#third-party/libpng"])
 
-    env_thirdparty = env_freetype.Clone()
-    env_thirdparty.disable_warnings()
-    lib = env_thirdparty.add_library("freetype_builtin", thirdparty_sources)
-    thirdparty_obj += lib
+    env_third_party = env_freetype.Clone()
+    env_third_party.disable_warnings()
+    lib = env_third_party.add_library("freetype_builtin", third_party_sources)
+    third_party_obj += lib
 
     # Needs to be appended to arrive after libscene in the linker call,
     # but we don't want it to arrive *after* system libs, so manual hack
@@ -115,5 +115,5 @@ module_obj = []
 env_freetype.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

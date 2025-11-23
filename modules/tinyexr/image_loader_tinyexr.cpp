@@ -8,7 +8,7 @@
 
 #include "core/os/os.h"
 #include "core/print_string.h"
-#include "thirdparty/tinyexr/tinyexr.h"
+#include "third-party/tinyexr/tinyexr.h"
 
 Error ImageLoaderTinyEXR::load_image(
     Ref<Image> p_image,

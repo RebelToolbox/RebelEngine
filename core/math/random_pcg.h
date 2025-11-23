@@ -8,7 +8,7 @@
 #define RANDOM_PCG_H
 
 #include "core/math/math_defs.h"
-#include "thirdparty/misc/pcg.h"
+#include "third-party/misc/pcg.h"
 
 #include <math.h>
 

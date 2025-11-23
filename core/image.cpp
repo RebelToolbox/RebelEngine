@@ -12,7 +12,7 @@
 #include "core/io/resource_loader.h"
 #include "core/math/math_funcs.h"
 #include "core/print_string.h"
-#include "thirdparty/misc/hq2x.h"
+#include "third-party/misc/hq2x.h"
 
 #include <stdio.h>
 

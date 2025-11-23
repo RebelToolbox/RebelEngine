@@ -5,13 +5,13 @@ Import("env_modules")
 
 env_vhacd = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
-thirdparty_dir = "#thirdparty/vhacd/"
+third_party_dir = "#third-party/vhacd/"
 
-env_vhacd.Prepend(CPPPATH=[thirdparty_dir + "include"])
+env_vhacd.Prepend(CPPPATH=[third_party_dir + "include"])
 
 # Rebel source files
 
@@ -20,5 +20,5 @@ module_obj = []
 env_vhacd.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

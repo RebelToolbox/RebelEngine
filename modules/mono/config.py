@@ -75,8 +75,8 @@ def configure(env):
         # Mono may come with zlib bundled for WASM or on newer version when built with MinGW.
         print("This Mono runtime comes with zlib bundled. Disabling 'builtin_zlib'...")
         env["builtin_zlib"] = False
-        thirdparty_zlib_dir = "#thirdparty/zlib/"
-        env.Prepend(CPPPATH=[thirdparty_zlib_dir])
+        third_party_zlib_dir = "#third-party/zlib/"
+        env.Prepend(CPPPATH=[third_party_zlib_dir])
 
 
 def get_classes():

@@ -1,0 +1,13 @@
+diff --git a/third-party/etc2comp/EtcConfig.h b/third-party/etc2comp/EtcConfig.h
+index 2e763791..b6148cca 100644
+--- a/third-party/etc2comp/EtcConfig.h
++++ b/third-party/etc2comp/EtcConfig.h
+@@ -58,7 +58,7 @@ typedef double	f64;
+ #define USE_STB_IMAGE_LOAD 0	
+ 
+ #if ETC_WINDOWS
+-#include <SDKDDKVer.h>
++#include <sdkddkver.h>
+ #define _CRT_SECURE_NO_WARNINGS (1)
+ #include <tchar.h>
+ #endif

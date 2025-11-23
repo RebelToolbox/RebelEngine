@@ -5,25 +5,25 @@ Import("env_modules")
 
 env_ws = env_modules.Clone()
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["platform"] == "web":
     # Our JavaScript/C++ interface.
     env.AddJSLibraries(["rebel_websocket.js"])
 
 elif env["builtin_wslay"]:
-    # Thirdparty source files
-    thirdparty_dir = "#thirdparty/wslay/"
-    thirdparty_sources = [
+    # Third-party source files
+    third_party_dir = "#third-party/wslay/"
+    third_party_sources = [
         "wslay_net.c",
         "wslay_event.c",
         "wslay_queue.c",
         "wslay_stack.c",
         "wslay_frame.c",
     ]
-    thirdparty_sources = [thirdparty_dir + s for s in thirdparty_sources]
+    third_party_sources = [third_party_dir + s for s in third_party_sources]
 
-    env_ws.Prepend(CPPPATH=[thirdparty_dir + "includes/"])
+    env_ws.Prepend(CPPPATH=[third_party_dir + "includes/"])
     env_ws.Append(CPPDEFINES=["HAVE_CONFIG_H"])
 
     if env["platform"] == "windows" or env["platform"] == "uwp":
@@ -31,10 +31,10 @@ elif env["builtin_wslay"]:
     else:
         env_ws.Append(CPPDEFINES=["HAVE_NETINET_IN_H"])
 
-    env_thirdparty = env_ws.Clone()
-    env_thirdparty.disable_warnings()
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-    env.modules_sources += thirdparty_obj
+    env_third_party = env_ws.Clone()
+    env_third_party.disable_warnings()
+    env_third_party.add_source_files(third_party_obj, third_party_sources)
+    env.modules_sources += third_party_obj
 
 
 # Rebel source files
@@ -44,5 +44,5 @@ module_obj = []
 env_ws.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

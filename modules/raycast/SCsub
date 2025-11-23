@@ -5,12 +5,12 @@ Import("env_modules")
 
 env_raycast = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["builtin_embree"]:
-    thirdparty_dir = "#thirdparty/embree/"
+    third_party_dir = "#third-party/embree/"
 
     embree_src = [
         "common/lexers/stringstream.cpp",
@@ -61,9 +61,9 @@ if env["builtin_embree"]:
         "kernels/geometry/primitive4.cpp",
     ]
 
-    thirdparty_sources = [thirdparty_dir + file for file in embree_src]
+    third_party_sources = [third_party_dir + file for file in embree_src]
 
-    env_raycast.Prepend(CPPPATH=[thirdparty_dir, thirdparty_dir + "include"])
+    env_raycast.Prepend(CPPPATH=[third_party_dir, third_party_dir + "include"])
     env_raycast.Append(
         CPPDEFINES=[
             "EMBREE_TARGET_SSE2",
@@ -86,15 +86,15 @@ if env["builtin_embree"]:
         else:
             env.Append(LIBS=["psapi"])
 
-    env_thirdparty = env_raycast.Clone()
-    env_thirdparty.disable_warnings()
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
+    env_third_party = env_raycast.Clone()
+    env_third_party.disable_warnings()
+    env_third_party.add_source_files(third_party_obj, third_party_sources)
 
     if not env["arch"] in ["x86", "x86_64"] or env.msvc:
         # Embree needs those, it will automatically use SSE2NEON in ARM
-        env_thirdparty.Append(CPPDEFINES=["__SSE2__", "__SSE__"])
+        env_third_party.Append(CPPDEFINES=["__SSE2__", "__SSE__"])
 
-    env.modules_sources += thirdparty_obj
+    env.modules_sources += third_party_obj
 
 
 # Rebel source files
@@ -104,5 +104,5 @@ module_obj = []
 env_raycast.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

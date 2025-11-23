@@ -18,8 +18,8 @@
 #include "editor/editor_export.h"
 #include "editor/editor_node.h"
 #include "platforms/uwp/logo.gen.h"
-#include "thirdparty/minizip/unzip.h"
-#include "thirdparty/minizip/zip.h"
+#include "third-party/minizip/unzip.h"
+#include "third-party/minizip/zip.h"
 
 #include <zlib.h>
 

@@ -83,7 +83,7 @@ config_files = [
 
 license_file = "LICENSE.txt"
 
-os.chdir(f"{os.path.dirname(__file__)}/../../thirdparty")
+os.chdir(f"{os.path.dirname(__file__)}/../../third-party")
 
 dir_name = "embree"
 if os.path.exists(dir_name):

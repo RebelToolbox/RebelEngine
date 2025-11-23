@@ -7,12 +7,12 @@ Import("env_modules")
 
 env_oidn = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
-thirdparty_dir = "#thirdparty/oidn/"
-thirdparty_sources = [
+third_party_dir = "#third-party/oidn/"
+third_party_sources = [
     "core/api.cpp",
     "core/device.cpp",
     "core/filter.cpp",
@@ -80,9 +80,9 @@ thirdparty_sources = [
     "common/thread.cpp",
     "common/tensor.cpp",
 ]
-thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-thirdparty_include_dirs = [
+third_party_include_dirs = [
     "",
     "include",
     "mkl-dnn/include",
@@ -91,10 +91,10 @@ thirdparty_include_dirs = [
     "mkl-dnn/src/cpu/xbyak",
     "mkl-dnn/src/cpu",
 ]
-thirdparty_include_dirs = [thirdparty_dir + file for file in thirdparty_include_dirs]
+third_party_include_dirs = [third_party_dir + file for file in third_party_include_dirs]
 
 
-env_oidn.Prepend(CPPPATH=thirdparty_include_dirs)
+env_oidn.Prepend(CPPPATH=third_party_include_dirs)
 env_oidn.Append(
     CPPDEFINES=[
         "MKLDNN_THR=MKLDNN_THR_SEQ",
@@ -107,19 +107,19 @@ env_oidn.Append(
     ]
 )
 
-env_thirdparty = env_oidn.Clone()
-env_thirdparty.disable_warnings()
-env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-env.modules_sources += thirdparty_obj
+env_third_party = env_oidn.Clone()
+env_third_party.disable_warnings()
+env_third_party.add_source_files(third_party_obj, third_party_sources)
+env.modules_sources += third_party_obj
 
 if env["platform"] == "windows" and not env.msvc:
-    env_thirdparty.Append(CPPFLAGS=["-mstackrealign"])
+    env_third_party.Append(CPPFLAGS=["-mstackrealign"])
 
-weights_in_path = thirdparty_dir + "weights/rtlightmap_hdr.tza"
-weights_out_path = thirdparty_dir + "weights/rtlightmap_hdr.gen.cpp"
+weights_in_path = third_party_dir + "weights/rtlightmap_hdr.tza"
+weights_out_path = third_party_dir + "weights/rtlightmap_hdr.gen.cpp"
 
-env_thirdparty.Depends(weights_out_path, weights_in_path)
-env_thirdparty.CommandNoCache(
+env_third_party.Depends(weights_out_path, weights_in_path)
+env_third_party.CommandNoCache(
     weights_out_path, weights_in_path, resource_to_cpp.tza_to_cpp
 )
 
@@ -133,5 +133,5 @@ env_modules.add_source_files(
 )
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

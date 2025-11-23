@@ -1,0 +1,14 @@
+diff --git a/third-party/etc2comp/EtcFilter.cpp b/third-party/etc2comp/EtcFilter.cpp
+index bc899a53..9d46a088 100644
+--- a/third-party/etc2comp/EtcFilter.cpp
++++ b/third-party/etc2comp/EtcFilter.cpp
+@@ -228,6 +228,9 @@ int FilterTwoPass( RGBCOLOR *pSrcImage, int srcWidth, int srcHeight,
+     pTempImage = (RGBCOLOR *)malloc( destWidth * srcHeight * sizeof(RGBCOLOR) );
+     if ( pTempImage == NULL )
+     {
++        // Rebel changes start.
++        free( contrib );
++        // Rebel changes end.
+         return 0;
+     }
+ 
