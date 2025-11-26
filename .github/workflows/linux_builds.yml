@@ -47,7 +47,7 @@ jobs:
             artifact: true
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Linux dependencies
         shell: bash
@@ -109,7 +109,7 @@ jobs:
       # - path: RebelTestProject - Don't change. This is the folder the rest of the workflow uses.
       - name: Checkout test project
         if: ${{ matrix.test }}
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: RebelToolbox/RebelTestProject
           ref: main
