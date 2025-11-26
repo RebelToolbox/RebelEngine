@@ -14,15 +14,15 @@
 # if no standard short name exists) and are all included in plain text at the
 # end of this file (in alphabetical order).
 #
-# Disclaimer for thirdparty libraries:
-# ------------------------------------
+# Disclaimer for third-party libraries:
+# -------------------------------------
 #
-# Licensing details for thirdparty libraries in the 'thirdparty/' directory
+# Licensing details for third-party libraries in the 'third-party/' directory
 # are given in summarized form, i.e. with only the "main" license described
 # in the library's license statement. Different licenses of single files or
-# code snippets in thirdparty libraries are not documented here.
+# code snippets in third-party libraries are not documented here.
 # For example:
-#   Files: ./thirdparty/zlib/
+#   Files: ./third-party/zlib/
 #   Copyright: 1995-2017, Jean-loup Gailly and Mark Adler
 #   License: Zlib
 # The exact copyright for each file in that library *may* differ, and some
@@ -30,7 +30,7 @@
 # (e.g. a public domain dedication), but as far as Rebel Engine is concerned
 # the library is considered as a whole under the Zlib license.
 #
-# Note: When linking dynamically against thirdparty libraries instead of
+# Note: When linking dynamically against third-party libraries instead of
 # building them into the Rebel binary, you may remove the corresponding
 # license details from this file.
 
@@ -130,75 +130,75 @@ Copyright: 2022-Present, Rebel Engine contributors
  2007, Starbreeze Studios
 License: Expat and Zlib
 
-Files: ./thirdparty/bullet/
+Files: ./third-party/bullet/
 Comment: Bullet Continuous Collision Detection and Physics Library
 Copyright: 2003-2013, Erwin Coumans
 License: Zlib
 
-Files: ./thirdparty/certs/ca-bundle.crt
+Files: ./third-party/certs/ca-bundle.crt
 Comment: Mozilla CA certificate bundle
 Copyright: Mozilla Contributors
 License: MPL-2.0
 
-Files: ./thirdparty/cvtt/
+Files: ./third-party/cvtt/
 Comment: Convection Texture Tools Stand-Alone Kernels
 Copyright: 2018, Eric Lasota
  2018, Microsoft Corp.
 License: Expat
 
-Files: ./thirdparty/embree/
+Files: ./third-party/embree/
 Comment: Embree
 Copyright: 2009-2021, Intel Corporation
 License: Apache-2.0
 
-Files: ./thirdparty/enet/
+Files: ./third-party/enet/
 Comment: ENet
 Copyright: 2002-2020, Lee Salzman
 License: Expat
 
-Files: ./thirdparty/etc2comp/
+Files: ./third-party/etc2comp/
 Comment: Etc2Comp
 Copyright: 2015, Etc2Comp Authors
 License: Apache-2.0
 
-Files: ./thirdparty/fonts/DroidSans*.ttf
+Files: ./third-party/fonts/DroidSans*.ttf
 Comment: DroidSans font
 Copyright: 2008, The Android Open Source Project
 License: Apache-2.0
 
-Files: ./thirdparty/fonts/NotoSans*.ttf
+Files: ./third-party/fonts/NotoSans*.ttf
 Comment: Noto Sans font
 Copyright: 2012, Google Inc.
 License: OFL-1.1
 
-Files: ./thirdparty/fonts/Hack_Regular.ttf
+Files: ./third-party/fonts/Hack_Regular.ttf
 Comment: Hack font
 Copyright: 2018, Source Foundry Authors
   2003, Bitstream Inc.
 License: Expat and Bitstream Vera Fonts Copyright
 
-Files: ./thirdparty/freetype/
+Files: ./third-party/freetype/
 Comment: The FreeType Project
 Copyright: 1996-2020, David Turner, Robert Wilhelm, and Werner Lemberg.
 License: FTL
 
-Files: ./thirdparty/glad/
+Files: ./third-party/glad/
 Comment: glad
 Copyright: 2013-2020, David Herberth
  2007-2020 The Khronos Group Inc.
 License: Expat
 
-Files: ./thirdparty/jpeg-compressor/
+Files: ./third-party/jpeg-compressor/
 Comment: jpeg-compressor
 Copyright: 2012, Rich Geldreich
 License: public-domain or Apache-2.0
 
-Files: ./thirdparty/libogg/
+Files: ./third-party/libogg/
 Comment: OggVorbis
 Copyright: 2002, Xiph.org Foundation
 License: BSD-3-clause
 
-Files: ./thirdparty/libpng/
+Files: ./third-party/libpng/
 Comment: libpng
 Copyright: 1995-2019, The PNG Reference Library Authors.
  2018-2019, Cosmin Truta.
@@ -207,168 +207,168 @@ Copyright: 1995-2019, The PNG Reference Library Authors.
  1995-1996, Guy Eric Schalnat, Group 42, Inc.
 License: Zlib
 
-Files: ./thirdparty/libtheora/
+Files: ./third-party/libtheora/
 Comment: OggTheora
 Copyright: 2002-2009, Xiph.org Foundation
 License: BSD-3-clause
 
-Files: ./thirdparty/libvorbis/
+Files: ./third-party/libvorbis/
 Comment: OggVorbis
 Copyright: 2002-2015, Xiph.org Foundation
 License: BSD-3-clause
 
-Files: ./thirdparty/libwebp/
+Files: ./third-party/libwebp/
 Comment: WebP codec
 Copyright: 2010, Google Inc.
 License: BSD-3-clause
 
-Files: ./thirdparty/mbedtls/
+Files: ./third-party/mbedtls/
 Comment: Mbed TLS
 Copyright: The Mbed TLS Contributors
 License: Apache-2.0
 
-Files: ./thirdparty/minimp3/
+Files: ./third-party/minimp3/
 Comment: MiniMP3
 Copyright: lieff
 License: CC0-1.0
 
-Files: ./thirdparty/miniupnp/
+Files: ./third-party/miniupnp/
 Comment: MiniUPnP
 Copyright: 2005-2025, Thomas Bernard
 License: BSD-3-clause
 
-Files: ./thirdparty/minizip/
+Files: ./third-party/minizip/
 Comment: MiniZip
 Copyright: 1998-2010, Gilles Vollant
  2009-2010, Mathias Svensson
  2007-2008, Even Rouault
 License: Zlib
 
-Files: ./thirdparty/misc/clipper.cpp
- ./thirdparty/misc/clipper.hpp
+Files: ./third-party/misc/clipper.cpp
+ ./third-party/misc/clipper.hpp
 Comment: Clipper
 Copyright: 2010-2017, Angus Johnson
 License: BSL-1.0
 
-Files: ./thirdparty/misc/easing_equations.cpp
+Files: ./third-party/misc/easing_equations.cpp
 Comment: Robert Penner's Easing Functions
 Copyright: 2001, Robert Penner
 License: BSD-3-clause
 
-Files: ./thirdparty/misc/fastlz.c
- ./thirdparty/misc/fastlz.h
+Files: ./third-party/misc/fastlz.c
+ ./third-party/misc/fastlz.h
 Comment: FastLZ
 Copyright: 2005-2020, Ariya Hidayat
 License: Expat
 
-Files: ./thirdparty/misc/hq2x.cpp
- ./thirdparty/misc/hq2x.h
+Files: ./third-party/misc/hq2x.cpp
+ ./third-party/misc/hq2x.h
 Comment: hq2x implementation
 Copyright: 2016, Bruno Ribeiro
 License: Apache-2.0
 
-Files: ./thirdparty/misc/ifaddrs-android.cc
- ./thirdparty/misc/ifaddrs-android.h
+Files: ./third-party/misc/ifaddrs-android.cc
+ ./third-party/misc/ifaddrs-android.h
 Comment: libjingle
 Copyright: 2012-2013, Google Inc.
 License: BSD-3-clause
 
-Files: ./thirdparty/misc/mikktspace.c
- ./thirdparty/misc/mikktspace.h
+Files: ./third-party/misc/mikktspace.c
+ ./third-party/misc/mikktspace.h
 Comment: Tangent Space Normal Maps implementation
 Copyright: 2011, Morten S. Mikkelsen
 License: Zlib
 
-Files: ./thirdparty/misc/open-simplex-noise.c
- ./thirdparty/misc/open-simplex-noise.h
+Files: ./third-party/misc/open-simplex-noise.c
+ ./third-party/misc/open-simplex-noise.h
 Comment: OpenSimplex Noise
 Copyright: 2014, Stephen M. Cameron
 License: public-domain or Unlicense
 
-Files: ./thirdparty/misc/pcg.cpp
- ./thirdparty/misc/pcg.h
+Files: ./third-party/misc/pcg.cpp
+ ./third-party/misc/pcg.h
 Comment: Minimal PCG32 implementation
 Copyright: 2014, M.E. O'Neill
 License: Apache-2.0
 
-Files: ./thirdparty/misc/smaz.c
- ./thirdparty/misc/smaz.h
+Files: ./third-party/misc/smaz.c
+ ./third-party/misc/smaz.h
 Comment: SMAZ
 Copyright: 2006-2009, Salvatore Sanfilippo
 License: BSD-3-clause
 
-Files: ./thirdparty/misc/stb_vorbis.c
+Files: ./third-party/misc/stb_vorbis.c
 Comment: stb libraries
 Copyright: Sean Barrett
 License: public-domain or Unlicense or Expat
 
-Files: ./thirdparty/misc/triangulator.cpp
- ./thirdparty/misc/triangulator.h
+Files: ./third-party/misc/triangulator.cpp
+ ./third-party/misc/triangulator.h
 Comment: PolyPartition
 Copyright: 2011, Ivan Fratric
 License: Expat
 
-Files: ./thirdparty/misc/yuv2rgb.h
+Files: ./third-party/misc/yuv2rgb.h
 Comment: YUV2RGB
 Copyright: 2008-2011, Robin Watts
 License: BSD-2-clause
 
-Files: ./thirdparty/nanosvg/
+Files: ./third-party/nanosvg/
 Comment: NanoSVG
 Copyright: 2013-2014, Mikko Mononen
 License: Zlib
 
-Files: ./thirdparty/pcre2/
+Files: ./third-party/pcre2/
 Comment: PCRE2
 Copyright: 1997-2020, University of Cambridge
  2009-2020, Zoltan Herczeg
 License: BSD-3-clause
 
-Files: ./thirdparty/pvrtccompressor/
+Files: ./third-party/pvrtccompressor/
 Comment: PvrTcCompressor
 Copyright: 2014, Jeffrey Lim.
 License: BSD-3-clause
 
-Files: ./thirdparty/recastnavigation/
+Files: ./third-party/recastnavigation/
 Comment: Recast
 Copyright: 2009, Mikko Mononen
 License: Zlib
 
-Files: ./thirdparty/squish/
+Files: ./third-party/squish/
 Comment: libSquish
 Copyright: 2006, Simon Brown
 License: Expat
 
-Files: ./thirdparty/tinyexr/
+Files: ./third-party/tinyexr/
 Comment: TinyEXR
 Copyright: 2014-2020, Syoyo Fujita
   2002, Industrial Light & Magic, a division of Lucas Digital Ltd. LLC
 License: BSD-3-clause
 
-Files: ./thirdparty/vhacd/
+Files: ./third-party/vhacd/
 Comment: V-HACD
 Copyright: 2011, Khaled Mamou
   2003-2009, Erwin Coumans
 License: BSD-3-clause
 
-Files: ./thirdparty/wslay/
+Files: ./third-party/wslay/
 Comment: Wslay
 Copyright: 2011, 2012, 2015, Tatsuhiro Tsujikawa
 License: Expat
 
-Files: ./thirdparty/xatlas/
+Files: ./third-party/xatlas/
 Comment: xatlas
 Copyright: 2018-2020, Jonathan Young
   2013, Thekla, Inc
   2006, NVIDIA Corporation, Ignacio Castano
 License: Expat
 
-Files: ./thirdparty/zlib/
+Files: ./third-party/zlib/
 Comment: zlib
 Copyright: 1995-2017, Jean-loup Gailly and Mark Adler
 License: Zlib
 
-Files: ./thirdparty/zstd/
+Files: ./third-party/zstd/
 Comment: Zstandard
 Copyright: 2016-2020, Facebook, Inc.
 License: BSD-3-clause

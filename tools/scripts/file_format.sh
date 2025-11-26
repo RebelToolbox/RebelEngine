@@ -29,7 +29,7 @@ while IFS= read -rd '' f; do
         continue
     elif [[ "$f" == *"po" ]]; then
         continue
-    elif [[ "$f" == "thirdparty"* ]]; then
+    elif [[ "$f" == "third-party"* ]]; then
         continue
     elif [[ "$f" == "platforms/android/project/engine/src/main/java/com/google"* ]]; then
         continue

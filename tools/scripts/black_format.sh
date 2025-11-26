@@ -7,7 +7,7 @@ set -uo pipefail
 # Apply black.
 echo -e "Formatting Python files..."
 PY_FILES=$(find \( -path "./.git" \
-                -o -path "./thirdparty" \
+                -o -path "./third-party" \
                 \) -prune \
                 -o \( -name "SConstruct" \
                 -o -name "SCsub" \

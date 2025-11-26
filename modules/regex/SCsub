@@ -5,18 +5,18 @@ Import("env_modules")
 
 env_regex = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["builtin_pcre2"]:
-    thirdparty_dir = "#thirdparty/pcre2/src/"
-    thirdparty_flags = ["PCRE2_STATIC", "HAVE_CONFIG_H", "SUPPORT_UNICODE"]
+    third_party_dir = "#third-party/pcre2/src/"
+    third_party_flags = ["PCRE2_STATIC", "HAVE_CONFIG_H", "SUPPORT_UNICODE"]
 
     if env["builtin_pcre2_with_jit"]:
-        thirdparty_flags.append("SUPPORT_JIT")
+        third_party_flags.append("SUPPORT_JIT")
 
-    thirdparty_sources = [
+    third_party_sources = [
         "pcre2_auto_possess.c",
         "pcre2_chartables.c",
         "pcre2_compile.c",
@@ -47,18 +47,18 @@ if env["builtin_pcre2"]:
         "pcre2_xclass.c",
     ]
 
-    thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+    third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-    env_regex.Prepend(CPPPATH=[thirdparty_dir])
-    env_regex.Append(CPPDEFINES=thirdparty_flags)
+    env_regex.Prepend(CPPPATH=[third_party_dir])
+    env_regex.Append(CPPDEFINES=third_party_flags)
 
     def pcre2_builtin(width):
         env_pcre2 = env_regex.Clone()
         env_pcre2.disable_warnings()
         env_pcre2["OBJSUFFIX"] = "_" + width + env_pcre2["OBJSUFFIX"]
         env_pcre2.Append(CPPDEFINES=[("PCRE2_CODE_UNIT_WIDTH", width)])
-        env_pcre2.add_source_files(thirdparty_obj, thirdparty_sources)
-        env.modules_sources += thirdparty_obj
+        env_pcre2.add_source_files(third_party_obj, third_party_sources)
+        env.modules_sources += third_party_obj
 
     pcre2_builtin("16")
     pcre2_builtin("32")
@@ -72,5 +72,5 @@ env_regex.Append(CPPDEFINES=[("PCRE2_CODE_UNIT_WIDTH", 0)])
 env_regex.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

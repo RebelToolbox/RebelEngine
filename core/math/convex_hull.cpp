@@ -6,7 +6,7 @@
 
 /*
  * Based on Rebel's patched VHACD-version of Bullet's btConvexHullComputer.
- * See /thirdparty/vhacd/btConvexHullComputer.cpp at
+ * See /third-party/vhacd/btConvexHullComputer.cpp at
  * 64403ddcab9f1dca2408f0a412a22d899708bbb1 In turn, based on
  * /src/LinearMath/btConvexHullComputer.cpp in
  * <https://github.com/bulletphysics/bullet3> at

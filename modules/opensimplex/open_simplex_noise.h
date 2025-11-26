@@ -10,7 +10,7 @@
 #include "core/image.h"
 #include "core/reference.h"
 #include "scene/resources/texture.h"
-#include "thirdparty/misc/open-simplex-noise.h"
+#include "third-party/misc/open-simplex-noise.h"
 
 class OpenSimplexNoise : public Resource {
     GDCLASS(OpenSimplexNoise, Resource);

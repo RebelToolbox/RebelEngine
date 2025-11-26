@@ -1,0 +1,16 @@
+diff --git a/third-party/bullet/LinearMath/btVector3.h b/third-party/bullet/LinearMath/btVector3.h
+index 9da16277..e15a8ab3 100644
+--- a/third-party/bullet/LinearMath/btVector3.h
++++ b/third-party/bullet/LinearMath/btVector3.h
+@@ -1092,6 +1092,11 @@ public:
+ 		mVec128 = rhs.mVec128;
+ 	}
+ 
++	SIMD_FORCE_INLINE btVector4(const btVector4& rhs)
++	{
++		mVec128 = rhs.mVec128;
++	}
++
+ 	SIMD_FORCE_INLINE btVector4&
+ 	operator=(const btVector4& v)
+ 	{

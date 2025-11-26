@@ -5,13 +5,13 @@ Import("env_modules")
 
 env_minimp3 = env_modules.Clone()
 
-thirdparty_dir = "#thirdparty/minimp3/"
+third_party_dir = "#third-party/minimp3/"
 
 # Treat minimp3 headers as system headers to avoid raising warnings. Not supported on MSVC.
 if not env.msvc:
-    env_minimp3.Append(CPPFLAGS=["-isystem", Dir(thirdparty_dir).path])
+    env_minimp3.Append(CPPFLAGS=["-isystem", Dir(third_party_dir).path])
 else:
-    env_minimp3.Prepend(CPPPATH=[thirdparty_dir])
+    env_minimp3.Prepend(CPPPATH=[third_party_dir])
 
 # Rebel source files
 env_minimp3.add_source_files(env.modules_sources, "*.cpp")

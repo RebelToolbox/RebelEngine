@@ -8,7 +8,7 @@
 
 #include "core/os/os.h"
 #include "core/project_settings.h"
-#include "thirdparty/misc/yuv2rgb.h"
+#include "third-party/misc/yuv2rgb.h"
 
 int VideoStreamPlaybackTheora::buffer_data() {
     char* buffer = ogg_sync_buffer(&oy, 4096);

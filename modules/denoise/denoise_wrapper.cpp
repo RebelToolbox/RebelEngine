@@ -7,7 +7,7 @@
 #include "denoise_wrapper.h"
 
 #include "core/os/memory.h"
-#include "thirdparty/oidn/include/OpenImageDenoise/oidn.h"
+#include "third-party/oidn/include/OpenImageDenoise/oidn.h"
 
 #include <stdio.h>
 

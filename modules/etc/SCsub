@@ -5,13 +5,13 @@ Import("env_modules")
 
 env_etc = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 # Not unbundled so far since not widespread as shared library
-thirdparty_dir = "#thirdparty/etc2comp/"
-thirdparty_sources = [
+third_party_dir = "#third-party/etc2comp/"
+third_party_sources = [
     "EtcBlock4x4.cpp",
     "EtcBlock4x4Encoding.cpp",
     "EtcBlock4x4Encoding_ETC1.cpp",
@@ -28,14 +28,14 @@ thirdparty_sources = [
     "EtcMath.cpp",
     "EtcSortedBlockList.cpp",
 ]
-thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-env_etc.Prepend(CPPPATH=[thirdparty_dir])
+env_etc.Prepend(CPPPATH=[third_party_dir])
 
-env_thirdparty = env_etc.Clone()
-env_thirdparty.disable_warnings()
-env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-env.modules_sources += thirdparty_obj
+env_third_party = env_etc.Clone()
+env_third_party.disable_warnings()
+env_third_party.add_source_files(third_party_obj, third_party_sources)
+env.modules_sources += third_party_obj
 
 # Rebel source files
 
@@ -44,5 +44,5 @@ module_obj = []
 env_etc.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

@@ -260,7 +260,7 @@ void CameraFeed::set_YCbCr_imgs(
     if (active) {
         VisualServer* vs = VisualServer::get_singleton();
 
-        ///@TODO investigate whether we can use thirdparty/misc/yuv2rgb.h here
+        ///@TODO investigate whether we can use third-party/misc/yuv2rgb.h here
         /// to convert our YUV data to RGB, our shader approach is potentially
         /// faster though..
         // Wondering about including that into multiple projects, may cause

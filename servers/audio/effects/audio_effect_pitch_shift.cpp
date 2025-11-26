@@ -9,7 +9,7 @@
 #include "core/math/math_funcs.h"
 #include "servers/audio_server.h"
 
-// Disabling clang-format for thirdparty code snippet
+// Disabling clang-format for third-party code snippet
 /* clang-format off */
 
 /****************************************************************************

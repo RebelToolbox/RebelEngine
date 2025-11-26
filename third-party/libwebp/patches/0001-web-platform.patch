@@ -1,0 +1,46 @@
+diff --git a/third-party/libwebp/src/utils/bit_reader_utils.c b/third-party/libwebp/src/utils/bit_reader_utils.c
+index 5e3a8b37..b218236f 100644
+--- a/third-party/libwebp/src/utils/bit_reader_utils.c
++++ b/third-party/libwebp/src/utils/bit_reader_utils.c
+@@ -48,7 +48,15 @@ void VP8InitBitReader(VP8BitReader* const br,
+   br->bits    = -8;   // to load the very first 8bits
+   br->eof     = 0;
+   VP8BitReaderSetBuffer(br, start, size);
++// Rebel changes start.
++#ifdef WEB_ENABLED
++  // The web platform requires aligned reads.
++  while(((uintptr_t)br->buf & 1) != 0 && !br->eof)
++    VP8LoadFinalBytes(br);
++#else
+   VP8LoadNewBytes(br);
++#endif
++// Rebel changes end.
+ }
+ 
+ void VP8RemapBitReader(VP8BitReader* const br, ptrdiff_t offset) {
+diff --git a/third-party/libwebp/src/utils/bit_reader_utils.h b/third-party/libwebp/src/utils/bit_reader_utils.h
+index ddce8606..6ce14509 100644
+--- a/third-party/libwebp/src/utils/bit_reader_utils.h
++++ b/third-party/libwebp/src/utils/bit_reader_utils.h
+@@ -61,6 +61,11 @@ extern "C" {
+ // BITS can be any multiple of 8 from 8 to 56 (inclusive).
+ // Pick values that fit natural register size.
+ 
++// Rebel changes start.
++#ifdef WEB_ENABLED
++#define BITS 16
++#else
++// Rebel changes end.
+ #if defined(__i386__) || defined(_M_IX86)      // x86 32bit
+ #define BITS 24
+ #elif defined(__x86_64__) || defined(_M_X64)   // x86 64bit
+@@ -76,6 +81,9 @@ extern "C" {
+ #else                                          // reasonable default
+ #define BITS 24
+ #endif
++// Rebel changes start.
++#endif
++// Rebel changes end.
+ 
+ //------------------------------------------------------------------------------
+ // Derived types and constants:

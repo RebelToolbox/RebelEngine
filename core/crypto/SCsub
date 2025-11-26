@@ -6,21 +6,21 @@ env_crypto = env.Clone()
 
 is_builtin = env["builtin_mbedtls"]
 has_module = env["module_mbedtls_enabled"]
-thirdparty_obj = []
+third_party_obj = []
 
-# If we're using the builtin thirdparty Mbed TLS library,
+# If we're using the builtin third-party Mbed TLS library,
 # but we're not using the full Mbed TLS module,
 # we need to include the path to the Mbed TLS header files.
 if is_builtin or not has_module:
-    env_crypto.Prepend(CPPPATH=["#thirdparty/mbedtls/include"])
+    env_crypto.Prepend(CPPPATH=["#third-party/mbedtls/include"])
 
 # If we're not using the full Mbed TLS module,
 # we need to create a custom build of a subset of the Mbed TLS library.
 if not has_module:
-    env_thirdparty = env_crypto.Clone()
-    env_thirdparty.disable_warnings()
+    env_third_party = env_crypto.Clone()
+    env_third_party.disable_warnings()
     # Custom config file
-    env_thirdparty.Append(
+    env_third_party.Append(
         CPPDEFINES=[
             (
                 "MBEDTLS_CONFIG_FILE",
@@ -28,8 +28,8 @@ if not has_module:
             )
         ]
     )
-    thirdparty_mbedtls_dir = "#thirdparty/mbedtls/library/"
-    thirdparty_mbedtls_sources = [
+    third_party_mbedtls_dir = "#third-party/mbedtls/library/"
+    third_party_mbedtls_sources = [
         "aes.c",
         "base64.c",
         "constant_time.c",
@@ -37,12 +37,12 @@ if not has_module:
         "sha1.c",
         "sha256.c",
     ]
-    thirdparty_mbedtls_sources = [
-        thirdparty_mbedtls_dir + file for file in thirdparty_mbedtls_sources
+    third_party_mbedtls_sources = [
+        third_party_mbedtls_dir + file for file in third_party_mbedtls_sources
     ]
-    thirdparty_mbedtls_sources.append("mbedtls_platform_util.c")
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_mbedtls_sources)
-    env.core_sources += thirdparty_obj
+    third_party_mbedtls_sources.append("mbedtls_platform_util.c")
+    env_third_party.add_source_files(third_party_obj, third_party_mbedtls_sources)
+    env.core_sources += third_party_obj
 
 
 # Rebel source files
@@ -52,5 +52,5 @@ core_obj = []
 env_crypto.add_source_files(core_obj, "*.cpp")
 env.core_sources += core_obj
 
-# Needed to force rebuilding the core files when the thirdparty library is updated.
-env.Depends(core_obj, thirdparty_obj)
+# Needed to force rebuilding the core files when the third-party library is updated.
+env.Depends(core_obj, third_party_obj)

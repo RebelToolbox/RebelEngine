@@ -16,7 +16,7 @@ include_files="SConstruct SCsub"
 include_extensions=".py"
 
 # Directories to ignore.
-exclude_directories="thirdparty"
+exclude_directories="third-party"
 
 # `pre-commit-style-check` uses six variables:
 # `application_name`: The style check application to run.

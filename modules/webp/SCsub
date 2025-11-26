@@ -5,13 +5,13 @@ Import("env_modules")
 
 env_webp = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["builtin_libwebp"]:
-    thirdparty_dir = "#thirdparty/libwebp/"
-    thirdparty_sources = [
+    third_party_dir = "#third-party/libwebp/"
+    third_party_sources = [
         "sharpyuv/sharpyuv_cpu.c",
         "sharpyuv/sharpyuv_csp.c",
         "sharpyuv/sharpyuv_dsp.c",
@@ -138,14 +138,14 @@ if env["builtin_libwebp"]:
         "src/utils/thread_utils.c",
         "src/utils/utils.c",
     ]
-    thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+    third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-    env_webp.Prepend(CPPPATH=[thirdparty_dir])
+    env_webp.Prepend(CPPPATH=[third_party_dir])
 
-    env_thirdparty = env_webp.Clone()
-    env_thirdparty.disable_warnings()
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-    env.modules_sources += thirdparty_obj
+    env_third_party = env_webp.Clone()
+    env_third_party.disable_warnings()
+    env_third_party.add_source_files(third_party_obj, third_party_sources)
+    env.modules_sources += third_party_obj
 
 
 # Rebel source files
@@ -155,5 +155,5 @@ module_obj = []
 env_webp.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

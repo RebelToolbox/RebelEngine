@@ -10,7 +10,7 @@
 #include "core/math/math_defs.h"
 #include "core/math/random_pcg.h"
 #include "core/typedefs.h"
-#include "thirdparty/misc/pcg.h"
+#include "third-party/misc/pcg.h"
 
 #include <float.h>
 #include <math.h>

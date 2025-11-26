@@ -5,12 +5,12 @@ Import("env_modules")
 
 env_mbed_tls = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["builtin_mbedtls"]:
-    thirdparty_sources = [
+    third_party_sources = [
         "aes.c",
         "aesce.c",
         "aesni.c",
@@ -121,15 +121,15 @@ if env["builtin_mbedtls"]:
         "x509write_csr.c",
     ]
 
-    thirdparty_dir = "#thirdparty/mbedtls/library/"
-    thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+    third_party_dir = "#third-party/mbedtls/library/"
+    third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-    env_mbed_tls.Prepend(CPPPATH=["#thirdparty/mbedtls/include/"])
+    env_mbed_tls.Prepend(CPPPATH=["#third-party/mbedtls/include/"])
 
-    env_thirdparty = env_mbed_tls.Clone()
-    env_thirdparty.disable_warnings()
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-    env.modules_sources += thirdparty_obj
+    env_third_party = env_mbed_tls.Clone()
+    env_third_party.disable_warnings()
+    env_third_party.add_source_files(third_party_obj, third_party_sources)
+    env.modules_sources += third_party_obj
 
 
 # Rebel source files
@@ -140,5 +140,5 @@ env_mbed_tls.add_source_files(module_obj, "*.cpp")
 
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

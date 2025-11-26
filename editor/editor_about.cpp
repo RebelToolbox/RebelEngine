@@ -183,12 +183,12 @@ EditorAbout::EditorAbout() {
     _license_text->set_text(String::utf8(REBEL_LICENSE_TEXT));
     tc->add_child(_license_text);
 
-    // Thirdparty License
+    // Third-party License
 
-    VBoxContainer* license_thirdparty = memnew(VBoxContainer);
-    license_thirdparty->set_name(TTR("Third-party Licenses"));
-    license_thirdparty->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-    tc->add_child(license_thirdparty);
+    VBoxContainer* license_third_party = memnew(VBoxContainer);
+    license_third_party->set_name(TTR("Third-party Licenses"));
+    license_third_party->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+    tc->add_child(license_third_party);
 
     Label* tpl_label = memnew(Label);
     tpl_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
@@ -200,13 +200,13 @@ EditorAbout::EditorAbout() {
         "with their respective copyright statements and license terms."
     ));
     tpl_label->set_size(Size2(630, 1) * EDSCALE);
-    license_thirdparty->add_child(tpl_label);
+    license_third_party->add_child(tpl_label);
 
     HSplitContainer* tpl_hbc = memnew(HSplitContainer);
     tpl_hbc->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     tpl_hbc->set_v_size_flags(Control::SIZE_EXPAND_FILL);
     tpl_hbc->set_split_offset(240 * EDSCALE);
-    license_thirdparty->add_child(tpl_hbc);
+    license_third_party->add_child(tpl_hbc);
 
     _tpl_tree = memnew(Tree);
     _tpl_tree->set_hide_root(true);

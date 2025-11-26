@@ -12,7 +12,7 @@ CLANG_FORMAT_FILE_EXTS=(".c" ".h" ".cpp" ".hpp" ".cc" ".hh" ".cxx" ".m" ".mm" ".
 git grep -zIl '' |
 while IFS= read -rd '' f; do
     # Exclude some files.
-    if [[ "$f" == "thirdparty"* ]]; then
+    if [[ "$f" == "third-party"* ]]; then
         continue
     elif [[ "$f" == "platforms/android/project/engine/src/main/java/com/google"* ]]; then
         continue

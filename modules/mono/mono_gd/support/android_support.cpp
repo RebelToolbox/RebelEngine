@@ -14,7 +14,7 @@
 #include <sys/system_properties.h>
 
 #if __ANDROID_API__ < 24
-#include "thirdparty/misc/ifaddrs-android.h"
+#include "third-party/misc/ifaddrs-android.h"
 #else
 #include <ifaddrs.h>
 #endif

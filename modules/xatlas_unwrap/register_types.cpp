@@ -7,7 +7,7 @@
 #include "register_types.h"
 
 #include "core/error_macros.h"
-#include "thirdparty/xatlas/xatlas.h"
+#include "third-party/xatlas/xatlas.h"
 
 #include <stdio.h>
 #include <stdlib.h>

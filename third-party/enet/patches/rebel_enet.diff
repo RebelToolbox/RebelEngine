@@ -1,0 +1,99 @@
+diff --git a/third-party/enet/enet/enet.h b/third-party/enet/enet/enet.h
+index fc45cbd0..053623a8 100644
+--- a/third-party/enet/enet/enet.h
++++ b/third-party/enet/enet/enet.h
+@@ -10,13 +10,10 @@ extern "C"
+ {
+ #endif
+ 
++#include <stdint.h>
+ #include <stdlib.h>
+ 
+-#ifdef _WIN32
+-#include "enet/win32.h"
+-#else
+-#include "enet/unix.h"
+-#endif
++#include "enet/rebel_enet.h"
+ 
+ #include "enet/types.h"
+ #include "enet/protocol.h"
+@@ -76,22 +73,6 @@ typedef enum _ENetSocketShutdown
+ #define ENET_HOST_BROADCAST 0xFFFFFFFFU
+ #define ENET_PORT_ANY       0
+ 
+-/**
+- * Portable internet address structure. 
+- *
+- * The host must be specified in network byte-order, and the port must be in host 
+- * byte-order. The constant ENET_HOST_ANY may be used to specify the default 
+- * server host. The constant ENET_HOST_BROADCAST may be used to specify the
+- * broadcast address (255.255.255.255).  This makes sense for enet_host_connect,
+- * but not for enet_host_create.  Once a server responds to a broadcast, the
+- * address is updated from ENET_HOST_BROADCAST to the server's actual IP address.
+- */
+-typedef struct _ENetAddress
+-{
+-   enet_uint32 host;
+-   enet_uint16 port;
+-} ENetAddress;
+-
+ /**
+  * Packet flag bit constants.
+  *
+@@ -604,6 +585,8 @@ ENET_API size_t enet_range_coder_decompress (void *, const enet_uint8 *, size_t,
+    
+ extern size_t enet_protocol_command_size (enet_uint8);
+ 
++#include "enet/rebel_enet_ext.h"
++
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/third-party/enet/host.c b/third-party/enet/host.c
+index 3b2180f7..21ab27e2 100644
+--- a/third-party/enet/host.c
++++ b/third-party/enet/host.c
+@@ -87,7 +87,7 @@ enet_host_create (const ENetAddress * address, size_t peerCount, size_t channelL
+     host -> commandCount = 0;
+     host -> bufferCount = 0;
+     host -> checksum = NULL;
+-    host -> receivedAddress.host = ENET_HOST_ANY;
++    memset(host -> receivedAddress.host, 0, 16);
+     host -> receivedAddress.port = 0;
+     host -> receivedData = NULL;
+     host -> receivedDataLength = 0;
+diff --git a/third-party/enet/protocol.c b/third-party/enet/protocol.c
+index 9d654f1d..d7fe80f1 100644
+--- a/third-party/enet/protocol.c
++++ b/third-party/enet/protocol.c
+@@ -309,7 +309,7 @@ enet_protocol_handle_connect (ENetHost * host, ENetProtocolHeader * header, ENet
+         }
+         else 
+         if (currentPeer -> state != ENET_PEER_STATE_CONNECTING &&
+-            currentPeer -> address.host == host -> receivedAddress.host)
++            enet_host_equal(currentPeer -> address.host, host -> receivedAddress.host))
+         {
+             if (currentPeer -> address.port == host -> receivedAddress.port &&
+                 currentPeer -> connectID == command -> connect.connectID)
+@@ -1031,9 +1031,8 @@ enet_protocol_handle_incoming_commands (ENetHost * host, ENetEvent * event)
+ 
+        if (peer -> state == ENET_PEER_STATE_DISCONNECTED ||
+            peer -> state == ENET_PEER_STATE_ZOMBIE ||
+-           ((host -> receivedAddress.host != peer -> address.host ||
+-             host -> receivedAddress.port != peer -> address.port) &&
+-             peer -> address.host != ENET_HOST_BROADCAST) ||
++           (!enet_host_equal(host -> receivedAddress.host, peer -> address.host) ||
++             host -> receivedAddress.port != peer -> address.port) ||
+            (peer -> outgoingPeerID < ENET_PROTOCOL_MAXIMUM_PEER_ID &&
+             sessionID != peer -> incomingSessionID))
+          return 0;
+@@ -1075,7 +1074,7 @@ enet_protocol_handle_incoming_commands (ENetHost * host, ENetEvent * event)
+        
+     if (peer != NULL)
+     {
+-       peer -> address.host = host -> receivedAddress.host;
++       enet_address_set_ip(&(peer -> address), host -> receivedAddress.host, 16);
+        peer -> address.port = host -> receivedAddress.port;
+        peer -> incomingDataTotal += host -> receivedDataLength;
+     }

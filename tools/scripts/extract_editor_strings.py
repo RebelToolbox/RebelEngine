@@ -77,7 +77,7 @@ def print_error(error):
 def get_files():
     filepaths = []
     for root, dirs, files in os.walk("."):
-        dirs[:] = [d for d in dirs if d not in ["thirdparty"]]
+        dirs[:] = [d for d in dirs if d not in ["third-party"]]
         files[:] = [f for f in files if not f.endswith(".gen.h")]
         for file in fnmatch.filter(files, "*.cpp"):
             filepaths.append(os.path.join(root, file))

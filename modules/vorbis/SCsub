@@ -3,18 +3,18 @@
 Import("env")
 Import("env_modules")
 
-# Only kept to build the thirdparty library used by the theora and webm
+# Only kept to build the third-party library used by the theora and webm
 # modules. We now use stb_vorbis for AudioStreamOGGVorbis.
 
 env_vorbis = env_modules.Clone()
 
-# Thirdparty source files
+# Third-party source files
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["builtin_libvorbis"]:
-    thirdparty_dir = "#thirdparty/libvorbis/"
-    thirdparty_sources = [
+    third_party_dir = "#third-party/libvorbis/"
+    third_party_sources = [
         # "analysis.c",
         # "barkmel.c",
         "bitrate.c",
@@ -42,18 +42,18 @@ if env["builtin_libvorbis"]:
         "window.c",
     ]
 
-    thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+    third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-    env_vorbis.Prepend(CPPPATH=[thirdparty_dir])
+    env_vorbis.Prepend(CPPPATH=[third_party_dir])
 
     # also requires libogg
     if env["builtin_libogg"]:
-        env_vorbis.Prepend(CPPPATH=["#thirdparty/libogg"])
+        env_vorbis.Prepend(CPPPATH=["#third-party/libogg"])
 
-    env_thirdparty = env_vorbis.Clone()
-    env_thirdparty.disable_warnings()
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-    env.modules_sources += thirdparty_obj
+    env_third_party = env_vorbis.Clone()
+    env_third_party.disable_warnings()
+    env_third_party.add_source_files(third_party_obj, third_party_sources)
+    env.modules_sources += third_party_obj
 
 
 # Rebel source files
@@ -63,5 +63,5 @@ module_obj = []
 env_vorbis.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj
 
-# Needed to force rebuilding the module files when the thirdparty library is updated.
-env.Depends(module_obj, thirdparty_obj)
+# Needed to force rebuilding the module files when the third-party library is updated.
+env.Depends(module_obj, third_party_obj)

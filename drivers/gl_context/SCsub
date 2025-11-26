@@ -2,25 +2,25 @@
 
 Import("env")
 
-thirdparty_obj = []
+third_party_obj = []
 
 if env["platform"] in ["macos", "windows", "linux"]:
-    # Thirdparty source files
-    thirdparty_dir = "#thirdparty/glad/"
-    thirdparty_sources = [
+    # Third-party source files
+    third_party_dir = "#third-party/glad/"
+    third_party_sources = [
         "glad.c",
     ]
-    thirdparty_sources = [thirdparty_dir + file for file in thirdparty_sources]
+    third_party_sources = [third_party_dir + file for file in third_party_sources]
 
-    env.Prepend(CPPPATH=[thirdparty_dir])
+    env.Prepend(CPPPATH=[third_party_dir])
 
     env.Append(CPPDEFINES=["GLAD_ENABLED"])
     env.Append(CPPDEFINES=["GLES_OVER_GL"])
 
-    env_thirdparty = env.Clone()
-    env_thirdparty.disable_warnings()
-    env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
-    env.drivers_sources += thirdparty_obj
+    env_third_party = env.Clone()
+    env_third_party.disable_warnings()
+    env_third_party.add_source_files(third_party_obj, third_party_sources)
+    env.drivers_sources += third_party_obj
 
 
 # Rebel source files
@@ -30,5 +30,5 @@ driver_obj = []
 env.add_source_files(driver_obj, "*.cpp")
 env.drivers_sources += driver_obj
 
-# Needed to force rebuilding the driver files when the thirdparty code is updated.
-env.Depends(driver_obj, thirdparty_obj)
+# Needed to force rebuilding the driver files when the third-party code is updated.
+env.Depends(driver_obj, third_party_obj)
