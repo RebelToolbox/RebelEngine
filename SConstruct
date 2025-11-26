@@ -517,7 +517,8 @@ if selected_platform in platform_list:
         if env["werror"]:
             env.Append(CCFLAGS=["/WX"])
     else:  # GCC, Clang
-        version = methods.get_compiler_version(env) or [-1, -1]
+        if methods.using_gcc(env):
+            version = methods.get_compiler_version(env) or [-1, -1]
 
         common_warnings = []
 

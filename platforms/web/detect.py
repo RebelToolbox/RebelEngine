@@ -1,4 +1,5 @@
 import os
+import subprocess
 import sys
 
 from emscripten_helpers import (
@@ -10,7 +11,8 @@ from emscripten_helpers import (
     create_template_zip,
 )
 from methods import get_compiler_version
-from SCons.Util import WhereIs
+from SCons.Platform import TempFileMunge
+from shutil import which
 
 
 def is_active():
@@ -22,7 +24,7 @@ def get_name():
 
 
 def can_build():
-    return WhereIs("emcc") is not None
+    return True
 
 
 def get_opts():
@@ -55,6 +57,20 @@ def get_opts():
             "Use closure compiler to minimize JavaScript code",
             False,
         ),
+        (
+            "emsdk",
+            "Path to emsdk",
+            (
+                os.environ["EMSDK"]
+                if "EMSDK" in os.environ
+                else os.path.join(os.getcwd(), "emsdk")
+            ),
+        ),
+        (
+            "emscripten_version",
+            "Version of Emscripten to use.",
+            "latest",
+        ),
     ]
 
 
@@ -76,6 +92,14 @@ def configure(env):
     except Exception:
         print("Initial memory must be a valid integer")
         sys.exit(255)
+
+    prepare_web(env)
+    if is_emscripten_active(env):
+        print("Building with active Emscripten")
+    else:
+        print("Building with Emscripten " + env["emscripten_version"] + ".")
+    if get_host_platform() == "windows":
+        use_response_files(env)
 
     ## Build type
     if env["target"].startswith("release"):
@@ -117,9 +141,6 @@ def configure(env):
         env.Append(CPPDEFINES=["NO_SAFE_CAST"])
 
     env.Append(LINKFLAGS=["-s", "INITIAL_MEMORY=%sMB" % env["initial_memory"]])
-
-    ## Copy env variables.
-    env["ENV"] = os.environ
 
     # LTO
     if env["use_thinlto"]:
@@ -171,7 +192,6 @@ def configure(env):
 
     env["CC"] = "emcc"
     env["CXX"] = "em++"
-
     env["AR"] = "emar"
     env["RANLIB"] = "emranlib"
 
@@ -184,11 +204,8 @@ def configure(env):
     )
     env["ARCOM"] = "${TEMPFILE(ARCOM_POSIX)}"
 
-    # All intermediate files are just LLVM bitcode.
-    env["OBJPREFIX"] = ""
-    env["OBJSUFFIX"] = ".bc"
-    env["PROGPREFIX"] = ""
     # Program() output consists of multiple files, so specify suffixes manually at builder.
+    env["PROGPREFIX"] = ""
     env["PROGSUFFIX"] = ""
     env["LIBPREFIX"] = "lib"
     env["LIBSUFFIX"] = ".a"
@@ -219,13 +236,6 @@ def configure(env):
         env.Append(CPPDEFINES=["NO_THREADS"])
 
     if env["gdnative_enabled"]:
-        major, minor, patch = get_compiler_version(env)
-        if major < 2 or (major == 2 and minor == 0 and patch < 10):
-            print(
-                "GDNative support requires emscripten >= 2.0.10, detected: %s.%s.%s"
-                % (major, minor, patch)
-            )
-            sys.exit(255)
         env.Append(CCFLAGS=["-s", "RELOCATABLE=1"])
         env.Append(LINKFLAGS=["-s", "RELOCATABLE=1"])
         # Weak symbols are broken upstream: https://github.com/emscripten-core/emscripten/issues/12819
@@ -257,3 +267,205 @@ def configure(env):
 
     # Add code that allow exiting runtime.
     env.Append(LINKFLAGS=["-s", "EXIT_RUNTIME=1"])
+
+
+def prepare_web(environment):
+    if get_host_platform() == "windows":
+        prepare_web_windows(environment)
+    if is_emscripten_active(environment):
+        print("EMSDK environment variable found.")
+        check_active_emscripten()
+        configure_active_emscripten_scons(environment)
+        return
+    if is_emsdk_cloned(environment):
+        update_emsdk(environment)
+    else:
+        install_emsdk(environment)
+    install_emscripten(environment)
+    env_string = activate_emscripten(environment)
+    configure_emscripten_scons(environment, env_string)
+
+
+def prepare_web_windows(environment):
+    print("Adding Python to the SCons path.")
+    environment.AppendENVPath("PATH", os.path.dirname(which("python")))
+
+
+def is_emscripten_active(environment):
+    return "EMSDK" in os.environ and environment["emsdk"] == os.environ["EMSDK"]
+
+
+def check_active_emscripten():
+    if (
+        not which("emcc")
+        or not which("em++")
+        or not which("emar")
+        or not which("emranlib")
+    ):
+        print("ERROR: Required Emscripten tools not found:")
+        if not which("emcc"):
+            print("- emcc")
+        if not which("em++"):
+            print("- em++")
+        if not which("emar"):
+            print("- emar")
+        if not which("emranlib"):
+            print("- emranlib")
+        print("Please check your Emscripten configuration and try again.")
+        exit(1)
+
+
+def install_emscripten(environment):
+    version = environment["emscripten_version"]
+    emsdk_app = get_emsdk_app(environment)
+    if not emsdk_app:
+        install_emsdk(environment)
+        emsdk_app = get_emsdk_app(environment)
+    print("Installing emscipten version:", version)
+    subprocess.run([emsdk_app, "install", version])
+
+
+def activate_emscripten(environment):
+    version = environment["emscripten_version"]
+    emsdk_path = environment["emsdk"]
+    # We call the emsdk python code directly, because
+    # we need to obtain the environment string that it generates.
+    sys.path.append(emsdk_path)
+    import emsdk as sdk
+
+    print("Activating emscipten version:", version)
+    sdk.main(["activate", version])
+    print("Getting environment construction string.")
+    tools_to_activate = sdk.currently_active_tools()
+    env_string = sdk.construct_env(tools_to_activate, False, False)
+    return env_string
+
+
+def configure_emscripten_scons(environment, env_string):
+    emsdk_path = os.path.abspath(environment["emsdk"])
+    emscripten_path = os.path.join(emsdk_path, "upstream", "emscripten")
+    print("Adding known Emscripten paths")
+    print("Adding path:", emsdk_path)
+    environment.PrependENVPath("PATH", emsdk_path)
+    print("Adding path:", emscripten_path)
+    environment.PrependENVPath("PATH", emscripten_path)
+    print("Applying Emscripten settings to SCons environment:")
+    print(env_string)
+    lines = env_string.split("\n")
+    for line in lines:
+        if get_host_platform() == "windows":
+            # Drop "SET " at start of line.
+            clean_line = line[4:]
+        else:
+            # Drop "export " at start of line.
+            clean_line = line[7:]
+        parts = clean_line.split("=")
+        if len(parts) != 2:
+            if line:
+                print("Skipping line:", line)
+            continue
+        key = parts[0]
+        value = parts[1]
+        if key.startswith("EMSDK"):
+            print("Adding variable:", key, "=", value)
+            environment[key] = value
+        if key.startswith("PATH"):
+            paths = value.split(os.pathsep)
+            for path in paths:
+                path = path.strip('"')
+                path = path.strip("'")
+                if path.startswith(emsdk_path) and path not in [
+                    emsdk_path,
+                    emscripten_path,
+                ]:
+                    print("Adding path:", path)
+                    environment.PrependENVPath("PATH", path)
+
+
+def configure_active_emscripten_scons(environment):
+    print("Applying active Emscripten settings to SCons environment:")
+    emsdk_path = os.path.normpath(environment["emsdk"])
+    for key, value in os.environ.items():
+        if key.startswith("EMSDK"):
+            print("Adding variable:", key, "=", value)
+            environment[key] = value
+        if key == "PATH":
+            paths = value.split(os.pathsep)
+            for path in paths:
+                if path.startswith(emsdk_path):
+                    print("Adding path:", path)
+                    environment.PrependENVPath("PATH", path)
+
+
+def is_emsdk_cloned(environment):
+    if get_emsdk_app(environment):
+        return True
+    return False
+
+
+def get_emsdk_app(environment):
+    emsdk_path = environment["emsdk"]
+    emsdk_app = os.path.join(emsdk_path, "emsdk" + (".bat" if os.name == "nt" else ""))
+    if not os.path.exists(emsdk_app):
+        if os.path.exists(emsdk_path):
+            print("ERROR: ", emsdk_app, "not found, but", emsdk_path, "exists!?")
+            print("Please fix the issue and try again.")
+            exit(1)
+        return None
+    return emsdk_app
+
+
+def install_emsdk(environment):
+    emsdk_path = environment["emsdk"]
+    parent = os.path.dirname(emsdk_path)
+    cwd = os.getcwd()
+    if parent != cwd:
+        os.chdir(parent)
+    print("Downloading Emscripten SDK into", parent)
+    subprocess.run(["git", "clone", "https://github.com/emscripten-core/emsdk.git"])
+    if parent != cwd:
+        os.chdir(cwd)
+
+
+def update_emsdk(environment):
+    emsdk_path = environment["emsdk"]
+    cwd = os.getcwd()
+    if emsdk_path != cwd:
+        os.chdir(emsdk_path)
+    print("Updating Emscripten SDK in", emsdk_path)
+    subprocess.run(["git", "pull"])
+    if emsdk_path != cwd:
+        os.chdir(cwd)
+
+
+def get_host_platform():
+    if sys.platform == "linux":
+        return "linux"
+    elif sys.platform == "darwin":
+        return "macos"
+    elif sys.platform == "win32":
+        return "windows"
+    else:
+        return None
+
+
+def use_response_files(environment):
+    print("Configuring response files:")
+    environment["TEMPFILE"] = TempFileMunge
+    environment["ARCOM"] = "${TEMPFILE('" + environment["ARCOM"] + "', '$ARCOMSTR')}"
+    environment["LINKCOM"] = (
+        "${TEMPFILE('" + environment["LINKCOM"] + "', '$LINKCOMSTR')}"
+    )
+    environment["TEMPFILEARGESCFUNC"] = fix_windows_backslash
+
+
+def fix_windows_backslash(argument):
+    # Apply default quote spaces function.
+    from SCons.Subst import quote_spaces
+
+    argument = quote_spaces(argument)
+
+    if get_host_platform() != "windows":
+        return argument
+    argument = argument.replace("\\", "\\\\")
+    return argument

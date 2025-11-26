@@ -43,8 +43,8 @@ logs/
 *.obj
 *.so
 
-# Emscripten generated
-*.bc
+# Web build generated
+emsdk/
 
 # Gradle generated
 .gradle/

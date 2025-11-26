@@ -5,8 +5,6 @@ on: [push, pull_request]
 env:
   BRANCH_NAME: main
   SCONSFLAGS: verbose=yes warnings=all werror=yes debug_symbols=no
-  EM_VERSION: 2.0.25
-  EM_CACHE_FOLDER: "emsdk-cache"
 
 concurrency:
   group: ci-${{github.actor}}-${{github.head_ref || github.run_number}}-${{github.ref}}-web
@@ -14,29 +12,14 @@ concurrency:
 
 jobs:
   web-template:
-    runs-on: "ubuntu-latest"
-    name: Template (target=release, tools=no)
+    runs-on: ${{ matrix.os }}
+    name: Template - ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v5
-
-      # Additional cache for Emscripten generated system libraries
-      - name: Load Emscripten cache
-        id: web-template-emscripten-cache
-        uses: actions/cache@v4
-        with:
-          path: ${{env.EM_CACHE_FOLDER}}
-          key: ${{env.EM_VERSION}}-${{github.job}}
-
-      - name: Set up Emscripten latest
-        uses: mymindstorm/setup-emsdk@v14
-        with:
-          version: ${{env.EM_VERSION}}
-          actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
-
-      - name: Verify Emscripten setup
-        run: |
-          emcc -v
 
       - name: Setup build cache
         uses: ./.github/actions/build-cache
@@ -55,3 +38,5 @@ jobs:
 
       - name: Upload artifact
         uses: ./.github/actions/upload-artifact
+        with:
+          name: ${{ github.job }}-${{ matrix.os }}
