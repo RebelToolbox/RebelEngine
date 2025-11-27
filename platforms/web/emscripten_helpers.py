@@ -56,9 +56,6 @@ def create_template_zip(env, js, wasm, extra):
     if env["gdnative_enabled"]:
         in_files.append(extra)  # Runtime
         out_files.append(zip_dir.File(binary_name + ".side.wasm"))
-    elif env["threads_enabled"]:
-        in_files.append(extra)  # Worker
-        out_files.append(zip_dir.File(binary_name + ".worker.js"))
 
     service_worker = "#tools/dist/html/service-worker.js"
     if env["tools"]:
@@ -68,7 +65,6 @@ def create_template_zip(env, js, wasm, extra):
             "rebel.tools.html",
             "offline.html",
             "rebel.tools.js",
-            "rebel.tools.worker.js",
             "rebel.tools.audio.worklet.js",
             "logo.svg",
             "favicon.png",

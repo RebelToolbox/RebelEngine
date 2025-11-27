@@ -656,7 +656,6 @@ Error WebEditorExportPlatform::_build_pwa(
         files.push_back(name + ".apple-touch-icon.png");
     }
     if (mode == EXPORT_MODE_THREADS) {
-        files.push_back(name + ".worker.js");
         files.push_back(name + ".audio.worklet.js");
     } else if (mode == EXPORT_MODE_GDNATIVE) {
         files.push_back(name + ".side.wasm");
@@ -1239,7 +1238,6 @@ Error WebEditorExportPlatform::run(
         DirAccess::remove_file_or_error(basepath + ".html");
         DirAccess::remove_file_or_error(basepath + ".offline.html");
         DirAccess::remove_file_or_error(basepath + ".js");
-        DirAccess::remove_file_or_error(basepath + ".worker.js");
         DirAccess::remove_file_or_error(basepath + ".audio.worklet.js");
         DirAccess::remove_file_or_error(basepath + ".service.worker.js");
         DirAccess::remove_file_or_error(basepath + ".pck");
