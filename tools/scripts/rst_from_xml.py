@@ -32,7 +32,7 @@ def main():
         )
         if arguments.dry_run:
             filename = os.devnull
-        rst_file = open(filename, "w", encoding="utf-8")
+        rst_file = open(filename, "w", encoding="utf-8", newline="\n")
         write_rst_file(rst_file, class_def)
     if error:
         print("Errors were found in the XML API Documentation.")
