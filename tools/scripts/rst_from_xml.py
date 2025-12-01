@@ -836,7 +836,7 @@ def rst_text(text):
             and remaining_text
             and (remaining_text[0].isalnum() or remaining_text[0] == "(")
         ):
-            result += "\ "
+            result += r"\ "
     return result
 
 
@@ -863,7 +863,7 @@ def escape_special_characters(text):
     escaped_text = ""
     for character in text:
         if character == "*":
-            escaped_text += "\*"
+            escaped_text += r"\*"
         elif character == "\\":
             escaped_text += "\\\\"
         else:
@@ -871,7 +871,9 @@ def escape_special_characters(text):
     position = escaped_text.find("_")
     while position != -1:
         if not text[position + 1].isalnum():
-            escaped_text = escaped_text[:position] + "\_" + escaped_text[position + 1 :]
+            escaped_text = (
+                escaped_text[:position] + r"\_" + escaped_text[position + 1 :]
+            )
         position = escaped_text.find("_", position + 2)
     return escaped_text
 
@@ -932,7 +934,7 @@ def extract_tag_contents(tag_name, text):
         if next_tag_name != ("/" + tag_name):
             tag_contents += "[" + next_tag_name + "]"
     if next_tag_name != ("/" + tag_name):
-        rst_error("Failed to find closing tag [\{}] in {}".format(tag_name, text))
+        rst_error("Failed to find closing tag [/{}] in {}".format(tag_name, text))
         exit(1)
     return (tag_contents, remaining_text)
 
