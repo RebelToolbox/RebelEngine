@@ -253,7 +253,7 @@ void Main::print_help(const char* p_binary) {
         "running the scene.\n"
     );
     OS::get_singleton()->print(
-        "  -p, --projects-manager            Start the Projects Manager, even "
+        "  -p, --projects-manager           Start the Projects Manager, even "
         "if a project is auto-detected.\n"
     );
 #endif
