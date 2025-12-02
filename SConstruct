@@ -495,20 +495,71 @@ if selected_platform in platform_list:
 
     # Configure compiler warnings
     if env.msvc:  # MSVC
-        # Truncations, narrowing conversions, signed/unsigned comparisons...
-        disable_nonessential_warnings = [
-            "/wd4267",
-            "/wd4244",
-            "/wd4305",
-            "/wd4018",
-            "/wd4800",
+        # Level 1 (severe) warnings ignored.
+        disabled_level_1_warnings = []
+        # Level 2 (significant) warnings ignored.
+        disabled_level_2_warnings = disabled_level_1_warnings + [
+            "/wd4244",  # Levels 3 and 4: Conversion to smaller type.
+            "/wd4305",  # Level 1: Conversion to smaller type in initialization or construction.
+        ]
+        # Level 3 (production quality) warnings ignored.
+        disabled_level_3_warnings = disabled_level_2_warnings + [
+            "/wd4267",  # Level 3: Conversion from size_t to smaller type.
+        ]
+        # Level 4 (informational) warnings ignored.
+        disabled_level_4_warnings = disabled_level_3_warnings + [
+            "/wd4100",  # Level 4: Unreferenced parameter.
+            "/wd4127",  # Level 4: Conditional expression is constant.
+            "/wd4201",  # Level 4: Nameless structure or union as member of another structure or union.
+            "/wd4245",  # Level 4: Conversion of signed const with a negative value to an unsigned type.
+            "/wd4324",  # Level 4: Structure was padded due to alignment specifier.
+            "/wd4389",  # Level 4: Equality comparing signed and unsigned variables.
+            "/wd4456",  # Level 4: Declaration hides previous local declaration.
+            "/wd4458",  # Level 4: Declaration hides class member.
+            "/wd4459",  # Level 4: Declaration hides global declaration.
+            "/wd4701",  # Level 4: Potentially uninitialized local variable used.
+            "/wd4702",  # Level 4: Unreachable code.
+            "/wd4703",  # Level 4: Potentially uninitialized local pointer variable used.
+        ]
+        # Other (off by default) warnings ignored.
+        disabled_level_all_warnings = disabled_level_4_warnings + [
+            "/wd4061",  # Level 4: Enum in switch is not explicitly handled by a case label.
+            "/wd4062",  # Level 4: Enum in switch is not handled.
+            "/wd4191",  # Level 3: Unsafe conversion.
+            "/wd4242",  # Level 3: Type conversion may result is loss of data.
+            "/wd4266",  # Level 4: No override available for virtual member function: function is hidden.
+            "/wd4296",  # Level 4: Expression is always false.
+            "/wd4355",  # Level 1: 'this' used in base member initializer list.
+            "/wd4365",  # Level 4: Conversion from signed to unsigned.
+            "/wd4388",  # Level 4: Operator comparing signed and unsigned variables.
+            "/wd4435",  # Level 4: Object layout under /vd2 will change due to virtual base.
+            "/wd4464",  # Level 4: Relative include path contains '..'.
+            "/wd4514",  # Level 4: Unreferenced inline function has been removed.
+            "/wd4623",  # Level 4: Derived class default constructor deleted, because deleted in base class.
+            "/wd4625",  # Level 4: Derived class copy constructor deleted, because deleted in base class.
+            "/wd4626",  # Level 4: Derived class assignment operator deleted, because deleted in base class.
+            "/wd4668",  # Level 4: Symbol is not defined as a preprocessor macro, replacing with '0'.
+            "/wd4774",  # Level 4: Format string argument is not a string literal.
+            "/wd4777",  # Level 4: Format string requires an argument of different type.
+            "/wd4800",  # Level 4: Implicit conversion to bool.
+            "/wd4820",  # Level 4: Order of members caused added padding.
+            "/wd5026",  # Level 1: Move constructor was implicitly defined as deleted.
+            "/wd5027",  # Level 1: Move assignment operator was implicitly defined as deleted.
+            "/wd5039",  # Level 4: Pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc.
+            "/wd5045",  # Level 4: Compiler will insert Spectre mitigation for memory load.
+            "/wd5204",  # Level 3: Class has virtual functions, but its trivial destructor is not virtual.
+            "/wd5219",  # Level 2: Implicit conversion with possible loss of data.
+            "/wd5246",  # Level 1: The initialization of a subobject should be wrapped in braces.
+            "/wd5267",  # Level 4: Implicit copy constructor/assignment operator is deprecated because it has a user-provided assignment operator/copy constructor.
         ]
         if env["warnings"] == "extra":
-            env.Append(CCFLAGS=["/Wall"])  # Implies /W4
+            # env.Append(CCFLAGS=["/Wall"] + disabled_level_all_warnings)
+            env.Append(CCFLAGS=["/W4"] + disabled_level_4_warnings)
         elif env["warnings"] == "all":
-            env.Append(CCFLAGS=["/W3"] + disable_nonessential_warnings)
+            env.Append(CCFLAGS=["/W3"] + disabled_level_3_warnings)
         elif env["warnings"] == "moderate":
-            env.Append(CCFLAGS=["/W2"] + disable_nonessential_warnings)
+            env.Append(CCFLAGS=["/W2"] + disabled_level_2_warnings)
+            # env.Append(CCFLAGS=["/W1"] + disabled_level_1_warnings)
         else:  # 'no'
             env.Append(CCFLAGS=["/w"])
         # Set exception handling model to avoid warnings caused by Windows system headers.
