@@ -1033,7 +1033,7 @@ void RasterizerCanvasBaseGLES3::render_rect_nvidia_workaround(
             // if horizontal flip, angle is 180
             float angle = 0.0f;
             if (flip_h) {
-                angle = Math_PI;
+                angle = static_cast<float>(Math_PI);
             }
 
             // add 1 (to take care of zero floating point error with sign)

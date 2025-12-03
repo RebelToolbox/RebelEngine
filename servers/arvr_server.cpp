@@ -156,10 +156,10 @@ real_t ARVRServer::get_world_scale() const {
 };
 
 void ARVRServer::set_world_scale(real_t p_world_scale) {
-    if (p_world_scale < 0.01) {
-        p_world_scale = 0.01;
-    } else if (p_world_scale > 1000.0) {
-        p_world_scale = 1000.0;
+    if (p_world_scale < 0.01f) {
+        p_world_scale = 0.01f;
+    } else if (p_world_scale > 1000) {
+        p_world_scale = 1000;
     }
 
     world_scale = p_world_scale;

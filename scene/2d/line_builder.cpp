@@ -69,13 +69,13 @@ LineBuilder::LineBuilder() {
     joint_mode      = Line2D::LINE_JOINT_SHARP;
     width           = 10;
     curve           = nullptr;
-    default_color   = Color(0.4, 0.5, 1);
+    default_color   = Color(0.4f, 0.5f, 1);
     gradient        = nullptr;
-    sharp_limit     = 2.f;
+    sharp_limit     = 2;
     round_precision = 8;
     begin_cap_mode  = Line2D::LINE_CAP_NONE;
     end_cap_mode    = Line2D::LINE_CAP_NONE;
-    tile_aspect     = 1.f;
+    tile_aspect     = 1;
 
     _interpolate_color = false;
     _last_index[0]     = 0;
@@ -179,7 +179,7 @@ void LineBuilder::build() {
         new_arc(
             pos0,
             pos_up0 - pos0,
-            -Math_PI,
+            -static_cast<float>(Math_PI),
             color0,
             Rect2(0.f, 0.f, uvx0 * 2, 1.f)
         );
@@ -428,7 +428,7 @@ void LineBuilder::build() {
         new_arc(
             pos1,
             pos_up1 - pos1,
-            Math_PI,
+            static_cast<float>(Math_PI),
             color,
             Rect2(uvx1 - 0.5f * dist, 0.f, dist, 1.f)
         );
@@ -609,7 +609,7 @@ void LineBuilder::new_arc(
     float t         = Vector2(1, 0).angle_to(vbegin);
     float end_angle = t + angle_delta;
     Vector2 rpos(0, 0);
-    float tt_begin = -Math_PI / 2.f;
+    float tt_begin = -static_cast<float>(Math_PI) / 2;
     float tt       = tt_begin;
 
     // Center vertice

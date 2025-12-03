@@ -2426,7 +2426,7 @@ LineEdit::LineEdit() {
     pass                                = false;
     secret_character                    = "*";
     text_changed_dirty                  = false;
-    placeholder_alpha                   = 0.6;
+    placeholder_alpha                   = 0.6f;
     clear_button_enabled                = false;
     clear_button_status.press_attempt   = false;
     clear_button_status.pressing_inside = false;
@@ -2445,7 +2445,7 @@ LineEdit::LineEdit() {
     caret_blink_enabled = false;
     caret_blink_timer   = memnew(Timer);
     add_child(caret_blink_timer);
-    caret_blink_timer->set_wait_time(0.65);
+    caret_blink_timer->set_wait_time(0.65f);
     caret_blink_timer->connect("timeout", this, "_toggle_draw_caret");
     cursor_set_blink_enabled(false);
 

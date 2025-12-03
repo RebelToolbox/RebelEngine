@@ -574,7 +574,7 @@ float AnimationNodeBlendSpace2D::process(float p_time, bool p_seek) {
         }
     } else {
         int new_closest        = -1;
-        float new_closest_dist = 1e20;
+        float new_closest_dist = 1e20f;
 
         for (int i = 0; i < blend_points_used; i++) {
             float d = blend_points[i].position.distance_squared_to(blend_pos);
@@ -949,7 +949,7 @@ AnimationNodeBlendSpace2D::AnimationNodeBlendSpace2D() {
     blend_points_used = 0;
     max_space         = Vector2(1, 1);
     min_space         = Vector2(-1, -1);
-    snap              = Vector2(0.1, 0.1);
+    snap              = Vector2(0.1f, 0.1f);
     x_label           = "x";
     y_label           = "y";
     trianges_dirty    = false;

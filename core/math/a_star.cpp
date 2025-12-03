@@ -342,7 +342,7 @@ void AStar::reserve_space(int p_num_nodes) {
 int AStar::get_closest_point(const Vector3& p_point, bool p_include_disabled)
     const {
     int closest_id      = -1;
-    real_t closest_dist = 1e20;
+    real_t closest_dist = 1e20f;
 
     for (OAHashMap<int, Point*>::Iterator it = points.iter(); it.valid;
          it                                  = points.next_iter(it)) {
@@ -367,7 +367,7 @@ int AStar::get_closest_point(const Vector3& p_point, bool p_include_disabled)
 }
 
 Vector3 AStar::get_closest_position_in_segment(const Vector3& p_point) const {
-    real_t closest_dist = 1e20;
+    real_t closest_dist = 1e20f;
     Vector3 closest_point;
 
     for (const Set<Segment>::Element* E = segments.front(); E; E = E->next()) {

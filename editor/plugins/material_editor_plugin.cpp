@@ -126,7 +126,7 @@ MaterialEditor::MaterialEditor() {
 
     camera = memnew(Camera);
     camera->set_transform(Transform(Basis(), Vector3(0, 0, 3)));
-    camera->set_perspective(45, 0.1, 10);
+    camera->set_perspective(45, 0.1f, 10);
     camera->make_current();
     viewport->add_child(camera);
 
@@ -140,7 +140,7 @@ MaterialEditor::MaterialEditor() {
     light2->set_transform(
         Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1))
     );
-    light2->set_color(Color(0.7, 0.7, 0.7));
+    light2->set_color(Color(0.7f, 0.7f, 0.7f));
     viewport->add_child(light2);
 
     sphere_instance = memnew(MeshInstance);
@@ -153,8 +153,8 @@ MaterialEditor::MaterialEditor() {
     box_xform.basis.rotate(Vector3(1, 0, 0), Math::deg2rad(25.0));
     box_xform.basis = box_xform.basis
                     * Basis().rotated(Vector3(0, 1, 0), Math::deg2rad(-25.0));
-    box_xform.basis.scale(Vector3(0.8, 0.8, 0.8));
-    box_xform.origin.y = 0.2;
+    box_xform.basis.scale(Vector3(0.8f, 0.8f, 0.8f));
+    box_xform.origin.y = 0.2f;
     box_instance->set_transform(box_xform);
 
     sphere_mesh.instance();

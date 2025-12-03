@@ -1854,7 +1854,7 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 
     Color clear = GLOBAL_DEF(
         "rendering/environment/default_clear_color",
-        Color(0.3, 0.3, 0.3)
+        Color(0.3f, 0.3f, 0.3f)
     );
     VisualServer::get_singleton()->set_default_clear_color(clear);
 
@@ -1943,7 +1943,7 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
     MAIN_PRINT("Main: DCC");
     VisualServer::get_singleton()->set_default_clear_color(GLOBAL_DEF(
         "rendering/environment/default_clear_color",
-        Color(0.3, 0.3, 0.3)
+        Color(0.3f, 0.3f, 0.3f)
     ));
 
     GLOBAL_DEF("application/config/icon", String());

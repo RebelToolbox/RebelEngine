@@ -111,7 +111,7 @@ Rect2 RayShape2D::get_rect() const {
     Rect2 rect;
     rect.position = Vector2();
     rect.expand_to(Vector2(0, length));
-    rect = rect.grow(Math_SQRT12 * 4);
+    rect = rect.grow(static_cast<real_t>(Math_SQRT12) * 4);
     return rect;
 }
 

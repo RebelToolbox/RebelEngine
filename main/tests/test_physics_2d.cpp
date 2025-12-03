@@ -462,7 +462,7 @@ protected:
             ray,
             ray_from,
             ray_end,
-            p_rid.is_valid() ? Color(0, 1, 0.4) : Color(1, 0.4, 0),
+            p_rid.is_valid() ? Color(0, 1, 0.4f) : Color(1, 0.4f, 0),
             2
         );
         if (p_rid.is_valid()) {
@@ -470,7 +470,7 @@ protected:
                 ray,
                 ray_end,
                 ray_end + p_normal * 20,
-                p_rid.is_valid() ? Color(0, 1, 0.4) : Color(1, 0.4, 0),
+                p_rid.is_valid() ? Color(0, 1, 0.4f) : Color(1, 0.4f, 0),
                 2
             );
         }

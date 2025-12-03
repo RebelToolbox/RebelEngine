@@ -4205,9 +4205,9 @@ void RasterizerStorageGLES2::update_dirty_multimeshes() {
             }
 
             mesh_aabb.size += Vector3(
-                0.001,
-                0.001,
-                0.001
+                0.001f,
+                0.001f,
+                0.001f
             ); // in case mesh is empty in one of the sides
 
             int stride = multimesh->color_floats + multimesh->xform_floats
@@ -5228,19 +5228,19 @@ RID RasterizerStorageGLES2::light_create(VS::LightType p_type) {
 
     light->type = p_type;
 
-    light->param[VS::LIGHT_PARAM_ENERGY]                  = 1.0;
-    light->param[VS::LIGHT_PARAM_INDIRECT_ENERGY]         = 1.0;
-    light->param[VS::LIGHT_PARAM_SIZE]                    = 0.0;
-    light->param[VS::LIGHT_PARAM_SPECULAR]                = 0.5;
-    light->param[VS::LIGHT_PARAM_RANGE]                   = 1.0;
+    light->param[VS::LIGHT_PARAM_ENERGY]                  = 1;
+    light->param[VS::LIGHT_PARAM_INDIRECT_ENERGY]         = 1;
+    light->param[VS::LIGHT_PARAM_SIZE]                    = 0;
+    light->param[VS::LIGHT_PARAM_SPECULAR]                = 0.5f;
+    light->param[VS::LIGHT_PARAM_RANGE]                   = 1;
     light->param[VS::LIGHT_PARAM_SPOT_ANGLE]              = 45;
     light->param[VS::LIGHT_PARAM_CONTACT_SHADOW_SIZE]     = 45;
     light->param[VS::LIGHT_PARAM_SHADOW_MAX_DISTANCE]     = 0;
-    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_1_OFFSET]   = 0.1;
-    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_2_OFFSET]   = 0.3;
-    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_3_OFFSET]   = 0.6;
-    light->param[VS::LIGHT_PARAM_SHADOW_NORMAL_BIAS]      = 0.1;
-    light->param[VS::LIGHT_PARAM_SHADOW_BIAS_SPLIT_SCALE] = 0.1;
+    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_1_OFFSET]   = 0.1f;
+    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_2_OFFSET]   = 0.3f;
+    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_3_OFFSET]   = 0.6f;
+    light->param[VS::LIGHT_PARAM_SHADOW_NORMAL_BIAS]      = 0.1f;
+    light->param[VS::LIGHT_PARAM_SHADOW_BIAS_SPLIT_SCALE] = 0.1f;
 
     light->color                    = Color(1, 1, 1, 1);
     light->shadow                   = false;

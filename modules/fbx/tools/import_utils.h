@@ -53,8 +53,8 @@ public:
 
     static void debug_xform(String name, const Transform& t) {
         print_verbose(
-            name + " " + t.origin
-            + " rotation: " + (t.basis.get_euler() * (180 / Math_PI))
+            name + " " + t.origin + " rotation: "
+            + (t.basis.get_euler() * (180 / static_cast<real_t>(Math_PI)))
         );
     }
 

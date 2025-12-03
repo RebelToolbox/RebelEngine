@@ -51,7 +51,7 @@ void EditorLog::_notification(int p_what) {
         );
         log->add_color_override(
             "selection_color",
-            get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
+            get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4f)
         );
     } else if (p_what == NOTIFICATION_THEME_CHANGED) {
         Ref<DynamicFont> df_output_code =
@@ -64,7 +64,7 @@ void EditorLog::_notification(int p_what) {
                 );
                 log->add_color_override(
                     "selection_color",
-                    get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
+                    get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4f)
                 );
             }
         }
@@ -118,7 +118,7 @@ void EditorLog::add_message(const String& p_msg, MessageType p_type) {
         case MSG_TYPE_EDITOR: {
             // Distinguish editor messages from messages printed by the project
             log->push_color(
-                get_color("font_color", "Editor") * Color(1, 1, 1, 0.6)
+                get_color("font_color", "Editor") * Color(1, 1, 1, 0.6f)
             );
         } break;
     }

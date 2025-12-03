@@ -713,7 +713,7 @@ void ScriptCreateDialog::_update_dialog() {
         if (is_new_script_created) {
             class_name->set_editable(true);
             class_name->set_placeholder(TTR("Allowed: a-z, A-Z, 0-9, _ and ."));
-            class_name->set_placeholder_alpha(0.3);
+            class_name->set_placeholder_alpha(0.3f);
         } else {
             class_name->set_editable(false);
         }
@@ -891,7 +891,7 @@ ScriptCreateDialog::ScriptCreateDialog() {
     vb->add_child(script_name_warning_label);
     script_name_warning_label->add_color_override(
         "font_color",
-        Color(1, 0.85, 0.4)
+        Color(1, 0.85f, 0.4f)
     );
     script_name_warning_label->set_autowrap(true);
     script_name_warning_label->hide();

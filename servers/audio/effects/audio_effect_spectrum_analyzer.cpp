@@ -337,6 +337,6 @@ void AudioEffectSpectrumAnalyzer::_bind_methods() {
 
 AudioEffectSpectrumAnalyzer::AudioEffectSpectrumAnalyzer() {
     buffer_length = 2;
-    tapback_pos   = 0.01;
+    tapback_pos   = 0.01f;
     fft_size      = FFT_SIZE_1024;
 }

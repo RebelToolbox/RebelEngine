@@ -322,7 +322,7 @@ NodePath Portal::get_linked_room() const {
 void Portal::flip() {
     // flip portal
     Transform tr      = get_transform();
-    Basis flip_basis  = Basis(Vector3(0, Math_PI, 0));
+    Basis flip_basis  = Basis(Vector3(0, static_cast<real_t>(Math_PI), 0));
     tr.basis         *= flip_basis;
     set_transform(tr);
 
@@ -584,7 +584,7 @@ void Portal::_sanitize_points() {
     }
     center /= _pts_local.size();
 
-    const real_t pull_in = 0.0001;
+    const real_t pull_in = 0.0001f;
 
     for (int n = 0; n < _pts_local.size(); n++) {
         Vector2 offset = _pts_local[n] - center;

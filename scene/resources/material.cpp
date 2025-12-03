@@ -2091,7 +2091,7 @@ static Plane _get_texture_mask(SpatialMaterial::TextureChannel p_channel) {
         Plane(0, 1, 0, 0),
         Plane(0, 0, 1, 0),
         Plane(0, 0, 0, 1),
-        Plane(0.3333333, 0.3333333, 0.3333333, 0),
+        Plane(0.3333333f, 0.3333333f, 0.3333333f, 0),
     };
 
     return masks[p_channel];
@@ -3800,10 +3800,10 @@ SpatialMaterial::SpatialMaterial() : element(this) {
     set_clearcoat(1);
     set_clearcoat_gloss(0.5);
     set_anisotropy(0);
-    set_depth_scale(0.05);
+    set_depth_scale(0.05f);
     set_subsurface_scattering_strength(0);
     set_transmission(Color(0, 0, 0));
-    set_refraction(0.05);
+    set_refraction(0.05f);
     set_line_width(1);
     set_point_size(1);
     set_uv1_offset(Vector3(0, 0, 0));
@@ -3816,7 +3816,7 @@ SpatialMaterial::SpatialMaterial() : element(this) {
     set_particles_anim_h_frames(1);
     set_particles_anim_v_frames(1);
     set_particles_anim_loop(false);
-    set_alpha_scissor_threshold(0.98);
+    set_alpha_scissor_threshold(0.98f);
     emission_op = EMISSION_OP_ADD;
 
     proximity_fade_enabled = false;

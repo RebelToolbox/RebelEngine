@@ -157,10 +157,10 @@ void MultiMeshEditor::_populate() {
 
     Transform axis_xform;
     if (axis == Vector3::AXIS_Z) {
-        axis_xform.rotate(Vector3(1, 0, 0), -Math_PI * 0.5);
+        axis_xform.rotate(Vector3(1, 0, 0), -static_cast<real_t>(Math_PI) / 2);
     }
     if (axis == Vector3::AXIS_X) {
-        axis_xform.rotate(Vector3(0, 0, 1), -Math_PI * 0.5);
+        axis_xform.rotate(Vector3(0, 0, 1), -static_cast<real_t>(Math_PI) / 2);
     }
 
     for (int i = 0; i < instance_count; i++) {

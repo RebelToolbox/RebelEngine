@@ -53,8 +53,8 @@ int Physics2DDirectSpaceStateSW::_intersect_point_impl(
     }
 
     Rect2 aabb;
-    aabb.position = p_point - Vector2(0.00001, 0.00001);
-    aabb.size     = Vector2(0.00002, 0.00002);
+    aabb.position = p_point - Vector2(0.00001f, 0.00001f);
+    aabb.size     = Vector2(0.00002f, 0.00002f);
 
     int amount = space->broadphase->cull_aabb(
         aabb,
@@ -1266,7 +1266,7 @@ bool Space2DSW::test_body_motion(
                 float depth = n.dot(a + recover_motion) - d;
                 if (depth > min_contact_depth + CMP_EPSILON) {
                     // Only recover if there is penetration.
-                    recover_motion -= n * (depth - min_contact_depth) * 0.4;
+                    recover_motion -= n * (depth - min_contact_depth) * 0.4f;
                 }
             }
 
@@ -1456,7 +1456,7 @@ bool Space2DSW::test_body_motion(
                     cbk.valid_dir =
                         col_obj_shape_xform.get_axis(1).normalized();
 
-                    cbk.valid_depth = 10e20;
+                    cbk.valid_depth = 10e20f;
 
                     Vector2 sep   = motion_normal; // important optimization for
                                                    // this to work fast enough
@@ -1939,11 +1939,11 @@ Space2DSW::Space2DSW() {
     contact_debug_count = 0;
 
     locked                          = false;
-    contact_recycle_radius          = 1.0;
-    contact_max_separation          = 1.5;
-    contact_max_allowed_penetration = 0.3;
+    contact_recycle_radius          = 1.0f;
+    contact_max_separation          = 1.5f;
+    contact_max_allowed_penetration = 0.3f;
 
-    constraint_bias = 0.2;
+    constraint_bias = 0.2f;
     body_linear_velocity_sleep_threshold =
         GLOBAL_DEF("physics/2d/sleep_threshold_linear", 2.0);
     body_angular_velocity_sleep_threshold = GLOBAL_DEF(

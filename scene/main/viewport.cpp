@@ -534,7 +534,7 @@ void Viewport::_process_picking(bool p_ignore_paused) {
     }
 
 #ifndef _3D_DISABLED
-    Vector2 last_pos(1e20, 1e20);
+    Vector2 last_pos(1e20f, 1e20f);
     CollisionObject* last_object = nullptr;
     ObjectID last_id             = 0;
 #endif

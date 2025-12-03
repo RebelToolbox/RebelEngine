@@ -1824,8 +1824,8 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
                     Vector2(i, si.position.y + si.size.y + 1)
                 ));
 
-                Color col =
-                    i == 0 ? Color(1, 0.8, 0.2, 0.5) : Color(1, 0.3, 0.1, 0.2);
+                Color col = i == 0 ? Color(1, 0.8f, 0.2f, 0.5f)
+                                   : Color(1, 0.3f, 0.1f, 0.2f);
                 p_overlay->draw_line(from, to, col, 1);
                 if (max_lines-- == 0) {
                     break;
@@ -1854,8 +1854,8 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
                         node->map_to_world(Vector2(i, j + 1), true) + ofs
                     );
 
-                    Color col = i == 0 ? Color(1, 0.8, 0.2, 0.5)
-                                       : Color(1, 0.3, 0.1, 0.2);
+                    Color col = i == 0 ? Color(1, 0.8f, 0.2f, 0.5f)
+                                       : Color(1, 0.3f, 0.1f, 0.2f);
                     p_overlay->draw_line(from, to, col, 1);
 
                     if (--max_lines == 0) {
@@ -1880,8 +1880,8 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
                     Vector2(si.position.x + si.size.x + 1, i)
                 ));
 
-                Color col =
-                    i == 0 ? Color(1, 0.8, 0.2, 0.5) : Color(1, 0.3, 0.1, 0.2);
+                Color col = i == 0 ? Color(1, 0.8f, 0.2f, 0.5f)
+                                   : Color(1, 0.3f, 0.1f, 0.2f);
                 p_overlay->draw_line(from, to, col, 1);
 
                 if (max_lines-- == 0) {
@@ -1909,8 +1909,8 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
                         node->map_to_world(Vector2(j + 1, i), true) + ofs
                     );
 
-                    Color col = i == 0 ? Color(1, 0.8, 0.2, 0.5)
-                                       : Color(1, 0.3, 0.1, 0.2);
+                    Color col = i == 0 ? Color(1, 0.8f, 0.2f, 0.5f)
+                                       : Color(1, 0.3f, 0.1f, 0.2f);
                     p_overlay->draw_line(from, to, col, 1);
 
                     if (--max_lines == 0) {
@@ -1938,7 +1938,7 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
             (rectangle.position + Point2(0, rectangle.size.y + 1))
         )));
 
-        p_overlay->draw_colored_polygon(points, Color(0.2, 0.8, 1, 0.4));
+        p_overlay->draw_colored_polygon(points, Color(0.2f, 0.8f, 1, 0.4f));
     }
 
     if (mouse_over && node->get_tileset().is_valid()) {
@@ -1970,9 +1970,9 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
         }
         Color col;
         if (node->get_cell(over_tile.x, over_tile.y) != TileMap::INVALID_CELL) {
-            col = Color(0.2, 0.8, 1.0, 0.8);
+            col = Color(0.2f, 0.8f, 1, 0.8f);
         } else {
-            col = Color(1.0, 0.4, 0.2, 0.8);
+            col = Color(1, 0.4f, 0.2f, 0.8f);
         }
 
         for (int i = 0; i < 4; i++) {
@@ -2086,7 +2086,7 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
                 (duplicate.position + Point2(0, duplicate.size.y + 1))
             )));
 
-            p_overlay->draw_colored_polygon(points, Color(0.2, 1.0, 0.8, 0.2));
+            p_overlay->draw_colored_polygon(points, Color(0.2f, 1, 0.8f, 0.2f));
 
         } else if (tool == TOOL_BUCKET) {
             Vector<int> tiles = get_selected_tiles();
@@ -2552,7 +2552,7 @@ TileMapEditor::TileMapEditor(EditorNode* p_editor) {
 
     // Tile position.
     tile_info = memnew(Label);
-    tile_info->set_modulate(Color(1, 1, 1, 0.8));
+    tile_info->set_modulate(Color(1, 1, 1, 0.8f));
     tile_info->set_mouse_filter(MOUSE_FILTER_IGNORE);
     tile_info->add_font_override(
         "font",
@@ -2563,7 +2563,7 @@ TileMapEditor::TileMapEditor(EditorNode* p_editor) {
     );
     tile_info->add_color_override(
         "font_color",
-        Color(1, 1, 1, 0.8)
+        Color(1, 1, 1, 0.8f)
     ); // Overlay has a fixed dark background.
     // The tile info is only displayed after a tile has been hovered.
     tile_info->hide();

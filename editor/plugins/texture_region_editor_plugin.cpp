@@ -80,7 +80,7 @@ void TextureRegionEditor::_region_draw() {
     );
 
     if (snap_mode == SNAP_GRID) {
-        Color grid_color = Color(1.0, 1.0, 1.0, 0.15);
+        Color grid_color = Color(1, 1, 1, 0.15f);
         Size2 s          = edit_draw->get_size();
         int last_cell    = 0;
 
@@ -190,7 +190,7 @@ void TextureRegionEditor::_region_draw() {
                 edit_draw->draw_line(
                     endpoints[i] - draw_ofs * draw_zoom,
                     endpoints[next] - draw_ofs * draw_zoom,
-                    Color(0.3, 0.7, 1, 1),
+                    Color(0.3f, 0.7f, 1, 1),
                     2
                 );
             }

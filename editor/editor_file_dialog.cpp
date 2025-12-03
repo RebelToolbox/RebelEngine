@@ -57,7 +57,7 @@ void EditorFileDialog::_notification(int p_what) {
                     "EditorIcons"
                 );
                 preview->set_texture(frame);
-                preview_wheel_timeout = 0.1;
+                preview_wheel_timeout = 0.1f;
             }
         }
     } else if (p_what == NOTIFICATION_POPUP_HIDE) {

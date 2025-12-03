@@ -210,19 +210,19 @@ void AnimationTrackEditColor::draw_key(
 
     draw_rect_clipped(
         Rect2(rect.position, rect.size / 2),
-        Color(0.4, 0.4, 0.4)
+        Color(0.4f, 0.4f, 0.4f)
     );
     draw_rect_clipped(
         Rect2(rect.position + rect.size / 2, rect.size / 2),
-        Color(0.4, 0.4, 0.4)
+        Color(0.4f, 0.4f, 0.4f)
     );
     draw_rect_clipped(
         Rect2(rect.position + Vector2(rect.size.x / 2, 0), rect.size / 2),
-        Color(0.6, 0.6, 0.6)
+        Color(0.6f, 0.6f, 0.6f)
     );
     draw_rect_clipped(
         Rect2(rect.position + Vector2(0, rect.size.y / 2), rect.size / 2),
-        Color(0.6, 0.6, 0.6)
+        Color(0.6f, 0.6f, 0.6f)
     );
     draw_rect_clipped(rect, color);
 
@@ -684,7 +684,7 @@ void AnimationTrackEditSpriteFrame::draw_key(
 
     Color accent = get_color("accent_color", "Editor");
     Color bg     = accent;
-    bg.a         = 0.15;
+    bg.a         = 0.15f;
 
     draw_rect_clipped(rect, bg);
 
@@ -918,7 +918,7 @@ void AnimationTrackEditVolumeDB::draw_bg(int p_clip_left, int p_clip_right) {
     int y_from = (get_size().height - tex_h) / 2;
     int y_size = tex_h;
 
-    Color color(1, 1, 1, 0.3);
+    Color color(1, 1, 1, 0.3f);
     draw_texture_rect(
         volume_texture,
         Rect2(p_clip_left, y_from, p_clip_right - p_clip_left, y_from + y_size),
@@ -936,7 +936,7 @@ void AnimationTrackEditVolumeDB::draw_fg(int p_clip_left, int p_clip_right) {
     draw_line(
         Vector2(p_clip_left, db0),
         Vector2(p_clip_right, db0),
-        Color(1, 1, 1, 0.3)
+        Color(1, 1, 1, 0.3f)
     );
 }
 
@@ -988,7 +988,7 @@ void AnimationTrackEditVolumeDB::draw_key_link(
     int y_from = (get_size().height - tex_h) / 2;
 
     Color color  = get_color("font_color", "Label");
-    color.a     *= 0.7;
+    color.a     *= 0.7f;
 
     draw_line(
         Point2(from_x, y_from + h * tex_h),
@@ -1047,8 +1047,8 @@ Rect2 AnimationTrackEditTypeAudio::get_key_rect(
 
     len -= end_ofs;
     len -= start_ofs;
-    if (len <= 0.001) {
-        len = 0.001;
+    if (len <= 0.001f) {
+        len = 0.001f;
     }
 
     if (get_animation()->track_get_key_count(get_track()) > p_index + 1) {
@@ -1128,8 +1128,8 @@ void AnimationTrackEditTypeAudio::draw_key(
     len -= end_ofs;
     len -= start_ofs;
 
-    if (len <= 0.001) {
-        len = 0.001;
+    if (len <= 0.001f) {
+        len = 0.001f;
     }
 
     int pixel_len = len * p_pixels_sec;
@@ -1193,7 +1193,7 @@ void AnimationTrackEditTypeAudio::draw_key(
         ->canvas_item_add_multiline(get_canvas_item(), lines, color);
 
     Color cut_color = get_color("accent_color", "Editor");
-    cut_color.a     = 0.7;
+    cut_color.a     = 0.7f;
     if (start_ofs > 0 && pixel_begin > p_clip_left) {
         draw_rect(
             Rect2(pixel_begin, rect.position.y, 1, rect.size.y),
@@ -1282,7 +1282,7 @@ void AnimationTrackEditTypeAudio::drop_data(
 
             while (get_animation()->track_find_key(get_track(), ofs, true) != -1
             ) { // make sure insertion point is valid
-                ofs += 0.001;
+                ofs += 0.001f;
             }
 
             get_undo_redo()->create_action(TTR("Add Audio Track Clip"));
@@ -1340,8 +1340,8 @@ void AnimationTrackEditTypeAudio::_gui_input(const Ref<InputEvent>& p_event) {
 
             len -= end_ofs;
             len -= start_ofs;
-            if (len <= 0.001) {
-                len = 0.001;
+            if (len <= 0.001f) {
+                len = 0.001f;
             }
 
             if (get_animation()->track_get_key_count(get_track()) > i + 1) {

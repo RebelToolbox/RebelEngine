@@ -791,10 +791,10 @@ void GIProbe::_bind_methods() {
 GIProbe::GIProbe() {
     subdiv        = SUBDIV_128;
     dynamic_range = 4;
-    energy        = 1.0;
-    bias          = 1.5;
-    normal_bias   = 0.0;
-    propagation   = 0.7;
+    energy        = 1;
+    bias          = 1.5f;
+    normal_bias   = 0;
+    propagation   = 0.7f;
     extents       = Vector3(10, 10, 10);
     interior      = false;
     compress      = false;

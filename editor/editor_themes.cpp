@@ -551,44 +551,44 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     // and "Custom")
 
     if (preset == "Default") {
-        preset_accent_color = Color(0.41, 0.61, 0.91);
-        preset_base_color   = Color(0.2, 0.23, 0.31);
+        preset_accent_color = Color(0.41f, 0.61f, 0.91f);
+        preset_base_color   = Color(0.2f, 0.23f, 0.31f);
         preset_contrast     = default_contrast;
     } else if (preset == "Custom") {
         accent_color = EDITOR_GET("interface/theme/accent_color");
         base_color   = EDITOR_GET("interface/theme/base_color");
         contrast     = EDITOR_GET("interface/theme/contrast");
     } else if (preset == "Alien") {
-        preset_accent_color = Color(0.11, 1.0, 0.6);
-        preset_base_color   = Color(0.18, 0.22, 0.25);
+        preset_accent_color = Color(0.11f, 1, 0.6f);
+        preset_base_color   = Color(0.18f, 0.22f, 0.25f);
         preset_contrast     = 0.25;
     } else if (preset == "Arc") {
-        preset_accent_color = Color(0.32, 0.58, 0.89);
-        preset_base_color   = Color(0.22, 0.24, 0.29);
+        preset_accent_color = Color(0.32f, 0.58f, 0.89f);
+        preset_base_color   = Color(0.22f, 0.24f, 0.29f);
         preset_contrast     = 0.25;
     } else if (preset == "Rebel 2") {
-        preset_accent_color = Color(0.53, 0.67, 0.89);
-        preset_base_color   = Color(0.24, 0.23, 0.27);
+        preset_accent_color = Color(0.53f, 0.67f, 0.89f);
+        preset_base_color   = Color(0.24f, 0.23f, 0.27f);
         preset_contrast     = 0.25;
     } else if (preset == "Grey") {
-        preset_accent_color = Color(0.72, 0.89, 1.0);
-        preset_base_color   = Color(0.24, 0.24, 0.24);
-        preset_contrast     = 0.2;
+        preset_accent_color = Color(0.72f, 0.89f, 1);
+        preset_base_color   = Color(0.24f, 0.24f, 0.24f);
+        preset_contrast     = 0.2f;
     } else if (preset == "Light") {
-        preset_accent_color = Color(0.13, 0.44, 1.0);
+        preset_accent_color = Color(0.13f, 0.44f, 1);
         preset_base_color   = Color(1, 1, 1);
-        preset_contrast     = 0.08;
+        preset_contrast     = 0.08f;
     } else if (preset == "Solarized (Dark)") {
-        preset_accent_color = Color(0.15, 0.55, 0.82);
-        preset_base_color   = Color(0.03, 0.21, 0.26);
-        preset_contrast     = 0.23;
+        preset_accent_color = Color(0.15f, 0.55f, 0.82f);
+        preset_base_color   = Color(0.03f, 0.21f, 0.26f);
+        preset_contrast     = 0.23f;
     } else if (preset == "Solarized (Light)") {
-        preset_accent_color = Color(0.15, 0.55, 0.82);
-        preset_base_color   = Color(0.99, 0.96, 0.89);
-        preset_contrast     = 0.06;
+        preset_accent_color = Color(0.15f, 0.55f, 0.82f);
+        preset_base_color   = Color(0.99f, 0.96f, 0.89f);
+        preset_contrast     = 0.06f;
     } else { // Default
-        preset_accent_color = Color(0.41, 0.61, 0.91);
-        preset_base_color   = Color(0.2, 0.23, 0.31);
+        preset_accent_color = Color(0.41f, 0.61f, 0.91f);
+        preset_base_color   = Color(0.2f, 0.23f, 0.31f);
         preset_contrast     = default_contrast;
     }
 
@@ -651,33 +651,34 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         MAX(contrast * 1.5, default_contrast * 1.5)
     );
 
-    const Color font_color    = mono_color.linear_interpolate(base_color, 0.25);
-    const Color font_color_hl = mono_color.linear_interpolate(base_color, 0.15);
+    const Color font_color = mono_color.linear_interpolate(base_color, 0.25f);
+    const Color font_color_hl =
+        mono_color.linear_interpolate(base_color, 0.15f);
     const Color font_color_focus =
-        mono_color.linear_interpolate(base_color, 0.15);
+        mono_color.linear_interpolate(base_color, 0.15f);
     const Color font_color_disabled =
-        Color(mono_color.r, mono_color.g, mono_color.b, 0.3);
+        Color(mono_color.r, mono_color.g, mono_color.b, 0.3f);
     const Color font_color_readonly =
-        Color(mono_color.r, mono_color.g, mono_color.b, 0.65);
-    const Color font_color_selection = accent_color * Color(1, 1, 1, 0.4);
+        Color(mono_color.r, mono_color.g, mono_color.b, 0.65f);
+    const Color font_color_selection = accent_color * Color(1, 1, 1, 0.4f);
     const Color color_disabled =
-        mono_color.inverted().linear_interpolate(base_color, 0.7);
+        mono_color.inverted().linear_interpolate(base_color, 0.7f);
     const Color color_disabled_bg =
-        mono_color.inverted().linear_interpolate(base_color, 0.9);
+        mono_color.inverted().linear_interpolate(base_color, 0.9f);
 
-    Color icon_color_hover   = Color(1, 1, 1) * (dark_theme ? 1.15 : 1.45);
-    icon_color_hover.a       = 1.0;
+    Color icon_color_hover   = Color(1, 1, 1) * (dark_theme ? 1.15f : 1.45f);
+    icon_color_hover.a       = 1;
     // Make the pressed icon color overbright because icons are not completely
     // white on a dark theme. On a light theme, icons are dark, so we need to
     // modulate them with an even brighter color.
-    Color icon_color_pressed = accent_color * (dark_theme ? 1.15 : 3.5);
-    icon_color_pressed.a     = 1.0;
+    Color icon_color_pressed = accent_color * (dark_theme ? 1.15f : 3.5f);
+    icon_color_pressed.a     = 1;
 
     const Color separator_color =
-        Color(mono_color.r, mono_color.g, mono_color.b, 0.1);
+        Color(mono_color.r, mono_color.g, mono_color.b, 0.1f);
 
     const Color highlight_color =
-        Color(mono_color.r, mono_color.g, mono_color.b, 0.2);
+        Color(mono_color.r, mono_color.g, mono_color.b, 0.2f);
 
     theme->set_color("accent_color", "Editor", accent_color);
     theme->set_color("highlight_color", "Editor", highlight_color);
@@ -690,17 +691,17 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     theme->set_color(
         "box_selection_fill_color",
         "Editor",
-        accent_color * Color(1, 1, 1, 0.3)
+        accent_color * Color(1, 1, 1, 0.3f)
     );
     theme->set_color(
         "box_selection_stroke_color",
         "Editor",
-        accent_color * Color(1, 1, 1, 0.8)
+        accent_color * Color(1, 1, 1, 0.8f)
     );
 
-    theme->set_color("axis_x_color", "Editor", Color(0.96, 0.20, 0.32));
-    theme->set_color("axis_y_color", "Editor", Color(0.53, 0.84, 0.01));
-    theme->set_color("axis_z_color", "Editor", Color(0.16, 0.55, 0.96));
+    theme->set_color("axis_x_color", "Editor", Color(0.96f, 0.20f, 0.32f));
+    theme->set_color("axis_y_color", "Editor", Color(0.53f, 0.84f, 0.01f));
+    theme->set_color("axis_z_color", "Editor", Color(0.16f, 0.55f, 0.96f));
 
     theme->set_color("font_color", "Editor", font_color);
     theme->set_color("highlighted_font_color", "Editor", font_color_hl);
@@ -708,17 +709,17 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 
     theme->set_color("mono_color", "Editor", mono_color);
 
-    Color success_color = Color(0.45, 0.95, 0.5);
-    Color warning_color = Color(1, 0.87, 0.4);
-    Color error_color   = Color(1, 0.47, 0.42);
+    Color success_color = Color(0.45f, 0.95f, 0.5f);
+    Color warning_color = Color(1, 0.87f, 0.4f);
+    Color error_color   = Color(1, 0.47f, 0.42f);
     Color property_color =
-        font_color.linear_interpolate(Color(0.5, 0.5, 0.5), 0.5);
+        font_color.linear_interpolate(Color(0.5f, 0.5f, 0.5f), 0.5f);
 
     if (!dark_theme) {
         // Darken some colors to be readable on a light background
-        success_color = success_color.linear_interpolate(mono_color, 0.35);
-        warning_color = warning_color.linear_interpolate(mono_color, 0.35);
-        error_color   = error_color.linear_interpolate(mono_color, 0.25);
+        success_color = success_color.linear_interpolate(mono_color, 0.35f);
+        warning_color = warning_color.linear_interpolate(mono_color, 0.35f);
+        error_color   = error_color.linear_interpolate(mono_color, 0.25f);
     }
 
     theme->set_color("success_color", "Editor", success_color);
@@ -942,7 +943,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 
     // CanvasItem Editor
     Ref<StyleBoxFlat> style_canvas_editor_info =
-        make_flat_stylebox(Color(0.0, 0.0, 0.0, 0.2));
+        make_flat_stylebox(Color(0, 0, 0, 0.2f));
     style_canvas_editor_info->set_expand_margin_size_all(4 * EDSCALE);
     theme->set_stylebox(
         "CanvasItemInfoOverlay",
@@ -1221,7 +1222,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         Ref<StyleBoxFlat> sub_inspector_bg;
 
         sub_inspector_bg = make_flat_stylebox(
-            dark_color_1.linear_interpolate(si_base_color, 0.08),
+            dark_color_1.linear_interpolate(si_base_color, 0.08f),
             2,
             0,
             2,
@@ -1237,7 +1238,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         sub_inspector_bg->set_default_margin(MARGIN_BOTTOM, 10);
         sub_inspector_bg->set_default_margin(MARGIN_TOP, 5);
         sub_inspector_bg->set_border_color(
-            si_base_color * Color(0.7, 0.7, 0.7, 0.8)
+            si_base_color * Color(0.7f, 0.7f, 0.7f, 0.8f)
         );
         sub_inspector_bg->set_draw_center(true);
 
@@ -1249,14 +1250,14 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 
         Ref<StyleBoxFlat> bg_color;
         bg_color.instance();
-        bg_color->set_bg_color(si_base_color * Color(0.7, 0.7, 0.7, 0.8));
+        bg_color->set_bg_color(si_base_color * Color(0.7f, 0.7f, 0.7f, 0.8f));
         bg_color->set_border_width_all(0);
 
         Ref<StyleBoxFlat> bg_color_selected;
         bg_color_selected.instance();
         bg_color_selected->set_border_width_all(0);
         bg_color_selected->set_bg_color(
-            si_base_color * Color(0.8, 0.8, 0.8, 0.8)
+            si_base_color * Color(0.8f, 0.8f, 0.8f, 0.8f)
         );
 
         theme->set_stylebox(
@@ -1306,7 +1307,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     theme->set_stylebox("bg", "Tree", style_tree_bg);
 
     const Color guide_color =
-        Color(mono_color.r, mono_color.g, mono_color.b, 0.05);
+        Color(mono_color.r, mono_color.g, mono_color.b, 0.05f);
     Color relationship_line_color = Color(
         mono_color.r,
         mono_color.g,
@@ -1388,7 +1389,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     theme->set_stylebox("button_pressed", "Tree", style_tree_btn);
 
     Ref<StyleBoxFlat> style_tree_hover = style_default->duplicate();
-    style_tree_hover->set_bg_color(highlight_color * Color(1, 1, 1, 0.4));
+    style_tree_hover->set_bg_color(highlight_color * Color(1, 1, 1, 0.4f));
     style_tree_hover->set_border_width_all(0);
     theme->set_stylebox("hover", "Tree", style_tree_hover);
 
@@ -1415,11 +1416,11 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     theme->set_stylebox("title_button_pressed", "Tree", style_tree_title);
 
     Color prop_category_color =
-        dark_color_1.linear_interpolate(mono_color, 0.12);
+        dark_color_1.linear_interpolate(mono_color, 0.12f);
     Color prop_section_color =
-        dark_color_1.linear_interpolate(mono_color, 0.09);
+        dark_color_1.linear_interpolate(mono_color, 0.09f);
     Color prop_subsection_color =
-        dark_color_1.linear_interpolate(mono_color, 0.06);
+        dark_color_1.linear_interpolate(mono_color, 0.06f);
     theme->set_color("prop_category", "Editor", prop_category_color);
     theme->set_color("prop_section", "Editor", prop_section_color);
     theme->set_color("prop_subsection", "Editor", prop_subsection_color);
@@ -2081,7 +2082,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     style_tooltip->set_default_margin(MARGIN_RIGHT, v);
     style_tooltip->set_default_margin(MARGIN_BOTTOM, v);
     style_tooltip->set_bg_color(
-        Color(mono_color.r, mono_color.g, mono_color.b, 0.9)
+        Color(mono_color.r, mono_color.g, mono_color.b, 0.9f)
     );
     style_tooltip->set_border_width_all(border_width);
     style_tooltip->set_border_color(mono_color);
@@ -2089,7 +2090,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     theme->set_color(
         "font_color_shadow",
         "TooltipLabel",
-        mono_color.inverted() * Color(1, 1, 1, 0.1)
+        mono_color.inverted() * Color(1, 1, 1, 0.1f)
     );
     theme->set_stylebox("panel", "TooltipPanel", style_tooltip);
 
@@ -2139,11 +2140,11 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     // GraphEdit
     theme->set_stylebox("bg", "GraphEdit", style_tree_bg);
     if (dark_theme) {
-        theme->set_color("grid_major", "GraphEdit", Color(1.0, 1.0, 1.0, 0.15));
-        theme->set_color("grid_minor", "GraphEdit", Color(1.0, 1.0, 1.0, 0.07));
+        theme->set_color("grid_major", "GraphEdit", Color(1, 1, 1, 0.15f));
+        theme->set_color("grid_minor", "GraphEdit", Color(1, 1, 1, 0.07f));
     } else {
-        theme->set_color("grid_major", "GraphEdit", Color(0.0, 0.0, 0.0, 0.15));
-        theme->set_color("grid_minor", "GraphEdit", Color(0.0, 0.0, 0.0, 0.07));
+        theme->set_color("grid_major", "GraphEdit", Color(0, 0, 0, 0.15f));
+        theme->set_color("grid_minor", "GraphEdit", Color(0, 0, 0, 0.07f));
     }
     theme->set_color(
         "selection_fill",
@@ -2195,13 +2196,15 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     Ref<StyleBoxFlat> style_minimap_node;
     if (dark_theme) {
         style_minimap_camera =
-            make_flat_stylebox(Color(0.65, 0.65, 0.65, 0.2), 0, 0, 0, 0);
-        style_minimap_camera->set_border_color(Color(0.65, 0.65, 0.65, 0.45));
+            make_flat_stylebox(Color(0.65f, 0.65f, 0.65f, 0.2f), 0, 0, 0, 0);
+        style_minimap_camera->set_border_color(Color(0.65f, 0.65f, 0.65f, 0.45f)
+        );
         style_minimap_node = make_flat_stylebox(Color(1, 1, 1), 0, 0, 0, 0);
     } else {
         style_minimap_camera =
-            make_flat_stylebox(Color(0.38, 0.38, 0.38, 0.2), 0, 0, 0, 0);
-        style_minimap_camera->set_border_color(Color(0.38, 0.38, 0.38, 0.45));
+            make_flat_stylebox(Color(0.38f, 0.38f, 0.38f, 0.2f), 0, 0, 0, 0);
+        style_minimap_camera->set_border_color(Color(0.38f, 0.38f, 0.38f, 0.45f)
+        );
         style_minimap_node = make_flat_stylebox(Color(0, 0, 0), 0, 0, 0, 0);
     }
     style_minimap_camera->set_border_width_all(1);
@@ -2213,9 +2216,9 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         theme->get_icon("GuiResizer", "EditorIcons");
     Color minimap_resizer_color;
     if (dark_theme) {
-        minimap_resizer_color = Color(1, 1, 1, 0.65);
+        minimap_resizer_color = Color(1, 1, 1, 0.65f);
     } else {
-        minimap_resizer_color = Color(0, 0, 0, 0.65);
+        minimap_resizer_color = Color(0, 0, 0, 0.65f);
     }
     theme->set_icon(
         "resizer",
@@ -2230,16 +2233,16 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     const float mv2           = 1.0 - mv;
     const int gn_margin_side  = 28;
     Ref<StyleBoxFlat> graphsb = make_flat_stylebox(
-        Color(mv, mv, mv, 0.7),
+        Color(mv, mv, mv, 0.7f),
         gn_margin_side,
         24,
         gn_margin_side,
         5
     );
     graphsb->set_border_width_all(border_width);
-    graphsb->set_border_color(Color(mv2, mv2, mv2, 0.9));
+    graphsb->set_border_color(Color(mv2, mv2, mv2, 0.9f));
     Ref<StyleBoxFlat> graphsbselected = make_flat_stylebox(
-        Color(mv, mv, mv, 0.9),
+        Color(mv, mv, mv, 0.9f),
         gn_margin_side,
         24,
         gn_margin_side,
@@ -2247,49 +2250,47 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     );
     graphsbselected->set_border_width_all(border_width);
     graphsbselected->set_border_color(
-        Color(accent_color.r, accent_color.g, accent_color.b, 0.9)
+        Color(accent_color.r, accent_color.g, accent_color.b, 0.9f)
     );
     graphsbselected->set_shadow_size(8 * EDSCALE);
     graphsbselected->set_shadow_color(shadow_color);
     Ref<StyleBoxFlat> graphsbcomment = make_flat_stylebox(
-        Color(mv, mv, mv, 0.3),
+        Color(mv, mv, mv, 0.3f),
         gn_margin_side,
         24,
         gn_margin_side,
         5
     );
     graphsbcomment->set_border_width_all(border_width);
-    graphsbcomment->set_border_color(Color(mv2, mv2, mv2, 0.9));
+    graphsbcomment->set_border_color(Color(mv2, mv2, mv2, 0.9f));
     Ref<StyleBoxFlat> graphsbcommentselected = make_flat_stylebox(
-        Color(mv, mv, mv, 0.4),
+        Color(mv, mv, mv, 0.4f),
         gn_margin_side,
         24,
         gn_margin_side,
         5
     );
     graphsbcommentselected->set_border_width_all(border_width);
-    graphsbcommentselected->set_border_color(Color(mv2, mv2, mv2, 0.9));
+    graphsbcommentselected->set_border_color(Color(mv2, mv2, mv2, 0.9f));
     Ref<StyleBoxFlat> graphsbbreakpoint = graphsbselected->duplicate();
     graphsbbreakpoint->set_draw_center(false);
     graphsbbreakpoint->set_border_color(warning_color);
-    graphsbbreakpoint->set_shadow_color(
-        warning_color * Color(1.0, 1.0, 1.0, 0.1)
-    );
+    graphsbbreakpoint->set_shadow_color(warning_color * Color(1, 1, 1, 0.1f));
     Ref<StyleBoxFlat> graphsbposition = graphsbselected->duplicate();
     graphsbposition->set_draw_center(false);
     graphsbposition->set_border_color(error_color);
-    graphsbposition->set_shadow_color(error_color * Color(1.0, 1.0, 1.0, 0.2));
+    graphsbposition->set_shadow_color(error_color * Color(1, 1, 1, 0.2f));
     Ref<StyleBoxFlat> smgraphsb = make_flat_stylebox(
-        Color(mv, mv, mv, 0.7),
+        Color(mv, mv, mv, 0.7f),
         gn_margin_side,
         24,
         gn_margin_side,
         5
     );
     smgraphsb->set_border_width_all(border_width);
-    smgraphsb->set_border_color(Color(mv2, mv2, mv2, 0.9));
+    smgraphsb->set_border_color(Color(mv2, mv2, mv2, 0.9f));
     Ref<StyleBoxFlat> smgraphsbselected = make_flat_stylebox(
-        Color(mv, mv, mv, 0.9),
+        Color(mv, mv, mv, 0.9f),
         gn_margin_side,
         24,
         gn_margin_side,
@@ -2297,7 +2298,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     );
     smgraphsbselected->set_border_width_all(border_width);
     smgraphsbselected->set_border_color(
-        Color(accent_color.r, accent_color.g, accent_color.b, 0.9)
+        Color(accent_color.r, accent_color.g, accent_color.b, 0.9f)
     );
     smgraphsbselected->set_shadow_size(8 * EDSCALE);
     smgraphsbselected->set_shadow_color(shadow_color);
@@ -2324,7 +2325,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
 
     Color default_node_color = Color(mv2, mv2, mv2);
     theme->set_color("title_color", "GraphNode", default_node_color);
-    default_node_color.a = 0.7;
+    default_node_color.a = 0.7f;
     theme->set_color("close_color", "GraphNode", default_node_color);
     theme->set_color("resizer_color", "GraphNode", default_node_color);
 
@@ -2386,7 +2387,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         "folder_icon_modulate",
         "FileDialog",
         (dark_theme ? Color(1, 1, 1) : Color(4.25, 4.25, 4.25))
-            .linear_interpolate(accent_color, 0.7)
+            .linear_interpolate(accent_color, 0.7f)
     );
     theme->set_color("files_disabled", "FileDialog", font_color_disabled);
 
@@ -2439,10 +2440,10 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     theme->set_color(
         "preview_picker_overlay_color",
         "ThemeEditor",
-        Color(0.1, 0.1, 0.1, 0.25)
+        Color(0.1f, 0.1f, 0.1f, 0.25f)
     );
     Color theme_preview_picker_bg_color = accent_color;
-    theme_preview_picker_bg_color.a     = 0.2;
+    theme_preview_picker_bg_color.a     = 0.2f;
     Ref<StyleBoxFlat> theme_preview_picker_sb =
         make_flat_stylebox(theme_preview_picker_bg_color, 0, 0, 0, 0);
     theme_preview_picker_sb->set_border_color(accent_color);
@@ -2477,30 +2478,30 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         Color(font_color.r, font_color.g, font_color.b, 0.5);
 
     const float mono_value = mono_color.r;
-    const Color alpha1     = Color(mono_value, mono_value, mono_value, 0.07);
-    const Color alpha2     = Color(mono_value, mono_value, mono_value, 0.14);
-    const Color alpha3     = Color(mono_value, mono_value, mono_value, 0.7);
+    const Color alpha1     = Color(mono_value, mono_value, mono_value, 0.07f);
+    const Color alpha2     = Color(mono_value, mono_value, mono_value, 0.14f);
+    const Color alpha3     = Color(mono_value, mono_value, mono_value, 0.7f);
 
     // editor main color
     const Color main_color =
-        dark_theme ? Color(0.34, 0.7, 1.0) : Color(0.02, 0.5, 1.0);
+        dark_theme ? Color(0.34f, 0.7f, 1) : Color(0.02f, 0.5f, 1);
 
     const Color symbol_color =
-        Color(0.34, 0.57, 1.0)
+        Color(0.34f, 0.57f, 1)
             .linear_interpolate(mono_color, dark_theme ? 0.5 : 0.3);
-    const Color keyword_color = Color(1.0, 0.44, 0.52);
+    const Color keyword_color = Color(1, 0.44f, 0.52f);
     const Color control_flow_keyword_color =
-        dark_theme ? Color(1.0, 0.55, 0.8) : Color(0.8, 0.4, 0.6);
+        dark_theme ? Color(1, 0.55f, 0.8f) : Color(0.8f, 0.4f, 0.6f);
     const Color basetype_color =
-        dark_theme ? Color(0.26, 1.0, 0.76) : Color(0.0, 0.76, 0.38);
+        dark_theme ? Color(0.26f, 1, 0.76f) : Color(0, 0.76f, 0.38f);
     const Color type_color =
-        basetype_color.linear_interpolate(mono_color, dark_theme ? 0.4 : 0.3);
+        basetype_color.linear_interpolate(mono_color, dark_theme ? 0.4f : 0.3f);
     const Color usertype_color =
-        basetype_color.linear_interpolate(mono_color, dark_theme ? 0.7 : 0.5);
+        basetype_color.linear_interpolate(mono_color, dark_theme ? 0.7f : 0.5f);
     const Color comment_color = dim_color;
     const Color string_color =
-        (dark_theme ? Color(1.0, 0.85, 0.26) : Color(1.0, 0.82, 0.09))
-            .linear_interpolate(mono_color, dark_theme ? 0.5 : 0.3);
+        (dark_theme ? Color(1, 0.85f, 0.26f) : Color(1, 0.82f, 0.09f))
+            .linear_interpolate(mono_color, dark_theme ? 0.5f : 0.3f);
 
     const Color te_background_color =
         dark_theme ? background_color : base_color;
@@ -2512,29 +2513,29 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     const Color completion_font_color     = font_color;
     const Color text_color                = font_color;
     const Color line_number_color         = dim_color;
-    const Color safe_line_number_color    = dim_color * Color(1, 1.2, 1, 1.5);
+    const Color safe_line_number_color    = dim_color * Color(1, 1.2f, 1, 1.5f);
     const Color caret_color               = mono_color;
     const Color caret_background_color    = mono_color.inverted();
     const Color text_selected_color       = dark_color_3;
-    const Color selection_color           = accent_color * Color(1, 1, 1, 0.35);
-    const Color brace_mismatch_color      = error_color;
-    const Color current_line_color        = alpha1;
+    const Color selection_color      = accent_color * Color(1, 1, 1, 0.35f);
+    const Color brace_mismatch_color = error_color;
+    const Color current_line_color   = alpha1;
     const Color line_length_guideline_color =
         dark_theme ? base_color : background_color;
     const Color word_highlighted_color = alpha1;
     const Color number_color =
-        basetype_color.linear_interpolate(mono_color, dark_theme ? 0.5 : 0.3);
+        basetype_color.linear_interpolate(mono_color, dark_theme ? 0.5f : 0.3f);
     const Color function_color = main_color;
     const Color member_variable_color =
-        main_color.linear_interpolate(mono_color, 0.6);
+        main_color.linear_interpolate(mono_color, 0.6f);
     const Color mark_color =
-        Color(error_color.r, error_color.g, error_color.b, 0.3);
-    const Color bookmark_color             = Color(0.08, 0.49, 0.98);
+        Color(error_color.r, error_color.g, error_color.b, 0.3f);
+    const Color bookmark_color             = Color(0.08f, 0.49f, 0.98f);
     const Color breakpoint_color           = error_color;
-    const Color executing_line_color       = Color(0.2, 0.8, 0.2, 0.4);
+    const Color executing_line_color       = Color(0.2f, 0.8f, 0.2f, 0.4f);
     const Color code_folding_color         = alpha3;
     const Color search_result_color        = alpha1;
-    const Color search_result_border_color = Color(0.41, 0.61, 0.91, 0.38);
+    const Color search_result_border_color = Color(0.41f, 0.61f, 0.91f, 0.38f);
 
     EditorSettings* setting = EditorSettings::get_singleton();
     String text_editor_color_theme =

@@ -58,7 +58,7 @@ AudioEffectReverbInstance::AudioEffectReverbInstance() {
     reverb[0].set_mix_rate(AudioServer::get_singleton()->get_mix_rate());
     reverb[0].set_extra_spread_base(0);
     reverb[1].set_mix_rate(AudioServer::get_singleton()->get_mix_rate());
-    reverb[1].set_extra_spread_base(0.000521); // for stereo effect
+    reverb[1].set_extra_spread_base(0.000521f); // for stereo effect
 }
 
 Ref<AudioEffectInstance> AudioEffectReverb::instance() {
@@ -257,11 +257,11 @@ void AudioEffectReverb::_bind_methods() {
 
 AudioEffectReverb::AudioEffectReverb() {
     predelay    = 150;
-    predelay_fb = 0.4;
+    predelay_fb = 0.4f;
     hpf         = 0;
-    room_size   = 0.8;
-    damping     = 0.5;
-    spread      = 1.0;
-    dry         = 1.0;
-    wet         = 0.5;
+    room_size   = 0.8f;
+    damping     = 0.5f;
+    spread      = 1;
+    dry         = 1;
+    wet         = 0.5f;
 }

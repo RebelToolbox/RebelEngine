@@ -106,7 +106,7 @@ void EditorNetworkProfiler::_clear_pressed() {
     nodes_data.clear();
     set_bandwidth(0, 0);
     if (frame_delay->is_stopped()) {
-        frame_delay->set_wait_time(0.1);
+        frame_delay->set_wait_time(0.1f);
         frame_delay->start();
     }
 }
@@ -124,7 +124,7 @@ void EditorNetworkProfiler::add_node_frame_data(
     }
 
     if (frame_delay->is_stopped()) {
-        frame_delay->set_wait_time(0.1);
+        frame_delay->set_wait_time(0.1f);
         frame_delay->start();
     }
 }
@@ -225,7 +225,7 @@ EditorNetworkProfiler::EditorNetworkProfiler() {
     add_child(counters_display);
 
     frame_delay = memnew(Timer);
-    frame_delay->set_wait_time(0.1);
+    frame_delay->set_wait_time(0.1f);
     frame_delay->set_one_shot(true);
     add_child(frame_delay);
     frame_delay->connect("timeout", this, "_update_frame");

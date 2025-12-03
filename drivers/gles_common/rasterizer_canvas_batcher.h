@@ -2656,7 +2656,7 @@ bool C_PREAMBLE::_prefill_rect(
         RAST_DEBUG_ASSERT(angles);
 
         float angle        = 0.0f;
-        const float TWO_PI = Math_PI * 2;
+        const float TWO_PI = static_cast<float>(Math_PI) * 2;
 
         if (r_fill_state.transform_mode != TM_NONE) {
             const Transform2D& tr = r_fill_state.transform_combined;
@@ -2691,7 +2691,7 @@ bool C_PREAMBLE::_prefill_rect(
 
         // if horizontal flip, angle is shifted by 180 degrees
         if (flip_h) {
-            angle += Math_PI;
+            angle += static_cast<float>(Math_PI);
 
             // mod to get back to 0 to TWO_PI range
             angle = fmodf(angle, TWO_PI);

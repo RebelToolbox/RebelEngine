@@ -427,7 +427,7 @@ Vector3 BulletPhysicsDirectSpaceState::get_closest_point_to_object_volume(
     ERR_FAIL_COND_V(!rigid_object, Vector3());
 
     btVector3 out_closest_point(0, 0, 0);
-    btScalar out_distance = 1e20;
+    btScalar out_distance = 1e20f;
 
     btVector3 bt_point;
     R_TO_B(p_point, bt_point);
@@ -1222,7 +1222,7 @@ void SpaceBullet::update_gravity() {
 /// Debug motion and normal vector drawing
 #define debug_test_motion 0
 
-#define RECOVERING_MOVEMENT_SCALE  0.4
+#define RECOVERING_MOVEMENT_SCALE  0.4f
 #define RECOVERING_MOVEMENT_CYCLES 4
 
 #if debug_test_motion

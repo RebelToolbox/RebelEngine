@@ -648,8 +648,8 @@ AudioEffectChorus::AudioEffectChorus() {
     voice_count     = 2;
     voice[0].delay  = 15;
     voice[1].delay  = 20;
-    voice[0].rate   = 0.8;
-    voice[1].rate   = 1.2;
+    voice[0].rate   = 0.8f;
+    voice[1].rate   = 1.2f;
     voice[0].depth  = 2;
     voice[1].depth  = 3;
     voice[0].cutoff = 8000;

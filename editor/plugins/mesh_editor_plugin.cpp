@@ -13,10 +13,10 @@ void MeshEditor::_gui_input(Ref<InputEvent> p_event) {
     if (mm.is_valid() && mm->get_button_mask() & BUTTON_MASK_LEFT) {
         rot_x -= mm->get_relative().y * 0.01;
         rot_y -= mm->get_relative().x * 0.01;
-        if (rot_x < -Math_PI / 2) {
-            rot_x = -Math_PI / 2;
-        } else if (rot_x > Math_PI / 2) {
-            rot_x = Math_PI / 2;
+        if (rot_x < -static_cast<float>(Math_PI) / 2) {
+            rot_x = -static_cast<float>(Math_PI) / 2;
+        } else if (rot_x > static_cast<float>(Math_PI) / 2) {
+            rot_x = static_cast<float>(Math_PI) / 2;
         }
         _update_rotation();
     }
@@ -103,8 +103,8 @@ MeshEditor::MeshEditor() {
     viewport->set_msaa(Viewport::MSAA_2X);
     set_stretch(true);
     camera = memnew(Camera);
-    camera->set_transform(Transform(Basis(), Vector3(0, 0, 1.1)));
-    camera->set_perspective(45, 0.1, 10);
+    camera->set_transform(Transform(Basis(), Vector3(0, 0, 1.1f)));
+    camera->set_perspective(45, 0.1f, 10);
     viewport->add_child(camera);
 
     light1 = memnew(DirectionalLight);
@@ -117,7 +117,7 @@ MeshEditor::MeshEditor() {
     light2->set_transform(
         Transform().looking_at(Vector3(0, 1, 0), Vector3(0, 0, 1))
     );
-    light2->set_color(Color(0.7, 0.7, 0.7));
+    light2->set_color(Color(0.7f, 0.7f, 0.7f));
     viewport->add_child(light2);
 
     rotation = memnew(Spatial);

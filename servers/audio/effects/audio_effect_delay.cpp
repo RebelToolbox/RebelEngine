@@ -476,12 +476,12 @@ AudioEffectDelay::AudioEffectDelay() {
     tap_1_active   = true;
     tap_1_delay_ms = 250;
     tap_1_level    = -6;
-    tap_1_pan      = 0.2;
+    tap_1_pan      = 0.2f;
 
     tap_2_active   = true;
     tap_2_delay_ms = 500;
     tap_2_level    = -12;
-    tap_2_pan      = -0.4;
+    tap_2_pan      = -0.4f;
 
     feedback_active   = false;
     feedback_delay_ms = 340;

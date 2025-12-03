@@ -7,11 +7,11 @@
 #include "import_utils.h"
 
 Vector3 ImportUtils::deg2rad(const Vector3& p_rotation) {
-    return p_rotation / 180.0 * Math_PI;
+    return p_rotation / 180.0 * static_cast<real_t>(Math_PI);
 }
 
 Vector3 ImportUtils::rad2deg(const Vector3& p_rotation) {
-    return p_rotation / Math_PI * 180.0;
+    return p_rotation / static_cast<real_t>(Math_PI) * 180.0;
 }
 
 Basis ImportUtils::EulerToBasis(

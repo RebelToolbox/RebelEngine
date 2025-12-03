@@ -124,7 +124,7 @@ void CollisionPolygon2D::_notification(int p_what) {
                 Vector2 n = polygon[(i + 1) % polygon_count];
                 // draw line with width <= 1, so it does not scale with zoom and
                 // break pixel exact editing
-                draw_line(p, n, Color(0.9, 0.2, 0.0, 0.8), 1);
+                draw_line(p, n, Color(0.9f, 0.2f, 0, 0.8f), 1);
             }
 
             if (polygon_count > 2) {
@@ -132,7 +132,7 @@ void CollisionPolygon2D::_notification(int p_what) {
 #if defined(TOOLS_ENABLED) && defined(DEBUG_DECOMPOSE)
                 Vector<Vector<Vector2>> decomp = _decompose_in_convex();
 
-                Color c(0.4, 0.9, 0.1);
+                Color c(0.4f, 0.9f, 0.1f);
                 for (int i = 0; i < decomp.size(); i++) {
                     c.set_hsv(
                         Math::fmod(c.get_h() + 0.738, 1),
@@ -186,8 +186,8 @@ void CollisionPolygon2D::set_polygon(const Vector<Point2>& p_polygon) {
         if (aabb == Rect2()) {
             aabb = Rect2(-10, -10, 20, 20);
         } else {
-            aabb.position -= aabb.size * 0.3;
-            aabb.size     += aabb.size * 0.6;
+            aabb.position -= aabb.size * 0.3f;
+            aabb.size     += aabb.size * 0.6f;
         }
     }
 

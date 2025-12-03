@@ -1031,7 +1031,7 @@ void ProjectSettingsEditor::popup_project_settings() {
     if (saved_size != Rect2()) {
         popup(saved_size);
     } else {
-        popup_centered_clamped(Size2(900, 700) * EDSCALE, 0.8);
+        popup_centered_clamped(Size2(900, 700) * EDSCALE, 0.8f);
     }
 
     globals_editor->update_category_list();

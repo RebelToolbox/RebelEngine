@@ -7,7 +7,7 @@
 #ifndef MATH_DEFS_H
 #define MATH_DEFS_H
 
-#define CMP_EPSILON  0.00001
+#define CMP_EPSILON  0.00001f
 #define CMP_EPSILON2 (CMP_EPSILON * CMP_EPSILON)
 
 #define CMP_NORMALIZE_TOLERANCE    0.000001
@@ -31,7 +31,7 @@
 #define UNIT_EPSILON 0.00001
 #else
 // tolerate some more floating point error normally
-#define UNIT_EPSILON 0.001
+#define UNIT_EPSILON 0.001f
 #endif
 
 #define USEC_TO_SEC(m_usec) ((m_usec) / 1000000.0)

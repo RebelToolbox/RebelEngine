@@ -45,7 +45,7 @@ struct ImportState {
     String path                = String();
     Spatial* root_owner        = nullptr;
     Spatial* root              = nullptr;
-    real_t scale               = 0.01;
+    real_t scale               = 0.01f;
     Ref<FBXNode> fbx_root_node = Ref<FBXNode>();
     // skeleton map - merged automatically when they are on the same x node in
     // the tree so we can merge them automatically.

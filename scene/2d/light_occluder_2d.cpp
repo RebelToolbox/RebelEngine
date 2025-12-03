@@ -212,13 +212,13 @@ void LightOccluder2D::_notification(int p_what) {
                 if (poly.size()) {
                     if (occluder_polygon->is_closed()) {
                         Vector<Color> color;
-                        color.push_back(Color(0, 0, 0, 0.6));
+                        color.push_back(Color(0, 0, 0, 0.6f));
                         draw_polygon(Variant(poly), color);
                     } else {
                         int ps                      = poly.size();
                         PoolVector<Vector2>::Read r = poly.read();
                         for (int i = 0; i < ps - 1; i++) {
-                            draw_line(r[i], r[i + 1], Color(0, 0, 0, 0.6), 3);
+                            draw_line(r[i], r[i + 1], Color(0, 0, 0, 0.6f), 3);
                         }
                     }
                 }

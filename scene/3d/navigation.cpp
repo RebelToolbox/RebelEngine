@@ -260,8 +260,8 @@ Vector<Vector3> Navigation::get_simple_path(
     Polygon* end_poly   = nullptr;
     Vector3 begin_point;
     Vector3 end_point;
-    float begin_d = 1e20;
-    float end_d   = 1e20;
+    float begin_d = 1e20f;
+    float end_d   = 1e20f;
 
     for (Map<int, NavMesh>::Element* E = navmesh_map.front(); E;
          E                             = E->next()) {
@@ -344,7 +344,7 @@ Vector<Vector3> Navigation::get_simple_path(
         // check open list
 
         List<Polygon*>::Element* least_cost_poly = nullptr;
-        float least_cost                         = 1e30;
+        float least_cost                         = 1e30f;
 
         // this could be faster (cache previous results)
         for (List<Polygon*>::Element* E = open_list.front(); E; E = E->next()) {
@@ -566,7 +566,7 @@ Vector3 Navigation::get_closest_point_to_segment(
 ) {
     bool use_collision = p_use_collision;
     Vector3 closest_point;
-    float closest_point_d = 1e20;
+    float closest_point_d = 1e20f;
 
     for (Map<int, NavMesh>::Element* E = navmesh_map.front(); E;
          E                             = E->next()) {
@@ -624,7 +624,7 @@ Vector3 Navigation::get_closest_point_to_segment(
 
 Vector3 Navigation::get_closest_point(const Vector3& p_point) {
     Vector3 closest_point;
-    float closest_point_d = 1e20;
+    float closest_point_d = 1e20f;
 
     for (Map<int, NavMesh>::Element* E = navmesh_map.front(); E;
          E                             = E->next()) {
@@ -656,7 +656,7 @@ Vector3 Navigation::get_closest_point(const Vector3& p_point) {
 Vector3 Navigation::get_closest_point_normal(const Vector3& p_point) {
     Vector3 closest_point;
     Vector3 closest_normal;
-    float closest_point_d = 1e20;
+    float closest_point_d = 1e20f;
 
     for (Map<int, NavMesh>::Element* E = navmesh_map.front(); E;
          E                             = E->next()) {
@@ -689,7 +689,7 @@ Vector3 Navigation::get_closest_point_normal(const Vector3& p_point) {
 Object* Navigation::get_closest_point_owner(const Vector3& p_point) {
     Vector3 closest_point;
     Object* owner         = nullptr;
-    float closest_point_d = 1e20;
+    float closest_point_d = 1e20f;
 
     for (Map<int, NavMesh>::Element* E = navmesh_map.front(); E;
          E                             = E->next()) {
@@ -785,7 +785,7 @@ void Navigation::_bind_methods() {
 
 Navigation::Navigation() {
     ERR_FAIL_COND(sizeof(Point) != 8);
-    cell_size = 0.01; // one centimeter
+    cell_size = 0.01f; // one centimeter
     last_id   = 1;
     up        = Vector3(0, 1, 0);
 }

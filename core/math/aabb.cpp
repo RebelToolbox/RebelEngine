@@ -125,8 +125,8 @@ bool AABB::intersects_ray(
 ) const {
     Vector3 c1, c2;
     Vector3 end = position + size;
-    real_t near = -1e20;
-    real_t far  = 1e20;
+    real_t near = -1e20f;
+    real_t far  = 1e20f;
     int axis    = 0;
 
     for (int i = 0; i < 3; i++) {

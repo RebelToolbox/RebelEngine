@@ -454,184 +454,184 @@ static Color _color_from_type(Variant::Type p_type, bool dark_theme = true) {
     if (dark_theme) {
         switch (p_type) {
             case Variant::NIL:
-                color = Color(0.41, 0.93, 0.74);
+                color = Color(0.41f, 0.93f, 0.74f);
                 break;
 
             case Variant::BOOL:
-                color = Color(0.55, 0.65, 0.94);
+                color = Color(0.55f, 0.65f, 0.94f);
                 break;
             case Variant::INT:
-                color = Color(0.49, 0.78, 0.94);
+                color = Color(0.49f, 0.78f, 0.94f);
                 break;
             case Variant::REAL:
-                color = Color(0.38, 0.85, 0.96);
+                color = Color(0.38f, 0.85f, 0.96f);
                 break;
             case Variant::STRING:
-                color = Color(0.42, 0.65, 0.93);
+                color = Color(0.42f, 0.65f, 0.93f);
                 break;
 
             case Variant::VECTOR2:
-                color = Color(0.74, 0.57, 0.95);
+                color = Color(0.74f, 0.57f, 0.95f);
                 break;
             case Variant::RECT2:
-                color = Color(0.95, 0.57, 0.65);
+                color = Color(0.95f, 0.57f, 0.65f);
                 break;
             case Variant::VECTOR3:
-                color = Color(0.84, 0.49, 0.93);
+                color = Color(0.84f, 0.49f, 0.93f);
                 break;
             case Variant::TRANSFORM2D:
-                color = Color(0.77, 0.93, 0.41);
+                color = Color(0.77f, 0.93f, 0.41f);
                 break;
             case Variant::PLANE:
-                color = Color(0.97, 0.44, 0.44);
+                color = Color(0.97f, 0.44f, 0.44f);
                 break;
             case Variant::QUAT:
-                color = Color(0.93, 0.41, 0.64);
+                color = Color(0.93f, 0.41f, 0.64f);
                 break;
             case Variant::AABB:
-                color = Color(0.93, 0.47, 0.57);
+                color = Color(0.93f, 0.47f, 0.57f);
                 break;
             case Variant::BASIS:
-                color = Color(0.89, 0.93, 0.41);
+                color = Color(0.89f, 0.93f, 0.41f);
                 break;
             case Variant::TRANSFORM:
-                color = Color(0.96, 0.66, 0.43);
+                color = Color(0.96f, 0.66f, 0.43f);
                 break;
 
             case Variant::COLOR:
-                color = Color(0.62, 1.0, 0.44);
+                color = Color(0.62f, 1.0f, 0.44f);
                 break;
             case Variant::NODE_PATH:
-                color = Color(0.41, 0.58, 0.93);
+                color = Color(0.41f, 0.58f, 0.93f);
                 break;
             case Variant::_RID:
-                color = Color(0.41, 0.93, 0.6);
+                color = Color(0.41f, 0.93f, 0.6f);
                 break;
             case Variant::OBJECT:
-                color = Color(0.47, 0.95, 0.91);
+                color = Color(0.47f, 0.95f, 0.91f);
                 break;
             case Variant::DICTIONARY:
-                color = Color(0.47, 0.93, 0.69);
+                color = Color(0.47f, 0.93f, 0.69f);
                 break;
 
             case Variant::ARRAY:
-                color = Color(0.88, 0.88, 0.88);
+                color = Color(0.88f, 0.88f, 0.88f);
                 break;
             case Variant::POOL_BYTE_ARRAY:
-                color = Color(0.67, 0.96, 0.78);
+                color = Color(0.67f, 0.96f, 0.78f);
                 break;
             case Variant::POOL_INT_ARRAY:
-                color = Color(0.69, 0.86, 0.96);
+                color = Color(0.69f, 0.86f, 0.96f);
                 break;
             case Variant::POOL_REAL_ARRAY:
-                color = Color(0.59, 0.91, 0.97);
+                color = Color(0.59f, 0.91f, 0.97f);
                 break;
             case Variant::POOL_STRING_ARRAY:
-                color = Color(0.62, 0.77, 0.95);
+                color = Color(0.62f, 0.77f, 0.95f);
                 break;
             case Variant::POOL_VECTOR2_ARRAY:
-                color = Color(0.82, 0.7, 0.96);
+                color = Color(0.82f, 0.7f, 0.96f);
                 break;
             case Variant::POOL_VECTOR3_ARRAY:
-                color = Color(0.87, 0.61, 0.95);
+                color = Color(0.87f, 0.61f, 0.95f);
                 break;
             case Variant::POOL_COLOR_ARRAY:
-                color = Color(0.91, 1.0, 0.59);
+                color = Color(0.91f, 1.0f, 0.59f);
                 break;
 
             default:
-                color.set_hsv(p_type / float(Variant::VARIANT_MAX), 0.7, 0.7);
+                color.set_hsv(p_type / float(Variant::VARIANT_MAX), 0.7f, 0.7f);
         }
     } else {
         switch (p_type) {
             case Variant::NIL:
-                color = Color(0.15, 0.89, 0.63);
+                color = Color(0.15f, 0.89f, 0.63f);
                 break;
 
             case Variant::BOOL:
-                color = Color(0.43, 0.56, 0.92);
+                color = Color(0.43f, 0.56f, 0.92f);
                 break;
             case Variant::INT:
-                color = Color(0.31, 0.7, 0.91);
+                color = Color(0.31f, 0.7f, 0.91f);
                 break;
             case Variant::REAL:
-                color = Color(0.15, 0.8, 0.94);
+                color = Color(0.15f, 0.8f, 0.94f);
                 break;
             case Variant::STRING:
-                color = Color(0.27, 0.56, 0.91);
+                color = Color(0.27f, 0.56f, 0.91f);
                 break;
 
             case Variant::VECTOR2:
-                color = Color(0.68, 0.46, 0.93);
+                color = Color(0.68f, 0.46f, 0.93f);
                 break;
             case Variant::RECT2:
-                color = Color(0.93, 0.46, 0.56);
+                color = Color(0.93f, 0.46f, 0.56f);
                 break;
             case Variant::VECTOR3:
-                color = Color(0.86, 0.42, 0.93);
+                color = Color(0.86f, 0.42f, 0.93f);
                 break;
             case Variant::TRANSFORM2D:
-                color = Color(0.59, 0.81, 0.1);
+                color = Color(0.59f, 0.81f, 0.1f);
                 break;
             case Variant::PLANE:
-                color = Color(0.97, 0.44, 0.44);
+                color = Color(0.97f, 0.44f, 0.44f);
                 break;
             case Variant::QUAT:
-                color = Color(0.93, 0.41, 0.64);
+                color = Color(0.93f, 0.41f, 0.64f);
                 break;
             case Variant::AABB:
-                color = Color(0.93, 0.47, 0.57);
+                color = Color(0.93f, 0.47f, 0.57f);
                 break;
             case Variant::BASIS:
-                color = Color(0.7, 0.73, 0.1);
+                color = Color(0.7f, 0.73f, 0.1f);
                 break;
             case Variant::TRANSFORM:
-                color = Color(0.96, 0.56, 0.28);
+                color = Color(0.96f, 0.56f, 0.28f);
                 break;
 
             case Variant::COLOR:
-                color = Color(0.24, 0.75, 0.0);
+                color = Color(0.24f, 0.75f, 0.0f);
                 break;
             case Variant::NODE_PATH:
-                color = Color(0.41, 0.58, 0.93);
+                color = Color(0.41f, 0.58f, 0.93f);
                 break;
             case Variant::_RID:
-                color = Color(0.17, 0.9, 0.45);
+                color = Color(0.17f, 0.9f, 0.45f);
                 break;
             case Variant::OBJECT:
-                color = Color(0.07, 0.84, 0.76);
+                color = Color(0.07f, 0.84f, 0.76f);
                 break;
             case Variant::DICTIONARY:
-                color = Color(0.34, 0.91, 0.62);
+                color = Color(0.34f, 0.91f, 0.62f);
                 break;
 
             case Variant::ARRAY:
-                color = Color(0.45, 0.45, 0.45);
+                color = Color(0.45f, 0.45f, 0.45f);
                 break;
             case Variant::POOL_BYTE_ARRAY:
-                color = Color(0.38, 0.92, 0.6);
+                color = Color(0.38f, 0.92f, 0.6f);
                 break;
             case Variant::POOL_INT_ARRAY:
-                color = Color(0.38, 0.73, 0.92);
+                color = Color(0.38f, 0.73f, 0.92f);
                 break;
             case Variant::POOL_REAL_ARRAY:
-                color = Color(0.25, 0.83, 0.95);
+                color = Color(0.25f, 0.83f, 0.95f);
                 break;
             case Variant::POOL_STRING_ARRAY:
-                color = Color(0.38, 0.62, 0.92);
+                color = Color(0.38f, 0.62f, 0.92f);
                 break;
             case Variant::POOL_VECTOR2_ARRAY:
-                color = Color(0.62, 0.36, 0.92);
+                color = Color(0.62f, 0.36f, 0.92f);
                 break;
             case Variant::POOL_VECTOR3_ARRAY:
-                color = Color(0.79, 0.35, 0.92);
+                color = Color(0.79f, 0.35f, 0.92f);
                 break;
             case Variant::POOL_COLOR_ARRAY:
-                color = Color(0.57, 0.73, 0.0);
+                color = Color(0.57f, 0.73f, 0.0f);
                 break;
 
             default:
-                color.set_hsv(p_type / float(Variant::VARIANT_MAX), 0.3, 0.3);
+                color.set_hsv(p_type / float(Variant::VARIANT_MAX), 0.3f, 0.3f);
         }
     }
 
@@ -897,11 +897,11 @@ void VisualScriptEditor::_update_graph(int p_only_id) {
                     Color mono_color = ((c.r + c.g + c.b) / 3) < 0.7
                                          ? Color(1.0, 1.0, 1.0)
                                          : Color(0.0, 0.0, 0.0);
-                    mono_color.a     = 0.85;
+                    mono_color.a     = 0.85f;
                     c                = mono_color;
                 }
                 gnode->add_color_override("title_color", c);
-                c.a = 0.7;
+                c.a = 0.7f;
                 gnode->add_color_override("close_color", c);
                 gnode->add_color_override("resizer_color", c);
                 gnode->add_style_override("frame", sbf);
@@ -5733,42 +5733,44 @@ void VisualScriptEditor::_notification(int p_what) {
 
             List<Pair<String, Color>> colors;
             if (dark_theme) {
+                colors.push_back(Pair<String, Color>(
+                    "flow_control",
+                    Color(0.96f, 0.96f, 0.96f)
+                ));
                 colors.push_back(
-                    Pair<String, Color>("flow_control", Color(0.96, 0.96, 0.96))
+                    Pair<String, Color>("functions", Color(0.96f, 0.52f, 0.51f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("functions", Color(0.96, 0.52, 0.51))
+                    Pair<String, Color>("data", Color(0.5f, 0.96f, 0.81f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("data", Color(0.5, 0.96, 0.81))
+                    Pair<String, Color>("operators", Color(0.67f, 0.59f, 0.87f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("operators", Color(0.67, 0.59, 0.87))
+                    Pair<String, Color>("custom", Color(0.5f, 0.73f, 0.96f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("custom", Color(0.5, 0.73, 0.96))
-                );
-                colors.push_back(
-                    Pair<String, Color>("constants", Color(0.96, 0.5, 0.69))
+                    Pair<String, Color>("constants", Color(0.96f, 0.5f, 0.69f))
                 );
             } else {
+                colors.push_back(Pair<String, Color>(
+                    "flow_control",
+                    Color(0.26f, 0.26f, 0.26f)
+                ));
                 colors.push_back(
-                    Pair<String, Color>("flow_control", Color(0.26, 0.26, 0.26))
+                    Pair<String, Color>("functions", Color(0.95f, 0.4f, 0.38f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("functions", Color(0.95, 0.4, 0.38))
+                    Pair<String, Color>("data", Color(0.07f, 0.73f, 0.51f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("data", Color(0.07, 0.73, 0.51))
+                    Pair<String, Color>("operators", Color(0.51f, 0.4f, 0.82f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("operators", Color(0.51, 0.4, 0.82))
+                    Pair<String, Color>("custom", Color(0.31f, 0.63f, 0.95f))
                 );
                 colors.push_back(
-                    Pair<String, Color>("custom", Color(0.31, 0.63, 0.95))
-                );
-                colors.push_back(
-                    Pair<String, Color>("constants", Color(0.94, 0.18, 0.49))
+                    Pair<String, Color>("constants", Color(0.94f, 0.18f, 0.49f))
                 );
             }
 

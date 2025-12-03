@@ -153,7 +153,7 @@ protected:
         /* CAPSULE SHAPE */
 
         PoolVector<Plane> capsule_planes =
-            Geometry::build_capsule_planes(0.5, 0.7, 12, Vector3::AXIS_Z);
+            Geometry::build_capsule_planes(0.5f, 0.7f, 12, Vector3::AXIS_Z);
 
         RID capsule_mesh = vs->mesh_create();
         Geometry::MeshData capsule_data =
@@ -172,7 +172,7 @@ protected:
         /* CONVEX SHAPE */
 
         PoolVector<Plane> convex_planes =
-            Geometry::build_cylinder_planes(0.5, 0.7, 5, Vector3::AXIS_Z);
+            Geometry::build_cylinder_planes(0.5f, 0.7f, 5, Vector3::AXIS_Z);
 
         RID convex_mesh = vs->mesh_create();
         Geometry::MeshData convex_data =
@@ -325,7 +325,7 @@ public:
         vs->light_set_shadow(lightaux, true);
         light = vs->instance_create2(lightaux, scenario);
         Transform t;
-        t.rotate(Vector3(1.0, 0, 0), 0.6);
+        t.rotate(Vector3(1.0, 0, 0), 0.6f);
         vs->instance_set_transform(light, t);
 
         /* CAMERA */
@@ -340,11 +340,11 @@ public:
         vs->viewport_attach_camera(viewport, camera);
         vs->viewport_set_scenario(viewport, scenario);
 
-        vs->camera_set_perspective(camera, 60, 0.1, 40.0);
+        vs->camera_set_perspective(camera, 60, 0.1f, 40.0);
         vs->camera_set_transform(camera, Transform(Basis(), Vector3(0, 9, 12)));
 
         Transform gxf;
-        gxf.basis.scale(Vector3(1.4, 0.4, 1.4));
+        gxf.basis.scale(Vector3(1.4f, 0.4f, 1.4f));
         gxf.origin = Vector3(-2, 1, -2);
         make_grid(5, 5, 2.5, 1, gxf);
         test_fall();
@@ -399,7 +399,7 @@ public:
         capsule_params["radius"] = 0.5;
         capsule_params["height"] = 1;
         Transform shape_xform;
-        shape_xform.rotate(Vector3(1, 0, 0), Math_PI / 2.0);
+        shape_xform.rotate(Vector3(1, 0, 0), static_cast<real_t>(Math_PI) / 2);
         // shape_xform.origin=Vector3(1,1,1);
         ps->shape_set_data(capsule_shape, capsule_params);
 
@@ -438,7 +438,10 @@ public:
             Transform t;
 
             t.origin = Vector3(0.0 * i, 3.5 + 1.1 * i, 0.7 + 0.0 * i);
-            t.basis.rotate(Vector3(0.2, -1, 0), Math_PI / 2 * 0.6);
+            t.basis.rotate(
+                Vector3(0.2f, -1, 0),
+                static_cast<real_t>(Math_PI) / 2 * 0.6f
+            );
 
             create_body(type, PhysicsServer::BODY_MODE_RIGID, t);
         }

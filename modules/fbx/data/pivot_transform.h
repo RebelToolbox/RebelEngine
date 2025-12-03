@@ -56,10 +56,17 @@ struct PivotTransform : Reference, ModelAbstraction {
 
     void debug_pivot_xform(String p_name) {
         print_verbose("debugging node name: " + p_name);
-        print_verbose("raw rotation: " + raw_rotation * (180 / Math_PI));
-        print_verbose("raw pre_rotation " + raw_pre_rotation * (180 / Math_PI));
         print_verbose(
-            "raw post_rotation " + raw_post_rotation * (180 / Math_PI)
+            "raw rotation: "
+            + raw_rotation * (180 / static_cast<real_t>(Math_PI))
+        );
+        print_verbose(
+            "raw pre_rotation "
+            + raw_pre_rotation * (180 / static_cast<real_t>(Math_PI))
+        );
+        print_verbose(
+            "raw post_rotation "
+            + raw_post_rotation * (180 / static_cast<real_t>(Math_PI))
         );
     }
 

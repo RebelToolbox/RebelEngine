@@ -9,7 +9,7 @@
 #include "collision_object_2d_sw.h"
 #include "core/project_settings.h"
 
-#define LARGE_ELEMENT_FI 1.01239812
+#define LARGE_ELEMENT_FI 1.01239812f
 
 void BroadPhase2DHashGrid::_pair_attempt(Element* p_elem, Element* p_with) {
     if (p_elem->owner == p_with->owner) {
@@ -532,10 +532,10 @@ int BroadPhase2DHashGrid::cull_segment(
     // avoid divisions by zero
     dir.normalize();
     if (dir.x == 0.0) {
-        dir.x = 0.000001;
+        dir.x = 0.000001f;
     }
     if (dir.y == 0.0) {
-        dir.y = 0.000001;
+        dir.y = 0.000001f;
     }
     Vector2 delta = dir.abs();
 

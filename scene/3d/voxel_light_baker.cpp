@@ -1009,7 +1009,8 @@ void VoxelLightBaker::plot_light_directional(
         Light* light = &light_data[idx];
 
         Vector3 to(light->x + 0.5, light->y + 0.5, light->z + 0.5);
-        to += -light_axis.sign() * 0.47; // make it more likely to receive a ray
+        // Make it more likely to receive a ray.
+        to += -light_axis.sign() * 0.47f;
 
         Vector3 from = to - max_len * light_axis;
 
@@ -1123,8 +1124,8 @@ void VoxelLightBaker::plot_light_omni(
         Light* light = &light_data[idx];
 
         Vector3 to(light->x + 0.5, light->y + 0.5, light->z + 0.5);
-        to += (light_pos - to).sign()
-            * 0.47; // make it more likely to receive a ray
+        // Make it more likely to receive a ray.
+        to += (light_pos - to).sign() * 0.47f;
 
         Vector3 light_axis = (to - light_pos).normalized();
         float distance_adv = _get_normal_advance(light_axis);
@@ -1183,8 +1184,8 @@ void VoxelLightBaker::plot_light_omni(
         ); // make it reach the center of the box always, but this tame make it
            // closer
         from  = to - light_axis * distance;
-        to   += (light_pos - to).sign()
-            * 0.47; // make it more likely to receive a ray
+        // Make it more likely to receive a ray.
+        to   += (light_pos - to).sign() * 0.47f;
 
         uint32_t result = 0xFFFFFFFF;
 
@@ -1885,5 +1886,5 @@ Transform VoxelLightBaker::get_to_cell_space_xform() const {
 VoxelLightBaker::VoxelLightBaker() {
     color_scan_cell_width = 4;
     bake_texture_size     = 128;
-    propagation           = 0.85;
+    propagation           = 0.85f;
 }

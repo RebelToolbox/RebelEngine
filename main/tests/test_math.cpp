@@ -386,8 +386,8 @@ uint32_t ihash3(uint32_t a) {
 MainLoop* test() {
     {
         float r = 1;
-        float g = 0.5;
-        float b = 0.1;
+        float g = 0.5f;
+        float b = 0.1f;
 
         const float pow2to9 = 512.0f;
         const float B       = 15.0f;
@@ -548,13 +548,13 @@ MainLoop* test() {
     {
         Vector3 v(1, 2, 3);
         v.normalize();
-        float a = 0.3;
+        float a = 0.3f;
 
         Basis m(v, a);
 
         Vector3 v2(7, 3, 1);
         v2.normalize();
-        float a2 = 0.8;
+        float a2 = 0.8f;
 
         Basis m2(v2, a2);
 
@@ -582,8 +582,8 @@ MainLoop* test() {
     print_line(ret);
 
     Basis m3;
-    m3.rotate(Vector3(1, 0, 0), 0.2);
-    m3.rotate(Vector3(0, 1, 0), 1.77);
+    m3.rotate(Vector3(1, 0, 0), 0.2f);
+    m3.rotate(Vector3(0, 1, 0), 1.77f);
     m3.rotate(Vector3(0, 0, 1), 212);
     Basis m32;
     m32.set_euler(m3.get_euler());

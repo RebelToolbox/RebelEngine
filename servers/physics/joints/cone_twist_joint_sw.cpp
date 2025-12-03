@@ -50,7 +50,7 @@ static void plane_space(const Vector3& n, Vector3& p, Vector3& q) {
 }
 
 static _FORCE_INLINE_ real_t atan2fast(real_t y, real_t x) {
-    real_t coeff_1 = Math_PI / 4.0f;
+    real_t coeff_1 = static_cast<real_t>(Math_PI) / 4;
     real_t coeff_2 = 3.0f * coeff_1;
     real_t abs_y   = Math::abs(y);
     real_t angle;
@@ -77,9 +77,9 @@ ConeTwistJointSW::ConeTwistJointSW(
     m_rbAFrame = rbAFrame;
     m_rbBFrame = rbBFrame;
 
-    m_swingSpan1       = Math_PI / 4.0;
-    m_swingSpan2       = Math_PI / 4.0;
-    m_twistSpan        = Math_PI * 2;
+    m_swingSpan1       = static_cast<real_t>(Math_PI) / 4;
+    m_swingSpan2       = static_cast<real_t>(Math_PI) / 4;
+    m_twistSpan        = static_cast<real_t>(Math_PI) * 2;
     m_biasFactor       = 0.3f;
     m_relaxationFactor = 1.0f;
 

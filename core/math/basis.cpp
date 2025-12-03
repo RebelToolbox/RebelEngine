@@ -166,7 +166,7 @@ Basis Basis::diagonalize() {
         // Compute the rotation angle
         real_t angle;
         if (Math::is_equal_approx(elements[j][j], elements[i][i])) {
-            angle = Math_PI / 4;
+            angle = static_cast<real_t>(Math_PI) / 4;
         } else {
             angle = 0.5
                   * Math::atan(
@@ -462,13 +462,13 @@ Vector3 Basis::get_euler_xyz() const {
             }
         } else {
             euler.x = Math::atan2(elements[2][1], elements[1][1]);
-            euler.y = -Math_PI / 2.0;
-            euler.z = 0.0;
+            euler.y = -static_cast<real_t>(Math_PI) / 2;
+            euler.z = 0;
         }
     } else {
         euler.x = Math::atan2(elements[2][1], elements[1][1]);
-        euler.y = Math_PI / 2.0;
-        euler.z = 0.0;
+        euler.y = static_cast<real_t>(Math_PI) / 2;
+        euler.z = 0;
     }
     return euler;
 }
@@ -515,13 +515,13 @@ Vector3 Basis::get_euler_xzy() const {
             // It's -1
             euler.x = -Math::atan2(elements[1][2], elements[2][2]);
             euler.y = 0.0;
-            euler.z = Math_PI / 2.0;
+            euler.z = static_cast<real_t>(Math_PI) / 2;
         }
     } else {
         // It's 1
         euler.x = -Math::atan2(elements[1][2], elements[2][2]);
         euler.y = 0.0;
-        euler.z = -Math_PI / 2.0;
+        euler.z = -static_cast<real_t>(Math_PI) / 2;
     }
     return euler;
 }
@@ -563,13 +563,13 @@ Vector3 Basis::get_euler_yzx() const {
             // It's -1
             euler.x = Math::atan2(elements[2][1], elements[2][2]);
             euler.y = 0.0;
-            euler.z = -Math_PI / 2.0;
+            euler.z = -static_cast<real_t>(Math_PI) / 2;
         }
     } else {
         // It's 1
         euler.x = Math::atan2(elements[2][1], elements[2][2]);
         euler.y = 0.0;
-        euler.z = Math_PI / 2.0;
+        euler.z = static_cast<real_t>(Math_PI) / 2;
     }
     return euler;
 }
@@ -625,12 +625,12 @@ Vector3 Basis::get_euler_yxz() const {
                 euler.z = atan2(elements[1][0], elements[1][1]);
             }
         } else { // m12 == -1
-            euler.x = Math_PI * 0.5;
+            euler.x = static_cast<real_t>(Math_PI) / 2;
             euler.y = atan2(elements[0][1], elements[0][0]);
             euler.z = 0;
         }
     } else { // m12 == 1
-        euler.x = -Math_PI * 0.5;
+        euler.x = -static_cast<real_t>(Math_PI) / 2;
         euler.y = -atan2(elements[0][1], elements[0][0]);
         euler.z = 0;
     }
@@ -677,13 +677,13 @@ Vector3 Basis::get_euler_zxy() const {
             euler.z = Math::atan2(-elements[0][1], elements[1][1]);
         } else {
             // It's -1
-            euler.x = -Math_PI / 2.0;
+            euler.x = -static_cast<real_t>(Math_PI) / 2;
             euler.y = Math::atan2(elements[0][2], elements[0][0]);
             euler.z = 0;
         }
     } else {
         // It's 1
-        euler.x = Math_PI / 2.0;
+        euler.x = static_cast<real_t>(Math_PI) / 2;
         euler.y = Math::atan2(elements[0][2], elements[0][0]);
         euler.z = 0;
     }
@@ -725,13 +725,13 @@ Vector3 Basis::get_euler_zyx() const {
         } else {
             // It's -1
             euler.x = 0;
-            euler.y = Math_PI / 2.0;
+            euler.y = static_cast<real_t>(Math_PI) / 2;
             euler.z = -Math::atan2(elements[0][1], elements[1][1]);
         }
     } else {
         // It's 1
         euler.x = 0;
-        euler.y = -Math_PI / 2.0;
+        euler.y = -static_cast<real_t>(Math_PI) / 2;
         euler.z = -Math::atan2(elements[0][1], elements[1][1]);
     }
     return euler;
@@ -909,9 +909,9 @@ void Basis::get_axis_angle(Vector3& r_axis, real_t& r_angle) const {
     /* checking this is a bad idea, because obtaining from scaled transform is a
 valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
 */
-    real_t angle, x, y, z;  // variables for result
-    real_t epsilon  = 0.01; // margin to allow for rounding errors
-    real_t epsilon2 = 0.1;  // margin to distinguish between 0 and 180 degrees
+    real_t angle, x, y, z;   // variables for result
+    real_t epsilon  = 0.01f; // margin to allow for rounding errors
+    real_t epsilon2 = 0.1f;  // margin to distinguish between 0 and 180 degrees
 
     if ((Math::abs(elements[1][0] - elements[0][1]) < epsilon)
         && (Math::abs(elements[2][0] - elements[0][2]) < epsilon)
@@ -930,7 +930,7 @@ valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
             return;
         }
         // otherwise this singularity is angle = 180
-        angle     = Math_PI;
+        angle     = static_cast<real_t>(Math_PI);
         real_t xx = (elements[0][0] + 1) / 2;
         real_t yy = (elements[1][1] + 1) / 2;
         real_t zz = (elements[2][2] + 1) / 2;
@@ -941,8 +941,8 @@ valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
             && (xx > zz)) { // elements[0][0] is the largest diagonal term
             if (xx < epsilon) {
                 x = 0;
-                y = Math_SQRT12;
-                z = Math_SQRT12;
+                y = static_cast<real_t>(Math_SQRT12);
+                z = static_cast<real_t>(Math_SQRT12);
             } else {
                 x = Math::sqrt(xx);
                 y = xy / x;
@@ -950,9 +950,9 @@ valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
             }
         } else if (yy > zz) { // elements[1][1] is the largest diagonal term
             if (yy < epsilon) {
-                x = Math_SQRT12;
+                x = static_cast<real_t>(Math_SQRT12);
                 y = 0;
-                z = Math_SQRT12;
+                z = static_cast<real_t>(Math_SQRT12);
             } else {
                 y = Math::sqrt(yy);
                 x = xy / y;
@@ -961,8 +961,8 @@ valid use case #ifdef MATH_CHECKS ERR_FAIL_COND(!is_rotation()); #endif
         } else { // elements[2][2] is the largest diagonal term so base result
                  // on this
             if (zz < epsilon) {
-                x = Math_SQRT12;
-                y = Math_SQRT12;
+                x = static_cast<real_t>(Math_SQRT12);
+                y = static_cast<real_t>(Math_SQRT12);
                 z = 0;
             } else {
                 z = Math::sqrt(zz);

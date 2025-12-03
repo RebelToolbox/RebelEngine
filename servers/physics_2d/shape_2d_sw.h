@@ -530,8 +530,8 @@ public:
         real_t& r_max
     ) const {
         // no matter the angle, the box is mirrored anyway
-        r_max = -1e20;
-        r_min = 1e20;
+        r_max = -1e20f;
+        r_min = 1e20f;
         for (int i = 0; i < 4; i++) {
             real_t d = p_normal.dot(p_transform.xform(Vector2(
                 ((i & 1) * 2 - 1) * half_extents.x,

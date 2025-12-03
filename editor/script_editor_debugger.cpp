@@ -431,7 +431,7 @@ void ScriptEditorDebugger::_scene_tree_property_value_edited(
     msg.push_back(p_value);
     ppeer->put_var(msg);
     inspect_edited_object_timeout =
-        0.7; // avoid annoyance, don't request soon after editing
+        0.7f; // avoid annoyance, don't request soon after editing
 }
 
 void ScriptEditorDebugger::_scene_tree_property_select_object(ObjectID p_object
@@ -1367,7 +1367,7 @@ void ScriptEditorDebugger::_performance_draw() {
         );
 
         // Draw the monitor name in the top-left corner.
-        color.a = 0.6;
+        color.a = 0.6f;
         perf_draw->draw_string(
             graph_font,
             r.position + Point2(0, graph_font->get_ascent()),
@@ -1377,7 +1377,7 @@ void ScriptEditorDebugger::_performance_draw() {
         );
 
         // Draw the monitor value in the top-left corner, just below the name.
-        color.a = 0.9;
+        color.a = 0.9f;
         perf_draw->draw_string(
             graph_font,
             r.position
@@ -1398,7 +1398,7 @@ void ScriptEditorDebugger::_performance_draw() {
         while (from >= 0 && E) {
             float m = perf_max[pi];
             if (m == 0) {
-                m = 0.00001;
+                m = 0.00001f;
             }
             float h2 = E->get()[pi] / m;
             h2       = (1.0 - h2) * r.size.y;

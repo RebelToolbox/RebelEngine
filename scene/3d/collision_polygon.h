@@ -14,7 +14,7 @@ class CollisionObject;
 
 class CollisionPolygon : public Spatial {
     GDCLASS(CollisionPolygon, Spatial);
-    real_t margin = 0.04;
+    real_t margin = 0.04f;
 
 protected:
     float depth;

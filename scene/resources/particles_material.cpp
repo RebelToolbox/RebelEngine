@@ -1500,7 +1500,7 @@ void ParticlesMaterial::set_gravity(const Vector3& p_gravity) {
     if (gset == Vector3()) {
         gset = Vector3(
             0,
-            -0.000001,
+            -0.000001f,
             0
         ); // as gravity is used as upvector in some calculations
     }
@@ -2453,7 +2453,7 @@ ParticlesMaterial::ParticlesMaterial() : element(this) {
     set_emission_sphere_radius(1);
     set_emission_box_extents(Vector3(1, 1, 1));
     set_trail_divisor(1);
-    set_gravity(Vector3(0, -9.8, 0));
+    set_gravity(Vector3(0, -9.8f, 0));
     set_lifetime_randomness(0);
     emission_point_count = 1;
     set_emission_ring_height(1.0);

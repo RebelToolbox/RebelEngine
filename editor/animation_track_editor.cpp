@@ -2095,7 +2095,7 @@ void AnimationTimelineEdit::_notification(int p_what) {
 
         float l = animation->get_length();
         if (l <= 0) {
-            l = 0.001; // avoid crashor
+            l = 0.001f; // avoid crashor
         }
 
         Ref<Texture> hsize_icon = get_icon("Hsize", "EditorIcons");
@@ -2160,9 +2160,9 @@ void AnimationTimelineEdit::_notification(int p_what) {
         int begin_px    = -get_value() * scale;
         Color notimecol = get_color("dark_color_2", "Editor");
         Color timecolor = color;
-        timecolor.a     = 0.2;
+        timecolor.a     = 0.2f;
         Color linecolor = color;
-        linecolor.a     = 0.2;
+        linecolor.a     = 0.2f;
 
         {
             draw_rect(
@@ -2641,7 +2641,7 @@ void AnimationTrackEdit::_notification(int p_what) {
 
         if (has_focus()) {
             Color accent  = get_color("accent_color", "Editor");
-            accent.a     *= 0.7;
+            accent.a     *= 0.7f;
             // Offside so the horizontal sides aren't cutoff.
             draw_rect(
                 Rect2(
@@ -2665,7 +2665,7 @@ void AnimationTrackEdit::_notification(int p_what) {
         };
         int hsep        = get_constant("hseparation", "ItemList");
         Color linecolor = color;
-        linecolor.a     = 0.2;
+        linecolor.a     = 0.2f;
 
         // NAMES AND ICONS //
 
@@ -2723,7 +2723,7 @@ void AnimationTrackEdit::_notification(int p_what) {
                 } else {
                     text += path.get_concatenated_subnames();
                 }
-                text_color.a *= 0.7;
+                text_color.a *= 0.7f;
             } else if (node) {
                 Ref<Texture> icon =
                     EditorNode::get_singleton()->get_object_icon(node, "Node");
@@ -3468,7 +3468,7 @@ String AnimationTrackEdit::get_tooltip(const Point2& p_pos) const {
 
     if (p_pos.x >= limit_start_hitbox && p_pos.x <= limit_end) {
         int key_idx        = -1;
-        float key_distance = 1e20;
+        float key_distance = 1e20f;
 
         // Select should happen in the opposite order of drawing for more
         // accurate overlap select.
@@ -3780,7 +3780,7 @@ void AnimationTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
 
         if (pos.x >= limit_start_hitbox && pos.x <= limit_end) {
             int key_idx        = -1;
-            float key_distance = 1e20;
+            float key_distance = 1e20f;
 
             // Select should happen in the opposite order of drawing for more
             // accurate overlap select.
@@ -4302,10 +4302,10 @@ void AnimationTrackEditGroup::_notification(int p_what) {
         }
 
         Color bgcol  = get_color("dark_color_2", "Editor");
-        bgcol.a     *= 0.6;
+        bgcol.a     *= 0.6f;
         draw_rect(Rect2(Point2(), get_size()), bgcol);
         Color linecolor = color;
-        linecolor.a     = 0.2;
+        linecolor.a     = 0.2f;
 
         draw_line(
             Point2(),
@@ -6233,7 +6233,7 @@ void AnimationTrackEditor::_insert_key_from_track(float p_ofs, int p_track) {
     }
     while (animation->track_find_key(p_track, p_ofs, true) != -1
     ) { // make sure insertion point is valid
-        p_ofs += 0.001;
+        p_ofs += 0.001f;
     }
 
     switch (animation->track_get_type(p_track)) {
@@ -7334,9 +7334,9 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
                 return;
             }
 
-            float from_t = 1e20;
-            float to_t   = -1e20;
-            float len    = -1e20;
+            float from_t = 1e20f;
+            float to_t   = -1e20f;
+            float len    = -1e20f;
             float pivot  = 0;
 
             for (Map<SelectedKey, KeyInfo>::Element* E = selection.front(); E;

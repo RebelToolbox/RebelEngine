@@ -478,7 +478,7 @@ public:
         Vector3* p_res,
         Vector3* p_norm
     ) {
-        real_t min = -1e20, max = 1e20;
+        real_t min = -1e20f, max = 1e20f;
 
         Vector3 rel  = p_to - p_from;
         real_t rel_l = rel.length();
@@ -1120,8 +1120,8 @@ public:
             return false;
         }
         const Vector2* p = p_polygon.ptr();
-        Vector2 further_away(-1e20, -1e20);
-        Vector2 further_away_opposite(1e20, 1e20);
+        Vector2 further_away(-1e20f, -1e20f);
+        Vector2 further_away_opposite(1e20f, 1e20f);
 
         for (int i = 0; i < c; i++) {
             further_away.x          = MAX(p[i].x, further_away.x);
@@ -1133,7 +1133,7 @@ public:
         // Make point outside that won't intersect with points in segment from
         // p_point.
         further_away += (further_away - further_away_opposite)
-                      * Vector2(1.221313, 1.512312);
+                      * Vector2(1.221313f, 1.512312f);
 
         int intersections = 0;
         for (int i = 0; i < c; i++) {
