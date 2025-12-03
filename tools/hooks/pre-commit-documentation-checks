@@ -20,7 +20,8 @@ then
     echo "Please fix the spelling errors and try again."
     exit 1
 else
-    echo "No spelling mistakes found."
+    echo "No spelling errors found."
 fi
 
+echo "Checking API documentation..."
 python3 tools/scripts/rst_from_xml.py docs modules --dry-run
