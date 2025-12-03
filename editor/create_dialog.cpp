@@ -94,7 +94,7 @@ void CreateDialog::popup_create(
     if (saved_size != Rect2()) {
         popup(saved_size);
     } else {
-        popup_centered_clamped(Size2(900, 700) * EDSCALE, 0.8);
+        popup_centered_clamped(Size2(900, 700) * EDSCALE, 0.8f);
     }
 
     if (p_dont_clear) {

@@ -17,7 +17,7 @@ void EditorQuickOpen::popup_dialog(
     search_options->set_select_mode(
         p_enable_multi ? Tree::SELECT_MULTI : Tree::SELECT_SINGLE
     );
-    popup_centered_ratio(0.4);
+    popup_centered_ratio(0.4f);
 
     if (p_dontclear) {
         search_box->select_all();

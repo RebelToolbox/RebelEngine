@@ -811,7 +811,8 @@ void EditorNode::_update_update_spinner() {
             EditorSettings::get_singleton()->is_dark_theme();
         update_spinner->set_self_modulate(
             gui_base->get_color("error_color", "Editor")
-            * (dark_theme ? Color(1.1, 1.1, 1.1) : Color(4.25, 4.25, 4.25))
+            * (dark_theme ? Color(1.1f, 1.1f, 1.1f) : Color(4.25f, 4.25f, 4.25f)
+            )
         );
     } else {
         update_spinner->set_tooltip(TTR("Spins when the editor window redraws.")
@@ -3518,7 +3519,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
         case SETTINGS_MANAGE_FEATURE_PROFILES: {
             feature_profile_manager->popup_centered_clamped(
                 Size2(900, 800) * EDSCALE,
-                0.8
+                0.8f
             );
         } break;
         case SETTINGS_TOGGLE_FULLSCREEN: {
@@ -5287,13 +5288,13 @@ void EditorNode::_dock_select_draw() {
     s.y     /= 2.0;
     s.x     /= 6.0;
 
-    Color used          = Color(0.6, 0.6, 0.6, 0.8);
-    Color used_selected = Color(0.8, 0.8, 0.8, 0.8);
+    Color used          = Color(0.6f, 0.6f, 0.6f, 0.8f);
+    Color used_selected = Color(0.8f, 0.8f, 0.8f, 0.8f);
     Color tab_selected  = theme_base->get_color("mono_color", "Editor");
     Color unused        = used;
-    unused.a            = 0.4;
+    unused.a            = 0.4f;
     Color unusable      = unused;
-    unusable.a          = 0.1;
+    unusable.a          = 0.1f;
 
     Rect2 unr(s.x * 2, 0, s.x * 2, s.y * 2);
     unr.position += Vector2(2, 5);
@@ -7616,7 +7617,7 @@ EditorNode::EditorNode() {
     tab_preview_panel = memnew(Panel);
     tab_preview_panel->set_size(Size2(100, 100) * EDSCALE);
     tab_preview_panel->hide();
-    tab_preview_panel->set_self_modulate(Color(1, 1, 1, 0.7));
+    tab_preview_panel->set_self_modulate(Color(1, 1, 1, 0.7f));
     gui_base->add_child(tab_preview_panel);
 
     tab_preview = memnew(TextureRect);
@@ -8624,7 +8625,7 @@ EditorNode::EditorNode() {
     // text.
     version_btn->set_meta(META_TEXT_TO_COPY, "v" VERSION_FULL_BUILD + hash);
     // Fade out the version label to be less prominent, but still readable
-    version_btn->set_self_modulate(Color(1, 1, 1, 0.65));
+    version_btn->set_self_modulate(Color(1, 1, 1, 0.65f));
     version_btn->set_underline_mode(LinkButton::UNDERLINE_MODE_ON_HOVER);
     version_btn->set_tooltip(TTR("Click to copy."));
     version_btn->connect("pressed", this, "_version_button_pressed");

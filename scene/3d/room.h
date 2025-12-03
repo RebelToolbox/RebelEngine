@@ -36,9 +36,9 @@ public:
             LocalVector<Plane, int32_t>& r_planes,
             const Plane& p
         ) const;
-        real_t _plane_simplify      = 0.5;
-        real_t _plane_simplify_dot  = 0.98;
-        real_t _plane_simplify_dist = 0.08;
+        real_t _plane_simplify      = 0.5f;
+        real_t _plane_simplify_dot  = 0.98f;
+        real_t _plane_simplify_dist = 0.08f;
     };
 
     Room();

@@ -251,9 +251,9 @@ void EditorSpatialGizmo::add_lines(
         PoolVector<Color>::Write w = color.write();
         for (int i = 0; i < p_lines.size(); i++) {
             if (is_selected()) {
-                w[i] = Color(1, 1, 1, 0.8) * p_modulate;
+                w[i] = Color(1, 1, 1, 0.f) * p_modulate;
             } else {
-                w[i] = Color(1, 1, 1, 0.2) * p_modulate;
+                w[i] = Color(1, 1, 1, 0.2f) * p_modulate;
             }
         }
     }
@@ -314,9 +314,9 @@ void EditorSpatialGizmo::add_vertices(
         PoolVector<Color>::Write w = color.write();
         for (int i = 0; i < p_vertices.size(); i++) {
             if (is_selected()) {
-                w[i] = Color(1, 1, 1, 0.8) * p_modulate;
+                w[i] = Color(1, 1, 1, 0.8f) * p_modulate;
             } else {
-                w[i] = Color(1, 1, 1, 0.2) * p_modulate;
+                w[i] = Color(1, 1, 1, 0.2f) * p_modulate;
             }
         }
     }
@@ -470,11 +470,11 @@ void EditorSpatialGizmo::add_handles(
         for (int i = 0; i < p_handles.size(); i++) {
             Color col(1, 1, 1, 1);
             if (is_handle_highlighted(i)) {
-                col = Color(0, 0, 1, 0.9);
+                col = Color(0, 0, 1, 0.9f);
             }
 
             if (SpatialEditor::get_singleton()->get_over_gizmo_handle() != i) {
-                col.a = 0.8;
+                col.a = 0.8f;
             }
 
             w[i] = col;
@@ -662,7 +662,7 @@ bool EditorSpatialGizmo::intersect_ray(
             );
         }
 
-        float min_d = 1e20;
+        float min_d = 1e20f;
         int idx     = -1;
 
         for (int i = 0; i < secondary_handles.size(); i++) {
@@ -685,7 +685,7 @@ bool EditorSpatialGizmo::intersect_ray(
             return true;
         }
 
-        min_d = 1e20;
+        min_d = 1e20f;
 
         for (int i = 0; i < handles.size(); i++) {
             Vector3 hpos = t.xform(handles[i]);
@@ -777,7 +777,7 @@ bool EditorSpatialGizmo::intersect_ray(
         }
 
         Vector3 cp;
-        float cpd = 1e20;
+        float cpd = 1e20f;
 
         for (int i = 0; i < vc / 2; i++) {
             Vector3 a = t.xform(vptr[i * 2 + 0]);
@@ -1034,7 +1034,7 @@ LightSpatialGizmoPlugin::LightSpatialGizmoPlugin() {
     create_material("lines_primary", Color(1, 1, 1), false, false, true);
     create_material(
         "lines_secondary",
-        Color(1, 1, 1, 0.35),
+        Color(1, 1, 1, 0.35f),
         false,
         false,
         true
@@ -1106,7 +1106,7 @@ static float _find_closest_angle_to_half_pi_arc(
 ) {
     // bleh, discrete is simpler
     static const int arc_test_points = 64;
-    float min_d                      = 1e20;
+    float min_d                      = 1e20f;
     Vector3 min_p;
 
     for (int i = 0; i < arc_test_points; i++) {
@@ -1266,12 +1266,12 @@ void LightSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 
         Vector3 arrow[arrow_points] = {
             Vector3(0, 0, -1),
-            Vector3(0, 0.8, 0),
-            Vector3(0, 0.3, 0),
-            Vector3(0, 0.3, arrow_length),
-            Vector3(0, -0.3, arrow_length),
-            Vector3(0, -0.3, 0),
-            Vector3(0, -0.8, 0)
+            Vector3(0, 0.8f, 0),
+            Vector3(0, 0.3f, 0),
+            Vector3(0, 0.3f, arrow_length),
+            Vector3(0, -0.3f, arrow_length),
+            Vector3(0, -0.3f, 0),
+            Vector3(0, -0.8f, 0)
         };
 
         int arrow_sides = 2;
@@ -1292,7 +1292,7 @@ void LightSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         }
 
         p_gizmo->add_lines(lines, material, false, color);
-        p_gizmo->add_unscaled_billboard(icon, 0.05, color);
+        p_gizmo->add_unscaled_billboard(icon, 0.05f, color);
     }
 
     if (Object::cast_to<OmniLight>(light)) {
@@ -1336,7 +1336,7 @@ void LightSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
             true,
             color
         );
-        p_gizmo->add_unscaled_billboard(icon, 0.05, color);
+        p_gizmo->add_unscaled_billboard(icon, 0.05f, color);
 
         Vector<Vector3> handles;
         handles.push_back(Vector3(r, 0, 0));
@@ -1385,7 +1385,7 @@ void LightSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         p_gizmo->add_lines(points_primary, material_primary, false, color);
         p_gizmo->add_lines(points_secondary, material_secondary, false, color);
 
-        const float ra = 16 * Math_PI * 2.0 / 64.0;
+        const float ra = 16 * static_cast<float>(Math_PI) * 2 / 64;
         const Point2 a = Vector2(Math::sin(ra), Math::cos(ra)) * w;
 
         Vector<Vector3> handles;
@@ -1393,7 +1393,7 @@ void LightSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         handles.push_back(Vector3(a.x, a.y, -d));
 
         p_gizmo->add_handles(handles, get_material("handles"));
-        p_gizmo->add_unscaled_billboard(icon, 0.05, color);
+        p_gizmo->add_unscaled_billboard(icon, 0.05f, color);
     }
 }
 
@@ -1403,7 +1403,7 @@ void LightSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 AudioStreamPlayer3DSpatialGizmoPlugin::AudioStreamPlayer3DSpatialGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/stream_player_3d",
-        Color(0.4, 0.8, 1)
+        Color(0.4f, 0.8f, 1)
     );
 
     create_icon_material(
@@ -1414,7 +1414,7 @@ AudioStreamPlayer3DSpatialGizmoPlugin::AudioStreamPlayer3DSpatialGizmoPlugin() {
     create_material("stream_player_3d_material_primary", gizmo_color);
     create_material(
         "stream_player_3d_material_secondary",
-        gizmo_color * Color(1, 1, 1, 0.35)
+        gizmo_color * Color(1, 1, 1, 0.35f)
     );
     create_handle_material("handles");
 }
@@ -1466,12 +1466,12 @@ void AudioStreamPlayer3DSpatialGizmoPlugin::set_handle(
     ray_from = gi.xform(ray_from);
     ray_to   = gi.xform(ray_to);
 
-    float closest_dist  = 1e20;
-    float closest_angle = 1e20;
+    float closest_dist  = 1e20f;
+    float closest_angle = 1e20f;
 
     for (int i = 0; i < 180; i++) {
-        float a  = i * Math_PI / 180.0;
-        float an = (i + 1) * Math_PI / 180.0;
+        float a  = i * static_cast<float>(Math_PI) / 180;
+        float an = (i + 1) * static_cast<float>(Math_PI) / 180;
 
         Vector3 from(Math::sin(a), 0, -Math::cos(a));
         Vector3 to(Math::sin(an), 0, -Math::cos(an));
@@ -1587,7 +1587,7 @@ void AudioStreamPlayer3DSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo
         p_gizmo->add_handles(handles, get_material("handles"));
     }
 
-    p_gizmo->add_unscaled_billboard(icon, 0.05);
+    p_gizmo->add_unscaled_billboard(icon, 0.05f);
 }
 
 //////
@@ -1613,7 +1613,7 @@ int ListenerSpatialGizmoPlugin::get_priority() const {
 
 void ListenerSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
     const Ref<Material> icon = get_material("listener_icon", p_gizmo);
-    p_gizmo->add_unscaled_billboard(icon, 0.05);
+    p_gizmo->add_unscaled_billboard(icon, 0.05f);
 }
 
 //////
@@ -1621,7 +1621,7 @@ void ListenerSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 CameraSpatialGizmoPlugin::CameraSpatialGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/camera",
-        Color(0.8, 0.4, 0.8)
+        Color(0.8f, 0.4f, 0.8f)
     );
 
     create_material("camera_material", gizmo_color);
@@ -2054,7 +2054,7 @@ void Position3DSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 SkeletonSpatialGizmoPlugin::SkeletonSpatialGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/skeleton",
-        Color(1, 0.8, 0.4)
+        Color(1, 0.8f, 0.4f)
     );
     create_material("skeleton_material", gizmo_color);
 }
@@ -2099,8 +2099,8 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 
     AABB aabb;
 
-    Color bonecolor = Color(1.0, 0.4, 0.4, 0.3);
-    Color rootcolor = Color(0.4, 1.0, 0.4, 0.1);
+    Color bonecolor = Color(1, 0.4f, 0.4f, 0.3f);
+    Color rootcolor = Color(0.4f, 1, 0.4f, 0.1f);
 
     for (int i_bone = 0; i_bone < skel->get_bone_count(); i_bone++) {
         int i = skel->get_process_order(i_bone);
@@ -2137,13 +2137,13 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
                 surface_tool->add_weights(weights);
                 surface_tool->add_color(rootcolor);
                 surface_tool->add_vertex(
-                    v0 - grests[parent].basis[j].normalized() * dist * 0.05
+                    v0 - grests[parent].basis[j].normalized() * dist * 0.05f
                 );
                 surface_tool->add_bones(bones);
                 surface_tool->add_weights(weights);
                 surface_tool->add_color(rootcolor);
                 surface_tool->add_vertex(
-                    v0 + grests[parent].basis[j].normalized() * dist * 0.05
+                    v0 + grests[parent].basis[j].normalized() * dist * 0.05f
                 );
 
                 if (j == closest) {
@@ -2163,8 +2163,8 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
                     if (k == 1) {
                         axis = -axis;
                     }
-                    Vector3 point  = v0 + d * dist * 0.2;
-                    point         += axis * dist * 0.1;
+                    Vector3 point  = v0 + d * dist * 0.2f;
+                    point         += axis * dist * 0.1f;
 
                     bones.write[0] = parent;
                     surface_tool->add_bones(bones);
@@ -2217,7 +2217,7 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 PhysicalBoneSpatialGizmoPlugin::PhysicalBoneSpatialGizmoPlugin() {
     create_material(
         "joint_material",
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/joint", Color(0.5, 0.8, 1))
+        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/joint", Color(0.5f, 0.8f, 1))
     );
 }
 
@@ -2380,12 +2380,14 @@ void PhysicalBoneSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 /////
 
 RayCastSpatialGizmoPlugin::RayCastSpatialGizmoPlugin() {
-    const Color gizmo_color =
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/shape", Color(0.5, 0.7, 1));
+    const Color gizmo_color = EDITOR_DEF(
+        "editors/3d_gizmos/gizmo_colors/shape",
+        Color(0.5f, 0.7f, 1)
+    );
     create_material("shape_material", gizmo_color);
     const float gizmo_value = gizmo_color.get_v();
     const Color gizmo_color_disabled =
-        Color(gizmo_value, gizmo_value, gizmo_value, 0.65);
+        Color(gizmo_value, gizmo_value, gizmo_value, 0.65f);
     create_material("shape_material_disabled", gizmo_color_disabled);
 }
 
@@ -2443,8 +2445,10 @@ void SpringArmSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 }
 
 SpringArmSpatialGizmoPlugin::SpringArmSpatialGizmoPlugin() {
-    Color gizmo_color =
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/shape", Color(0.5, 0.7, 1));
+    Color gizmo_color = EDITOR_DEF(
+        "editors/3d_gizmos/gizmo_colors/shape",
+        Color(0.5f, 0.7f, 1)
+    );
     create_material("shape_material", gizmo_color);
 }
 
@@ -2463,8 +2467,10 @@ int SpringArmSpatialGizmoPlugin::get_priority() const {
 /////
 
 VehicleWheelSpatialGizmoPlugin::VehicleWheelSpatialGizmoPlugin() {
-    Color gizmo_color =
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/shape", Color(0.5, 0.7, 1));
+    Color gizmo_color = EDITOR_DEF(
+        "editors/3d_gizmos/gizmo_colors/shape",
+        Color(0.5f, 0.7f, 1)
+    );
     create_material("shape_material", gizmo_color);
 }
 
@@ -2509,7 +2515,7 @@ void VehicleWheelSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
                     i / 360.0 * t / springsec + j * (t / springsec),
                     a.y
                 )
-                * 0.2
+                * 0.2f
             );
             points.push_back(
                 Vector3(
@@ -2517,7 +2523,7 @@ void VehicleWheelSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
                     (i + skip) / 360.0 * t / springsec + j * (t / springsec),
                     b.y
                 )
-                * 0.2
+                * 0.2f
             );
         }
     }
@@ -2554,8 +2560,10 @@ void VehicleWheelSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 ///////////
 
 SoftBodySpatialGizmoPlugin::SoftBodySpatialGizmoPlugin() {
-    Color gizmo_color =
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/shape", Color(0.5, 0.7, 1));
+    Color gizmo_color = EDITOR_DEF(
+        "editors/3d_gizmos/gizmo_colors/shape",
+        Color(0.5f, 0.7f, 1)
+    );
     create_material("shape_material", gizmo_color);
     create_handle_material("handles");
 }
@@ -2659,10 +2667,10 @@ bool SoftBodySpatialGizmoPlugin::is_handle_highlighted(
 VisibilityNotifierGizmoPlugin::VisibilityNotifierGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/visibility_notifier",
-        Color(0.8, 0.5, 0.7)
+        Color(0.8f, 0.5f, 0.7f)
     );
     create_material("visibility_notifier_material", gizmo_color);
-    gizmo_color.a = 0.1;
+    gizmo_color.a = 0.1f;
     create_material("visibility_notifier_solid_material", gizmo_color);
     create_handle_material("handles");
 }
@@ -2778,8 +2786,8 @@ void VisibilityNotifierGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
         // resize
         aabb.position[p_idx] =
@@ -2894,7 +2902,7 @@ bool CPUParticlesGizmoPlugin::is_selectable_when_hidden() const {
 
 void CPUParticlesGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
     Ref<Material> icon = get_material("particles_icon", p_gizmo);
-    p_gizmo->add_unscaled_billboard(icon, 0.05);
+    p_gizmo->add_unscaled_billboard(icon, 0.05f);
 }
 
 ////
@@ -2902,10 +2910,10 @@ void CPUParticlesGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 ParticlesGizmoPlugin::ParticlesGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/particles",
-        Color(0.8, 0.7, 0.4)
+        Color(0.8f, 0.7f, 0.4f)
     );
     create_material("particles_material", gizmo_color);
-    gizmo_color.a = 0.1;
+    gizmo_color.a = 0.1f;
     create_material("particles_solid_material", gizmo_color);
     create_icon_material(
         "particles_icon",
@@ -3029,8 +3037,8 @@ void ParticlesGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
         // resize
         aabb.position[p_idx] =
@@ -3118,7 +3126,7 @@ void ParticlesGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
     }
 
     p_gizmo->add_handles(handles, get_material("handles"));
-    p_gizmo->add_unscaled_billboard(icon, 0.05);
+    p_gizmo->add_unscaled_billboard(icon, 0.05f);
 }
 
 ////
@@ -3126,15 +3134,15 @@ void ParticlesGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 ReflectionProbeGizmoPlugin::ReflectionProbeGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/reflection_probe",
-        Color(0.6, 1, 0.5)
+        Color(0.6f, 1, 0.5f)
     );
 
     create_material("reflection_probe_material", gizmo_color);
 
-    gizmo_color.a = 0.5;
+    gizmo_color.a = 0.5f;
     create_material("reflection_internal_material", gizmo_color);
 
-    gizmo_color.a = 0.1;
+    gizmo_color.a = 0.1f;
     create_material("reflection_probe_solid_material", gizmo_color);
 
     create_icon_material(
@@ -3231,8 +3239,8 @@ void ReflectionProbeGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         extents[p_idx] = d;
@@ -3362,22 +3370,22 @@ void ReflectionProbeGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         p_gizmo->add_solid_box(solid_material, probe->get_extents() * 2.0);
     }
 
-    p_gizmo->add_unscaled_billboard(icon, 0.05);
+    p_gizmo->add_unscaled_billboard(icon, 0.05f);
     p_gizmo->add_handles(handles, get_material("handles"));
 }
 
 GIProbeGizmoPlugin::GIProbeGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/gi_probe",
-        Color(0.5, 1, 0.6)
+        Color(0.5f, 1, 0.6f)
     );
 
     create_material("gi_probe_material", gizmo_color);
 
-    gizmo_color.a = 0.5;
+    gizmo_color.a = 0.5f;
     create_material("gi_probe_internal_material", gizmo_color);
 
-    gizmo_color.a = 0.1;
+    gizmo_color.a = 0.1f;
     create_material("gi_probe_solid_material", gizmo_color);
 
     create_icon_material(
@@ -3461,8 +3469,8 @@ void GIProbeGizmoPlugin::set_handle(
         );
     }
 
-    if (d < 0.001) {
-        d = 0.001;
+    if (d < 0.001f) {
+        d = 0.001f;
     }
 
     extents[p_idx] = d;
@@ -3568,7 +3576,7 @@ void GIProbeGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         p_gizmo->add_solid_box(solid_material, aabb.get_size());
     }
 
-    p_gizmo->add_unscaled_billboard(icon, 0.05);
+    p_gizmo->add_unscaled_billboard(icon, 0.05f);
     p_gizmo->add_handles(handles, get_material("handles"));
 }
 
@@ -3577,12 +3585,12 @@ void GIProbeGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 BakedIndirectLightGizmoPlugin::BakedIndirectLightGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/baked_indirect_light",
-        Color(0.5, 0.6, 1)
+        Color(0.5f, 0.6f, 1)
     );
 
     create_material("baked_indirect_light_material", gizmo_color);
 
-    gizmo_color.a = 0.1;
+    gizmo_color.a = 0.1f;
     create_material("baked_indirect_light_internal_material", gizmo_color);
 
     create_icon_material(
@@ -3657,8 +3665,8 @@ void BakedIndirectLightGizmoPlugin::set_handle(
         );
     }
 
-    if (d < 0.001) {
-        d = 0.001;
+    if (d < 0.001f) {
+        d = 0.001f;
     }
 
     extents[p_idx] = d;
@@ -3738,19 +3746,21 @@ void BakedIndirectLightGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         p_gizmo->add_solid_box(material_internal, aabb.get_size());
     }
 
-    p_gizmo->add_unscaled_billboard(icon, 0.05);
+    p_gizmo->add_unscaled_billboard(icon, 0.05f);
     p_gizmo->add_handles(handles, get_material("handles"));
 }
 
 ////
 
 CollisionObjectGizmoPlugin::CollisionObjectGizmoPlugin() {
-    const Color gizmo_color =
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/shape", Color(0.5, 0.7, 1));
+    const Color gizmo_color = EDITOR_DEF(
+        "editors/3d_gizmos/gizmo_colors/shape",
+        Color(0.5f, 0.7f, 1)
+    );
     create_material("shape_material", gizmo_color);
     const float gizmo_value = gizmo_color.get_v();
     const Color gizmo_color_disabled =
-        Color(gizmo_value, gizmo_value, gizmo_value, 0.65);
+        Color(gizmo_value, gizmo_value, gizmo_value, 0.65f);
     create_material("shape_material_disabled", gizmo_color_disabled);
 }
 
@@ -3812,12 +3822,14 @@ void CollisionObjectGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 ////
 
 CollisionShapeSpatialGizmoPlugin::CollisionShapeSpatialGizmoPlugin() {
-    const Color gizmo_color =
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/shape", Color(0.5, 0.7, 1));
+    const Color gizmo_color = EDITOR_DEF(
+        "editors/3d_gizmos/gizmo_colors/shape",
+        Color(0.5f, 0.7f, 1)
+    );
     create_material("shape_material", gizmo_color);
     const float gizmo_value = gizmo_color.get_v();
     const Color gizmo_color_disabled =
-        Color(gizmo_value, gizmo_value, gizmo_value, 0.65);
+        Color(gizmo_value, gizmo_value, gizmo_value, 0.65f);
     create_material("shape_material_disabled", gizmo_color_disabled);
     create_handle_material("handles");
 }
@@ -3950,8 +3962,8 @@ void CollisionShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         ss->set_radius(d);
@@ -3976,8 +3988,8 @@ void CollisionShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         rs->set_length(d);
@@ -4004,8 +4016,8 @@ void CollisionShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         Vector3 he = bs->get_extents();
@@ -4038,8 +4050,8 @@ void CollisionShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         if (p_idx == 0) {
@@ -4070,8 +4082,8 @@ void CollisionShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         if (p_idx == 0) {
@@ -4492,12 +4504,14 @@ void CollisionShapeSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 /////
 
 CollisionPolygonSpatialGizmoPlugin::CollisionPolygonSpatialGizmoPlugin() {
-    const Color gizmo_color =
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/shape", Color(0.5, 0.7, 1));
+    const Color gizmo_color = EDITOR_DEF(
+        "editors/3d_gizmos/gizmo_colors/shape",
+        Color(0.5f, 0.7f, 1)
+    );
     create_material("shape_material", gizmo_color);
     const float gizmo_value = gizmo_color.get_v();
     const Color gizmo_color_disabled =
-        Color(gizmo_value, gizmo_value, gizmo_value, 0.65);
+        Color(gizmo_value, gizmo_value, gizmo_value, 0.65f);
     create_material("shape_material_disabled", gizmo_color_disabled);
 }
 
@@ -4549,28 +4563,28 @@ NavigationMeshSpatialGizmoPlugin::NavigationMeshSpatialGizmoPlugin() {
         "navigation_edge_material",
         EDITOR_DEF(
             "editors/3d_gizmos/gizmo_colors/navigation_edge",
-            Color(0.5, 1, 1)
+            Color(0.5f, 1, 1)
         )
     );
     create_material(
         "navigation_edge_material_disabled",
         EDITOR_DEF(
             "editors/3d_gizmos/gizmo_colors/navigation_edge_disabled",
-            Color(0.7, 0.7, 0.7)
+            Color(0.7f, 0.7f, 0.7f)
         )
     );
     create_material(
         "navigation_solid_material",
         EDITOR_DEF(
             "editors/3d_gizmos/gizmo_colors/navigation_solid",
-            Color(0.5, 1, 1, 0.4)
+            Color(0.5f, 1, 1, 0.4f)
         )
     );
     create_material(
         "navigation_solid_material_disabled",
         EDITOR_DEF(
             "editors/3d_gizmos/gizmo_colors/navigation_solid_disabled",
-            Color(0.7, 0.7, 0.7, 0.4)
+            Color(0.7f, 0.7f, 0.7f, 0.4f)
         )
     );
 }
@@ -4695,8 +4709,8 @@ void NavigationMeshSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
 
 //////
 
-#define BODY_A_RADIUS 0.25
-#define BODY_B_RADIUS 0.27
+#define BODY_A_RADIUS 0.25f
+#define BODY_B_RADIUS 0.27f
 
 Basis JointGizmosDrawer::look_body(
     const Transform& p_joint_transform,
@@ -4863,8 +4877,8 @@ void JointGizmosDrawer::draw_circle(
 
     } else {
         if (p_limit_lower > p_limit_upper) {
-            p_limit_lower = -Math_PI;
-            p_limit_upper = Math_PI;
+            p_limit_lower = -static_cast<real_t>(Math_PI);
+            p_limit_upper = static_cast<real_t>(Math_PI);
         }
 
         const int points = 32;
@@ -5010,26 +5024,26 @@ void JointGizmosDrawer::draw_cone(
 JointSpatialGizmoPlugin::JointSpatialGizmoPlugin() {
     create_material(
         "joint_material",
-        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/joint", Color(0.5, 0.8, 1))
+        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/joint", Color(0.5f, 0.8f, 1))
     );
     create_material(
         "joint_body_a_material",
         EDITOR_DEF(
             "editors/3d_gizmos/gizmo_colors/joint_body_a",
-            Color(0.6, 0.8, 1)
+            Color(0.6f, 0.8f, 1)
         )
     );
     create_material(
         "joint_body_b_material",
         EDITOR_DEF(
             "editors/3d_gizmos/gizmo_colors/joint_body_b",
-            Color(0.6, 0.9, 1)
+            Color(0.6f, 0.9f, 1)
         )
     );
 
     update_timer = memnew(Timer);
     update_timer->set_name("JointGizmoUpdateTimer");
-    update_timer->set_wait_time(1.0 / 120.0);
+    update_timer->set_wait_time(1.f / 120);
     update_timer->connect("timeout", this, "incremental_update_gizmos");
     update_timer->set_autostart(true);
     EditorNode::get_singleton()->call_deferred("add_child", update_timer);
@@ -5805,15 +5819,15 @@ RoomSpatialGizmo::RoomSpatialGizmo(Room* p_room) {
 PortalGizmoPlugin::PortalGizmoPlugin() {
     Color color_portal_margin = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/portal_margin",
-        Color(1.0, 0.1, 0.1, 0.3)
+        Color(1, 0.1f, 0.1f, 0.3f)
     );
     Color color_portal_edge = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/portal_edge",
-        Color(0.0, 0.0, 0.0, 0.3)
+        Color(0, 0, 0, 0.3f)
     );
     Color color_portal_arrow = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/portal_arrow",
-        Color(1.0, 1.0, 1.0, 1.0)
+        Color(1, 1, 1, 1)
     );
 
     create_icon_material(
@@ -5821,7 +5835,7 @@ PortalGizmoPlugin::PortalGizmoPlugin() {
         SpatialEditor::get_singleton()->get_icon("GizmoPortal", "EditorIcons"),
         true
     );
-    create_material("portal", Color(1.0, 1.0, 1.0, 1.0), false, false, true);
+    create_material("portal", Color(1, 1, 1, 1), false, false, true);
     create_material("portal_margin", color_portal_margin, false, false, false);
     create_material("portal_edge", color_portal_edge, false, false, false);
     create_material("portal_arrow", color_portal_arrow, false, false, false);
@@ -5955,7 +5969,7 @@ void PortalSpatialGizmo::redraw() {
         || _portal->_warning_facing_wrong_way
         || _portal->_warning_autolink_failed) {
         Ref<Material> icon = gizmo_plugin->get_material("portal_icon", this);
-        add_unscaled_billboard(icon, 0.05);
+        add_unscaled_billboard(icon, 0.05f);
     }
 
     Transform tr     = _portal->get_global_transform();
@@ -6093,9 +6107,9 @@ void PortalSpatialGizmo::redraw() {
     // arrow
     if (show_margins) {
         const int arrow_points   = 7;
-        const float arrow_length = 0.5;  // 1.5
-        const float arrow_width  = 0.1;  // 0.3
-        const float arrow_barb   = 0.27; // 0.8
+        const float arrow_length = 0.5f;  // 1.5
+        const float arrow_width  = 0.1f;  // 0.3
+        const float arrow_barb   = 0.27f; // 0.8
 
         Vector3 arrow[arrow_points] = {
             Vector3(0, 0, -1),
@@ -6134,21 +6148,19 @@ PortalSpatialGizmo::PortalSpatialGizmo(Portal* p_portal) {
 
     _color_portal_front = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/portal_front",
-        Color(0.05, 0.05, 1.0, 0.3)
+        Color(0.05f, 0.05f, 1, 0.3f)
     );
     _color_portal_back = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/portal_back",
-        Color(1.0, 1.0, 0.0, 0.15)
+        Color(1, 1, 0, 0.15f)
     );
 }
 
 /////////////////////
 
 OccluderGizmoPlugin::OccluderGizmoPlugin() {
-    Color color_occluder = EDITOR_DEF(
-        "editors/3d_gizmos/gizmo_colors/occluder",
-        Color(1.0, 0.0, 1.0)
-    );
+    Color color_occluder =
+        EDITOR_DEF("editors/3d_gizmos/gizmo_colors/occluder", Color(1, 0, 1));
     create_material("occluder", color_occluder, false, true, false);
 
     create_handle_material("occluder_handle");

@@ -30,7 +30,7 @@ Error QuickHull::build(
     Set<Vector3> valid_cache;
 
     for (int i = 0; i < p_points.size(); i++) {
-        Vector3 sp = p_points[i].snapped(Vector3(0.0001, 0.0001, 0.0001));
+        Vector3 sp = p_points[i].snapped(Vector3(0.0001f, 0.0001f, 0.0001f));
         if (valid_cache.has(sp)) {
             valid_points.write[i] = false;
         } else {

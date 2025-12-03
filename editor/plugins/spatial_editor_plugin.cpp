@@ -31,14 +31,14 @@
 
 #define DISTANCE_DEFAULT 4
 
-#define GIZMO_ARROW_SIZE      0.35
-#define GIZMO_RING_HALF_WIDTH 0.1
-#define GIZMO_SCALE_DEFAULT   0.15
-#define GIZMO_PLANE_SIZE      0.2
-#define GIZMO_PLANE_DST       0.3
-#define GIZMO_CIRCLE_SIZE     1.1
-#define GIZMO_SCALE_OFFSET    (GIZMO_CIRCLE_SIZE + 0.3)
-#define GIZMO_ARROW_OFFSET    (GIZMO_CIRCLE_SIZE + 0.3)
+#define GIZMO_ARROW_SIZE      0.35f
+#define GIZMO_RING_HALF_WIDTH 0.1f
+#define GIZMO_SCALE_DEFAULT   0.15f
+#define GIZMO_PLANE_SIZE      0.2f
+#define GIZMO_PLANE_DST       0.3f
+#define GIZMO_CIRCLE_SIZE     1.1f
+#define GIZMO_SCALE_OFFSET    (GIZMO_CIRCLE_SIZE + 0.3f)
+#define GIZMO_ARROW_OFFSET    (GIZMO_CIRCLE_SIZE + 0.3f)
 
 #define ZOOM_FREELOOK_MIN               0.01
 #define ZOOM_FREELOOK_MULTIPLIER        1.08
@@ -117,7 +117,7 @@ void ViewportRotationControl::_draw_axis(const Axis2D& p_axis) {
     const double alpha =
         focused ? 1.0 : ((p_axis.z_axis + 1.0) / 2.0) * 0.5 + 0.5;
     const Color c = focused
-                      ? Color(0.9, 0.9, 0.9)
+                      ? Color(0.9f, 0.9f, 0.9f)
                       : Color(axis_color.r, axis_color.g, axis_color.b, alpha);
 
     if (positive) {
@@ -143,7 +143,7 @@ void ViewportRotationControl::_draw_axis(const Axis2D& p_axis) {
         draw_circle(
             p_axis.screen_point,
             AXIS_CIRCLE_RADIUS * 0.8,
-            c.darkened(0.4)
+            c.darkened(0.4f)
         );
     }
 }
@@ -328,7 +328,7 @@ void SpatialEditorViewport::_update_camera(float p_interp_delta) {
     }
 
     // Apply camera transform
-    real_t tolerance = 0.001;
+    real_t tolerance = 0.001f;
     bool equal       = true;
     if (!Math::is_equal_approx(
             old_camera_cursor.x_rot,
@@ -534,7 +534,7 @@ ObjectID SpatialEditorViewport::_select_ray(
     Node* edited_scene  = get_tree()->get_edited_scene_root();
     ObjectID closest    = 0;
     Node* item          = nullptr;
-    float closest_dist  = 1e20;
+    float closest_dist  = 1e20f;
     int selected_handle = -1;
 
     for (int i = 0; i < instances.size(); i++) {
@@ -976,13 +976,13 @@ bool SpatialEditorViewport::_gizmo_select(
     if (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT
         || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_MOVE) {
         int col_axis = -1;
-        float col_d  = 1e20;
+        float col_d  = 1e20f;
 
         for (int i = 0; i < 3; i++) {
             Vector3 grabber_pos =
                 gt.origin
                 + gt.basis.get_axis(i) * gs
-                      * (GIZMO_ARROW_OFFSET + (GIZMO_ARROW_SIZE * 0.5));
+                      * (GIZMO_ARROW_OFFSET + (GIZMO_ARROW_SIZE / 2));
             float grabber_radius = gs * GIZMO_ARROW_SIZE;
 
             Vector3 r;
@@ -1005,7 +1005,7 @@ bool SpatialEditorViewport::_gizmo_select(
         bool is_plane_translate = false;
         // plane select
         if (col_axis == -1) {
-            col_d = 1e20;
+            col_d = 1e20f;
 
             for (int i = 0; i < 3; i++) {
                 Vector3 ivec2 = gt.basis.get_axis((i + 1) % 3).normalized();
@@ -1016,7 +1016,7 @@ bool SpatialEditorViewport::_gizmo_select(
                 const Vector3 grabber_pos =
                     gt.origin
                     + (ivec2 + ivec3) * gs
-                          * (GIZMO_PLANE_SIZE + GIZMO_PLANE_DST * 0.6667);
+                          * (GIZMO_PLANE_SIZE + GIZMO_PLANE_DST * 0.6667f);
 
                 Vector3 r;
                 Plane plane(gt.origin, gt.basis.get_axis(i).normalized());
@@ -1059,7 +1059,7 @@ bool SpatialEditorViewport::_gizmo_select(
     if (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT
         || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_ROTATE) {
         int col_axis = -1;
-        float col_d  = 1e20;
+        float col_d  = 1e20f;
 
         for (int i = 0; i < 3; i++) {
             Plane plane(gt.origin, gt.basis.get_axis(i).normalized());
@@ -1099,7 +1099,7 @@ bool SpatialEditorViewport::_gizmo_select(
 
     if (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SCALE) {
         int col_axis = -1;
-        float col_d  = 1e20;
+        float col_d  = 1e20f;
 
         for (int i = 0; i < 3; i++) {
             Vector3 grabber_pos =
@@ -1126,7 +1126,7 @@ bool SpatialEditorViewport::_gizmo_select(
         bool is_plane_scale = false;
         // plane select
         if (col_axis == -1) {
-            col_d = 1e20;
+            col_d = 1e20f;
 
             for (int i = 0; i < 3; i++) {
                 Vector3 ivec2 = gt.basis.get_axis((i + 1) % 3).normalized();
@@ -1137,7 +1137,7 @@ bool SpatialEditorViewport::_gizmo_select(
                 Vector3 grabber_pos =
                     gt.origin
                     + (ivec2 + ivec3) * gs
-                          * (GIZMO_PLANE_SIZE + GIZMO_PLANE_DST * 0.6667);
+                          * (GIZMO_PLANE_SIZE + GIZMO_PLANE_DST * 0.6667f);
 
                 Vector3 r;
                 Plane plane(gt.origin, gt.basis.get_axis(i).normalized());
@@ -2534,29 +2534,37 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent>& p_event) {
         if (ED_IS_SHORTCUT("spatial_editor/orbit_view_down", p_event)) {
             // Clamp rotation to roughly -90..90 degrees so the user can't look
             // upside-down and end up disoriented.
-            cursor.x_rot = CLAMP(cursor.x_rot - Math_PI / 12.0, -1.57, 1.57);
-            view_type    = VIEW_TYPE_USER;
+            cursor.x_rot = CLAMP(
+                cursor.x_rot - static_cast<float>(Math_PI) / 12,
+                -1.57,
+                1.57
+            );
+            view_type = VIEW_TYPE_USER;
             _update_name();
         }
         if (ED_IS_SHORTCUT("spatial_editor/orbit_view_up", p_event)) {
             // Clamp rotation to roughly -90..90 degrees so the user can't look
             // upside-down and end up disoriented.
-            cursor.x_rot = CLAMP(cursor.x_rot + Math_PI / 12.0, -1.57, 1.57);
-            view_type    = VIEW_TYPE_USER;
+            cursor.x_rot = CLAMP(
+                cursor.x_rot + static_cast<float>(Math_PI) / 12,
+                -1.57,
+                1.57
+            );
+            view_type = VIEW_TYPE_USER;
             _update_name();
         }
         if (ED_IS_SHORTCUT("spatial_editor/orbit_view_right", p_event)) {
-            cursor.y_rot -= Math_PI / 12.0;
+            cursor.y_rot -= static_cast<float>(Math_PI) / 12;
             view_type     = VIEW_TYPE_USER;
             _update_name();
         }
         if (ED_IS_SHORTCUT("spatial_editor/orbit_view_left", p_event)) {
-            cursor.y_rot += Math_PI / 12.0;
+            cursor.y_rot += static_cast<float>(Math_PI) / 12;
             view_type     = VIEW_TYPE_USER;
             _update_name();
         }
         if (ED_IS_SHORTCUT("spatial_editor/orbit_view_180", p_event)) {
-            cursor.y_rot += Math_PI;
+            cursor.y_rot += static_cast<float>(Math_PI);
             view_type     = VIEW_TYPE_USER;
             _update_name();
         }
@@ -2649,7 +2657,7 @@ void SpatialEditorViewport::_nav_pan(
             ->get("editors/3d/navigation/navigation_scheme")
             .operator int();
 
-    real_t pan_speed       = 1 / 150.0;
+    real_t pan_speed       = 1.f / 150;
     int pan_speed_modifier = 10;
     if (nav_scheme == NAVIGATION_MAYA && p_event->get_shift()) {
         pan_speed *= pan_speed_modifier;
@@ -2685,7 +2693,7 @@ void SpatialEditorViewport::_nav_zoom(
             ->get("editors/3d/navigation/navigation_scheme")
             .operator int();
 
-    real_t zoom_speed       = 1 / 80.0;
+    real_t zoom_speed       = 1.f / 80;
     int zoom_speed_modifier = 10;
     if (nav_scheme == NAVIGATION_MAYA && p_event->get_shift()) {
         zoom_speed *= zoom_speed_modifier;
@@ -2969,10 +2977,10 @@ void SpatialEditorViewport::_update_freelook(real_t delta) {
     real_t speed = freelook_speed;
 
     if (is_shortcut_pressed("spatial_editor/freelook_speed_modifier")) {
-        speed *= 3.0;
+        speed *= 3;
     }
     if (is_shortcut_pressed("spatial_editor/freelook_slow_modifier")) {
-        speed *= 0.333333;
+        speed /= 3;
     }
 
     const Vector3 motion  = direction * speed * delta;
@@ -3099,14 +3107,14 @@ void SpatialEditorViewport::_notification(int p_what) {
 
             // apply AABB scaling before item's global transform
             {
-                const Vector3 offset(0.005, 0.005, 0.005);
+                const Vector3 offset(0.005f, 0.005f, 0.005f);
                 Basis aabb_s;
                 aabb_s.scale(se->aabb.size + offset);
                 t.translate(se->aabb.position - offset / 2);
                 t.basis = t.basis * aabb_s;
             }
             {
-                const Vector3 offset(0.01, 0.01, 0.01);
+                const Vector3 offset(0.01f, 0.01f, 0.01f);
                 Basis aabb_s;
                 aabb_s.scale(se->aabb.size + offset);
                 t_offset.translate(se->aabb.position - offset / 2);
@@ -3440,13 +3448,17 @@ static void draw_indicator_bar(
     // Note: because this bar appears over the viewport, it has to stay readable
     // for any background color Draw both neutral dark and bright colors to
     // account this
-    surface.draw_rect(r, Color(1, 1, 1, 0.2));
+    surface.draw_rect(r, Color(1, 1, 1, 0.2f));
     surface.draw_rect(
         Rect2(r.position.x, r.position.y + r.size.y - sy, r.size.x, sy),
-        Color(1, 1, 1, 0.6)
+        Color(1, 1, 1, 0.6f)
     );
-    surface
-        .draw_rect(r.grow(1), Color(0, 0, 0, 0.7), false, Math::round(EDSCALE));
+    surface.draw_rect(
+        r.grow(1),
+        Color(0, 0, 0, 0.7f),
+        false,
+        Math::round(EDSCALE)
+    );
 
     const Vector2 icon_size = icon->get_size();
     const Vector2 icon_pos  = Vector2(
@@ -3506,8 +3518,8 @@ void SpatialEditorViewport::_draw() {
     if (message_time > 0) {
         Ref<Font> font = get_font("font", "Label");
         Point2 msgpos  = Point2(5, get_size().y - 20);
-        font->draw(ci, msgpos + Point2(1, 1), message, Color(0, 0, 0, 0.8));
-        font->draw(ci, msgpos + Point2(-1, -1), message, Color(0, 0, 0, 0.8));
+        font->draw(ci, msgpos + Point2(1, 1), message, Color(0, 0, 0, 0.8f));
+        font->draw(ci, msgpos + Point2(-1, -1), message, Color(0, 0, 0, 0.8f));
         font->draw(ci, msgpos, message, Color(1, 1, 1, 1));
     }
 
@@ -3570,7 +3582,7 @@ void SpatialEditorViewport::_draw() {
 
         surface->draw_rect(
             draw_rect,
-            Color(0.6, 0.6, 0.1, 0.5),
+            Color(0.6f, 0.6f, 0.1f, 0.5f),
             false,
             Math::round(2 * EDSCALE)
         );
@@ -3646,7 +3658,7 @@ void SpatialEditorViewport::_menu_option(int p_option) {
     switch (p_option) {
         case VIEW_TOP: {
             cursor.y_rot = 0;
-            cursor.x_rot = Math_PI / 2.0;
+            cursor.x_rot = static_cast<float>(Math_PI) / 2;
             set_message(TTR("Top View."), 2);
             view_type = VIEW_TYPE_TOP;
             _set_auto_orthogonal();
@@ -3655,7 +3667,7 @@ void SpatialEditorViewport::_menu_option(int p_option) {
         } break;
         case VIEW_BOTTOM: {
             cursor.y_rot = 0;
-            cursor.x_rot = -Math_PI / 2.0;
+            cursor.x_rot = -static_cast<float>(Math_PI) / 2;
             set_message(TTR("Bottom View."), 2);
             view_type = VIEW_TYPE_BOTTOM;
             _set_auto_orthogonal();
@@ -3664,7 +3676,7 @@ void SpatialEditorViewport::_menu_option(int p_option) {
         } break;
         case VIEW_LEFT: {
             cursor.x_rot = 0;
-            cursor.y_rot = Math_PI / 2.0;
+            cursor.y_rot = static_cast<float>(Math_PI) / 2;
             set_message(TTR("Left View."), 2);
             view_type = VIEW_TYPE_LEFT;
             _set_auto_orthogonal();
@@ -3673,7 +3685,7 @@ void SpatialEditorViewport::_menu_option(int p_option) {
         } break;
         case VIEW_RIGHT: {
             cursor.x_rot = 0;
-            cursor.y_rot = -Math_PI / 2.0;
+            cursor.y_rot = -static_cast<float>(Math_PI) / 2;
             set_message(TTR("Right View."), 2);
             view_type = VIEW_TYPE_RIGHT;
             _set_auto_orthogonal();
@@ -3682,7 +3694,7 @@ void SpatialEditorViewport::_menu_option(int p_option) {
         } break;
         case VIEW_FRONT: {
             cursor.x_rot = 0;
-            cursor.y_rot = Math_PI;
+            cursor.y_rot = static_cast<float>(Math_PI);
             set_message(TTR("Front View."), 2);
             view_type = VIEW_TYPE_FRONT;
             _set_auto_orthogonal();
@@ -4365,7 +4377,7 @@ void SpatialEditorViewport::update_transform_gizmo_view() {
             .y;
     float dd = Math::abs(d0 - d1);
     if (dd == 0) {
-        dd = 0.0001;
+        dd = 0.0001f;
     }
 
     float gizmo_size =
@@ -4826,7 +4838,7 @@ AABB SpatialEditorViewport::_calculate_spatial_bounds(
 
     if (bounds.size == Vector3()
         && p_parent->get_class_name() != StringName("Spatial")) {
-        bounds = AABB(Vector3(-0.2, -0.2, -0.2), Vector3(0.4, 0.4, 0.4));
+        bounds = AABB(Vector3(-0.2f, -0.2f, -0.2f), Vector3(0.4f, 0.4f, 0.4f));
     }
 
     if (!p_exclude_toplevel_transform) {
@@ -6315,7 +6327,7 @@ void SpatialEditor::_generate_selection_boxes() {
     Ref<SpatialMaterial> mat_xray = memnew(SpatialMaterial);
     mat_xray->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
     mat_xray->set_flag(SpatialMaterial::FLAG_DISABLE_DEPTH_TEST, true);
-    mat_xray->set_albedo(selection_box_color * Color(1, 1, 1, 0.15));
+    mat_xray->set_albedo(selection_box_color * Color(1, 1, 1, 0.15f));
     mat_xray->set_feature(SpatialMaterial::FEATURE_TRANSPARENT, true);
     st_xray->set_material(mat_xray);
     selection_box_xray = st_xray->commit();
@@ -7402,9 +7414,9 @@ void SpatialEditor::_init_indicators() {
                 const int arrow_points = 5;
                 Vector3 arrow[5]       = {
                     nivec * 0.0 + ivec * 0.0,
-                    nivec * 0.01 + ivec * 0.0,
-                    nivec * 0.01 + ivec * GIZMO_ARROW_OFFSET,
-                    nivec * 0.065 + ivec * GIZMO_ARROW_OFFSET,
+                    nivec * 0.01f + ivec * 0.0,
+                    nivec * 0.01f + ivec * GIZMO_ARROW_OFFSET,
+                    nivec * 0.065f + ivec * GIZMO_ARROW_OFFSET,
                     nivec * 0.0
                         + ivec * (GIZMO_ARROW_OFFSET + GIZMO_ARROW_SIZE),
                 };
@@ -7449,7 +7461,7 @@ void SpatialEditor::_init_indicators() {
                     vec * GIZMO_PLANE_DST - ivec3 * GIZMO_PLANE_SIZE
                 };
 
-                Basis ma(ivec, Math_PI / 2);
+                Basis ma(ivec, static_cast<real_t>(Math_PI) / 2);
 
                 Vector3 points[4] = {
                     ma.xform(plane[0]),
@@ -7634,11 +7646,11 @@ void SpatialEditor::_init_indicators() {
                 const int arrow_points = 6;
                 Vector3 arrow[6]       = {
                     nivec * 0.0 + ivec * 0.0,
-                    nivec * 0.01 + ivec * 0.0,
-                    nivec * 0.01 + ivec * 1.0 * GIZMO_SCALE_OFFSET,
-                    nivec * 0.07 + ivec * 1.0 * GIZMO_SCALE_OFFSET,
-                    nivec * 0.07 + ivec * 1.11 * GIZMO_SCALE_OFFSET,
-                    nivec * 0.0 + ivec * 1.11 * GIZMO_SCALE_OFFSET,
+                    nivec * 0.01f + ivec * 0.0,
+                    nivec * 0.01f + ivec * 1.0 * GIZMO_SCALE_OFFSET,
+                    nivec * 0.07f + ivec * 1.0 * GIZMO_SCALE_OFFSET,
+                    nivec * 0.07f + ivec * 1.11f * GIZMO_SCALE_OFFSET,
+                    nivec * 0.0 + ivec * 1.11f * GIZMO_SCALE_OFFSET,
                 };
 
                 int arrow_sides = 4;
@@ -7681,7 +7693,7 @@ void SpatialEditor::_init_indicators() {
                     vec * GIZMO_PLANE_DST - ivec3 * GIZMO_PLANE_SIZE
                 };
 
-                Basis ma(ivec, Math_PI / 2);
+                Basis ma(ivec, static_cast<real_t>(Math_PI) / 2);
 
                 Vector3 points[4] = {
                     ma.xform(plane[0]),
@@ -7733,7 +7745,7 @@ void SpatialEditor::_update_context_menu_stylebox() {
             "accent_color",
             "Editor"
         );
-    context_menu_stylebox->set_bg_color(accent_color * Color(1, 1, 1, 0.1));
+    context_menu_stylebox->set_bg_color(accent_color * Color(1, 1, 1, 0.1f));
     // Add an underline to the StyleBox, but prevent its minimum vertical size
     // from changing.
     context_menu_stylebox->set_border_color(accent_color);
@@ -9519,7 +9531,7 @@ void EditorSpatialGizmoPlugin::create_material(
 ) {
     Color instanced_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/instanced",
-        Color(0.7, 0.7, 0.7, 0.6)
+        Color(0.7f, 0.7f, 0.7f, 0.6f)
     );
 
     Vector<Ref<SpatialMaterial>> mats;
@@ -9534,7 +9546,7 @@ void EditorSpatialGizmoPlugin::create_material(
         Color color = instanced ? instanced_color : p_color;
 
         if (!selected) {
-            color.a *= 0.3;
+            color.a *= 0.3f;
         }
 
         material->set_albedo(color);
@@ -9572,7 +9584,7 @@ void EditorSpatialGizmoPlugin::create_icon_material(
 ) {
     Color instanced_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/instanced",
-        Color(0.7, 0.7, 0.7, 0.6)
+        Color(0.7f, 0.7f, 0.7f, 0.6f)
     );
 
     Vector<Ref<SpatialMaterial>> icons;
@@ -9587,7 +9599,7 @@ void EditorSpatialGizmoPlugin::create_icon_material(
         Color color = instanced ? instanced_color : p_albedo;
 
         if (!selected) {
-            color.a *= 0.85;
+            color.a *= 0.85f;
         }
 
         icon->set_albedo(color);

@@ -953,17 +953,17 @@ void MeshInstance::create_debug_tangents() {
 
             lines.push_back(v);               // normal
             colors.push_back(Color(0, 0, 1)); // color
-            lines.push_back(v + n * 0.04);    // normal
+            lines.push_back(v + n * 0.04f);   // normal
             colors.push_back(Color(0, 0, 1)); // color
 
             lines.push_back(v);               // tangent
             colors.push_back(Color(1, 0, 0)); // color
-            lines.push_back(v + t * 0.04);    // tangent
+            lines.push_back(v + t * 0.04f);   // tangent
             colors.push_back(Color(1, 0, 0)); // color
 
             lines.push_back(v);               // binormal
             colors.push_back(Color(0, 1, 0)); // color
-            lines.push_back(v + b * 0.04);    // binormal
+            lines.push_back(v + b * 0.04f);   // binormal
             colors.push_back(Color(0, 1, 0)); // color
         }
     }
@@ -1232,7 +1232,7 @@ bool MeshInstance::_check_for_valid_indices(
 
             // if the area is zero, the triangle is invalid (and will crash
             // xatlas if we use it)
-            if (_triangle_is_degenerate(p0, p1, p2, 0.00001)) {
+            if (_triangle_is_degenerate(p0, p1, p2, 0.00001f)) {
                 _merge_log("\t\tdetected zero area triangle, ignoring");
                 ok = false;
             }

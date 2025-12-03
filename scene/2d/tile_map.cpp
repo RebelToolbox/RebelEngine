@@ -1947,7 +1947,7 @@ Vector2 TileMap::world_to_map(const Vector2& p_pos) const {
     // 0.00005 is 5*CMP_EPSILON, results would start being unpredictable if
     // cell size is > 15,000, but we can hardly have more precision anyway with
     // floating point.
-    ret += Vector2(0.00005, 0.00005);
+    ret += Vector2(0.00005f, 0.00005f);
 
     switch (half_offset) {
         case HALF_OFFSET_X: {
@@ -2650,7 +2650,7 @@ TileMap::TileMap() {
     clip_uv               = false;
     format = FORMAT_1; // Assume lowest possible format if none is present
 
-    fp_adjust   = 0.00001;
+    fp_adjust   = 0.00001f;
     tile_origin = TILE_ORIGIN_TOP_LEFT;
     set_notify_transform(true);
     set_notify_local_transform(false);

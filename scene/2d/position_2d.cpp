@@ -18,12 +18,12 @@ void Position2D::_draw_cross() {
     draw_line(
         Point2(-extents, 0),
         Point2(+extents, 0),
-        Color(0.96, 0.20, 0.32)
+        Color(0.96f, 0.20f, 0.32f)
     );
     draw_line(
         Point2(0, -extents),
         Point2(0, +extents),
-        Color(0.53, 0.84, 0.01)
+        Color(0.53f, 0.84f, 0.01f)
     );
 }
 

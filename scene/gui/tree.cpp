@@ -2120,7 +2120,7 @@ void Tree::_range_click_timeout() {
         blocked--;
 
         if (range_click_timer->is_one_shot()) {
-            range_click_timer->set_wait_time(0.05);
+            range_click_timer->set_wait_time(0.05f);
             range_click_timer->set_one_shot(false);
             range_click_timer->start();
         }
@@ -2416,7 +2416,7 @@ int Tree::propagate_mouse_event(
                                 range_item_last = p_item;
                                 range_up_last   = up;
 
-                                range_click_timer->set_wait_time(0.6);
+                                range_click_timer->set_wait_time(0.6f);
                                 range_click_timer->set_one_shot(true);
                                 range_click_timer->start();
 
@@ -3081,7 +3081,7 @@ void Tree::_gui_input(Ref<InputEvent> p_event) {
                     popup_edited_item->cells[popup_edited_item_col];
                 float diff_y  = -mm->get_relative().y;
                 diff_y        = Math::pow(ABS(diff_y), 1.8f) * SGN(diff_y);
-                diff_y       *= 0.1;
+                diff_y       *= 0.1f;
                 range_drag_base =
                     CLAMP(range_drag_base + c.step * diff_y, c.min, c.max);
                 popup_edited_item->set_range(

@@ -432,18 +432,18 @@ Light::Light(VisualServer::LightType p_type) {
     set_param(PARAM_ENERGY, 1);
     set_param(PARAM_INDIRECT_ENERGY, 1);
     set_param(PARAM_SIZE, 0);
-    set_param(PARAM_SPECULAR, 0.5);
+    set_param(PARAM_SPECULAR, 0.5f);
     set_param(PARAM_RANGE, 5);
     set_param(PARAM_ATTENUATION, 1);
     set_param(PARAM_SPOT_ANGLE, 45);
     set_param(PARAM_SPOT_ATTENUATION, 1);
     set_param(PARAM_CONTACT_SHADOW_SIZE, 0);
     set_param(PARAM_SHADOW_MAX_DISTANCE, 0);
-    set_param(PARAM_SHADOW_SPLIT_1_OFFSET, 0.1);
-    set_param(PARAM_SHADOW_SPLIT_2_OFFSET, 0.2);
-    set_param(PARAM_SHADOW_SPLIT_3_OFFSET, 0.5);
-    set_param(PARAM_SHADOW_NORMAL_BIAS, 0.0);
-    set_param(PARAM_SHADOW_BIAS, 0.15);
+    set_param(PARAM_SHADOW_SPLIT_1_OFFSET, 0.1f);
+    set_param(PARAM_SHADOW_SPLIT_2_OFFSET, 0.2f);
+    set_param(PARAM_SHADOW_SPLIT_3_OFFSET, 0.5f);
+    set_param(PARAM_SHADOW_NORMAL_BIAS, 0);
+    set_param(PARAM_SHADOW_BIAS, 0.15f);
     set_disable_scale(true);
 }
 
@@ -629,10 +629,10 @@ void DirectionalLight::_bind_methods() {
 }
 
 DirectionalLight::DirectionalLight() : Light(VisualServer::LIGHT_DIRECTIONAL) {
-    set_param(PARAM_SHADOW_NORMAL_BIAS, 0.8);
-    set_param(PARAM_SHADOW_BIAS, 0.1);
+    set_param(PARAM_SHADOW_NORMAL_BIAS, 0.8f);
+    set_param(PARAM_SHADOW_BIAS, 0.1f);
     set_param(PARAM_SHADOW_MAX_DISTANCE, 100);
-    set_param(PARAM_SHADOW_BIAS_SPLIT_SCALE, 0.25);
+    set_param(PARAM_SHADOW_BIAS_SPLIT_SCALE, 0.25f);
     set_shadow_mode(SHADOW_PARALLEL_4_SPLITS);
     set_shadow_depth_range(SHADOW_DEPTH_RANGE_STABLE);
 

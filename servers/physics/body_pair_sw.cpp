@@ -189,7 +189,7 @@ bool BodyPairSW::_test_ccd(
     Transform from_inv = p_xform_B.affine_inverse();
 
     Vector3 local_from = from_inv.xform(
-        from - mnormal * mlen * 0.1
+        from - mnormal * mlen * 0.1f
     ); // start from a little inside the bounding box
     Vector3 local_to = from_inv.xform(to);
 

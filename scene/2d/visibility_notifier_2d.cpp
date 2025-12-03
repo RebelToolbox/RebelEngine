@@ -97,7 +97,7 @@ void VisibilityNotifier2D::_notification(int p_what) {
         } break;
         case NOTIFICATION_DRAW: {
             if (Engine::get_singleton()->is_editor_hint()) {
-                draw_rect(rect, Color(1, 0.5, 1, 0.2));
+                draw_rect(rect, Color(1, 0.5f, 1, 0.2f));
             }
         } break;
         case NOTIFICATION_EXIT_TREE: {

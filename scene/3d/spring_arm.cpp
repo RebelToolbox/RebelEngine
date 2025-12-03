@@ -16,7 +16,7 @@ SpringArm::SpringArm() :
     current_spring_length(0),
     keep_child_basis(false),
     mask(1),
-    margin(0.01) {}
+    margin(0.01f) {}
 
 void SpringArm::_notification(int p_what) {
     switch (p_what) {

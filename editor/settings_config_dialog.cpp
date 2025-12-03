@@ -86,7 +86,7 @@ void EditorSettingsDialog::popup_edit_settings() {
     if (saved_size != Rect2()) {
         popup(saved_size);
     } else {
-        popup_centered_clamped(Size2(900, 700) * EDSCALE, 0.8);
+        popup_centered_clamped(Size2(900, 700) * EDSCALE, 0.8f);
     }
 
     _focus_current_search_box();

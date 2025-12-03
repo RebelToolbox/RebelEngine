@@ -46,7 +46,7 @@ class PortalRoomsBSP {
 
     PortalRenderer* _portal_renderer = nullptr;
 
-    const real_t _plane_epsilon = 0.001;
+    const real_t _plane_epsilon = 0.001f;
 
 public:
     // build the BSP on level start

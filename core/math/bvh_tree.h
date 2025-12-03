@@ -182,7 +182,7 @@ public:
         // or expose this value to the user.
         // This default may make sense for a typically scaled 3d game, but maybe
         // not for 2d on a pixel scale.
-        params_set_pairing_expansion(0.1);
+        params_set_pairing_expansion(0.1f);
     }
 
 private:

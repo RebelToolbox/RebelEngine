@@ -25,15 +25,15 @@ void EditorHelp::_init_colors() {
     text_color      = get_color("default_color", "RichTextLabel");
     headline_color  = get_color("headline_color", "EditorHelp");
     base_type_color = title_color.linear_interpolate(text_color, 0.5);
-    comment_color   = text_color * Color(1, 1, 1, 0.6);
+    comment_color   = text_color * Color(1, 1, 1, 0.6f);
     symbol_color    = comment_color;
-    value_color     = text_color * Color(1, 1, 1, 0.6);
-    qualifier_color = text_color * Color(1, 1, 1, 0.8);
+    value_color     = text_color * Color(1, 1, 1, 0.6f);
+    qualifier_color = text_color * Color(1, 1, 1, 0.8f);
     type_color =
         get_color("accent_color", "Editor").linear_interpolate(text_color, 0.5);
     class_desc->add_color_override(
         "selection_color",
-        get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
+        get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4f)
     );
     class_desc->add_constant_override(
         "line_separation",
@@ -1366,8 +1366,8 @@ static void _add_text_to_rt(const String& p_bbcode, RichTextLabel* p_rt) {
 
     Color font_color_hl = p_rt->get_color("headline_color", "EditorHelp");
     Color accent_color  = p_rt->get_color("accent_color", "Editor");
-    Color link_color    = accent_color.linear_interpolate(font_color_hl, 0.8);
-    Color code_color    = accent_color.linear_interpolate(font_color_hl, 0.6);
+    Color link_color    = accent_color.linear_interpolate(font_color_hl, 0.8f);
+    Color code_color    = accent_color.linear_interpolate(font_color_hl, 0.6f);
 
     String bbcode =
         p_bbcode.dedent().replace("\t", "").replace("\r", "").strip_edges();
@@ -1701,7 +1701,7 @@ EditorHelp::EditorHelp() {
     class_desc->set_v_size_flags(SIZE_EXPAND_FILL);
     class_desc->add_color_override(
         "selection_color",
-        get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
+        get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4f)
     );
 
     class_desc->connect("meta_clicked", this, "_class_desc_select");
@@ -1772,7 +1772,7 @@ void EditorHelpBit::_notification(int p_what) {
         case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {
             rich_text->add_color_override(
                 "selection_color",
-                get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
+                get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4f)
             );
         } break;
         default:
@@ -1791,7 +1791,7 @@ EditorHelpBit::EditorHelpBit() {
     rich_text->connect("meta_clicked", this, "_meta_clicked");
     rich_text->add_color_override(
         "selection_color",
-        get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4)
+        get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4f)
     );
     rich_text->set_override_selected_font_color(false);
     set_custom_minimum_size(Size2(0, 70 * EDSCALE));

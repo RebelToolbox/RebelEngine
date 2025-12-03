@@ -1522,7 +1522,7 @@ bool PopupMenu::is_hide_on_multistate_item_selection() const {
 
 void PopupMenu::set_submenu_popup_delay(float p_time) {
     if (p_time <= 0) {
-        p_time = 0.01;
+        p_time = 0.01f;
     }
 
     submenu_timer->set_wait_time(p_time);
@@ -1976,7 +1976,7 @@ PopupMenu::PopupMenu() {
     set_hide_on_window_lose_focus(true);
 
     submenu_timer = memnew(Timer);
-    submenu_timer->set_wait_time(0.3);
+    submenu_timer->set_wait_time(0.3f);
     submenu_timer->set_one_shot(true);
     submenu_timer->connect("timeout", this, "_submenu_timeout");
     add_child(submenu_timer);

@@ -133,8 +133,8 @@ void MobileVRInterface::set_position_from_sensors() {
     if (sensor_first) {
         sensor_first = false;
     } else {
-        acc     = scrub(acc, last_accerometer_data, 2, 0.2);
-        magneto = scrub(magneto, last_magnetometer_data, 3, 0.3);
+        acc     = scrub(acc, last_accerometer_data, 2, 0.2f);
+        magneto = scrub(magneto, last_magnetometer_data, 3, 0.3f);
     };
 
     last_accerometer_data  = acc;
@@ -179,7 +179,7 @@ void MobileVRInterface::set_position_from_sensors() {
         // convert to quaternions, easier to smooth those out
         Quat transform_quat(orientation);
         Quat acc_mag_quat(combine_acc_mag(grav, magneto));
-        transform_quat = transform_quat.slerp(acc_mag_quat, 0.1);
+        transform_quat = transform_quat.slerp(acc_mag_quat, 0.1f);
         orientation    = Basis(transform_quat);
 
         tracking_state = ARVRInterface::ARVR_NORMAL_TRACKING;
@@ -582,13 +582,13 @@ MobileVRInterface::MobileVRInterface() {
     // Just set some defaults for these. At some point we need to look at adding
     // a lookup table for common device + headset combos and/or support reading
     // cardboard QR codes
-    eye_height       = 1.85;
-    intraocular_dist = 6.0;
-    display_width    = 14.5;
-    display_to_lens  = 4.0;
-    oversample       = 1.5;
-    k1               = 0.215;
-    k2               = 0.215;
+    eye_height       = 1.85f;
+    intraocular_dist = 6.0f;
+    display_width    = 14.5f;
+    display_to_lens  = 4.0f;
+    oversample       = 1.5f;
+    k1               = 0.215f;
+    k2               = 0.215f;
     last_ticks       = 0;
 };
 

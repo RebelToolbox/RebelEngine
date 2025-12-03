@@ -23,7 +23,7 @@ private:
     String type;
     float range            = INFINITY;
     float inner_cone_angle = 0.0f;
-    float outer_cone_angle = Math_TAU / 8.0f;
+    float outer_cone_angle = static_cast<float>(Math_TAU) / 8.0f;
 
 public:
     Color get_color();

@@ -189,7 +189,7 @@ bool BodyPair2DSW::_test_ccd(
     Transform2D from_inv = p_xform_B.affine_inverse();
 
     Vector2 local_from = from_inv.xform(
-        from - mnormal * mlen * 0.1
+        from - mnormal * mlen * 0.1f
     ); // start from a little inside the bounding box
     Vector2 local_to = from_inv.xform(to);
 
@@ -371,7 +371,7 @@ bool BodyPair2DSW::setup(real_t p_step) {
 
     real_t max_penetration = space->get_contact_max_allowed_penetration();
 
-    real_t bias = 0.3;
+    real_t bias = 0.3f;
     if (shape_A_ptr->get_custom_bias() || shape_B_ptr->get_custom_bias()) {
         if (shape_A_ptr->get_custom_bias() == 0) {
             bias = shape_B_ptr->get_custom_bias();

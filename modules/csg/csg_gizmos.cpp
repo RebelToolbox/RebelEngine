@@ -11,16 +11,16 @@
 CSGShapeSpatialGizmoPlugin::CSGShapeSpatialGizmoPlugin() {
     Color gizmo_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/csg",
-        Color(0.0, 0.4, 1, 0.15)
+        Color(0, 0.4f, 1, 0.15f)
     );
     create_material("shape_union_material", gizmo_color);
     create_material("shape_union_solid_material", gizmo_color);
     gizmo_color.invert();
     create_material("shape_subtraction_material", gizmo_color);
     create_material("shape_subtraction_solid_material", gizmo_color);
-    gizmo_color.r = 0.95;
-    gizmo_color.g = 0.95;
-    gizmo_color.b = 0.95;
+    gizmo_color.r = 0.95f;
+    gizmo_color.g = 0.95f;
+    gizmo_color.b = 0.95f;
     create_material("shape_intersection_material", gizmo_color);
     create_material("shape_intersection_solid_material", gizmo_color);
 
@@ -126,8 +126,8 @@ void CSGShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         s->set_radius(d);
@@ -161,8 +161,8 @@ void CSGShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         switch (p_idx) {
@@ -200,8 +200,8 @@ void CSGShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         if (p_idx == 0) {
@@ -233,8 +233,8 @@ void CSGShapeSpatialGizmoPlugin::set_handle(
             );
         }
 
-        if (d < 0.001) {
-            d = 0.001;
+        if (d < 0.001f) {
+            d = 0.001f;
         }
 
         if (p_idx == 0) {

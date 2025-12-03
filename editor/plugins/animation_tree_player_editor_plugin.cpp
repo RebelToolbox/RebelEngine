@@ -509,7 +509,7 @@ void AnimationTreePlayerEditor::_draw_node(const StringName& p_node) {
     Ref<Font> font          = get_font("font", "PopupMenu");
     Color font_color        = get_color("font_color", "PopupMenu");
     Color font_color_title  = get_color("font_color_hover", "PopupMenu");
-    font_color_title.a     *= 0.8;
+    font_color_title.a     *= 0.8f;
     Ref<Texture> slot_icon  = get_icon("VisualShaderPort", "EditorIcons");
 
     Size2 size = get_node_size(p_node);
@@ -535,7 +535,7 @@ void AnimationTreePlayerEditor::_draw_node(const StringName& p_node) {
     Point2 ascofs(0, font->get_ascent());
 
     Color bx  = font_color_title;
-    bx.a     *= 0.1;
+    bx.a     *= 0.1f;
     draw_rect(
         Rect2(
             ofs,
@@ -1035,7 +1035,7 @@ void AnimationTreePlayerEditor::_notification(int p_what) {
                 _draw_cos_line(
                     click_pos,
                     click_motion,
-                    Color(0.5, 1, 0.5, 0.8)
+                    Color(0.5f, 1, 0.5f, 0.8f)
                 );
             }
 
@@ -1049,7 +1049,7 @@ void AnimationTreePlayerEditor::_notification(int p_what) {
                 const AnimationTreePlayer::Connection& c = E->get();
                 Point2 source = _get_slot_pos(c.src_node, false, 0);
                 Point2 dest   = _get_slot_pos(c.dst_node, true, c.dst_input);
-                Color col     = Color(1, 1, 0.5, 0.8);
+                Color col     = Color(1, 1, 0.5f, 0.8f);
                 /*
                 if (click_type==CLICK_NODE && click_node==c.src_node) {
 
@@ -1074,7 +1074,7 @@ void AnimationTreePlayerEditor::_notification(int p_what) {
                         get_canvas_item(),
                         status_offset,
                         TTR("Animation tree is valid."),
-                        Color(0, 1, 0.6, 0.8)
+                        Color(0, 1, 0.6f, 0.8f)
                     );
                 } break;
                 default: {
@@ -1082,7 +1082,7 @@ void AnimationTreePlayerEditor::_notification(int p_what) {
                         get_canvas_item(),
                         status_offset,
                         TTR("Animation tree is invalid."),
-                        Color(1, 0.6, 0.0, 0.8)
+                        Color(1, 0.6f, 0, 0.8f)
                     );
                 } break;
             }

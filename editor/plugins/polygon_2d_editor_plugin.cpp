@@ -309,7 +309,7 @@ void Polygon2DEditor::_menu_option(int p_option) {
                     "interface/dialogs/uv_editor_bounds"
                 ));
             } else {
-                uv_edit->popup_centered_ratio(0.85);
+                uv_edit->popup_centered_ratio(0.85f);
             }
             _update_bone_list();
         } break;
@@ -697,7 +697,7 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
                     }
 
                     int closest        = -1;
-                    float closest_dist = 1e20;
+                    float closest_dist = 1e20f;
 
                     for (int i = points_prev.size() - internal_vertices;
                          i < points_prev.size();
@@ -811,7 +811,7 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
 
                 if (uv_move_current == UV_MODE_ADD_POLYGON) {
                     int closest        = -1;
-                    float closest_dist = 1e20;
+                    float closest_dist = 1e20f;
 
                     for (int i = 0; i < points_prev.size(); i++) {
                         Vector2 tuv = mtx.xform(points_prev[i]);
@@ -1230,7 +1230,7 @@ void Polygon2DEditor::_uv_draw() {
     );
 
     if (snap_show_grid) {
-        Color grid_color = Color(1.0, 1.0, 1.0, 0.15);
+        Color grid_color = Color(1, 1, 1, 0.15f);
         Size2 s          = uv_edit_draw->get_size();
         int last_cell    = 0;
 
@@ -1310,11 +1310,11 @@ void Polygon2DEditor::_uv_draw() {
     // All UV points are sharp, so use the sharp handle icon
     Ref<Texture> handle = get_icon("EditorPathSharpHandle", "EditorIcons");
 
-    Color poly_line_color = Color(0.9, 0.5, 0.5);
+    Color poly_line_color = Color(0.9f, 0.5f, 0.5f);
     if (polygons.size() || polygon_create.size()) {
         poly_line_color.a *= 0.25;
     }
-    Color polygon_line_color = Color(0.5, 0.5, 0.9);
+    Color polygon_line_color = Color(0.5f, 0.5f, 0.9f);
     Vector<Color> polygon_fill_color;
     {
         Color pf  = polygon_line_color;
@@ -1414,7 +1414,7 @@ void Polygon2DEditor::_uv_draw() {
                 uv_edit_draw->draw_texture(
                     handle,
                     mtx.xform(uvs[i]) - handle->get_size() * 0.5,
-                    Color(0.6, 0.8, 1)
+                    Color(0.6f, 0.8f, 1)
                 );
             }
         }
@@ -1530,7 +1530,7 @@ void Polygon2DEditor::_uv_draw() {
         uv_edit_draw->draw_circle(
             bone_paint_pos,
             bone_paint_radius->get_value() * EDSCALE,
-            Color(1, 1, 1, 0.1)
+            Color(1, 1, 1, 0.1f)
         );
     }
 

@@ -24,8 +24,8 @@ AreaBullet::AreaBullet() :
     spOv_gravityPointAttenuation(1),
     spOv_gravityVec(0, -1, 0),
     spOv_gravityMag(10),
-    spOv_linearDump(0.1),
-    spOv_angularDump(0.1),
+    spOv_linearDump(0.1f),
+    spOv_angularDump(0.1f),
     spOv_priority(0),
     isScratched(false) {
     btGhost = bulletnew(btGhostObject);

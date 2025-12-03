@@ -344,8 +344,8 @@ RID VisualServer::get_white_texture() {
     return white_texture;
 }
 
-#define SMALL_VEC2 Vector2(0.00001, 0.00001)
-#define SMALL_VEC3 Vector3(0.00001, 0.00001, 0.00001)
+#define SMALL_VEC2 Vector2(0.00001f, 0.00001f)
+#define SMALL_VEC3 Vector3(0.00001f, 0.00001f, 0.00001f)
 
 // Maps normalized vector to an octahedron projected onto the cartesian plane
 // Resulting 2D vector in range [-1, 1]

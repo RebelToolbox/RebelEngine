@@ -204,7 +204,7 @@ void RayCast::_update_raycast_state() {
 
     Vector3 to = cast_to;
     if (to == Vector3()) {
-        to = Vector3(0, 0.01, 0);
+        to = Vector3(0, 0.01f, 0);
     }
 
     PhysicsDirectSpaceState::RayResult rr;

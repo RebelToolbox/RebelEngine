@@ -36,11 +36,11 @@ GradientEdit::GradientEdit() {
 int GradientEdit::_get_point_from_pos(int x) {
     int result         = -1;
     int total_w        = get_size().width - get_size().height - SPACING;
-    float min_distance = 1e20;
+    float min_distance = 1e20f;
     for (int i = 0; i < points.size(); i++) {
         // Check if we clicked at point
         float distance = ABS(x - points[i].offset * total_w);
-        float min      = (POINT_WIDTH / 2 * 1.7); // make it easier to grab
+        float min      = (POINT_WIDTH / 2 * 1.7f); // make it easier to grab
         if (distance <= min && distance < min_distance) {
             result       = i;
             min_distance = distance;
@@ -223,7 +223,7 @@ void GradientEdit::_gui_input(const Ref<InputEvent>& p_event) {
             newofs = Math::stepify(newofs, mm->get_shift() ? 0.025 : 0.1);
         } else if (mm->get_shift()) {
             // Snap to nearest point if holding just Shift
-            const float snap_threshold = 0.03;
+            const float snap_threshold = 0.03f;
             float smallest_ofs         = snap_threshold;
             bool found                 = false;
             int nearest_point          = 0;
@@ -351,7 +351,7 @@ void GradientEdit::_notification(int p_what) {
         // Draw point markers
         for (int i = 0; i < points.size(); i++) {
             Color col = points[i].color.contrasted();
-            col.a     = 0.9;
+            col.a     = 0.9f;
 
             draw_line(
                 Vector2(points[i].offset * total_w, 0),
@@ -369,9 +369,9 @@ void GradientEdit::_notification(int p_what) {
             if (grabbed == i) {
                 rect = rect.grow(-1);
                 if (has_focus()) {
-                    draw_rect(rect, Color(1, 0, 0, 0.9), false);
+                    draw_rect(rect, Color(1, 0, 0, 0.9f), false);
                 } else {
-                    draw_rect(rect, Color(0.6, 0, 0, 0.9), false);
+                    draw_rect(rect, Color(0.6f, 0, 0, 0.9f), false);
                 }
 
                 rect = rect.grow(-1);
@@ -393,12 +393,12 @@ void GradientEdit::_notification(int p_what) {
             draw_line(
                 Vector2(total_w + SPACING, 0),
                 Vector2(total_w + SPACING + h, h),
-                Color(1, 1, 1, 0.6)
+                Color(1, 1, 1, 0.6f)
             );
             draw_line(
                 Vector2(total_w + SPACING, h),
                 Vector2(total_w + SPACING + h, 0),
-                Color(1, 1, 1, 0.6)
+                Color(1, 1, 1, 0.6f)
             );
         }
 
@@ -407,19 +407,23 @@ void GradientEdit::_notification(int p_what) {
             draw_line(
                 Vector2(-1, -1),
                 Vector2(total_w + 1, -1),
-                Color(1, 1, 1, 0.6)
+                Color(1, 1, 1, 0.6f)
             );
             draw_line(
                 Vector2(total_w + 1, -1),
                 Vector2(total_w + 1, h + 1),
-                Color(1, 1, 1, 0.6)
+                Color(1, 1, 1, 0.6f)
             );
             draw_line(
                 Vector2(total_w + 1, h + 1),
                 Vector2(-1, h + 1),
-                Color(1, 1, 1, 0.6)
+                Color(1, 1, 1, 0.6f)
             );
-            draw_line(Vector2(-1, -1), Vector2(-1, h + 1), Color(1, 1, 1, 0.6));
+            draw_line(
+                Vector2(-1, -1),
+                Vector2(-1, h + 1),
+                Color(1, 1, 1, 0.6f)
+            );
         }
     }
 

@@ -394,7 +394,7 @@ RID PinJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 }
 
 PinJoint::PinJoint() {
-    params[PARAM_BIAS]          = 0.3;
+    params[PARAM_BIAS]          = 0.3f;
     params[PARAM_DAMPING]       = 1;
     params[PARAM_IMPULSE_CLAMP] = 0;
 }
@@ -647,12 +647,12 @@ RID HingeJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 }
 
 HingeJoint::HingeJoint() {
-    params[PARAM_BIAS]                  = 0.3;
-    params[PARAM_LIMIT_UPPER]           = Math_PI * 0.5;
-    params[PARAM_LIMIT_LOWER]           = -Math_PI * 0.5;
-    params[PARAM_LIMIT_BIAS]            = 0.3;
-    params[PARAM_LIMIT_SOFTNESS]        = 0.9;
-    params[PARAM_LIMIT_RELAXATION]      = 1.0;
+    params[PARAM_BIAS]                  = 0.3f;
+    params[PARAM_LIMIT_UPPER]           = static_cast<float>(Math_PI) / 2;
+    params[PARAM_LIMIT_LOWER]           = -static_cast<float>(Math_PI) / 2;
+    params[PARAM_LIMIT_BIAS]            = 0.3f;
+    params[PARAM_LIMIT_SOFTNESS]        = 0.9f;
+    params[PARAM_LIMIT_RELAXATION]      = 1;
     params[PARAM_MOTOR_TARGET_VELOCITY] = 1;
     params[PARAM_MOTOR_MAX_IMPULSE]     = 1;
 
@@ -1028,29 +1028,29 @@ RID SliderJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 }
 
 SliderJoint::SliderJoint() {
-    params[PARAM_LINEAR_LIMIT_UPPER]            = 1.0;
-    params[PARAM_LINEAR_LIMIT_LOWER]            = -1.0;
-    params[PARAM_LINEAR_LIMIT_SOFTNESS]         = 1.0;
-    params[PARAM_LINEAR_LIMIT_RESTITUTION]      = 0.7;
-    params[PARAM_LINEAR_LIMIT_DAMPING]          = 1.0;
-    params[PARAM_LINEAR_MOTION_SOFTNESS]        = 1.0;
-    params[PARAM_LINEAR_MOTION_RESTITUTION]     = 0.7;
-    params[PARAM_LINEAR_MOTION_DAMPING]         = 0; // 1.0;
-    params[PARAM_LINEAR_ORTHOGONAL_SOFTNESS]    = 1.0;
-    params[PARAM_LINEAR_ORTHOGONAL_RESTITUTION] = 0.7;
-    params[PARAM_LINEAR_ORTHOGONAL_DAMPING]     = 1.0;
+    params[PARAM_LINEAR_LIMIT_UPPER]            = 1;
+    params[PARAM_LINEAR_LIMIT_LOWER]            = -1;
+    params[PARAM_LINEAR_LIMIT_SOFTNESS]         = 1;
+    params[PARAM_LINEAR_LIMIT_RESTITUTION]      = 0.7f;
+    params[PARAM_LINEAR_LIMIT_DAMPING]          = 1;
+    params[PARAM_LINEAR_MOTION_SOFTNESS]        = 1;
+    params[PARAM_LINEAR_MOTION_RESTITUTION]     = 0.7f;
+    params[PARAM_LINEAR_MOTION_DAMPING]         = 0;
+    params[PARAM_LINEAR_ORTHOGONAL_SOFTNESS]    = 1;
+    params[PARAM_LINEAR_ORTHOGONAL_RESTITUTION] = 0.7f;
+    params[PARAM_LINEAR_ORTHOGONAL_DAMPING]     = 1;
 
     params[PARAM_ANGULAR_LIMIT_UPPER]            = 0;
     params[PARAM_ANGULAR_LIMIT_LOWER]            = 0;
-    params[PARAM_ANGULAR_LIMIT_SOFTNESS]         = 1.0;
-    params[PARAM_ANGULAR_LIMIT_RESTITUTION]      = 0.7;
-    params[PARAM_ANGULAR_LIMIT_DAMPING]          = 0; // 1.0;
-    params[PARAM_ANGULAR_MOTION_SOFTNESS]        = 1.0;
-    params[PARAM_ANGULAR_MOTION_RESTITUTION]     = 0.7;
-    params[PARAM_ANGULAR_MOTION_DAMPING]         = 1.0;
-    params[PARAM_ANGULAR_ORTHOGONAL_SOFTNESS]    = 1.0;
-    params[PARAM_ANGULAR_ORTHOGONAL_RESTITUTION] = 0.7;
-    params[PARAM_ANGULAR_ORTHOGONAL_DAMPING]     = 1.0;
+    params[PARAM_ANGULAR_LIMIT_SOFTNESS]         = 1;
+    params[PARAM_ANGULAR_LIMIT_RESTITUTION]      = 0.7f;
+    params[PARAM_ANGULAR_LIMIT_DAMPING]          = 0;
+    params[PARAM_ANGULAR_MOTION_SOFTNESS]        = 1;
+    params[PARAM_ANGULAR_MOTION_RESTITUTION]     = 0.7f;
+    params[PARAM_ANGULAR_MOTION_DAMPING]         = 1;
+    params[PARAM_ANGULAR_ORTHOGONAL_SOFTNESS]    = 1;
+    params[PARAM_ANGULAR_ORTHOGONAL_RESTITUTION] = 0.7f;
+    params[PARAM_ANGULAR_ORTHOGONAL_DAMPING]     = 1;
 }
 
 //////////////////////////////////
@@ -1217,11 +1217,11 @@ RID ConeTwistJoint::_configure_joint(PhysicsBody* body_a, PhysicsBody* body_b) {
 }
 
 ConeTwistJoint::ConeTwistJoint() {
-    params[PARAM_SWING_SPAN] = Math_PI * 0.25;
-    params[PARAM_TWIST_SPAN] = Math_PI;
-    params[PARAM_BIAS]       = 0.3;
-    params[PARAM_SOFTNESS]   = 0.8;
-    params[PARAM_RELAXATION] = 1.0;
+    params[PARAM_SWING_SPAN] = static_cast<float>(Math_PI) / 4;
+    params[PARAM_TWIST_SPAN] = static_cast<float>(Math_PI);
+    params[PARAM_BIAS]       = 0.3f;
+    params[PARAM_SOFTNESS]   = 0.8f;
+    params[PARAM_RELAXATION] = 1;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -2227,21 +2227,21 @@ RID Generic6DOFJoint::_configure_joint(
 Generic6DOFJoint::Generic6DOFJoint() {
     set_param_x(PARAM_LINEAR_LOWER_LIMIT, 0);
     set_param_x(PARAM_LINEAR_UPPER_LIMIT, 0);
-    set_param_x(PARAM_LINEAR_LIMIT_SOFTNESS, 0.7);
-    set_param_x(PARAM_LINEAR_RESTITUTION, 0.5);
-    set_param_x(PARAM_LINEAR_DAMPING, 1.0);
+    set_param_x(PARAM_LINEAR_LIMIT_SOFTNESS, 0.7f);
+    set_param_x(PARAM_LINEAR_RESTITUTION, 0.5f);
+    set_param_x(PARAM_LINEAR_DAMPING, 1);
     set_param_x(PARAM_LINEAR_MOTOR_TARGET_VELOCITY, 0);
     set_param_x(PARAM_LINEAR_MOTOR_FORCE_LIMIT, 0);
-    set_param_x(PARAM_LINEAR_SPRING_STIFFNESS, 0.01);
-    set_param_x(PARAM_LINEAR_SPRING_DAMPING, 0.01);
-    set_param_x(PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT, 0.0);
+    set_param_x(PARAM_LINEAR_SPRING_STIFFNESS, 0.01f);
+    set_param_x(PARAM_LINEAR_SPRING_DAMPING, 0.01f);
+    set_param_x(PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT, 0);
     set_param_x(PARAM_ANGULAR_LOWER_LIMIT, 0);
     set_param_x(PARAM_ANGULAR_UPPER_LIMIT, 0);
     set_param_x(PARAM_ANGULAR_LIMIT_SOFTNESS, 0.5f);
-    set_param_x(PARAM_ANGULAR_DAMPING, 1.0f);
+    set_param_x(PARAM_ANGULAR_DAMPING, 1);
     set_param_x(PARAM_ANGULAR_RESTITUTION, 0);
     set_param_x(PARAM_ANGULAR_FORCE_LIMIT, 0);
-    set_param_x(PARAM_ANGULAR_ERP, 0.5);
+    set_param_x(PARAM_ANGULAR_ERP, 0.5f);
     set_param_x(PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, 0);
     set_param_x(PARAM_ANGULAR_MOTOR_FORCE_LIMIT, 300);
     set_param_x(PARAM_ANGULAR_SPRING_STIFFNESS, 0);
@@ -2257,21 +2257,21 @@ Generic6DOFJoint::Generic6DOFJoint() {
 
     set_param_y(PARAM_LINEAR_LOWER_LIMIT, 0);
     set_param_y(PARAM_LINEAR_UPPER_LIMIT, 0);
-    set_param_y(PARAM_LINEAR_LIMIT_SOFTNESS, 0.7);
-    set_param_y(PARAM_LINEAR_RESTITUTION, 0.5);
-    set_param_y(PARAM_LINEAR_DAMPING, 1.0);
+    set_param_y(PARAM_LINEAR_LIMIT_SOFTNESS, 0.7f);
+    set_param_y(PARAM_LINEAR_RESTITUTION, 0.5f);
+    set_param_y(PARAM_LINEAR_DAMPING, 1);
     set_param_y(PARAM_LINEAR_MOTOR_TARGET_VELOCITY, 0);
     set_param_y(PARAM_LINEAR_MOTOR_FORCE_LIMIT, 0);
-    set_param_y(PARAM_LINEAR_SPRING_STIFFNESS, 0.01);
-    set_param_y(PARAM_LINEAR_SPRING_DAMPING, 0.01);
-    set_param_y(PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT, 0.0);
+    set_param_y(PARAM_LINEAR_SPRING_STIFFNESS, 0.01f);
+    set_param_y(PARAM_LINEAR_SPRING_DAMPING, 0.01f);
+    set_param_y(PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT, 0);
     set_param_y(PARAM_ANGULAR_LOWER_LIMIT, 0);
     set_param_y(PARAM_ANGULAR_UPPER_LIMIT, 0);
     set_param_y(PARAM_ANGULAR_LIMIT_SOFTNESS, 0.5f);
-    set_param_y(PARAM_ANGULAR_DAMPING, 1.0f);
+    set_param_y(PARAM_ANGULAR_DAMPING, 1);
     set_param_y(PARAM_ANGULAR_RESTITUTION, 0);
     set_param_y(PARAM_ANGULAR_FORCE_LIMIT, 0);
-    set_param_y(PARAM_ANGULAR_ERP, 0.5);
+    set_param_y(PARAM_ANGULAR_ERP, 0.5f);
     set_param_y(PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, 0);
     set_param_y(PARAM_ANGULAR_MOTOR_FORCE_LIMIT, 300);
     set_param_y(PARAM_ANGULAR_SPRING_STIFFNESS, 0);
@@ -2287,21 +2287,21 @@ Generic6DOFJoint::Generic6DOFJoint() {
 
     set_param_z(PARAM_LINEAR_LOWER_LIMIT, 0);
     set_param_z(PARAM_LINEAR_UPPER_LIMIT, 0);
-    set_param_z(PARAM_LINEAR_LIMIT_SOFTNESS, 0.7);
-    set_param_z(PARAM_LINEAR_RESTITUTION, 0.5);
-    set_param_z(PARAM_LINEAR_DAMPING, 1.0);
+    set_param_z(PARAM_LINEAR_LIMIT_SOFTNESS, 0.7f);
+    set_param_z(PARAM_LINEAR_RESTITUTION, 0.5f);
+    set_param_z(PARAM_LINEAR_DAMPING, 1);
     set_param_z(PARAM_LINEAR_MOTOR_TARGET_VELOCITY, 0);
     set_param_z(PARAM_LINEAR_MOTOR_FORCE_LIMIT, 0);
-    set_param_z(PARAM_LINEAR_SPRING_STIFFNESS, 0.01);
-    set_param_z(PARAM_LINEAR_SPRING_DAMPING, 0.01);
-    set_param_z(PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT, 0.0);
+    set_param_z(PARAM_LINEAR_SPRING_STIFFNESS, 0.01f);
+    set_param_z(PARAM_LINEAR_SPRING_DAMPING, 0.01f);
+    set_param_z(PARAM_LINEAR_SPRING_EQUILIBRIUM_POINT, 0);
     set_param_z(PARAM_ANGULAR_LOWER_LIMIT, 0);
     set_param_z(PARAM_ANGULAR_UPPER_LIMIT, 0);
     set_param_z(PARAM_ANGULAR_LIMIT_SOFTNESS, 0.5f);
-    set_param_z(PARAM_ANGULAR_DAMPING, 1.0f);
+    set_param_z(PARAM_ANGULAR_DAMPING, 1);
     set_param_z(PARAM_ANGULAR_RESTITUTION, 0);
     set_param_z(PARAM_ANGULAR_FORCE_LIMIT, 0);
-    set_param_z(PARAM_ANGULAR_ERP, 0.5);
+    set_param_z(PARAM_ANGULAR_ERP, 0.5f);
     set_param_z(PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, 0);
     set_param_z(PARAM_ANGULAR_MOTOR_FORCE_LIMIT, 300);
     set_param_z(PARAM_ANGULAR_SPRING_STIFFNESS, 0);

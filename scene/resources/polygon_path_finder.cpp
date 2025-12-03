@@ -137,7 +137,7 @@ Vector<Vector2> PolygonPathFinder::find_path(
     Edge ignore_to_edge(-1, -1);
 
     if (!_is_point_inside(from)) {
-        float closest_dist = 1e20;
+        float closest_dist = 1e20f;
         Vector2 closest_point;
 
         for (Set<Edge>::Element* E = edges.front(); E; E = E->next()) {
@@ -159,7 +159,7 @@ Vector<Vector2> PolygonPathFinder::find_path(
     };
 
     if (!_is_point_inside(to)) {
-        float closest_dist = 1e20;
+        float closest_dist = 1e20f;
         Vector2 closest_point;
 
         for (Set<Edge>::Element* E = edges.front(); E; E = E->next()) {
@@ -327,7 +327,7 @@ Vector<Vector2> PolygonPathFinder::find_path(
         // check open list
 
         int least_cost_point = -1;
-        float least_cost     = 1e30;
+        float least_cost     = 1e30f;
 
         // this could be faster (cache previous results)
         for (Set<int>::Element* E = open_list.front(); E; E = E->next()) {

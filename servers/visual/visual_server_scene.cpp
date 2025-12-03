@@ -2582,20 +2582,20 @@ void VisualServerScene::_update_instance_lightmap_captures(Instance* p_instance
 
     static const Vector3 cone_traces[12] = {
         Vector3(0, 0, 1),
-        Vector3(0.866025, 0, 0.5),
-        Vector3(0.267617, 0.823639, 0.5),
-        Vector3(-0.700629, 0.509037, 0.5),
-        Vector3(-0.700629, -0.509037, 0.5),
-        Vector3(0.267617, -0.823639, 0.5),
+        Vector3(0.866025f, 0, 0.5f),
+        Vector3(0.267617f, 0.823639f, 0.5f),
+        Vector3(-0.700629f, 0.509037f, 0.5f),
+        Vector3(-0.700629f, -0.509037f, 0.5f),
+        Vector3(0.267617f, -0.823639f, 0.5f),
         Vector3(0, 0, -1),
-        Vector3(0.866025, 0, -0.5),
-        Vector3(0.267617, 0.823639, -0.5),
-        Vector3(-0.700629, 0.509037, -0.5),
-        Vector3(-0.700629, -0.509037, -0.5),
-        Vector3(0.267617, -0.823639, -0.5)
+        Vector3(0.866025f, 0, -0.5f),
+        Vector3(0.267617f, 0.823639f, -0.5f),
+        Vector3(-0.700629f, 0.509037f, -0.5f),
+        Vector3(-0.700629f, -0.509037f, -0.5f),
+        Vector3(0.267617f, -0.823639f, -0.5f)
     };
 
-    float cone_aperture = 0.577; // tan(angle) 60 degrees
+    float cone_aperture = 0.577f; // tan(angle) 60 degrees
 
     if (p_instance->lightmap_capture_data.empty()) {
         p_instance->lightmap_capture_data.resize(12);
@@ -2712,8 +2712,8 @@ bool VisualServerScene::_light_instance_update_shadow(
                 // check distance max and min
 
                 bool found_items = false;
-                float z_max      = -1e20;
-                float z_min      = 1e20;
+                float z_max      = -1e20f;
+                float z_min      = 1e20f;
 
                 for (int i = 0; i < cull_count; i++) {
                     Instance* instance = instance_shadow_cull_result[i];
@@ -3154,7 +3154,7 @@ bool VisualServerScene::_light_instance_update_shadow(
                     VS::LIGHT_PARAM_RANGE
                 );
                 CameraMatrix cm;
-                cm.set_perspective(90, 1, 0.01, radius);
+                cm.set_perspective(90, 1, 0.01f, radius);
 
                 for (int i = 0; i < 6; i++) {
                     // using this one ensures that raster deferred will have it
@@ -3265,7 +3265,7 @@ bool VisualServerScene::_light_instance_update_shadow(
             );
 
             CameraMatrix cm;
-            cm.set_perspective(angle * 2.0, 1.0, 0.01, radius);
+            cm.set_perspective(angle * 2, 1, 0.01f, radius);
 
             Vector<Plane> planes = cm.get_projection_planes(light_transform);
             int cull_count       = _cull_convex_from_point(
@@ -4131,7 +4131,7 @@ bool VisualServerScene::_render_reflection_probe_step(
 
         // render cubemap side
         CameraMatrix cm;
-        cm.set_perspective(90, 1, 0.01, max_distance);
+        cm.set_perspective(90, 1, 0.01f, max_distance);
 
         static const Vector3 view_up[6] = {
             Vector3(0, -1, 0),
@@ -4687,8 +4687,8 @@ void VisualServerScene::_bake_gi_probe_light(
                     light->pos[1] + 0.5,
                     light->pos[2] + 0.5
                 );
-                to += -light_axis.sign()
-                    * 0.47; // make it more likely to receive a ray
+                // Make it more likely to receive a ray.
+                to += -light_axis.sign() * 0.47f;
 
                 Vector3 norm(
                     (((cells[idx].normal >> 16) & 0xFF) / 255.0) * 2.0 - 1.0,
@@ -4773,8 +4773,8 @@ void VisualServerScene::_bake_gi_probe_light(
                     light->pos[1] + 0.5,
                     light->pos[2] + 0.5
                 );
-                to += (light_pos - to).sign()
-                    * 0.47; // make it more likely to receive a ray
+                // Make it more likely to receive a ray.
+                to += (light_pos - to).sign() * 0.47f;
 
                 Vector3 norm(
                     (((cells[idx].normal >> 16) & 0xFF) / 255.0) * 2.0 - 1.0,

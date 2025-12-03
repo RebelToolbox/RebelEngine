@@ -1025,9 +1025,9 @@ void TextEdit::_notification(int p_what) {
                 if (dragging_minimap) {
                     viewport_alpha = 0.25;
                 } else if (hovering_minimap) {
-                    viewport_alpha = 0.175;
+                    viewport_alpha = 0.175f;
                 } else {
-                    viewport_alpha = 0.1;
+                    viewport_alpha = 0.1f;
                 }
 
                 const Color viewport_color =
@@ -1169,7 +1169,7 @@ void TextEdit::_notification(int p_what) {
                             }
 
                             if (characters > 0) {
-                                previous_color.a *= 0.6;
+                                previous_color.a *= 0.6f;
                                 // take one for zero indexing, and if we hit
                                 // whitespace / the end of a word.
                                 int chars         = MAX(0,
@@ -9609,7 +9609,7 @@ TextEdit::TextEdit() {
     caret_blink_enabled = false;
     caret_blink_timer   = memnew(Timer);
     add_child(caret_blink_timer);
-    caret_blink_timer->set_wait_time(0.65);
+    caret_blink_timer->set_wait_time(0.65f);
     caret_blink_timer->connect("timeout", this, "_toggle_draw_caret");
     cursor_set_blink_enabled(false);
     right_click_moves_caret = true;
@@ -9623,7 +9623,7 @@ TextEdit::TextEdit() {
 
     click_select_held = memnew(Timer);
     add_child(click_select_held);
-    click_select_held->set_wait_time(0.05);
+    click_select_held->set_wait_time(0.05f);
     click_select_held->connect("timeout", this, "_click_selection_held");
 
     current_op.type = TextOperation::TYPE_NONE;

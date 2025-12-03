@@ -6494,7 +6494,7 @@ void RasterizerStorageGLES3::update_dirty_multimeshes() {
             if (multimesh->mesh.is_valid()) {
                 mesh_aabb = mesh_get_aabb(multimesh->mesh, RID());
             } else {
-                mesh_aabb.size += Vector3(0.001, 0.001, 0.001);
+                mesh_aabb.size += Vector3(0.001f, 0.001f, 0.001f);
             }
 
             int stride = multimesh->color_floats + multimesh->xform_floats
@@ -6980,19 +6980,19 @@ RID RasterizerStorageGLES3::light_create(VS::LightType p_type) {
     Light* light = memnew(Light);
     light->type  = p_type;
 
-    light->param[VS::LIGHT_PARAM_ENERGY]                  = 1.0;
-    light->param[VS::LIGHT_PARAM_INDIRECT_ENERGY]         = 1.0;
-    light->param[VS::LIGHT_PARAM_SIZE]                    = 0.0;
-    light->param[VS::LIGHT_PARAM_SPECULAR]                = 0.5;
-    light->param[VS::LIGHT_PARAM_RANGE]                   = 1.0;
+    light->param[VS::LIGHT_PARAM_ENERGY]                  = 1;
+    light->param[VS::LIGHT_PARAM_INDIRECT_ENERGY]         = 1;
+    light->param[VS::LIGHT_PARAM_SIZE]                    = 0;
+    light->param[VS::LIGHT_PARAM_SPECULAR]                = 0.5f;
+    light->param[VS::LIGHT_PARAM_RANGE]                   = 1;
     light->param[VS::LIGHT_PARAM_SPOT_ANGLE]              = 45;
     light->param[VS::LIGHT_PARAM_CONTACT_SHADOW_SIZE]     = 45;
     light->param[VS::LIGHT_PARAM_SHADOW_MAX_DISTANCE]     = 0;
-    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_1_OFFSET]   = 0.1;
-    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_2_OFFSET]   = 0.3;
-    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_3_OFFSET]   = 0.6;
-    light->param[VS::LIGHT_PARAM_SHADOW_NORMAL_BIAS]      = 0.1;
-    light->param[VS::LIGHT_PARAM_SHADOW_BIAS_SPLIT_SCALE] = 0.1;
+    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_1_OFFSET]   = 0.1f;
+    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_2_OFFSET]   = 0.3f;
+    light->param[VS::LIGHT_PARAM_SHADOW_SPLIT_3_OFFSET]   = 0.6f;
+    light->param[VS::LIGHT_PARAM_SHADOW_NORMAL_BIAS]      = 0.1f;
+    light->param[VS::LIGHT_PARAM_SHADOW_BIAS_SPLIT_SCALE] = 0.1f;
 
     light->color                    = Color(1, 1, 1, 1);
     light->shadow                   = false;
@@ -7537,15 +7537,15 @@ RID RasterizerStorageGLES3::gi_probe_create() {
     GIProbe* gip = memnew(GIProbe);
 
     gip->bounds        = AABB(Vector3(), Vector3(1, 1, 1));
-    gip->dynamic_range = 1.0;
-    gip->energy        = 1.0;
-    gip->propagation   = 1.0;
-    gip->bias          = 0.4;
-    gip->normal_bias   = 0.4;
+    gip->dynamic_range = 1;
+    gip->energy        = 1;
+    gip->propagation   = 1;
+    gip->bias          = 0.4f;
+    gip->normal_bias   = 0.4f;
     gip->interior      = false;
     gip->compress      = false;
     gip->version       = 1;
-    gip->cell_size     = 1.0;
+    gip->cell_size     = 1;
 
     return gi_probe_owner.make_rid(gip);
 }
@@ -8676,9 +8676,9 @@ void RasterizerStorageGLES3::update_particles() {
         if (particles->clear && particles->pre_process_time > 0.0) {
             float frame_time;
             if (particles->fixed_fps > 0) {
-                frame_time = 1.0 / particles->fixed_fps;
+                frame_time = 1.f / particles->fixed_fps;
             } else {
-                frame_time = 1.0 / 30.0;
+                frame_time = 1.f / 3;
             }
 
             float todo = particles->pre_process_time;
@@ -8700,10 +8700,10 @@ void RasterizerStorageGLES3::update_particles() {
                 decr       = frame_time;
             }
             float delta = frame.delta;
-            if (delta > 0.1) { // avoid recursive stalls if fps goes below 10
-                delta = 0.1;
-            } else if (delta <= 0.0) { // unlikely but..
-                delta = 0.001;
+            if (delta > 0.1f) { // avoid recursive stalls if fps goes below 10
+                delta = 0.1f;
+            } else if (delta <= 0) { // unlikely but..
+                delta = 0.001f;
             }
             float todo = particles->frame_remainder + delta;
 

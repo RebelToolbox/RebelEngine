@@ -59,15 +59,15 @@ void EditorAudioBus::_notification(int p_what) {
             disabled_vu = get_icon("BusVuFrozen", "EditorIcons");
 
             Color solo_color = EditorSettings::get_singleton()->is_dark_theme()
-                                 ? Color(1.0, 0.89, 0.22)
-                                 : Color(1.0, 0.92, 0.44);
+                                 ? Color(1.0f, 0.89f, 0.22f)
+                                 : Color(1.0f, 0.92f, 0.44f);
             Color mute_color = EditorSettings::get_singleton()->is_dark_theme()
-                                 ? Color(1.0, 0.16, 0.16)
-                                 : Color(1.0, 0.44, 0.44);
+                                 ? Color(1.0f, 0.16f, 0.16f)
+                                 : Color(1.0f, 0.44f, 0.44f);
             Color bypass_color =
                 EditorSettings::get_singleton()->is_dark_theme()
-                    ? Color(0.13, 0.8, 1.0)
-                    : Color(0.44, 0.87, 1.0);
+                    ? Color(0.13f, 0.8f, 1.0f)
+                    : Color(0.44f, 0.87f, 1.0f);
 
             solo->set_icon(get_icon("AudioBusSolo", "EditorIcons"));
             solo->add_color_override("icon_color_pressed", solo_color);
@@ -116,7 +116,7 @@ void EditorAudioBus::_notification(int p_what) {
 
             if (get_index() != 0 && hovering_drop) {
                 Color accent  = get_color("accent_color", "Editor");
-                accent.a     *= 0.7;
+                accent.a     *= 0.7f;
                 draw_rect(Rect2(Point2(), get_size()), accent, false);
             }
         } break;
@@ -718,7 +718,7 @@ Variant EditorAudioBus::get_drag_data(const Point2& p_point) {
     Control* c = memnew(Control);
     Panel* p   = memnew(Panel);
     c->add_child(p);
-    p->set_modulate(Color(1, 1, 1, 0.7));
+    p->set_modulate(Color(1, 1, 1, 0.7f));
     p->add_style_override("panel", get_stylebox("focus", "Button"));
     p->set_size(get_size());
     p->set_position(-p_point);
@@ -1192,7 +1192,7 @@ void EditorAudioBusDrop::_notification(int p_what) {
 
             if (hovering_drop) {
                 Color accent  = get_color("accent_color", "Editor");
-                accent.a     *= 0.7;
+                accent.a     *= 0.7f;
                 draw_rect(Rect2(Point2(), get_size()), accent, false);
             }
         } break;
@@ -1750,7 +1750,7 @@ EditorAudioBuses::EditorAudioBuses() {
     bus_scroll->add_child(bus_hb);
 
     save_timer = memnew(Timer);
-    save_timer->set_wait_time(0.8);
+    save_timer->set_wait_time(0.8f);
     save_timer->set_one_shot(true);
     add_child(save_timer);
     save_timer->connect("timeout", this, "_server_save");

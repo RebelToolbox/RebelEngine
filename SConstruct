@@ -500,7 +500,6 @@ if selected_platform in platform_list:
         # Level 2 (significant) warnings ignored.
         disabled_level_2_warnings = disabled_level_1_warnings + [
             "/wd4244",  # Levels 3 and 4: Conversion to smaller type.
-            "/wd4305",  # Level 1: Conversion to smaller type in initialization or construction.
         ]
         # Level 3 (production quality) warnings ignored.
         disabled_level_3_warnings = disabled_level_2_warnings + [

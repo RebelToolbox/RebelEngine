@@ -1759,9 +1759,9 @@ void StyleBoxFlat::_bind_methods() {
 }
 
 StyleBoxFlat::StyleBoxFlat() {
-    bg_color     = Color(0.6, 0.6, 0.6);
-    shadow_color = Color(0, 0, 0, 0.6);
-    border_color = Color(0.8, 0.8, 0.8);
+    bg_color     = Color(0.6f, 0.6f, 0.6f);
+    shadow_color = Color(0, 0, 0, 0.6f);
+    border_color = Color(0.8f, 0.8f, 0.8f);
 
     blend_border = false;
     draw_center  = true;

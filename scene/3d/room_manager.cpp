@@ -1186,19 +1186,19 @@ void RoomManager::_autolink_portals(
 
             // these numbers are arbitrary .. we could alternatively reuse the
             // portal margins for this?
-            real_t dist = 0.01;
+            real_t dist = 0.01f;
             switch (attempt) {
                 default: {
-                    dist = 0.01;
+                    dist = 0.01f;
                 } break;
                 case 1: {
-                    dist = 0.1;
+                    dist = 0.1f;
                 } break;
                 case 2: {
-                    dist = 1.0;
+                    dist = 1;
                 } break;
                 case 3: {
-                    dist = 2.0;
+                    dist = 2;
                 } break;
             }
 
@@ -1991,7 +1991,7 @@ void RoomManager::_build_simplified_bound(
     Vector<Vector3> pts = Geometry::compute_convex_mesh_points(
         &r_planes[0],
         r_planes.size(),
-        0.001
+        0.001f
     );
     Error err = _build_room_convex_hull(p_room, pts, r_md);
 
@@ -2031,8 +2031,8 @@ Error RoomManager::_build_room_convex_hull(
     // value between  0.3 (accurate) and 10.0 (very rough)
     // * UNIT_EPSILON
     s *= s;
-    s *= 40.0;
-    s += 0.3; // minimum
+    s *= 40;
+    s += 0.3f; // minimum
     s *= UNIT_EPSILON;
     return _build_convex_hull(p_points, r_mesh, s);
 }

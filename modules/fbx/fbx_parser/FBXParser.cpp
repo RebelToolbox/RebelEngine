@@ -1276,7 +1276,8 @@ Transform ReadMatrix(const ElementPtr element) {
     // xform.basis.transpose();
 
     print_verbose(
-        "xform verbose basis: " + (xform.basis.get_euler() * (180 / Math_PI))
+        "xform verbose basis: "
+        + (xform.basis.get_euler() * (180 / static_cast<real_t>(Math_PI)))
         + " xform origin:" + xform.origin
     );
 

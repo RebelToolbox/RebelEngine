@@ -30,7 +30,7 @@ void PivotTransform::ReadTransformChain() {
         );
         print_verbose(
             "valid pre_rotation: " + raw_pre_rotation + " euler conversion: "
-            + (pre_rotation.get_euler() * (180 / Math_PI))
+            + (pre_rotation.get_euler() * (180 / static_cast<real_t>(Math_PI)))
         );
     }
     raw_post_rotation = ImportUtils::safe_import_vector3(
@@ -43,7 +43,7 @@ void PivotTransform::ReadTransformChain() {
         );
         print_verbose(
             "valid post_rotation: " + raw_post_rotation + " euler conversion: "
-            + (pre_rotation.get_euler() * (180 / Math_PI))
+            + (pre_rotation.get_euler() * (180 / static_cast<real_t>(Math_PI)))
         );
     }
     const Vector3& RotationPivot = ImportUtils::safe_import_vector3(

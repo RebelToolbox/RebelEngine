@@ -823,7 +823,7 @@ void Curve2D::_bake() const {
     pointlist.push_back(pos); // start always from origin
 
     for (int i = 0; i < points.size() - 1; i++) {
-        float step = 0.1; // at least 10 substeps ought to be enough?
+        float step = 0.1f; // at least 10 substeps ought to be enough?
         float p    = 0;
 
         while (p < 1.0) {
@@ -1470,7 +1470,7 @@ void Curve3D::_bake() const {
     pointlist.push_back(Plane(pos, points[0].tilt));
 
     for (int i = 0; i < points.size() - 1; i++) {
-        float step = 0.1; // at least 10 substeps ought to be enough?
+        float step = 0.1f; // at least 10 substeps ought to be enough?
         float p    = 0;
 
         while (p < 1.0) {
@@ -2119,6 +2119,6 @@ Curve3D::Curve3D() {
     /*	add_point(Vector3(-1,0,0));
     add_point(Vector3(0,2,0));
     add_point(Vector3(0,3,5));*/
-    bake_interval     = 0.2;
+    bake_interval     = 0.2f;
     up_vector_enabled = true;
 }
