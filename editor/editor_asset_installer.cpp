@@ -143,7 +143,7 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
         extension_guess["gdshader"] = tree->get_icon("Shader", "EditorIcons");
         extension_guess["shader"]   = tree->get_icon("Shader", "EditorIcons");
         extension_guess["gd"]       = tree->get_icon("GDScript", "EditorIcons");
-        if (Engine::get_singleton()->has_singleton("GodotSharp")) {
+        if (Engine::get_singleton()->has_singleton("RebelSharp")) {
             extension_guess["cs"] =
                 tree->get_icon("CSharpScript", "EditorIcons");
         } else {
