@@ -1,0 +1,59 @@
+diff --git a/third-party/misc/ifaddrs-android.cc b/third-party/misc/ifaddrs-android.cc
+index f96db8ad..27f49270 100644
+--- a/third-party/misc/ifaddrs-android.cc
++++ b/third-party/misc/ifaddrs-android.cc
+@@ -24,8 +24,9 @@
+  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+-#if defined(ANDROID)
+-#include "talk/base/ifaddrs-android.h"
++// Rebel changes start.
++#include "ifaddrs-android.h"
++// Rebel changes end.
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/types.h>
+@@ -219,4 +220,3 @@ void freeifaddrs(struct ifaddrs* addrs) {
+     delete last;
+   }
+ }
+-#endif  // defined(ANDROID)
+diff --git a/third-party/misc/ifaddrs-android.h b/third-party/misc/ifaddrs-android.h
+index 6e204af2..c314d76a 100644
+--- a/third-party/misc/ifaddrs-android.h
++++ b/third-party/misc/ifaddrs-android.h
+@@ -32,6 +32,11 @@
+ // Fills out a list of ifaddr structs (see below) which contain information
+ // about every network interface available on the host.
+ // See 'man getifaddrs' on Linux or OS X (nb: it is not a POSIX function).
++// Rebel changes start.
++#ifdef __cplusplus
++extern "C" {
++#endif
++// Rebel changes end.
+ struct ifaddrs {
+   struct ifaddrs* ifa_next;
+   char* ifa_name;
+@@ -40,7 +45,21 @@ struct ifaddrs {
+   struct sockaddr* ifa_netmask;
+   // Real ifaddrs has broadcast, point to point and data members.
+   // We don't need them (yet?).
++  // Rebel changes start.
++  // Added to match the actual ifaddrs struct. However, they are not used.
++  union
++  {
++    struct sockaddr *ifu_broadaddr;
++    struct sockaddr *ifu_dstaddr;
++  } ifa_ifu;
++  void *ifa_data;
++  // Rebel changes end.
+ };
++// Rebel changes start.
++#ifdef __cplusplus
++}
++#endif
++// Rebel changes end.
+ int getifaddrs(struct ifaddrs** result);
+ void freeifaddrs(struct ifaddrs* addrs);
+ #endif  // TALK_BASE_IFADDRS_ANDROID_H_
