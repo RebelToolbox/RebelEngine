@@ -279,12 +279,6 @@ Comment: Tangent Space Normal Maps implementation
 Copyright: 2011, Morten S. Mikkelsen
 License: Zlib
 
-Files: ./third-party/misc/open-simplex-noise.c
- ./third-party/misc/open-simplex-noise.h
-Comment: OpenSimplex Noise
-Copyright: 2014, Stephen M. Cameron
-License: public-domain or Unlicense
-
 Files: ./third-party/misc/pcg.cpp
  ./third-party/misc/pcg.h
 Comment: Minimal PCG32 implementation
@@ -317,6 +311,12 @@ Files: ./third-party/nanosvg/
 Comment: NanoSVG
 Copyright: 2013-2014, Mikko Mononen
 License: Zlib
+
+Files: ./third-party/open_simplex_noise/open-simplex-noise.c
+ ./third-party/open_simplex_noise/open-simplex-noise.h
+Comment: Open Simplex Noise
+Copyright: 2014, Stephen M. Cameron
+License: Unlicense (Public Domain)
 
 Files: ./third-party/pcre2/
 Comment: PCRE2
