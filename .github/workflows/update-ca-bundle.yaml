@@ -1,0 +1,135 @@
+name: Update CA bundle
+on:
+  workflow_dispatch:
+  schedule:
+    # Check for updates every week on Sunday at midnight.
+    - cron: '0 0 * * 0'
+
+jobs:
+  update-ca-bundle:
+    name: Update CA bundle
+    # Don't run on forks.
+    if: github.repository == 'RebelToolbox/RebelEngine'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Rebel Engine
+        uses: actions/checkout@v6
+        with:
+          path: RebelEngine
+
+      - name: Checkout ca-bundle
+        uses: actions/checkout@v6
+        with:
+          repository: bagder/ca-bundle
+          path: ca-bundle
+
+      - name: Create branch
+        working-directory: RebelEngine
+        run: |
+          #Create branch
+          git fetch origin
+          echo "::group::git switch main"
+          if ! git switch main 2>/dev/null ; then
+            git switch -c main origin/main
+          fi
+          echo "::endgroup::"
+          echo "::group::git switch -c update-ca-bundle"
+          if git ls-remote --exit-code                    \
+            --heads origin refs/heads/update-ca-bundle \
+            >/dev/null
+          then
+            echo "Using existing branch."
+            git switch -c update-ca-bundle origin/update-ca-bundle
+            echo "existing_branch=yes" >> "$GITHUB_ENV"
+          else
+            echo "Creating new branch."
+            git switch -c update-ca-bundle
+          fi
+          echo "::endgroup::"
+
+      - name: Update existing branch
+        if: env.existing_branch == 'yes'
+        working-directory: RebelEngine
+        run: |
+          #Update existing branch
+          echo "::group::git rebase main"
+          if ! git rebase main >/dev/null ; then
+            git rebase --abort
+            echo "Rebase merge conflict!"
+            echo "Previous changes need to be overwritten."
+            echo "recreate_branch=yes" >> "$GITHUB_ENV"
+          else
+            git push -f
+          fi
+          echo "::endgroup::"
+
+      - name: Recreate branch
+        if: env.recreate_branch == 'yes'
+        working-directory: RebelEngine
+        run: |
+          git switch main
+          git branch -D update-ca-bundle
+          git switch -c update-ca-bundle
+          git push -u -f origin update-ca-bundle
+
+      - name: Update Rebel copy of ca-bundle
+        run: |
+          #Update Rebel copy of ca-bundle
+          cp ca-bundle/ca-bundle.crt RebelEngine/third-party/certs/
+
+      - name: Check for changes
+        working-directory: RebelEngine
+        run: |
+          #git diff
+          if git diff --exit-code ; then
+            echo "CA bundle not updated."
+          else
+            echo "CA bundle has been updated."
+            echo "has_changes=yes" >> "$GITHUB_ENV"
+          fi
+
+      - name: Create commit
+        working-directory: RebelEngine
+        if: env.has_changes == 'yes'
+        run: |
+          #Create commit
+          git config user.name "Rebel Bot"
+          git config user.email "RebelToolboxBot@users.noreply.github.com"
+          echo "Adding files..."
+          git add .
+          echo "Creating commit..."
+          git commit -m "Update CA bundle"
+          echo "Pushing changes..."
+          git push -u origin update-ca-bundle
+
+      - name: Create Pull Request body file
+        if: env.has_changes == 'yes'
+        run: |
+          #Create Pull Request body file
+          echo "Updates the CA bundle with the latest Mozilla CA bundle." > body-file.md
+          echo "" >> body-file.md
+          echo "Source: https://curl.se/docs/caextract.html" >> body-file.md
+          echo "Using: https://github.com/bagder/ca-bundle" >> body-file.md
+
+      - name: Create Pull Request
+        working-directory: RebelEngine
+        if: env.has_changes == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          #Create Pull Request
+          if gh pr list --state open --head update-ca-bundle \
+            --json state | grep state
+          then
+            echo "Existing Pull Request updated."
+            echo "Please merge the Pull Request."
+          else
+            gh pr create                     \
+              --base main                    \
+              --head update-ca-bundle        \
+              --title "Update CA bundle"     \
+              --body-file ../body-file.md    \
+              --label "PR Type: Maintenance"
+            echo "New Pull Request created!"
+          fi
