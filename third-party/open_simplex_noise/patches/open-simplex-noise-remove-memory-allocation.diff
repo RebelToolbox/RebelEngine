@@ -1,0 +1,136 @@
+diff --git a/third-party/open_simplex_noise/open-simplex-noise.c b/third-party/open_simplex_noise/open-simplex-noise.c
+index fdbcaccb..e0c8f6d0 100644
+--- a/third-party/open_simplex_noise/open-simplex-noise.c
++++ b/third-party/open_simplex_noise/open-simplex-noise.c
+@@ -34,11 +34,6 @@
+ 	
+ #define DEFAULT_SEED (0LL)
+ 
+-struct osn_context {
+-	int16_t *perm;
+-	int16_t *permGradIndex3D;
+-};
+-
+ #define ARRAYSIZE(x) (sizeof((x)) / sizeof((x)[0]))
+ 
+ /* 
+@@ -127,45 +122,14 @@ static INLINE int fastFloor(OSNFLOAT x) {
+ 	return x < xi ? xi - 1 : xi;
+ }
+ 	
+-static int allocate_perm(struct osn_context *ctx, int nperm, int ngrad)
+-{
+-	if (ctx->perm)
+-		free(ctx->perm);
+-	if (ctx->permGradIndex3D)
+-		free(ctx->permGradIndex3D);
+-	ctx->perm = (int16_t *) malloc(sizeof(*ctx->perm) * nperm); 
+-	if (!ctx->perm)
+-		return -ENOMEM;
+-	ctx->permGradIndex3D = (int16_t *) malloc(sizeof(*ctx->permGradIndex3D) * ngrad);
+-	if (!ctx->permGradIndex3D) {
+-		free(ctx->perm);
+-		return -ENOMEM;
+-	}
+-	return 0;
+-}
+-	
+-int open_simplex_noise_init_perm(struct osn_context *ctx, int16_t p[], int nelements)
+-{
+-	int i, rc;
+-
+-	rc = allocate_perm(ctx, nelements, 256);
+-	if (rc)
+-		return rc;
+-	memcpy(ctx->perm, p, sizeof(*ctx->perm) * nelements);
+-		
+-	for (i = 0; i < 256; i++) {
+-		/* Since 3D has 24 gradients, simple bitmask won't work, so precompute modulo array. */
+-		ctx->permGradIndex3D[i] = (int16_t)((ctx->perm[i] % (ARRAYSIZE(gradients3D) / 3)) * 3);
+-	}
+-	return 0;
+-}
+-
+ /*	
+  * Initializes using a permutation array generated from a 64-bit seed.
+  * Generates a proper permutation (i.e. doesn't merely perform N successive pair
+  * swaps on a base array).  Uses a simple 64-bit LCG.
+  */
+-int open_simplex_noise(int64_t seed, struct osn_context **ctx)
++// Rebel changes start.
++int open_simplex_noise(int64_t seed, struct osn_context *ctx)
++// Rebel changes end.
+ {
+ 	int rc;
+ 	int16_t source[256];
+@@ -174,20 +138,10 @@ int open_simplex_noise(int64_t seed, struct osn_context **ctx)
+ 	int16_t *permGradIndex3D;
+ 	int r;
+ 
+-	*ctx = (struct osn_context *) malloc(sizeof(**ctx));
+-	if (!(*ctx))
+-		return -ENOMEM;
+-	(*ctx)->perm = NULL;
+-	(*ctx)->permGradIndex3D = NULL;
+-
+-	rc = allocate_perm(*ctx, 256, 256);
+-	if (rc) {
+-		free(*ctx);
+-		return rc;
+-	}
+-
+-	perm = (*ctx)->perm;
+-	permGradIndex3D = (*ctx)->permGradIndex3D;
++	// Rebel changes start.
++	perm = ctx->perm;
++	permGradIndex3D = ctx->permGradIndex3D;
++	// Rebel changes end.
+ 
+ 	uint64_t seedU = seed;
+ 	for (i = 0; i < 256; i++)
+@@ -207,21 +161,6 @@ int open_simplex_noise(int64_t seed, struct osn_context **ctx)
+ 	return 0;
+ }
+ 
+-void open_simplex_noise_free(struct osn_context *ctx)
+-{
+-	if (!ctx)
+-		return;
+-	if (ctx->perm) {
+-		free(ctx->perm);
+-		ctx->perm = NULL;	
+-	}
+-	if (ctx->permGradIndex3D) {
+-		free(ctx->permGradIndex3D);
+-		ctx->permGradIndex3D = NULL;
+-	}
+-	free(ctx);
+-}
+-	
+ /* 2D OpenSimplex (Simplectic) Noise. */
+ OSNFLOAT open_simplex_noise2(const struct osn_context *ctx, OSNFLOAT x, OSNFLOAT y)
+ {
+diff --git a/third-party/open_simplex_noise/open-simplex-noise.h b/third-party/open_simplex_noise/open-simplex-noise.h
+index 9d39c789..d6c934fa 100644
+--- a/third-party/open_simplex_noise/open-simplex-noise.h
++++ b/third-party/open_simplex_noise/open-simplex-noise.h
+@@ -42,11 +42,15 @@
+ #define OSNFLOAT double
+ #endif
+ 
+-struct osn_context;
++// Rebel changes start.
++struct osn_context {
++	int16_t perm[256];
++	int16_t permGradIndex3D[256];
++};
++
++int open_simplex_noise(int64_t seed, struct osn_context *ctx);
++// Rebel changes end.
+ 
+-int open_simplex_noise(int64_t seed, struct osn_context **ctx);
+-void open_simplex_noise_free(struct osn_context *ctx);
+-int open_simplex_noise_init_perm(struct osn_context *ctx, int16_t p[], int nelements);
+ OSNFLOAT open_simplex_noise2(const struct osn_context *ctx, OSNFLOAT x, OSNFLOAT y);
+ OSNFLOAT open_simplex_noise3(const struct osn_context *ctx, OSNFLOAT x, OSNFLOAT y, OSNFLOAT z);
+ OSNFLOAT open_simplex_noise4(const struct osn_context *ctx, OSNFLOAT x, OSNFLOAT y, OSNFLOAT z, OSNFLOAT w);

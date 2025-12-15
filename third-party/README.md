@@ -343,12 +343,6 @@ Collection of single-file libraries used in Rebel Engine.
   * Version: 1.0 (2011)
   * License: zlib
 
-- `open-simplex-noise.{c,h}`
-  * Source: https://github.com/smcameron/open-simplex-noise-in-c
-  * Commit: 826f1dd1724e6fb3ff45f58e48c0fbae864c3403 (December 2020)
-  * License: Public Domain or Unlicense
-  Note: Includes Rebel changes in `open-simplex-noise-no-allocate.patch`
-
 - `pcg.{cpp,h}`
   * Project: https://www.pcg-random.org/
   * Source: https://github.com/imneme/pcg-cpp
@@ -402,6 +396,22 @@ Files copied from the library source:
 - LICENSE.txt
 
 Note: Includes Rebel changes.
+Patch files for the changes are included in the patches/ folder.
+
+
+## open_simplex_noise
+
+- Source: https://github.com/smcameron/open-simplex-noise-in-c
+- Commit: 53cf5bfd4a5289f263568bedd778e2d86eb8a1ef (February 2025)
+- License: Public Domain or Unlicense
+
+Files copied from the library source:
+- open-simplex-noise.c
+- open-simplex-noise.h
+- LICENSE
+
+Note: Includes Rebel changes to avoid memory allocation.
+They are marked with `// Rebel changes start.` and `// Rebel changes end.`
 Patch files for the changes are included in the patches/ folder.
 
 
