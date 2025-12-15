@@ -76,7 +76,7 @@ jobs:
       - name: Update Rebel copy of ca-bundle
         run: |
           #Update Rebel copy of ca-bundle
-          cp ca-bundle/ca-bundle.crt RebelEngine/third-party/certs/
+          cp ca-bundle/ca-bundle.crt RebelEngine/third-party/ca-bundle/
 
       - name: Check for changes
         working-directory: RebelEngine
