@@ -53,7 +53,7 @@ android {
     // Provides access to the Rebel source files.
     externalNativeBuild {
         cmake {
-            path "CMakeLists.txt"
+            path "../../../../CMakeLists.txt"
         }
     }
 }
