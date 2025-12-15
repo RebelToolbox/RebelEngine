@@ -1,0 +1,137 @@
+diff --git a/third-party/yuv2rgb/yuv420rgb8888c.c b/third-party/yuv2rgb/yuv420rgb8888c.c
+index 19e5db4a..48251193 100644
+--- a/third-party/yuv2rgb/yuv420rgb8888c.c
++++ b/third-party/yuv2rgb/yuv420rgb8888c.c
+@@ -89,12 +89,15 @@ do {                             \
+     }                            \
+ } while (0 == 1)
+ 
+-#define STORE(Y,DSTPTR)     \
+-do {                        \
+-    (DSTPTR) = (Y & 0xFF) | (0xFF00 & (Y>>14)) | (0xFF0000 & (Y<<5));\
++#define STORE(Y,DSTPTR)         \
++do {                            \
++    *(DSTPTR)++ = (Y)>>11;      \
++    *(DSTPTR)++ = (Y)>>22;      \
++    *(DSTPTR)++ = (Y);          \
++    *(DSTPTR)++ = 255;          \
+ } while (0 == 1)
+ 
+-void yuv420_2_rgb8888(uint8_t  *dst_ptr_,
++void yuv420_2_rgb8888(uint8_t  *dst_ptr,
+                 const uint8_t  *y_ptr,
+                 const uint8_t  *u_ptr,
+                 const uint8_t  *v_ptr,
+@@ -106,9 +109,7 @@ void yuv420_2_rgb8888(uint8_t  *dst_ptr_,
+                 const uint32_t *tables,
+                       int32_t   dither)
+ {
+-    uint32_t *dst_ptr = (uint32_t *)(void *)dst_ptr_;
+-    dst_span >>= 2;
+-
++    /* Fixed the endian error when casting 'dst_ptr to uint32_t'. */
+     height -= 1;
+     while (height > 0)
+     {
+@@ -118,36 +119,38 @@ void yuv420_2_rgb8888(uint8_t  *dst_ptr_,
+         {
+             /* Do 2 column pairs */
+             uint32_t uv, y0, y1;
++            uint8_t * dst_ptr_1span = dst_ptr + dst_span;
+ 
+             uv  = READUV(*u_ptr++,*v_ptr++);
+             y1  = uv + READY(y_ptr[y_span]);
+             y0  = uv + READY(*y_ptr++);
+             FIXUP(y1);
+             FIXUP(y0);
+-            STORE(y1, dst_ptr[dst_span]);
+-            STORE(y0, *dst_ptr++);
++            STORE(y1, dst_ptr_1span);
++            STORE(y0, dst_ptr);
+             y1  = uv + READY(y_ptr[y_span]);
+             y0  = uv + READY(*y_ptr++);
+             FIXUP(y1);
+             FIXUP(y0);
+-            STORE(y1, dst_ptr[dst_span]);
+-            STORE(y0, *dst_ptr++);
++            STORE(y1, dst_ptr_1span);
++            STORE(y0, dst_ptr);
+             height += (2<<16);
+         }
+         if ((height>>16) == 0)
+         {
+             /* Trailing column pair */
+             uint32_t uv, y0, y1;
++            uint8_t * dst_ptr_1span = dst_ptr + dst_span;
+ 
+             uv = READUV(*u_ptr,*v_ptr);
+             y1 = uv + READY(y_ptr[y_span]);
+             y0 = uv + READY(*y_ptr++);
+             FIXUP(y1);
+             FIXUP(y0);
+-            STORE(y0, dst_ptr[dst_span]);
+-            STORE(y1, *dst_ptr++);
++            STORE(y0, dst_ptr_1span);
++            STORE(y1, dst_ptr);
+         }
+-        dst_ptr += dst_span*2-width;
++        dst_ptr += (dst_span * 2) - (width * 4);
+         y_ptr   += y_span*2-width;
+         u_ptr   += uv_span-(width>>1);
+         v_ptr   += uv_span-(width>>1);
+@@ -169,8 +172,8 @@ void yuv420_2_rgb8888(uint8_t  *dst_ptr_,
+             y0  = uv + READY(*y_ptr++);
+             FIXUP(y1);
+             FIXUP(y0);
+-            STORE(y1, *dst_ptr++);
+-            STORE(y0, *dst_ptr++);
++            STORE(y1, dst_ptr);
++            STORE(y0, dst_ptr);
+             height += (2<<16);
+         }
+         if ((height>>16) == 0)
+@@ -181,7 +184,7 @@ void yuv420_2_rgb8888(uint8_t  *dst_ptr_,
+             uv = READUV(*u_ptr++,*v_ptr++);
+             y0 = uv + READY(*y_ptr++);
+             FIXUP(y0);
+-            STORE(y0, *dst_ptr++);
++            STORE(y0, dst_ptr);
+         }
+     }
+ }
+diff --git a/third-party/yuv2rgb/yuv422rgb8888c.c b/third-party/yuv2rgb/yuv422rgb8888c.c
+index a23009c1..cd1f16cc 100644
+--- a/third-party/yuv2rgb/yuv422rgb8888c.c
++++ b/third-party/yuv2rgb/yuv422rgb8888c.c
+@@ -91,10 +91,10 @@ do {                             \
+ 
+ #define STORE(Y,DSTPTR)         \
+ do {                            \
+-    *(DSTPTR)++ = (Y);          \
+-    *(DSTPTR)++ = (Y)>>22;      \
+     *(DSTPTR)++ = (Y)>>11;      \
+-    *(DSTPTR)++ = 0;            \
++    *(DSTPTR)++ = (Y)>>22;      \
++    *(DSTPTR)++ = (Y);          \
++    *(DSTPTR)++ = 255;          \
+ } while (0 == 1)
+ 
+ void yuv422_2_rgb8888(uint8_t  *dst_ptr,
+diff --git a/third-party/yuv2rgb/yuv444rgb8888c.c b/third-party/yuv2rgb/yuv444rgb8888c.c
+index 2a73c17b..a16154ff 100644
+--- a/third-party/yuv2rgb/yuv444rgb8888c.c
++++ b/third-party/yuv2rgb/yuv444rgb8888c.c
+@@ -91,10 +91,10 @@ do {                             \
+ 
+ #define STORE(Y,DSTPTR)         \
+ do {                            \
+-    *(DSTPTR)++ = (Y);          \
+-    *(DSTPTR)++ = (Y)>>22;      \
+     *(DSTPTR)++ = (Y)>>11;      \
+-    *(DSTPTR)++ = 0;            \
++    *(DSTPTR)++ = (Y)>>22;      \
++    *(DSTPTR)++ = (Y);          \
++    *(DSTPTR)++ = 255;          \
+ } while (0 == 1)
+ 
+ void yuv444_2_rgb8888(uint8_t  *dst_ptr,

@@ -1,0 +1,24 @@
+diff --git a/third-party/yuv2rgb/yuv2rgb.h b/third-party/yuv2rgb/yuv2rgb.h
+index 34fa7fb9..d1d4a7be 100644
+--- a/third-party/yuv2rgb/yuv2rgb.h
++++ b/third-party/yuv2rgb/yuv2rgb.h
+@@ -18,6 +18,10 @@ typedef signed   int   int32_t;
+ typedef unsigned short uint16_t;
+ typedef unsigned char  uint8_t;
+ 
++#ifdef __cplusplus
++extern "C" {
++#endif
++
+ extern const uint32_t yuv2rgb565_table[];
+ extern const uint32_t yuv2bgr565_table[];
+ 
+@@ -129,5 +133,8 @@ void yuv444_2_rgb8888(uint8_t  *dst_ptr,
+                 const uint32_t *tables,
+                       int32_t   dither);
+ 
++#ifdef __cplusplus
++}
++#endif
+ 
+ #endif /* YUV2RGB_H */
