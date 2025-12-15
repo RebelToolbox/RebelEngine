@@ -317,7 +317,7 @@ void MacOSEditorExportPlatform::get_export_options(List<ExportOption>* r_options
         ""
     ));
 
-    if (!Engine::get_singleton()->has_singleton("GodotSharp")) {
+    if (!Engine::get_singleton()->has_singleton("RebelSharp")) {
         // These entitlements are required to run managed code, and are always
         // enabled in Mono builds.
         r_options->push_back(ExportOption(
@@ -1174,7 +1174,7 @@ Error MacOSEditorExportPlatform::export_project(
                 }
                 file = file.replace(
                     "/data.mono.macos.64.release_debug/",
-                    "/GodotSharp/"
+                    "/RebelSharp/"
                 );
             }
             if (file.find("/data.mono.macos.64.release/") != -1) {
@@ -1184,7 +1184,7 @@ Error MacOSEditorExportPlatform::export_project(
                 }
                 file = file.replace(
                     "/data.mono.macos.64.release/",
-                    "/GodotSharp/"
+                    "/RebelSharp/"
                 );
             }
 
@@ -1258,7 +1258,7 @@ Error MacOSEditorExportPlatform::export_project(
                 );
                 ent_f->store_line("<plist version=\"1.0\">");
                 ent_f->store_line("<dict>");
-                if (Engine::get_singleton()->has_singleton("GodotSharp")) {
+                if (Engine::get_singleton()->has_singleton("RebelSharp")) {
                     // These entitlements are required to run managed code, and
                     // are always enabled in Mono builds.
                     ent_f->store_line(
