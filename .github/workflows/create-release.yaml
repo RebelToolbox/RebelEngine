@@ -205,7 +205,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download Android build artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           pattern: android*
           path: bin/
@@ -291,21 +291,21 @@ jobs:
           cd ../../..
 
       - name: Upload Android Release APK
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: android-release-apk
           path: bin/android_release.apk
           retention-days: 1
 
       - name: Upload Android Debug APK
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: android-debug-apk
           path: bin/android_debug.apk
           retention-days: 1
 
       - name: Upload Android Project Template
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: android-template
           path: bin/android_template.zip
@@ -320,7 +320,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download macOS build artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           pattern: macos*
           path: bin/
@@ -365,14 +365,14 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload macOS Editor App
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: macos-editor-app
           path: rebel-editor-macos-universal.zip
           retention-days: 1
 
       - name: Upload macOS Template App
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: macos-engine-app
           path: rebel-engine-macos-universal.zip
@@ -387,7 +387,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download iOS build artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           pattern: ios*
           path: bin/
@@ -411,7 +411,7 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload iOS Template
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ios-template
           path: ios-template.zip
@@ -425,7 +425,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           path: artifacts/
           merge-multiple: true
@@ -485,7 +485,7 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload Templates Zip File
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: rebel-templates
           path: rebel-templates.zip
@@ -511,7 +511,7 @@ jobs:
           echo "version=$version" >> $GITHUB_ENV
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           path: artifacts/
           merge-multiple: true
@@ -538,7 +538,7 @@ jobs:
           cp artifacts/rebel-templates.zip release/rebel-templates-$version.tpz
 
       - name: Upload release ${{ env.version }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: rebel-${{ env.version }}
           path: release
