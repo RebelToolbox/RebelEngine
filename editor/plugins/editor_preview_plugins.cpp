@@ -386,7 +386,7 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
         camera,
         Transform(Basis(), Vector3(0, 0, 3))
     );
-    VS::get_singleton()->camera_set_perspective(camera, 45, 0.1, 10);
+    VS::get_singleton()->camera_set_perspective(camera, 45, 0.1f, 10);
 
     light          = VS::get_singleton()->directional_light_create();
     light_instance = VS::get_singleton()->instance_create2(light, scenario);
@@ -396,8 +396,7 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
     );
 
     light2 = VS::get_singleton()->directional_light_create();
-    VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
-    // VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
+    VS::get_singleton()->light_set_color(light2, Color(0.7f, 0.7f, 0.7f));
 
     light_instance2 = VS::get_singleton()->instance_create2(light2, scenario);
 
@@ -417,7 +416,7 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
     PoolVector<Vector3> normals;
     PoolVector<Vector2> uvs;
     PoolVector<float> tangents;
-    Basis tt = Basis(Vector3(0, 1, 0), Math_PI * 0.5);
+    Basis tt = Basis(Vector3(0, 1, 0), static_cast<real_t>(Math_PI) / 2);
 
     for (int i = 1; i <= lats; i++) {
         double lat0 = Math_PI * (-0.5 + (double)(i - 1) / lats);
@@ -452,7 +451,7 @@ EditorMaterialPreviewPlugin::EditorMaterialPreviewPlugin() {
             Math::atan2(v[m_idx].x, v[m_idx].z),                               \
             Math::atan2(-v[m_idx].y, v[m_idx].z)                               \
         );                                                                     \
-        uv /= Math_PI;                                                         \
+        uv /= static_cast<real_t>(Math_PI);                                    \
         uv *= 4.0;                                                             \
         uv  = uv * 0.5 + Vector2(0.5, 0.5);                                    \
         uvs.push_back(uv);                                                     \
@@ -790,9 +789,11 @@ Ref<Texture> EditorMeshPreviewPlugin::generate(
     Vector3 ofs    = aabb.position + aabb.size * 0.5;
     aabb.position -= ofs;
     Transform xform;
-    xform.basis = Basis().rotated(Vector3(0, 1, 0), -Math_PI * 0.125);
     xform.basis =
-        Basis().rotated(Vector3(1, 0, 0), Math_PI * 0.125) * xform.basis;
+        Basis().rotated(Vector3(0, 1, 0), -static_cast<real_t>(Math_PI) / 8);
+    xform.basis =
+        Basis().rotated(Vector3(1, 0, 0), static_cast<real_t>(Math_PI) / 8)
+        * xform.basis;
     AABB rot_aabb = xform.xform(aabb);
     float m       = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
     if (m == 0) {
@@ -866,7 +867,7 @@ EditorMeshPreviewPlugin::EditorMeshPreviewPlugin() {
         Transform(Basis(), Vector3(0, 0, 3))
     );
     // VS::get_singleton()->camera_set_perspective(camera,45,0.1,10);
-    VS::get_singleton()->camera_set_orthogonal(camera, 1.0, 0.01, 1000.0);
+    VS::get_singleton()->camera_set_orthogonal(camera, 1, 0.01f, 1000);
 
     light          = VS::get_singleton()->directional_light_create();
     light_instance = VS::get_singleton()->instance_create2(light, scenario);
@@ -876,7 +877,7 @@ EditorMeshPreviewPlugin::EditorMeshPreviewPlugin() {
     );
 
     light2 = VS::get_singleton()->directional_light_create();
-    VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
+    VS::get_singleton()->light_set_color(light2, Color(0.7f, 0.7f, 0.7f));
     // VS::get_singleton()->light_set_color(light2, VS::LIGHT_COLOR_SPECULAR,
     // Color(0.0, 0.0, 0.0));
     light_instance2 = VS::get_singleton()->instance_create2(light2, scenario);

@@ -334,7 +334,7 @@ void EditorSpinSlider::_draw_spin_slider() {
                       - updown2->get_width();
         Color c(1, 1, 1);
         if (hover_updown) {
-            c *= Color(1.2, 1.2, 1.2);
+            c *= Color(1.2f, 1.2f, 1.2f);
         }
         draw_texture(updown2, Vector2(updown_offset, updown_vofs), c);
         if (grabber->is_visible()) {
@@ -346,11 +346,11 @@ void EditorSpinSlider::_draw_spin_slider() {
         int ofs   = sb->get_offset().x;
         int svofs = (get_size().height + vofs) / 2 - 1;
         Color c   = fc;
-        c.a       = 0.2;
+        c.a       = 0.2f;
 
         draw_rect(Rect2(ofs, svofs + 1, width, 2 * EDSCALE), c);
         int gofs = get_as_ratio() * width;
-        c.a      = 0.9;
+        c.a      = 0.9f;
         Rect2 grabber_rect =
             Rect2(ofs + gofs, svofs + 1, grabber_w, 2 * EDSCALE);
         draw_rect(grabber_rect, c);

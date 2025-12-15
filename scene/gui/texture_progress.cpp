@@ -628,13 +628,13 @@ void TextureProgress::_notification(int p_what) {
                                 draw_line(
                                     p - Point2(8, 0),
                                     p + Point2(8, 0),
-                                    Color(0.9, 0.5, 0.5),
+                                    Color(0.9f, 0.5f, 0.5f),
                                     2
                                 );
                                 draw_line(
                                     p - Point2(0, 8),
                                     p + Point2(0, 8),
-                                    Color(0.9, 0.5, 0.5),
+                                    Color(0.9f, 0.5f, 0.5f),
                                     2
                                 );
                             }

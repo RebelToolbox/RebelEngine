@@ -280,7 +280,7 @@ bool AnimationNodeStateMachinePlayback::_travel(
 
         // find the last cost transition
         List<int>::Element* least_cost_transition = nullptr;
-        float least_cost                          = 1e20;
+        float least_cost                          = 1e20f;
 
         for (List<int>::Element* E = open_list.front(); E; E = E->next()) {
             float cost =
@@ -517,7 +517,7 @@ float AnimationNodeStateMachinePlayback::process(
             }
         }
     } else {
-        float priority_best = 1e20;
+        float priority_best = 1e20f;
         int auto_advance_to = -1;
         for (int i = 0; i < p_state_machine->transitions.size(); i++) {
             bool auto_advance = false;

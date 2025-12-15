@@ -56,7 +56,7 @@ public:
             visible_layers        = 0xFFFFFFFF;
             fov                   = 70;
             type                  = PERSPECTIVE;
-            znear                 = 0.05;
+            znear                 = 0.05f;
             zfar                  = 100;
             size                  = 1.0;
             offset                = Vector2();

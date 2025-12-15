@@ -7072,7 +7072,7 @@ Error ShaderLanguage::_parse_shader(
                                 if (type == TYPE_INT) {
                                     uniform2.hint_range[2] = 1;
                                 } else {
-                                    uniform2.hint_range[2] = 0.001;
+                                    uniform2.hint_range[2] = 0.001f;
                                 }
                             }
 

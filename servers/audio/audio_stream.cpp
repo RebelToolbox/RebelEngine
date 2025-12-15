@@ -330,7 +330,7 @@ void AudioStreamRandomPitch::_bind_methods() {
 }
 
 AudioStreamRandomPitch::AudioStreamRandomPitch() {
-    random_pitch = 1.1;
+    random_pitch = 1.1f;
 }
 
 void AudioStreamPlaybackRandomPitch::start(float p_from_pos) {

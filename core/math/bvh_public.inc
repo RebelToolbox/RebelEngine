@@ -506,7 +506,7 @@ void params_set_pairing_expansion(real_t p_value) {
     _pairing_expansion = p_value;
 
     // calculate shrinking threshold
-    const real_t fudge_factor = 1.1;
+    const real_t fudge_factor = 1.1f;
     _aabb_shrinkage_threshold =
         _pairing_expansion * POINT::AXIS_COUNT * 2.0 * fudge_factor;
 }

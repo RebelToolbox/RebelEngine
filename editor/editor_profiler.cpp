@@ -52,7 +52,7 @@ void EditorProfiler::add_frame_metric(const Metric& p_metric, bool p_final) {
     }
 
     if (plot_delay->is_stopped()) {
-        plot_delay->set_wait_time(0.1);
+        plot_delay->set_wait_time(0.1f);
         plot_delay->start();
     }
 }
@@ -82,7 +82,7 @@ void EditorProfiler::clear() {
 
 static String _get_percent_txt(float p_value, float p_total) {
     if (p_total == 0) {
-        p_total = 0.00001;
+        p_total = 0.00001f;
     }
 
     return String::num((p_value / p_total) * 100, 1) + "%";
@@ -118,7 +118,7 @@ Color EditorProfiler::_get_color_from_signature(const StringName& p_signature
     double rot = ABS(double(p_signature.hash()) / double(0x7FFFFFFF));
     Color c;
     c.set_hsv(rot, bc.get_s(), bc.get_v());
-    return c.linear_interpolate(get_color("base_color", "Editor"), 0.07);
+    return c.linear_interpolate(get_color("base_color", "Editor"), 0.07f);
 }
 
 void EditorProfiler::_item_edited() {
@@ -140,7 +140,7 @@ void EditorProfiler::_item_edited() {
     }
 
     if (!frame_delay->is_processing()) {
-        frame_delay->set_wait_time(0.1);
+        frame_delay->set_wait_time(0.1f);
         frame_delay->start();
     }
 
@@ -202,7 +202,7 @@ void EditorProfiler::_update_plot() {
 
     if (highest > 0) {
         // means some data exists..
-        highest      *= 1.2; // leave some upper room
+        highest      *= 1.2f; // leave some upper room
         graph_height  = highest;
 
         Vector<int> columnv;
@@ -469,7 +469,7 @@ void EditorProfiler::_graph_tex_draw() {
         graph->draw_line(
             Vector2(cur_x, 0),
             Vector2(cur_x, graph->get_size().y),
-            Color(1, 1, 1, 0.8)
+            Color(1, 1, 1, 0.8f)
         );
     }
 
@@ -486,7 +486,7 @@ void EditorProfiler::_graph_tex_draw() {
         graph->draw_line(
             Vector2(cur_x, 0),
             Vector2(cur_x, graph->get_size().y),
-            Color(1, 1, 1, 0.4)
+            Color(1, 1, 1, 0.4f)
         );
     }
 }
@@ -578,7 +578,7 @@ void EditorProfiler::_graph_tex_input(const Ref<InputEvent>& p_ev) {
             seeking = true;
 
             if (!frame_delay->is_processing()) {
-                frame_delay->set_wait_time(0.1);
+                frame_delay->set_wait_time(0.1f);
                 frame_delay->start();
             }
         }
@@ -853,13 +853,13 @@ EditorProfiler::EditorProfiler() {
     EDITOR_DEF("debugger/profiler_frame_max_functions", 512);
 
     frame_delay = memnew(Timer);
-    frame_delay->set_wait_time(0.1);
+    frame_delay->set_wait_time(0.1f);
     frame_delay->set_one_shot(true);
     add_child(frame_delay);
     frame_delay->connect("timeout", this, "_update_frame");
 
     plot_delay = memnew(Timer);
-    plot_delay->set_wait_time(0.1);
+    plot_delay->set_wait_time(0.1f);
     plot_delay->set_one_shot(true);
     add_child(plot_delay);
     plot_delay->connect("timeout", this, "_update_plot");

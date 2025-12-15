@@ -498,20 +498,20 @@ VehicleWheel::VehicleWheel() {
     m_brake         = real_t(0.);
     m_rollInfluence = real_t(0.1);
 
-    m_suspensionRestLength     = 0.15;
-    m_wheelRadius              = 0.5; // 0.28;
-    m_suspensionStiffness      = 5.88;
-    m_wheelsDampingCompression = 0.83;
-    m_wheelsDampingRelaxation  = 0.88;
-    m_frictionSlip             = 10.5;
+    m_suspensionRestLength     = 0.15f;
+    m_wheelRadius              = 0.5f;
+    m_suspensionStiffness      = 5.88f;
+    m_wheelsDampingCompression = 0.83f;
+    m_wheelsDampingRelaxation  = 0.88f;
+    m_frictionSlip             = 10.5f;
     m_bIsFrontWheel            = false;
     m_maxSuspensionTravelCm    = 500;
     m_maxSuspensionForce       = 6000;
 
     m_suspensionRelativeVelocity     = 0;
-    m_clippedInvContactDotSuspension = 1.0;
+    m_clippedInvContactDotSuspension = 1;
     m_raycastInfo.m_isInContact      = false;
-    m_raycastInfo.m_suspensionLength = 0.0;
+    m_raycastInfo.m_suspensionLength = 0;
 
     body = nullptr;
 }

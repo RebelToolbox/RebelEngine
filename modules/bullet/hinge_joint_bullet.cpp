@@ -186,7 +186,10 @@ void HingeJointBullet::set_flag(
     switch (p_flag) {
         case PhysicsServer::HINGE_JOINT_FLAG_USE_LIMIT:
             if (!p_value) {
-                hingeConstraint->setLimit(-Math_PI, Math_PI);
+                hingeConstraint->setLimit(
+                    -static_cast<btScalar>(Math_PI),
+                    static_cast<btScalar>(Math_PI)
+                );
             }
             break;
         case PhysicsServer::HINGE_JOINT_FLAG_ENABLE_MOTOR:

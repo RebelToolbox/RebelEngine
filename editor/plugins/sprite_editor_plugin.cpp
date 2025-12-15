@@ -540,7 +540,7 @@ void SpriteEditor::_debug_uv_draw() {
     debug_uv->set_custom_minimum_size(tex->get_size() + draw_size_offset);
     debug_uv->draw_set_transform(draw_pos_offset, 0, Size2(1.0, 1.0));
 
-    Color color = Color(1.0, 0.8, 0.7);
+    Color color = Color(1, 0.8f, 0.7f);
 
     if (selected_menu_item == MENU_OPTION_CONVERT_TO_MESH_2D
         && uv_lines.size() > 0) {

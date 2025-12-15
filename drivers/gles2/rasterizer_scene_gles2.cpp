@@ -2762,7 +2762,8 @@ void RasterizerSceneGLES2::_setup_light(
                        : 1; // inverse color for base pass lights only
 
     state.scene_shader.set_uniform(SceneShaderGLES2::LIGHT_SPECULAR, specular);
-    Color color = light_ptr->color * sign * energy * Math_PI;
+    Color color =
+        light_ptr->color * sign * energy * static_cast<float>(Math_PI);
     state.scene_shader.set_uniform(SceneShaderGLES2::LIGHT_COLOR, color);
 
     state.scene_shader.set_uniform(

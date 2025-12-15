@@ -363,11 +363,11 @@ void GDScriptSyntaxHighlighter::_update_cache() {
     const bool default_theme = text_editor_color_theme == "Default";
 
     if (default_theme || EditorSettings::get_singleton()->is_dark_theme()) {
-        function_definition_color = Color(0.4, 0.9, 1.0);
-        node_path_color           = Color(0.39, 0.76, 0.35);
+        function_definition_color = Color(0.4f, 0.9f, 1.0f);
+        node_path_color           = Color(0.39f, 0.76f, 0.35f);
     } else {
-        function_definition_color = Color(0.0, 0.65, 0.73);
-        node_path_color           = Color(0.32, 0.55, 0.29);
+        function_definition_color = Color(0.0f, 0.65f, 0.73f);
+        node_path_color           = Color(0.32f, 0.55f, 0.29f);
     }
 
     EDITOR_DEF(

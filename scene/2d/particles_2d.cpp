@@ -122,7 +122,7 @@ void Particles2D::set_process_material(const Ref<Material>& p_material) {
     process_material          = p_material;
     Ref<ParticlesMaterial> pm = p_material;
     if (pm.is_valid() && !pm->get_flag(ParticlesMaterial::FLAG_DISABLE_Z)
-        && pm->get_gravity() == Vector3(0, -9.8, 0)) {
+        && pm->get_gravity() == Vector3(0, -9.8f, 0)) {
         // Likely a new (3D) material, modify it to match 2D space
         pm->set_flag(ParticlesMaterial::FLAG_DISABLE_Z, true);
         pm->set_gravity(Vector3(0, 98, 0));
@@ -359,7 +359,7 @@ void Particles2D::_notification(int p_what) {
         if (Engine::get_singleton()->is_editor_hint()
             && (this == get_tree()->get_edited_scene_root()
                 || get_tree()->get_edited_scene_root()->is_a_parent_of(this))) {
-            draw_rect(visibility_rect, Color(0, 0.7, 0.9, 0.4), false);
+            draw_rect(visibility_rect, Color(0, 0.7f, 0.9f, 0.4f), false);
         }
 #endif
     }

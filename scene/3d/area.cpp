@@ -1086,13 +1086,13 @@ void Area::_bind_methods() {
 Area::Area() :
     CollisionObject(PhysicsServer::get_singleton()->area_create(), true) {
     space_override = SPACE_OVERRIDE_DISABLED;
-    set_gravity(9.8);
+    set_gravity(9.8f);
     locked = false;
     set_gravity_vector(Vector3(0, -1, 0));
     gravity_is_point       = false;
     gravity_distance_scale = 0;
-    linear_damp            = 0.1;
-    angular_damp           = 0.1;
+    linear_damp            = 0.1f;
+    angular_damp           = 0.1f;
     priority               = 0;
     monitoring             = false;
     monitorable            = false;

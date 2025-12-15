@@ -166,7 +166,7 @@ void RayShape2DSW::set_data(const Variant& p_data) {
     Dictionary d   = p_data;
     length         = d["length"];
     slips_on_slope = d["slips_on_slope"];
-    configure(Rect2(0, 0, 0.001, length));
+    configure(Rect2(0, 0, 0.001f, length));
 }
 
 Variant RayShape2DSW::get_data() const {
@@ -249,10 +249,10 @@ void SegmentShape2DSW::set_data(const Variant& p_data) {
     aabb.position = a;
     aabb.expand_to(b);
     if (aabb.size.x == 0) {
-        aabb.size.x = 0.001;
+        aabb.size.x = 0.001f;
     }
     if (aabb.size.y == 0) {
-        aabb.size.y = 0.001;
+        aabb.size.y = 0.001f;
     }
     configure(aabb);
 }

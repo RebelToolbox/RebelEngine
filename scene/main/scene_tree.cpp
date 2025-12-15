@@ -971,7 +971,7 @@ Ref<ArrayMesh> SceneTree::get_debug_contact_mesh() {
 
     PoolVector<Vector3> vertices;
     for (int i = 0; i < 6; i++) {
-        vertices.push_back(diamond[i] * 0.1);
+        vertices.push_back(diamond[i] * 0.1f);
     }
 
     Array arr;
@@ -2553,19 +2553,19 @@ SceneTree::SceneTree() {
 #endif
     debug_collisions_color = GLOBAL_DEF(
         "debug/shapes/collision/shape_color",
-        Color(0.0, 0.6, 0.7, 0.42)
+        Color(0, 0.6f, 0.7f, 0.42f)
     );
     debug_collision_contact_color = GLOBAL_DEF(
         "debug/shapes/collision/contact_color",
-        Color(1.0, 0.2, 0.1, 0.8)
+        Color(1, 0.2f, 0.1f, 0.8f)
     );
     debug_navigation_color = GLOBAL_DEF(
         "debug/shapes/navigation/geometry_color",
-        Color(0.1, 1.0, 0.7, 0.4)
+        Color(0.1f, 1, 0.7f, 0.4f)
     );
     debug_navigation_disabled_color = GLOBAL_DEF(
         "debug/shapes/navigation/disabled_geometry_color",
-        Color(1.0, 0.7, 0.1, 0.4)
+        Color(1, 0.7f, 0.1f, 0.4f)
     );
     collision_debug_contacts =
         GLOBAL_DEF("debug/shapes/collision/max_contacts_displayed", 10000);

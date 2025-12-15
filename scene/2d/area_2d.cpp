@@ -999,7 +999,7 @@ Area2D::Area2D() :
     set_gravity_vector(Vector2(0, 1));
     gravity_is_point       = false;
     gravity_distance_scale = 0;
-    linear_damp            = 0.1;
+    linear_damp            = 0.1f;
     angular_damp           = 1;
     locked                 = false;
     priority               = 0;

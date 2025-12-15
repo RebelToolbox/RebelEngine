@@ -39,7 +39,7 @@ void DependencyEditor::_load_pressed(Object* p_item, int p_cell, int p_button) {
     for (List<String>::Element* E = ext.front(); E; E = E->next()) {
         search->add_filter("*" + E->get());
     }
-    search->popup_centered_ratio(0.65
+    search->popup_centered_ratio(0.65f
     ); // So it doesn't completely cover the dialog below it.
 }
 
@@ -180,7 +180,7 @@ void DependencyEditor::_update_list() {
         item->set_text(1, path);
 
         if (!FileAccess::exists(path)) {
-            item->set_custom_color(1, Color(1, 0.4, 0.3));
+            item->set_custom_color(1, Color(1, 0.4f, 0.3f));
             missing.push_back(path);
             broken = true;
         }
@@ -196,7 +196,7 @@ void DependencyEditor::edit(const String& p_path) {
     set_title(TTR("Dependencies For:") + " " + p_path.get_file());
 
     _update_list();
-    popup_centered_ratio(0.7
+    popup_centered_ratio(0.7f
     ); // So it doesn't completely cover the dialog below it.
 
     if (EditorNode::get_singleton()->is_scene_open(p_path)) {

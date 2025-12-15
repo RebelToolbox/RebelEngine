@@ -823,7 +823,7 @@ CSGShape::CSGShape() {
     parent             = nullptr;
     brush              = nullptr;
     dirty              = false;
-    snap               = 0.001;
+    snap               = 0.001f;
     use_collision      = false;
     collision_layer    = 1;
     collision_mask     = 1;

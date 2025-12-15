@@ -510,11 +510,11 @@ void VisualShaderEditor::_update_created_node(GraphNode* node) {
         Color c              = sb->get_border_color();
         Color mono_color = ((c.r + c.g + c.b) / 3) < 0.7 ? Color(1.0, 1.0, 1.0)
                                                          : Color(0.0, 0.0, 0.0);
-        mono_color.a     = 0.85;
+        mono_color.a     = 0.85f;
         c                = mono_color;
 
         node->add_color_override("title_color", c);
-        c.a = 0.7;
+        c.a = 0.7f;
         node->add_color_override("close_color", c);
         node->add_color_override("resizer_color", c);
     }
@@ -544,11 +544,11 @@ void VisualShaderEditor::_update_graph() {
     }
 
     static const Color type_color[5] = {
-        Color(0.38, 0.85, 0.96), // scalar
-        Color(0.84, 0.49, 0.93), // vector
-        Color(0.55, 0.65, 0.94), // boolean
-        Color(0.96, 0.66, 0.43), // transform
-        Color(1.0, 1.0, 0.0)     // sampler
+        Color(0.38f, 0.85f, 0.96f), // scalar
+        Color(0.84f, 0.49f, 0.93f), // vector
+        Color(0.55f, 0.65f, 0.94f), // boolean
+        Color(0.96f, 0.66f, 0.43f), // transform
+        Color(1, 1, 0)              // sampler
     };
 
     List<VisualShader::Connection> connections;
@@ -5010,7 +5010,7 @@ VisualShaderEditor::VisualShaderEditor() {
         VisualShaderNode::PORT_TYPE_SCALAR,
         -1,
         -1,
-        Math_E
+        static_cast<float>(Math_E)
     ));
     add_options.push_back(AddOption(
         "Epsilon",
@@ -5046,7 +5046,7 @@ VisualShaderEditor::VisualShaderEditor() {
         VisualShaderNode::PORT_TYPE_SCALAR,
         -1,
         -1,
-        Math_PI / 4
+        static_cast<float>(Math_PI) / 4
     ));
     add_options.push_back(AddOption(
         "Pi/2",
@@ -5058,7 +5058,7 @@ VisualShaderEditor::VisualShaderEditor() {
         VisualShaderNode::PORT_TYPE_SCALAR,
         -1,
         -1,
-        Math_PI / 2
+        static_cast<float>(Math_PI) / 2
     ));
     add_options.push_back(AddOption(
         "Pi",
@@ -5070,7 +5070,7 @@ VisualShaderEditor::VisualShaderEditor() {
         VisualShaderNode::PORT_TYPE_SCALAR,
         -1,
         -1,
-        Math_PI
+        static_cast<float>(Math_PI)
     ));
     add_options.push_back(AddOption(
         "Tau",
@@ -5082,7 +5082,7 @@ VisualShaderEditor::VisualShaderEditor() {
         VisualShaderNode::PORT_TYPE_SCALAR,
         -1,
         -1,
-        Math_TAU
+        static_cast<float>(Math_TAU)
     ));
     add_options.push_back(AddOption(
         "Sqrt2",
@@ -5094,7 +5094,7 @@ VisualShaderEditor::VisualShaderEditor() {
         VisualShaderNode::PORT_TYPE_SCALAR,
         -1,
         -1,
-        Math_SQRT2
+        static_cast<float>(Math_SQRT2)
     ));
 
     // FUNCTIONS

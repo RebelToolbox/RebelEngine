@@ -130,7 +130,7 @@ void TriangleMesh::create(const PoolVector<Vector3>& p_faces) {
 
             for (int j = 0; j < 3; j++) {
                 int vidx   = -1;
-                Vector3 vs = v[j].snapped(Vector3(0.0001, 0.0001, 0.0001));
+                Vector3 vs = v[j].snapped(Vector3(0.0001f, 0.0001f, 0.0001f));
                 Map<Vector3, int>::Element* E = db.find(vs);
                 if (E) {
                     vidx = E->get();
@@ -404,7 +404,7 @@ bool TriangleMesh::intersect_ray(
     };
 
     Vector3 n   = p_dir;
-    real_t d    = 1e20;
+    real_t d    = 1e20f;
     bool inters = false;
 
     int level = 0;

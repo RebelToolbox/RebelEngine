@@ -214,7 +214,7 @@ PhysicsDirectSpaceState* BulletPhysicsDirectBodyState::get_space_state() {
 RigidBodyBullet::KinematicUtilities::KinematicUtilities(RigidBodyBullet* p_owner
 ) :
     owner(p_owner),
-    safe_margin(0.001) {}
+    safe_margin(0.001f) {}
 
 RigidBodyBullet::KinematicUtilities::~KinematicUtilities() {
     just_delete_shapes(shapes.size()); // don't need to resize
@@ -313,7 +313,7 @@ RigidBodyBullet::RigidBodyBullet() :
     for (int i = areasWhereIam.size() - 1; 0 <= i; --i) {
         areasWhereIam.write[i] = NULL;
     }
-    btBody->setSleepingThresholds(0.2, 0.2);
+    btBody->setSleepingThresholds(0.2f, 0.2f);
 
     prev_collision_traces = &collision_traces_1;
     curr_collision_traces = &collision_traces_2;
@@ -824,7 +824,7 @@ void RigidBodyBullet::set_continuous_collision_detection(bool p_enable) {
     if (p_enable) {
         // This threshold enable CCD if the object moves more than
         // 1 meter in one simulation frame
-        btBody->setCcdMotionThreshold(1e-7);
+        btBody->setCcdMotionThreshold(1e-7f);
 
         /// Calculate using the rule writte below the CCD swept sphere radius
         ///     CCD works on an embedded sphere of radius, make sure this radius

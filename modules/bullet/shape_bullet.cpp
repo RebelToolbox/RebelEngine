@@ -18,7 +18,7 @@
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include <btBulletCollisionCommon.h>
 
-ShapeBullet::ShapeBullet() : margin(0.04) {}
+ShapeBullet::ShapeBullet() : margin(0.04f) {}
 
 ShapeBullet::~ShapeBullet() {}
 

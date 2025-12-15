@@ -153,7 +153,7 @@ public:
         vs->viewport_attach_camera(viewport, camera);
         vs->viewport_set_scenario(viewport, scenario);
         vs->camera_set_transform(camera, Transform(Basis(), Vector3(0, 3, 30)));
-        vs->camera_set_perspective(camera, 60, 0.1, 1000);
+        vs->camera_set_perspective(camera, 60, 0.1f, 1000);
 
         /*
         RID lightaux = vs->light_create( VisualServer::LIGHT_OMNI );
@@ -174,7 +174,7 @@ public:
         // lla.set_look_at(Vector3(),Vector3(1,-1,1),Vector3(0,1,0));
         lla.set_look_at(
             Vector3(),
-            Vector3(-0.000000, -0.836026, -0.548690),
+            Vector3(-0.000000, -0.836026f, -0.548690f),
             Vector3(0, 1, 0)
         );
 

@@ -705,7 +705,7 @@ Vector3 PhysicsDirectSpaceStateSW::get_closest_point_to_object_volume(
 
     ERR_FAIL_COND_V(obj->get_space() != space, Vector3());
 
-    float min_distance = 1e20;
+    float min_distance = 1e20f;
     Vector3 min_point;
 
     bool shapes_found = false;
@@ -1129,7 +1129,7 @@ bool SpaceSW::test_body_motion(
                 float depth = n.dot(a + recover_motion) - d;
                 if (depth > min_contact_depth + CMP_EPSILON) {
                     // Only recover if there is penetration.
-                    recover_motion -= n * (depth - min_contact_depth) * 0.4;
+                    recover_motion -= n * (depth - min_contact_depth) * 0.4f;
                 }
             }
 
@@ -1689,11 +1689,11 @@ SpaceSW::SpaceSW() {
     contact_debug_count = 0;
 
     locked                          = false;
-    contact_recycle_radius          = 0.01;
-    contact_max_separation          = 0.05;
-    contact_max_allowed_penetration = 0.01;
+    contact_recycle_radius          = 0.01f;
+    contact_max_separation          = 0.05f;
+    contact_max_allowed_penetration = 0.01f;
 
-    constraint_bias = 0.01;
+    constraint_bias = 0.01f;
     body_linear_velocity_sleep_threshold =
         GLOBAL_DEF("physics/3d/sleep_threshold_linear", 0.1);
     body_angular_velocity_sleep_threshold = GLOBAL_DEF(

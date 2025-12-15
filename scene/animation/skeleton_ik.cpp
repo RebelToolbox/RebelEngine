@@ -609,7 +609,7 @@ SkeletonIK::SkeletonIK() :
     interpolation(1),
     override_tip_basis(true),
     use_magnet(false),
-    min_distance(0.01),
+    min_distance(0.01f),
     max_iterations(10),
     skeleton(nullptr),
     target_node_override(nullptr),

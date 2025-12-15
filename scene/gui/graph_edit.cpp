@@ -1162,9 +1162,9 @@ void GraphEdit::_top_layer_draw() {
         Color col = connecting_color;
 
         if (connecting_target) {
-            col.r += 0.4;
-            col.g += 0.4;
-            col.b += 0.4;
+            col.r += 0.4f;
+            col.g += 0.4f;
+            col.b += 0.4f;
         }
 
         if (!connecting_out) {
@@ -2388,7 +2388,7 @@ GraphEdit::GraphEdit() {
     zoom_hb->add_child(minimap_button);
 
     Vector2 minimap_size  = Vector2(240, 160);
-    float minimap_opacity = 0.65;
+    float minimap_opacity = 0.65f;
 
     minimap = memnew(GraphEditMinimap(this));
     top_layer->add_child(minimap);

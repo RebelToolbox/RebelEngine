@@ -9,7 +9,7 @@
 
 #include "core/resource.h"
 
-#define ANIM_MIN_LENGTH 0.001
+#define ANIM_MIN_LENGTH 0.001f
 
 class Animation : public Resource {
     GDCLASS(Animation, Resource);

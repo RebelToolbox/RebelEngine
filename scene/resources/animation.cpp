@@ -3632,7 +3632,7 @@ void Animation::optimize(
 }
 
 Animation::Animation() {
-    step   = 0.1;
+    step   = 0.1f;
     loop   = false;
     length = 1;
 }

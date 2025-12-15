@@ -532,7 +532,9 @@ Node* ResourceImporterScene::_fix_node(
                 rayShape->set_length(1);
                 colshape->set_shape(rayShape);
                 colshape->set_name("RayShape");
-                Object::cast_to<Spatial>(sb)->rotate_x(Math_PI / 2);
+                Object::cast_to<Spatial>(sb)->rotate_x(
+                    static_cast<float>(Math_PI) / 2
+                );
             } else if (empty_draw_type == "IMAGE") {
                 PlaneShape* planeShape = memnew(PlaneShape);
                 colshape->set_shape(planeShape);

@@ -349,7 +349,7 @@ void Spatial::set_rotation(const Vector3& p_euler_rad) {
 }
 
 void Spatial::set_rotation_degrees(const Vector3& p_euler_deg) {
-    set_rotation(p_euler_deg * Math_PI / 180.0);
+    set_rotation(p_euler_deg * static_cast<real_t>(Math_PI) / 180);
 }
 
 void Spatial::set_scale(const Vector3& p_scale) {
@@ -383,7 +383,7 @@ Vector3 Spatial::get_rotation() const {
 }
 
 Vector3 Spatial::get_rotation_degrees() const {
-    return get_rotation() * 180.0 / Math_PI;
+    return get_rotation() * 180 / static_cast<real_t>(Math_PI);
 }
 
 Vector3 Spatial::get_scale() const {

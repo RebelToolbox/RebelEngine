@@ -240,7 +240,7 @@ bool SceneTreeEditor::_add_nodes(
                 );
             }
 
-            accent.a *= 0.7;
+            accent.a *= 0.7f;
         }
 
         if (marked.has(p_node)) {
@@ -662,7 +662,7 @@ void SceneTreeEditor::_update_visibility_color(Node* p_node, TreeItem* p_item) {
         Color color(1, 1, 1, 1);
         bool visible_on_screen = p_node->call("is_visible_in_tree");
         if (!visible_on_screen) {
-            color.a = 0.6;
+            color.a = 0.6f;
         }
         int idx = p_item->get_button_by_id(0, BUTTON_VISIBILITY);
         p_item->set_button_color(0, idx, color);

@@ -210,7 +210,7 @@ void RayCast2D::_update_raycast_state() {
 
     Vector2 to = cast_to;
     if (to == Vector2()) {
-        to = Vector2(0, 0.01);
+        to = Vector2(0, 0.01f);
     }
 
     Physics2DDirectSpaceState::RayResult rr;

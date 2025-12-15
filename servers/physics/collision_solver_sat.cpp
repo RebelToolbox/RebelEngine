@@ -415,7 +415,7 @@ static void _generate_contacts_face_circle(
     static const int circle_segments = 8;
     Vector3 circle_points[circle_segments];
 
-    real_t angle_delta = 2.0 * Math_PI / circle_segments;
+    real_t angle_delta = 2 * static_cast<real_t>(Math_PI) / circle_segments;
 
     for (int i = 0; i < circle_segments; ++i) {
         Vector3 point_pos  = circle_B_pos;
@@ -850,7 +850,7 @@ public:
         real_t p_margin_A = 0,
         real_t p_margin_B = 0
     ) {
-        best_depth  = 1e15;
+        best_depth  = 1e15f;
         shape_A     = p_shape_A;
         shape_B     = p_shape_B;
         transform_A = &p_transform_A;

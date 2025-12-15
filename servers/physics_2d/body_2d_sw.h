@@ -453,7 +453,7 @@ void Body2DSW::add_contact(
     if (contact_count < c_max) {
         idx = contact_count++;
     } else {
-        real_t least_depth = 1e20;
+        real_t least_depth = 1e20f;
         int least_deep     = -1;
         for (int i = 0; i < c_max; i++) {
             if (i == 0 || c[i].depth < least_depth) {

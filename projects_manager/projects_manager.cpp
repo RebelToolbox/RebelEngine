@@ -761,7 +761,7 @@ Control* ProjectsManager::_create_tools() {
         version_hash = vformat(" [%s]", version_hash.left(9));
     }
     version_label->set_text(vformat("v%s%s", VERSION_FULL_BUILD, version_hash));
-    version_label->set_self_modulate(Color(1, 1, 1, 0.6));
+    version_label->set_self_modulate(Color(1, 1, 1, 0.6f));
     version_label->set_underline_mode(LinkButton::UNDERLINE_MODE_ON_HOVER);
     version_label->set_tooltip(TTR("Click to copy."));
     version_label->connect("pressed", this, "_on_version_label_pressed");

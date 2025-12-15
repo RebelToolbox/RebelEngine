@@ -105,7 +105,7 @@ void Reverb::process(float* p_src, float* p_dst, int p_frames) {
         }
     }
 
-    static const float allpass_feedback = 0.7;
+    static const float allpass_feedback = 0.7f;
     /* this one works, but the other version is just nicer....
     int ap_size_limit[MAX_ALLPASS];
 
@@ -160,7 +160,7 @@ void Reverb::process(float* p_src, float* p_dst, int p_frames) {
         }
     }
 
-    static const float wet_scale = 0.6;
+    static const float wet_scale = 0.6f;
 
     for (int i = 0; i < p_frames; i++) {
         p_dst[i] = p_dst[i] * params.wet * wet_scale + p_src[i] * params.dry;
@@ -317,15 +317,15 @@ void Reverb::clear_buffers() {
 }
 
 Reverb::Reverb() {
-    params.room_size         = 0.8;
-    params.damp              = 0.5;
-    params.dry               = 1.0;
-    params.wet               = 0.0;
+    params.room_size         = 0.8f;
+    params.damp              = 0.5f;
+    params.dry               = 1;
+    params.wet               = 0;
     params.mix_rate          = 44100;
     params.extra_spread_base = 0;
-    params.extra_spread      = 1.0;
+    params.extra_spread      = 1;
     params.predelay          = 150;
-    params.predelay_fb       = 0.4;
+    params.predelay_fb       = 0.4f;
     params.hpf               = 0;
     hpf_h1                   = 0;
     hpf_h2                   = 0;

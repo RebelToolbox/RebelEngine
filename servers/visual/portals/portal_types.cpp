@@ -98,8 +98,8 @@ bool VSPortal::_is_plane_duplicate(
     const Plane& p_plane,
     const LocalVector<Plane, int32_t>& p_planes
 ) const {
-    const real_t epsilon_d   = 0.001;
-    const real_t epsilon_dot = 0.98;
+    const real_t epsilon_d   = 0.001f;
+    const real_t epsilon_dot = 0.98f;
 
     for (int n = 0; n < p_planes.size(); n++) {
         const Plane& p = p_planes[n];
@@ -126,7 +126,7 @@ bool VSPortal::_pvs_is_outside_planes(
     const Vector<Vector3>& pts = _pts_world;
     int nPoints                = pts.size();
 
-    const real_t epsilon = 0.1;
+    const real_t epsilon = 0.1f;
 
     for (int p = 0; p < p_planes.size(); p++) {
         for (int n = 0; n < nPoints; n++) {
@@ -149,7 +149,7 @@ bool VSPortal::_test_pvs_plane(
     const Vector3* pts_b,
     int num_b
 ) const {
-    const real_t epsilon = 0.1;
+    const real_t epsilon = 0.1f;
 
     for (int n = 0; n < num_a; n++) {
         real_t dist = p_plane.distance_to(pts_a[n]);

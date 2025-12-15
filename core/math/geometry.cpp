@@ -562,7 +562,7 @@ PoolVector<Face3> Geometry::wrap_geometry(
         }
     }
 
-    global_aabb.grow_by(0.01); // Avoid numerical error.
+    global_aabb.grow_by(0.01f); // Avoid numerical error.
 
     // Determine amount of cells in grid axis.
     int div_x, div_y, div_z;
@@ -1093,7 +1093,7 @@ void Geometry::make_atlas(
     // Find the result with the best aspect ratio.
 
     int best           = -1;
-    real_t best_aspect = 1e20;
+    real_t best_aspect = 1e20f;
 
     for (int i = 0; i < results.size(); i++) {
         real_t h      = next_power_of_2(results[i].max_h);
@@ -1303,7 +1303,7 @@ real_t Geometry::calculate_convex_hull_volume(const Geometry::MeshData& p_md) {
         volume += face_area * height;
     }
 
-    volume *= (1.0 / 3.0) * 0.5;
+    volume *= (1.f / 3) / 2;
     return volume;
 }
 

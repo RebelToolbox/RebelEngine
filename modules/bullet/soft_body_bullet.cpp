@@ -22,7 +22,7 @@ SoftBodyBullet::SoftBodyBullet() :
     volume_stiffness(0.5),
     pressure_coefficient(0.),
     pose_matching_coefficient(0.),
-    damping_coefficient(0.01),
+    damping_coefficient(0.01f),
     drag_coefficient(0.) {}
 
 SoftBodyBullet::~SoftBodyBullet() {}
@@ -434,7 +434,7 @@ void SoftBodyBullet::setup_soft_body() {
     // Soft body setup
     setupBulletCollisionObject(bt_soft_body);
     bt_soft_body->m_worldInfo = nullptr; // Remove fake world info
-    bt_soft_body->getCollisionShape()->setMargin(0.01);
+    bt_soft_body->getCollisionShape()->setMargin(0.01f);
     bt_soft_body->setCollisionFlags(
         bt_soft_body->getCollisionFlags()
         & (~(

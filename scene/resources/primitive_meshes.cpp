@@ -308,8 +308,8 @@ PrimitiveMesh::~PrimitiveMesh() {
 void CapsuleMesh::_create_mesh_array(Array& p_arr) const {
     int i, j, prevrow, thisrow, point;
     float x, y, z, u, v, w;
-    float onethird  = 1.0 / 3.0;
-    float twothirds = 2.0 / 3.0;
+    float onethird  = 1.f / 3;
+    float twothirds = 2.f / 3;
 
     // note, this has been aligned with our collision shape but I've left the
     // descriptions as top/middle/bottom
@@ -574,8 +574,8 @@ CapsuleMesh::CapsuleMesh() {
 void CubeMesh::_create_mesh_array(Array& p_arr) const {
     int i, j, prevrow, thisrow, point;
     float x, y, z;
-    float onethird  = 1.0 / 3.0;
-    float twothirds = 2.0 / 3.0;
+    float onethird  = 1.f / 3;
+    float twothirds = 2.f / 3;
 
     Vector3 start_pos = size * -0.5;
 
@@ -1335,8 +1335,8 @@ PlaneMesh::PlaneMesh() {
 void PrismMesh::_create_mesh_array(Array& p_arr) const {
     int i, j, prevrow, thisrow, point;
     float x, y, z;
-    float onethird  = 1.0 / 3.0;
-    float twothirds = 2.0 / 3.0;
+    float onethird  = 1.f / 3;
+    float twothirds = 2.f / 3;
 
     Vector3 start_pos = size * -0.5;
 

@@ -86,7 +86,7 @@ public:
         CameraData() :
             mode(MODE_PERSPECTIVE),
             aspect(1),
-            z_near(0.1),
+            z_near(0.1f),
             z_far(100) {
             perspective.x_fov = 0;
             perspective.y_fov = 0;

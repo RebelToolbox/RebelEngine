@@ -127,7 +127,7 @@ void ScriptEditorQuickOpen::popup_dialog(
     const Vector<String>& p_functions,
     bool p_dontclear
 ) {
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     if (p_dontclear) {
         search_box->select_all();
     } else {
@@ -2186,7 +2186,7 @@ void ScriptEditor::_update_script_names() {
         if (sedata_filtered[i].used) {
             script_list->set_item_custom_bg_color(
                 index,
-                Color(88 / 255.0, 88 / 255.0, 60 / 255.0)
+                Color(88 / 255.f, 88 / 255.f, 60 / 255.f)
             );
         }
         if (tab_container->get_current_tab() == sedata_filtered[i].index) {
@@ -4496,7 +4496,7 @@ ScriptEditorPlugin::ScriptEditorPlugin(EditorNode* p_node) {
     EDITOR_DEF("text_editor/script_list/script_temperature_history_size", 15);
     EDITOR_DEF(
         "text_editor/script_list/current_script_background_color",
-        Color(1, 1, 1, 0.3)
+        Color(1, 1, 1, 0.3f)
     );
     EDITOR_DEF("text_editor/script_list/group_help_pages", true);
     EditorSettings::get_singleton()->add_property_hint(PropertyInfo(

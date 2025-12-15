@@ -631,7 +631,7 @@ void AbstractPolygon2DEditor::forward_canvas_draw_over_viewport(
         }
 
         const int n_points = points.size();
-        const Color col    = Color(1, 0.3, 0.1, 0.8);
+        const Color col    = Color(1, 0.3f, 0.1f, 0.8f);
 
         for (int i = 0; i < n_points; i++) {
             const Vertex vertex(j, i);

@@ -436,7 +436,7 @@ void PropertySelector::select_method_from_base_type(
     instance      = nullptr;
     virtuals_only = p_virtuals_only;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();
@@ -455,7 +455,7 @@ void PropertySelector::select_method_from_script(
     instance      = nullptr;
     virtuals_only = false;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();
@@ -474,7 +474,7 @@ void PropertySelector::select_method_from_basic_type(
     instance      = nullptr;
     virtuals_only = false;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();
@@ -498,7 +498,7 @@ void PropertySelector::select_method_from_instance(
     instance      = nullptr;
     virtuals_only = false;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();
@@ -516,7 +516,7 @@ void PropertySelector::select_property_from_base_type(
     instance      = nullptr;
     virtuals_only = false;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();
@@ -536,7 +536,7 @@ void PropertySelector::select_property_from_script(
     instance      = nullptr;
     virtuals_only = false;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();
@@ -555,7 +555,7 @@ void PropertySelector::select_property_from_basic_type(
     instance      = nullptr;
     virtuals_only = false;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();
@@ -573,7 +573,7 @@ void PropertySelector::select_property_from_instance(
     instance      = p_instance;
     virtuals_only = false;
 
-    popup_centered_ratio(0.6);
+    popup_centered_ratio(0.6f);
     search_box->set_text("");
     search_box->grab_focus();
     _update_search();

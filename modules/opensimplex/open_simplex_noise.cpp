@@ -121,10 +121,10 @@ Ref<Image> OpenSimplexNoise::get_seamless_image(int p_size) const {
             float ii = (float)i / (float)p_size;
             float jj = (float)j / (float)p_size;
 
-            ii *= 2.0 * Math_PI;
-            jj *= 2.0 * Math_PI;
+            ii *= 2 * static_cast<float>(Math_PI);
+            jj *= 2 * static_cast<float>(Math_PI);
 
-            float radius = p_size / (2.0 * Math_PI);
+            float radius = p_size / (2 * static_cast<float>(Math_PI));
 
             float x = radius * Math::sin(jj);
             float y = radius * Math::cos(jj);
