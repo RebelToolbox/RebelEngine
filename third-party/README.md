@@ -476,10 +476,12 @@ Patch files for the changes are included in the patches/ folder.
 - License: MIT
 
 Files copied from the library source:
-- All `*.c` and `*.h` in `lib/` and `lib/includes/`
+- All `*.c` and `*.h` in `lib/` and its subdirectories.
+- `COPYING`
+Includes a custom `config.h` file in the `includes` folder.
 
-Note: Includes fix.
-Patch file for the changes is `msvcfix.diff`.
+Note: Includes fix to support MSVC, which doesn't support the POSIX defined ssize_t.
+Patch file for the changes is included in the patches/ folder.
 
 
 ## xatlas
