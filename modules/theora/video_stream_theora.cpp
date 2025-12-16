@@ -8,7 +8,7 @@
 
 #include "core/os/os.h"
 #include "core/project_settings.h"
-#include "third-party/misc/yuv2rgb.h"
+#include "third-party/yuv2rgb/yuv2rgb.h"
 
 int VideoStreamPlaybackTheora::buffer_data() {
     char* buffer = ogg_sync_buffer(&oy, 4096);
@@ -78,7 +78,9 @@ void VideoStreamPlaybackTheora::video_write() {
                 size.y,
                 yuv[0].stride,
                 yuv[1].stride,
-                size.x << 2
+                size.x << 2,
+                yuv2rgb565_table,
+                0
             );
 
         } else if (px_fmt == TH_PF_422) {
@@ -91,7 +93,9 @@ void VideoStreamPlaybackTheora::video_write() {
                 size.y,
                 yuv[0].stride,
                 yuv[1].stride,
-                size.x << 2
+                size.x << 2,
+                yuv2rgb565_table,
+                0
             );
 
         } else if (px_fmt == TH_PF_420) {
@@ -104,7 +108,9 @@ void VideoStreamPlaybackTheora::video_write() {
                 size.y,
                 yuv[0].stride,
                 yuv[1].stride,
-                size.x << 2
+                size.x << 2,
+                yuv2rgb565_table,
+                0
             );
         };
 

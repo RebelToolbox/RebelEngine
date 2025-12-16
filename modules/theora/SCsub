@@ -75,6 +75,23 @@ if env["builtin_libtheora"]:
 
     env_theora.Prepend(CPPPATH=[third_party_dir])
 
+    # Uses yuv2rgb library
+    yuv2rgb_dir = "#third-party/yuv2rgb/"
+    yuv2rgb_sources = [
+        "yuv2rgb16tab.c",
+        "yuv420rgb565c.c",
+        "yuv420rgb8888c.c",
+        "yuv420rgb888c.c",
+        "yuv422rgb565c.c",
+        "yuv422rgb8888c.c",
+        "yuv422rgb888c.c",
+        "yuv444rgb565c.c",
+        "yuv444rgb8888c.c",
+        "yuv444rgb888c.c",
+    ]
+    yuv2rgb_sources = [yuv2rgb_dir + file for file in yuv2rgb_sources]
+    env_theora.Prepend(CPPPATH=[yuv2rgb_dir])
+
     # also requires libogg and libvorbis
     if env["builtin_libogg"]:
         env_theora.Prepend(CPPPATH=["#third-party/libogg"])
@@ -84,6 +101,7 @@ if env["builtin_libtheora"]:
     env_third_party = env_theora.Clone()
     env_third_party.disable_warnings()
     env_third_party.add_source_files(third_party_obj, third_party_sources)
+    env_third_party.add_source_files(third_party_obj, yuv2rgb_sources)
     env.modules_sources += third_party_obj
 
 

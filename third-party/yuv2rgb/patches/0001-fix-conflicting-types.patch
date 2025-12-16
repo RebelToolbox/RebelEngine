@@ -1,0 +1,26 @@
+diff --git a/third-party/yuv2rgb/yuv422rgb565c.c b/third-party/yuv2rgb/yuv422rgb565c.c
+index cf92d358..aa77e04d 100644
+--- a/third-party/yuv2rgb/yuv422rgb565c.c
++++ b/third-party/yuv2rgb/yuv422rgb565c.c
+@@ -102,7 +102,7 @@ do {                        \
+     (DSTPTR) = (Y);         \
+ } while (0 == 1)
+ 
+-void yuv422_2_rgb565(uint16_t *dst_ptr,
++void yuv422_2_rgb565(uint8_t *dst_ptr,
+                const uint8_t  *y_ptr,
+                const uint8_t  *u_ptr,
+                const uint8_t  *v_ptr,
+diff --git a/third-party/yuv2rgb/yuv444rgb565c.c b/third-party/yuv2rgb/yuv444rgb565c.c
+index 700181a3..ff01ae58 100644
+--- a/third-party/yuv2rgb/yuv444rgb565c.c
++++ b/third-party/yuv2rgb/yuv444rgb565c.c
+@@ -102,7 +102,7 @@ do {                        \
+     (DSTPTR) = (Y);         \
+ } while (0 == 1)
+ 
+-void yuv444_2_rgb565(uint16_t *dst_ptr,
++void yuv444_2_rgb565(uint8_t *dst_ptr,
+                const uint8_t  *y_ptr,
+                const uint8_t  *u_ptr,
+                const uint8_t  *v_ptr,
