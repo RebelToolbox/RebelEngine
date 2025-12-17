@@ -1,8 +1,8 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef WSLAY_CONFIG_H
+#define WSLAY_CONFIG_H
 
 #ifdef BIG_ENDIAN_ENABLED
-#define WORDS_BIGENDIAN
+#define WORDS_BIGENDIAN 1
 #endif
 
-#endif /* CONFIG_H */
+#endif // WSLAY_CONFIG_H

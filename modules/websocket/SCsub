@@ -18,7 +18,6 @@ elif env["builtin_wslay"]:
         "wslay_net.c",
         "wslay_event.c",
         "wslay_queue.c",
-        "wslay_stack.c",
         "wslay_frame.c",
     ]
     third_party_sources = [third_party_dir + s for s in third_party_sources]
