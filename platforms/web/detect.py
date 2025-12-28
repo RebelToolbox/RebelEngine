@@ -353,12 +353,14 @@ def configure_emscripten_scons(environment, env_string):
     print(env_string)
     lines = env_string.split("\n")
     for line in lines:
-        if get_host_platform() == "windows":
+        if line.startswith("SET"):
             # Drop "SET " at start of line.
             clean_line = line[4:]
+            path_separator = ";"
         else:
             # Drop "export " at start of line.
             clean_line = line[7:]
+            path_separator = ":"
         parts = clean_line.split("=")
         if len(parts) != 2:
             if line:
@@ -370,16 +372,27 @@ def configure_emscripten_scons(environment, env_string):
             print("Adding variable:", key, "=", value)
             environment[key] = value
         if key.startswith("PATH"):
-            paths = value.split(os.pathsep)
+            paths = value.split(path_separator)
             for path in paths:
                 path = path.strip('"')
                 path = path.strip("'")
+                if path.startswith("/") and get_host_platform() == "windows":
+                    path = windows_path_from_bash_path(path)
                 if path.startswith(emsdk_path) and path not in [
                     emsdk_path,
                     emscripten_path,
                 ]:
                     print("Adding path:", path)
                     environment.PrependENVPath("PATH", path)
+
+
+def windows_path_from_bash_path(path):
+    drive = path[1].capitalize() + ":\\"
+    # Drop leading "/<drive-letter>/".
+    path = path[3:]
+    path = path.replace("/", "\\")
+    # Add drive letter.
+    return drive + path
 
 
 def configure_active_emscripten_scons(environment):
