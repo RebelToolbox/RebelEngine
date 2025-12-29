@@ -270,8 +270,6 @@ def configure(env):
 
 
 def prepare_web(environment):
-    if get_host_platform() == "windows":
-        prepare_web_windows(environment)
     if is_emscripten_active(environment):
         print("EMSDK environment variable found.")
         check_active_emscripten()
@@ -284,11 +282,6 @@ def prepare_web(environment):
     install_emscripten(environment)
     env_string = activate_emscripten(environment)
     configure_emscripten_scons(environment, env_string)
-
-
-def prepare_web_windows(environment):
-    print("Adding Python to the SCons path.")
-    environment.AppendENVPath("PATH", os.path.dirname(which("python")))
 
 
 def is_emscripten_active(environment):
@@ -372,6 +365,12 @@ def configure_emscripten_scons(environment, env_string):
         if key.startswith("EMSDK"):
             print("Adding variable:", key, "=", value)
             environment[key] = value
+        if key.startswith("EMSDK_PYTHON"):
+            python_path = os.path.dirname(value)
+            if python_path.startswith('"') and not python_path.endswith('"'):
+                python_path += '"'
+            print("Adding path:", python_path)
+            environment.PrependENVPath("PATH", python_path)
         if key.startswith("PATH"):
             paths = value.split(path_separator)
             for path in paths:
