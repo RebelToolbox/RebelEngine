@@ -335,22 +335,23 @@ def activate_emscripten(environment):
 
     print("Activating emscipten version:", version)
     sdk.main(["activate", version])
+    # .emscripten file is created or updated by activate; so load it (again).
+    print("Loading Emscripten config.")
+    sdk.load_em_config()
     print("Getting environment construction string.")
-    tools_to_activate = sdk.currently_active_tools()
-    env_string = sdk.construct_env(tools_to_activate, False, False)
+    active_tools = sdk.currently_active_tools()
+    print("Currently active tools:", active_tools)
+    active_tools = sdk.process_tool_list(active_tools)
+    print("Processed tool list:", active_tools)
+    env_string = sdk.construct_env(active_tools, False, False)
+    print("Environment construction string:")
+    print(env_string)
     return env_string
 
 
 def configure_emscripten_scons(environment, env_string):
+    print("Applying Emscripten environment settings to SCons environment:")
     emsdk_path = os.path.abspath(environment["emsdk"])
-    emscripten_path = os.path.join(emsdk_path, "upstream", "emscripten")
-    print("Adding known Emscripten paths")
-    print("Adding path:", emsdk_path)
-    environment.PrependENVPath("PATH", emsdk_path)
-    print("Adding path:", emscripten_path)
-    environment.PrependENVPath("PATH", emscripten_path)
-    print("Applying Emscripten settings to SCons environment:")
-    print(env_string)
     lines = env_string.split("\n")
     for line in lines:
         if line.startswith("SET"):
@@ -378,10 +379,7 @@ def configure_emscripten_scons(environment, env_string):
                 path = path.strip("'")
                 if path.startswith("/") and get_host_platform() == "windows":
                     path = windows_path_from_bash_path(path)
-                if path.startswith(emsdk_path) and path not in [
-                    emsdk_path,
-                    emscripten_path,
-                ]:
+                if path.startswith(emsdk_path):
                     print("Adding path:", path)
                     environment.PrependENVPath("PATH", path)
 
