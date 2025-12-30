@@ -1541,7 +1541,7 @@ public:
                                             // first
                                             bptr[idx] = Rect2(
                                                 p,
-                                                Vector2(0.00001, 0.00001)
+                                                Vector2(0.00001f, 0.00001f)
                                             );
                                         } else {
                                             bptr[idx].expand_to(p);

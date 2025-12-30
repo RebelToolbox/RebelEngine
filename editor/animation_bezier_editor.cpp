@@ -263,7 +263,7 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
 
         if (has_focus()) {
             Color accent  = get_color("accent_color", "Editor");
-            accent.a     *= 0.7;
+            accent.a     *= 0.7f;
             draw_rect(
                 Rect2(Point2(), get_size()),
                 accent,
@@ -277,7 +277,7 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
         int hsep        = get_constant("hseparation", "ItemList");
         int vsep        = get_constant("vseparation", "ItemList");
         Color linecolor = color;
-        linecolor.a     = 0.2;
+        linecolor.a     = 0.2f;
 
         draw_line(
             Point2(limit, 0),
@@ -378,14 +378,14 @@ void AnimationBezierTrackEdit::_notification(int p_what) {
                 font->get_height() + vsep
             );
             if (i != track) {
-                cc.a          *= 0.7;
+                cc.a          *= 0.7f;
                 uint32_t hash  = path.hash();
                 hash           = ((hash >> 16) ^ hash) * 0x45d9f3b;
                 hash           = ((hash >> 16) ^ hash) * 0x45d9f3b;
                 hash           = (hash >> 16) ^ hash;
                 float h        = (hash % 65535) / 65536.0;
                 Color subcolor;
-                subcolor.set_hsv(h, 0.2, 0.8);
+                subcolor.set_hsv(h, 0.2f, 0.8f);
                 subcolor.a = 0.5;
                 draw_rect(
                     Rect2(
@@ -774,7 +774,7 @@ void AnimationBezierTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
             );
         } else {
             if (v_zoom < 100000) {
-                v_zoom *= 1.2;
+                v_zoom *= 1.2f;
             }
         }
         v_scroll = v_scroll
@@ -791,8 +791,8 @@ void AnimationBezierTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
                 timeline->get_zoom()->get_value() * 1.05
             );
         } else {
-            if (v_zoom > 0.000001) {
-                v_zoom /= 1.2;
+            if (v_zoom > 0.000001f) {
+                v_zoom /= 1.2f;
             }
         }
         v_scroll = v_scroll
@@ -944,7 +944,7 @@ void AnimationBezierTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
                           / timeline->get_zoom_scale())
                        + timeline->get_value();
             while (animation->track_find_key(track, time, true) != -1) {
-                time += 0.001;
+                time += 0.001f;
             }
 
             undo_redo->create_action(TTR("Add Bezier Point"));
@@ -1358,7 +1358,7 @@ void AnimationBezierTrackEdit::_menu_selected(int p_index) {
                           / timeline->get_zoom_scale())
                        + timeline->get_value();
             while (animation->track_find_key(track, time, true) != -1) {
-                time += 0.001;
+                time += 0.001f;
             }
 
             undo_redo->create_action(TTR("Add Bezier Point"));

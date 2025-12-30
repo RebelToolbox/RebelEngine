@@ -360,7 +360,7 @@ bool PathEditorPlugin::forward_spatial_gui_input(
             int rc                  = v3a.size();
             int closest_seg         = -1;
             Vector3 closest_seg_point;
-            float closest_d = 1e20;
+            float closest_d = 1e20f;
 
             if (rc >= 2) {
                 PoolVector<Vector3>::Read r = v3a.read();
@@ -787,9 +787,9 @@ int PathSpatialGizmoPlugin::get_priority() const {
 PathSpatialGizmoPlugin::PathSpatialGizmoPlugin() {
     Color path_color = EDITOR_DEF(
         "editors/3d_gizmos/gizmo_colors/path",
-        Color(0.5, 0.5, 1.0, 0.8)
+        Color(0.5f, 0.5f, 1, 0.8f)
     );
     create_material("path_material", path_color);
-    create_material("path_thin_material", Color(0.5, 0.5, 0.5));
+    create_material("path_thin_material", Color(0.5f, 0.5f, 0.5f));
     create_handle_material("handles");
 }

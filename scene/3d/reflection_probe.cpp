@@ -67,8 +67,8 @@ void ReflectionProbe::set_extents(const Vector3& p_extents) {
     extents = p_extents;
 
     for (int i = 0; i < 3; i++) {
-        if (extents[i] < 0.01) {
-            extents[i] = 0.01;
+        if (extents[i] < 0.01f) {
+            extents[i] = 0.01f;
         }
 
         if (extents[i] - 0.01 < ABS(origin_offset[i])) {

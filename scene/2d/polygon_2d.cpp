@@ -149,7 +149,7 @@ void Polygon2D::_notification(int p_what) {
             if (invert) {
                 Rect2 bounds;
                 int highest_idx = -1;
-                float highest_y = -1e20;
+                float highest_y = -1e20f;
                 float sum       = 0;
 
                 for (int i = 0; i < len; i++) {

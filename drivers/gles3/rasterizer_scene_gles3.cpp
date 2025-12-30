@@ -6576,7 +6576,7 @@ void RasterizerSceneGLES3::render_scene(
     state.ubo_data.z_slope_scale                      = 0;
     state.ubo_data.shadow_dual_paraboloid_render_side = 0;
     state.ubo_data.shadow_dual_paraboloid_render_zfar = 0;
-    state.ubo_data.opaque_prepass_threshold           = 0.99;
+    state.ubo_data.opaque_prepass_threshold           = 0.99f;
 
     if (storage->frame.current_rt) {
         int viewport_width_pixels  = storage->frame.current_rt->width;
@@ -7663,7 +7663,7 @@ void RasterizerSceneGLES3::render_shadow(
     state.ubo_data.z_slope_scale                      = normal_bias;
     state.ubo_data.shadow_dual_paraboloid_render_side = dp_direction;
     state.ubo_data.shadow_dual_paraboloid_render_zfar = zfar;
-    state.ubo_data.opaque_prepass_threshold           = 0.1;
+    state.ubo_data.opaque_prepass_threshold           = 0.1f;
 
     _setup_environment(nullptr, light_projection, light_transform);
 

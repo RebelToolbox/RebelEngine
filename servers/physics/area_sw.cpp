@@ -287,13 +287,13 @@ AreaSW::AreaSW() :
     moved_list(this) {
     _set_static(true); // areas are never active
     space_override_mode    = PhysicsServer::AREA_SPACE_OVERRIDE_DISABLED;
-    gravity                = 9.80665;
+    gravity                = 9.80665f;
     gravity_vector         = Vector3(0, -1, 0);
     gravity_is_point       = false;
     gravity_distance_scale = 0;
     point_attenuation      = 1;
-    angular_damp           = 0.1;
-    linear_damp            = 0.1;
+    angular_damp           = 0.1f;
+    linear_damp            = 0.1f;
     priority               = 0;
     set_ray_pickable(false);
     monitor_callback_id      = 0;

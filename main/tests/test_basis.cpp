@@ -22,11 +22,11 @@ enum RotOrder {
 };
 
 Vector3 deg2rad(const Vector3& p_rotation) {
-    return p_rotation / 180.0 * Math_PI;
+    return p_rotation / 180.f * static_cast<real_t>(Math_PI);
 }
 
 Vector3 rad2deg(const Vector3& p_rotation) {
-    return p_rotation / Math_PI * 180.0;
+    return p_rotation / static_cast<real_t>(Math_PI) * 180.f;
 }
 
 Basis EulerToBasis(RotOrder mode, const Vector3& p_rotation) {

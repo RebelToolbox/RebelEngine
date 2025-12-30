@@ -2094,7 +2094,7 @@ CodeTextEditor::CodeTextEditor() {
     font_resize_timer = memnew(Timer);
     add_child(font_resize_timer);
     font_resize_timer->set_one_shot(true);
-    font_resize_timer->set_wait_time(0.07);
+    font_resize_timer->set_wait_time(0.07f);
     font_resize_timer->connect("timeout", this, "_font_resize_timeout");
 
     EditorSettings::get_singleton()

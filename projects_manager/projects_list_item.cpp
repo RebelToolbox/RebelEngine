@@ -35,7 +35,7 @@ ProjectsListItem::ProjectsListItem(
     // Disables hover focus; so the whole item remains highlighted.
     favorite_button->set_mouse_filter(MOUSE_FILTER_PASS);
     if (!favorite) {
-        favorite_button->set_modulate(Color(1, 1, 1, 0.2));
+        favorite_button->set_modulate(Color(1, 1, 1, 0.2f));
     }
     favorite_button->connect("pressed", this, "_on_favorite_pressed");
     favorite_button_container->add_child(favorite_button);
@@ -250,7 +250,7 @@ void ProjectsListItem::_on_favorite_pressed() {
             project_folder
         );
     } else {
-        favorite_button->set_modulate(Color(1, 1, 1, 0.2));
+        favorite_button->set_modulate(Color(1, 1, 1, 0.2f));
         EditorSettings::get_singleton()->erase(
             "favorite_projects/" + project_key
         );

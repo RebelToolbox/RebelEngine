@@ -275,9 +275,9 @@ void PVSBuilder::trace_rooms_recursive(
             // The epsilon should be BEHIND the way we are going through the
             // portal, so depends whether it is outgoing or not
             if (outgoing) {
-                _trace_start_point -= portal._plane.normal * 0.1;
+                _trace_start_point -= portal._plane.normal * 0.1f;
             } else {
-                _trace_start_point += portal._plane.normal * 0.1;
+                _trace_start_point += portal._plane.normal * 0.1f;
             }
 
         } else {

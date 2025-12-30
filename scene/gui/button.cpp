@@ -150,7 +150,7 @@ void Button::_notification(int p_what) {
             if (!_icon.is_null()) {
                 int valign = size.height - style->get_minimum_size().y;
                 if (is_disabled()) {
-                    color_icon.a = 0.4;
+                    color_icon.a = 0.4f;
                 }
 
                 float icon_ofs_region = 0;

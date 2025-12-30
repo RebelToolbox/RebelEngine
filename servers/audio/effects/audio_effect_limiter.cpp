@@ -168,7 +168,7 @@ void AudioEffectLimiter::_bind_methods() {
 
 AudioEffectLimiter::AudioEffectLimiter() {
     threshold       = 0;
-    ceiling         = -0.1;
+    ceiling         = -0.1f;
     soft_clip       = 2;
     soft_clip_ratio = 10;
 }

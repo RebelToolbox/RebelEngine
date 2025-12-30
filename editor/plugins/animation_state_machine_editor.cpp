@@ -192,7 +192,7 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(
 
         // test the lines now
         int closest     = -1;
-        float closest_d = 1e20;
+        float closest_d = 1e20f;
         for (int i = 0; i < transition_lines.size(); i++) {
             Vector2 s[2]   = {transition_lines[i].from, transition_lines[i].to};
             Vector2 cpoint = Geometry::get_closest_point_to_segment_2d(
@@ -363,8 +363,8 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(
             List<StringName> nodes;
             state_machine->get_node_list(&nodes);
 
-            float best_d_x = 1e20;
-            float best_d_y = 1e20;
+            float best_d_x = 1e20f;
+            float best_d_y = 1e20f;
 
             for (List<StringName>::Element* E = nodes.front(); E;
                  E                            = E->next()) {
@@ -575,9 +575,9 @@ void AnimationNodeStateMachineEditor::_connection_draw(
     Color accent = get_color("accent_color", "Editor");
 
     if (!p_enabled) {
-        linecolor.a  *= 0.2;
-        icon_color.a *= 0.2;
-        accent.a     *= 0.6;
+        linecolor.a  *= 0.2f;
+        icon_color.a *= 0.2f;
+        accent.a     *= 0.6f;
     }
 
     Ref<Texture> icons[6] = {
@@ -662,7 +662,7 @@ void AnimationNodeStateMachineEditor::_state_machine_draw() {
     Ref<Texture> edit              = get_icon("Edit", "EditorIcons");
     Color accent                   = get_color("accent_color", "Editor");
     Color linecolor                = get_color("font_color", "Label");
-    linecolor.a                   *= 0.3;
+    linecolor.a                   *= 0.3f;
     Ref<StyleBox> playing_overlay  = get_stylebox("position", "GraphNode");
 
     bool playing = false;
@@ -1041,7 +1041,7 @@ void AnimationNodeStateMachineEditor::_state_machine_pos_draw() {
     float c    = pos / len;
     Color fg   = get_color("font_color", "Label");
     Color bg   = fg;
-    bg.a      *= 0.3;
+    bg.a      *= 0.3f;
 
     state_machine_play_pos->draw_line(from, to, bg, 2);
 

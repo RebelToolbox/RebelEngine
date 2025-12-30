@@ -59,7 +59,7 @@ void SpriteFramesEditor::_sheet_preview_draw() {
 
     real_t width  = (texture_size.width / h) * sheet_zoom;
     real_t height = (texture_size.height / v) * sheet_zoom;
-    const float a = 0.3;
+    const float a = 0.3f;
 
     real_t y_end = v * height;
     for (int i = 0; i <= h; i++) {
@@ -101,7 +101,7 @@ void SpriteFramesEditor::_sheet_preview_draw() {
 
         split_sheet_preview->draw_rect(
             Rect2(x + 5, y + 5, width - 10, height - 10),
-            Color(0, 0, 0, 0.35),
+            Color(0, 0, 0, 0.35f),
             true
         );
         split_sheet_preview->draw_rect(
@@ -353,7 +353,7 @@ void SpriteFramesEditor::_prepare_sprite_sheet(const String& p_file) {
         // reset zoom
         _sheet_zoom_reset();
     }
-    split_sheet_dialog->popup_centered_ratio(0.65);
+    split_sheet_dialog->popup_centered_ratio(0.65f);
 }
 
 void SpriteFramesEditor::_notification(int p_what) {

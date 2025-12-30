@@ -619,7 +619,7 @@ ImageTexture::ImageTexture() {
     flags                 = FLAGS_DEFAULT;
     texture               = VisualServer::get_singleton()->texture_create();
     storage               = STORAGE_RAW;
-    lossy_storage_quality = 0.7;
+    lossy_storage_quality = 0.7f;
     image_stored          = false;
     format                = Image::FORMAT_L8;
 }
@@ -2287,7 +2287,7 @@ CubeMap::CubeMap() {
     }
     cubemap               = VisualServer::get_singleton()->texture_create();
     storage               = STORAGE_RAW;
-    lossy_storage_quality = 0.7;
+    lossy_storage_quality = 0.7f;
     format                = Image::FORMAT_BPTC_RGBA;
 }
 

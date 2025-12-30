@@ -618,7 +618,7 @@ void LightmapperCPU::_plot_triangle(
                 pixel_polygon.write[k] = Vector2(i, j) + corners[k];
             }
 
-            const float max_dist = 0.05;
+            const float max_dist = 0.05f;
             bool v0eqv1          = v0.distance_squared_to(v1) < max_dist;
             bool v1eqv2          = v1.distance_squared_to(v2) < max_dist;
             bool v2eqv0          = v2.distance_squared_to(v0) < max_dist;
@@ -1149,10 +1149,13 @@ void LightmapperCPU::_compute_indirect_light(uint32_t p_idx, void* r_lightmap) {
                         st.y = direction.y > 0.0 ? 0.0 : Math_PI;
                     }
 
-                    st.x    += Math_PI;
-                    st      /= Vector2(Math_TAU, Math_PI);
-                    st.x     = Math::fmod(st.x + 0.75, 1.0);
-                    Color c  = _bilinear_sample(
+                    st.x += static_cast<real_t>(Math_PI);
+                    st   /= Vector2(
+                        static_cast<real_t>(Math_TAU),
+                        static_cast<real_t>(Math_PI)
+                    );
+                    st.x    = Math::fmod(st.x + 0.75, 1.0);
+                    Color c = _bilinear_sample(
                         parameters.environment_panorama,
                         st,
                         false,
@@ -1228,7 +1231,7 @@ void LightmapperCPU::_post_process(uint32_t p_idx, void* r_output) {
             }
 
             int closest_idx    = -1;
-            float closest_dist = 1e20;
+            float closest_dist = 1e20f;
 
             for (int y = i - margin; y <= i + margin; y++) {
                 for (int x = j - margin; x <= j + margin; x++) {
@@ -1548,7 +1551,7 @@ void LightmapperCPU::_dilate_lightmap(
             }
 
             Vector2i closest;
-            float closest_dist = 1e20;
+            float closest_dist = 1e20f;
 
             for (int y = i - margin; y <= i + margin; y++) {
                 for (int x = j - margin; x <= j + margin; x++) {
@@ -1709,7 +1712,7 @@ LightmapperCPU::BakeError LightmapperCPU::bake(
 
     if (p_step_function) {
         bool cancelled = p_step_function(
-            0.1,
+            0.1f,
             TTR("Preparing data structures"),
             p_bake_userdata,
             true
@@ -1761,7 +1764,7 @@ LightmapperCPU::BakeError LightmapperCPU::bake(
 
     if (p_step_function) {
         bool cancelled = p_step_function(
-            0.2,
+            0.2f,
             TTR("Generate buffers"),
             p_bake_userdata,
             true
@@ -1909,8 +1912,12 @@ LightmapperCPU::BakeError LightmapperCPU::bake(
     }
 
     if (p_step_function) {
-        bool cancelled =
-            p_step_function(0.8, TTR("Post processing"), p_bake_userdata, true);
+        bool cancelled = p_step_function(
+            0.8f,
+            TTR("Post processing"),
+            p_bake_userdata,
+            true
+        );
         if (cancelled) {
             return BAKE_ERROR_USER_ABORTED;
         }
@@ -1980,7 +1987,7 @@ LightmapperCPU::BakeError LightmapperCPU::bake(
 
     if (p_step_function) {
         bool cancelled = p_step_function(
-            0.9,
+            0.9f,
             TTR("Plotting lightmaps"),
             p_bake_userdata,
             true

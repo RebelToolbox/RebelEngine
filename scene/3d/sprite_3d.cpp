@@ -460,10 +460,10 @@ SpriteBase3D::SpriteBase3D() {
     alpha_cut      = ALPHA_CUT_DISABLED;
     billboard_mode = SpatialMaterial::BILLBOARD_DISABLED;
     axis           = Vector3::AXIS_Z;
-    pixel_size     = 0.01;
+    pixel_size     = 0.01f;
     modulate       = Color(1, 1, 1, 1);
     pending_update = false;
-    opacity        = 1.0;
+    opacity        = 1;
 
     material = VisualServer::get_singleton()->material_create();
     // Set defaults for material, names need to match up those in

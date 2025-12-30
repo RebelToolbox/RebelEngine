@@ -67,7 +67,7 @@ Vector<Ref<Texture>> EditorInterface::make_mesh_previews(
     RID light_instance = VS::get_singleton()->instance_create2(light, scenario);
 
     RID light2 = VS::get_singleton()->directional_light_create();
-    VS::get_singleton()->light_set_color(light2, Color(0.7, 0.7, 0.7));
+    VS::get_singleton()->light_set_color(light2, Color(0.7f, 0.7f, 0.7f));
     RID light_instance2 =
         VS::get_singleton()->instance_create2(light2, scenario);
 
@@ -95,9 +95,13 @@ Vector<Ref<Texture>> EditorInterface::make_mesh_previews(
         Vector3 ofs    = aabb.position + aabb.size * 0.5;
         aabb.position -= ofs;
         Transform xform;
-        xform.basis = Basis().rotated(Vector3(0, 1, 0), -Math_PI / 6);
+        xform.basis = Basis().rotated(
+            Vector3(0, 1, 0),
+            -static_cast<real_t>(Math_PI) / 6
+        );
         xform.basis =
-            Basis().rotated(Vector3(1, 0, 0), Math_PI / 6) * xform.basis;
+            Basis().rotated(Vector3(1, 0, 0), static_cast<real_t>(Math_PI) / 6)
+            * xform.basis;
         AABB rot_aabb = xform.xform(aabb);
         float m       = MAX(rot_aabb.size.x, rot_aabb.size.y) * 0.5;
         if (m == 0) {
@@ -113,7 +117,8 @@ Vector<Ref<Texture>> EditorInterface::make_mesh_previews(
             camera,
             xform * Transform(Basis(), Vector3(0, 0, 3))
         );
-        VS::get_singleton()->camera_set_orthogonal(camera, m * 2, 0.01, 1000.0);
+        VS::get_singleton()
+            ->camera_set_orthogonal(camera, m * 2, 0.01f, 1000.0);
 
         VS::get_singleton()->instance_set_transform(
             light_instance,

@@ -1179,10 +1179,10 @@ void TileSetEditor::_on_workspace_draw() {
         return;
     }
 
-    const Color COLOR_AUTOTILE    = Color(0.3, 0.6, 1);
-    const Color COLOR_SINGLE      = Color(1, 1, 0.3);
-    const Color COLOR_ATLAS       = Color(0.8, 0.8, 0.8);
-    const Color COLOR_SUBDIVISION = Color(0.3, 0.7, 0.6);
+    const Color COLOR_AUTOTILE    = Color(0.3f, 0.6f, 1);
+    const Color COLOR_SINGLE      = Color(1, 1, 0.3f);
+    const Color COLOR_ATLAS       = Color(0.8f, 0.8f, 0.8f);
+    const Color COLOR_SUBDIVISION = Color(0.3f, 0.7f, 0.6f);
 
     draw_handles = false;
 
@@ -1201,8 +1201,8 @@ void TileSetEditor::_on_workspace_draw() {
                 draw_highlight_subtile(coord);
             } break;
             case EDITMODE_BITMASK: {
-                Color c(1, 0, 0, 0.5);
-                Color ci(0.3, 0.6, 1, 0.5);
+                Color c(1, 0, 0, 0.5f);
+                Color ci(0.3f, 0.6f, 1, 0.5f);
                 for (int x = 0; x < region.size.x / (spacing + size.x); x++) {
                     for (int y = 0; y < region.size.y / (spacing + size.y);
                          y++) {
@@ -1684,9 +1684,9 @@ void TileSetEditor::_on_workspace_overlay_draw() {
         return;
     }
 
-    const Color COLOR_AUTOTILE = Color(0.266373, 0.565288, 0.988281);
-    const Color COLOR_SINGLE   = Color(0.988281, 0.909323, 0.266373);
-    const Color COLOR_ATLAS    = Color(0.78653, 0.812835, 0.832031);
+    const Color COLOR_AUTOTILE = Color(0.266373f, 0.565288f, 0.988281f);
+    const Color COLOR_SINGLE   = Color(0.988281f, 0.909323f, 0.266373f);
+    const Color COLOR_ATLAS    = Color(0.78653f, 0.812835f, 0.832031f);
 
     if (tile_names_visible) {
         String current_texture_path = get_current_texture()->get_path();
@@ -1718,7 +1718,7 @@ void TileSetEditor::_on_workspace_overlay_draw() {
             region.set_size(font->get_string_size(tile_id_name));
             workspace_overlay->draw_rect(region, c);
             region.position.y += region.size.y - 2;
-            c                  = Color(0.1, 0.1, 0.1);
+            c                  = Color(0.1f, 0.1f, 0.1f);
             workspace_overlay
                 ->draw_string(font, region.position, tile_id_name, c);
         }
@@ -3798,7 +3798,7 @@ void TileSetEditor::_zoom_reset() {
 }
 
 void TileSetEditor::draw_highlight_current_tile() {
-    Color shadow_color = Color(0.3, 0.3, 0.3, 0.3);
+    Color shadow_color = Color(0.3f, 0.3f, 0.3f, 0.3f);
     if ((workspace_mode == WORKSPACE_EDIT && get_current_tile() >= 0)
         || !edited_region.has_no_area()) {
         Rect2 region;
@@ -3864,7 +3864,7 @@ void TileSetEditor::draw_highlight_subtile(
     Vector2 coord,
     const Vector<Vector2>& other_highlighted
 ) {
-    Color shadow_color  = Color(0.3, 0.3, 0.3, 0.3);
+    Color shadow_color  = Color(0.3f, 0.3f, 0.3f, 0.3f);
     Vector2 size        = tileset->autotile_get_size(get_current_tile());
     int spacing         = tileset->autotile_get_spacing(get_current_tile());
     Rect2 region        = tileset->tile_get_region(get_current_tile());
@@ -3988,7 +3988,7 @@ void TileSetEditor::draw_tile_subdivision(int p_id, Color p_color) const {
 }
 
 void TileSetEditor::draw_edited_region_subdivision() const {
-    Color c      = Color(0.3, 0.7, 0.6);
+    Color c      = Color(0.3f, 0.7f, 0.6f);
     Rect2 region = edited_region;
     Size2 size;
     int spacing;
@@ -4050,7 +4050,7 @@ void TileSetEditor::draw_edited_region_subdivision() const {
 
 void TileSetEditor::draw_grid_snap() {
     if (tools[TOOL_GRID_SNAP]->is_pressed()) {
-        Color grid_color = Color(0.4, 0, 1);
+        Color grid_color = Color(0.4f, 0, 1);
         Size2 s          = workspace->get_size();
 
         int width_count = Math::floor(
@@ -4157,20 +4157,20 @@ void TileSetEditor::draw_polygon_shapes() {
                          || coord == edited_shape_coord)
                         && sd[i].shape == edited_collision_shape) {
                         if (is_convex) {
-                            c_bg     = Color(0, 1, 1, 0.5);
+                            c_bg     = Color(0, 1, 1, 0.5f);
                             c_border = Color(0, 1, 1);
                         } else {
-                            c_bg     = Color(0.8, 0, 1, 0.5);
-                            c_border = Color(0.8, 0, 1);
+                            c_bg     = Color(0.8f, 0, 1, 0.5f);
+                            c_border = Color(0.8f, 0, 1);
                         }
                     } else {
                         if (is_convex) {
-                            c_bg     = Color(0.9, 0.7, 0.07, 0.5);
-                            c_border = Color(0.9, 0.7, 0.07, 1);
+                            c_bg     = Color(0.9f, 0.7f, 0.07f, 0.5f);
+                            c_border = Color(0.9f, 0.7f, 0.07f, 1);
 
                         } else {
-                            c_bg     = Color(0.9, 0.45, 0.075, 0.5);
-                            c_border = Color(0.9, 0.45, 0.075);
+                            c_bg     = Color(0.9f, 0.45f, 0.075f, 0.5f);
+                            c_border = Color(0.9f, 0.45f, 0.075f);
                         }
                     }
                     Vector<Vector2> polygon;
@@ -4296,11 +4296,11 @@ void TileSetEditor::draw_polygon_shapes() {
                         Color c_border;
                         if (coord == edited_shape_coord
                             && shape == edited_occlusion_shape) {
-                            c_bg     = Color(0, 1, 1, 0.5);
+                            c_bg     = Color(0, 1, 1, 0.5f);
                             c_border = Color(0, 1, 1);
                         } else {
-                            c_bg     = Color(0.9, 0.7, 0.07, 0.5);
-                            c_border = Color(0.9, 0.7, 0.07, 1);
+                            c_bg     = Color(0.9f, 0.7f, 0.07f, 0.5f);
+                            c_border = Color(0.9f, 0.7f, 0.07f, 1);
                         }
                         Vector<Vector2> polygon;
                         Vector<Color> colors;
@@ -4422,11 +4422,11 @@ void TileSetEditor::draw_polygon_shapes() {
                         Color c_border;
                         if (coord == edited_shape_coord
                             && shape == edited_navigation_shape) {
-                            c_bg     = Color(0, 1, 1, 0.5);
+                            c_bg     = Color(0, 1, 1, 0.5f);
                             c_border = Color(0, 1, 1);
                         } else {
-                            c_bg     = Color(0.9, 0.7, 0.07, 0.5);
-                            c_border = Color(0.9, 0.7, 0.07, 1);
+                            c_bg     = Color(0.9f, 0.7f, 0.07f, 0.5f);
+                            c_border = Color(0.9f, 0.7f, 0.07f, 1);
                         }
                         Vector<Vector2> polygon;
                         Vector<Color> colors;

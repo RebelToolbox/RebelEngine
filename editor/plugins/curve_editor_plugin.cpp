@@ -735,9 +735,9 @@ void CurveEditor::_draw() {
     Vector2 max_edge = get_world_pos(Vector2(view_size.x, 0));
 
     const Color grid_color0 =
-        get_color("mono_color", "Editor") * Color(1, 1, 1, 0.15);
+        get_color("mono_color", "Editor") * Color(1, 1, 1, 0.15f);
     const Color grid_color1 =
-        get_color("mono_color", "Editor") * Color(1, 1, 1, 0.07);
+        get_color("mono_color", "Editor") * Color(1, 1, 1, 0.07f);
     draw_line(
         Vector2(min_edge.x, curve.get_min_value()),
         Vector2(max_edge.x, curve.get_min_value()),
@@ -908,7 +908,7 @@ void CurveEditor::_draw() {
     // Help text
 
     if (_selected_point > 0 && _selected_point + 1 < curve.get_point_count()) {
-        text_color.a *= 0.4;
+        text_color.a *= 0.4f;
         draw_string(
             font,
             Vector2(50 * EDSCALE, font_height),
@@ -916,7 +916,7 @@ void CurveEditor::_draw() {
             text_color
         );
     } else if (curve.get_point_count() == 0) {
-        text_color.a *= 0.4;
+        text_color.a *= 0.4f;
         draw_string(
             font,
             Vector2(50 * EDSCALE, font_height),
@@ -1000,14 +1000,14 @@ Ref<Texture> CurvePreviewGenerator::generate(
 
     im.lock();
 
-    Color bg_color(0.1, 0.1, 0.1, 1.0);
+    Color bg_color(0.1f, 0.1f, 0.1f, 1);
     for (int i = 0; i < thumbnail_size; i++) {
         for (int j = 0; j < thumbnail_size / 2; j++) {
             im.set_pixel(i, j, bg_color);
         }
     }
 
-    Color line_color(0.8, 0.8, 0.8, 1.0);
+    Color line_color(0.8f, 0.8f, 0.8f, 1);
     float range_y = curve.get_max_value() - curve.get_min_value();
 
     int prev_y = 0;

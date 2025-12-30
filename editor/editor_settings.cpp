@@ -454,7 +454,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
         "Auto,Dark,Light",
         PROPERTY_USAGE_DEFAULT
     );
-    _initial_set("interface/theme/base_color", Color(0.2, 0.23, 0.31));
+    _initial_set("interface/theme/base_color", Color(0.2f, 0.23f, 0.31f));
     hints["interface/theme/base_color"] = PropertyInfo(
         Variant::COLOR,
         "interface/theme/base_color",
@@ -462,7 +462,7 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
         "",
         PROPERTY_USAGE_DEFAULT
     );
-    _initial_set("interface/theme/accent_color", Color(0.41, 0.61, 0.91));
+    _initial_set("interface/theme/accent_color", Color(0.41f, 0.61f, 0.91f));
     hints["interface/theme/accent_color"] = PropertyInfo(
         Variant::COLOR,
         "interface/theme/accent_color",
@@ -769,10 +769,13 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
     _initial_set("editors/grid_map/pick_distance", 5000.0);
 
     // 3D
-    _initial_set("editors/3d/primary_grid_color", Color(0.56, 0.56, 0.56, 0.5));
+    _initial_set(
+        "editors/3d/primary_grid_color",
+        Color(0.56f, 0.56f, 0.56f, 0.5f)
+    );
     _initial_set(
         "editors/3d/secondary_grid_color",
-        Color(0.38, 0.38, 0.38, 0.5)
+        Color(0.38f, 0.38f, 0.38f, 0.5f)
     );
 
     // Use a similar color to the 2D editor selection.
@@ -965,17 +968,26 @@ void EditorSettings::_load_defaults(Ref<ConfigFile> p_extra_config) {
     _initial_set("editors/3d/freelook/freelook_speed_zoom_link", false);
 
     // 2D
-    _initial_set("editors/2d/grid_color", Color(1.0, 1.0, 1.0, 0.07));
-    _initial_set("editors/2d/guides_color", Color(0.6, 0.0, 0.8));
-    _initial_set("editors/2d/smart_snapping_line_color", Color(0.9, 0.1, 0.1));
+    _initial_set("editors/2d/grid_color", Color(1, 1, 1, 0.07f));
+    _initial_set("editors/2d/guides_color", Color(0.6f, 0, 0.8f));
+    _initial_set(
+        "editors/2d/smart_snapping_line_color",
+        Color(0.9f, 0.1f, 0.1f)
+    );
     _initial_set("editors/2d/bone_width", 5);
-    _initial_set("editors/2d/bone_color1", Color(1.0, 1.0, 1.0, 0.9));
-    _initial_set("editors/2d/bone_color2", Color(0.6, 0.6, 0.6, 0.9));
-    _initial_set("editors/2d/bone_selected_color", Color(0.9, 0.45, 0.45, 0.9));
-    _initial_set("editors/2d/bone_ik_color", Color(0.9, 0.9, 0.45, 0.9));
-    _initial_set("editors/2d/bone_outline_color", Color(0.35, 0.35, 0.35));
+    _initial_set("editors/2d/bone_color1", Color(1, 1, 1, 0.9f));
+    _initial_set("editors/2d/bone_color2", Color(0.6f, 0.6f, 0.6f, 0.9f));
+    _initial_set(
+        "editors/2d/bone_selected_color",
+        Color(0.9f, 0.45f, 0.45f, 0.9f)
+    );
+    _initial_set("editors/2d/bone_ik_color", Color(0.9f, 0.9f, 0.45f, 0.9f));
+    _initial_set("editors/2d/bone_outline_color", Color(0.35f, 0.35f, 0.35f));
     _initial_set("editors/2d/bone_outline_size", 2);
-    _initial_set("editors/2d/viewport_border_color", Color(0.4, 0.4, 1.0, 0.4));
+    _initial_set(
+        "editors/2d/viewport_border_color",
+        Color(0.4f, 0.4f, 1, 0.4f)
+    );
     _initial_set("editors/2d/constrain_editor_view", true);
     _initial_set("editors/2d/warped_mouse_panning", true);
     _initial_set("editors/2d/simple_panning", false);
@@ -1106,51 +1118,48 @@ void EditorSettings::_load_default_text_editor_theme() {
 
     _initial_set(
         "text_editor/highlighting/symbol_color",
-        Color(0.73, 0.87, 1.0)
+        Color(0.73f, 0.87f, 1)
     );
-    _initial_set(
-        "text_editor/highlighting/keyword_color",
-        Color(1.0, 1.0, 0.7)
-    );
+    _initial_set("text_editor/highlighting/keyword_color", Color(1, 1, 0.7f));
     _initial_set(
         "text_editor/highlighting/control_flow_keyword_color",
-        Color(1.0, 0.85, 0.7)
+        Color(1, 0.85f, 0.7f)
     );
     _initial_set(
         "text_editor/highlighting/base_type_color",
-        Color(0.64, 1.0, 0.83)
+        Color(0.64f, 1, 0.83f)
     );
     _initial_set(
         "text_editor/highlighting/engine_type_color",
-        Color(0.51, 0.83, 1.0)
+        Color(0.51f, 0.83f, 1)
     );
     _initial_set(
         "text_editor/highlighting/user_type_color",
-        Color(0.42, 0.67, 0.93)
+        Color(0.42f, 0.67f, 0.93f)
     );
     _initial_set(
         "text_editor/highlighting/comment_color",
-        Color(0.4, 0.4, 0.4)
+        Color(0.4f, 0.4f, 0.4f)
     );
     _initial_set(
         "text_editor/highlighting/string_color",
-        Color(0.94, 0.43, 0.75)
+        Color(0.94f, 0.43f, 0.75f)
     );
     _initial_set(
         "text_editor/highlighting/background_color",
-        dark_theme ? Color(0.0, 0.0, 0.0, 0.23) : Color(0.2, 0.23, 0.31)
+        dark_theme ? Color(0, 0, 0, 0.23f) : Color(0.2f, 0.23f, 0.31f)
     );
     _initial_set(
         "text_editor/highlighting/completion_background_color",
-        Color(0.17, 0.16, 0.2)
+        Color(0.17f, 0.16f, 0.2f)
     );
     _initial_set(
         "text_editor/highlighting/completion_selected_color",
-        Color(0.26, 0.26, 0.27)
+        Color(0.26f, 0.26f, 0.27f)
     );
     _initial_set(
         "text_editor/highlighting/completion_existing_color",
-        Color(0.13, 0.87, 0.87, 0.87)
+        Color(0.13f, 0.87f, 0.87f, 0.87f)
     );
     _initial_set(
         "text_editor/highlighting/completion_scroll_color",
@@ -1158,23 +1167,23 @@ void EditorSettings::_load_default_text_editor_theme() {
     );
     _initial_set(
         "text_editor/highlighting/completion_font_color",
-        Color(0.67, 0.67, 0.67)
+        Color(0.67f, 0.67f, 0.67f)
     );
     _initial_set(
         "text_editor/highlighting/text_color",
-        Color(0.67, 0.67, 0.67)
+        Color(0.67f, 0.67f, 0.67f)
     );
     _initial_set(
         "text_editor/highlighting/line_number_color",
-        Color(0.67, 0.67, 0.67, 0.4)
+        Color(0.67f, 0.67f, 0.67f, 0.4f)
     );
     _initial_set(
         "text_editor/highlighting/safe_line_number_color",
-        Color(0.67, 0.78, 0.67, 0.6)
+        Color(0.67f, 0.78f, 0.67f, 0.6f)
     );
     _initial_set(
         "text_editor/highlighting/caret_color",
-        Color(0.67, 0.67, 0.67)
+        Color(0.67f, 0.67f, 0.67f)
     );
     _initial_set(
         "text_editor/highlighting/caret_background_color",
@@ -1186,63 +1195,63 @@ void EditorSettings::_load_default_text_editor_theme() {
     );
     _initial_set(
         "text_editor/highlighting/selection_color",
-        Color(0.41, 0.61, 0.91, 0.35)
+        Color(0.41f, 0.61f, 0.91f, 0.35f)
     );
     _initial_set(
         "text_editor/highlighting/brace_mismatch_color",
-        Color(1, 0.2, 0.2)
+        Color(1, 0.2f, 0.2f)
     );
     _initial_set(
         "text_editor/highlighting/current_line_color",
-        Color(0.3, 0.5, 0.8, 0.15)
+        Color(0.3f, 0.5f, 0.8f, 0.15f)
     );
     _initial_set(
         "text_editor/highlighting/line_length_guideline_color",
-        Color(0.3, 0.5, 0.8, 0.1)
+        Color(0.3f, 0.5f, 0.8f, 0.1f)
     );
     _initial_set(
         "text_editor/highlighting/word_highlighted_color",
-        Color(0.8, 0.9, 0.9, 0.15)
+        Color(0.8f, 0.9f, 0.9f, 0.15f)
     );
     _initial_set(
         "text_editor/highlighting/number_color",
-        Color(0.92, 0.58, 0.2)
+        Color(0.92f, 0.58f, 0.2f)
     );
     _initial_set(
         "text_editor/highlighting/function_color",
-        Color(0.4, 0.64, 0.81)
+        Color(0.4f, 0.64f, 0.81f)
     );
     _initial_set(
         "text_editor/highlighting/member_variable_color",
-        Color(0.9, 0.31, 0.35)
+        Color(0.9f, 0.31f, 0.35f)
     );
     _initial_set(
         "text_editor/highlighting/mark_color",
-        Color(1.0, 0.4, 0.4, 0.4)
+        Color(1, 0.4f, 0.4f, 0.4f)
     );
     _initial_set(
         "text_editor/highlighting/bookmark_color",
-        Color(0.08, 0.49, 0.98)
+        Color(0.08f, 0.49f, 0.98f)
     );
     _initial_set(
         "text_editor/highlighting/breakpoint_color",
-        Color(0.8, 0.8, 0.4, 0.2)
+        Color(0.8f, 0.8f, 0.4f, 0.2f)
     );
     _initial_set(
         "text_editor/highlighting/executing_line_color",
-        Color(0.2, 0.8, 0.2, 0.4)
+        Color(0.2f, 0.8f, 0.2f, 0.4f)
     );
     _initial_set(
         "text_editor/highlighting/code_folding_color",
-        Color(0.8, 0.8, 0.8, 0.8)
+        Color(0.8f, 0.8f, 0.8f, 0.8f)
     );
     _initial_set(
         "text_editor/highlighting/search_result_color",
-        Color(0.05, 0.25, 0.05, 1)
+        Color(0.05f, 0.25f, 0.05f, 1)
     );
     _initial_set(
         "text_editor/highlighting/search_result_border_color",
-        Color(0.41, 0.61, 0.91, 0.38)
+        Color(0.41f, 0.61f, 0.91f, 0.38f)
     );
 }
 

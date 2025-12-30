@@ -60,7 +60,7 @@ void Environment::set_sky_rotation(const Vector3& p_euler_rad) {
 }
 
 void Environment::set_sky_rotation_degrees(const Vector3& p_euler_deg) {
-    set_sky_rotation(p_euler_deg * Math_PI / 180.0);
+    set_sky_rotation(p_euler_deg * static_cast<real_t>(Math_PI) / 180);
     _change_notify("background_sky_rotation");
 }
 
@@ -144,7 +144,7 @@ Vector3 Environment::get_sky_rotation() const {
 }
 
 Vector3 Environment::get_sky_rotation_degrees() const {
-    return get_sky_rotation() * 180.0 / Math_PI;
+    return get_sky_rotation() * 180 / static_cast<real_t>(Math_PI);
 }
 
 Color Environment::get_bg_color() const {
@@ -3014,9 +3014,9 @@ Environment::Environment() :
     tonemap_white               = 1.0;
     tonemap_auto_exposure       = false;
     tonemap_auto_exposure_max   = 8;
-    tonemap_auto_exposure_min   = 0.05;
-    tonemap_auto_exposure_speed = 0.5;
-    tonemap_auto_exposure_grey  = 0.4;
+    tonemap_auto_exposure_min   = 0.05f;
+    tonemap_auto_exposure_speed = 0.5f;
+    tonemap_auto_exposure_grey  = 0.4f;
 
     set_tonemapper(tone_mapper); // update
 
@@ -3029,9 +3029,9 @@ Environment::Environment() :
 
     ssr_enabled         = false;
     ssr_max_steps       = 64;
-    ssr_fade_in         = 0.15;
-    ssr_fade_out        = 2.0;
-    ssr_depth_tolerance = 0.2;
+    ssr_fade_in         = 0.15f;
+    ssr_fade_out        = 2;
+    ssr_depth_tolerance = 0.2f;
     ssr_roughness       = true;
 
     ssao_enabled             = false;
@@ -3039,40 +3039,40 @@ Environment::Environment() :
     ssao_intensity           = 1;
     ssao_radius2             = 0;
     ssao_intensity2          = 1;
-    ssao_bias                = 0.01;
-    ssao_direct_light_affect = 0.0;
-    ssao_ao_channel_affect   = 0.0;
+    ssao_bias                = 0.01f;
+    ssao_direct_light_affect = 0;
+    ssao_ao_channel_affect   = 0;
     ssao_blur                = SSAO_BLUR_3x3;
     set_ssao_edge_sharpness(4);
     set_ssao_quality(SSAO_QUALITY_MEDIUM);
 
     glow_enabled             = false;
     glow_levels              = (1 << 2) | (1 << 4);
-    glow_intensity           = 0.8;
-    glow_strength            = 1.0;
-    glow_bloom               = 0.0;
+    glow_intensity           = 0.8f;
+    glow_strength            = 1;
+    glow_bloom               = 0;
     glow_blend_mode          = GLOW_BLEND_MODE_SOFTLIGHT;
-    glow_hdr_bleed_threshold = 1.0;
-    glow_hdr_luminance_cap   = 12.0;
-    glow_hdr_bleed_scale     = 2.0;
+    glow_hdr_bleed_threshold = 1;
+    glow_hdr_luminance_cap   = 12;
+    glow_hdr_bleed_scale     = 2;
     glow_bicubic_upscale     = false;
     glow_high_quality        = false;
 
     dof_blur_far_enabled    = false;
     dof_blur_far_distance   = 10;
     dof_blur_far_transition = 5;
-    dof_blur_far_amount     = 0.1;
+    dof_blur_far_amount     = 0.1f;
     dof_blur_far_quality    = DOF_BLUR_QUALITY_MEDIUM;
 
     dof_blur_near_enabled    = false;
     dof_blur_near_distance   = 2;
     dof_blur_near_transition = 1;
-    dof_blur_near_amount     = 0.1;
+    dof_blur_near_amount     = 0.1f;
     dof_blur_near_quality    = DOF_BLUR_QUALITY_MEDIUM;
 
     fog_enabled    = false;
-    fog_color      = Color(0.5, 0.5, 0.5);
-    fog_sun_color  = Color(0.8, 0.8, 0.0);
+    fog_color      = Color(0.5f, 0.5f, 0.5f);
+    fog_sun_color  = Color(0.8f, 0.8f, 0);
     fog_sun_amount = 0;
 
     fog_depth_enabled = true;
@@ -3089,8 +3089,8 @@ Environment::Environment() :
     fog_height_max     = 0;
     fog_height_curve   = 1;
 
-    set_fog_color(Color(0.5, 0.6, 0.7));
-    set_fog_sun_color(Color(1.0, 0.9, 0.7));
+    set_fog_color(Color(0.5f, 0.6f, 0.7f));
+    set_fog_sun_color(Color(1, 0.9f, 0.7f));
 }
 
 Environment::~Environment() {

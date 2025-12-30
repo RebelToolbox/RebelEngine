@@ -226,14 +226,14 @@ void fill_default_theme(
 
     // Font Colors
 
-    Color control_font_color          = Color(0.88, 0.88, 0.88);
-    Color control_font_color_lower    = Color(0.63, 0.63, 0.63);
-    Color control_font_color_low      = Color(0.69, 0.69, 0.69);
-    Color control_font_color_hover    = Color(0.94, 0.94, 0.94);
-    Color control_font_color_focus    = Color(0.94, 0.94, 0.94);
-    Color control_font_color_disabled = Color(0.9, 0.9, 0.9, 0.2);
+    Color control_font_color          = Color(0.88f, 0.88f, 0.88f);
+    Color control_font_color_lower    = Color(0.63f, 0.63f, 0.63f);
+    Color control_font_color_low      = Color(0.69f, 0.69f, 0.69f);
+    Color control_font_color_hover    = Color(0.94f, 0.94f, 0.94f);
+    Color control_font_color_focus    = Color(0.94f, 0.94f, 0.94f);
+    Color control_font_color_disabled = Color(0.9f, 0.9f, 0.9f, 0.2f);
     Color control_font_color_pressed  = Color(1, 1, 1);
-    Color font_color_selection        = Color(0.49, 0.49, 0.49);
+    Color font_color_selection        = Color(0.49f, 0.49f, 0.49f);
 
     // Panel
 
@@ -342,7 +342,7 @@ void fill_default_theme(
     theme->set_color(
         "font_color_pressed",
         "ColorPickerButton",
-        Color(0.8, 0.8, 0.8, 1)
+        Color(0.8f, 0.8f, 0.8f, 1)
     );
     theme
         ->set_color("font_color_hover", "ColorPickerButton", Color(1, 1, 1, 1));
@@ -351,7 +351,7 @@ void fill_default_theme(
     theme->set_color(
         "font_color_disabled",
         "ColorPickerButton",
-        Color(0.9, 0.9, 0.9, 0.3)
+        Color(0.9f, 0.9f, 0.9f, 0.3f)
     );
 
     theme->set_constant("hseparation", "ColorPickerButton", 2 * scale);
@@ -391,7 +391,7 @@ void fill_default_theme(
     theme->set_color(
         "font_color_disabled",
         "ToolButton",
-        Color(0.9, 0.95, 1, 0.3)
+        Color(0.9f, 0.95f, 1, 0.3f)
     );
 
     theme->set_constant("hseparation", "ToolButton", 3);
@@ -489,7 +489,7 @@ void fill_default_theme(
         ->set_color("font_color_hover", "MenuButton", control_font_color_hover);
     theme
         ->set_color("font_color_focus", "MenuButton", control_font_color_focus);
-    theme->set_color("font_color_disabled", "MenuButton", Color(1, 1, 1, 0.3));
+    theme->set_color("font_color_disabled", "MenuButton", Color(1, 1, 1, 0.3f));
 
     theme->set_constant("hseparation", "MenuButton", 3 * scale);
 
@@ -729,17 +729,17 @@ void fill_default_theme(
     theme->set_color(
         "completion_background_color",
         "TextEdit",
-        Color(0.17, 0.16, 0.2)
+        Color(0.17f, 0.16f, 0.2f)
     );
     theme->set_color(
         "completion_selected_color",
         "TextEdit",
-        Color(0.26, 0.26, 0.27)
+        Color(0.26f, 0.26f, 0.27f)
     );
     theme->set_color(
         "completion_existing_color",
         "TextEdit",
-        Color(0.87, 0.87, 0.87, 0.13)
+        Color(0.87f, 0.87f, 0.87f, 0.13f)
     );
     theme->set_color(
         "completion_scroll_color",
@@ -749,7 +749,7 @@ void fill_default_theme(
     theme->set_color(
         "completion_font_color",
         "TextEdit",
-        Color(0.67, 0.67, 0.67)
+        Color(0.67f, 0.67f, 0.67f)
     );
     theme->set_color("font_color", "TextEdit", control_font_color);
     theme->set_color("font_color_selected", "TextEdit", Color(0, 0, 0));
@@ -764,49 +764,53 @@ void fill_default_theme(
         )
     );
     theme->set_color("selection_color", "TextEdit", font_color_selection);
-    theme->set_color("mark_color", "TextEdit", Color(1.0, 0.4, 0.4, 0.4));
-    theme->set_color("bookmark_color", "TextEdit", Color(0.08, 0.49, 0.98));
-    theme->set_color("breakpoint_color", "TextEdit", Color(0.8, 0.8, 0.4, 0.2));
+    theme->set_color("mark_color", "TextEdit", Color(1, 0.4f, 0.4f, 0.4f));
+    theme->set_color("bookmark_color", "TextEdit", Color(0.08f, 0.49f, 0.98f));
+    theme->set_color(
+        "breakpoint_color",
+        "TextEdit",
+        Color(0.8f, 0.8f, 0.4f, 0.2f)
+    );
     theme->set_color(
         "executing_line_color",
         "TextEdit",
-        Color(0.2, 0.8, 0.2, 0.4)
+        Color(0.2f, 0.8f, 0.2f, 0.4f)
     );
     theme->set_color(
         "code_folding_color",
         "TextEdit",
-        Color(0.8, 0.8, 0.8, 0.8)
+        Color(0.8f, 0.8f, 0.8f, 0.8f)
     );
     theme->set_color(
         "current_line_color",
         "TextEdit",
-        Color(0.25, 0.25, 0.26, 0.8)
+        Color(0.25f, 0.25f, 0.26f, 0.8f)
     );
     theme->set_color("caret_color", "TextEdit", control_font_color);
     theme->set_color("caret_background_color", "TextEdit", Color(0, 0, 0));
     theme->set_color("symbol_color", "TextEdit", control_font_color_hover);
-    theme->set_color("brace_mismatch_color", "TextEdit", Color(1, 0.2, 0.2));
+    theme->set_color("brace_mismatch_color", "TextEdit", Color(1, 0.2f, 0.2f));
     theme->set_color(
         "line_number_color",
         "TextEdit",
-        Color(0.67, 0.67, 0.67, 0.4)
+        Color(0.67f, 0.67f, 0.67f, 0.4f)
     );
     theme->set_color(
         "safe_line_number_color",
         "TextEdit",
-        Color(0.67, 0.78, 0.67, 0.6)
+        Color(0.67f, 0.78f, 0.67f, 0.6f)
     );
-    theme->set_color("function_color", "TextEdit", Color(0.4, 0.64, 0.81));
+    theme->set_color("function_color", "TextEdit", Color(0.4f, 0.64f, 0.81f));
     theme->set_color(
         "member_variable_color",
         "TextEdit",
-        Color(0.9, 0.31, 0.35)
+        Color(0.9f, 0.31f, 0.35f)
     );
-    theme->set_color("number_color", "TextEdit", Color(0.92, 0.58, 0.2));
+    theme->set_color("number_color", "TextEdit", Color(0.92f, 0.58f, 0.2f));
     theme->set_color(
         "word_highlighted_color",
         "TextEdit",
-        Color(0.8, 0.9, 0.9, 0.15)
+        Color(0.8f, 0.9f, 0.9f, 0.15f)
     );
 
     theme->set_constant("completion_lines", "TextEdit", 7);
@@ -1050,12 +1054,15 @@ void fill_default_theme(
     theme->set_font("font", "PopupMenu", default_font);
 
     theme->set_color("font_color", "PopupMenu", control_font_color);
-    theme
-        ->set_color("font_color_accel", "PopupMenu", Color(0.7, 0.7, 0.7, 0.8));
+    theme->set_color(
+        "font_color_accel",
+        "PopupMenu",
+        Color(0.7f, 0.7f, 0.7f, 0.8f)
+    );
     theme->set_color(
         "font_color_disabled",
         "PopupMenu",
-        Color(0.4, 0.4, 0.4, 0.8)
+        Color(0.4f, 0.4f, 0.4f, 0.8f)
     );
     theme->set_color("font_color_hover", "PopupMenu", control_font_color);
     theme->set_color("font_color_separator", "PopupMenu", control_font_color);
@@ -1154,10 +1161,13 @@ void fill_default_theme(
     theme->set_color("title_button_color", "Tree", control_font_color);
     theme->set_color("font_color", "Tree", control_font_color_low);
     theme->set_color("font_color_selected", "Tree", control_font_color_pressed);
-    theme->set_color("guide_color", "Tree", Color(0, 0, 0, 0.1));
-    theme->set_color("drop_position_color", "Tree", Color(1, 0.3, 0.2));
-    theme
-        ->set_color("relationship_line_color", "Tree", Color(0.27, 0.27, 0.27));
+    theme->set_color("guide_color", "Tree", Color(0, 0, 0, 0.1f));
+    theme->set_color("drop_position_color", "Tree", Color(1, 0.3f, 0.2f));
+    theme->set_color(
+        "relationship_line_color",
+        "Tree",
+        Color(0.27f, 0.27f, 0.27f)
+    );
     theme->set_color(
         "custom_button_font_highlight",
         "Tree",
@@ -1196,7 +1206,7 @@ void fill_default_theme(
         "ItemList",
         control_font_color_pressed
     );
-    theme->set_color("guide_color", "ItemList", Color(0, 0, 0, 0.1));
+    theme->set_color("guide_color", "ItemList", Color(0, 0, 0, 0.1f));
     theme->set_stylebox("selected", "ItemList", item_selected_oof);
     theme->set_stylebox("selected_focus", "ItemList", item_selected);
     theme->set_stylebox("cursor", "ItemList", focus);
@@ -1396,7 +1406,7 @@ void fill_default_theme(
     theme->set_icon("file", "FileDialog", make_icon(icon_file_png));
     theme->set_color("folder_icon_modulate", "FileDialog", Color(1, 1, 1));
     theme->set_color("file_icon_modulate", "FileDialog", Color(1, 1, 1));
-    theme->set_color("files_disabled", "FileDialog", Color(0, 0, 0, 0.7));
+    theme->set_color("files_disabled", "FileDialog", Color(0, 0, 0, 0.7f));
 
     // ColorPicker
 
@@ -1445,7 +1455,7 @@ void fill_default_theme(
     theme->set_font("font", "TooltipLabel", default_font);
 
     theme->set_color("font_color", "TooltipLabel", Color(0, 0, 0));
-    theme->set_color("font_color_shadow", "TooltipLabel", Color(0, 0, 0, 0.1));
+    theme->set_color("font_color_shadow", "TooltipLabel", Color(0, 0, 0, 0.1f));
 
     theme->set_constant("shadow_offset_x", "TooltipLabel", 1);
     theme->set_constant("shadow_offset_y", "TooltipLabel", 1);
@@ -1474,7 +1484,7 @@ void fill_default_theme(
     theme->set_color(
         "selection_color",
         "RichTextLabel",
-        Color(0.1, 0.1, 1, 0.8)
+        Color(0.1f, 0.1f, 1, 0.8f)
     );
 
     theme->set_color("font_color_shadow", "RichTextLabel", Color(0, 0, 0, 0));
@@ -1530,10 +1540,10 @@ void fill_default_theme(
         "GraphEdit",
         make_stylebox(tree_bg_png, 4, 4, 4, 5)
     );
-    theme->set_color("grid_minor", "GraphEdit", Color(1, 1, 1, 0.05));
-    theme->set_color("grid_major", "GraphEdit", Color(1, 1, 1, 0.2));
-    theme->set_color("selection_fill", "GraphEdit", Color(1, 1, 1, 0.3));
-    theme->set_color("selection_stroke", "GraphEdit", Color(1, 1, 1, 0.8));
+    theme->set_color("grid_minor", "GraphEdit", Color(1, 1, 1, 0.05f));
+    theme->set_color("grid_major", "GraphEdit", Color(1, 1, 1, 0.2f));
+    theme->set_color("selection_fill", "GraphEdit", Color(1, 1, 1, 0.3f));
+    theme->set_color("selection_stroke", "GraphEdit", Color(1, 1, 1, 0.8f));
     theme->set_color("activity", "GraphEdit", Color(1, 1, 1));
     theme->set_constant("bezier_len_pos", "GraphEdit", 80 * scale);
     theme->set_constant("bezier_len_neg", "GraphEdit", 160 * scale);
@@ -1550,11 +1560,11 @@ void fill_default_theme(
     theme->set_stylebox(
         "bg",
         "GraphEditMinimap",
-        make_flat_stylebox(Color(0.24, 0.24, 0.24), 0, 0, 0, 0)
+        make_flat_stylebox(Color(0.24f, 0.24f, 0.24f), 0, 0, 0, 0)
     );
     Ref<StyleBoxFlat> style_minimap_camera =
-        make_flat_stylebox(Color(0.65, 0.65, 0.65, 0.2), 0, 0, 0, 0);
-    style_minimap_camera->set_border_color(Color(0.65, 0.65, 0.65, 0.45));
+        make_flat_stylebox(Color(0.65f, 0.65f, 0.65f, 0.2f), 0, 0, 0, 0);
+    style_minimap_camera->set_border_color(Color(0.65f, 0.65f, 0.65f, 0.45f));
     style_minimap_camera->set_border_width_all(1);
     theme->set_stylebox("camera", "GraphEditMinimap", style_minimap_camera);
     Ref<StyleBoxFlat> style_minimap_node =
@@ -1568,7 +1578,8 @@ void fill_default_theme(
         "GraphEditMinimap",
         flip_icon(resizer_icon, true, true)
     );
-    theme->set_color("resizer_color", "GraphEditMinimap", Color(1, 1, 1, 0.85));
+    theme
+        ->set_color("resizer_color", "GraphEditMinimap", Color(1, 1, 1, 0.85f));
 
     // Theme
 

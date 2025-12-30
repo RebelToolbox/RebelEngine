@@ -65,8 +65,8 @@ HingeJointSW::HingeJointSW(
     m_rbBFrame.basis[2][2] *= real_t(-1.);
 
     // start with free
-    m_lowerLimit = Math_PI;
-    m_upperLimit = -Math_PI;
+    m_lowerLimit = static_cast<real_t>(Math_PI);
+    m_upperLimit = -static_cast<real_t>(Math_PI);
 
     m_useLimit         = false;
     m_biasFactor       = 0.3f;
@@ -74,7 +74,7 @@ HingeJointSW::HingeJointSW(
     m_limitSoftness    = 0.9f;
     m_solveLimit       = false;
 
-    tau = 0.3;
+    tau = 0.3f;
 
     m_angularOnly        = false;
     m_enableAngularMotor = false;
@@ -144,8 +144,8 @@ HingeJointSW::HingeJointSW(
     );
 
     // start with free
-    m_lowerLimit = Math_PI;
-    m_upperLimit = -Math_PI;
+    m_lowerLimit = static_cast<real_t>(Math_PI);
+    m_upperLimit = -static_cast<real_t>(Math_PI);
 
     m_useLimit         = false;
     m_biasFactor       = 0.3f;
@@ -153,7 +153,7 @@ HingeJointSW::HingeJointSW(
     m_limitSoftness    = 0.9f;
     m_solveLimit       = false;
 
-    tau = 0.3;
+    tau = 0.3f;
 
     m_angularOnly        = false;
     m_enableAngularMotor = false;
@@ -427,7 +427,7 @@ void	HingeJointSW::updateRHS(real_t	timeStep)
 */
 
 static _FORCE_INLINE_ real_t atan2fast(real_t y, real_t x) {
-    real_t coeff_1 = Math_PI / 4.0f;
+    real_t coeff_1 = static_cast<real_t>(Math_PI) / 4;
     real_t coeff_2 = 3.0f * coeff_1;
     real_t abs_y   = Math::abs(y);
     real_t angle;

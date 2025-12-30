@@ -3051,7 +3051,7 @@ void SceneTreeDock::set_selected(Node* p_node, bool p_emit_selected) {
 void SceneTreeDock::import_subscene() {
     import_subscene_dialog->popup_centered_clamped(
         Size2(500, 800) * EDSCALE,
-        0.8
+        0.8f
     );
 }
 

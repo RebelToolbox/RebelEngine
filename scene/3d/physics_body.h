@@ -459,7 +459,7 @@ public:
         real_t damping;
         real_t impulse_clamp;
 
-        PinJointData() : bias(0.3), damping(1.), impulse_clamp(0) {}
+        PinJointData() : bias(0.3f), damping(1), impulse_clamp(0) {}
     };
 
     struct ConeJointData : public JointData {
@@ -482,11 +482,11 @@ public:
         real_t relaxation;
 
         ConeJointData() :
-            swing_span(Math_PI * 0.25),
-            twist_span(Math_PI),
-            bias(0.3),
-            softness(0.8),
-            relaxation(1.) {}
+            swing_span(static_cast<real_t>(Math_PI) / 4),
+            twist_span(static_cast<real_t>(Math_PI)),
+            bias(0.3f),
+            softness(0.8f),
+            relaxation(1) {}
     };
 
     struct HingeJointData : public JointData {
@@ -511,11 +511,11 @@ public:
 
         HingeJointData() :
             angular_limit_enabled(false),
-            angular_limit_upper(Math_PI * 0.5),
-            angular_limit_lower(-Math_PI * 0.5),
-            angular_limit_bias(0.3),
-            angular_limit_softness(0.9),
-            angular_limit_relaxation(1.) {}
+            angular_limit_upper(static_cast<real_t>(Math_PI) / 2),
+            angular_limit_lower(-static_cast<real_t>(Math_PI) / 2),
+            angular_limit_bias(0.3f),
+            angular_limit_softness(0.9f),
+            angular_limit_relaxation(1) {}
     };
 
     struct SliderJointData : public JointData {
@@ -543,16 +543,16 @@ public:
         real_t angular_limit_damping;
 
         SliderJointData() :
-            linear_limit_upper(1.),
-            linear_limit_lower(-1.),
-            linear_limit_softness(1.),
-            linear_limit_restitution(0.7),
-            linear_limit_damping(1.),
+            linear_limit_upper(1),
+            linear_limit_lower(-1),
+            linear_limit_softness(1),
+            linear_limit_restitution(0.7f),
+            linear_limit_damping(1),
             angular_limit_upper(0),
             angular_limit_lower(0),
-            angular_limit_softness(1.),
-            angular_limit_restitution(0.7),
-            angular_limit_damping(1.) {}
+            angular_limit_softness(1),
+            angular_limit_restitution(0.7f),
+            angular_limit_damping(1) {}
     };
 
     struct SixDOFJointData : public JointData {
@@ -583,9 +583,9 @@ public:
                 linear_limit_enabled(true),
                 linear_limit_upper(0),
                 linear_limit_lower(0),
-                linear_limit_softness(0.7),
-                linear_restitution(0.5),
-                linear_damping(1.),
+                linear_limit_softness(0.7f),
+                linear_restitution(0.5f),
+                linear_damping(1),
                 linear_spring_enabled(false),
                 linear_spring_stiffness(0),
                 linear_spring_damping(0),
@@ -593,10 +593,10 @@ public:
                 angular_limit_enabled(true),
                 angular_limit_upper(0),
                 angular_limit_lower(0),
-                angular_limit_softness(0.5),
+                angular_limit_softness(0.5f),
                 angular_restitution(0),
-                angular_damping(1.),
-                erp(0.5),
+                angular_damping(1),
+                erp(0.5f),
                 angular_spring_enabled(false),
                 angular_spring_stiffness(0),
                 angular_spring_damping(0.),

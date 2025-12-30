@@ -40,11 +40,11 @@ void SpatialVelocityTracker::update_position(const Vector3& p_position) {
 Vector3 SpatialVelocityTracker::get_tracked_linear_velocity() const {
     Vector3 linear_velocity;
 
-    float max_time = 1 / 5.0; // maximum time to interpolate a velocity
+    float max_time = 1.f / 5; // maximum time to interpolate a velocity
 
     Vector3 distance_accum;
-    float time_accum = 0.0;
-    float base_time  = 0.0;
+    float time_accum = 0;
+    float base_time  = 0;
 
     if (position_history_len) {
         if (physics_step) {

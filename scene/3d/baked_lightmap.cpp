@@ -1029,7 +1029,7 @@ BakedLightmap::BakeError BakedLightmap::bake(
     if (environment_mode != ENVIRONMENT_MODE_DISABLED) {
         if (bake_step_function) {
             bake_step_function(
-                0.1,
+                0.1f,
                 TTR("Preparing environment"),
                 nullptr,
                 true
@@ -1065,8 +1065,8 @@ BakedLightmap::BakeError BakedLightmap::bake(
                         Vector2i(128, 64)
                     );
                     environment_xform.set_euler(
-                        environment_custom_sky_rotation_degrees * Math_PI
-                        / 180.0
+                        environment_custom_sky_rotation_degrees
+                        * static_cast<real_t>(Math_PI) / 180
                     );
                 }
 
@@ -1092,8 +1092,8 @@ BakedLightmap::BakeError BakedLightmap::bake(
     BakeStepUD bsud;
     bsud.func         = bake_step_function;
     bsud.ud           = nullptr;
-    bsud.from_percent = 0.1;
-    bsud.to_percent   = 0.9;
+    bsud.from_percent = 0.1f;
+    bsud.to_percent   = 0.9f;
 
     bool gen_atlas = OS::get_singleton()->get_current_video_driver()
                           == OS::VIDEO_DRIVER_GLES2
@@ -1145,7 +1145,7 @@ BakedLightmap::BakeError BakedLightmap::bake(
     if (capture_enabled) {
         if (bake_step_function) {
             bool cancelled = bake_step_function(
-                0.85,
+                0.85f,
                 TTR("Generating capture"),
                 nullptr,
                 true
@@ -1267,7 +1267,7 @@ BakedLightmap::BakeError BakedLightmap::bake(
 
     if (bake_step_function) {
         bool cancelled =
-            bake_step_function(0.9, TTR("Saving lightmaps"), nullptr, true);
+            bake_step_function(0.9f, TTR("Saving lightmaps"), nullptr, true);
         if (cancelled) {
             bake_end_function(time_started);
             return BAKE_ERROR_USER_ABORTED;
@@ -2339,14 +2339,14 @@ BakedLightmap::BakedLightmap() {
     capture_cell_size = 0.5;
 
     environment_mode          = ENVIRONMENT_MODE_DISABLED;
-    environment_custom_color  = Color(0.2, 0.7, 1.0);
-    environment_custom_energy = 1.0;
-    environment_min_light     = Color(0.0, 0.0, 0.0);
+    environment_custom_color  = Color(0.2f, 0.7f, 1);
+    environment_custom_energy = 1;
+    environment_min_light     = Color(0, 0, 0);
 
     use_denoiser = true;
     use_hdr      = true;
     use_color    = true;
-    bias         = 0.005;
+    bias         = 0.005f;
 
     generate_atlas = true;
     max_atlas_size = 4096;

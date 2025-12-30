@@ -314,7 +314,7 @@ void Camera2D::_notification(int p_what) {
             }
 
             if (screen_drawing_enabled) {
-                Color area_axis_color(1, 0.4, 1, 0.63);
+                Color area_axis_color(1, 0.4f, 1, 0.63f);
                 float area_axis_width = 1;
                 if (is_current()) {
                     area_axis_width = 3;
@@ -348,7 +348,7 @@ void Camera2D::_notification(int p_what) {
             }
 
             if (limit_drawing_enabled) {
-                Color limit_drawing_color(1, 1, 0.25, 0.63);
+                Color limit_drawing_color(1, 1, 0.25f, 0.63f);
                 float limit_drawing_width = 1;
                 if (is_current()) {
                     limit_drawing_width = 3;
@@ -382,7 +382,7 @@ void Camera2D::_notification(int p_what) {
             }
 
             if (margin_drawing_enabled) {
-                Color margin_drawing_color(0.25, 1, 1, 0.63);
+                Color margin_drawing_color(0.25f, 1, 1, 0.63f);
                 float margin_drawing_width = 1;
                 if (is_current()) {
                     margin_drawing_width = 3;
@@ -1129,10 +1129,10 @@ Camera2D::Camera2D() {
     limit[MARGIN_RIGHT]  = 10000000;
     limit[MARGIN_BOTTOM] = 10000000;
 
-    drag_margin[MARGIN_LEFT]   = 0.2;
-    drag_margin[MARGIN_TOP]    = 0.2;
-    drag_margin[MARGIN_RIGHT]  = 0.2;
-    drag_margin[MARGIN_BOTTOM] = 0.2;
+    drag_margin[MARGIN_LEFT]   = 0.2f;
+    drag_margin[MARGIN_TOP]    = 0.2f;
+    drag_margin[MARGIN_RIGHT]  = 0.2f;
+    drag_margin[MARGIN_BOTTOM] = 0.2f;
     camera_pos                 = Vector2();
     first                      = true;
     smoothing_enabled          = false;

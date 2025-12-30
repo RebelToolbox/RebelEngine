@@ -107,7 +107,7 @@ void PlaneShapeSW::project_range(
 }
 
 Vector3 PlaneShapeSW::get_support(const Vector3& p_normal) const {
-    return p_normal * 1e15;
+    return p_normal * 1e15f;
 }
 
 bool PlaneShapeSW::intersect_segment(
@@ -234,7 +234,7 @@ Vector3 RayShapeSW::get_moment_of_inertia(real_t p_mass) const {
 void RayShapeSW::_setup(real_t p_length, bool p_slips_on_slope) {
     length         = p_length;
     slips_on_slope = p_slips_on_slope;
-    configure(AABB(Vector3(0, 0, 0), Vector3(0.1, 0.1, length)));
+    configure(AABB(Vector3(0, 0, 0), Vector3(0.1f, 0.1f, length)));
 }
 
 void RayShapeSW::set_data(const Variant& p_data) {
@@ -511,7 +511,7 @@ Vector3 BoxShapeSW::get_closest_point_to(const Vector3& p_point) const {
     }
 
     // check segments
-    float min_distance     = 1e20;
+    float min_distance     = 1e20f;
     Vector3 closest_vertex = half_extents * p_point.sign();
     Vector3 s[2]           = {closest_vertex, closest_vertex};
 
@@ -630,7 +630,7 @@ bool CapsuleShapeSW::intersect_segment(
     Vector3& r_normal
 ) const {
     Vector3 norm = (p_end - p_begin).normalized();
-    real_t min_d = 1e20;
+    real_t min_d = 1e20f;
 
     Vector3 res, n;
     bool collision = false;
@@ -1123,7 +1123,7 @@ bool ConvexPolygonShapeSW::intersect_segment(
     const Vector3* vertices = mesh.vertices.ptr();
 
     Vector3 n  = p_end - p_begin;
-    real_t min = 1e20;
+    real_t min = 1e20f;
     bool col   = false;
 
     for (int i = 0; i < fc; i++) {
@@ -1203,7 +1203,7 @@ Vector3 ConvexPolygonShapeSW::get_closest_point_to(const Vector3& p_point
         return p_point;
     }
 
-    float min_distance = 1e20;
+    float min_distance = 1e20f;
     Vector3 min_point;
 
     // check edges
@@ -1547,7 +1547,7 @@ bool ConcavePolygonShapeSW::intersect_segment(
     params.vertices = vr.ptr();
     params.bvh      = br.ptr();
 
-    params.min_d = 1e20;
+    params.min_d = 1e20f;
     // cull
     _cull_segment(0, &params);
 
@@ -2055,7 +2055,7 @@ bool HeightMapShapeSW::_intersect_grid_segment(
                          ? 1
                          : ((ray_dir_flat.y < -CMP_EPSILON) ? -1 : 0);
 
-    const real_t infinite = 1e20;
+    const real_t infinite = 1e20f;
     const real_t delta_x =
         (x_step != 0) ? 1.f / Math::abs(ray_dir_flat.x) : infinite;
     const real_t delta_z =

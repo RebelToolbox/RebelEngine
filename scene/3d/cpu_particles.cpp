@@ -578,9 +578,9 @@ void CPUParticles::_update_internal() {
     if (time == 0 && pre_process_time > 0.0) {
         float frame_time;
         if (fixed_fps > 0) {
-            frame_time = 1.0 / fixed_fps;
+            frame_time = 1.f / fixed_fps;
         } else {
-            frame_time = 1.0 / 30.0;
+            frame_time = 1.f / 30;
         }
 
         float todo = pre_process_time;
@@ -597,10 +597,10 @@ void CPUParticles::_update_internal() {
         float decr       = frame_time;
 
         float ldelta = delta;
-        if (ldelta > 0.1) { // avoid recursive stalls if fps goes below 10
-            ldelta = 0.1;
-        } else if (ldelta <= 0.0) { // unlikely but..
-            ldelta = 0.001;
+        if (ldelta > 0.1f) { // avoid recursive stalls if fps goes below 10
+            ldelta = 0.1f;
+        } else if (ldelta <= 0) { // unlikely but..
+            ldelta = 0.001f;
         }
         float todo = frame_remainder + ldelta;
 
@@ -1139,37 +1139,37 @@ void CPUParticles::_particles_process(float p_delta) {
         Basis hue_rot_mat;
         {
             Basis mat1(
-                0.299,
-                0.587,
-                0.114,
-                0.299,
-                0.587,
-                0.114,
-                0.299,
-                0.587,
-                0.114
+                0.299f,
+                0.587f,
+                0.114f,
+                0.299f,
+                0.587f,
+                0.114f,
+                0.299f,
+                0.587f,
+                0.114f
             );
             Basis mat2(
-                0.701,
-                -0.587,
-                -0.114,
-                -0.299,
-                0.413,
-                -0.114,
-                -0.300,
-                -0.588,
-                0.886
+                0.701f,
+                -0.587f,
+                -0.114f,
+                -0.299f,
+                0.413f,
+                -0.114f,
+                -0.300f,
+                -0.588f,
+                0.886f
             );
             Basis mat3(
-                0.168,
-                0.330,
-                -0.497,
-                -0.328,
-                0.035,
-                0.292,
-                1.250,
-                -1.050,
-                -0.203
+                0.168f,
+                0.330f,
+                -0.497f,
+                -0.328f,
+                0.035f,
+                0.292f,
+                1.250f,
+                -1.050f,
+                -0.203f
             );
 
             for (int j = 0; j < 3; j++) {
@@ -1283,8 +1283,8 @@ void CPUParticles::_particles_process(float p_delta) {
                                1.0f,
                                p.scale_rand * randomness[PARAM_SCALE]
                          );
-        if (base_scale < 0.000001) {
-            base_scale = 0.000001;
+        if (base_scale < 0.000001f) {
+            base_scale = 0.000001f;
         }
 
         p.transform.basis.scale(Vector3(1, 1, 1) * base_scale);
@@ -2630,7 +2630,7 @@ CPUParticles::CPUParticles() {
     set_emission_ring_inner_radius(0.0);
     set_emission_ring_axis(Vector3(0.0, 0.0, 1.0));
 
-    set_gravity(Vector3(0, -9.8, 0));
+    set_gravity(Vector3(0, -9.8f, 0));
 
     for (int i = 0; i < PARAM_MAX; i++) {
         set_param_randomness(Parameter(i), 0);

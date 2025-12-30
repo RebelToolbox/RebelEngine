@@ -152,7 +152,7 @@ void RootMotionView::_notification(int p_what) {
 AABB RootMotionView::get_aabb() const {
     return AABB(
         Vector3(-radius, 0, -radius),
-        Vector3(radius * 2, 0.001, radius * 2)
+        Vector3(radius * 2, 0.001f, radius * 2)
     );
 }
 

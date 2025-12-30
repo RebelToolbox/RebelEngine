@@ -26,8 +26,8 @@ void Room::SimplifyInfo::set_simplify(real_t p_value, real_t p_room_size) {
     // _plane_simplify_dist = MAX(_plane_simplify_dist, 0.08);
 
     // test fix
-    _plane_simplify_dot  = 0.99;
-    _plane_simplify_dist = 0.08;
+    _plane_simplify_dot  = 0.99f;
+    _plane_simplify_dist = 0.08f;
 
     // print_verbose("plane simplify dot : " +
     // String(Variant(_plane_simplify_dot))); print_verbose("plane simplify dist

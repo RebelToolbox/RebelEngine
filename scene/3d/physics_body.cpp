@@ -1686,7 +1686,7 @@ bool KinematicBody::move_and_collide(
     // but only if collision depth is low enough to avoid tunneling.
     if (p_cancel_sliding) {
         real_t motion_length = p_motion.length();
-        real_t precision     = 0.001;
+        real_t precision     = 0.001f;
 
         if (colliding) {
             // Can't just use margin as a threshold because collision depth is
@@ -2463,7 +2463,7 @@ KinematicBody::KinematicBody() :
     on_ceiling  = false;
     on_wall     = false;
 
-    set_safe_margin(0.001);
+    set_safe_margin(0.001f);
 }
 
 KinematicBody::~KinematicBody() {

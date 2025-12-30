@@ -180,7 +180,7 @@ void NavigationPolygon::make_polygons_from_outlines() {
         }
     }
 
-    outside_point += Vector2(0.7239784, 0.819238); // avoid precision issues
+    outside_point += Vector2(0.7239784f, 0.819238f); // avoid precision issues
 
     for (int i = 0; i < outlines.size(); i++) {
         PoolVector<Vector2> ol = outlines[i];

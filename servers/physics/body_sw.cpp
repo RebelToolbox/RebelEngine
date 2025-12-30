@@ -798,7 +798,7 @@ BodySW::BodySW() :
     active = true;
 
     mass                   = 1;
-    kinematic_safe_margin  = 0.001;
+    kinematic_safe_margin  = 0.001f;
     //_inv_inertia=Transform();
     _inv_mass              = 1;
     bounce                 = 0;

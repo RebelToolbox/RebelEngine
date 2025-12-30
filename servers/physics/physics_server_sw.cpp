@@ -1573,7 +1573,7 @@ void PhysicsServerSW::set_collision_iterations(int p_iterations) {
 };
 
 void PhysicsServerSW::init() {
-    last_step    = 0.001;
+    last_step    = 0.001f;
     iterations   = 8; // 8?
     stepper      = memnew(StepSW);
     direct_state = memnew(PhysicsDirectBodyStateSW);
@@ -1706,7 +1706,7 @@ void PhysicsServerSW::_shape_col_cbk(
 
     if (cbk->amount == cbk->max) {
         // find least deep
-        real_t min_depth  = 1e20;
+        real_t min_depth  = 1e20f;
         int min_depth_idx = 0;
         for (int i = 0; i < cbk->amount; i++) {
             real_t d =

@@ -144,10 +144,10 @@ bool test_add_remove() {
     a.disconnect_points(3, 4, false);
     // Remaining edges: <2, 3>, <0, 3>, <1, 4> (directed)
     ok = ok
-      && (a.get_closest_position_in_segment(Vector3(2, 0.5, 0))
+      && (a.get_closest_position_in_segment(Vector3(2, 0.5f, 0))
           == Vector3(1.75, 0.75, 0));
     ok = ok
-      && (a.get_closest_position_in_segment(Vector3(-1, 0.2, 0))
+      && (a.get_closest_position_in_segment(Vector3(-1, 0.2f, 0))
           == Vector3(0, 0, 0));
     ok = ok
       && (a.get_closest_position_in_segment(Vector3(3, 2, 0))

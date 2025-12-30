@@ -1828,7 +1828,7 @@ bool KinematicBody2D::move_and_collide(
     // but only if collision depth is low enough to avoid tunneling.
     if (p_cancel_sliding) {
         real_t motion_length = p_motion.length();
-        real_t precision     = 0.001;
+        real_t precision     = 0.001f;
 
         if (colliding) {
             // Can't just use margin as a threshold because collision depth is
@@ -2454,7 +2454,7 @@ void KinematicBody2D::_bind_methods() {
 
 KinematicBody2D::KinematicBody2D() :
     PhysicsBody2D(Physics2DServer::BODY_MODE_KINEMATIC) {
-    margin = 0.08;
+    margin = 0.08f;
 
     on_floor        = false;
     on_ceiling      = false;

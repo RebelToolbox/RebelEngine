@@ -339,7 +339,7 @@ bool Face3::intersects_aabb2(const AABB& p_aabb) const {
                 SWAP(maxB, minB);
             }
 
-            real_t minT = 1e20, maxT = -1e20;
+            real_t minT = 1e20f, maxT = -1e20f;
             for (int k = 0; k < 3; k++) {
                 real_t vert_d = axis.dot(vertex[k]);
 

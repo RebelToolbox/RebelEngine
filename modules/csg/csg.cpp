@@ -1771,8 +1771,8 @@ void CSGBrushOperation::update_faces(
                 }
                 sep_axis.normalize();
 
-                real_t min_a = 1e20, max_a = -1e20;
-                real_t min_b = 1e20, max_b = -1e20;
+                real_t min_a = 1e20f, max_a = -1e20f;
+                real_t min_b = 1e20f, max_b = -1e20f;
 
                 for (int k = 0; k < 3; k++) {
                     real_t d = sep_axis.dot(vertices_a[k]);

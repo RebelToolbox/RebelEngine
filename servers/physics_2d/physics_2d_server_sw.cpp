@@ -159,7 +159,7 @@ void Physics2DServerSW::_shape_col_cbk(
 
     if (cbk->amount == cbk->max) {
         // find least deep
-        real_t min_depth  = 1e20;
+        real_t min_depth  = 1e20f;
         int min_depth_idx = 0;
         for (int i = 0; i < cbk->amount; i++) {
             real_t d =
@@ -1517,7 +1517,7 @@ void Physics2DServerSW::set_collision_iterations(int p_iterations) {
 
 void Physics2DServerSW::init() {
     doing_sync   = false;
-    last_step    = 0.001;
+    last_step    = 0.001f;
     iterations   = 8; // 8?
     stepper      = memnew(Step2DSW);
     direct_state = memnew(Physics2DDirectBodyStateSW);

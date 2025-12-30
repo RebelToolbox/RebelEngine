@@ -38,7 +38,7 @@ bool test_aabb_regular() {
     bool pass = true;
 
     Transform tr;
-    tr.basis  = Basis(Vector3(Math_PI, 0, 0));
+    tr.basis  = Basis(Vector3(static_cast<real_t>(Math_PI), 0, 0));
     tr.origin = Vector3(1, 2, 3);
 
     AABB bb(Vector3(1, 1, 1), Vector3(2, 3, 4));
@@ -145,7 +145,7 @@ bool test_vector3_regular() {
 
     RandomNumberGenerator rng;
     const real_t range     = 1800.0;
-    const real_t range_rot = Math_PI;
+    const real_t range_rot = static_cast<real_t>(Math_PI);
 
     bool passed_multi = true;
     for (int n = 0; n < 1000; n++) {
@@ -169,7 +169,7 @@ bool test_vector3_regular() {
         Vector3 pt = tr.xform(pt_test);
         pt         = tr.xform_inv(pt);
 
-        if (!pt.is_equal_approx(pt_test, 0.1)) {
+        if (!pt.is_equal_approx(pt_test, 0.1f)) {
             passed_multi = false;
         }
     }

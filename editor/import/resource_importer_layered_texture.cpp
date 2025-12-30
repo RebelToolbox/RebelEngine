@@ -188,7 +188,7 @@ void ResourceImporterLayeredTexture::_save_tex(
                 image->generate_mipmaps(false);
 
                 Image::CompressSource csource = Image::COMPRESS_SOURCE_LAYERED;
-                image->compress(p_vram_compression, csource, 0.7);
+                image->compress(p_vram_compression, csource, 0.7f);
 
                 if (i == 0) {
                     // hack so we can properly tell the format

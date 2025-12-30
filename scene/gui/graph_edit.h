@@ -118,7 +118,7 @@ private:
     Vector2 drag_accum;
 
     float zoom      = 1.0f;
-    float zoom_step = 1.2;
+    float zoom_step = 1.2f;
     float zoom_min;
     float zoom_max;
 

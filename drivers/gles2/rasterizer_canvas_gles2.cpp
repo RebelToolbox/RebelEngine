@@ -691,7 +691,8 @@ void RasterizerCanvasGLES2::render_batches(
                                         // if horizontal flip, angle is 180
                                         float angle = 0.0f;
                                         if (flip_h) {
-                                            angle = Math_PI;
+                                            angle =
+                                                static_cast<real_t>(Math_PI);
                                         }
 
                                         // add 1 (to take care of zero floating

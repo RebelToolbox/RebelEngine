@@ -101,7 +101,7 @@ void EditorPropertyMultilineText::_open_big_text() {
         add_child(big_text_dialog);
     }
 
-    big_text_dialog->popup_centered_clamped(Size2(1000, 900) * EDSCALE, 0.8);
+    big_text_dialog->popup_centered_clamped(Size2(1000, 900) * EDSCALE, 0.8f);
     big_text->set_text(text->get_text());
     big_text->grab_focus();
 }
@@ -734,10 +734,10 @@ public:
                 Color color = get_color("highlight_color", "Editor");
 
                 Color text_color  = get_color("font_color", "Editor");
-                text_color.a     *= 0.5;
+                text_color.a     *= 0.5f;
 
                 Color text_color_on  = get_color("dark_color_3", "Editor");
-                text_color_on.a     *= 0.8;
+                text_color_on.a     *= 0.8f;
 
                 const int vofs = (grid_size.height - h) / 2;
 
@@ -755,10 +755,10 @@ public:
                             const bool on = value & (1 << layer_index);
                             Rect2 rect2   = Rect2(ofs, Size2(bsize, bsize));
 
-                            color.a = on ? 0.6 : 0.2;
+                            color.a = on ? 0.6f : 0.2f;
                             if (layer_index == hovered_index) {
                                 // Add visual feedback when hovering a flag.
-                                color.a += 0.15;
+                                color.a += 0.15f;
                             }
 
                             draw_rect(rect2, color);
@@ -1236,7 +1236,7 @@ void EditorPropertyEasing::_drag_easing(const Ref<InputEvent>& p_ev) {
         // 0 is a singularity, but both positive and negative values
         // are otherwise allowed. Enforce 0+ as workaround.
         if (Math::is_zero_approx(val)) {
-            val = 0.00001;
+            val = 0.00001f;
         }
 
         // Limit to a reasonable value to prevent the curve going into infinity,
@@ -1263,7 +1263,7 @@ void EditorPropertyEasing::_draw_easing() {
     if (dragging) {
         line_color = get_color("accent_color", "Editor");
     } else {
-        line_color = get_color("font_color", "Label") * Color(1, 1, 1, 0.9);
+        line_color = get_color("font_color", "Label") * Color(1, 1, 1, 0.9f);
     }
 
     Vector<Point2> points;

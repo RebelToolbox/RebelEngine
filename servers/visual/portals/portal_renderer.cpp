@@ -802,15 +802,14 @@ void PortalRenderer::_add_portal_to_convex_hull(
 
         // and because the portal plane is more important, we will REPLACE the
         // existing similar plane with the portal plane.
-        const real_t d = 0.03; // 0.08f
+        const real_t d = 0.03f;
 
         if (Math::abs(p.d - o.d) > d) {
             continue;
         }
 
         real_t dot = p.normal.dot(o.normal);
-        if (dot < 0.99) // 0.98f
-        {
+        if (dot < 0.99f) {
             continue;
         }
 

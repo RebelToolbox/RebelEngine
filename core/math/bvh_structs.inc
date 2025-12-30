@@ -199,14 +199,14 @@ uint32_t _root_node_id[NUM_TREES];
 // but on the other hand over estimates the bounding box of nodes.
 // we can either use auto mode, where the expansion is based on the root node
 // size, or specify manually
-real_t _node_expansion    = 0.5;
+real_t _node_expansion    = 0.5f;
 bool _auto_node_expansion = true;
 
 // pairing expansion important for physics pairing
 // larger values gives more 'sticky' pairing, and is less likely to exhibit
 // tunneling we can either use auto mode, where the expansion is based on the
 // root node size, or specify manually
-real_t _pairing_expansion = 0.1;
+real_t _pairing_expansion = 0.1f;
 
 #ifdef BVH_ALLOW_AUTO_EXPANSION
 bool _auto_pairing_expansion = true;
@@ -217,4 +217,4 @@ bool _auto_pairing_expansion = true;
 // where we should override the optimization and create a new expanded bound.
 // This threshold is derived from the _pairing_expansion, and should be
 // recalculated if _pairing_expansion is changed.
-real_t _aabb_shrinkage_threshold = 0.0;
+real_t _aabb_shrinkage_threshold = 0;
