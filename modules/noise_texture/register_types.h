@@ -4,10 +4,10 @@
 //
 // SPDX-License-Identifier: MIT
 
-#ifndef OPENSIMPLEX_REGISTER_TYPES_H
-#define OPENSIMPLEX_REGISTER_TYPES_H
+#ifndef NOISE_TEXTURE_REGISTER_TYPES_H
+#define NOISE_TEXTURE_REGISTER_TYPES_H
 
-void register_opensimplex_types();
-void unregister_opensimplex_types();
+void register_noise_texture_types();
+void unregister_noise_texture_types();
 
-#endif // OPENSIMPLEX_REGISTER_TYPES_H
+#endif // NOISE_TEXTURE_REGISTER_TYPES_H

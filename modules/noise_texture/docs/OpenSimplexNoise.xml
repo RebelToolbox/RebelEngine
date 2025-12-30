@@ -100,17 +100,17 @@ SPDX-License-Identifier: MIT
     </methods>
     <members>
         <member name="lacunarity" type="float" setter="set_lacunarity" getter="get_lacunarity" default="2.0">
-            Difference in period between [member octaves].
+            Controls period change across octaves. [code]2[/code] is usually a good value to address all detail levels.
         </member>
         <member name="octaves" type="int" setter="set_octaves" getter="get_octaves" default="3">
-            Number of OpenSimplex noise layers that are sampled to get the fractal noise. Higher values result in more detailed noise but take more time to generate.
+            The number of noise layers that are sampled to get the fractal noise. Higher values result in more detailed noise but take exponentially more time to generate.
             [b]Note:[/b] The maximum allowed value is 9.
         </member>
         <member name="period" type="float" setter="set_period" getter="get_period" default="64.0">
-            Period of the base octave. A lower period results in a higher-frequency noise (more value changes across the same distance).
+            The distance above which we start to see similarities. Higher values create longer "hills". Lower values result in a higher-frequency noise.
         </member>
         <member name="persistence" type="float" setter="set_persistence" getter="get_persistence" default="0.5">
-            Contribution factor of the different octaves. A [code]persistence[/code] value of 1 means all the octaves have the same contribution, a value of 0.5 means each octave contributes half as much as the previous one.
+            Determines the contribution of each octave. A value of 1 means all the octaves have the same contribution, a value of 0.5 means each octave contributes half as much as the previous one. Higher values increase grain, lower values increase smoothness.
         </member>
         <member name="seed" type="int" setter="set_seed" getter="get_seed" default="0">
             Seed used to generate random values, different seeds will generate different noise maps.
