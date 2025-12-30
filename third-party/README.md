@@ -335,7 +335,7 @@ Collection of single-file libraries used in Rebel Engine.
   * Source: https://chromium.googlesource.com/external/webrtc/stable/talk/+/master/base
   * Commit: 5976650443d68ccfadf1dea24999ee459dd2819d (July 2013)
   * License: BSD-3-Clause
-  Note: Includes Rebel changes.
+  Note: Includes Rebel changes in `ifaddrs-android.patch`.
 
 - `mikktspace.{c,h}`
   * Project: http://www.mikktspace.com/
