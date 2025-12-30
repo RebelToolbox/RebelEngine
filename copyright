@@ -302,11 +302,6 @@ Comment: PolyPartition
 Copyright: 2011, Ivan Fratric
 License: Expat
 
-Files: ./third-party/misc/yuv2rgb.h
-Comment: YUV2RGB
-Copyright: 2008-2011, Robin Watts
-License: BSD-2-clause
-
 Files: ./third-party/nanosvg/
 Comment: NanoSVG
 Copyright: 2013-2014, Mikko Mononen
@@ -362,6 +357,11 @@ Copyright: 2018-2020, Jonathan Young
   2013, Thekla, Inc
   2006, NVIDIA Corporation, Ignacio Castano
 License: Expat
+
+Files: ./third-party/yuv2rgb
+Comment: yuv2rgb
+Copyright: 2008-2011, Robin Watts
+License: BSD-0-clause
 
 Files: ./third-party/zlib/
 Comment: zlib

@@ -363,11 +363,6 @@ Collection of single-file libraries used in Rebel Engine.
   * Source: https://github.com/ivanfratric/polypartition
   * License: MIT
 
-- `yuv2rgb.h`
-  * Project: http://wss.co.uk/pinknoise/yuv2rgb/
-  * License: BSD
-
-
 ## nanosvg
 
 - Source: https://github.com/memononen/nanosvg
@@ -501,6 +496,20 @@ Patch file for the changes is `msvcfix.diff`.
 Files copied from the library source:
 - `xatlas.{cpp,h}`
 - `LICENSE`
+
+
+## yuv2rgb
+
+- Project: http://wss.co.uk/pinknoise/yuv2rgb/
+- Version 0.03 (October, 2011)
+- License: BSD-0-Clause
+
+Files copied from the library source:
+- All .c and .h files except test.c
+- COPYING
+
+Note: Includes multiple fixes.
+Patch files for the changes are included in the patches/ folder.
 
 
 ## zlib
