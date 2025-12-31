@@ -361,6 +361,7 @@ def configure_emscripten_scons(environment, env_string):
         else:
             # Drop "export " at start of line.
             clean_line = line[7:]
+            clean_line = clean_line.strip(";")
             path_separator = ":"
         parts = clean_line.split("=")
         if len(parts) != 2:
