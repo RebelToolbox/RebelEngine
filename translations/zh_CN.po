@@ -45556,11 +45556,11 @@ msgstr ""
 msgid "Returns [code]true[/code] if the node path is empty."
 msgstr "节点路径为空时返回 [code]true[/code]。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "[OpenSimplexNoise] filled texture."
 msgstr "使用 [OpenSimplexNoise] 填充的纹理。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "Uses an [OpenSimplexNoise] to fill the texture data. You can specify the "
 "texture size but keep in mind that larger textures will take longer to "
@@ -45588,7 +45588,7 @@ msgstr ""
 "var image = texture.get_data()\n"
 "[/codeblock]"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "If [code]true[/code], the resulting texture contains a normal map created "
 "from the original noise interpreted as a bump map."
@@ -45596,7 +45596,7 @@ msgstr ""
 "如果 [code]true[/code]，产生的纹理包含一个由原始噪声创建的法线贴图，解释为凹"
 "凸贴图。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "Strength of the bump maps used in this texture. A higher value will make the "
 "bump maps appear larger while a lower value will make them appear softer."
@@ -45604,15 +45604,15 @@ msgstr ""
 "此纹理中使用的凹凸贴图的强度。较高的值会使凹凸贴图看起来更大，而较低的值会使"
 "它们看起来更柔和。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "Height of the generated texture."
 msgstr "生成的纹理的高度。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "The [OpenSimplexNoise] instance used to generate the noise."
 msgstr "用来生成噪声的 [OpenSimplexNoise] 实例。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "An offset used to specify the noise space coordinate of the top left corner "
 "of the generated noise. This value is ignored if [member seamless] is "
@@ -45621,7 +45621,7 @@ msgstr ""
 "用于指定生成噪声左上角的噪声空间坐标的偏移量。如果启用了 [member seamless]，"
 "则忽略此值。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "Whether the texture can be tiled without visible seams or not. Seamless "
 "textures take longer to generate.\n"
@@ -45633,7 +45633,7 @@ msgstr ""
 "[b]注：[/b] 与非无缝噪声相比，无缝噪声具有较低的对比度。这是由于噪声使用更高"
 "维度来生成无缝噪声的方式。"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "Width of the generated texture."
 msgstr "生成的纹理的宽度。"
 
@@ -46545,11 +46545,11 @@ msgstr "在计算阴影时，垂直方向上使用更多的细节。"
 msgid "Use more detail horizontally when computing the shadow."
 msgstr "在计算阴影时，在水平方向上使用更多的细节。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Noise generator based on Open Simplex."
 msgstr "基于Open Simplex的噪声发生器。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "This resource allows you to configure and sample a fractal noise space. Here "
 "is a brief usage example that configures an OpenSimplexNoise and gets "
@@ -46588,7 +46588,7 @@ msgstr ""
 "print(noise.get_noise_4d(0.5, 1.9, 4.7, 0.0))\n"
 "[/codeblock]"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "Generate a noise image in [constant Image.FORMAT_L8] format with the "
 "requested [code]width[/code] and [code]height[/code], based on the current "
@@ -46600,7 +46600,7 @@ msgstr ""
 "定其[code]width[/code] 和 [code]height[/code]。如果指定了[code]noise_offset[/"
 "code]，那么偏移值将作为生成的噪声左上角的坐标。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "Returns the 1D noise value [code][-1,1][/code] at the given x-coordinate.\n"
 "[b]Note:[/b] This method actually returns the 2D noise value [code][-1,1][/"
@@ -46610,19 +46610,19 @@ msgstr ""
 "[b]注意：[/b]这个方法实际上返回的是固定Y坐标值为0.0的二维噪声值[code][-1,1][/"
 "code]。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Returns the 2D noise value [code][-1,1][/code] at the given position."
 msgstr "返回给定位置的2D噪声值[code][-1,1][/code]。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Returns the 3D noise value [code][-1,1][/code] at the given position."
 msgstr "返回在给定位置的3D噪声值[code][-1,1][/code]。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Returns the 4D noise value [code][-1,1][/code] at the given position."
 msgstr "返回指定位置的4D噪声值[code][-1,1][/code]。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "Generate a tileable noise image in [constant Image.FORMAT_L8] format, based "
 "on the current noise parameters. Generated seamless images are always square "
@@ -46636,14 +46636,17 @@ msgstr ""
 "[b]注意：[/b] 与非无缝噪声相比，无缝噪声的对比度较低。。这是由于噪声使用更高"
 "维度来生成无缝噪声的方式。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
-msgid "Difference in period between [member octaves]."
-msgstr "在 [member octaves] 之间的周期差异。"
-
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
-"Number of OpenSimplex noise layers that are sampled to get the fractal "
-"noise. Higher values result in more detailed noise but take more time to "
+"Controls period change across octaves. [code]2[/code] is usually a good "
+"value to address all detail levels."
+msgstr ""
+
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
+#, fuzzy
+msgid ""
+"The number of noise layers that are sampled to get the fractal noise. Higher "
+"values result in more detailed noise but take exponentially more time to "
 "generate.\n"
 "[b]Note:[/b] The maximum allowed value is 9."
 msgstr ""
@@ -46651,23 +46654,24 @@ msgstr ""
 "时间来生成。\n"
 "[b]备注:[/b]最大值为9。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
-"Period of the base octave. A lower period results in a higher-frequency "
-"noise (more value changes across the same distance)."
+"The distance above which we start to see similarities. Higher values create "
+"longer \"hills\". Lower values result in a higher-frequency noise."
 msgstr ""
-"基本八度的周期。较低的周期会导致更高频率的噪声(在相同距离上的值变化更多)。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
+#, fuzzy
 msgid ""
-"Contribution factor of the different octaves. A [code]persistence[/code] "
-"value of 1 means all the octaves have the same contribution, a value of 0.5 "
-"means each octave contributes half as much as the previous one."
+"Determines the contribution of each octave. A value of 1 means all the "
+"octaves have the same contribution, a value of 0.5 means each octave "
+"contributes half as much as the previous one. Higher values increase grain, "
+"lower values increase smoothness."
 msgstr ""
 "不同八度音阶的贡献因子。[code]persistence[/code]值为1表示所有的八度有相同的贡"
 "献，值为0.5表示每个八度的贡献是前一个的一半。"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "Seed used to generate random values, different seeds will generate different "
 "noise maps."
@@ -56607,8 +56611,8 @@ msgstr "远程文件系统使用的页面大小（字节）。"
 msgid ""
 "The CA certificates bundle to use for SSL connections. If this is set to a "
 "non-empty value, this will [i]override[/i] Rebel Engine's default "
-"[url=https://github.com/RebelToolbox/RebelEngine/blob/main/third-party/certs/"
-"ca-bundle.crt]Mozilla CA certificate bundle[/url]. If left empty, the "
+"[url=https://github.com/RebelToolbox/RebelEngine/blob/main/third-party/ca-"
+"bundle/ca-bundle.crt]Mozilla CA certificate bundle[/url]. If left empty, the "
 "default certificate bundle will be used.\n"
 "If in doubt, leave this setting empty."
 msgstr ""

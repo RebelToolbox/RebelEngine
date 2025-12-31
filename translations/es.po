@@ -48667,11 +48667,11 @@ msgstr ""
 msgid "Returns [code]true[/code] if the node path is empty."
 msgstr "Devuelve [code]true[/code] si la ruta del nodo está vacía."
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "[OpenSimplexNoise] filled texture."
 msgstr "Textura rellenada [OpenSimplexNoise]."
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 #, fuzzy
 msgid ""
 "Uses an [OpenSimplexNoise] to fill the texture data. You can specify the "
@@ -48704,7 +48704,7 @@ msgstr ""
 "var imagen = textura.get_data()\n"
 "[/codeblock]"
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "If [code]true[/code], the resulting texture contains a normal map created "
 "from the original noise interpreted as a bump map."
@@ -48712,7 +48712,7 @@ msgstr ""
 "Si [code]true[/code], la textura resultante contiene un mapa normal creado a "
 "partir del ruido original interpretado como un bump map."
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "Strength of the bump maps used in this texture. A higher value will make the "
 "bump maps appear larger while a lower value will make them appear softer."
@@ -48721,22 +48721,22 @@ msgstr ""
 "que los bump maps parezcan más grandes mientras que un valor más bajo los "
 "hará parecer más suaves."
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "Height of the generated texture."
 msgstr "Altura de la textura generada."
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "The [OpenSimplexNoise] instance used to generate the noise."
 msgstr "La instancia [OpenSimplexNoise] utilizada para generar el ruido."
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "An offset used to specify the noise space coordinate of the top left corner "
 "of the generated noise. This value is ignored if [member seamless] is "
 "enabled."
 msgstr ""
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid ""
 "Whether the texture can be tiled without visible seams or not. Seamless "
 "textures take longer to generate.\n"
@@ -48745,7 +48745,7 @@ msgid ""
 "seamless noise."
 msgstr ""
 
-#: modules/opensimplex/docs/NoiseTexture.xml
+#: modules/noise_texture/docs/NoiseTexture.xml
 msgid "Width of the generated texture."
 msgstr "El ancho de la textura generada."
 
@@ -49703,11 +49703,11 @@ msgstr ""
 msgid "Use more detail horizontally when computing the shadow."
 msgstr ""
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Noise generator based on Open Simplex."
 msgstr "Generador de ruido basado en Open Simplex."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "This resource allows you to configure and sample a fractal noise space. Here "
 "is a brief usage example that configures an OpenSimplexNoise and gets "
@@ -49747,7 +49747,7 @@ msgstr ""
 "print(ruido.get_noise_4d(0.5, 1.9, 4.7, 0.0))\n"
 "[/codeblock]"
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "Generate a noise image in [constant Image.FORMAT_L8] format with the "
 "requested [code]width[/code] and [code]height[/code], based on the current "
@@ -49756,7 +49756,7 @@ msgid ""
 "noise."
 msgstr ""
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "Returns the 1D noise value [code][-1,1][/code] at the given x-coordinate.\n"
 "[b]Note:[/b] This method actually returns the 2D noise value [code][-1,1][/"
@@ -49766,19 +49766,19 @@ msgstr ""
 "[b]Nota:[/b] Este método devuelve realmente el valor de ruido 2D [code][-1,1]"
 "[/code] con el valor fijo de la coordenada y 0,0."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Returns the 2D noise value [code][-1,1][/code] at the given position."
 msgstr "Devuelve el valor de ruido 2D [code][-1,1][/code] en la posición dada."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Returns the 3D noise value [code][-1,1][/code] at the given position."
 msgstr "Devuelve el valor de ruido 3D [code][-1,1][/code] en la posición dada."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid "Returns the 4D noise value [code][-1,1][/code] at the given position."
 msgstr "Devuelve el valor de ruido 4D [code][-1,1][/code] en la posición dada."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 #, fuzzy
 msgid ""
 "Generate a tileable noise image in [constant Image.FORMAT_L8] format, based "
@@ -49792,14 +49792,17 @@ msgstr ""
 "actuales. Las imágenes generadas sin costura son siempre cuadradas "
 "([code]size[/code] × [code]size[/code])."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
-msgid "Difference in period between [member octaves]."
-msgstr "Diferencia de período entre [member octaves]."
-
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
-"Number of OpenSimplex noise layers that are sampled to get the fractal "
-"noise. Higher values result in more detailed noise but take more time to "
+"Controls period change across octaves. [code]2[/code] is usually a good "
+"value to address all detail levels."
+msgstr ""
+
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
+#, fuzzy
+msgid ""
+"The number of noise layers that are sampled to get the fractal noise. Higher "
+"values result in more detailed noise but take exponentially more time to "
 "generate.\n"
 "[b]Note:[/b] The maximum allowed value is 9."
 msgstr ""
@@ -49808,26 +49811,26 @@ msgstr ""
 "detallado, pero tardan más tiempo en generarse.\n"
 "[b]Nota:[/b] El máximo valor permitido es 9."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
-"Period of the base octave. A lower period results in a higher-frequency "
-"noise (more value changes across the same distance)."
+"The distance above which we start to see similarities. Higher values create "
+"longer \"hills\". Lower values result in a higher-frequency noise."
 msgstr ""
-"Período de la octava base. Un período más bajo da como resultado un ruido de "
-"mayor frecuencia (más valor cambia a través de la misma distancia)."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
+#, fuzzy
 msgid ""
-"Contribution factor of the different octaves. A [code]persistence[/code] "
-"value of 1 means all the octaves have the same contribution, a value of 0.5 "
-"means each octave contributes half as much as the previous one."
+"Determines the contribution of each octave. A value of 1 means all the "
+"octaves have the same contribution, a value of 0.5 means each octave "
+"contributes half as much as the previous one. Higher values increase grain, "
+"lower values increase smoothness."
 msgstr ""
 "Factor de contribución de las diferentes octavas. Un valor de "
 "[code]persistence[/code] de 1 significa que todas las octavas tienen la "
 "misma contribución, un valor de 0,5 significa que cada octava contribuye la "
 "mitad que la anterior."
 
-#: modules/opensimplex/docs/OpenSimplexNoise.xml
+#: modules/noise_texture/docs/OpenSimplexNoise.xml
 msgid ""
 "Seed used to generate random values, different seeds will generate different "
 "noise maps."
@@ -60567,8 +60570,8 @@ msgstr ""
 msgid ""
 "The CA certificates bundle to use for SSL connections. If this is set to a "
 "non-empty value, this will [i]override[/i] Rebel Engine's default "
-"[url=https://github.com/RebelToolbox/RebelEngine/blob/main/third-party/certs/"
-"ca-bundle.crt]Mozilla CA certificate bundle[/url]. If left empty, the "
+"[url=https://github.com/RebelToolbox/RebelEngine/blob/main/third-party/ca-"
+"bundle/ca-bundle.crt]Mozilla CA certificate bundle[/url]. If left empty, the "
 "default certificate bundle will be used.\n"
 "If in doubt, leave this setting empty."
 msgstr ""
