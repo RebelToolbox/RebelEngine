@@ -54,7 +54,7 @@ private:
     uint32_t collision_layer;
     bool _static;
 
-    SelfList<CollisionObject2DSW> pending_shape_update_list;
+    SelfList<CollisionObject2DSW> pending_shape_update_list{this};
 
     void _update_shapes();
     void _recheck_shapes();

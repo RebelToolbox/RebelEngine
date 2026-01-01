@@ -513,8 +513,7 @@ PluginScript::PluginScript() :
     _desc(nullptr),
     _language(nullptr),
     _tool(false),
-    _valid(false),
-    _script_list(this) {}
+    _valid(false) {}
 
 void PluginScript::init(PluginScriptLanguage* language) {
     _desc     = &language->_desc.script_desc;

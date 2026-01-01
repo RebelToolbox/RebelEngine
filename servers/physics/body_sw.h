@@ -54,9 +54,9 @@ class BodySW : public CollisionObjectSW {
     real_t area_angular_damp;
     real_t area_linear_damp;
 
-    SelfList<BodySW> active_list;
-    SelfList<BodySW> inertia_update_list;
-    SelfList<BodySW> direct_state_query_list;
+    SelfList<BodySW> active_list{this};
+    SelfList<BodySW> inertia_update_list{this};
+    SelfList<BodySW> direct_state_query_list{this};
 
     VSet<RID> exceptions;
     bool omit_force_integration;

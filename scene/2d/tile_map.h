@@ -122,7 +122,7 @@ private:
         RID body;
         uint32_t shape_owner_id;
 
-        SelfList<Quadrant> dirty_list;
+        SelfList<Quadrant> dirty_list{this};
 
         struct NavPoly {
             int id;
@@ -149,7 +149,7 @@ private:
             occluder_instances = q.occluder_instances;
         }
 
-        Quadrant(const Quadrant& q) : dirty_list(this) {
+        Quadrant(const Quadrant& q) {
             pos                = q.pos;
             canvas_items       = q.canvas_items;
             body               = q.body;
@@ -159,7 +159,7 @@ private:
             navpoly_ids        = q.navpoly_ids;
         }
 
-        Quadrant() : dirty_list(this) {}
+        Quadrant() {}
     };
 
     Map<PosKey, Quadrant> quadrant_map;

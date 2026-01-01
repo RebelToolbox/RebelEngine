@@ -50,7 +50,7 @@ class Resource : public Reference {
     friend class SceneState;
     Node* local_scene;
 
-    SelfList<Resource> remapped_list;
+    SelfList<Resource> remapped_list{this};
 
 protected:
     void emit_changed();

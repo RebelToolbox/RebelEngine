@@ -986,7 +986,7 @@ void Spatial::_bind_methods() {
     ADD_SIGNAL(MethodInfo("gameplay_exited"));
 }
 
-Spatial::Spatial() : xform_change(this) {
+Spatial::Spatial() {
     data.dirty         = DIRTY_NONE;
     data.children_lock = 0;
 

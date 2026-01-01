@@ -1393,7 +1393,7 @@ Mutex DynamicFont::dynamic_font_mutex;
 
 SelfList<DynamicFont>::List* DynamicFont::dynamic_fonts = nullptr;
 
-DynamicFont::DynamicFont() : font_list(this) {
+DynamicFont::DynamicFont() {
     cache_id.size         = 16;
     outline_cache_id.size = 16;
     spacing_top           = 0;

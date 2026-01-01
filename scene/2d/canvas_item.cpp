@@ -392,7 +392,7 @@ void CanvasItemMaterial::_bind_methods() {
     BIND_ENUM_CONSTANT(LIGHT_MODE_LIGHT_ONLY);
 }
 
-CanvasItemMaterial::CanvasItemMaterial() : element(this) {
+CanvasItemMaterial::CanvasItemMaterial() {
     blend_mode          = BLEND_MODE_MIX;
     light_mode          = LIGHT_MODE_NORMAL;
     particles_animation = false;
@@ -2116,7 +2116,7 @@ int CanvasItem::get_canvas_layer() const {
     }
 }
 
-CanvasItem::CanvasItem() : xform_change(this) {
+CanvasItem::CanvasItem() {
     canvas_item    = VisualServer::get_singleton()->canvas_item_create();
     visible        = true;
     pending_update = false;

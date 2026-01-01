@@ -419,7 +419,7 @@ void Resource::_bind_methods() {
     BIND_VMETHOD(MethodInfo("_setup_local_to_scene"));
 }
 
-Resource::Resource() : remapped_list(this) {
+Resource::Resource() {
 #ifdef TOOLS_ENABLED
     last_modified_time        = 0;
     import_last_modified_time = 0;

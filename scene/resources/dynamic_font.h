@@ -298,7 +298,7 @@ public:
         bool p_outline          = false
     ) const;
 
-    SelfList<DynamicFont> font_list;
+    SelfList<DynamicFont> font_list{this};
 
     static Mutex dynamic_font_mutex;
     static SelfList<DynamicFont>::List* dynamic_fonts;

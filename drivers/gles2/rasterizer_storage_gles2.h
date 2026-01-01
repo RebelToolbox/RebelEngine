@@ -450,7 +450,7 @@ public:
         uint32_t custom_code_id;
         uint32_t version;
 
-        SelfList<Shader> dirty_list;
+        SelfList<Shader> dirty_list{this};
 
         Map<StringName, RID> default_textures;
 
@@ -554,7 +554,7 @@ public:
         bool uses_vertex_time;
         bool uses_fragment_time;
 
-        Shader() : dirty_list(this) {
+        Shader() {
             shader         = nullptr;
             valid          = false;
             custom_code_id = 0;
@@ -605,8 +605,8 @@ public:
     struct Material : public RID_Data {
         Shader* shader;
         Map<StringName, Variant> params;
-        SelfList<Material> list;
-        SelfList<Material> dirty_list;
+        SelfList<Material> list{this};
+        SelfList<Material> dirty_list{this};
         Vector<Pair<StringName, RID>> textures;
         float line_width;
         int render_priority;
@@ -622,7 +622,7 @@ public:
         bool can_cast_shadow_cache;
         bool is_animated_cache;
 
-        Material() : list(this), dirty_list(this) {
+        Material() {
             can_cast_shadow_cache = false;
             is_animated_cache     = false;
             shader                = nullptr;
@@ -754,7 +754,7 @@ public:
         VS::BlendShapeMode blend_shape_mode;
         PoolRealArray blend_shape_values;
 
-        SelfList<Mesh> update_list;
+        SelfList<Mesh> update_list{this};
 
         AABB custom_aabb;
 
@@ -774,8 +774,7 @@ public:
         Mesh() :
             blend_shape_count(0),
             blend_shape_mode(VS::BLEND_SHAPE_MODE_NORMALIZED),
-            blend_shape_values(PoolRealArray()),
-            update_list(this) {}
+            blend_shape_values(PoolRealArray()) {}
     };
 
     mutable RID_Owner<Mesh> mesh_owner;
@@ -880,8 +879,8 @@ public:
 
         AABB aabb;
 
-        SelfList<MultiMesh> update_list;
-        SelfList<MultiMesh> mesh_list;
+        SelfList<MultiMesh> update_list{this};
+        SelfList<MultiMesh> mesh_list{this};
 
         int visible_instances;
 
@@ -897,8 +896,6 @@ public:
             transform_format(VS::MULTIMESH_TRANSFORM_2D),
             color_format(VS::MULTIMESH_COLOR_NONE),
             custom_data_format(VS::MULTIMESH_CUSTOM_DATA_NONE),
-            update_list(this),
-            mesh_list(this),
             visible_instances(-1),
             xform_floats(0),
             color_floats(0),
@@ -1040,12 +1037,12 @@ public:
 
         GLuint tex_id;
 
-        SelfList<Skeleton> update_list;
+        SelfList<Skeleton> update_list{this};
         Set<RasterizerScene::InstanceBase*> instances;
 
         Transform2D base_transform_2d;
 
-        Skeleton() : use_2d(false), size(0), tex_id(0), update_list(this) {}
+        Skeleton() : use_2d(false), size(0), tex_id(0) {}
     };
 
     mutable RID_Owner<Skeleton> skeleton_owner;
@@ -1321,9 +1318,9 @@ public:
         float energy;
         bool interior;
 
-        SelfList<LightmapCapture> update_list;
+        SelfList<LightmapCapture> update_list{this};
 
-        LightmapCapture() : update_list(this) {
+        LightmapCapture() {
             energy      = 1.0;
             cell_subdiv = 1;
             interior    = false;

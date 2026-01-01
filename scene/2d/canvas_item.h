@@ -83,7 +83,7 @@ private:
 
     static Mutex material_mutex;
     static SelfList<CanvasItemMaterial>::List* dirty_materials;
-    SelfList<CanvasItemMaterial> element;
+    SelfList<CanvasItemMaterial> element{this};
 
     void _update_shader();
     _FORCE_INLINE_ void _queue_shader_change();
@@ -149,7 +149,7 @@ public:
     };
 
 private:
-    mutable SelfList<Node> xform_change;
+    mutable SelfList<Node> xform_change{this};
 
     RID canvas_item;
     String group;

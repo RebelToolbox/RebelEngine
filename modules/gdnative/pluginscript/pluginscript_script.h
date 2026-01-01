@@ -29,7 +29,7 @@ private:
 
     Ref<Script> _ref_base_parent;
     StringName _native_parent;
-    SelfList<PluginScript> _script_list;
+    SelfList<PluginScript> _script_list{this};
 
     Map<StringName, int> _member_lines;
     Map<StringName, Variant> _properties_default_values;
