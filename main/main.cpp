@@ -30,7 +30,6 @@
 #include "main/main_timer_sync.h"
 #include "main/performance.h"
 #include "main/splash.gen.h"
-#include "main/tests/test_main.h"
 #include "modules/register_module_types.h"
 #include "platforms/register_platform_apis.h"
 #include "scene/debugger/script_debugger_remote.h"
@@ -45,6 +44,7 @@
 #include "servers/physics_server.h"
 #include "servers/register_server_types.h"
 #include "servers/visual_server_callbacks.h"
+#include "tests/test_main.h"
 
 #ifdef TOOLS_ENABLED
 #include "editor/docs/docs_data.h"
