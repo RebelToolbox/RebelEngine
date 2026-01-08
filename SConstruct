@@ -784,6 +784,7 @@ if selected_platform in platform_list:
     SConscript("drivers/SCsub")
     SConscript("platforms/SCsub")
     SConscript("modules/SCsub")
+    SConscript("tests/SCsub")
     SConscript("main/SCsub")
 
     SConscript("platforms/" + selected_platform + "/SCsub")  # build selected platform
