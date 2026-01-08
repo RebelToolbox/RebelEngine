@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+SPDX-FileCopyrightText: 2023 Rebel Engine contributors
+SPDX-FileCopyrightText: 2014-2022 Godot Engine contributors
+SPDX-FileCopyrightText: 2007-2014 Juan Linietsky, Ariel Manzur
+
+SPDX-License-Identifier: MIT
+-->
+<class name="JSONRPC" inherits="Object" version="1.0">
+    <brief_description>
+        Creates and processes JSON-RPC objects.
+    </brief_description>
+    <description>
+        [url=https://www.jsonrpc.org/]JSON-RPC[/url] is a standard which wraps a method call in a [JSON] object that can be sent between systems. Request, notification and response objects have a defined structure that enable methods with arguments to be called and results to be returned. This class implements that standard using a [Dictionary].
+    </description>
+    <tutorials>
+    </tutorials>
+    <methods>
+        <method name="make_notification" qualifiers="const">
+            <return type="Dictionary" />
+            <argument index="0" name="method" type="String" />
+            <argument index="1" name="params" type="Variant" />
+            <description>
+                Creates a JSON-RPC Notification object as a dictionary. A JSON-RPC Notification object is sent to a server to call [code]method[/code]. The method will be called with [code]params[/code] arguments passed as an [Array] or [Dictionary].
+                Notification objects are sent to a server when a response is not required. If a response is required, then use [method make_request] to create a Request object instead.
+                If scopes are used, [code]method[/code] will be of the form "[i]scope/method[/i]". See [method set_scope] for specifying the object against which the method should be called.
+            </description>
+        </method>
+        <method name="make_request" qualifiers="const">
+            <return type="Dictionary" />
+            <argument index="0" name="method" type="String" />
+            <argument index="1" name="params" type="Variant" />
+            <argument index="2" name="id" type="Variant" />
+            <description>
+                Creates a JSON-RPC Request object as a dictionary. A JSON-RPC Request object is sent to a server to call [code]method[/code]. The method will be called with [code]params[/code] arguments passed as an [Array] or [Dictionary]. The [code]id[/code] uniquely identifies this request. The server is expected to send a response with the same ID.
+                Request objects are sent to a server with the expectation of a response. If a response is not required, then use [method make_notification] to create a Notification object instead.
+                If scopes are used, [code]method[/code] will be of the form "[i]scope/method[/i]". See [method set_scope] for specifying the object against which the method should be called.
+            </description>
+        </method>
+        <method name="make_response" qualifiers="const">
+            <return type="Dictionary" />
+            <argument index="0" name="result" type="Variant" />
+            <argument index="1" name="id" type="Variant" />
+            <description>
+                Creates a JSON-RPC Response object as a dictionary. A JSON-RPC Response object is sent by a server after processing a Request Object. The [code]result[/code] is the return value of the method called. The [code]id[/code] is the same id that was sent with the Request object.
+            </description>
+        </method>
+        <method name="make_response_error" qualifiers="const">
+            <return type="Dictionary" />
+            <argument index="0" name="code" type="int" />
+            <argument index="1" name="message" type="String" />
+            <argument index="2" name="id" type="Variant" default="null" />
+            <description>
+                Creates a JSON-RPC Response error object as a dictionary. A JSON-RPC Response error object is sent by a server if a Request object results in an error. The [code]code[/code] indicates the type of error that occurred. It must be one of the [enum ErrorCode] constants. The [code]message[/code] is a short description of the error. It should be a concise single sentence. The [code]id[/code] is the same id that was sent with the Request object.
+            </description>
+        </method>
+        <method name="process_action">
+            <return type="Variant" />
+            <argument index="0" name="request" type="Variant" />
+            <argument index="1" name="unused" type="bool" default="true" />
+            <description>
+                Processes a [code]request[/code]: a JSON-RPC Request or Notification object passed as a [Dictionary] or an [Array] of JSON-RPC [Dictionary] objects. If it received a JSON-RPC Request object, it returns a JSON-RPC Response object as a [Dictionary] or an [Array] of JSON-RPC Response objects.
+                The [code]unused[/code] argument is not used.
+                [b]Note:[/b] Only methods of objects added using [method set_scope] or declared in the class extended from [JSONRPC] are processed.
+            </description>
+        </method>
+        <method name="process_string">
+            <return type="String" />
+            <argument index="0" name="request_string" type="String" />
+            <description>
+                Processes a [code]request_string[/code]: a JSON-RPC Request or Notification object passed as a JSON [String]. If it received a JSON-RPC Request object, it returns a JSON-RPC Response object as a JSON [String].
+                [b]Note:[/b] Only methods of objects added using [method set_scope] or declared in the class extended from [JSONRPC] are processed.
+            </description>
+        </method>
+        <method name="set_scope">
+            <return type="void" />
+            <argument index="0" name="scope" type="String" />
+            <argument index="1" name="target" type="Object" />
+            <description>
+                Adds a [code]target[/code] object, whose methods can be called via a JSON-RPC Request object. The object is identified via the [code]scope[/code] name. Methods are called using the form "[i]scope/method[/i]".
+            </description>
+        </method>
+    </methods>
+    <constants>
+        <constant name="PARSE_ERROR" value="-32700" enum="ErrorCode">
+        </constant>
+        <constant name="INVALID_REQUEST" value="-32600" enum="ErrorCode">
+        </constant>
+        <constant name="METHOD_NOT_FOUND" value="-32601" enum="ErrorCode">
+        </constant>
+        <constant name="INVALID_PARAMS" value="-32602" enum="ErrorCode">
+        </constant>
+        <constant name="INTERNAL_ERROR" value="-32603" enum="ErrorCode">
+        </constant>
+    </constants>
+</class>
