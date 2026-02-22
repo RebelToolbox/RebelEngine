@@ -287,13 +287,15 @@ Files created from make and modified for Rebel Engine:
 
 - Project: https://www.zlib.net
 - Source: https://github.com/madler/zlib
-- Version: 1.3.1 (51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf, January 2024)
+- Version: 1.3.2 (da607da739fa6047df13e66a2af6b8bec7c2a498, February 2026)
 - License: zlib
 
 Files copied from the library source:
 - contrib/minizip/crypt.h
+- contrib/minizip/ints.h
 - contrib/minizip/ioapi.c
 - contrib/minizip/ioapi.h
+- contrib/minizip/skipset.h
 - contrib/minizip/unzip.c
 - contrib/minizip/unzip.h
 - contrib/minizip/zip.c
@@ -517,7 +519,7 @@ Patch files for the changes are included in the patches/ folder.
 ## zlib
 
 - Source: https://www.zlib.net
-- Version: 1.3.1 (2024)
+- Version: 1.3.2 (da607da739fa6047df13e66a2af6b8bec7c2a498, February 2026)
 - License: zlib
 
 Files copied from the library source:
