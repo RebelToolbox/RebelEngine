@@ -236,8 +236,6 @@ def configure(env):
         env.Append(CPPDEFINES=["NO_THREADS"])
 
     if env["gdnative_enabled"]:
-        env.Append(CCFLAGS=["-s", "RELOCATABLE=1"])
-        env.Append(LINKFLAGS=["-s", "RELOCATABLE=1"])
         # Weak symbols are broken upstream: https://github.com/emscripten-core/emscripten/issues/12819
         env.Append(CPPDEFINES=["ZSTD_HAVE_WEAK_SYMBOLS=0"])
         env.extra_suffix = ".gdnative" + env.extra_suffix
