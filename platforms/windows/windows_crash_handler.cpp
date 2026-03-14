@@ -9,7 +9,6 @@
 #include "core/os/os.h"
 #include "core/project_settings.h"
 #include "core/version.h"
-#include "core/version_hash.gen.h"
 #include "main/main.h"
 
 #ifdef CRASH_HANDLER_EXCEPTION
@@ -195,14 +194,14 @@ DWORD CrashHandlerException(EXCEPTION_POINTERS* ep) {
 
     // Print the engine version just before, so that people are reminded to
     // include the version in backtrace reports.
-    if (String(VERSION_HASH).length() != 0) {
-        fprintf(
-            stderr,
-            "Engine version: " VERSION_FULL_NAME " (" VERSION_HASH ")\n"
-        );
-    } else {
-        fprintf(stderr, "Engine version: " VERSION_FULL_NAME "\n");
-    }
+#ifdef VERSION_HASH
+    fprintf(
+        stderr,
+        "Engine version: " VERSION_FULL_NAME " (" VERSION_HASH ")\n"
+    );
+#else
+    fprintf(stderr, "Engine version: " VERSION_FULL_NAME "\n");
+#endif // VERSION_HASH
     fprintf(stderr, "Dumping the backtrace. %ls\n", msg.c_str());
 
     int n = 0;

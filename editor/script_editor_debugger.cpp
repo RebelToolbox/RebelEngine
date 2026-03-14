@@ -11,7 +11,6 @@
 #include "core/project_settings.h"
 #include "core/ustring.h"
 #include "core/version.h"
-#include "core/version_hash.gen.h"
 #include "editor/editor_log.h"
 #include "editor/plugins/canvas_item_editor_plugin.h"
 #include "editor/plugins/spatial_editor_plugin.h"
@@ -2613,28 +2612,28 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
 
             // Construct a GitHub repository URL and open it in the user's
             // default web browser.
-            if (String(VERSION_HASH).length() >= 1) {
-                // Git commit hash information available; use it for greater
-                // accuracy, including for development versions.
-                OS::get_singleton()->shell_open(vformat(
-                    "https://github.com/RebelToolbox/RebelEngine/blob/%s/"
-                    "%s#L%d",
-                    VERSION_HASH,
-                    file,
-                    line_number
-                ));
-            } else {
-                // Git commit hash information unavailable; fall back to tagged
-                // releases.
-                OS::get_singleton()->shell_open(vformat(
-                    "https://github.com/RebelToolbox/RebelEngine/blob/"
-                    "%s-stable/"
-                    "%s#L%d",
-                    VERSION_NUMBER,
-                    file,
-                    line_number
-                ));
-            }
+#ifdef VERSION_HASH
+            // Git commit hash information available; use it for greater
+            // accuracy, including for development versions.
+            OS::get_singleton()->shell_open(vformat(
+                "https://github.com/RebelToolbox/RebelEngine/blob/%s/"
+                "%s#L%d",
+                VERSION_HASH,
+                file,
+                line_number
+            ));
+#else  // ! VERSION_HASH
+       // Git commit hash information unavailable; fall back to tagged
+       // releases.
+            OS::get_singleton()->shell_open(vformat(
+                "https://github.com/RebelToolbox/RebelEngine/blob/"
+                "%s/"
+                "%s#L%d",
+                VERSION_NUMBER,
+                file,
+                line_number
+            ));
+#endif // VERSION_HASH
         } break;
     }
 }

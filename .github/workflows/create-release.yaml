@@ -1,10 +1,6 @@
 name: Create Release
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Version"
-        required: true
   schedule:
     # Create nightly development release every day at midnight.
     - cron: '0 0 * * *'
@@ -12,8 +8,8 @@ on:
 jobs:
   builds:
     name: ${{ matrix.name }}
-    # Don't run on forks.
-    if: github.repository == 'RebelToolbox/RebelEngine'
+    # Don't run nightly scheduled release on forks.
+    if: github.event_name != 'schedule' || github.repository == 'RebelToolbox/RebelEngine'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -192,6 +188,8 @@ jobs:
           artifact: ${{ matrix.artifact }}
           build-options: ${{ matrix.build-options }}
           use-build-cache: false
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
 
   android-templates:
     name: Create Android Templates
@@ -433,22 +431,16 @@ jobs:
       - name: Create version.txt File
         run: |
           #Creating version.txt file.
-          echo "::group::Create extract_version.py."
-          set +H
-          echo "#!/usr/bin/env python3" > extract_version.py
-          echo "import version" >> extract_version.py
-          echo "version_number = str(version.major)" >> extract_version.py
-          echo "version_number += '.' +  str(version.minor)" >> extract_version.py
-          echo "if version.patch != 0:" >> extract_version.py
-          echo "  version_number += '.' + str(version.patch)" >> extract_version.py
-          echo "version_number += '.' + version.status" >> extract_version.py
-          echo "file = open(\"version.txt\", \"w\")" >> extract_version.py
-          echo "file.write(version_number + \"\\n\")" >> extract_version.py
-          echo "file.close()" >> extract_version.py
-          echo "::endgroup::"
-          # Run python script to create version.txt file.
-          chmod +x extract_version.py
-          ./extract_version.py
+          echo > $(python3 -c '
+          import version
+          version_number = str(version.major)
+          version_number += "." + str(version.minor)
+          version_number += "." + str(version.patch)
+          pre_release = version.pre_release if hasattr(version, "pre_release") else None
+          if pre_release:
+              version_number += "-" + pre_release
+          print(version_number)
+          ') > version.txt
 
       - name: Create Zip File
         run: |
@@ -500,14 +492,17 @@ jobs:
 
       - name: Set Version
         run: |
-          # If a development or nightly version, append the date.
-          version=dev
-          if [[ "${{ github.event.inputs.version }}" != "" ]]; then
-            version=${{ github.event.inputs.version }}
-          fi
-          if [[ $version == "dev" ]]; then
-            version=dev-$(date +'%Y-%m-%d')
-          fi
+          #Setting version.
+          version=$(python3 -c '
+          import version
+          version_number = str(version.major)
+          version_number += "." + str(version.minor)
+          version_number += "." + str(version.patch)
+          pre_release = version.pre_release if hasattr(version, "pre_release") else None
+          if pre_release:
+              version_number += "-" + pre_release
+          print(version_number)
+          ')
           echo "version=$version" >> $GITHUB_ENV
 
       - name: Download Artifacts
@@ -543,19 +538,28 @@ jobs:
           name: rebel-${{ env.version }}
           path: release
 
+      - name: Remove previous nightly releases
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Removing previous nightly releases"
+          gh release list | grep "Nightly" | while IFS=$'\t' read title type tag published ; do
+            gh release delete $tag --cleanup-tag
+          done
+
       - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           #Creating release
-          echo "Removing previous development and nightly releases"
-          gh release list | grep dev | while IFS=$'\t' read title type tag published ; do
-            gh release delete $tag --cleanup-tag
-          done
-          if [[ $version == dev* ]] ; then
-            echo "Creating $(date +'%Y-%m-%d') Nightly"
-            gh release create $version ./release/* --generate-notes --title "Nightly $(date +'%Y-%m-%d')"
+          if [[ ${{ github.event_name }} == "schedule" ]] ; then
+            echo "Creating $version Nightly $(date +'%Y-%m-%d')"
+            gh release create v$version ./release/* --generate-notes --title "Nightly $(date +'%Y-%m-%d')" --prerelease
+          elif [[ $version == *-* ]] ; then
+            echo "Creating Rebel Engine pre-release version $version"
+            gh release create v$version ./release/* --generate-notes --title "Rebel Engine v$version" --prerelease
           else
-            echo "Creating Rebel Engine $version"
-            gh release create $version ./release/* --generate-notes --title "Rebel Engine v$version"
+            echo "Creating Rebel Engine release version $version"
+            gh release create v$version ./release/* --generate-notes --title "Rebel Engine v$version"
           fi

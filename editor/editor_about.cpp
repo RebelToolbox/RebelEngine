@@ -10,7 +10,6 @@
 #include "core/donors.gen.h"
 #include "core/license.gen.h"
 #include "core/version.h"
-#include "core/version_hash.gen.h"
 #include "editor_node.h"
 
 // The metadata key used to store and retrieve the version text to copy to the
@@ -128,10 +127,11 @@ EditorAbout::EditorAbout() {
     version_info_vbc->add_child(v_spacer);
 
     version_btn = memnew(LinkButton);
-    String hash = String(VERSION_HASH);
-    if (hash.length() != 0) {
-        hash = " " + vformat("[%s]", hash.left(9));
-    }
+#ifdef VERSION_HASH
+    String hash = vformat(" [%s]", String(VERSION_HASH).left(9));
+#else
+    String hash = "";
+#endif // VERSION_HASH
     version_btn->set_text(VERSION_FULL_NAME + hash);
     // Set the text to copy in metadata as it slightly differs from the button's
     // text.

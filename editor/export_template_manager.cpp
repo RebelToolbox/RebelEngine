@@ -44,7 +44,7 @@ void ExportTemplateManager::_update_template_status() {
     memdelete(da);
 
     // Update the state of the current version.
-    String current_version = VERSION_FULL_CONFIG;
+    String current_version = VERSION_FULL;
     current_value->set_text(current_version);
 
     if (templates.has(current_version)) {
@@ -261,9 +261,9 @@ void ExportTemplateManager::_refresh_mirrors() {
     }
     is_refreshing_mirrors = true;
 
-    String current_version = VERSION_FULL_CONFIG;
+    String current_version = VERSION_FULL;
     const String mirrors_metadata_url =
-        "https://rebeltoolbox.org/mirrorlist/" + current_version + ".json";
+        "https://rebeltoolbox.org/mirrors/" + current_version + ".json";
     request_mirrors->request(mirrors_metadata_url);
 }
 
@@ -787,7 +787,7 @@ void ExportTemplateManager::_hide_dialog() {
 bool ExportTemplateManager::can_install_android_template() {
     const String templates_dir =
         EditorSettings::get_singleton()->get_templates_dir().plus_file(
-            VERSION_FULL_CONFIG
+            VERSION_FULL
         );
     return FileAccess::exists(templates_dir.plus_file("android_template.zip"));
 }
@@ -795,7 +795,7 @@ bool ExportTemplateManager::can_install_android_template() {
 Error ExportTemplateManager::install_android_template() {
     const String& templates_path =
         EditorSettings::get_singleton()->get_templates_dir().plus_file(
-            VERSION_FULL_CONFIG
+            VERSION_FULL
         );
     const String& source_zip = templates_path.plus_file("android_template.zip");
     ERR_FAIL_COND_V(!FileAccess::exists(source_zip), ERR_CANT_OPEN);
@@ -819,7 +819,7 @@ Error ExportTemplateManager::install_android_template_from_file(
         FileAccessRef f =
             FileAccess::open("res://android/.build_version", FileAccess::WRITE);
         ERR_FAIL_COND_V(!f, ERR_CANT_CREATE);
-        f->store_line(VERSION_FULL_CONFIG);
+        f->store_line(VERSION_FULL);
         f->close();
     }
 
@@ -1059,15 +1059,6 @@ ExportTemplateManager::ExportTemplateManager() {
     set_hide_on_ok(false);
     get_ok()->set_text(TTR("Close"));
 
-    // Downloadable export templates are only available for stable and official
-    // alpha/beta/RC builds (which always have a number following their status,
-    // e.g. "alpha1"). Therefore, don't display download-related features when
-    // using a development version (whose builds aren't numbered).
-    downloads_available = String(VERSION_STATUS) != String("dev")
-                       && String(VERSION_STATUS) != String("alpha")
-                       && String(VERSION_STATUS) != String("beta")
-                       && String(VERSION_STATUS) != String("rc");
-
     VBoxContainer* main_vb = memnew(VBoxContainer);
     add_child(main_vb);
 
@@ -1122,7 +1113,7 @@ ExportTemplateManager::ExportTemplateManager() {
         "pressed",
         this,
         "_open_template_folder",
-        varray(VERSION_FULL_CONFIG)
+        varray(VERSION_FULL)
     );
 
     current_uninstall_button = memnew(Button);
@@ -1131,12 +1122,8 @@ ExportTemplateManager::ExportTemplateManager() {
         TTR("Uninstall templates for the current version.")
     );
     current_installed_hb->add_child(current_uninstall_button);
-    current_uninstall_button->connect(
-        "pressed",
-        this,
-        "_uninstall_template",
-        varray(VERSION_FULL_CONFIG)
-    );
+    current_uninstall_button
+        ->connect("pressed", this, "_uninstall_template", varray(VERSION_FULL));
 
     main_vb->add_child(memnew(HSeparator));
 
@@ -1189,14 +1176,6 @@ ExportTemplateManager::ExportTemplateManager() {
     );
     download_install_hb->add_child(download_current_button);
     download_current_button->connect("pressed", this, "_download_current");
-
-    // Update downloads buttons to prevent unsupported downloads.
-    if (!downloads_available) {
-        download_current_button->set_disabled(true);
-        download_current_button->set_tooltip(TTR(
-            "Official export templates aren't available for development builds."
-        ));
-    }
 
     HBoxContainer* install_file_hb = memnew(HBoxContainer);
     install_file_hb->set_alignment(BoxContainer::ALIGN_END);

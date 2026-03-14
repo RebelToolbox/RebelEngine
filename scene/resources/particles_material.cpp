@@ -123,8 +123,9 @@ void ParticlesMaterial::_update_shader() {
 
     // Add a comment to describe the shader origin (useful when converting to
     // ShaderMaterial).
-    String code = "// NOTE: Shader automatically converted from " VERSION_NAME
-                  " " VERSION_FULL_CONFIG "'s ParticlesMaterial.\n\n";
+    String code =
+        "// NOTE: Shader automatically converted from " VERSION_FULL_NAME
+        "'s ParticlesMaterial.\n\n";
 
     code += "shader_type particles;\n";
 

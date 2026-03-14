@@ -10,7 +10,6 @@
 #include "core/donors.gen.h"
 #include "core/license.gen.h"
 #include "core/version.h"
-#include "core/version_hash.gen.h"
 
 void Engine::set_iterations_per_second(int p_ips) {
     ERR_FAIL_COND_MSG(
@@ -69,25 +68,25 @@ void Engine::set_portals_active(bool p_active) {
 
 Dictionary Engine::get_version_info() const {
     Dictionary dict;
-    dict["major"]  = VERSION_MAJOR;
-    dict["minor"]  = VERSION_MINOR;
-    dict["patch"]  = VERSION_PATCH;
-    dict["hex"]    = VERSION_HEX;
-    dict["status"] = VERSION_STATUS;
-    dict["build"]  = VERSION_BUILD;
+    dict["major"] = VERSION_MAJOR;
+    dict["minor"] = VERSION_MINOR;
+    dict["patch"] = VERSION_PATCH;
+#ifdef VERSION_PRE_RELEASE
+    dict["status"] = VERSION_PRE_RELEASE;
+#else  // ! VERSION_PRE_RELEASE
+    dict["status"] = "Release";
+#endif // VERSION_PRE_RELEASE
+    dict["build"]  = VERSION_DATE;
     dict["year"]   = VERSION_YEAR;
-
-    String hash  = VERSION_HASH;
-    dict["hash"] = hash.length() == 0 ? String("unknown") : hash;
-
-    String stringver = String(dict["major"]) + "." + String(dict["minor"]);
-    if ((int)dict["patch"] != 0) {
-        stringver += "." + String(dict["patch"]);
-    }
-    stringver +=
-        "-" + String(dict["status"]) + " (" + String(dict["build"]) + ")";
-    dict["string"] = stringver;
-
+    dict["month"]  = VERSION_MONTH;
+    dict["day"]    = VERSION_DAY;
+    dict["string"] = VERSION_FULL_BUILD;
+#ifdef VERSION_HASH
+    dict["hash"] = VERSION_HASH;
+#else  // ! VERSION_HASH
+    dict["hash"] = String("Unknown");
+#endif // VERSION_HASH
+    dict["hex"] = VERSION_HEX;
     return dict;
 }
 

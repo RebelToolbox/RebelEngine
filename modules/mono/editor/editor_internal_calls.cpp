@@ -269,7 +269,7 @@ MonoString* rebel_icall_Internal_UpdateApiAssembliesFromPrebuilt(
 MonoString* rebel_icall_Internal_FullTemplatesDir() {
     String full_templates_dir =
         EditorSettings::get_singleton()->get_templates_dir().plus_file(
-            VERSION_FULL_CONFIG
+            VERSION_FULL
         );
     return GDMonoMarshal::mono_string_from_rebel(full_templates_dir);
 }

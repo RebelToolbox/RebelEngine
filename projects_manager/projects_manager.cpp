@@ -16,7 +16,6 @@
 #include "core/os/os.h"
 #include "core/translation.h"
 #include "core/version.h"
-#include "core/version_hash.gen.h"
 #include "editor/editor_scale.h"
 #include "editor/editor_settings.h"
 #include "editor/editor_themes.h"
@@ -755,12 +754,13 @@ Control* ProjectsManager::_create_tools() {
     // Pushes the version label down.
     Control* version_spacer          = memnew(Control);
     version_container->add_child(version_spacer);
-    version_label       = memnew(LinkButton);
-    String version_hash = String(VERSION_HASH);
-    if (!version_hash.empty()) {
-        version_hash = vformat(" [%s]", version_hash.left(9));
-    }
-    version_label->set_text(vformat("v%s%s", VERSION_FULL_BUILD, version_hash));
+    version_label = memnew(LinkButton);
+#ifdef VERSION_HASH
+    String hash = vformat(" [%s]", String(VERSION_HASH).left(9));
+#else
+    String hash = "";
+#endif // VERSION_HASH
+    version_label->set_text(vformat("v%s%s", VERSION_FULL_BUILD, hash));
     version_label->set_self_modulate(Color(1, 1, 1, 0.6f));
     version_label->set_underline_mode(LinkButton::UNDERLINE_MODE_ON_HOVER);
     version_label->set_tooltip(TTR("Click to copy."));

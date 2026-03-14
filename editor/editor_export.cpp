@@ -362,7 +362,7 @@ String EditorExportPlatform::find_export_template(
     String template_file_name,
     String* err
 ) const {
-    String current_version = VERSION_FULL_CONFIG;
+    String current_version = VERSION_FULL;
     String template_path   = EditorSettings::get_singleton()
                                ->get_templates_dir()
                                .plus_file(current_version)

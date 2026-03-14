@@ -3622,13 +3622,13 @@ Error EditorExportPlatformAndroid::export_project_helper(
             String version = f->get_line().strip_edges();
             print_verbose("- build version: " + version);
             f->close();
-            if (version != VERSION_FULL_CONFIG) {
+            if (version != VERSION_FULL) {
                 EditorNode::get_singleton()->show_warning(vformat(
                     TTR("Android build version mismatch:\n   Template "
                         "installed: %s\n   Rebel Version: %s\nPlease reinstall "
                         "Android project template from 'Project' menu."),
                     version,
-                    VERSION_FULL_CONFIG
+                    VERSION_FULL
                 ));
                 return ERR_UNCONFIGURED;
             }
@@ -3799,7 +3799,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
         cmdline.push_back(
             "-Pperform_signing=" + sign_flag
         ); // argument to specify whether the build should be signed.
-        cmdline.push_back("-Peditor_version=" + String(VERSION_FULL_CONFIG));
+        cmdline.push_back("-Peditor_version=" + String(VERSION_FULL));
 
         // NOTE: The release keystore is not included in the verbose logging
         // to avoid accidentally leaking sensitive information when sharing

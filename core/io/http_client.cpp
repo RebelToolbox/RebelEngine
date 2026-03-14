@@ -174,8 +174,8 @@ Error HTTPClient::request_raw(
         // Should it add utf8 encoding?
     }
     if (add_uagent) {
-        request += "User-Agent: RebelEngine/" + String(VERSION_FULL_BUILD)
-                 + " (" + OS::get_singleton()->get_name() + ")\r\n";
+        request += "User-Agent: RebelEngine/" + String(VERSION_NUMBER) + " ("
+                 + OS::get_singleton()->get_name() + ")\r\n";
     }
     if (add_accept) {
         request += "Accept: */*\r\n";

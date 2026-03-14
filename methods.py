@@ -71,54 +71,73 @@ def add_module_version_string(self, s):
     self.module_version_string += "." + s
 
 
-def update_version(module_version_string=""):
-    build_name = "custom_build"
-    if os.getenv("BUILD_NAME") != None:
-        build_name = str(os.getenv("BUILD_NAME"))
-        print("Using custom build name: " + build_name)
-
-    import version
-
-    # NOTE: It is safe to generate this file here, since this is still executed serially
-    f = open("core/version_generated.gen.h", "w")
-    f.write('#define VERSION_SHORT_NAME "' + str(version.short_name) + '"\n')
-    f.write('#define VERSION_NAME "' + str(version.name) + '"\n')
-    f.write("#define VERSION_MAJOR " + str(version.major) + "\n")
-    f.write("#define VERSION_MINOR " + str(version.minor) + "\n")
-    f.write("#define VERSION_PATCH " + str(version.patch) + "\n")
-    f.write('#define VERSION_STATUS "' + str(version.status) + '"\n')
-    f.write('#define VERSION_BUILD "' + str(build_name) + '"\n')
-    f.write(
-        '#define VERSION_MODULE_CONFIG "'
-        + str(version.module_config)
-        + module_version_string
-        + '"\n'
-    )
-    f.write("#define VERSION_YEAR " + str(version.year) + "\n")
-    f.write('#define VERSION_WEBSITE "' + str(version.website) + '"\n')
-    f.close()
-
-    # NOTE: It is safe to generate this file here, since this is still executed serially
-    fhash = open("core/version_hash.gen.h", "w")
-    githash = ""
-    gitfolder = ".git"
-
-    if os.path.isfile(".git"):
-        module_folder = open(".git", "r").readline().strip()
-        if module_folder.startswith("gitdir: "):
-            gitfolder = module_folder[8:]
-
-    if os.path.isfile(os.path.join(gitfolder, "HEAD")):
-        head = open_utf8(os.path.join(gitfolder, "HEAD"), "r").readline().strip()
-        if head.startswith("ref: "):
-            head = os.path.join(gitfolder, head[5:])
-            if os.path.isfile(head):
-                githash = open(head, "r").readline().strip()
+def get_git_hash():
+    git_folder = ".git"
+    head_folder = git_folder
+    if os.path.isfile(git_folder):
+        with open(git_folder, "r") as git_file:
+            git_dir = git_file.readline().strip()
+            if git_dir.startswith("gitdir: "):
+                head_folder = git_dir[8:]
+            else:
+                print('ERROR: .git is a file, but doesn\'t contain "gitdir:"')
+                return None
+        commondir_path = os.path.join(head_folder, "commondir")
+        if os.path.isfile(commondir_path):
+            with open(commondir_path, "r") as commondir_file:
+                common_folder = commondir_file.readline().strip()
+                git_folder = os.path.join(head_folder, common_folder)
         else:
-            githash = head
+            git_folder = head_folder
+    if not os.path.isdir(git_folder):
+        return None
 
-    fhash.write('#define VERSION_HASH "' + githash + '"')
-    fhash.close()
+    head_path = os.path.join(head_folder, "HEAD")
+    if not os.path.isfile(head_path):
+        print("ERROR: Cannot find ", head_path, "file")
+        return None
+    with open_utf8(os.path.join(head_path), "r") as head_file:
+        ref = head_file.readline().strip()
+        if not ref.startswith("ref: "):
+            print("ERROR:", head_path, 'doesn\'t contain "ref:"')
+            return None
+        branch = ref[5:]
+    branch_path = os.path.join(git_folder, branch)
+    if not os.path.isfile(branch_path):
+        print("ERROR: Cannot find", branch_path)
+        return None
+    with open(branch_path, "r") as branch_file:
+        return branch_file.readline().strip()
+
+
+def update_version(module_version_string=""):
+    import version
+    from datetime import datetime, timezone
+
+    current_time = datetime.now(timezone.utc)
+    current_date = str(datetime.date(current_time))
+    current_year = str(current_time.year)
+    current_month = str(current_time.month)
+    current_day = str(current_time.day)
+    git_hash = get_git_hash()
+    pre_release = version.pre_release if hasattr(version, "pre_release") else None
+
+    # NOTE: It is safe to generate this file here, since this is still executed serially
+    with open("core/version_generated.gen.h", "w") as version_file:
+        version_file.write('#define VERSION_NAME "' + version.name + '"\n')
+        version_file.write('#define VERSION_SHORT_NAME "' + version.short_name + '"\n')
+        version_file.write('#define VERSION_WEBSITE "' + version.website + '"\n')
+        version_file.write("#define VERSION_MAJOR " + str(version.major) + "\n")
+        version_file.write("#define VERSION_MINOR " + str(version.minor) + "\n")
+        version_file.write("#define VERSION_PATCH " + str(version.patch) + "\n")
+        if pre_release:
+            version_file.write('#define VERSION_PRE_RELEASE "' + pre_release + '"\n')
+        version_file.write('#define VERSION_DATE "' + current_date + '"\n')
+        version_file.write("#define VERSION_YEAR " + current_year + "\n")
+        version_file.write("#define VERSION_MONTH " + current_month + "\n")
+        version_file.write("#define VERSION_DAY " + current_day + "\n")
+        if git_hash:
+            version_file.write('#define VERSION_HASH "' + git_hash + '"' + "\n")
 
 
 def parse_cg_file(fname, uniforms, sizes, conditionals):

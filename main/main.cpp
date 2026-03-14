@@ -23,7 +23,6 @@
 #include "core/script_language.h"
 #include "core/translation.h"
 #include "core/version.h"
-#include "core/version_hash.gen.h"
 #include "drivers/register_driver_types.h"
 #include "main/app_icon.gen.h"
 #include "main/input_default.h"
@@ -145,10 +144,11 @@ static String unescape_cmdline(const String& p_str) {
 }
 
 static String get_full_version_string() {
-    String hash = String(VERSION_HASH);
-    if (hash.length() != 0) {
-        hash = "." + hash.left(9);
-    }
+#ifdef VERSION_HASH
+    String hash = vformat(" [%s]", String(VERSION_HASH).left(9));
+#else
+    String hash = "";
+#endif // VERSION_HASH
     return String(VERSION_FULL_BUILD) + hash;
 }
 

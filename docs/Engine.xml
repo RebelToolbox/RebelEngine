@@ -112,16 +112,19 @@ SPDX-License-Identifier: MIT
             <return type="Dictionary" />
             <description>
                 Returns the current engine version information in a Dictionary.
-                [code]major[/code]    - Holds the major version number as an int
-                [code]minor[/code]    - Holds the minor version number as an int
-                [code]patch[/code]    - Holds the patch version number as an int
-                [code]hex[/code]      - Holds the full version number encoded as a hexadecimal int with one byte (2 places) per number (see example below)
-                [code]status[/code]   - Holds the status (e.g. "beta", "rc1", "rc2", ... "stable") as a String
-                [code]build[/code]    - Holds the build name (e.g. "custom_build") as a String
-                [code]hash[/code]     - Holds the full Git commit hash as a String
-                [code]year[/code]     - Holds the year the version was released in as an int
-                [code]string[/code]   - [code]major[/code] + [code]minor[/code] + [code]patch[/code] + [code]status[/code] + [code]build[/code] in a single String
-                The [code]hex[/code] value is encoded as follows, from left to right: one byte for the major, one byte for the minor, one byte for the patch version. For example, "3.1.12" would be [code]0x03010C[/code]. [b]Note:[/b] It's still an int internally, and printing it will give you its decimal representation, which is not particularly meaningful. Use hexadecimal literals for easy version comparisons from code:
+                [code]major[/code]    - The build major version number as an int.
+                [code]minor[/code]    - The build minor version number as an int.
+                [code]patch[/code]    - The build patch version number as an int.
+                [code]status[/code]   - Holds the build status (e.g. "dev", "beta", "rc1", "Release", etc.) as a String.
+                [code]build[/code]    - The build date in YYYY-MM-DD ISO date format.
+                [code]year[/code]     - The year the build was created as an int.
+                [code]month[/code]    - The month the build was created as an int.
+                [code]day[/code]      - The day of the month the build was created as an int.
+                [code]string[/code]   - The full Semantic Version (e.g. 1.0-dev+2025.8.22) as a string.
+                [code]hash[/code]     - If available, the full Git commit hash as a String.
+                [code]hex[/code]      - The version number encoded as a hexadecimal int.
+                The [code]hex[/code] value is encoded as follows, from left to right: one byte for the major, one byte for the minor, one byte for the patch version. For example, "3.1.12" would be [code]0x03010C[/code].
+                [b]Note:[/b] It's still an int internally, and printing it will give you its decimal representation, which is not particularly meaningful. Use hexadecimal literals for easy version comparisons from code:
                 [codeblock]
                 if Engine.get_version_info().hex &gt;= 0x030200:
                     # Do things specific to version 3.2 or later
