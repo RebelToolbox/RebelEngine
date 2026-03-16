@@ -3893,10 +3893,6 @@ msgid ""
 msgstr ""
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr "Templat eksport rasmi tidak tersedia untuk binaan pembangunan."
-
-#: editor/export_template_manager.cpp
 #, fuzzy
 msgid "Install from File"
 msgstr "Pasang Dari Fail"

@@ -3919,10 +3919,6 @@ msgid ""
 msgstr "حمّل ونصّب قوالب الإصدار الحالي من أفضل مصدر متوفر."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr "قوالب التصدير الرسمية غير مدعومة لأجل البناء الخاص بالتطوير."
-
-#: editor/export_template_manager.cpp
 #, fuzzy
 msgid "Install from File"
 msgstr "تثبيت من ملف"

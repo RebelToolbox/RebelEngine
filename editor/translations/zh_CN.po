@@ -3849,10 +3849,6 @@ msgid ""
 msgstr "从最佳的镜像下载当前版本的模板并安装。"
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr "开发构建下官方导出模板不可用。"
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "从文件安装"
 

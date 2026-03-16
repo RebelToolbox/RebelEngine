@@ -3948,11 +3948,6 @@ msgid ""
 msgstr ""
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr ""
-"Officiële export sjablonen zijn niet beschikbaar voor ontwikkel builds."
-
-#: editor/export_template_manager.cpp
 #, fuzzy
 msgid "Install from File"
 msgstr "Installeer Vanuit Bestand"

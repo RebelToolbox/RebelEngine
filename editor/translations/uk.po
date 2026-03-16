@@ -3897,10 +3897,6 @@ msgstr ""
 "дзеркала."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr "Для тестових збірок не передбачено офіційних шаблонів експортування."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "Встановити з файла"
 

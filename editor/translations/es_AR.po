@@ -3908,12 +3908,6 @@ msgstr ""
 "posible."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr ""
-"Las plantillas de exportación oficiales no están disponibles para las "
-"versiones de desarrollo."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "Instalar desde Archivo"
 

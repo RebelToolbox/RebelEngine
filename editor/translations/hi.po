@@ -3862,10 +3862,6 @@ msgid ""
 msgstr ""
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr "विकास के निर्माण के लिए आधिकारिक निर्यात टेम्पलेटउपलब्ध नहीं हैं।"
-
-#: editor/export_template_manager.cpp
 #, fuzzy
 msgid "Install from File"
 msgstr "फ़ाइल से इंस्टॉल करें"

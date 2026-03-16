@@ -3927,12 +3927,6 @@ msgstr ""
 "Mevcut sürüm için şablonları mümkün olan en iyi aynadan indirin ve yükleyin."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr ""
-"Resmi dışa aktarım şablonları, geliştirici sürümleri için kullanılabilir "
-"değildir."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "Dosyadan Kur"
 

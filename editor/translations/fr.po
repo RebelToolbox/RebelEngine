@@ -3989,12 +3989,6 @@ msgstr ""
 "depuis le meilleur miroir disponible."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr ""
-"Les modèles d'exportation officiels ne sont pas disponibles pour les "
-"versions de développement."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "Installer depuis un fichier"
 

@@ -3874,10 +3874,6 @@ msgstr ""
 "Stáhnutí a instalace šablon pro aktuální verzi z nejlepšího možného zrcadla."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr "Oficiální šablony exportu nejsou k dispozici pro vývojová sestavení."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "Instalovat ze souboru"
 
