@@ -413,6 +413,7 @@ jobs:
         with:
           name: ios-template
           path: ios-template.zip
+          retention-days: 1
 
   create-templates-zip:
     name: Create Templates Zip File
@@ -481,6 +482,7 @@ jobs:
         with:
           name: rebel-templates
           path: rebel-templates.zip
+          retention-days: 1
 
   create-release:
     name: Create Release
