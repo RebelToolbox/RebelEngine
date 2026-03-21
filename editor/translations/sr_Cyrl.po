@@ -4178,11 +4178,6 @@ msgstr ""
 
 #: editor/export_template_manager.cpp
 #, fuzzy
-msgid "Official export templates aren't available for development builds."
-msgstr "Званични извозни нацрти нису доступни за развојну градњу."
-
-#: editor/export_template_manager.cpp
-#, fuzzy
 msgid "Install from File"
 msgstr "Инсталирај са датотеком"
 

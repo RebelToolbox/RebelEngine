@@ -4008,12 +4008,6 @@ msgstr ""
 "possível."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr ""
-"Modelos de exportação oficiais não estão disponíveis para compilações de "
-"desenvolvimento."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "Instalar a Partir do Arquivo"
 

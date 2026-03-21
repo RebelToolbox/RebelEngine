@@ -3944,11 +3944,6 @@ msgstr ""
 
 #: editor/export_template_manager.cpp
 #, fuzzy
-msgid "Official export templates aren't available for development builds."
-msgstr "Development builds未能提供官方export templates。"
-
-#: editor/export_template_manager.cpp
-#, fuzzy
 msgid "Install from File"
 msgstr "從檔案安裝"
 

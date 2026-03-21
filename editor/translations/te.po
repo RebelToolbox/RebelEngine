@@ -3657,10 +3657,6 @@ msgid ""
 msgstr ""
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr ""
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr ""
 

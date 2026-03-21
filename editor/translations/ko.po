@@ -3865,10 +3865,6 @@ msgstr ""
 "최상의 가능한 미러에서 현재 버전을 위한 템플릿을 다운로드하고 설치합니다."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr "공식 내보내기 템플릿은 개발 빌드에서는 이용할 수 없습니다."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "파일에서 설치"
 

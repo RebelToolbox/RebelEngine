@@ -3969,12 +3969,6 @@ msgstr ""
 "und installieren."
 
 #: editor/export_template_manager.cpp
-msgid "Official export templates aren't available for development builds."
-msgstr ""
-"Für Entwicklungsversionen werden keine offizielle Exportvorlagen bereit "
-"gestellt."
-
-#: editor/export_template_manager.cpp
 msgid "Install from File"
 msgstr "Aus Datei installieren"
 
