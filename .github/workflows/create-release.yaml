@@ -413,6 +413,7 @@ jobs:
         with:
           name: ios-template
           path: ios-template.zip
+          retention-days: 1
 
   create-templates-zip:
     name: Create Templates Zip File
@@ -431,7 +432,7 @@ jobs:
       - name: Create version.txt File
         run: |
           #Creating version.txt file.
-          echo > $(python3 -c '
+          echo $(python3 -c '
           import version
           version_number = str(version.major)
           version_number += "." + str(version.minor)
@@ -481,6 +482,7 @@ jobs:
         with:
           name: rebel-templates
           path: rebel-templates.zip
+          retention-days: 1
 
   create-release:
     name: Create Release
@@ -558,8 +560,8 @@ jobs:
             gh release create v$version ./release/* --generate-notes --title "Nightly $(date +'%Y-%m-%d')" --prerelease
           elif [[ $version == *-* ]] ; then
             echo "Creating Rebel Engine pre-release version $version"
-            gh release create v$version ./release/* --generate-notes --title "Rebel Engine v$version" --prerelease
+            gh release create v$version ./release/* --target ${{ github.ref_name }} --generate-notes --title "Rebel Engine v$version" --prerelease
           else
             echo "Creating Rebel Engine release version $version"
-            gh release create v$version ./release/* --generate-notes --title "Rebel Engine v$version"
+            gh release create v$version ./release/* --target ${{ github.ref_name }} --generate-notes --title "Rebel Engine v$version"
           fi
