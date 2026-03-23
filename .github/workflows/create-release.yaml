@@ -431,7 +431,7 @@ jobs:
       - name: Create version.txt File
         run: |
           #Creating version.txt file.
-          echo > $(python3 -c '
+          echo $(python3 -c '
           import version
           version_number = str(version.major)
           version_number += "." + str(version.minor)
