@@ -172,7 +172,7 @@ Files copied from the library source:
 
 - Project: https://libpng.org/pub/png/libpng.html
 - Source: https://sourceforge.net/projects/libpng/
-- Version: 1.6.55 (c3e304954a9cfd154bc0dfbfea2b01cd61d6546d, February 2026)
+- Version: 1.6.56 (d5515b5b8be3901aac04e5bd8bd5c89f287bcd33, March 2026)
 - License: libpng/zlib
 
 Files copied from the library source:
