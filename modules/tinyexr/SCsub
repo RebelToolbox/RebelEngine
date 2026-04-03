@@ -18,6 +18,9 @@ third_party_sources = [third_party_dir + file for file in third_party_sources]
 
 env_tinyexr.Prepend(CPPPATH=[third_party_dir])
 
+# Use our zlib third-party library.
+# Note: Requires including zlib.h before including tinyexr.h
+env_tinyexr.Append(CPPDEFINES=["TINYEXR_USE_MINIZ=0"])
 # Enable threaded loading with C++11.
 env_tinyexr.Append(CPPDEFINES=["TINYEXR_USE_THREAD"])
 

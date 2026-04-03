@@ -1,0 +1,11 @@
+diff --git a/third-party/tinyexr/tinyexr.cc b/third-party/tinyexr/tinyexr.cc
+index fef8f66c..1aed9e6c 100644
+--- a/third-party/tinyexr/tinyexr.cc
++++ b/third-party/tinyexr/tinyexr.cc
+@@ -4,5 +4,6 @@
+ #endif
+ #endif
+ 
++#include "../zlib/zlib.h"
+ #define TINYEXR_IMPLEMENTATION
+ #include "tinyexr.h"
