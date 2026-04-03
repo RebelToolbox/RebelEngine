@@ -454,11 +454,13 @@ Files copied from the library source:
 ## tinyexr
 
 - Source: https://github.com/syoyo/tinyexr
-- Version: 1.0.0 (e4b7840d9448b7d57a88384ce26143004f3c0c71, 2020)
+- Version: 1.0.12 (735ff73ce5959cf005eb99ce517c9bcecab89dfb, March 2025)
 - License: BSD-3-Clause
 
 Files copied from the library source:
 - `tinyexr.{cc,h}`
+
+Note: Includes patch file to use our zlib third-party library.
 
 
 ## vhacd
