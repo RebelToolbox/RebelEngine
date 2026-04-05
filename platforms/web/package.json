@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "eslint": "^10.1.0",
+    "eslint": "^10.2.0",
     "globals": "^17.4.0",
     "jsdoc": "^4.0.5"
   },
