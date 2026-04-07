@@ -246,13 +246,15 @@ Patch file for the changes is included in the patches/ folder.
 
 - Project: https://www.trustedfirmware.org/projects/mbed-tls/
 - Source: https://github.com/Mbed-TLS/mbedtls
-- Version: 3.6.5 (e185d7fd85499c8ce5ca2a54f5cf8fe7dbe3f8df, October 2025)
+- Version: 3.6.6 (0bebf8b8c7f07abe3571ded48a11aa907a1ffb20, March 2026)
 - License: Apache 2.0
 
 Files copied from the library source:
-- All `*.h` from `include/`
-- All `*.c` and `*.h` from `library/`
-- The `LICENSE` file.
+- `include/mbedtls/*.h`
+- `include/psa/*.h`
+- `library/*.h`
+- `library/*.c`
+- `LICENSE`
 
 
 ## minimp3
