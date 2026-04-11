@@ -456,11 +456,15 @@ Files copied from the library source:
 ## tinyexr
 
 - Source: https://github.com/syoyo/tinyexr
-- Version: 1.0.0 (e4b7840d9448b7d57a88384ce26143004f3c0c71, 2020)
+- Version: 1.0.13 (4946b5d92e13bcc8102ac2c8efd129596a90bf75, March 2026)
 - License: BSD-3-Clause
 
 Files copied from the library source:
 - `tinyexr.{cc,h}`
+- exr_reader.hh
+- streamreader.hh
+
+Note: Includes patch file to use our zlib third-party library.
 
 
 ## vhacd
