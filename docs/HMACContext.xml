@@ -31,7 +31,7 @@ SPDX-License-Identifier: MIT
         [/codeblock]
         And in C# we can use the following.
         [codeblock]
-        using Godot;
+        using Rebel;
         using System;
         using System.Diagnostics;
 
