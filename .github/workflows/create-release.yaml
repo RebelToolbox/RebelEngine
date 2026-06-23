@@ -26,12 +26,12 @@ jobs:
             build-options: production=yes target=release_debug
 
           - name: macOS Editor x86 64 bit
-            os: macos-latest
+            os: macos-15
             artifact: macos-editor-x86-64
             build-options: production=yes target=release_debug
 
           - name: macOS Editor armv8 64 bit
-            os: macos-latest
+            os: macos-15
             artifact: macos-editor-arm64
             build-options: production=yes target=release_debug arch=arm64
 
@@ -69,22 +69,22 @@ jobs:
 
           # Rebel Engine macOS builds
           - name: macOS Engine x86 64 bit
-            os: macos-latest
+            os: macos-15
             artifact: macos-engine-x86-64
             build-options: production=yes tools=no target=release
 
           - name: macOS Engine x86 64 bit Debug
-            os: macos-latest
+            os: macos-15
             artifact: macos-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
 
           - name: macOS Engine armv8 64 bit
-            os: macos-latest
+            os: macos-15
             artifact: macos-engine-arm64
             build-options: production=yes tools=no target=release arch=arm64
 
           - name: macOS Engine armv8 64 bit Debug
-            os: macos-latest
+            os: macos-15
             artifact: macos-engine-arm64-debug
             build-options: production=yes tools=no target=release_debug arch=arm64
 
