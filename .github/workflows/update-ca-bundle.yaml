@@ -14,12 +14,12 @@ jobs:
 
     steps:
       - name: Checkout Rebel Engine
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: RebelEngine
 
       - name: Checkout ca-bundle
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: bagder/ca-bundle
           path: ca-bundle
