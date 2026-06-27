@@ -6,6 +6,7 @@
 import argparse
 import os
 import re
+import string
 import textwrap
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
@@ -827,16 +828,71 @@ def rst_text(text):
     result = ""
     remaining_text = text
     while remaining_text:
-        plain_text, tag, remaining_text = extract_next_tag(remaining_text)
-        result += escape_special_characters(plain_text)
+        before_text, tag, remaining_text = extract_next_tag(remaining_text)
+        result += escape_special_characters(before_text)
+        if needs_escaped_space_before(result, tag):
+            result += r"\ "
         result += rst_tag(tag)
-        if (
-            result.endswith("`")
-            and remaining_text
-            and (remaining_text[0].isalnum() or remaining_text[0] == "(")
-        ):
+        if needs_escaped_space_after(tag, remaining_text):
             result += r"\ "
     return result
+
+
+def needs_escaped_space_before(before_text, tag):
+    if not before_text or not tag:
+        return False
+    if tag.is_block_tag():
+        return False
+    last_character = before_text[-1]
+    if not is_word_character(last_character):
+        return False
+    return True
+
+
+def needs_escaped_space_after(tag, after_text):
+    if not after_text:
+        return False
+    if tag.is_block_tag():
+        return False
+    next_character = after_text[0]
+    if not (is_word_character(next_character) or is_open_bracket(next_character)):
+        return False
+    return True
+
+
+def is_word_character(character):
+    chinese_punctuation = [
+        "。",
+        "，",
+        "、",
+        "—",
+        "！",
+        "？",
+        "：",
+        "；",
+        "（",
+        "）",
+        "…",
+        "”",
+        "‘",
+    ]
+    if character.isspace():
+        return False
+    if character in string.punctuation:
+        return False
+    if character in chinese_punctuation:
+        return False
+    return True
+
+
+def is_open_bracket(character):
+    open_brackets = [
+        "[",
+        "(",
+        "（",
+    ]
+    if character in open_brackets:
+        return True
 
 
 def add_line_breaks(text):
@@ -883,15 +939,7 @@ def extract_next_tag(text):
         return (before_text, None, after_text)
     tag = TagDef(tag_name)
     tag.name, tag.value = extract_tag_value(tag_name)
-    block_tags = [
-        "b",
-        "code",
-        "codeblock",
-        "i",
-        "img",
-        "url",
-    ]
-    if tag.name in block_tags:
+    if tag.has_contents():
         tag.contents, after_text = extract_tag_contents(tag.name, after_text)
     return (before_text, tag, after_text)
 
@@ -1134,10 +1182,29 @@ class TypeDef:
 
 
 class TagDef:
+    content_tags = [
+        "b",
+        "code",
+        "codeblock",
+        "i",
+        "img",
+        "url",
+    ]
+    block_tags = [
+        "codeblock",
+        "img",
+    ]
+
     def __init__(self, name):
         self.name = name
         self.value = ""
         self.contents = ""
+
+    def has_contents(self):
+        return self.name in TagDef.content_tags
+
+    def is_block_tag(self):
+        return self.name in TagDef.block_tags
 
 
 if __name__ == "__main__":
