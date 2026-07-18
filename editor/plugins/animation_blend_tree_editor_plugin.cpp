@@ -65,7 +65,7 @@ void AnimationNodeBlendTreeEditor::_update_options_menu(bool p_has_input_ports
         add_node->get_popup()->add_item(TTR("Paste"), MENU_PASTE);
     }
     add_node->get_popup()->add_separator();
-    add_node->get_popup()->add_item(TTR("Load..."), MENU_LOAD_FILE);
+    add_node->get_popup()->add_item(TTR(L"Load…"), MENU_LOAD_FILE);
     use_popup_menu_position = false;
 }
 
@@ -1339,7 +1339,7 @@ AnimationNodeBlendTreeEditor::AnimationNodeBlendTreeEditor() {
 
     add_node = memnew(MenuButton);
     graph->get_zoom_hbox()->add_child(add_node);
-    add_node->set_text(TTR("Add Node..."));
+    add_node->set_text(TTR(L"Add Node…"));
     graph->get_zoom_hbox()->move_child(add_node, 0);
     add_node->get_popup()->connect("id_pressed", this, "_add_node");
     add_node

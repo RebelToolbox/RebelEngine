@@ -1376,7 +1376,7 @@ void EditorNode::save_resource_as(
         file->set_current_path(existing);
     }
     file->popup_centered_ratio();
-    file->set_title(TTR("Save Resource As..."));
+    file->set_title(TTR(L"Save Resource As…"));
 }
 
 void EditorNode::_menu_option(int p_option) {
@@ -2690,7 +2690,7 @@ void EditorNode::_run(bool p_current, const String& p_custom) {
             // Set the option to save and run so when the dialog is accepted,
             // the scene runs.
             current_option = FILE_SAVE_AND_RUN;
-            file->set_title(TTR("Save scene before running..."));
+            file->set_title(TTR(L"Save scene before running…"));
             return;
         }
 
@@ -2810,17 +2810,17 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
         } break;
         case FILE_QUICK_OPEN: {
             quick_open->popup_dialog("Resource", true);
-            quick_open->set_title(TTR("Quick Open..."));
+            quick_open->set_title(TTR(L"Quick Open…"));
 
         } break;
         case FILE_QUICK_OPEN_SCENE: {
             quick_open->popup_dialog("PackedScene", true);
-            quick_open->set_title(TTR("Quick Open Scene..."));
+            quick_open->set_title(TTR(L"Quick Open Scene…"));
 
         } break;
         case FILE_QUICK_OPEN_SCRIPT: {
             quick_open->popup_dialog("Script", true);
-            quick_open->set_title(TTR("Quick Open Script..."));
+            quick_open->set_title(TTR(L"Quick Open Script…"));
 
         } break;
         case FILE_OPEN_PREV: {
@@ -3006,7 +3006,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                 file->set_current_path(existing);
             }
             file->popup_centered_ratio();
-            file->set_title(TTR("Save Scene As..."));
+            file->set_title(TTR(L"Save Scene As…"));
 
         } break;
 
@@ -3188,7 +3188,7 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                 || editor_run.get_status() == EditorRun::STATUS_STOP) {
                 _menu_option_confirm(RUN_STOP, true);
                 quick_run->popup_dialog("PackedScene", true);
-                quick_run->set_title(TTR("Quick Run Scene..."));
+                quick_run->set_title(TTR(L"Quick Run Scene…"));
                 play_custom_scene_button->set_pressed(false);
             } else {
                 String last_custom_scene = run_custom_filename;
@@ -7821,7 +7821,7 @@ EditorNode::EditorNode() {
     );
     ED_SHORTCUT(
         "editor/filter_files",
-        TTR("Filter Files..."),
+        TTR(L"Filter Files…"),
         KEY_MASK_ALT + KEY_MASK_CMD + KEY_P
     );
     PopupMenu* p;
@@ -7835,16 +7835,13 @@ EditorNode::EditorNode() {
         FILE_NEW_SCENE
     );
     p->add_shortcut(
-        ED_SHORTCUT(
-            "editor/new_inherited_scene",
-            TTR("New Inherited Scene...")
-        ),
+        ED_SHORTCUT("editor/new_inherited_scene", TTR(L"New Inherited Scene…")),
         FILE_NEW_INHERITED_SCENE
     );
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/open_scene",
-            TTR("Open Scene..."),
+            TTR(L"Open Scene…"),
             KEY_MASK_CMD + KEY_O
         ),
         FILE_OPEN_SCENE
@@ -7871,7 +7868,7 @@ EditorNode::EditorNode() {
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/save_scene_as",
-            TTR("Save Scene As..."),
+            TTR(L"Save Scene As…"),
             KEY_MASK_SHIFT + KEY_MASK_CMD + KEY_S
         ),
         FILE_SAVE_AS_SCENE
@@ -7889,7 +7886,7 @@ EditorNode::EditorNode() {
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/quick_open",
-            TTR("Quick Open..."),
+            TTR(L"Quick Open…"),
             KEY_MASK_SHIFT + KEY_MASK_ALT + KEY_O
         ),
         FILE_QUICK_OPEN
@@ -7897,7 +7894,7 @@ EditorNode::EditorNode() {
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/quick_open_scene",
-            TTR("Quick Open Scene..."),
+            TTR(L"Quick Open Scene…"),
             KEY_MASK_SHIFT + KEY_MASK_CMD + KEY_O
         ),
         FILE_QUICK_OPEN_SCENE
@@ -7905,7 +7902,7 @@ EditorNode::EditorNode() {
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/quick_open_script",
-            TTR("Quick Open Script..."),
+            TTR(L"Quick Open Script…"),
             KEY_MASK_ALT + KEY_MASK_CMD + KEY_O
         ),
         FILE_QUICK_OPEN_SCRIPT
@@ -7915,13 +7912,13 @@ EditorNode::EditorNode() {
     PopupMenu* pm_export = memnew(PopupMenu);
     pm_export->set_name("Export");
     p->add_child(pm_export);
-    p->add_submenu_item(TTR("Convert To..."), "Export");
+    p->add_submenu_item(TTR(L"Convert To…"), "Export");
     pm_export->add_shortcut(
-        ED_SHORTCUT("editor/convert_to_MeshLibrary", TTR("MeshLibrary...")),
+        ED_SHORTCUT("editor/convert_to_MeshLibrary", TTR(L"MeshLibrary…")),
         FILE_EXPORT_MESH_LIBRARY
     );
     pm_export->add_shortcut(
-        ED_SHORTCUT("editor/convert_to_TileSet", TTR("TileSet...")),
+        ED_SHORTCUT("editor/convert_to_TileSet", TTR(L"TileSet…")),
         FILE_EXPORT_TILESET
     );
     pm_export->connect("id_pressed", this, "_menu_option");
@@ -7983,7 +7980,7 @@ EditorNode::EditorNode() {
     p = project_menu->get_popup();
     p->set_hide_on_window_lose_focus(true);
     p->add_shortcut(
-        ED_SHORTCUT("editor/project_settings", TTR("Project Settings...")),
+        ED_SHORTCUT("editor/project_settings", TTR(L"Project Settings…")),
         RUN_SETTINGS
     );
     p->connect("id_pressed", this, "_menu_option");
@@ -8004,11 +8001,11 @@ EditorNode::EditorNode() {
 
     p->add_separator();
     p->add_shortcut(
-        ED_SHORTCUT("editor/export", TTR("Export...")),
+        ED_SHORTCUT("editor/export", TTR(L"Export…")),
         FILE_EXPORT_PROJECT
     );
     p->add_item(
-        TTR("Install Android Project Template..."),
+        TTR(L"Install Android Project Template…"),
         FILE_INSTALL_ANDROID_PROJECT_TEMPLATE
     );
     p->add_item(TTR("Open Project Data Folder"), RUN_PROJECT_DATA_FOLDER);
@@ -8023,7 +8020,7 @@ EditorNode::EditorNode() {
     p->add_child(tool_menu);
     p->add_submenu_item(TTR("Tools"), "Tools");
     tool_menu->add_item(
-        TTR("Orphan Resource Explorer..."),
+        TTR(L"Orphan Resource Explorer…"),
         TOOLS_ORPHAN_RESOURCES
     );
 
@@ -8177,14 +8174,14 @@ EditorNode::EditorNode() {
     p->add_shortcut(
         ED_SHORTCUT(
             "editor/editor_settings",
-            TTR("Editor Settings..."),
+            TTR(L"Editor Settings…"),
             KEY_MASK_CMD + KEY_COMMA
         ),
         SETTINGS_PREFERENCES
     );
 #else
     p->add_shortcut(
-        ED_SHORTCUT("editor/editor_settings", TTR("Editor Settings...")),
+        ED_SHORTCUT("editor/editor_settings", TTR(L"Editor Settings…")),
         SETTINGS_PREFERENCES
     );
 #endif
@@ -8265,11 +8262,11 @@ EditorNode::EditorNode() {
     p->add_separator();
 
     p->add_item(
-        TTR("Manage Editor Features..."),
+        TTR(L"Manage Editor Features…"),
         SETTINGS_MANAGE_FEATURE_PROFILES
     );
     p->add_item(
-        TTR("Manage Export Templates..."),
+        TTR(L"Manage Export Templates…"),
         SETTINGS_MANAGE_EXPORT_TEMPLATES
     );
 

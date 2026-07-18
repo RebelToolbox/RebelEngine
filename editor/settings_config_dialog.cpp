@@ -300,7 +300,7 @@ void EditorSettingsDialog::_shortcut_button_pressed(
     Ref<ShortCut> sc = EditorSettings::get_singleton()->get_shortcut(item);
 
     if (p_idx == 0) {
-        press_a_key_label->set_text(TTR("Press a Key..."));
+        press_a_key_label->set_text(TTR(L"Press a Key…"));
         last_wait_for_key = Ref<InputEventKey>();
         press_a_key->popup_centered(Size2(250, 80) * EDSCALE);
         press_a_key->grab_focus();
@@ -558,7 +558,7 @@ EditorSettingsDialog::EditorSettingsDialog() {
     add_child(press_a_key);
 
     Label* l = memnew(Label);
-    l->set_text(TTR("Press a Key..."));
+    l->set_text(TTR(L"Press a Key…"));
     l->set_anchors_and_margins_preset(Control::PRESET_WIDE);
     l->set_align(Label::ALIGN_CENTER);
     l->set_margin(MARGIN_TOP, 20);

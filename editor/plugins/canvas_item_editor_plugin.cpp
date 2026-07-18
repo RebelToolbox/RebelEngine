@@ -8693,7 +8693,7 @@ CanvasItemEditor::CanvasItemEditor(EditorNode* p_editor) {
     p->add_shortcut(
         ED_SHORTCUT(
             "canvas_item_editor/configure_snap",
-            TTR("Configure Snap...")
+            TTR(L"Configure Snap…")
         ),
         SNAP_CONFIGURE
     );
@@ -9218,7 +9218,7 @@ void CanvasItemEditorViewport::_on_select_type(Object* selected) {
     CheckBox* check = Object::cast_to<CheckBox>(selected);
     String type     = check->get_text();
     selector->set_title(vformat(TTR("Add %s"), type));
-    label->set_text(vformat(TTR("Adding %s..."), type));
+    label->set_text(vformat(TTR(L"Adding %s…"), type));
 }
 
 void CanvasItemEditorViewport::_on_change_type_confirmed() {
@@ -9624,7 +9624,7 @@ bool CanvasItemEditorViewport::can_drop_data(
                 preview_node->set_position(
                     (p_point - trans.get_origin()) / trans.get_scale().x
                 );
-                label->set_text(vformat(TTR("Adding %s..."), default_type));
+                label->set_text(vformat(TTR(L"Adding %s…"), default_type));
             }
             return can_instance;
         }

@@ -2894,8 +2894,8 @@ void FileSystemDock::_file_and_folders_fill_popup(
 
     if (all_files) {
         if (filenames.size() == 1) {
-            p_popup->add_item(TTR("Edit Dependencies..."), FILE_DEPENDENCIES);
-            p_popup->add_item(TTR("View Owners..."), FILE_OWNERS);
+            p_popup->add_item(TTR(L"Edit Dependencies…"), FILE_DEPENDENCIES);
+            p_popup->add_item(TTR(L"View Owners…"), FILE_OWNERS);
             p_popup->add_separator();
         }
 
@@ -2931,7 +2931,7 @@ void FileSystemDock::_file_and_folders_fill_popup(
     if (p_paths.size() > 1 || p_paths[0] != "res://") {
         p_popup->add_icon_item(
             get_icon("MoveUp", "EditorIcons"),
-            TTR("Move To..."),
+            TTR(L"Move To…"),
             FILE_MOVE
         );
         p_popup->add_icon_shortcut(
@@ -2946,22 +2946,22 @@ void FileSystemDock::_file_and_folders_fill_popup(
         if (p_display_path_dependent_options) {
             p_popup->add_icon_item(
                 get_icon("Folder", "EditorIcons"),
-                TTR("New Folder..."),
+                TTR(L"New Folder…"),
                 FILE_NEW_FOLDER
             );
             p_popup->add_icon_item(
                 get_icon("PackedScene", "EditorIcons"),
-                TTR("New Scene..."),
+                TTR(L"New Scene…"),
                 FILE_NEW_SCENE
             );
             p_popup->add_icon_item(
                 get_icon("Script", "EditorIcons"),
-                TTR("New Script..."),
+                TTR(L"New Script…"),
                 FILE_NEW_SCRIPT
             );
             p_popup->add_icon_item(
                 get_icon("Object", "EditorIcons"),
-                TTR("New Resource..."),
+                TTR(L"New Resource…"),
                 FILE_NEW_RESOURCE
             );
             p_popup->add_separator();
@@ -3015,22 +3015,22 @@ void FileSystemDock::_tree_rmb_empty(const Vector2& p_pos) {
     tree_popup->set_size(Size2(1, 1));
     tree_popup->add_icon_item(
         get_icon("Folder", "EditorIcons"),
-        TTR("New Folder..."),
+        TTR(L"New Folder…"),
         FILE_NEW_FOLDER
     );
     tree_popup->add_icon_item(
         get_icon("PackedScene", "EditorIcons"),
-        TTR("New Scene..."),
+        TTR(L"New Scene…"),
         FILE_NEW_SCENE
     );
     tree_popup->add_icon_item(
         get_icon("Script", "EditorIcons"),
-        TTR("New Script..."),
+        TTR(L"New Script…"),
         FILE_NEW_SCRIPT
     );
     tree_popup->add_icon_item(
         get_icon("Object", "EditorIcons"),
-        TTR("New Resource..."),
+        TTR(L"New Resource…"),
         FILE_NEW_RESOURCE
     );
     tree_popup->set_position(tree->get_global_position() + p_pos);
@@ -3080,22 +3080,22 @@ void FileSystemDock::_file_list_rmb_pressed(const Vector2& p_pos) {
 
     file_list_popup->add_icon_item(
         get_icon("Folder", "EditorIcons"),
-        TTR("New Folder..."),
+        TTR(L"New Folder…"),
         FILE_NEW_FOLDER
     );
     file_list_popup->add_icon_item(
         get_icon("PackedScene", "EditorIcons"),
-        TTR("New Scene..."),
+        TTR(L"New Scene…"),
         FILE_NEW_SCENE
     );
     file_list_popup->add_icon_item(
         get_icon("Script", "EditorIcons"),
-        TTR("New Script..."),
+        TTR(L"New Script…"),
         FILE_NEW_SCRIPT
     );
     file_list_popup->add_icon_item(
         get_icon("Object", "EditorIcons"),
-        TTR("New Resource..."),
+        TTR(L"New Resource…"),
         FILE_NEW_RESOURCE
     );
     file_list_popup->add_separator();
@@ -3517,11 +3517,11 @@ FileSystemDock::FileSystemDock(EditorNode* p_editor) {
     );
     ED_SHORTCUT(
         "filesystem_dock/duplicate",
-        TTR("Duplicate..."),
+        TTR(L"Duplicate…"),
         KEY_MASK_CMD | KEY_D
     );
     ED_SHORTCUT("filesystem_dock/delete", TTR("Delete"), KEY_DELETE);
-    ED_SHORTCUT("filesystem_dock/rename", TTR("Rename..."), KEY_F2);
+    ED_SHORTCUT("filesystem_dock/rename", TTR(L"Rename…"), KEY_F2);
     ED_SHORTCUT(
         "filesystem_dock/open_search",
         TTR("Focus the search box"),
@@ -3655,7 +3655,7 @@ FileSystemDock::FileSystemDock(EditorNode* p_editor) {
     add_child(scanning_vb);
 
     Label* slabel = memnew(Label);
-    slabel->set_text(TTR("Scanning Files,\nPlease Wait..."));
+    slabel->set_text(TTR(L"Scanning Files,\nPlease Wait…"));
     slabel->set_align(Label::ALIGN_CENTER);
     scanning_vb->add_child(slabel);
 

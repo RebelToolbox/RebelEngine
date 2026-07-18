@@ -2736,11 +2736,7 @@ void ScriptTextEditor::register_editor() {
         KEY_MASK_CMD | KEY_I
     );
 
-    ED_SHORTCUT(
-        "script_text_editor/find",
-        TTR("Find..."),
-        KEY_MASK_CMD | KEY_F
-    );
+    ED_SHORTCUT("script_text_editor/find", TTR(L"Find…"), KEY_MASK_CMD | KEY_F);
 #ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "script_text_editor/find_next",
@@ -2754,7 +2750,7 @@ void ScriptTextEditor::register_editor() {
     );
     ED_SHORTCUT(
         "script_text_editor/replace",
-        TTR("Replace..."),
+        TTR(L"Replace…"),
         KEY_MASK_ALT | KEY_MASK_CMD | KEY_F
     );
 #else
@@ -2766,14 +2762,14 @@ void ScriptTextEditor::register_editor() {
     );
     ED_SHORTCUT(
         "script_text_editor/replace",
-        TTR("Replace..."),
+        TTR(L"Replace…"),
         KEY_MASK_CMD | KEY_R
     );
 #endif
 
     ED_SHORTCUT(
         "script_text_editor/find_in_files",
-        TTR("Find in Files..."),
+        TTR(L"Find in Files…"),
         KEY_MASK_CMD | KEY_MASK_SHIFT | KEY_F
     );
 
@@ -2815,19 +2811,19 @@ void ScriptTextEditor::register_editor() {
 #ifdef MACOS_ENABLED
     ED_SHORTCUT(
         "script_text_editor/goto_function",
-        TTR("Go to Function..."),
+        TTR(L"Go to Function…"),
         KEY_MASK_CTRL | KEY_MASK_CMD | KEY_J
     );
 #else
     ED_SHORTCUT(
         "script_text_editor/goto_function",
-        TTR("Go to Function..."),
+        TTR(L"Go to Function…"),
         KEY_MASK_ALT | KEY_MASK_CMD | KEY_F
     );
 #endif
     ED_SHORTCUT(
         "script_text_editor/goto_line",
-        TTR("Go to Line..."),
+        TTR(L"Go to Line…"),
         KEY_MASK_CMD | KEY_L
     );
 

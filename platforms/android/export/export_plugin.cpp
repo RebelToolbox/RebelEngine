@@ -2618,7 +2618,7 @@ Error EditorExportPlatformAndroid::run(
     String adb = get_adb_path();
 
     // Export_temp APK.
-    if (ep.step(TTR("Exporting APK..."), 0)) {
+    if (ep.step(TTR(L"Exporting APK…"), 0)) {
         device_lock.unlock();
         return ERR_SKIP;
     }
@@ -2666,7 +2666,7 @@ Error EditorExportPlatformAndroid::run(
     String package_name = p_preset->get("package/unique_name");
 
     if (remove_prev) {
-        if (ep.step(TTR("Uninstalling..."), 1)) {
+        if (ep.step(TTR(L"Uninstalling…"), 1)) {
             CLEANUP_AND_RETURN(ERR_SKIP);
         }
 
@@ -2686,7 +2686,7 @@ Error EditorExportPlatformAndroid::run(
     print_line(
         "Installing to device (please wait...): " + devices[p_device].name
     );
-    if (ep.step(TTR("Installing to device, please wait..."), 2)) {
+    if (ep.step(TTR(L"Installing to device, please wait…"), 2)) {
         CLEANUP_AND_RETURN(ERR_SKIP);
     }
 
@@ -2776,7 +2776,7 @@ Error EditorExportPlatformAndroid::run(
         }
     }
 
-    if (ep.step(TTR("Running on device..."), 3)) {
+    if (ep.step(TTR(L"Running on device…"), 3)) {
         CLEANUP_AND_RETURN(ERR_SKIP);
     }
     args.clear();
@@ -3361,7 +3361,7 @@ Error EditorExportPlatformAndroid::sign_apk(
             );
         }
 
-        if (ep.step(vformat(TTR("Signing debug %s..."), export_label), 104)) {
+        if (ep.step(vformat(TTR(L"Signing debug %s…"), export_label), 104)) {
             return ERR_SKIP;
         }
 
@@ -3370,7 +3370,7 @@ Error EditorExportPlatformAndroid::sign_apk(
         password = release_password;
         user     = release_username;
 
-        if (ep.step(vformat(TTR("Signing release %s..."), export_label), 104)) {
+        if (ep.step(vformat(TTR(L"Signing release %s…"), export_label), 104)) {
             return ERR_SKIP;
         }
     }
@@ -3413,7 +3413,7 @@ Error EditorExportPlatformAndroid::sign_apk(
         return ERR_CANT_CREATE;
     }
 
-    if (ep.step(vformat(TTR("Verifying %s..."), export_label), 105)) {
+    if (ep.step(vformat(TTR(L"Verifying %s…"), export_label), 105)) {
         return ERR_SKIP;
     }
 
@@ -3464,7 +3464,7 @@ void EditorExportPlatformAndroid::_clear_assets_directory() {
 }
 
 void EditorExportPlatformAndroid::_remove_copied_libs() {
-    print_verbose("Removing previously installed libraries...");
+    print_verbose(L"Removing previously installed libraries…");
     Error error;
     String libs_json =
         FileAccess::get_file_as_string(GDNATIVE_LIBS_PATH, &error);
@@ -3546,7 +3546,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
     bool apk_expansion          = p_preset->get("apk_expansion/enable");
     Vector<String> enabled_abis = get_enabled_abis(p_preset);
 
-    print_verbose("Exporting for Android...");
+    print_verbose(L"Exporting for Android…");
     print_verbose("- debug build: " + bool_to_string(p_debug));
     print_verbose("- export path: " + p_path);
     print_verbose("- export format: " + itos(export_format));
@@ -3973,7 +3973,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
     FileAccess* src_f    = nullptr;
     zlib_filefunc_def io = zipio_create_io_from_file(&src_f);
 
-    if (ep.step(TTR("Creating APK..."), 0)) {
+    if (ep.step(TTR(L"Creating APK…"), 0)) {
         return ERR_SKIP;
     }
 
@@ -4160,7 +4160,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
         CLEANUP_AND_RETURN(ERR_FILE_NOT_FOUND);
     }
 
-    if (ep.step(TTR("Adding files..."), 1)) {
+    if (ep.step(TTR(L"Adding files…"), 1)) {
         CLEANUP_AND_RETURN(ERR_SKIP);
     }
     err = OK;
@@ -4227,7 +4227,7 @@ Error EditorExportPlatformAndroid::export_project_helper(
 
     // If we're not signing the apk, then the next step should be the last.
     const int next_step = should_sign ? 103 : 105;
-    if (ep.step(TTR("Aligning APK..."), next_step)) {
+    if (ep.step(TTR(L"Aligning APK…"), next_step)) {
         CLEANUP_AND_RETURN(ERR_SKIP);
     }
 

@@ -1735,7 +1735,7 @@ Error ResourceImporterScene::import(
     String ext = src_path.get_extension().to_lower();
 
     EditorProgress progress("import", TTR("Import Scene"), 104);
-    progress.step(TTR("Importing Scene..."), 0);
+    progress.step(TTR(L"Importing Scene…"), 0);
 
     for (Set<Ref<EditorSceneImporter>>::Element* E = importers.front(); E;
          E                                         = E->next()) {
@@ -2097,7 +2097,7 @@ Error ResourceImporterScene::import(
         );
     }
 
-    progress.step(TTR("Running Custom Script..."), 2);
+    progress.step(TTR(L"Running Custom Script…"), 2);
 
     String post_import_script_path = p_options["nodes/custom_script"];
     Ref<EditorScenePostImport> post_import_script;
@@ -2139,7 +2139,7 @@ Error ResourceImporterScene::import(
         }
     }
 
-    progress.step(TTR("Saving..."), 104);
+    progress.step(TTR(L"Saving…"), 104);
 
     if (external_scenes) {
         // save sub-scenes as instances!

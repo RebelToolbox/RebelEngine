@@ -1083,7 +1083,7 @@ void ScriptEditor::_menu_option(int p_option) {
 
             file_dialog->clear_filters();
             file_dialog->popup_centered_ratio();
-            file_dialog->set_title(TTR("New Text File..."));
+            file_dialog->set_title(TTR(L"New Text File…"));
         } break;
         case FILE_OPEN: {
             file_dialog->set_mode(EditorFileDialog::MODE_OPEN_FILE);
@@ -1293,7 +1293,7 @@ void ScriptEditor::_menu_option(int p_option) {
                         text_file->get_path().get_file()
                     );
                     file_dialog->popup_centered_ratio();
-                    file_dialog->set_title(TTR("Save File As..."));
+                    file_dialog->set_title(TTR(L"Save File As…"));
                     break;
                 }
 
@@ -1567,7 +1567,7 @@ void ScriptEditor::_show_save_theme_as_dialog() {
         )
     );
     file_dialog->popup_centered_ratio();
-    file_dialog->set_title(TTR("Save Theme As..."));
+    file_dialog->set_title(TTR(L"Save Theme As…"));
 }
 
 void ScriptEditor::_tab_changed(int p_which) {
@@ -3356,7 +3356,7 @@ void ScriptEditor::_update_selected_editor_menu() {
         script_search_menu->get_popup()->add_shortcut(
             ED_SHORTCUT(
                 "script_editor/find",
-                TTR("Find..."),
+                TTR(L"Find…"),
                 KEY_MASK_CMD | KEY_F
             ),
             HELP_SEARCH_FIND
@@ -3987,15 +3987,15 @@ ScriptEditor::ScriptEditor(EditorNode* p_editor) {
     file_menu->set_switch_on_hover(true);
     file_menu->get_popup()->set_hide_on_window_lose_focus(true);
     file_menu->get_popup()->add_shortcut(
-        ED_SHORTCUT("script_editor/new", TTR("New Script...")),
+        ED_SHORTCUT("script_editor/new", TTR(L"New Script…")),
         FILE_NEW
     );
     file_menu->get_popup()->add_shortcut(
-        ED_SHORTCUT("script_editor/new_textfile", TTR("New Text File...")),
+        ED_SHORTCUT("script_editor/new_textfile", TTR(L"New Text File…")),
         FILE_NEW_TEXTFILE
     );
     file_menu->get_popup()->add_shortcut(
-        ED_SHORTCUT("script_editor/open", TTR("Open...")),
+        ED_SHORTCUT("script_editor/open", TTR(L"Open…")),
         FILE_OPEN
     );
     file_menu->get_popup()->add_shortcut(
@@ -4028,7 +4028,7 @@ ScriptEditor::ScriptEditor(EditorNode* p_editor) {
         FILE_SAVE
     );
     file_menu->get_popup()->add_shortcut(
-        ED_SHORTCUT("script_editor/save_as", TTR("Save As...")),
+        ED_SHORTCUT("script_editor/save_as", TTR(L"Save As…")),
         FILE_SAVE_AS
     );
     file_menu->get_popup()->add_shortcut(
@@ -4086,7 +4086,7 @@ ScriptEditor::ScriptEditor(EditorNode* p_editor) {
     file_menu->get_popup()->add_child(theme_submenu);
     theme_submenu->connect("id_pressed", this, "_theme_option");
     theme_submenu->add_shortcut(
-        ED_SHORTCUT("script_editor/import_theme", TTR("Import Theme...")),
+        ED_SHORTCUT("script_editor/import_theme", TTR(L"Import Theme…")),
         THEME_IMPORT
     );
     theme_submenu->add_shortcut(
@@ -4100,7 +4100,7 @@ ScriptEditor::ScriptEditor(EditorNode* p_editor) {
         THEME_SAVE
     );
     theme_submenu->add_shortcut(
-        ED_SHORTCUT("script_editor/save_theme_as", TTR("Save Theme As...")),
+        ED_SHORTCUT("script_editor/save_theme_as", TTR(L"Save Theme As…")),
         THEME_SAVE_AS
     );
 

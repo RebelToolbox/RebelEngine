@@ -36,7 +36,7 @@ SceneExporterGLTFPlugin::SceneExporterGLTFPlugin(EditorNode* p_node) {
     file_export_lib->add_filter("*.glb");
     file_export_lib->add_filter("*.gltf");
     file_export_lib->set_title(TTR("Export Mesh GLTF2"));
-    String gltf_scene_name = TTR("Export GLTF...");
+    String gltf_scene_name = TTR(L"Export GLTF…");
     add_tool_menu_item(
         gltf_scene_name,
         this,

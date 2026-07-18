@@ -6960,12 +6960,12 @@ VisualScriptEditor::VisualScriptEditor() {
     graph_hbc->add_child(base_type_select);
 
     Button* add_nds = memnew(Button);
-    add_nds->set_text(TTR("Add Nodes..."));
+    add_nds->set_text(TTR(L"Add Nodes…"));
     graph_hbc->add_child(add_nds);
     add_nds->connect("pressed", this, "_add_node_dialog");
 
     Button* fn_btn = memnew(Button);
-    fn_btn->set_text(TTR("Add Function..."));
+    fn_btn->set_text(TTR(L"Add Function…"));
     graph_hbc->add_child(fn_btn);
     fn_btn->connect("pressed", this, "_create_function_dialog");
 

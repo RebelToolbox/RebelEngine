@@ -460,7 +460,7 @@ void AnimationPlayerEditor::_animation_save_as(const Ref<Resource>& p_resource
     }
     file->set_current_path(path);
     file->popup_centered_ratio();
-    file->set_title(TTR("Save Resource As..."));
+    file->set_title(TTR(L"Save Resource As…"));
     current_option = RESOURCE_SAVE;
 }
 
@@ -1947,7 +1947,7 @@ AnimationPlayerEditor::AnimationPlayerEditor(
     tool_anim->get_popup()->add_shortcut(
         ED_SHORTCUT(
             "animation_player_editor/save_as_animation",
-            TTR("Save As...")
+            TTR(L"Save As…")
         ),
         TOOL_SAVE_AS_ANIM
     );
@@ -1972,14 +1972,14 @@ AnimationPlayerEditor::AnimationPlayerEditor(
     tool_anim->get_popup()->add_shortcut(
         ED_SHORTCUT(
             "animation_player_editor/rename_animation",
-            TTR("Rename...")
+            TTR(L"Rename…")
         ),
         TOOL_RENAME_ANIM
     );
     tool_anim->get_popup()->add_shortcut(
         ED_SHORTCUT(
             "animation_player_editor/edit_transitions",
-            TTR("Edit Transitions...")
+            TTR(L"Edit Transitions…")
         ),
         TOOL_EDIT_TRANSITIONS
     );

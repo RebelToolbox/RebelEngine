@@ -1690,7 +1690,7 @@ GridMapEditor::GridMapEditor(EditorNode* p_editor) {
 
     options->get_popup()->add_separator();
     options->get_popup()->add_item(
-        TTR("Settings..."),
+        TTR(L"Settings…"),
         MENU_OPTION_GRIDMAP_SETTINGS
     );
 

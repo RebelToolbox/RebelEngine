@@ -5538,8 +5538,8 @@ SpatialEditorViewport::SpatialEditorViewport(
     );
     zoom_limit_label->set_margin(Margin::MARGIN_TOP, -28 * EDSCALE);
     zoom_limit_label->set_text(
-        TTR("To zoom further, change the camera's clipping planes (View -> "
-            "Settings...)")
+        TTR(L"To zoom further, change the camera's clipping planes (View -> "
+            L"Settings…)")
     );
     zoom_limit_label->set_name("ZoomLimitMessageLabel");
     zoom_limit_label->add_color_override("font_color", Color(1, 1, 1, 1));
@@ -9060,14 +9060,14 @@ SpatialEditor::SpatialEditor(EditorNode* p_editor) {
     p->add_shortcut(
         ED_SHORTCUT(
             "spatial_editor/transform_dialog",
-            TTR("Transform Dialog...")
+            TTR(L"Transform Dialog…")
         ),
         MENU_TRANSFORM_DIALOG
     );
 
     p->add_separator();
     p->add_shortcut(
-        ED_SHORTCUT("spatial_editor/configure_snap", TTR("Configure Snap...")),
+        ED_SHORTCUT("spatial_editor/configure_snap", TTR(L"Configure Snap…")),
         MENU_TRANSFORM_CONFIGURE_SNAP
     );
 
@@ -9181,7 +9181,7 @@ SpatialEditor::SpatialEditor(EditorNode* p_editor) {
 
     p->add_separator();
     p->add_shortcut(
-        ED_SHORTCUT("spatial_editor/settings", TTR("Settings...")),
+        ED_SHORTCUT("spatial_editor/settings", TTR(L"Settings…")),
         MENU_VIEW_CAMERA_SETTINGS
     );
 

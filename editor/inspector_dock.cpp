@@ -604,7 +604,7 @@ InspectorDock::InspectorDock(EditorNode* p_editor, EditorData& p_editor_data) {
     general_options_hb->add_child(resource_save_button);
     resource_save_button->get_popup()->add_item(TTR("Save"), RESOURCE_SAVE);
     resource_save_button->get_popup()->add_item(
-        TTR("Save As..."),
+        TTR(L"Save As…"),
         RESOURCE_SAVE_AS
     );
     resource_save_button->get_popup()

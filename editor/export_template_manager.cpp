@@ -129,7 +129,7 @@ void ExportTemplateManager::_download_current() {
 
         _download_template(mirror_url, true);
     } else if (!mirrors_available && !is_refreshing_mirrors) {
-        _set_current_progress_status(TTR("Retrieving the mirror list..."));
+        _set_current_progress_status(TTR(L"Retrieving the mirror list…"));
         _refresh_mirrors();
     }
 }
@@ -145,7 +145,7 @@ void ExportTemplateManager::_download_template(
 
     install_options_vb->hide();
     download_progress_hb->show();
-    _set_current_progress_status(TTR("Starting the download..."));
+    _set_current_progress_status(TTR(L"Starting the download…"));
 
     download_templates->set_download_file(
         EditorSettings::get_singleton()->get_cache_dir().plus_file(
@@ -164,7 +164,7 @@ void ExportTemplateManager::_download_template(
     }
 
     set_process(true);
-    _set_current_progress_status(TTR("Connecting to the mirror..."));
+    _set_current_progress_status(TTR(L"Connecting to the mirror…"));
 }
 
 void ExportTemplateManager::_download_template_completed(
@@ -213,7 +213,7 @@ void ExportTemplateManager::_download_template_completed(
                 );
             } else {
                 _set_current_progress_status(
-                    TTR("Download complete; extracting templates...")
+                    TTR(L"Download complete; extracting templates…")
                 );
                 String path = download_templates->get_download_file();
 
@@ -375,7 +375,7 @@ bool ExportTemplateManager::_humanize_http_status(
             success   = false;
             break;
         case HTTPClient::STATUS_CONNECTING:
-            *r_status = TTR("Connecting...");
+            *r_status = TTR(L"Connecting…");
             break;
         case HTTPClient::STATUS_CANT_CONNECT:
             *r_status = TTR("Can't Connect");
@@ -385,7 +385,7 @@ bool ExportTemplateManager::_humanize_http_status(
             *r_status = TTR("Connected");
             break;
         case HTTPClient::STATUS_REQUESTING:
-            *r_status = TTR("Requesting...");
+            *r_status = TTR(L"Requesting…");
             break;
         case HTTPClient::STATUS_BODY:
             *r_status           = TTR("Downloading");
