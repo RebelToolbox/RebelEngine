@@ -57,7 +57,7 @@ SPDX-License-Identifier: MIT
             <return type="void" />
             <argument index="0" name="menu_node" type="Object" />
             <description>
-                This virtual method is called when updating the context menu of [EditorResourcePicker]. Implement this method to override the "New ..." items with your own options. [code]menu_node[/code] is a reference to the [PopupMenu] node.
+                This virtual method is called when updating the context menu of [EditorResourcePicker]. Implement this method to override the "New …" items with your own options. [code]menu_node[/code] is a reference to the [PopupMenu] node.
                 [b]Note:[/b] Implement [method handle_menu_selected] to handle these custom items.
             </description>
         </method>
