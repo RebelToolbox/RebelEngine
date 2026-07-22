@@ -7771,7 +7771,7 @@ void CanvasItemEditor::_popup_callback(int p_op) {
         case SKELETON_MAKE_BONES: {
             Map<Node*, Object*>& selection = editor_selection->get_selection();
 
-            undo_redo->create_action(TTR("Create Custom Bone(s) from Node(s)"));
+            undo_redo->create_action(TTR("Create Custom Bones from Nodes"));
             for (Map<Node*, Object*>::Element* E = selection.front(); E;
                  E                               = E->next()) {
                 Node2D* n2d = Object::cast_to<Node2D>(E->key());
@@ -8812,7 +8812,7 @@ CanvasItemEditor::CanvasItemEditor(EditorNode* p_editor) {
     p->add_shortcut(
         ED_SHORTCUT(
             "canvas_item_editor/skeleton_make_bones",
-            TTR("Make Custom Bone(s) from Node(s)"),
+            TTR("Make Custom Bones from Nodes"),
             KEY_MASK_CMD | KEY_MASK_SHIFT | KEY_B
         ),
         SKELETON_MAKE_BONES

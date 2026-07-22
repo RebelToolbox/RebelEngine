@@ -1070,7 +1070,7 @@ void EditorFileDialog::set_mode(Mode p_mode) {
             break;
         case MODE_OPEN_FILES:
             get_ok()->set_text(TTR("Open"));
-            set_title(TTR("Open File(s)"));
+            set_title(TTR("Open Files"));
             can_create_dir = false;
             break;
         case MODE_OPEN_DIR:

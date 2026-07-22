@@ -56,7 +56,7 @@ SPDX-License-Identifier: MIT
             The displayed animation frame's index.
         </member>
         <member name="frames" type="SpriteFrames" setter="set_sprite_frames" getter="get_sprite_frames">
-            The [SpriteFrames] resource containing the animation(s).
+            The [SpriteFrames] resource containing frames and animation data.
         </member>
         <member name="offset" type="Vector2" setter="set_offset" getter="get_offset" default="Vector2( 0, 0 )">
             The texture's drawing offset.

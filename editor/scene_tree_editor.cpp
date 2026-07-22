@@ -292,45 +292,68 @@ bool SceneTreeEditor::_add_nodes(
             );
         }
 
-        int num_connections = p_node->get_persistent_signal_connection_count();
-        int num_groups      = p_node->get_persistent_group_count();
+        int connection_count = p_node->get_persistent_signal_connection_count();
+        int group_count      = p_node->get_persistent_group_count();
 
-        if (num_connections >= 1 && num_groups >= 1) {
-            item->add_button(
-                0,
-                get_icon("SignalsAndGroups", "EditorIcons"),
-                BUTTON_SIGNALS,
-                false,
-                vformat(
-                    TTR("Node has %s connection(s) and %s group(s).\nClick to "
-                        "show signals dock."),
-                    num_connections,
-                    num_groups
-                )
-            );
-        } else if (num_connections >= 1) {
-            item->add_button(
-                0,
-                get_icon("Signals", "EditorIcons"),
-                BUTTON_SIGNALS,
-                false,
-                vformat(
-                    TTR("Node has %s connection(s).\nClick to show signals "
-                        "dock."),
-                    num_connections
-                )
-            );
-        } else if (num_groups >= 1) {
-            item->add_button(
-                0,
-                get_icon("Groups", "EditorIcons"),
-                BUTTON_GROUPS,
-                false,
-                vformat(
-                    TTR("Node is in %s group(s).\nClick to show groups dock."),
-                    num_groups
-                )
-            );
+        String tool_tip;
+        if (connection_count == 0) {
+            if (group_count == 0) {
+                // No signal connections or groups.
+            } else if (group_count == 1) {
+                tool_tip = TTR("Node is in a group.");
+            } else { // group_count > 1
+                tool_tip = vformat(TTR("Node is in %d groups."), group_count);
+            }
+        } else if (connection_count == 1) {
+            if (group_count == 0) {
+                tool_tip = TTR("Node has a signal connection.");
+            } else if (group_count == 1) {
+                tool_tip =
+                    TTR("Node has a signal connection and is in a group");
+            } else { // group_count > 1
+                tool_tip = vformat(
+                    TTR("Node has a signal connection and is in %d groups"),
+                    group_count
+                );
+            }
+        } else { // connection_count > 1
+            if (group_count == 0) {
+                tool_tip = vformat(
+                    TTR("Node has %d signal connections"),
+                    connection_count
+                );
+            } else if (group_count == 1) {
+                tool_tip = vformat(
+                    TTR("Node has %d signal connections and is in a group"),
+                    connection_count
+                );
+            } else { // group_count > 1
+                tool_tip = vformat(
+                    TTR("Node has %d signal connections and is in %d groups"),
+                    connection_count,
+                    group_count
+                );
+            }
+        }
+
+        Ref<Texture> button_icon;
+        int button_id = BUTTON_SIGNALS;
+        if (connection_count > 0 && group_count > 0) {
+            button_icon  = get_icon("SignalsAndGroups", "EditorIcons");
+            tool_tip    += "\nClick to show signals dock.";
+        } else if (connection_count > 0) {
+            button_icon  = get_icon("Signals", "EditorIcons");
+            tool_tip    += "\nClick to show signals dock.";
+        } else if (group_count > 0) {
+            button_icon  = get_icon("Groups", "EditorIcons");
+            button_id    = BUTTON_GROUPS;
+            tool_tip    += "\nClick to show groups dock.";
+        } else {
+            // No signal connections or groups.
+        }
+
+        if (connection_count > 0 || group_count > 0) {
+            item->add_button(0, button_icon, button_id, false, tool_tip);
         }
     }
 

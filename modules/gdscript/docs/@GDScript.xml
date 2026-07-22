@@ -61,9 +61,9 @@ SPDX-License-Identifier: MIT
             <description>
                 Returns the arc cosine of [code]s[/code] in radians. Use to get the angle of cosine [code]s[/code]. [code]s[/code] must be between [code]-1.0[/code] and [code]1.0[/code] (inclusive), otherwise, [method acos] will return [constant NAN].
                 [codeblock]
-                # c is 0.523599 or 30 degrees if converted with rad2deg(s)
                 c = acos(0.866025)
                 [/codeblock]
+                [code]s[/code] is 0.523599 or 30 degrees if converted with [method rad2deg]
             </description>
         </method>
         <method name="asin">
@@ -72,9 +72,9 @@ SPDX-License-Identifier: MIT
             <description>
                 Returns the arc sine of [code]s[/code] in radians. Use to get the angle of sine [code]s[/code]. [code]s[/code] must be between [code]-1.0[/code] and [code]1.0[/code] (inclusive), otherwise, [method asin] will return [constant NAN].
                 [codeblock]
-                # s is 0.523599 or 30 degrees if converted with rad2deg(s)
                 s = asin(0.5)
                 [/codeblock]
+                [code]s[/code] is 0.523599 or 30 degrees if converted with [method rad2deg]
             </description>
         </method>
         <method name="assert">
@@ -297,7 +297,7 @@ SPDX-License-Identifier: MIT
                 a = floor(-2.99) # a is -3.0
                 [/codeblock]
                 See also [method ceil], [method round], [method stepify], and [int].
-                [b]Note:[/b] This method returns a float. If you need an integer and [code]s[/code] is a non-negative number, you can use [code]int(s)[/code] directly.
+                [b]Note:[/b] This method returns a float. If you need an integer and [code]s[/code] is a non-negative number, you can use [int][code](s)[/code] directly.
             </description>
         </method>
         <method name="fmod">

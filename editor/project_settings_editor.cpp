@@ -1614,10 +1614,13 @@ void ProjectSettingsEditor::_translation_res_add(const PoolStringArray& p_paths
         }
     }
 
-    undo_redo->create_action(vformat(
-        TTR("Translation Resource Remap: Add %d Path(s)"),
-        p_paths.size()
-    ));
+    if (p_paths.size() == 1) {
+        undo_redo->create_action(TTR("Add localization remap resource"));
+    } else {
+        undo_redo->create_action(
+            vformat(TTR("Add %d localization remap resources"), p_paths.size())
+        );
+    }
     undo_redo->add_do_property(
         ProjectSettings::get_singleton(),
         "locale/translation_remaps",
@@ -1661,10 +1664,13 @@ void ProjectSettingsEditor::_translation_res_option_add(
     }
     remaps[key] = r;
 
-    undo_redo->create_action(vformat(
-        TTR("Translation Resource Remap: Add %d Remap(s)"),
-        p_paths.size()
-    ));
+    if (p_paths.size() == 1) {
+        undo_redo->create_action(TTR("Add localization locale remap"));
+    } else {
+        undo_redo->create_action(
+            vformat(TTR("Add %d localization locale remaps"), p_paths.size())
+        );
+    }
     undo_redo->add_do_property(
         ProjectSettings::get_singleton(),
         "locale/translation_remaps",

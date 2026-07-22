@@ -3856,17 +3856,30 @@ void AnimationTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
                 TTR("Insert Key"),
                 MENU_KEY_INSERT
             );
-            if (editor->is_selection_active()) {
+            if (editor->get_selection_count() == 1) {
                 menu->add_separator();
                 menu->add_icon_item(
                     get_icon("Duplicate", "EditorIcons"),
-                    TTR("Duplicate Key(s)"),
+                    TTR("Duplicate Selected Key"),
                     MENU_KEY_DUPLICATE
                 );
                 menu->add_separator();
                 menu->add_icon_item(
                     get_icon("Remove", "EditorIcons"),
-                    TTR("Delete Key(s)"),
+                    TTR("Delete Selected Key"),
+                    MENU_KEY_DELETE
+                );
+            } else if (editor->get_selection_count() > 1) {
+                menu->add_separator();
+                menu->add_icon_item(
+                    get_icon("Duplicate", "EditorIcons"),
+                    TTR("Duplicate Selected Keys"),
+                    MENU_KEY_DUPLICATE
+                );
+                menu->add_separator();
+                menu->add_icon_item(
+                    get_icon("Remove", "EditorIcons"),
+                    TTR("Delete Selected Keys"),
                     MENU_KEY_DELETE
                 );
             }
@@ -5524,7 +5537,7 @@ bool AnimationTrackEditor::is_key_selected(int p_track, int p_key) const {
     return selection.has(sk);
 }
 
-bool AnimationTrackEditor::is_selection_active() const {
+int AnimationTrackEditor::get_selection_count() const {
     return selection.size();
 }
 
@@ -8283,7 +8296,7 @@ AnimationTrackEditor::AnimationTrackEditor() {
     );
     ichb->add_child(insert_confirm_bezier);
     insert_confirm_reset = memnew(CheckBox);
-    insert_confirm_reset->set_text(TTR("Create RESET Track(s)"));
+    insert_confirm_reset->set_text(TTR("Create RESET Tracks"));
     insert_confirm_reset->set_pressed(
         EDITOR_GET("editors/animation/default_create_reset_tracks")
     );
@@ -8373,7 +8386,7 @@ AnimationTrackEditor::AnimationTrackEditor() {
     cleanup_all->set_text(TTR("Clean-up all animations"));
     cleanup_vb->add_child(cleanup_all);
 
-    cleanup_dialog->set_title(TTR("Clean-Up Animation(s) (NO UNDO!)"));
+    cleanup_dialog->set_title(TTR("Clean-Up Animation (NO UNDO!)"));
     cleanup_dialog->get_ok()->set_text(TTR("Clean-Up"));
 
     cleanup_dialog->connect(

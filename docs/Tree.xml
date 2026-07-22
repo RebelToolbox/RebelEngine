@@ -165,7 +165,7 @@ SPDX-License-Identifier: MIT
             <description>
                 Returns the currently focused item, or [code]null[/code] if no item is focused.
                 In [constant SELECT_ROW] and [constant SELECT_SINGLE] modes, the focused item is same as the selected item. In [constant SELECT_MULTI] mode, the focused item is the item under the focus cursor, not necessarily selected.
-                To get the currently selected item(s), use [method get_next_selected].
+                To get the currently selected item, use [method get_next_selected].
             </description>
         </method>
         <method name="get_selected_column" qualifiers="const">

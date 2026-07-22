@@ -137,9 +137,13 @@ void SpriteFramesEditor::_sheet_preview_draw() {
     }
 
     split_sheet_dialog->get_ok()->set_disabled(false);
-    split_sheet_dialog->get_ok()->set_text(
-        vformat(TTR("Add %d Frame(s)"), frames_selected.size())
-    );
+    if (frames_selected.size() == 1) {
+        split_sheet_dialog->get_ok()->set_text(TTR("Add frame"));
+    } else {
+        split_sheet_dialog->get_ok()->set_text(
+            vformat(TTR("Add %d frames"), frames_selected.size())
+        );
+    }
 }
 
 void SpriteFramesEditor::_sheet_preview_input(const Ref<InputEvent>& p_event) {

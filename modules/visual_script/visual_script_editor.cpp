@@ -3148,7 +3148,11 @@ void VisualScriptEditor::drop_data_fw(
         int new_id = script->get_available_id();
 
         if (files.size()) {
-            undo_redo->create_action(TTR("Add Node(s)"));
+            if (files.size() == 1) {
+                undo_redo->create_action(TTR("Add Node)"));
+            } else {
+                undo_redo->create_action(TTR("Add Nodes)"));
+            }
 
             for (int i = 0; i < files.size(); i++) {
                 Ref<Resource> res = ResourceLoader::load(files[i]);
@@ -3243,7 +3247,11 @@ void VisualScriptEditor::drop_data_fw(
 
         Vector2 pos = _get_pos_in_graph(p_point);
 
-        undo_redo->create_action(TTR("Add Node(s) From Tree"));
+        if (nodes.size() == 1) {
+            undo_redo->create_action(TTR("Add Node from Tree"));
+        } else {
+            undo_redo->create_action(TTR("Add Nodes from Tree"));
+        }
         int base_id = script->get_available_id();
 
         if (use_node || nodes.size() > 1) {
@@ -3841,7 +3849,7 @@ static bool _get_in_slot(
 }
 
 void VisualScriptEditor::_begin_node_move() {
-    undo_redo->create_action(TTR("Move Node(s)"));
+    undo_redo->create_action(TTR("Move Node"));
 }
 
 void VisualScriptEditor::_end_node_move() {

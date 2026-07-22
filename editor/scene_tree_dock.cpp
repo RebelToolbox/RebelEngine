@@ -207,7 +207,11 @@ void SceneTreeDock::_perform_instance_scenes(
         return;
     }
 
-    editor_data->get_undo_redo().create_action(TTR("Instance Scene(s)"));
+    if (instances.size() == 1) {
+        editor_data->get_undo_redo().create_action(TTR("Instance scene"));
+    } else {
+        editor_data->get_undo_redo().create_action(TTR("Instance scenes"));
+    }
 
     for (int i = 0; i < instances.size(); i++) {
         Node* instanced_scene = instances[i];
@@ -536,7 +540,11 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
                 owner = paste_parent;
             }
 
-            editor_data->get_undo_redo().create_action(TTR("Paste Node(s)"));
+            if (node_clipboard.size() == 1) {
+                editor_data->get_undo_redo().create_action(TTR("Paste node"));
+            } else {
+                editor_data->get_undo_redo().create_action(TTR("Paste nodes"));
+            }
             editor_data->get_undo_redo().add_do_method(
                 editor_selection,
                 "clear"
@@ -791,10 +799,13 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
             List<Node*> selection = editor_selection->get_selected_node_list();
             if (selection.size() == 0) {
                 break;
+            } else if (selection.size() == 1) {
+                editor_data->get_undo_redo().create_action(TTR("Duplicate node")
+                );
+            } else {
+                editor_data->get_undo_redo().create_action(TTR("Duplicate nodes"
+                ));
             }
-
-            editor_data->get_undo_redo().create_action(TTR("Duplicate Node(s)")
-            );
             editor_data->get_undo_redo().add_do_method(
                 editor_selection,
                 "clear"
@@ -2575,9 +2586,17 @@ void SceneTreeDock::_delete_confirm(bool p_cut) {
     editor->get_editor_plugins_over()->make_visible(false);
 
     if (p_cut) {
-        editor_data->get_undo_redo().create_action(TTR("Cut Node(s)"));
+        if (remove_list.size() == 1) {
+            editor_data->get_undo_redo().create_action(TTR("Cut node"));
+        } else {
+            editor_data->get_undo_redo().create_action(TTR("Cut nodes"));
+        }
     } else {
-        editor_data->get_undo_redo().create_action(TTR("Remove Node(s)"));
+        if (remove_list.size() == 1) {
+            editor_data->get_undo_redo().create_action(TTR("Remove node"));
+        } else {
+            editor_data->get_undo_redo().create_action(TTR("Remove nodes"));
+        }
     }
 
     bool entire_scene = false;
@@ -2846,7 +2865,11 @@ void SceneTreeDock::_create() {
         ERR_FAIL_COND(selection.size() <= 0);
 
         UndoRedo* ur = EditorNode::get_singleton()->get_undo_redo();
-        ur->create_action(TTR("Change type of node(s)"));
+        if (selection.size() == 1) {
+            ur->create_action(TTR("Change type of node"));
+        } else {
+            ur->create_action(TTR("Change type of nodes"));
+        }
 
         for (List<Node*>::Element* E = selection.front(); E; E = E->next()) {
             Node* n = E->get();
@@ -3661,11 +3684,27 @@ void SceneTreeDock::_tree_rmb(const Vector2& p_menu_pos) {
 
     if (profile_allow_editing) {
         menu->add_separator();
-        menu->add_icon_shortcut(
-            get_icon("Remove", "EditorIcons"),
-            ED_SHORTCUT("scene_tree/delete", TTR("Delete Node(s)"), KEY_DELETE),
-            TOOL_ERASE
-        );
+        if (selection.size() == 1) {
+            menu->add_icon_shortcut(
+                get_icon("Remove", "EditorIcons"),
+                ED_SHORTCUT(
+                    "scene_tree/delete",
+                    TTR("Delete Node"),
+                    KEY_DELETE
+                ),
+                TOOL_ERASE
+            );
+        } else {
+            menu->add_icon_shortcut(
+                get_icon("Remove", "EditorIcons"),
+                ED_SHORTCUT(
+                    "scene_tree/delete",
+                    TTR("Delete Nodes"),
+                    KEY_DELETE
+                ),
+                TOOL_ERASE
+            );
+        }
     }
     menu->set_size(Size2(1, 1));
     menu->set_position(p_menu_pos);

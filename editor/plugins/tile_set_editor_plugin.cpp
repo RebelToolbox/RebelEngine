@@ -483,7 +483,7 @@ TileSetEditor::TileSetEditor(EditorNode* p_editor) {
         tileset_toolbar_buttons[TOOL_TILESET_ADD_TEXTURE]
     );
     tileset_toolbar_buttons[TOOL_TILESET_ADD_TEXTURE]->set_tooltip(
-        TTR("Add Texture(s) to TileSet.")
+        TTR("Add Texture to TileSet.")
     );
 
     tileset_toolbar_buttons[TOOL_TILESET_REMOVE_TEXTURE] = memnew(ToolButton);
@@ -1014,10 +1014,17 @@ void TileSetEditor::_on_textures_added(const PoolStringArray& p_paths) {
         _on_texture_list_selected(texture_list->get_item_count() - 1);
     }
 
-    if (invalid_count > 0) {
+    if (invalid_count == 1) {
+        err_dialog->set_text(
+            TTR("1 file was not added, because it was already on the list.")
+        );
+        err_dialog->popup_centered(Size2(300, 60));
+    }
+    if (invalid_count > 1) {
         err_dialog->set_text(vformat(
-            TTR("%s file(s) were not added because was already on the list."),
-            String::num(invalid_count, 0)
+            TTR("%d files were not added, because they were already on the "
+                "list."),
+            invalid_count
         ));
         err_dialog->popup_centered(Size2(300, 60));
     }
