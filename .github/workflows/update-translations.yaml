@@ -26,7 +26,13 @@ jobs:
       - name: Create branch
         run: |
           #Create branch
+          echo "::group::git config"
+          git config user.name "Rebel Documentation"
+          git config user.email "158277139+RebelDocumentation@users.noreply.github.com"
+          echo "::endgroup::"
+          echo "::group::git fetch origin"
           git fetch origin
+          echo "::endgroup::"
           echo "::group::git switch main"
           if ! git switch main 2>/dev/null ; then
             git switch -c main origin/main
@@ -97,8 +103,6 @@ jobs:
         if: env.has_changes == 'yes'
         run: |
           #Create commit
-          git config user.name "Rebel Documentation"
-          git config user.email "158277139+RebelDocumentation@users.noreply.github.com"
           echo "Adding files"
           git add .
           echo "Creating commit"
