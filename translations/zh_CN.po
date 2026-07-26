@@ -10266,7 +10266,7 @@ msgstr ""
 "在给定的点之间创建一个分段。如果 [code]bidirectional[/code] 为 [code]false[/"
 "code]，则只允许从 [code]id[/code] 到 [code]to_id[/code] 之间的移动，不允许反"
 "方向移动。\n"
-"(codeblock)\n"
+"[codeblock]\n"
 "var astar = AStar2D.new()\n"
 "astar.add_point(1, Vector2(1, 1))\n"
 "astar.add_point(2, Vector2(0, 5))\n"
@@ -24508,7 +24508,7 @@ msgstr "如果文件系统正在被扫描，返回扫描的进度，值为0-1。
 
 #: docs/EditorFileSystem.xml
 msgid "Returns [code]true[/code] of the filesystem is being scanned."
-msgstr "返回 [code]true[/code] 如果文件系统已经被扫[/code]描完毕。"
+msgstr "返回 [code]true[/code] 如果文件系统已经被扫描完毕。"
 
 #: docs/EditorFileSystem.xml
 msgid "Scan the filesystem for changes."

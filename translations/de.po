@@ -1980,7 +1980,7 @@ msgstr ""
 "var result = wrapi(-6, -5, -1)\n"
 "[/codeblock]\n"
 "[b]Hinweis:[/b] Wenn [code]min[/code] gleich [code]0[/code], ist dies "
-"äquivalent zu [methode posmod], also verwenden Sie lieber das stattdessen.\n"
+"äquivalent zu [method posmod], also verwenden Sie lieber das stattdessen.\n"
 "[code]wrapi[/code] ist flexibler als der [method posmod]-Ansatz, da es dem "
 "Benutzer die Kontrolle über den Mindestwert gibt."
 
