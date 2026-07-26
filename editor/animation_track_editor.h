@@ -611,7 +611,7 @@ public:
     void show_select_node_warning(bool p_show);
 
     bool is_key_selected(int p_track, int p_key) const;
-    bool is_selection_active() const;
+    int get_selection_count() const;
     bool is_moving_selection() const;
     bool is_snap_enabled() const;
     float get_moving_selection_offset() const;

@@ -222,7 +222,7 @@ EditorSubScene::EditorSubScene() {
     scene   = nullptr;
     is_root = false;
 
-    set_title(TTR("Select Node(s) to Import"));
+    set_title(TTR("Select Nodes to Import"));
     set_hide_on_ok(false);
 
     VBoxContainer* vb = memnew(VBoxContainer);

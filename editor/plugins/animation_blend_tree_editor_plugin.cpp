@@ -645,7 +645,7 @@ void AnimationNodeBlendTreeEditor::_delete_nodes_request() {
         return;
     }
 
-    undo_redo->create_action(TTR("Delete Node(s)"));
+    undo_redo->create_action(TTR("Delete Nodes"));
 
     for (List<StringName>::Element* F = to_erase.front(); F; F = F->next()) {
         _delete_request(F->get());

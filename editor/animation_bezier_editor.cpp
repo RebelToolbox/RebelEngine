@@ -827,17 +827,30 @@ void AnimationBezierTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
                 TTR("Insert Key Here"),
                 MENU_KEY_INSERT
             );
-            if (selection.size()) {
+            if (selection.size() == 1) {
                 menu->add_separator();
                 menu->add_icon_item(
                     get_icon("Duplicate", "EditorIcons"),
-                    TTR("Duplicate Selected Key(s)"),
+                    TTR("Duplicate Selected Key"),
                     MENU_KEY_DUPLICATE
                 );
                 menu->add_separator();
                 menu->add_icon_item(
                     get_icon("Remove", "EditorIcons"),
-                    TTR("Delete Selected Key(s)"),
+                    TTR("Delete Selected Key"),
+                    MENU_KEY_DELETE
+                );
+            } else if (selection.size() > 1) {
+                menu->add_separator();
+                menu->add_icon_item(
+                    get_icon("Duplicate", "EditorIcons"),
+                    TTR("Duplicate Selected Keys"),
+                    MENU_KEY_DUPLICATE
+                );
+                menu->add_separator();
+                menu->add_icon_item(
+                    get_icon("Remove", "EditorIcons"),
+                    TTR("Delete Selected Keys"),
                     MENU_KEY_DELETE
                 );
             }

@@ -255,7 +255,7 @@ SPDX-License-Identifier: MIT
             Trail particles' color will vary along this [GradientTexture].
         </member>
         <member name="trail_divisor" type="int" setter="set_trail_divisor" getter="get_trail_divisor" default="1">
-            Emitter will emit [code]amount[/code] divided by [code]trail_divisor[/code] particles. The remaining particles will be used as trail(s).
+            Emitter will emit [code]amount[/code] divided by [code]trail_divisor[/code] particles. The remaining particles will be used as trails.
         </member>
         <member name="trail_size_modifier" type="CurveTexture" setter="set_trail_size_modifier" getter="get_trail_size_modifier">
             Trail particles' size will vary along this [CurveTexture].

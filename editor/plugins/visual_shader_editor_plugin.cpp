@@ -2142,7 +2142,7 @@ void VisualShaderEditor::_node_dragged(
 void VisualShaderEditor::_nodes_dragged() {
     drag_dirty = false;
 
-    undo_redo->create_action(TTR("Node(s) Moved"));
+    undo_redo->create_action(TTR("Nodes moved"));
 
     for (List<DragOp>::Element* E = drag_buffer.front(); E; E = E->next()) {
         undo_redo->add_do_method(

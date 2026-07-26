@@ -1227,7 +1227,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
     import_profiles->set_mode(EditorFileDialog::MODE_OPEN_FILES);
     import_profiles->add_filter("*.profile; " + TTR("Rebel Feature Profile"));
     import_profiles->connect("files_selected", this, "_import_profiles");
-    import_profiles->set_title(TTR("Import Profile(s)"));
+    import_profiles->set_title(TTR("Import Profile"));
     import_profiles->set_access(EditorFileDialog::ACCESS_FILESYSTEM);
 
     export_profile = memnew(EditorFileDialog);

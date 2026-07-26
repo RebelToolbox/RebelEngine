@@ -2943,12 +2943,18 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                 }
 
                 const int saved = _save_external_resources();
-                if (saved > 0) {
+                if (saved == 1) {
+                    show_accept(
+                        TTR("The current scene has no root node, but the "
+                            "modified external resource was saved anyway."),
+                        TTR("OK")
+                    );
+                } else if (saved > 1) {
                     show_accept(
                         vformat(
                             TTR("The current scene has no root node, but %d "
-                                "modified external resource(s) were saved "
-                                "anyway."),
+                                "modified external resources were saved anyway."
+                            ),
                             saved
                         ),
                         TTR("OK")
@@ -3335,9 +3341,9 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
                         );
                         save_confirmation->set_text(
                             (p_option == FILE_QUIT
-                                 ? TTR("Save changes to the following scene(s) "
+                                 ? TTR("Save changes to the following scenes "
                                        "before quitting?")
-                                 : TTR("Save changes to the following scene(s) "
+                                 : TTR("Save changes to the following scenes "
                                        "before opening Projects Manager?"))
                             + unsaved_scenes
                         );
