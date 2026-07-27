@@ -119,12 +119,24 @@ msgstr "Τιμή:"
 msgid "Insert Key Here"
 msgstr "Εισαγωγή κλειδιού εδώ"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Αναπαραγωγή Επιλεγμένων Κλειδιών"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Διαγραφή επιλογής"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Αναπαραγωγή Επιλεγμένων Κλειδιών"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Διαγραφή επιλογής"
 
 #: editor/animation_bezier_editor.cpp
@@ -318,14 +330,6 @@ msgstr "Αναδίπλωση παρεμβολής επανάληψης"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Εισαγωγή κλειδιού"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Αναπαραγωγή Κλειδιών"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Διαγραφή κλειδιών"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -624,7 +628,7 @@ msgstr "Χρήση καμπυλών Bezier"
 
 #: editor/animation_track_editor.cpp
 #, fuzzy
-msgid "Create RESET Track(s)"
+msgid "Create RESET Tracks"
 msgstr "Επικόλληση κομματιών"
 
 #: editor/animation_track_editor.cpp
@@ -660,7 +664,8 @@ msgid "Clean-up all animations"
 msgstr "Εκκαθάριση όλων των animation"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Εκκαθάριση όλων των animation (ΧΩΡΙΣ ΑΝΑΙΡΕΣΗ!)"
 
 #: editor/animation_track_editor.cpp
@@ -1129,7 +1134,13 @@ msgid "Errors loading!"
 msgstr "Σφάλματα κατά την φόρτωση!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Μόνιμη διαγραφή %d αντικειμένων; (Αδύνατη η αναίρεση)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Μόνιμη διαγραφή %d αντικειμένων; (Αδύνατη η αναίρεση)"
 
 #: editor/dependency_editor.cpp
@@ -1248,7 +1259,11 @@ msgid "%s (already exists)"
 msgstr "%s (Υπάρχει ήδη)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+
+#: editor/editor_asset_installer.cpp
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 
 #: editor/editor_asset_installer.cpp
@@ -1888,7 +1903,8 @@ msgid "Rebel Feature Profile"
 msgstr "Προφίλ Χαρακτηριστικών του Godot"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Εισαγωγή Προφίλ"
 
 #: editor/editor_feature_profile.cpp
@@ -1946,9 +1962,10 @@ msgstr "Όλα τα αρχεία (*)"
 msgid "Open a File"
 msgstr "Άνοιγμα αρχείου"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Άνοιγμα αρχείου/-ων"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Άνοιγμα Αρχείου"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2575,8 +2592,14 @@ msgstr ""
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2684,12 +2707,13 @@ msgid "Save & Quit"
 msgstr "Αποθήκευση & Έξοδος"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Αποθήκευση αλλαγών στις ακόλουθες σκηνές πριν την έξοδο;"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Αποθήκευση αλλαγών στις ακόλουθες σκηνές πριν το άνοιγμα του Διαχειριστή "
 "Έργων;"
@@ -3673,7 +3697,8 @@ msgstr ""
 "πιο ακριβείς αλλαγές."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Επιλέξτε κόμβους για εισαγωγή"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4854,13 +4879,13 @@ msgid "Set Animation"
 msgstr "Ορισμός Κίνησης"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Διαγραφή Κόμβου"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
 msgstr "Διαγραφή Κόμβων"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
@@ -5136,6 +5161,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Χρόνοι ανάμειξης κινήσεων"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Μετακίνηση Κόμβου"
 
@@ -5914,7 +5940,8 @@ msgid "Clear Guides"
 msgstr "Εκκαθάριση Οδηγών"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Δημιουργία Προσαρμοσμένου(ων) Οστού(ών) από Κόμβο(ους)"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6113,7 +6140,8 @@ msgid "Show Bones"
 msgstr "Εμφάνιση Οστών"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Δημιουργία Προσαρμοσμένου(ων) Οστού(ών) από Κόμβο(ους)"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8568,7 +8596,13 @@ msgid "No Frames Selected"
 msgstr "Δεν Επιλέχθηκαν Καρέ"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Προσθήκη καρέ"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Προσθήκη %d Καρέ"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8721,8 +8755,14 @@ msgid "Styleboxes"
 msgstr "Κουτί Στυλ"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "Χρώμα"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "Σταθερές"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8731,7 +8771,12 @@ msgstr "Δεν βρέθηκαν υπό-πόροι."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "Σταθερή"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "Σταθερές"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8740,8 +8785,13 @@ msgid "No constants found."
 msgstr "Σταθερή χρώματος."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "Σταθερές"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8749,8 +8799,13 @@ msgid "No fonts found."
 msgstr "Δεν βρέθηκε!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "Σταθερές"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8758,8 +8813,14 @@ msgid "No icons found."
 msgstr "Δεν βρέθηκε!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "Κουτί Στυλ"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "Κουτί Στυλ"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9408,7 +9469,8 @@ msgid "Clear Transform"
 msgstr "Εκκαθάριση Μετασχηματισμού"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Προσθήκη Υφών σε TileSet."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9594,7 +9656,13 @@ msgid "Remove Texture"
 msgstr "Αφαίρεση Υφής"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "Το/α αρχείο/α %s δεν προστέθηκε/αν γιατί ήταν ήδη στην λίστα."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "Το/α αρχείο/α %s δεν προστέθηκε/αν γιατί ήταν ήδη στην λίστα."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9909,8 +9977,8 @@ msgstr "Προσθήκη Κόμβου στο Οπτικό Πρόγραμμα Σ�
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "Μετακίνηση Κόμβου"
+msgid "Nodes moved"
+msgstr "Μετονομασία κόμβου"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9920,10 +9988,6 @@ msgstr "Αναπαραγωγή Κόμβων"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Επικόλληση κόμβων"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Διαγραφή Κόμβων"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11110,14 +11174,20 @@ msgid "Remove Translation"
 msgstr "Αφαίρεση μετάφρασης"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Προσθήκη ανακατεύθυνσης διαδρομής πόρου"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Προσθήκη ανακατεύθυνσης διαδρομής πόρου"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11482,7 +11552,13 @@ msgstr ""
 "σκηνή υπάρχει μέσα σε έναν από τους κόμβους της."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Δημιουργία στιγμιοτύπυ σκηνών"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Δημιουργία στιγμιοτύπυ σκηνών"
 
 #: editor/scene_tree_dock.cpp
@@ -11499,7 +11575,12 @@ msgstr "Δεν είναι δυνατή η επικόλληση του ριζικ
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "Επικόλληση κόμβων"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "Επικόλληση κόμβων"
 
 #: editor/scene_tree_dock.cpp
@@ -11519,7 +11600,13 @@ msgid "Move Nodes In Parent"
 msgstr "Μετακίνηση κόμβων στον γονέα"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Αναπαραγωγή Κόμβων"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
 msgstr "Αναπαραγωγή Κόμβων"
 
 #: editor/scene_tree_dock.cpp
@@ -11672,15 +11759,32 @@ msgstr "Σύνδεση Δέσμης Ενεργειών"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "Αποκοπή κόμβων"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Αποκοπή κόμβων"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Αφαίρεση κόμβων"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Αφαίρεση κόμβων"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Αλλαγή τύπου κόμβων"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Αλλαγή τύπου κόμβων"
 
 #: editor/scene_tree_dock.cpp
@@ -11821,28 +11925,50 @@ msgid "Node configuration warning:"
 msgstr "Προειδοποίηση διαμόρφωσης κόμβου:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Ο κόμβος έχει %s σύνδεση/-εις και %s ομάδα/-ες.\n"
-"Πατήστε για εμφάνιση της πλατφόρμας σημάτων."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Κόμβοι σε ομάδα"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Κόμβοι σε ομάδα"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Ο κόμβος έχει %s σύνδεση/-εις.\n"
 "Πατήστε για εμφάνιση της πλατφόρμας σημάτων."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
 msgstr ""
-"Ο κόμβος είναι σε %s ομάδα/-ες\n"
-"Πατήστε για εμφάνιση της πλατφόρμας ομάδων."
+"Επιλέξτε έναν μοναδικό κόμβο για να επεξεργαστείτε τα σήματα και τις ομάδες "
+"του."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Ο κόμβος έχει %s σύνδεση/-εις.\n"
+"Πατήστε για εμφάνιση της πλατφόρμας σημάτων."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Ο κόμβος έχει %s σύνδεση/-εις.\n"
+"Πατήστε για εμφάνιση της πλατφόρμας σημάτων."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12839,11 +12965,22 @@ msgstr "Προσθέστε έναν κόμβο preload"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "Προσθήκη κόμβου"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "Προσθήκη κόμβου"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Προσθέστε κόμβο/-ους από δέντρο"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Προσθέστε κόμβο/-ους από δέντρο"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12867,10 +13004,6 @@ msgstr "Προσθέστε ιδιότητα Setter"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Αλλαγή βασικού τύπου"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Μετακίνηση κόμβων"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14739,6 +14872,10 @@ msgstr "Ειδοποίηση!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Παρακαλώ επιβεβαιώστε..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Άνοιγμα αρχείου/-ων"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

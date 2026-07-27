@@ -122,9 +122,9 @@ msgid ""
 "[code]1.0[/code] (inclusive), otherwise, [method acos] will return [constant "
 "NAN].\n"
 "[codeblock]\n"
-"# c is 0.523599 or 30 degrees if converted with rad2deg(s)\n"
 "c = acos(0.866025)\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"[code]s[/code] is 0.523599 or 30 degrees if converted with [method rad2deg]"
 msgstr ""
 
 #: modules/gdscript/docs/@GDScript.xml
@@ -134,9 +134,9 @@ msgid ""
 "[code]1.0[/code] (inclusive), otherwise, [method asin] will return [constant "
 "NAN].\n"
 "[codeblock]\n"
-"# s is 0.523599 or 30 degrees if converted with rad2deg(s)\n"
 "s = asin(0.5)\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"[code]s[/code] is 0.523599 or 30 degrees if converted with [method rad2deg]"
 msgstr ""
 
 #: modules/gdscript/docs/@GDScript.xml
@@ -348,7 +348,7 @@ msgid ""
 "[/codeblock]\n"
 "See also [method ceil], [method round], [method stepify], and [int].\n"
 "[b]Note:[/b] This method returns a float. If you need an integer and "
-"[code]s[/code] is a non-negative number, you can use [code]int(s)[/code] "
+"[code]s[/code] is a non-negative number, you can use [int][code](s)[/code] "
 "directly."
 msgstr ""
 
@@ -3983,7 +3983,7 @@ msgid "The displayed animation frame's index."
 msgstr ""
 
 #: docs/AnimatedSprite.xml docs/AnimatedSprite3D.xml
-msgid "The [SpriteFrames] resource containing the animation(s)."
+msgid "The [SpriteFrames] resource containing frames and animation data."
 msgstr ""
 
 #: docs/AnimatedSprite.xml docs/Sprite.xml docs/SpriteBase3D.xml
@@ -31689,7 +31689,7 @@ msgstr ""
 #: docs/LightOccluder2D.xml
 msgid ""
 "The LightOccluder2D's light mask. The LightOccluder2D will cast shadows only "
-"from Light2D(s) that have the same light mask(s)."
+"from [Light2D]s that have the same light mask."
 msgstr ""
 
 #: docs/LightOccluder2D.xml
@@ -34929,7 +34929,7 @@ msgid ""
 "Packets are not acknowledged, no resend attempts are made for lost packets. "
 "Packets are received in the order they were sent in. Potentially faster than "
 "[constant TRANSFER_MODE_RELIABLE]. Use for non-critical data or data that "
-"would be outdated if received late due to resend attempt(s) anyway, for "
+"would be outdated if received late due to resend attempts anyway, for "
 "example movement and positional data."
 msgstr ""
 
@@ -38810,7 +38810,7 @@ msgstr ""
 #: docs/PackedScene.xml
 msgid ""
 "Instantiates the scene's node hierarchy. Triggers child scene "
-"instantiation(s). Triggers a [constant Node.NOTIFICATION_INSTANCED] "
+"instantiations. Triggers a [constant Node.NOTIFICATION_INSTANCED] "
 "notification on the root node."
 msgstr ""
 
@@ -39635,7 +39635,7 @@ msgstr ""
 #: docs/ParticlesMaterial.xml
 msgid ""
 "Emitter will emit [code]amount[/code] divided by [code]trail_divisor[/code] "
-"particles. The remaining particles will be used as trail(s)."
+"particles. The remaining particles will be used as trails."
 msgstr ""
 
 #: docs/ParticlesMaterial.xml
@@ -41231,7 +41231,7 @@ msgstr ""
 
 #: docs/Physics2DShapeQueryParameters.xml docs/PhysicsShapeQueryParameters.xml
 msgid ""
-"The physics layer(s) the query will take into account (as a bitmask). See "
+"The physics layers the query will take into account (as a bitmask). See "
 "[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
@@ -48012,7 +48012,7 @@ msgid ""
 "respect the documented return types and values. You should give it a global "
 "class name with [code]class_name[/code] for it to be registered. Like built-"
 "in ResourceFormatLoaders, it will be called automatically when loading "
-"resources of its handled type(s). You may also implement a "
+"resources of its handled types. You may also implement a "
 "[ResourceFormatSaver].\n"
 "[b]Note:[/b] You can also extend [EditorImportPlugin] if the resource type "
 "you need exists but Rebel Engine is unable to load its format. Choosing one "
@@ -48084,7 +48084,7 @@ msgid ""
 "documented return types and values. You should give it a global class name "
 "with [code]class_name[/code] for it to be registered. Like built-in "
 "ResourceFormatSavers, it will be called automatically when saving resources "
-"of its recognized type(s). You may also implement a [ResourceFormatLoader]."
+"of its recognized types. You may also implement a [ResourceFormatLoader]."
 msgstr ""
 
 #: docs/ResourceFormatSaver.xml
@@ -57724,16 +57724,16 @@ msgstr ""
 
 #: docs/TileMap.xml
 msgid ""
-"The collision layer(s) for all colliders in the TileMap. See [url=https://"
-"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
+"The collision layers for all colliders in the TileMap. See [url=https://docs."
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
 
 #: docs/TileMap.xml
 msgid ""
-"The collision mask(s) for all colliders in the TileMap. See [url=https://"
-"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
+"The collision mask for all colliders in the TileMap. See [url=https://docs."
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -57773,8 +57773,8 @@ msgstr ""
 #: docs/TileMap.xml
 msgid ""
 "The light mask assigned to all light occluders in the TileMap. The TileSet's "
-"light occluders will cast shadows only from Light2D(s) that have the same "
-"light mask(s)."
+"light occluders will cast shadows only from [Light2D]s that have the same "
+"light mask."
 msgstr ""
 
 #: docs/TileMap.xml
@@ -58927,7 +58927,7 @@ msgid ""
 "In [constant SELECT_ROW] and [constant SELECT_SINGLE] modes, the focused "
 "item is same as the selected item. In [constant SELECT_MULTI] mode, the "
 "focused item is the item under the focus cursor, not necessarily selected.\n"
-"To get the currently selected item(s), use [method get_next_selected]."
+"To get the currently selected item, use [method get_next_selected]."
 msgstr ""
 
 #: docs/Tree.xml
@@ -62390,7 +62390,7 @@ msgstr ""
 
 #: docs/VisualInstance.xml
 msgid ""
-"The render layer(s) this [VisualInstance] is drawn on.\n"
+"The render layers this [VisualInstance] is drawn on.\n"
 "This object will only be visible for [Camera]s whose cull mask includes the "
 "render object this [VisualInstance] is set to."
 msgstr ""

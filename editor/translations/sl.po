@@ -117,12 +117,24 @@ msgstr "Vrednost:"
 msgid "Insert Key Here"
 msgstr "Vstavi Ključ Tukaj"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Podvoji Izbran/e Ključ/e"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Izbriši Izbran/e Ključ/e"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Podvoji Izbran/e Ključ/e"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Izbriši Izbran/e Ključ/e"
 
 #: editor/animation_bezier_editor.cpp
@@ -332,16 +344,6 @@ msgstr ""
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr ""
-
-#: editor/animation_track_editor.cpp
-#, fuzzy
-msgid "Duplicate Key(s)"
-msgstr "Animacija Podvoji ključe"
-
-#: editor/animation_track_editor.cpp
-#, fuzzy
-msgid "Delete Key(s)"
-msgstr "Animacija Izbriši ključe"
 
 #: editor/animation_track_editor.cpp
 #, fuzzy
@@ -645,7 +647,7 @@ msgstr ""
 
 #: editor/animation_track_editor.cpp
 #, fuzzy
-msgid "Create RESET Track(s)"
+msgid "Create RESET Tracks"
 msgstr "Prilepi Parametre"
 
 #: editor/animation_track_editor.cpp
@@ -681,7 +683,8 @@ msgid "Clean-up all animations"
 msgstr "Pobriši vse animacije"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Izbriši Animacijo/e (BREZ VRNITVE!)"
 
 #: editor/animation_track_editor.cpp
@@ -1166,7 +1169,13 @@ msgid "Errors loading!"
 msgstr "Napake pri nalaganju!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Trajno izbrišem %d predmet(e)? (Brez vrnitve!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Trajno izbrišem %d predmet(e)? (Brez vrnitve!)"
 
 #: editor/dependency_editor.cpp
@@ -1286,7 +1295,11 @@ msgid "%s (already exists)"
 msgstr "SamodejnoNalaganje '%s' že obstaja!"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+
+#: editor/editor_asset_installer.cpp
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 
 #: editor/editor_asset_installer.cpp
@@ -1933,7 +1946,7 @@ msgstr "Upravljaj Izvozne Predloge"
 
 #: editor/editor_feature_profile.cpp
 #, fuzzy
-msgid "Import Profile(s)"
+msgid "Import Profile"
 msgstr "%d več datotek"
 
 #: editor/editor_feature_profile.cpp
@@ -1996,9 +2009,10 @@ msgstr "Vse Datoteke (*)"
 msgid "Open a File"
 msgstr "Odpri v Datoteki"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Odpri Datotek(o/e)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Odpri v Datoteki"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2640,8 +2654,14 @@ msgstr ""
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2745,12 +2765,13 @@ msgid "Save & Quit"
 msgstr "Shrani & Zapri"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Shranim spremembe na sledečih scenah pred zaprtjem?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Shranim spremembe na sledečih scenah pred odpiranjem Upravljalnika Projekta?"
 
@@ -3729,7 +3750,8 @@ msgid "Hold %s to round to integers. Hold Shift for more precise changes."
 msgstr ""
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Izberi Gradnik(e) za Uvoz"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4959,15 +4981,16 @@ msgid "Set Animation"
 msgstr "Animacija"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 #, fuzzy
 msgid "Delete Node"
 msgstr "Izberi Gradnik"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr ""
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Delete Nodes"
+msgstr "Izberi Gradnik"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 #, fuzzy
@@ -5253,6 +5276,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Navzkrižna Animacija Časa Mešanice"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
 msgid "Move Node"
 msgstr "Način Premika"
@@ -6066,7 +6090,7 @@ msgstr "Zaženi Prizor po Meri"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
-msgid "Create Custom Bone(s) from Node(s)"
+msgid "Create Custom Bones from Nodes"
 msgstr "Zaženi Prizor po Meri"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6279,8 +6303,9 @@ msgid "Show Bones"
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
+msgstr "Zaženi Prizor po Meri"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
@@ -8743,8 +8768,14 @@ msgid "No Frames Selected"
 msgstr "Izbriši Izbrano"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
-msgstr ""
+#, fuzzy
+msgid "Add frame"
+msgstr "Animacija Dodaj sled"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
+msgstr "Prehod"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Frame"
@@ -8903,8 +8934,13 @@ msgid "Styleboxes"
 msgstr ""
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+msgid "1 color"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "Konstante"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8913,7 +8949,12 @@ msgstr "Ni Zadetka!"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "Konstanta"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "Konstante"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8922,8 +8963,13 @@ msgid "No constants found."
 msgstr "Konstanta"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "Konstante"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8931,8 +8977,13 @@ msgid "No fonts found."
 msgstr "Ni Zadetka!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "Konstante"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8940,8 +8991,14 @@ msgid "No icons found."
 msgstr "Ni Zadetka!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "1 korak"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "Ni Zadetka!"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9585,7 +9642,7 @@ msgstr "Preoblikovanje"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 #, fuzzy
-msgid "Add Texture(s) to TileSet."
+msgid "Add Texture to TileSet."
 msgstr "Dodaj Gradnik(e) iz Drevesa"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9789,7 +9846,11 @@ msgid "Remove Texture"
 msgstr "Odstrani Predlogo"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+msgid "1 file was not added, because it was already on the list."
+msgstr ""
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+msgid "%d files were not added, because they were already on the list."
 msgstr ""
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -10132,8 +10193,8 @@ msgstr ""
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "Način Premika"
+msgid "Nodes moved"
+msgstr "Odstrani"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
@@ -10144,11 +10205,6 @@ msgstr "Animacija Podvoji ključe"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr ""
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Delete Nodes"
-msgstr "Izberi Gradnik"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11268,11 +11324,19 @@ msgid "Remove Translation"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
+msgid "Add localization remap resource"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -11646,8 +11710,14 @@ msgid ""
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
-msgstr ""
+#, fuzzy
+msgid "Instance scene"
+msgstr "Vstavi Ključ Tukaj"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
+msgstr "Vstavi Ključ Tukaj"
 
 #: editor/scene_tree_dock.cpp
 msgid "Replace with Branch Scene"
@@ -11663,7 +11733,12 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "Prilepi Pozicijo"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "Prilepi Pozicijo"
 
 #: editor/scene_tree_dock.cpp
@@ -11684,8 +11759,14 @@ msgid "Move Nodes In Parent"
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Animacija Podvoji ključe"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Animacija Podvoji ključe"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11834,16 +11915,33 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "Gradnik Prehod"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Gradnik Prehod"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
-msgstr ""
+#, fuzzy
+msgid "Remove node"
+msgstr "Odstrani Predlogo"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Odstrani Vse Stvari"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Spremeni Ime Animacije:"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
+msgstr "Spremeni Ime Animacije:"
 
 #: editor/scene_tree_dock.cpp
 msgid ""
@@ -11986,21 +12084,38 @@ msgid "Node configuration warning:"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Dodaj v Skupino"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Dodaj v Skupino"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Za urejanje Signalov in Skupin izberi Gradnik."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in %d groups"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
@@ -13028,11 +13143,22 @@ msgstr "Dodaj prednaloženo vozlišče"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "Dodaj vozlišče"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "Dodaj vozlišče"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Dodaj Gradnik(e) iz Drevesa"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Dodaj Gradnik(e) iz Drevesa"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -13052,10 +13178,6 @@ msgstr "Dodaj Setter Lastnost"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Spremeni Osnovni Tip"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14763,6 +14885,10 @@ msgstr "Opozorilo!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Prosimo Potrdite..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Odpri Datotek(o/e)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

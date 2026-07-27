@@ -121,12 +121,24 @@ msgstr "Значення:"
 msgid "Insert Key Here"
 msgstr "Вставити ключ тут"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Дублювати позначені ключі"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Вилучити позначені ключі"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Дублювати позначені ключі"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Вилучити позначені ключі"
 
 #: editor/animation_bezier_editor.cpp
@@ -320,14 +332,6 @@ msgstr "Загорнута інтерполяція циклу"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Вставити ключ"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Дублювати ключі"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Вилучити ключі"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -621,7 +625,8 @@ msgid "Use Bezier Curves"
 msgstr "Використовувати криві Безьє"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "Створити доріжки RESET"
 
 #: editor/animation_track_editor.cpp
@@ -657,7 +662,8 @@ msgid "Clean-up all animations"
 msgstr "Очищення всіх анімації"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Очистити анімацію(ї) (НЕ СКАСУВАТИ!)"
 
 #: editor/animation_track_editor.cpp
@@ -1123,7 +1129,13 @@ msgid "Errors loading!"
 msgstr "Помилки завантаження!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Остаточно вилучити %d об'єкт(и)? (Неможливо скасувати)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Остаточно вилучити %d об'єкт(и)? (Неможливо скасувати)"
 
 #: editor/dependency_editor.cpp
@@ -1240,7 +1252,13 @@ msgid "%s (already exists)"
 msgstr "%s (вже існує)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr "Вміст пакунка «%s» — немає конфліктів файлів із вашим проєктом:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "Вміст пакунка «%s» — конфлікт %d файлів із вашим проєктом:"
 
 #: editor/editor_asset_installer.cpp
@@ -1875,7 +1893,8 @@ msgid "Rebel Feature Profile"
 msgstr "Профіль можливостей Godot"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Імпортувати профілі"
 
 #: editor/editor_feature_profile.cpp
@@ -1932,9 +1951,10 @@ msgstr "Усі файли (*)"
 msgid "Open a File"
 msgstr "Відкрити файл"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Відкрити файл(и)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Відкрити файл"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2552,9 +2572,19 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr "%s вже не існує! Будь ласка, вкажіть нове місце для збереження."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"У поточної сцени немає кореневого вузла, але %d змінених зовнішніх ресурсів "
+"було збережено попри це."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "У поточної сцени немає кореневого вузла, але %d змінених зовнішніх ресурсів "
 "було збережено попри це."
@@ -2662,12 +2692,13 @@ msgid "Save & Quit"
 msgstr "Зберегти та вийти"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Зберегти зміни в наступній(их) сцені(ах) перед тим, як вийти?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Зберегти зміни в наступній(их) сцені(ах) перед відкриттям менеджера проєктів?"
 
@@ -3640,7 +3671,8 @@ msgstr ""
 "Shift, щоб зміни були точнішими."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Виберіть вузол(вузли) для імпорту"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4796,13 +4828,13 @@ msgid "Set Animation"
 msgstr "Встановити анімацію"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Вилучити вузол"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
 msgstr "Вилучити вузли"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
@@ -5078,6 +5110,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Час між анімаціями"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Пересунути вузол"
 
@@ -5849,7 +5882,8 @@ msgid "Clear Guides"
 msgstr "Вилучити напрямні"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Створити нетипові кістки з вузлів"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6042,7 +6076,8 @@ msgid "Show Bones"
 msgstr "Показати кістки"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Створити нетипові кістки з вузлів"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8435,7 +8470,13 @@ msgid "No Frames Selected"
 msgstr "Кадрів не позначено"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Додати кадр"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Додати %d кадри"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8587,7 +8628,13 @@ msgid "Styleboxes"
 msgstr "Стильові панелі"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+#, fuzzy
+msgid "1 color"
+msgstr "Кольори"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
 msgstr "{num} кольорів"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8595,7 +8642,13 @@ msgid "No colors found."
 msgstr "Кольорів не знайдено."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} constant(s)"
+#, fuzzy
+msgid "1 constant"
+msgstr "Сталий"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "{num} сталих"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8603,7 +8656,12 @@ msgid "No constants found."
 msgstr "Сталих не знайдено."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
 msgstr "{num} шрифтів"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8611,7 +8669,12 @@ msgid "No fonts found."
 msgstr "Шрифтів не знайдено."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
 msgstr "{num} піктограм"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8619,7 +8682,13 @@ msgid "No icons found."
 msgstr "Піктограм не знайдено."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
+#, fuzzy
+msgid "1 stylebox"
+msgstr "Стильові панелі"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
 msgstr "{num} панелей стилів"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -9220,7 +9289,8 @@ msgid "Clear Transform"
 msgstr "Зняти перетворення"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Додати текстури до TileSet."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9404,7 +9474,13 @@ msgid "Remove Texture"
 msgstr "Вилучити текстуру"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s файлів не додано, оскільки вони вже були у списку."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s файлів не додано, оскільки вони вже були у списку."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9719,8 +9795,9 @@ msgid "Add Node to Visual Shader"
 msgstr "Додати вузол до візуального шейдера"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "Пересунуто вузли"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "Вилучено вузол"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9730,10 +9807,6 @@ msgstr "Дублювати вузли"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Вставити вузли"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Вилучити вузли"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10917,13 +10990,20 @@ msgid "Remove Translation"
 msgstr "Вилучити переклад"
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Повторна прив'язка ресурсів перекладу: додавання %d шляхів"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
+msgid "Add %d localization remap resources"
 msgstr ""
-"Повторна прив'язка ресурсів перекладу: додавання %d повторних прив'язок"
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11289,7 +11369,13 @@ msgstr ""
 "одному з її вузлів."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Сцени екземпляра"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Сцени екземпляра"
 
 #: editor/scene_tree_dock.cpp
@@ -11305,7 +11391,13 @@ msgid "Can't paste root node into the same scene."
 msgstr "Не можна вставляти кореневий вузол до сцени цього кореневого вузла."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
+#, fuzzy
+msgid "Paste node"
+msgstr "Вставити вузли"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "Вставити вузли"
 
 #: editor/scene_tree_dock.cpp
@@ -11325,7 +11417,13 @@ msgid "Move Nodes In Parent"
 msgstr "Пересунути вузли у батьківський"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Дублювати вузли"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
 msgstr "Дублювати вузли"
 
 #: editor/scene_tree_dock.cpp
@@ -11483,15 +11581,33 @@ msgid "Attach Script"
 msgstr "Долучити скрипт"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
+#, fuzzy
+msgid "Cut node"
 msgstr "Вирізати вузли"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Вирізати вузли"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Вилучити вузли"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Вилучити вузли"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Змінити тип вузлів"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Змінити тип вузлів"
 
 #: editor/scene_tree_dock.cpp
@@ -11636,28 +11752,48 @@ msgid "Node configuration warning:"
 msgstr "Попередження щодо налаштовування вузла:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Вузол містить %s з'єднання і %s групи.\n"
-"Клацніть, щоб переглянути панель сигналів."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Вузли у групі"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Вузли у групі"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Вузол містить %s з'єднань.\n"
 "Клацніть, щоб переглянути панель сигналів."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Виберіть окремий вузол для редагування його сигналів та груп."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"Вузол належить %s групам.\n"
-"Клацніть, щоб переглянути панель груп."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Вузол містить %s з'єднань.\n"
+"Клацніть, щоб переглянути панель сигналів."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Вузол містить %s з'єднань.\n"
+"Клацніть, щоб переглянути панель сигналів."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12635,11 +12771,23 @@ msgid "Add Preload Node"
 msgstr "Додати попередньо завантажений вузол"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s)"
+#, fuzzy
+msgid "Add Node)"
+msgstr "Додати вузол"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes)"
 msgstr "Додати вузли"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Додати вузли з дерева"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Додати вузли з дерева"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12663,10 +12811,6 @@ msgstr "Додати властивість встановлювача"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Змінити базовий тип"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Пересунути вузли"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14549,6 +14693,10 @@ msgstr "Увага!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Будь ласка, підтвердьте..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Відкрити файл(и)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

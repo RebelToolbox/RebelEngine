@@ -117,12 +117,24 @@ msgstr "القيمة:"
 msgid "Insert Key Here"
 msgstr "أدخل المفتاح هنا"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "تكرار المفتاح(المفاتيح) المحدد(ة)"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "إمسح المفتاح(المفاتيح) المحدد(ة)"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "تكرار المفتاح(المفاتيح) المحدد(ة)"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "إمسح المفتاح(المفاتيح) المحدد(ة)"
 
 #: editor/animation_bezier_editor.cpp
@@ -316,14 +328,6 @@ msgstr "التفاف الحلقة المثبتة"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "أدخل المفتاح"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "مفتاح (مفاتيح) المكررة"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "مفتاح الحذف()"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -610,7 +614,8 @@ msgid "Use Bezier Curves"
 msgstr "إستعمل منحنيات بيزر"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "إنشاء مسار/ات إعادة التعيين (RESET)"
 
 #: editor/animation_track_editor.cpp
@@ -646,7 +651,8 @@ msgid "Clean-up all animations"
 msgstr "تنظيف جميع الحركات"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "تنظيف الحركة(ات) (بلا عودة)"
 
 #: editor/animation_track_editor.cpp
@@ -1109,7 +1115,13 @@ msgid "Errors loading!"
 msgstr "اخطاء في التحميل!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "هل تريد حذف %d عنصر (عناصر) نهائيًا؟ (لا تراجع!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "هل تريد حذف %d عنصر (عناصر) نهائيًا؟ (لا تراجع!)"
 
 #: editor/dependency_editor.cpp
@@ -1225,7 +1237,13 @@ msgid "%s (already exists)"
 msgstr "%s (موجود بالفعل)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr "محتويات المصدر \"%s\" - لا تتعارض مع مشروعك:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "تتعارض محتويات المصدر \"%s\" - من الملف(ات) %d مع مشروعك:"
 
 #: editor/editor_asset_installer.cpp
@@ -1849,7 +1867,8 @@ msgid "Rebel Feature Profile"
 msgstr "ملفات غودوت المُرشّحة"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "استيراد الملف(الملفات)"
 
 #: editor/editor_feature_profile.cpp
@@ -1907,9 +1926,10 @@ msgstr "كل الملفات (*)"
 msgid "Open a File"
 msgstr "إفتح ملف"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "إفتح ملف(ات)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "افتح الملف"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2528,9 +2548,19 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr "%s لم يعد موجوداً! من فضلك حدد موقعاً جديداً للحفظ."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"المشهد الحالي لا يملك عقدة رئيسة، ولكن %d عدّل المصدر(مصادر) خارجياً وتم الحفظ "
+"عموما."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "المشهد الحالي لا يملك عقدة رئيسة، ولكن %d عدّل المصدر(مصادر) خارجياً وتم الحفظ "
 "عموما."
@@ -2638,12 +2668,13 @@ msgid "Save & Quit"
 msgstr "حفظ و خروج"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "هل تريد حفظ التغييرات للمشاهد التالية قبل الخروج؟"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "هل تود حفظ التغييرات التي اجريت على المشاهد الحالية قبل فتح نافذة ادارة "
 "المشروع؟"
@@ -3607,7 +3638,8 @@ msgstr ""
 "امسك Ctrl للتدوير للأعداد الصحيحة. اضغط على Shift لإجراء تغييرات أكثر دقة."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "إختيار عقدة(عقد) للإستيراد"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4776,14 +4808,14 @@ msgid "Set Animation"
 msgstr "تحديد الرسومية المتحركة"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "حذف العُقدة"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr "حذف عُقدة (عُقد)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
+msgstr "حذف العُقد"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5056,6 +5088,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "وقت الدمج عبر الحركة"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "تحريك العُقدة"
 
@@ -5832,7 +5865,8 @@ msgid "Clear Guides"
 msgstr "مسح الموجهات"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "إنشاء عظمة (عظام) مخصوصة من عُقدة (عُقد)"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6027,7 +6061,8 @@ msgid "Show Bones"
 msgstr "إظهار العظام"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "إنشاء عظمة (عظام) مخصوصة من عُقدة (عُقد)"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8467,7 +8502,13 @@ msgid "No Frames Selected"
 msgstr "لا إطارات مُحددة"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "إضافة إطار"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "إضافة %d إطار(ات)"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8622,7 +8663,13 @@ msgid "Styleboxes"
 msgstr "الأسلوب"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+#, fuzzy
+msgid "1 color"
+msgstr "اللون"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
 msgstr "{num} لون (ألوان)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8632,7 +8679,12 @@ msgstr "لا مصدر للسطح تم تحديده."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "ثابت"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "الثوابت"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8641,7 +8693,12 @@ msgid "No constants found."
 msgstr "ثابت اللون."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
 msgstr "{num} خط (خطوط)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8650,7 +8707,12 @@ msgid "No fonts found."
 msgstr "لم يوجد!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
 msgstr "{num} أيقونة (أيقونات)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8659,7 +8721,13 @@ msgid "No icons found."
 msgstr "لم يوجد!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
+#, fuzzy
+msgid "1 stylebox"
+msgstr "الأسلوب"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
 msgstr "{num} ستايلبوكس"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -9318,7 +9386,8 @@ msgid "Clear Transform"
 msgstr "محو التَحَوّل"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "إضافة نقش(نقوش) إلى مُحدد البلاط TileSet."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9499,7 +9568,13 @@ msgid "Remove Texture"
 msgstr "إزالة النقش"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s الملف(ات) لم تضف بسبب كونها موجودة سلفاً بالقائمة."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s الملف(ات) لم تضف بسبب كونها موجودة سلفاً بالقائمة."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9814,8 +9889,8 @@ msgstr "إضافة عُقدة للتظليل البصري Visual Shader"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "لقد تحركت العُقدة"
+msgid "Nodes moved"
+msgstr "تمت إزالة الكائن"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9825,10 +9900,6 @@ msgstr "مضاعفة العُقد"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "لصق العُقد"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "حذف العُقد"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11021,14 +11092,20 @@ msgid "Remove Translation"
 msgstr "إزالة الترجمة"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "مورد إعادة رسم الخريطة يُضيف إعادة رسم خريطة"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "مورد إعادة رسم الخريطة يُضيف إعادة رسم خريطة"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11391,7 +11468,13 @@ msgid ""
 msgstr "لا يمكن نمذجة المشهد '%s' لأن المشهد الحالي مُتضَمن في واحد من عُقده."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "نمذجة المشهد(المشاهد)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "نمذجة المشهد(المشاهد)"
 
 #: editor/scene_tree_dock.cpp
@@ -11408,7 +11491,12 @@ msgstr "لا يمكن لصق عقدة الجذر في نفس المشهد."
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "لصق العُقد"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "لصق العُقد"
 
 #: editor/scene_tree_dock.cpp
@@ -11428,8 +11516,14 @@ msgid "Move Nodes In Parent"
 msgstr "تحريك العُقد عند الأب"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "مضاعفة العُقدة(العُقد)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "مضاعفة العُقد"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "مضاعفة العُقد"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11583,15 +11677,32 @@ msgstr "إلحاق نص برمجي"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "قص العُقد"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "قص العُقد"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "إزالة عُقدة (عُقد)"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "إزالة عُقدة (عُقد)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "تغيير نوع العُقدة(العُقد)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "تغيير نوع العُقدة(العُقد)"
 
 #: editor/scene_tree_dock.cpp
@@ -11732,28 +11843,48 @@ msgid "Node configuration warning:"
 msgstr "تحذير تهيئة العُقدة:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"تملك هذه العُقدة %s اتصال(ات) و %s مجموعة(مجموعات).\n"
-"اضغط لإظهار رصيف (ميناء) الإشارات."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "العُقد في المجموعة"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "العُقد في المجموعة"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "تملك العُقدة %s اتصال(ات).\n"
 "اضغط لإظهار رصيف (ميناء) الإشارات."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "حدد عقدة لكي تُعدل إشاراتها ومجموعاتها."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"العُقدة ضمن %s مجموعة(مجموعات).\n"
-"اضغط لإظهار رصيف (ميناء) المجموعات."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"تملك العُقدة %s اتصال(ات).\n"
+"اضغط لإظهار رصيف (ميناء) الإشارات."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"تملك العُقدة %s اتصال(ات).\n"
+"اضغط لإظهار رصيف (ميناء) الإشارات."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12743,11 +12874,22 @@ msgstr "إضافة عُقدة مسبقة التحميل"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "إضافة عُقدة"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "إضافة عُقدة"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "إضافة عُقدة (عُقد) من الشجرة"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "إضافة عُقدة (عُقد) من الشجرة"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12770,10 +12912,6 @@ msgstr "إضافة خاصية مُحدد Setter Property"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "تعديل النوع الأساس"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "تحريك العقدة(عقدات)"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14661,6 +14799,10 @@ msgstr "تنبيه!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "يُرجى التأكيد..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "إفتح ملف(ات)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

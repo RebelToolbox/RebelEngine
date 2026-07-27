@@ -117,12 +117,24 @@ msgstr "Arvo:"
 msgid "Insert Key Here"
 msgstr "Lisää tähän avainruutu"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Kahdenna valitut avaimet"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Poista valitut avaimet"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Kahdenna valitut avaimet"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Poista valitut avaimet"
 
 #: editor/animation_bezier_editor.cpp
@@ -316,14 +328,6 @@ msgstr "Kiedo kierron interpolointi"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Lisää avainruutu"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Kahdenna avainruudut"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Poista avainruudut"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -610,7 +614,8 @@ msgid "Use Bezier Curves"
 msgstr "Käytä Bezier-käyriä"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "Luo palautusraidat"
 
 #: editor/animation_track_editor.cpp
@@ -646,7 +651,8 @@ msgid "Clean-up all animations"
 msgstr "Siivoa kaikki animaatiot"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Siivoa animaatio(t) (EI VOI KUMOTA!)"
 
 #: editor/animation_track_editor.cpp
@@ -1110,7 +1116,13 @@ msgid "Errors loading!"
 msgstr "Virheitä ladatessa!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Poista pysyvästi %d kohdetta? (Ei voi kumota!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Poista pysyvästi %d kohdetta? (Ei voi kumota!)"
 
 #: editor/dependency_editor.cpp
@@ -1226,7 +1238,15 @@ msgid "%s (already exists)"
 msgstr "%s (on jo olemassa)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+"Assetin \"%s\" sisältö - Yksikään tiedosto ei ole ristiriidassa projektisi "
+"kanssa:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 "Assetin \"%s\"sisältö - %d tiedostoa on ristiriidassa projektisi kanssa:"
 
@@ -1861,7 +1881,8 @@ msgid "Rebel Feature Profile"
 msgstr "Godotin ominaisuusprofiili"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Tuo profiileja"
 
 #: editor/editor_feature_profile.cpp
@@ -1918,9 +1939,10 @@ msgstr "Kaikki tiedostot (*)"
 msgid "Open a File"
 msgstr "Avaa tiedosto"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Avaa tiedosto(t)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Avaa tiedosto"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2538,9 +2560,19 @@ msgstr ""
 "%s ei ole enää olemassa! Ole hyvä ja määrittele uusi tallennussijainti."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"Nykyisellä skenellä ei ole juurisolmua, mutta %d muokattua ulkoista "
+"resurssia tallennettiin silti."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "Nykyisellä skenellä ei ole juurisolmua, mutta %d muokattua ulkoista "
 "resurssia tallennettiin silti."
@@ -2648,12 +2680,13 @@ msgid "Save & Quit"
 msgstr "Tallenna ja lopeta"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Tallenetaanko muutokset seuraaviin skeneihin ennen sulkemista?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Tallennetaanko muutokset seuraaviin skeneihin ennen Projektienhallinnan "
 "avaamista?"
@@ -3616,7 +3649,8 @@ msgstr ""
 "tarkempia muutoksia varten."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Valitse tuotavat solmut"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4769,14 +4803,14 @@ msgid "Set Animation"
 msgstr "Aseta animaatio"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Poista solmu"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr "Poista solmu(t)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
+msgstr "Poista solmut"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5049,6 +5083,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Lomittautuvien animaatioiden sulautusajat"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Siirrä solmua"
 
@@ -5820,7 +5855,8 @@ msgid "Clear Guides"
 msgstr "Poista apuviivat"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Luo mukautetut luut solmuista"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6013,7 +6049,8 @@ msgid "Show Bones"
 msgstr "Näytä luut"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Luo mukautetut luut solmuista"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8403,7 +8440,13 @@ msgid "No Frames Selected"
 msgstr "Ei valittuja ruutuja"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Lisää ruutu"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Lisää %d ruutua"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8555,7 +8598,13 @@ msgid "Styleboxes"
 msgstr "Tyylilaatikot"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+#, fuzzy
+msgid "1 color"
+msgstr "Värit"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
 msgstr "{num} väriä"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8563,7 +8612,13 @@ msgid "No colors found."
 msgstr "Värejä ei löytynyt."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} constant(s)"
+#, fuzzy
+msgid "1 constant"
+msgstr "Vakio"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "{num} vakiota"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8571,7 +8626,12 @@ msgid "No constants found."
 msgstr "Vakioita ei löytynyt."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
 msgstr "{num} fonttia"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8579,7 +8639,12 @@ msgid "No fonts found."
 msgstr "Fontteja ei löytynyt."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
 msgstr "{num} kuvaketta"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8587,7 +8652,13 @@ msgid "No icons found."
 msgstr "Kuvakkeita ei löytynyt."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
+#, fuzzy
+msgid "1 stylebox"
+msgstr "Tyylilaatikot"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
 msgstr "{num} tyylilaatikkoa"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -9187,7 +9258,8 @@ msgid "Clear Transform"
 msgstr "Tyhjennä muunnos"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Lisää tekstuurit laattavalikoimaan."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9367,7 +9439,13 @@ msgid "Remove Texture"
 msgstr "Poista tekstuuri"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s tiedostoa ei lisätty, koska ne olivat jo listalla."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s tiedostoa ei lisätty, koska ne olivat jo listalla."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9683,8 +9761,9 @@ msgid "Add Node to Visual Shader"
 msgstr "Lisää solmu visuaaliseen sävyttimeen"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "Solmu(t) siirretty"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "Solmu poistettu"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9694,10 +9773,6 @@ msgstr "Kahdenna solmut"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Liitä solmut"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Poista solmut"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10876,12 +10951,20 @@ msgid "Remove Translation"
 msgstr "Poista käännös"
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Käännösresurssin uudelleenmäppäys: lisää %d polkua"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Käännösresurssin uudelleenmäppäys: lisää %d uudelleenmäppäystä"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11245,7 +11328,13 @@ msgstr ""
 "jossakin sen solmuista."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Luo ilmentymä skenestä tai skeneistä"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Luo ilmentymä skenestä tai skeneistä"
 
 #: editor/scene_tree_dock.cpp
@@ -11261,8 +11350,14 @@ msgid "Can't paste root node into the same scene."
 msgstr "Juurisolmua ei voida liittää samaan skeneen."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
-msgstr "Liitä solmu(t)"
+#, fuzzy
+msgid "Paste node"
+msgstr "Liitä solmut"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
+msgstr "Liitä solmut"
 
 #: editor/scene_tree_dock.cpp
 msgid "Detach Script"
@@ -11281,8 +11376,14 @@ msgid "Move Nodes In Parent"
 msgstr "Siirrä solmut isännän alle"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "Kahdenna solmu(t)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Kahdenna solmut"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Kahdenna solmut"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11441,15 +11542,33 @@ msgid "Attach Script"
 msgstr "Liitä skripti"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
-msgstr "Leikkaa solmu(t)"
+#, fuzzy
+msgid "Cut node"
+msgstr "Leikkaa solmut"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Leikkaa solmut"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Poista solmu(t)"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Poista solmu(t)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Vaihda solmujen tyyppiä"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Vaihda solmujen tyyppiä"
 
 #: editor/scene_tree_dock.cpp
@@ -11593,28 +11712,48 @@ msgid "Node configuration warning:"
 msgstr "Solmun konfiguroinnin varoitus:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Solmulla on %s yhteyttä ja %s ryhmää.\n"
-"Napsauta näyttääksesi signaalitelakan."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Ryhmään kuuluvat solmut"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Ryhmään kuuluvat solmut"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Solmulla on %s liitäntää.\n"
 "Napsauta näyttääksesi signaalitelakan."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Valitse yksittäinen solmu muokataksesi sen signaaleja ja ryhmiä."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"Solmu kuuluu %s ryhmään.\n"
-"Napsauta näyttääksesi ryhmätelakan."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Solmulla on %s liitäntää.\n"
+"Napsauta näyttääksesi signaalitelakan."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Solmulla on %s liitäntää.\n"
+"Napsauta näyttääksesi signaalitelakan."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12595,11 +12734,23 @@ msgid "Add Preload Node"
 msgstr "Lisää esiladattu solmu"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s)"
+#, fuzzy
+msgid "Add Node)"
+msgstr "Lisää solmu"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes)"
 msgstr "Lisää solmuja"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Lisää solmut puusta"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Lisää solmut puusta"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12622,10 +12773,6 @@ msgstr "Lisää asettajaominaisuus"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Muuta kantatyyppiä"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Siirrä solmu(t)"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14478,6 +14625,10 @@ msgstr "Huomio!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Ole hyvä ja vahvista..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Avaa tiedosto(t)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

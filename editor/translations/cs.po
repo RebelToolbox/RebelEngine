@@ -117,12 +117,24 @@ msgstr "Hodnota:"
 msgid "Insert Key Here"
 msgstr "Vložit klíč zde"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Duplikovat vybrané klíč(e)"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Smazat vybrané klíč(e)"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Duplikovat vybrané klíč(e)"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Smazat vybrané klíč(e)"
 
 #: editor/animation_bezier_editor.cpp
@@ -318,14 +330,6 @@ msgstr "Interpolace ovinutou smyčkou"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Vložit klíč"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Duplikovat klíč(e)"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Odstranit klíč(e)"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -617,7 +621,8 @@ msgid "Use Bezier Curves"
 msgstr "Použít Bézierovy křivky"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "Vytvořit RESET stopu/stopy"
 
 #: editor/animation_track_editor.cpp
@@ -653,7 +658,8 @@ msgid "Clean-up all animations"
 msgstr "Pročistit všechny animace"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Pročistit animaci (NELZE VZÍT ZPĚT!)"
 
 #: editor/animation_track_editor.cpp
@@ -1117,7 +1123,13 @@ msgid "Errors loading!"
 msgstr "Chyby při načítání!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Permanentně smazat %d položek? (nelze vrátit zpět!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Permanentně smazat %d položek? (nelze vrátit zpět!)"
 
 #: editor/dependency_editor.cpp
@@ -1233,7 +1245,14 @@ msgid "%s (already exists)"
 msgstr "%s (již existuje)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+"Obsah balíčku \"%s\" - Žádné soubory nejsou v konfliktu s vaším projektem:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "Obsah balíčku \"%s\" - %d souborů koliduje s vaším projektem:"
 
 #: editor/editor_asset_installer.cpp
@@ -1858,7 +1877,8 @@ msgid "Rebel Feature Profile"
 msgstr "Godot feature profil"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Importovat profil(y)"
 
 #: editor/editor_feature_profile.cpp
@@ -1915,9 +1935,10 @@ msgstr "Všechny soubory (*)"
 msgid "Open a File"
 msgstr "Otevřít soubor"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Otevřít soubor(y)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Otevřít soubor"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2534,9 +2555,19 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr "%s již neexistuje! Zadejte prosím nové umístění pro uložení."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"Aktuální scéna nemá kořenový uzel, ale přesto bylo uloženo %d upravených "
+"externích zdrojů."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "Aktuální scéna nemá kořenový uzel, ale přesto bylo uloženo %d upravených "
 "externích zdrojů."
@@ -2643,12 +2674,13 @@ msgid "Save & Quit"
 msgstr "Uložit a ukončit"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Uložit změny následujících scén před ukončením?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr "Uložit změny následujících scén před otevřením Správce projektu?"
 
 #: editor/editor_node.cpp
@@ -3609,7 +3641,8 @@ msgstr ""
 "Podržte %s pro zaokrouhlení na celá čísla. Pro přesnější změny podržte Shift."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Vyberte uzly pro import"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4754,14 +4787,14 @@ msgid "Set Animation"
 msgstr "Nastavit animaci"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Smazat uzel"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr "Odstranit uzly"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
+msgstr "Smazat uzly"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5032,6 +5065,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Přechodové časy prolnutí animací"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Přesunout uzel"
 
@@ -5801,7 +5835,8 @@ msgid "Clear Guides"
 msgstr "Vymazat vodítka"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Vytvořit vlastní kosti z uzlů"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -5993,7 +6028,8 @@ msgid "Show Bones"
 msgstr "Zobrazit kosti"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Vytvořit kosti z uzlů"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8390,7 +8426,13 @@ msgid "No Frames Selected"
 msgstr "Nebyly vybrány žádné snímky"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Přidat snímek"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Přidat %d snímků"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8543,8 +8585,14 @@ msgid "Styleboxes"
 msgstr "Styl"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "Barvy"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "Konstanty"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No colors found."
@@ -8552,7 +8600,12 @@ msgstr "Nebyly nalezeny žádné barvy."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "Konstantní"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "Konstanty"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8560,24 +8613,40 @@ msgid "No constants found."
 msgstr "Nebyly nalezeny žádné konstanty."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "Konstanty"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No fonts found."
 msgstr "Nebyla nalezena žádná písma."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "Konstanty"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No icons found."
 msgstr "Nebyly nalezeny žádné ikony."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "Styl"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "Styl"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9192,7 +9261,8 @@ msgid "Clear Transform"
 msgstr "Promazat transformaci"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Přidat textury do TileSet."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9373,7 +9443,13 @@ msgid "Remove Texture"
 msgstr "Odstranit texturu"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s soubory nebyly přidány, protože již byly v seznamu."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s soubory nebyly přidány, protože již byly v seznamu."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9687,8 +9763,9 @@ msgid "Add Node to Visual Shader"
 msgstr "Přidat uzel do VisualShader"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "Uzel přesunut"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "Uzel odebrán"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9698,10 +9775,6 @@ msgstr "Duplikovat uzly"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Vložit uzly"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Smazat uzly"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10877,14 +10950,20 @@ msgid "Remove Translation"
 msgstr "Odstranit překlad"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Přidat přemapování zdroje"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Přidat přemapování zdroje"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11247,7 +11326,13 @@ msgstr ""
 "Scénu \"%s\" nelze vytvořit, protože aktuální scéna je jedním z jejích uzlů."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Scéna/Scény instance"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Scéna/Scény instance"
 
 #: editor/scene_tree_dock.cpp
@@ -11263,7 +11348,13 @@ msgid "Can't paste root node into the same scene."
 msgstr "Nelze vložit kořenový uzel do stejné scény."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
+#, fuzzy
+msgid "Paste node"
+msgstr "Vložit uzly"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "Vložit uzly"
 
 #: editor/scene_tree_dock.cpp
@@ -11283,8 +11374,14 @@ msgid "Move Nodes In Parent"
 msgstr "Přesunout uzly v rodiči"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "Duplikovat uzel/uzly"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Duplikovat uzly"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Duplikovat uzly"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11429,15 +11526,33 @@ msgid "Attach Script"
 msgstr "Připojit skript"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
+#, fuzzy
+msgid "Cut node"
 msgstr "Vyjmout uzly"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Vyjmout uzly"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Odstranit uzel/uzly"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Odstranit uzel/uzly"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Změnit typ uzlů"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Změnit typ uzlů"
 
 #: editor/scene_tree_dock.cpp
@@ -11577,28 +11692,48 @@ msgid "Node configuration warning:"
 msgstr "Varování konfigurace uzlu:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Uzel má %s připojení a %s skupin.\n"
-"Kliknutím zobrazíte panel signálů."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Uzly jsou ve skupině"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Uzly jsou ve skupině"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Uzel má %s připojení.\n"
 "Kliknutím zobrazíte panel signálů."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Zvolte vybraný uzel pro editaci jeho signálů a skupin."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"Uzel je v %s skupinách.\n"
-"Kliknutím zobrazíte panel skupin."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Uzel má %s připojení.\n"
+"Kliknutím zobrazíte panel signálů."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Uzel má %s připojení.\n"
+"Kliknutím zobrazíte panel signálů."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12577,11 +12712,22 @@ msgstr "Přidat předem načtený uzel"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "Přidat uzel"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "Přidat uzel"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Přidat uzel(y) ze stromu"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Přidat uzel(y) ze stromu"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12603,10 +12749,6 @@ msgstr "Přidat vlastnost setter"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Změnit základní typ"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Přesunout uzly"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14409,6 +14551,10 @@ msgstr "Pozor!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Potvrďte prosím..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Otevřít soubor(y)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

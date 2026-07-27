@@ -126,15 +126,16 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
+#, fuzzy
 msgid ""
 "Returns the arc cosine of [code]s[/code] in radians. Use to get the angle of "
 "cosine [code]s[/code]. [code]s[/code] must be between [code]-1.0[/code] and "
 "[code]1.0[/code] (inclusive), otherwise, [method acos] will return [constant "
 "NAN].\n"
 "[codeblock]\n"
-"# c is 0.523599 or 30 degrees if converted with rad2deg(s)\n"
 "c = acos(0.866025)\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"[code]s[/code] is 0.523599 or 30 degrees if converted with [method rad2deg]"
 msgstr ""
 "以弧度单位，返回 [code]s[/code] 的反余弦值。用于求余弦值为 [code]s[/code] 的"
 "角度。[code]s[/code] 必须在 [code]-1.0[/code] 到 [code]1.0[/code] 之间（闭区"
@@ -145,15 +146,16 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
+#, fuzzy
 msgid ""
 "Returns the arc sine of [code]s[/code] in radians. Use to get the angle of "
 "sine [code]s[/code]. [code]s[/code] must be between [code]-1.0[/code] and "
 "[code]1.0[/code] (inclusive), otherwise, [method asin] will return [constant "
 "NAN].\n"
 "[codeblock]\n"
-"# s is 0.523599 or 30 degrees if converted with rad2deg(s)\n"
 "s = asin(0.5)\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"[code]s[/code] is 0.523599 or 30 degrees if converted with [method rad2deg]"
 msgstr ""
 "以弧度单位，返回 [code]s[/code] 的反正弦值。用于求正弦值为 [code]s[/code] 的"
 "角度。[code]s[/code] 必须在 [code]-1.0[/code] 到 [code]1.0[/code] 之间（闭区"
@@ -475,6 +477,7 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
+#, fuzzy
 msgid ""
 "Rounds [code]s[/code] downward (towards negative infinity), returning the "
 "largest whole number that is not more than [code]s[/code].\n"
@@ -485,7 +488,7 @@ msgid ""
 "[/codeblock]\n"
 "See also [method ceil], [method round], [method stepify], and [int].\n"
 "[b]Note:[/b] This method returns a float. If you need an integer and "
-"[code]s[/code] is a non-negative number, you can use [code]int(s)[/code] "
+"[code]s[/code] is a non-negative number, you can use [int][code](s)[/code] "
 "directly."
 msgstr ""
 "向下舍入 [code]s[/code] （朝负无穷大），返回不大于 [code]s[/code] 的最大整"
@@ -4863,7 +4866,8 @@ msgid "The displayed animation frame's index."
 msgstr "显示的动画帧的索引。"
 
 #: docs/AnimatedSprite.xml docs/AnimatedSprite3D.xml
-msgid "The [SpriteFrames] resource containing the animation(s)."
+#, fuzzy
+msgid "The [SpriteFrames] resource containing frames and animation data."
 msgstr "包含动画的 [SpriteFrames] 资源。"
 
 #: docs/AnimatedSprite.xml docs/Sprite.xml docs/SpriteBase3D.xml
@@ -39456,9 +39460,10 @@ msgstr ""
 "[OccluderPolygon2D]。"
 
 #: docs/LightOccluder2D.xml
+#, fuzzy
 msgid ""
 "The LightOccluder2D's light mask. The LightOccluder2D will cast shadows only "
-"from Light2D(s) that have the same light mask(s)."
+"from [Light2D]s that have the same light mask."
 msgstr ""
 "LightOccluder2D的灯光遮罩。LightOccluder2D将仅从具有相同灯光遮罩的Light2D投射"
 "阴影。"
@@ -43440,11 +43445,12 @@ msgstr ""
 "序是否重要。"
 
 #: docs/NetworkedMultiplayerPeer.xml
+#, fuzzy
 msgid ""
 "Packets are not acknowledged, no resend attempts are made for lost packets. "
 "Packets are received in the order they were sent in. Potentially faster than "
 "[constant TRANSFER_MODE_RELIABLE]. Use for non-critical data or data that "
-"would be outdated if received late due to resend attempt(s) anyway, for "
+"would be outdated if received late due to resend attempts anyway, for "
 "example movement and positional data."
 msgstr ""
 "数据包不被确认，对丢失的数据包不进行重发尝试。数据包按其发送顺序接收。有可能"
@@ -48708,9 +48714,10 @@ msgid ""
 msgstr "返回代表场景文件内容的 [code]SceneState[/code]。"
 
 #: docs/PackedScene.xml
+#, fuzzy
 msgid ""
 "Instantiates the scene's node hierarchy. Triggers child scene "
-"instantiation(s). Triggers a [constant Node.NOTIFICATION_INSTANCED] "
+"instantiations. Triggers a [constant Node.NOTIFICATION_INSTANCED] "
 "notification on the root node."
 msgstr ""
 "实例化场景的节点层次结构。触发子场景实例化。在根节点上触发一个 [constant "
@@ -49735,9 +49742,10 @@ msgid "Trail particles' color will vary along this [GradientTexture]."
 msgstr "轨迹粒子的颜色将沿着这个[GradientTexture]变化。"
 
 #: docs/ParticlesMaterial.xml
+#, fuzzy
 msgid ""
 "Emitter will emit [code]amount[/code] divided by [code]trail_divisor[/code] "
-"particles. The remaining particles will be used as trail(s)."
+"particles. The remaining particles will be used as trails."
 msgstr ""
 "发射器将发射[code]amount[/code]除以[code]trail_visor[/code]的粒子。剩下的粒子"
 "将作为轨迹使用。"
@@ -51629,8 +51637,9 @@ msgid ""
 msgstr "如果[code]true[/code]，查询将考虑[PhysicsBody2D]。"
 
 #: docs/Physics2DShapeQueryParameters.xml docs/PhysicsShapeQueryParameters.xml
+#, fuzzy
 msgid ""
-"The physics layer(s) the query will take into account (as a bitmask). See "
+"The physics layers the query will take into account (as a bitmask). See "
 "[url=https://docs.rebeltoolbox.com/en/latest/tutorials/physics/"
 "physics_introduction.html#collision-layers-and-masks]Collision layers and "
 "masks[/url] in the documentation for more information."
@@ -60071,7 +60080,7 @@ msgid ""
 "respect the documented return types and values. You should give it a global "
 "class name with [code]class_name[/code] for it to be registered. Like built-"
 "in ResourceFormatLoaders, it will be called automatically when loading "
-"resources of its handled type(s). You may also implement a "
+"resources of its handled types. You may also implement a "
 "[ResourceFormatSaver].\n"
 "[b]Note:[/b] You can also extend [EditorImportPlugin] if the resource type "
 "you need exists but Rebel Engine is unable to load its format. Choosing one "
@@ -60174,7 +60183,7 @@ msgid ""
 "documented return types and values. You should give it a global class name "
 "with [code]class_name[/code] for it to be registered. Like built-in "
 "ResourceFormatSavers, it will be called automatically when saving resources "
-"of its recognized type(s). You may also implement a [ResourceFormatLoader]."
+"of its recognized types. You may also implement a [ResourceFormatLoader]."
 msgstr ""
 "当您从编辑器执行此操作或使用 [ResourceSaver] 单例时，引擎可以节省资源。这要归"
 "功于多个 [ResourceFormatSaver]，每个都处理自己的格式并由引擎自动调用。\n"
@@ -72045,9 +72054,10 @@ msgid ""
 msgstr "静态体碰撞的摩擦值，参阅[code]collision_use_kinematic[/code]。"
 
 #: docs/TileMap.xml
+#, fuzzy
 msgid ""
-"The collision layer(s) for all colliders in the TileMap. See [url=https://"
-"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
+"The collision layers for all colliders in the TileMap. See [url=https://docs."
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -72056,9 +72066,10 @@ msgstr ""
 "html#collision-layers-and-masks]碰撞层和掩码[/url]。"
 
 #: docs/TileMap.xml
+#, fuzzy
 msgid ""
-"The collision mask(s) for all colliders in the TileMap. See [url=https://"
-"docs.rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
+"The collision mask for all colliders in the TileMap. See [url=https://docs."
+"rebeltoolbox.com/en/latest/tutorials/physics/physics_introduction."
 "html#collision-layers-and-masks]Collision layers and masks[/url] in the "
 "documentation for more information."
 msgstr ""
@@ -72114,10 +72125,11 @@ msgid "The TileMap orientation mode. See [enum Mode] for possible values."
 msgstr "图块地图的方向模式。有关可能的值，参阅[enum Mode]。"
 
 #: docs/TileMap.xml
+#, fuzzy
 msgid ""
 "The light mask assigned to all light occluders in the TileMap. The TileSet's "
-"light occluders will cast shadows only from Light2D(s) that have the same "
-"light mask(s)."
+"light occluders will cast shadows only from [Light2D]s that have the same "
+"light mask."
 msgstr ""
 "分配给图块地图中所有光遮挡器的光线遮罩。图块集的光遮挡器将只从具有相同光线遮"
 "挡的Light2D中投射阴影。"
@@ -73474,13 +73486,14 @@ msgid "Returns the current scrolling position."
 msgstr "返回当前的滚动位置。"
 
 #: docs/Tree.xml
+#, fuzzy
 msgid ""
 "Returns the currently focused item, or [code]null[/code] if no item is "
 "focused.\n"
 "In [constant SELECT_ROW] and [constant SELECT_SINGLE] modes, the focused "
 "item is same as the selected item. In [constant SELECT_MULTI] mode, the "
 "focused item is the item under the focus cursor, not necessarily selected.\n"
-"To get the currently selected item(s), use [method get_next_selected]."
+"To get the currently selected item, use [method get_next_selected]."
 msgstr ""
 "返回当前的焦点项，如果没有焦点项，则返回[code]null[/code]。\n"
 "在[constant SELECT_ROW]和[constant SELECT_SINGLE]模式下，焦点项与选择项相同。"
@@ -77748,8 +77761,9 @@ msgid "Enables a particular layer in [member layers]."
 msgstr "启用 [member layers] 中的特定层。"
 
 #: docs/VisualInstance.xml
+#, fuzzy
 msgid ""
-"The render layer(s) this [VisualInstance] is drawn on.\n"
+"The render layers this [VisualInstance] is drawn on.\n"
 "This object will only be visible for [Camera]s whose cull mask includes the "
 "render object this [VisualInstance] is set to."
 msgstr ""

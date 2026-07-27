@@ -117,12 +117,24 @@ msgstr "값:"
 msgid "Insert Key Here"
 msgstr "여기에 키 삽입"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "선택한 키 복제"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "선택한 키 삭제"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "선택한 키 복제"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "선택한 키 삭제"
 
 #: editor/animation_bezier_editor.cpp
@@ -316,14 +328,6 @@ msgstr "루프 보간 래핑"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "키 삽입"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "키 복제"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "키 삭제"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -613,7 +617,8 @@ msgid "Use Bezier Curves"
 msgstr "베지어 곡선 사용"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "재설정 트랙 만들기"
 
 #: editor/animation_track_editor.cpp
@@ -649,7 +654,8 @@ msgid "Clean-up all animations"
 msgstr "모든 애니메이션 정리"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "애니메이션 정리 (되돌릴 수 없습니다!)"
 
 #: editor/animation_track_editor.cpp
@@ -1113,7 +1119,13 @@ msgid "Errors loading!"
 msgstr "불러오기 오류!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "%d개의 항목을 영구적으로 삭제할까요? (되돌릴 수 없습니다!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "%d개의 항목을 영구적으로 삭제할까요? (되돌릴 수 없습니다!)"
 
 #: editor/dependency_editor.cpp
@@ -1228,7 +1240,13 @@ msgid "%s (already exists)"
 msgstr "%s (이미 있습니다)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr "애셋 \"%s\"의 콘텐츠 - 프로젝트와 충돌하는 파일이 없습니다:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "애셋 \"%s\"의 콘텐츠 - 파일 %d개가 프로젝트와 충돌합니다:"
 
 #: editor/editor_asset_installer.cpp
@@ -1853,7 +1871,8 @@ msgid "Rebel Feature Profile"
 msgstr "Godot 기능 프로필"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "프로필 가져오기"
 
 #: editor/editor_feature_profile.cpp
@@ -1910,9 +1929,10 @@ msgstr "모든 파일 (*)"
 msgid "Open a File"
 msgstr "파일 열기"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "여러 파일 열기"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "파일 열기"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2529,9 +2549,19 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr "%s은(는) 더 이상 존재하지 않습니다! 새 저장 위치를 지정해 주세요."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"현재 씬에는 루트 노드가 없지만, 그래도 수정된 외부 리소스 %d개가 저장되었습니"
+"다."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "현재 씬에는 루트 노드가 없지만, 그래도 수정된 외부 리소스 %d개가 저장되었습니"
 "다."
@@ -2638,12 +2668,13 @@ msgid "Save & Quit"
 msgstr "저장 & 종료"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "종료하기 전에 해당 씬의 변경사항을 저장하시겠습니까?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr "프로젝트 매니저를 열기 전에 해당 씬의 변경사항을 저장하시겠습니까?"
 
 #: editor/editor_node.cpp
@@ -3600,7 +3631,8 @@ msgid "Hold %s to round to integers. Hold Shift for more precise changes."
 msgstr "%s를 눌러 정수로 반올림합니다. Shift를 눌러 좀 더 정밀하게 조작합니다."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "가져올 노드 선택"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4743,13 +4775,13 @@ msgid "Set Animation"
 msgstr "애니메이션 설정"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "노드 삭제"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
 msgstr "노드 삭제"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
@@ -5024,6 +5056,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "교차-애니메이션 혼합 시간"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "노드 이동"
 
@@ -5786,7 +5819,8 @@ msgid "Clear Guides"
 msgstr "가이드 지우기"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "노드에서 커스텀 본 만들기"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -5976,7 +6010,8 @@ msgid "Show Bones"
 msgstr "본 보이기"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "노드에서 커스텀 본 만들기"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8357,7 +8392,13 @@ msgid "No Frames Selected"
 msgstr "선택한 프레임 없음"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "프레임 추가"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "프레임 %d개 추가"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8509,7 +8550,13 @@ msgid "Styleboxes"
 msgstr "스타일박스"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+#, fuzzy
+msgid "1 color"
+msgstr "색상"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
 msgstr "{num}색"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8517,7 +8564,13 @@ msgid "No colors found."
 msgstr "색을 찾을 수 없습니다."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} constant(s)"
+#, fuzzy
+msgid "1 constant"
+msgstr "상수"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "상수 {num}개"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8525,7 +8578,12 @@ msgid "No constants found."
 msgstr "상수를 찾을 수 없습니다."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
 msgstr "글꼴 {num}개"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8533,7 +8591,12 @@ msgid "No fonts found."
 msgstr "글꼴을 찾을 수 없습니다."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
 msgstr "아이콘 {num}개"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8541,7 +8604,13 @@ msgid "No icons found."
 msgstr "아이콘을 찾을 수 없습니다."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
+#, fuzzy
+msgid "1 stylebox"
+msgstr "스타일박스"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
 msgstr "스타일박스 {num}개"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -9135,7 +9204,8 @@ msgid "Clear Transform"
 msgstr "변형 지우기"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "TileSet에 텍스처를 추가합니다."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9315,7 +9385,13 @@ msgid "Remove Texture"
 msgstr "텍스처 제거"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s 파일이 이미 목록에 있어서 추가하지 않았습니다."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s 파일이 이미 목록에 있어서 추가하지 않았습니다."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9629,8 +9705,9 @@ msgid "Add Node to Visual Shader"
 msgstr "노드를 비주얼 셰이더에 추가"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "노드 이동됨"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "노드 제거됨"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9640,10 +9717,6 @@ msgstr "노드 복제"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "노드 붙여넣기"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "노드 삭제"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10801,12 +10874,20 @@ msgid "Remove Translation"
 msgstr "번역 제거"
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "리소스 리맵핑 번역: 경로 %d개 추가"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "리소스 리맵핑 번역: 리매핑 %d개 추가"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11168,7 +11249,13 @@ msgid ""
 msgstr "한 노드에 현재 씬이 있기 때문에, '%s' 씬을 인스턴스할 수 없습니다."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "씬 인스턴스화"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "씬 인스턴스화"
 
 #: editor/scene_tree_dock.cpp
@@ -11184,7 +11271,13 @@ msgid "Can't paste root node into the same scene."
 msgstr "루트 노드를 같은 씬 안으로 붙여넣을 수 없습니다."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
+#, fuzzy
+msgid "Paste node"
+msgstr "노드 붙여넣기"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "노드 붙여넣기"
 
 #: editor/scene_tree_dock.cpp
@@ -11204,7 +11297,13 @@ msgid "Move Nodes In Parent"
 msgstr "노드들을 부모 노드로 이동"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "노드 복제"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
 msgstr "노드 복제"
 
 #: editor/scene_tree_dock.cpp
@@ -11358,15 +11457,33 @@ msgid "Attach Script"
 msgstr "스크립트 붙이기"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
+#, fuzzy
+msgid "Cut node"
 msgstr "노드 잘라내기"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "노드 잘라내기"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "노드 제거"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "노드 제거"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "노드 타입 바꾸기"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "노드 타입 바꾸기"
 
 #: editor/scene_tree_dock.cpp
@@ -11507,28 +11624,48 @@ msgid "Node configuration warning:"
 msgstr "노드 설정 경고:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"노드에 %s 연결과 %s 그룹이 있습니다.\n"
-"클릭하여 시그널 독을 봅니다."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "그룹에 속한 노드"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "그룹에 속한 노드"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "노드에 %s 연결이 있습니다.\n"
 "클릭하여 시그널 독을 봅니다."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "시그널과 그룹을 편집할 단일 노드를 선택하세요."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"노드가 그룹 안에 있습니다.\n"
-"클릭하면 그룹 독을 보여줘요."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"노드에 %s 연결이 있습니다.\n"
+"클릭하여 시그널 독을 봅니다."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"노드에 %s 연결이 있습니다.\n"
+"클릭하여 시그널 독을 봅니다."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12503,11 +12640,23 @@ msgid "Add Preload Node"
 msgstr "Preload 노드 추가"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s)"
+#, fuzzy
+msgid "Add Node)"
 msgstr "노드 추가"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "노드 추가"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "트리에서 노드 추가"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "트리에서 노드 추가"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12530,10 +12679,6 @@ msgstr "Setter 속성 추가"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "기본 타입 바꾸기"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "노드 이동"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14342,6 +14487,10 @@ msgstr "경고!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "확인해주세요..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "여러 파일 열기"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."
