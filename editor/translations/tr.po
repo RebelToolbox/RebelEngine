@@ -116,12 +116,24 @@ msgstr "Değer:"
 msgid "Insert Key Here"
 msgstr "Anahtar Gir"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Seçilen Tuşu/Tuşları Çoğalt"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Seçilen Tuşu/Tuşları Sil"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Seçilen Tuşu/Tuşları Çoğalt"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Seçilen Tuşu/Tuşları Sil"
 
 #: editor/animation_bezier_editor.cpp
@@ -315,14 +327,6 @@ msgstr "Döngü Aradeğerlemesin Sar"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Anahtar Ekle"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Yinelenen Anahtar(lar)"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Anahtar(lar)ı Sil"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -613,7 +617,8 @@ msgid "Use Bezier Curves"
 msgstr "Bezier Eğrileri Kullan"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "RESET İz(ler)i oluşturun"
 
 #: editor/animation_track_editor.cpp
@@ -649,7 +654,8 @@ msgid "Clean-up all animations"
 msgstr "Tüm animasyonları temizle"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Animasyon(ları) Temizle (GERİ ALINAMAZ!)"
 
 #: editor/animation_track_editor.cpp
@@ -1114,7 +1120,13 @@ msgid "Errors loading!"
 msgstr "Yükleme hataları!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "%d Öğeleri kalıcı olarak silsin mi? (Geri alınamaz!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "%d Öğeleri kalıcı olarak silsin mi? (Geri alınamaz!)"
 
 #: editor/dependency_editor.cpp
@@ -1231,7 +1243,13 @@ msgid "%s (already exists)"
 msgstr "%s (Zaten Var)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr "\"%s\" öğesinin içeriği - Projenizle çakışan dosya yok:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "\"%s\" öğesinin içeriği - %d dosya(lar) projenizle çakışıyor:"
 
 #: editor/editor_asset_installer.cpp
@@ -1861,7 +1879,8 @@ msgid "Rebel Feature Profile"
 msgstr "Godot Özellik Profili"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Profil(leri) İçe Aktar"
 
 #: editor/editor_feature_profile.cpp
@@ -1918,9 +1937,10 @@ msgstr "Tüm Dosyalar (*)"
 msgid "Open a File"
 msgstr "Bir Dosya Aç"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Dosya(ları) Aç"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Dosya Aç"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2539,9 +2559,19 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr "%s artık mevcut değil! Lütfen yeni bir kaydetme konumu belirtin."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"Geçerli sahnenin kök düğümü yok, ancak %d değiştirilmiş harici kaynak(lar) "
+"yine de kaydedildi."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "Geçerli sahnenin kök düğümü yok, ancak %d değiştirilmiş harici kaynak(lar) "
 "yine de kaydedildi."
@@ -2648,12 +2678,13 @@ msgid "Save & Quit"
 msgstr "Kaydet & Çık"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Çıkmadan önce değişiklikler aşağıdaki sahne(ler)e kaydedilsin mi?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Proje Yöneticisi açılmadan önce değişiklikler aşağıdaki sahneye(lere) "
 "kaydedilsin mi?"
@@ -3623,7 +3654,8 @@ msgstr ""
 "Shift tuşuna basılı tutun."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Düğüm(leri) içe Aktarmak için Seç"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4775,14 +4807,14 @@ msgid "Set Animation"
 msgstr "Animasyon Ata"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Düğüm Sil"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr "Düğüm(leri) Sil"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
+msgstr "Düğümleri Sil"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5053,6 +5085,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Çapraz-Animasyon Karışma Süreleri"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Düğümü Taşı"
 
@@ -5824,7 +5857,8 @@ msgid "Clear Guides"
 msgstr "Kılavuzları Temizle"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Düğüm[ler]den istenilen biçimde Kemik[ler] oluştur"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6017,7 +6051,8 @@ msgid "Show Bones"
 msgstr "Kemikleri Göster"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Düğüm[ler]den istenilen şekilde kemik[ler] yarat"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8400,7 +8435,13 @@ msgid "No Frames Selected"
 msgstr "Çerçeve seçilmedi"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Çerçeve Ekle"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "%d Çerçeve[ler]'i ekle"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8552,7 +8593,13 @@ msgid "Styleboxes"
 msgstr "StilKutusu"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+#, fuzzy
+msgid "1 color"
+msgstr "Renkler"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
 msgstr "{num} renk(lar)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8560,7 +8607,13 @@ msgid "No colors found."
 msgstr "Renk bulunamadı."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} constant(s)"
+#, fuzzy
+msgid "1 constant"
+msgstr "Sabit"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "{num} Sabitler"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8568,7 +8621,12 @@ msgid "No constants found."
 msgstr "Sabitler bulunamadı."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
 msgstr "{num} yazı tipi(leri)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8576,7 +8634,12 @@ msgid "No fonts found."
 msgstr "Yazı tipi bulunamadı."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
 msgstr "{num} simge(ler)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8584,7 +8647,13 @@ msgid "No icons found."
 msgstr "Simge bulunamadı."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
+#, fuzzy
+msgid "1 stylebox"
+msgstr "StilKutusu"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
 msgstr "{num} stil kutusu(lar)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -9182,7 +9251,8 @@ msgid "Clear Transform"
 msgstr "Dönüşümü Temizle"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "DöşemeTakımına doku[lar] ekle."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9365,7 +9435,13 @@ msgid "Remove Texture"
 msgstr "Dokuyu Kaldır"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s dosyası eklenmedi çünkü zaten listede idi."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s dosyası eklenmedi çünkü zaten listede idi."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9679,8 +9755,9 @@ msgid "Add Node to Visual Shader"
 msgstr "Visual Shader'a düğüm ekle"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "Düğüm(ler) Taşındı"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "Düğüm Silindi"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9690,10 +9767,6 @@ msgstr "Düğümleri Çokla"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Düğümleri Yapıştır"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Düğümleri Sil"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10869,12 +10942,20 @@ msgid "Remove Translation"
 msgstr "Çeviriyi Kaldır"
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Çeviri Kaynağı Yeniden Eşlemesi: %d Yol(lar) Ekle"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Çeviri Kaynağı Yeniden Eşlemesi: %d Yeniden Haritalama Ekle"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11240,7 +11321,13 @@ msgstr ""
 "örneklenemiyor."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Sahne(leri) Örnekle"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Sahne(leri) Örnekle"
 
 #: editor/scene_tree_dock.cpp
@@ -11256,8 +11343,14 @@ msgid "Can't paste root node into the same scene."
 msgstr "Kök düğümü aynı sahne içine yapıştırılamaz."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
-msgstr "Düğüm(leri) Yapıştır"
+#, fuzzy
+msgid "Paste node"
+msgstr "Düğümleri Yapıştır"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
+msgstr "Düğümleri Yapıştır"
 
 #: editor/scene_tree_dock.cpp
 msgid "Detach Script"
@@ -11276,8 +11369,14 @@ msgid "Move Nodes In Parent"
 msgstr "Düğümleri Ataya Taşı"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "Düğüm(leri) Çoğalt"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Düğümleri Çokla"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Düğümleri Çokla"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11436,15 +11535,33 @@ msgid "Attach Script"
 msgstr "Betik İliştir"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
-msgstr "Düğüm(leri) Kes"
+#, fuzzy
+msgid "Cut node"
+msgstr "Düğümleri Kes"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Düğümleri Kes"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Düğümleri Kaldır"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Düğümleri Kaldır"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Düğüm(ler) türünü değiştir"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Düğüm(ler) türünü değiştir"
 
 #: editor/scene_tree_dock.cpp
@@ -11586,28 +11703,48 @@ msgid "Node configuration warning:"
 msgstr "Düğüm yapılandırma uyarısı:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Düğüm %s bağlantı(lar) ve %s grup(lar)a sahip\n"
-"Sinyaller bölümünü göstermek için tıkla."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Gruptaki Düğümler"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Gruptaki Düğümler"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Düğüm %s bağlantılara sahip.\n"
 "Sinyaller bölümünü göstermek için tıkla."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Sinyallerini ve Gruplarını düzenlemek için bir Düğüm seçin."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"Düğüm %s grup(lar)ı içinde.\n"
-"Gruplar bölümünü göstermek için tıkla."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Düğüm %s bağlantılara sahip.\n"
+"Sinyaller bölümünü göstermek için tıkla."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Düğüm %s bağlantılara sahip.\n"
+"Sinyaller bölümünü göstermek için tıkla."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12581,11 +12718,23 @@ msgid "Add Preload Node"
 msgstr "Önyüklenen Düğüm Ekle"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s)"
+#, fuzzy
+msgid "Add Node)"
+msgstr "Düğüm Ekle"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes)"
 msgstr "Düğüm(ler) Ekle"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Ağaçtan Düğüm(ler) Ekle"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Ağaçtan Düğüm(ler) Ekle"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12608,10 +12757,6 @@ msgstr "Atayıcı Özellik Ekle"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Temel Tipi Değiştir"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Düğüm(ler) Taşı"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14460,6 +14605,10 @@ msgstr "Uyarı!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Lütfen Doğrulayın..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Dosya(ları) Aç"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

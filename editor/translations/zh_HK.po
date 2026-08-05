@@ -117,14 +117,24 @@ msgstr ""
 msgid "Insert Key Here"
 msgstr "在這插入關鍵幀"
 
-#: editor/animation_bezier_editor.cpp
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
 #, fuzzy
-msgid "Duplicate Selected Key(s)"
+msgid "Duplicate Selected Key"
 msgstr "複製 Selection"
 
-#: editor/animation_bezier_editor.cpp
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
 #, fuzzy
-msgid "Delete Selected Key(s)"
+msgid "Delete Selected Key"
+msgstr "刪除選中檔案"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "複製 Selection"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "刪除選中檔案"
 
 #: editor/animation_bezier_editor.cpp
@@ -333,16 +343,6 @@ msgstr ""
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "插入動畫幀"
-
-#: editor/animation_track_editor.cpp
-#, fuzzy
-msgid "Duplicate Key(s)"
-msgstr "複製動畫幀"
-
-#: editor/animation_track_editor.cpp
-#, fuzzy
-msgid "Delete Key(s)"
-msgstr "移除動畫幀"
 
 #: editor/animation_track_editor.cpp
 #, fuzzy
@@ -648,7 +648,7 @@ msgstr ""
 
 #: editor/animation_track_editor.cpp
 #, fuzzy
-msgid "Create RESET Track(s)"
+msgid "Create RESET Tracks"
 msgstr "貼上參數"
 
 #: editor/animation_track_editor.cpp
@@ -690,7 +690,7 @@ msgid "Clean-up all animations"
 msgstr ""
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr ""
 
 #: editor/animation_track_editor.cpp
@@ -1159,7 +1159,11 @@ msgid "Errors loading!"
 msgstr "載入錯誤!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+msgid "Permanently delete item? (No undo!)"
+msgstr ""
+
+#: editor/dependency_editor.cpp
+msgid "Permanently delete %d items? (No undo!)"
 msgstr ""
 
 #: editor/dependency_editor.cpp
@@ -1277,7 +1281,11 @@ msgid "%s (already exists)"
 msgstr "AutoLoad '%s'已存在！"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+
+#: editor/editor_asset_installer.cpp
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 
 #: editor/editor_asset_installer.cpp
@@ -1925,7 +1933,7 @@ msgstr "管理輸出範本"
 
 #: editor/editor_feature_profile.cpp
 #, fuzzy
-msgid "Import Profile(s)"
+msgid "Import Profile"
 msgstr "多　%d　檔案"
 
 #: editor/editor_feature_profile.cpp
@@ -1988,9 +1996,10 @@ msgstr "所有檔案(*)"
 msgid "Open a File"
 msgstr "開啟檔案"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "開啟(多個)檔案"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "開啟檔案"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2609,8 +2618,14 @@ msgstr ""
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2716,12 +2731,12 @@ msgstr "儲存檔案"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before quitting?"
+msgid "Save changes to the following scenes before quitting?"
 msgstr "離開前要先儲存以下 scene 的任何更改嗎？"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr "開啟 Project Manager 前要先儲存以下 scene 的任何更改嗎？"
 
 #: editor/editor_node.cpp
@@ -3678,7 +3693,7 @@ msgstr ""
 
 #: editor/editor_sub_scene.cpp
 #, fuzzy
-msgid "Select Node(s) to Import"
+msgid "Select Nodes to Import"
 msgstr "選擇要導入的Node(s)"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4906,15 +4921,16 @@ msgid "Set Animation"
 msgstr "新的動畫名稱："
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 #, fuzzy
 msgid "Delete Node"
 msgstr "不選"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr ""
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Delete Nodes"
+msgstr "不選"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 #, fuzzy
@@ -5204,6 +5220,7 @@ msgid "Cross-Animation Blend Times"
 msgstr ""
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
 msgid "Move Node"
 msgstr "移動模式"
@@ -5998,7 +6015,7 @@ msgstr "運行場景"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
-msgid "Create Custom Bone(s) from Node(s)"
+msgid "Create Custom Bones from Nodes"
 msgstr "運行場景"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6197,8 +6214,9 @@ msgid "Show Bones"
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
+msgstr "運行場景"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
@@ -8674,8 +8692,14 @@ msgid "No Frames Selected"
 msgstr "刪除選中檔案"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
-msgstr ""
+#, fuzzy
+msgid "Add frame"
+msgstr "新增動畫軌跡"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
+msgstr "過渡"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Frame"
@@ -8836,8 +8860,13 @@ msgid "Styleboxes"
 msgstr ""
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+msgid "1 color"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "常數"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8846,7 +8875,12 @@ msgstr "資源"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "常數"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "常數"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8855,8 +8889,13 @@ msgid "No constants found."
 msgstr "常數"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "常數"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8864,8 +8903,13 @@ msgid "No fonts found."
 msgstr "找不到!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "常數"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8873,8 +8917,14 @@ msgid "No icons found."
 msgstr "找不到!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "資源"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "資源"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9515,7 +9565,7 @@ msgstr ""
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 #, fuzzy
-msgid "Add Texture(s) to TileSet."
+msgid "Add Texture to TileSet."
 msgstr "由主幹新增節點"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9716,7 +9766,11 @@ msgid "Remove Texture"
 msgstr "移除選項"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+msgid "1 file was not added, because it was already on the list."
+msgstr ""
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+msgid "%d files were not added, because they were already on the list."
 msgstr ""
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -10058,8 +10112,8 @@ msgstr ""
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "移動模式"
+msgid "Nodes moved"
+msgstr "已移除："
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
@@ -10071,11 +10125,6 @@ msgstr "複製動畫幀"
 #, fuzzy
 msgid "Paste Nodes"
 msgstr "貼上"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Delete Nodes"
-msgstr "不選"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11204,11 +11253,19 @@ msgid "Remove Translation"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
+msgid "Add localization remap resource"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -11585,8 +11642,14 @@ msgid ""
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
-msgstr ""
+#, fuzzy
+msgid "Instance scene"
+msgstr "在這插入關鍵幀"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
+msgstr "在這插入關鍵幀"
 
 #: editor/scene_tree_dock.cpp
 msgid "Replace with Branch Scene"
@@ -11602,7 +11665,12 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "貼上"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "貼上"
 
 #: editor/scene_tree_dock.cpp
@@ -11623,8 +11691,14 @@ msgid "Move Nodes In Parent"
 msgstr "在Parent內移動Nodes"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "再製Node"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "複製動畫幀"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "複製動畫幀"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11777,16 +11851,32 @@ msgstr "腳本"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "貼上"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Cut nodes"
+msgstr "貼上"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Change type of node(s)"
+msgid "Remove node"
+msgstr "移除選項"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove nodes"
+msgstr "移除選項"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "動畫變化數值"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "動畫變化數值"
 
 #: editor/scene_tree_dock.cpp
@@ -11931,21 +12021,37 @@ msgid "Node configuration warning:"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Group中的Nodes"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Group中的Nodes"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+msgid "Node has a signal connection and is in %d groups"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in %d groups"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
@@ -12976,11 +13082,22 @@ msgstr "新增節點"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "新增節點"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "新增節點"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "由主幹新增節點"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "由主幹新增節點"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -13000,11 +13117,6 @@ msgstr ""
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr ""
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
-msgid "Move Node(s)"
-msgstr "移動模式"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14690,6 +14802,10 @@ msgstr "警告!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "請確認..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "開啟(多個)檔案"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

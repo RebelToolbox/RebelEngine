@@ -117,12 +117,24 @@ msgstr "Nilai:"
 msgid "Insert Key Here"
 msgstr "Sisipkan Key Disini"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Duplikat Key Terpilih"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Hapus Kunci Terpilih"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Duplikat Key Terpilih"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Hapus Kunci Terpilih"
 
 #: editor/animation_bezier_editor.cpp
@@ -316,14 +328,6 @@ msgstr "Interpolasi perulangan warp"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Masukkan Kunci"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Duplikat Key"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Hapus Key"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -614,7 +618,8 @@ msgid "Use Bezier Curves"
 msgstr "Gunakan Lengkungan Bezier"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "Buat RESET Track"
 
 #: editor/animation_track_editor.cpp
@@ -650,7 +655,8 @@ msgid "Clean-up all animations"
 msgstr "Bersihkan semua animasi"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Bersihkan Animasi (Tidak Dapat Dikembalikan!)"
 
 #: editor/animation_track_editor.cpp
@@ -1115,7 +1121,13 @@ msgid "Errors loading!"
 msgstr "Gagal memuat!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Hapus secara permanen %d item? (Tidak dapat dikembalikan!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Hapus secara permanen %d item? (Tidak dapat dikembalikan!)"
 
 #: editor/dependency_editor.cpp
@@ -1231,7 +1243,13 @@ msgid "%s (already exists)"
 msgstr "%s (sudah ada)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr "Konten dari aset \"%s\" - Tidak ada konflik dengan proyek anda:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "Konten dari aset \"%s\" - %d berkas-berkas konflik dengan proyek anda:"
 
 #: editor/editor_asset_installer.cpp
@@ -1861,7 +1879,8 @@ msgid "Rebel Feature Profile"
 msgstr "Profil Fitur Godot"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Impor Profil"
 
 #: editor/editor_feature_profile.cpp
@@ -1918,9 +1937,10 @@ msgstr "Semua File-file (*)"
 msgid "Open a File"
 msgstr "Buka sebuah File"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Buka File (File-file)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Buka Berkas"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2543,9 +2563,19 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr ""
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"Scene saat ini tidak memiliki node root, tetapi %d sumber daya eksternal "
+"yang diubah tetap disimpan."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "Scene saat ini tidak memiliki node root, tetapi %d sumber daya eksternal "
 "yang diubah tetap disimpan."
@@ -2652,12 +2682,13 @@ msgid "Save & Quit"
 msgstr "Simpan & Keluar"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Simpan perubahan skena saat ini sebelum keluar?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr "Simpan perubahan skena saat ini sebelum membuka Manajer Proyek?"
 
 #: editor/editor_node.cpp
@@ -3623,7 +3654,8 @@ msgstr ""
 "lebih presisi."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Pilih node untuk diimpor"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4765,13 +4797,13 @@ msgid "Set Animation"
 msgstr "Atur Animasi"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Hapus Node"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
 msgstr "Hapus Node"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
@@ -5045,6 +5077,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Waktu Berbaur Animasi-silang"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Pindahkan Node"
 
@@ -5810,7 +5843,8 @@ msgid "Clear Guides"
 msgstr "Bersihkan Panduan"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Buat Tulang Kustom dari Node"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6003,7 +6037,8 @@ msgid "Show Bones"
 msgstr "Tampilkan Tulang-tulang"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Buat Tulang Kustom(satu/lebih) dari Node(satu/lebih)"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8403,7 +8438,13 @@ msgid "No Frames Selected"
 msgstr "Tidak ada frame yang dipilih"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Tambah Frame"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Tambah %d Frame"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8557,8 +8598,14 @@ msgid "Styleboxes"
 msgstr "Gaya"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "Warna"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "Konstanta"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8567,7 +8614,12 @@ msgstr "Tidak ada sub-resourc yang ditemukan."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "Konstan"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "Konstanta"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8576,24 +8628,40 @@ msgid "No constants found."
 msgstr "Konstanta warna."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "Konstanta"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No fonts found."
 msgstr "Font tidak ditemukan."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "Konstanta"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No icons found."
 msgstr "Ikon tidak ditemukan."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "Gaya"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "Gaya"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9222,7 +9290,8 @@ msgid "Clear Transform"
 msgstr "Bersihkan Transformasi"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Tambahkan Tekstur ke TileSet."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9405,7 +9474,13 @@ msgid "Remove Texture"
 msgstr "Hapus Tekstur"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "Berkas %s tidak ditambahkan karena sudah ada dalam daftar."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "Berkas %s tidak ditambahkan karena sudah ada dalam daftar."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9719,8 +9794,9 @@ msgid "Add Node to Visual Shader"
 msgstr "Tambah Node ke Visual Shader"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "Node Dipindahkan"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "Node Dihapus"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9730,10 +9806,6 @@ msgstr "Duplikat Node"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Rekatkan Node"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Hapus Node"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10924,14 +10996,20 @@ msgid "Remove Translation"
 msgstr "Hapus Terjemahan"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Resource Remap Tambah Remap"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Resource Remap Tambah Remap"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11296,7 +11374,13 @@ msgstr ""
 "satu node-nya."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Instansi Skena"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Instansi Skena"
 
 #: editor/scene_tree_dock.cpp
@@ -11312,8 +11396,14 @@ msgid "Can't paste root node into the same scene."
 msgstr "Tidak dapat menempelkan node akar ke dalam skena yang sama."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
-msgstr "Tempel Node"
+#, fuzzy
+msgid "Paste node"
+msgstr "Rekatkan Node"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
+msgstr "Rekatkan Node"
 
 #: editor/scene_tree_dock.cpp
 msgid "Detach Script"
@@ -11332,7 +11422,13 @@ msgid "Move Nodes In Parent"
 msgstr "Pindah Beberapa Node dalam Parent"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Duplikat Node"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
 msgstr "Duplikat Node"
 
 #: editor/scene_tree_dock.cpp
@@ -11481,15 +11577,33 @@ msgid "Attach Script"
 msgstr "Lampirkan Skrip"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
+#, fuzzy
+msgid "Cut node"
 msgstr "Potong Node"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Potong Node"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Hapus Node"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Hapus Node"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Ubah jenis node"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Ubah jenis node"
 
 #: editor/scene_tree_dock.cpp
@@ -11630,28 +11744,48 @@ msgid "Node configuration warning:"
 msgstr "Peringatan pengaturan node:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Node memiliki %s koneksi dan %s grup.\n"
-"Klik untuk menampilkan dock sinyal."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Node dalam Grup"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Node dalam Grup"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Node memiliki %s koneksi.\n"
 "Klik untuk menampilkan dock sinyal."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Pilih sebuah node untuk menyunting sinyal dan grup."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"Node berada dalam %s grup.\n"
-"Klik untuk menampilkan dock grup."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Node memiliki %s koneksi.\n"
+"Klik untuk menampilkan dock sinyal."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Node memiliki %s koneksi.\n"
+"Klik untuk menampilkan dock sinyal."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12638,11 +12772,22 @@ msgstr "Tambah Node Preload"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "Tambahkan Node"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "Tambahkan Node"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Tambahkan Node (Node-node) dari Tree"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Tambahkan Node (Node-node) dari Tree"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12665,10 +12810,6 @@ msgstr "Tambahkan Properti Setter"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Ubah Tipe Basis"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Pindahkan Node"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14509,6 +14650,10 @@ msgstr "Peringatan!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Mohon konfirmasi..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Buka File (File-file)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

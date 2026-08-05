@@ -118,12 +118,24 @@ msgstr "Valoare:"
 msgid "Insert Key Here"
 msgstr "Inserează Cheia Aici"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Duplicați Cheile Selectate"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Ştergeți Cheile Selectate"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Duplicați Cheile Selectate"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Ştergeți Cheile Selectate"
 
 #: editor/animation_bezier_editor.cpp
@@ -318,14 +330,6 @@ msgstr "Înfășurați intercalarea buclei"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Inserare cheie"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Clonare Chei"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Ștergeți Cheile"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -616,7 +620,8 @@ msgid "Use Bezier Curves"
 msgstr "Folosește curbe Bezier"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "Creați o pista RESET"
 
 #: editor/animation_track_editor.cpp
@@ -652,7 +657,8 @@ msgid "Clean-up all animations"
 msgstr "Curățați toate animațiile"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Curățați Animațiile (FĂRĂ ANULARE!)"
 
 #: editor/animation_track_editor.cpp
@@ -1118,7 +1124,13 @@ msgid "Errors loading!"
 msgstr "Erori încărcând!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Ștergeți permanent %d articol(e)? (Fără anulare!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Ștergeți permanent %d articol(e)? (Fără anulare!)"
 
 #: editor/dependency_editor.cpp
@@ -1235,7 +1247,14 @@ msgid "%s (already exists)"
 msgstr "%s (deja există)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+"Conținutul pachetului \"%s\" - Niciun fișier nu conflictă cu proiectul tău:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "Conținutul pachetului \"%s\" - %d fișiere conflictă cu proiectul tău:"
 
 #: editor/editor_asset_installer.cpp
@@ -1873,7 +1892,8 @@ msgid "Rebel Feature Profile"
 msgstr "Administrează Șabloanele de Export"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Încarcă Profil(e)"
 
 #: editor/editor_feature_profile.cpp
@@ -1930,9 +1950,10 @@ msgstr "Toate Fişierele (*)"
 msgid "Open a File"
 msgstr "Deschideți un Fișier"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Deschideți Fișier(e)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Deschideți un Fișier"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2548,8 +2569,14 @@ msgstr "%s nu mai există! Vă rugăm să specificați o nouă locație de salva
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2655,13 +2682,14 @@ msgid "Save & Quit"
 msgstr "Salvează și Închide"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr ""
 "Salvezi modificările făcute în urmatoarea(le) scenă(e) înainte să închizi?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Salvezi modificările făcute în urmatoarea(le) scenă(e) înainte să deschizi "
 "Managerul de Proiect?"
@@ -3616,7 +3644,8 @@ msgid "Hold %s to round to integers. Hold Shift for more precise changes."
 msgstr ""
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Selectează Nodul(rile) pentru Importare"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4789,15 +4818,16 @@ msgid "Set Animation"
 msgstr "Animație"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 #, fuzzy
 msgid "Delete Node"
 msgstr "Creează Nod"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr ""
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Delete Nodes"
+msgstr "Creează Nod"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5077,6 +5107,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Timpi de Amestecare Cross-Animație"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
 msgid "Move Node"
 msgstr "Mod Mutare"
@@ -5876,7 +5907,7 @@ msgstr "Curăță Postura"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
-msgid "Create Custom Bone(s) from Node(s)"
+msgid "Create Custom Bones from Nodes"
 msgstr "Creează Puncte de Emisie Din Mesh"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6085,8 +6116,9 @@ msgid "Show Bones"
 msgstr "Arată Oasele"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
+msgstr "Creează Puncte de Emisie Din Mesh"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
@@ -8556,8 +8588,14 @@ msgid "No Frames Selected"
 msgstr "Încadrează în Ecran Selecția"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
-msgstr ""
+#, fuzzy
+msgid "Add frame"
+msgstr "Adăugați Pistă"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
+msgstr "Adaugă %s"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Frame"
@@ -8715,8 +8753,13 @@ msgid "Styleboxes"
 msgstr ""
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+msgid "1 color"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "Constante"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8725,7 +8768,12 @@ msgstr "Nu s-a găsit nici o sub-resursă."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "Permanent"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "Constante"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8734,8 +8782,13 @@ msgid "No constants found."
 msgstr "Constantă de culoare."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "Constante"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8743,8 +8796,13 @@ msgid "No fonts found."
 msgstr "Nu s-a găsit nici o sub-resursă."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "Constante"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8752,8 +8810,14 @@ msgid "No icons found."
 msgstr "Nu s-a găsit nici o sub-resursă."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "1 pas"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "Nu s-a găsit nici o sub-resursă."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9397,8 +9461,9 @@ msgid "Clear Transform"
 msgstr "Anim Schimbare transformare"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
-msgstr ""
+#, fuzzy
+msgid "Add Texture to TileSet."
+msgstr "Capturare din Pixel"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 msgid "Remove selected Texture from TileSet."
@@ -9597,7 +9662,11 @@ msgid "Remove Texture"
 msgstr "Elimină Șablon"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+msgid "1 file was not added, because it was already on the list."
+msgstr ""
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+msgid "%d files were not added, because they were already on the list."
 msgstr ""
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9930,8 +9999,8 @@ msgstr ""
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "Mod Mutare"
+msgid "Nodes moved"
+msgstr "Ștergeți"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
@@ -9942,11 +10011,6 @@ msgstr "Anim Clonare Chei"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr ""
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Delete Nodes"
-msgstr "Creează Nod"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11048,11 +11112,19 @@ msgid "Remove Translation"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
+msgid "Add localization remap resource"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -11419,8 +11491,14 @@ msgid ""
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
-msgstr ""
+#, fuzzy
+msgid "Instance scene"
+msgstr "Inserează Cheia Aici"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
+msgstr "Inserează Cheia Aici"
 
 #: editor/scene_tree_dock.cpp
 msgid "Replace with Branch Scene"
@@ -11436,7 +11514,12 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "Lipește Postura"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "Lipește Postura"
 
 #: editor/scene_tree_dock.cpp
@@ -11457,8 +11540,14 @@ msgid "Move Nodes In Parent"
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Anim Clonare Chei"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Anim Clonare Chei"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11606,16 +11695,33 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "Creează Nod"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Creează Nod"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
-msgstr ""
+#, fuzzy
+msgid "Remove node"
+msgstr "Elimină Șablon"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Elimini obiectul %d?"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Modificarea numelui portului de intrare"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
+msgstr "Modificarea numelui portului de intrare"
 
 #: editor/scene_tree_dock.cpp
 msgid ""
@@ -11757,21 +11863,38 @@ msgid "Node configuration warning:"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Noduri în Grup"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Noduri în Grup"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Selectați un singur nod pentru a-i edita semnalele și grupurile."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in %d groups"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
@@ -12773,12 +12896,23 @@ msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "Se adaugă %s..."
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
-msgstr ""
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "Se adaugă %s..."
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Adaugă punct"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
+msgstr "Adaugă punct"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid ""
@@ -12796,10 +12930,6 @@ msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
-msgstr ""
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
 msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -14475,6 +14605,10 @@ msgstr ""
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr ""
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Deschideți Fișier(e)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

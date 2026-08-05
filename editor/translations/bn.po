@@ -116,12 +116,24 @@ msgstr "মান:"
 msgid "Insert Key Here"
 msgstr "চাবি ইন্সার্ট করুন"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "নির্বাচিত key সমূহ অনুলিপি করুন"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "নির্বাচিত সমূহ অপসারণ করুন"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "নির্বাচিত key সমূহ অনুলিপি করুন"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "নির্বাচিত সমূহ অপসারণ করুন"
 
 #: editor/animation_bezier_editor.cpp
@@ -315,14 +327,6 @@ msgstr "Wrap লুপ ইন্টারপ"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "চাবি ইন্সার্ট করুন"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "কী (সমূহ) প্রতিলিপি করুন"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "কী (সমূহ) অপসারণ করুন"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -618,7 +622,7 @@ msgstr "বেজিয়ার কার্ভ ব্যবহার করু
 
 #: editor/animation_track_editor.cpp
 #, fuzzy
-msgid "Create RESET Track(s)"
+msgid "Create RESET Tracks"
 msgstr "মানসমূহ প্রতিলেপন/পেস্ট করুন"
 
 #: editor/animation_track_editor.cpp
@@ -654,7 +658,8 @@ msgid "Clean-up all animations"
 msgstr "সকল অ্যানিমেশনসমূহ পরিচ্ছন্ন করুন"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "সকল অ্যানিমেশনসমূহ পরিচ্ছন্ন করুন (অফেরৎযোগ্য!)"
 
 #: editor/animation_track_editor.cpp
@@ -1141,7 +1146,13 @@ msgid "Errors loading!"
 msgstr "লোডে একাধিক সমস্যা হয়েছে!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "%d -টি বস্তু(সমূহ) স্থায়ীভাবে মুছে ফেলবেন? (অফেরৎযোগ্য!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "%d -টি বস্তু(সমূহ) স্থায়ীভাবে মুছে ফেলবেন? (অফেরৎযোগ্য!)"
 
 #: editor/dependency_editor.cpp
@@ -1260,7 +1271,11 @@ msgid "%s (already exists)"
 msgstr "স্থায়ীয়তা টগল করুন"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+
+#: editor/editor_asset_installer.cpp
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 
 #: editor/editor_asset_installer.cpp
@@ -1919,7 +1934,7 @@ msgstr "এক্সপোর্ট টেমপ্লেটসমূহ লো�
 
 #: editor/editor_feature_profile.cpp
 #, fuzzy
-msgid "Import Profile(s)"
+msgid "Import Profile"
 msgstr "প্রকল্প ইম্পোর্ট করা হয়েছে"
 
 #: editor/editor_feature_profile.cpp
@@ -1984,9 +1999,10 @@ msgstr "সব ফাইল (*)"
 msgid "Open a File"
 msgstr "একটি ফাইল খুলুন"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "এক বা একাধিক ফাইল খুলুন"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "একটি ফাইল খুলুন"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2646,8 +2662,14 @@ msgstr ""
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2755,12 +2777,13 @@ msgid "Save & Quit"
 msgstr "ফাইল সংরক্ষন করুন"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "বন্ধ করার পূর্বে পরিবর্তনসমূহ (সিন) সংরক্ষণ করবেন?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr "প্রজেক্ট ম্যানেজার ওপেন করার পূর্বে পরিবর্তনসমূহ (সিন) সংরক্ষণ করবেন?"
 
 #: editor/editor_node.cpp
@@ -3775,7 +3798,8 @@ msgstr ""
 "(generic signature) তৈরি করতে/নামাতে শিফট কী (Shift) চেপে রাখুন।"
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "ইম্পোর্টের জন্য নোড(সমূহ) নির্বাচন করুন"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -5050,14 +5074,15 @@ msgid "Set Animation"
 msgstr "অ্যানিমেশন"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 #, fuzzy
 msgid "Delete Node"
 msgstr "নোড(সমূহ) অপসারণ করুন"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Delete Nodes"
 msgstr "নোড(সমূহ) অপসারণ করুন"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
@@ -5348,6 +5373,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "আন্ত-অ্যানিমেশন ব্লেন্ড সময়"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
 msgid "Move Node"
 msgstr "মোড (Mode) সরান"
@@ -6170,7 +6196,7 @@ msgstr "ভঙ্গি পরিষ্কার করুন"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
-msgid "Create Custom Bone(s) from Node(s)"
+msgid "Create Custom Bones from Nodes"
 msgstr "Mesh হতে Emitter তৈরি করুন"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6384,8 +6410,9 @@ msgid "Show Bones"
 msgstr "বোন্‌/হাড় দেখান"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
+msgstr "Mesh হতে Emitter তৈরি করুন"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
@@ -8963,7 +8990,12 @@ msgstr "নির্বাচনকে ফ্রেমভূক্ত করু�
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 #, fuzzy
-msgid "Add %d Frame(s)"
+msgid "Add frame"
+msgstr "ফ্রেম যোগ করুন"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "ফ্রেম যোগ করুন"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -9133,8 +9165,14 @@ msgid "Styleboxes"
 msgstr "স্টাইল"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "রঙ"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "ধ্রুবকসমূহ:"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9143,7 +9181,12 @@ msgstr "কোনো পৃষ্ঠতলের উৎস নির্দিষ
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "ধ্রুবক/কন্সট্যান্ট"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "ধ্রুবকসমূহ:"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -9152,8 +9195,13 @@ msgid "No constants found."
 msgstr "ধ্রুবক/কন্সট্যান্ট"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "ধ্রুবকসমূহ:"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9161,8 +9209,13 @@ msgid "No fonts found."
 msgstr "খুঁজে পাওয়া যায়নি!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "ধ্রুবকসমূহ:"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9170,8 +9223,14 @@ msgid "No icons found."
 msgstr "খুঁজে পাওয়া যায়নি!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "স্টাইল"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "স্টাইল"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9838,7 +9897,7 @@ msgstr "রুপান্তর"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 #, fuzzy
-msgid "Add Texture(s) to TileSet."
+msgid "Add Texture to TileSet."
 msgstr "শাখা (tree) হতে নোড (সমূহ) যুক্ত করুন"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -10044,7 +10103,11 @@ msgid "Remove Texture"
 msgstr "বস্তু অপসারণ করুন"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+msgid "1 file was not added, because it was already on the list."
+msgstr ""
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+msgid "%d files were not added, because they were already on the list."
 msgstr ""
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -10395,8 +10458,8 @@ msgstr "শেডার"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "মোড (Mode) সরান"
+msgid "Nodes moved"
+msgstr "অপসারিত:"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
@@ -10407,11 +10470,6 @@ msgstr "নোড(সমূহ) প্রতিলিপি করুন"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "নোড-সমূহ প্রতিলেপন/পেস্ট করুন"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Delete Nodes"
-msgstr "নোড(সমূহ) অপসারণ করুন"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11577,14 +11635,20 @@ msgid "Remove Translation"
 msgstr "অনুবাদ অপসারণ করুন"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "রিসোর্স পুনঃ-চিত্রাঙ্কিত করে যুক্ত করুন"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "রিসোর্স পুনঃ-চিত্রাঙ্কিত করে যুক্ত করুন"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11969,7 +12033,13 @@ msgstr ""
 "সম্ভব হচ্ছে না।"
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "দৃশ্য(সমূহ) ইন্সট্যান্স করুন"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "দৃশ্য(সমূহ) ইন্সট্যান্স করুন"
 
 #: editor/scene_tree_dock.cpp
@@ -11988,7 +12058,12 @@ msgstr "বাহিরের দৃশ্যের নোডে এটি ক�
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "নোড-সমূহ প্রতিলেপন/পেস্ট করুন"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "নোড-সমূহ প্রতিলেপন/পেস্ট করুন"
 
 #: editor/scene_tree_dock.cpp
@@ -12009,7 +12084,13 @@ msgid "Move Nodes In Parent"
 msgstr "অভিভাবকে নোডসমূহ সরান"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "নোড(সমূহ) প্রতিলিপি করুন"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
 msgstr "নোড(সমূহ) প্রতিলিপি করুন"
 
 #: editor/scene_tree_dock.cpp
@@ -12161,16 +12242,32 @@ msgstr "স্ক্রিপ্ট সংযুক্ত করুন"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "নোড-সমূহ কর্তন/কাট করুন"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "নোড-সমূহ কর্তন/কাট করুন"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "নোড(সমূহ) অপসারণ করুন"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Change type of node(s)"
+msgid "Remove nodes"
+msgstr "নোড(সমূহ) অপসারণ করুন"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "ইনপুট নাম পরিবর্তন করুন"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "ইনপুট নাম পরিবর্তন করুন"
 
 #: editor/scene_tree_dock.cpp
@@ -12323,30 +12420,47 @@ msgstr "নোড কনফিগারেশন সতর্কবার্ত�
 
 #: editor/scene_tree_editor.cpp
 #, fuzzy
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"এই নোডের কানেকশন এবং গ্রুপ বিদ্যমান\n"
-"সিগন্যাল ডক দেখানোর জন্য ক্লিক করুন।"
+msgid "Node is in a group."
+msgstr "গ্রুপসমূহ সম্পাদন করুন"
 
 #: editor/scene_tree_editor.cpp
 #, fuzzy
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+msgid "Node is in %d groups."
+msgstr "গ্রুপসমূহ সম্পাদন করুন"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "এই নোডের কানেকশন বিদ্যমান\n"
 "সিগন্যাল ডক দেখানোর জন্য ক্লিক করুন।"
 
 #: editor/scene_tree_editor.cpp
 #, fuzzy
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+msgid "Node has a signal connection and is in %d groups"
+msgstr "সিগন্যাল-সমূহ এবং দলসমূহ সম্পাদন করতে একটি নোড নির্বাচন করুন।"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"এই নোডটি একটি গ্রুপের অন্তর্ভুক্ত।\n"
-"গ্রুপ ডক প্রদর্শন করতে ক্লিক করুন।"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"এই নোডের কানেকশন বিদ্যমান\n"
+"সিগন্যাল ডক দেখানোর জন্য ক্লিক করুন।"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"এই নোডের কানেকশন বিদ্যমান\n"
+"সিগন্যাল ডক দেখানোর জন্য ক্লিক করুন।"
 
 #: editor/scene_tree_editor.cpp
 #, fuzzy
@@ -13444,11 +13558,22 @@ msgstr "প্রিলোড নোড যুক্ত করুন"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "নোড সংযোজন করুন"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "নোড সংযোজন করুন"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "শাখা (tree) হতে নোড (সমূহ) যুক্ত করুন"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "শাখা (tree) হতে নোড (সমূহ) যুক্ত করুন"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -13469,11 +13594,6 @@ msgstr "সেটার (Setter) এর বৈশিষ্ট্যে যুক
 #, fuzzy
 msgid "Change Base Type"
 msgstr "ধরণ পরিবর্তন করুন"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
-msgid "Move Node(s)"
-msgstr "নোড(সমূহ) অপসারণ করুন"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
@@ -15235,6 +15355,10 @@ msgstr "সতর্কতা!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "অনুগ্রহ করে নিশ্চিত করুন..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "এক বা একাধিক ফাইল খুলুন"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

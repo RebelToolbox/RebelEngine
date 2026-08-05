@@ -118,12 +118,24 @@ msgstr "Waarde:"
 msgid "Insert Key Here"
 msgstr "Hier Key invoegen"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Geselecteerde sleutel(s) dupliceren"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Geselecteerde sleutel(s) verwijderen"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Geselecteerde sleutel(s) dupliceren"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Geselecteerde sleutel(s) verwijderen"
 
 #: editor/animation_bezier_editor.cpp
@@ -317,14 +329,6 @@ msgstr "Naadloze lusinterpolatie"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Sleutel invoeren"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Sleutel(s) dupliceren"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Sleutel(s) verwijderen"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -616,7 +620,8 @@ msgid "Use Bezier Curves"
 msgstr "Gebruik Bezier Curves"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "Creëer RESET Track(s)"
 
 #: editor/animation_track_editor.cpp
@@ -652,7 +657,8 @@ msgid "Clean-up all animations"
 msgstr "Alle animaties opruimen"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Animatie(s) opruimen (ONOMKEERBAAR!)"
 
 #: editor/animation_track_editor.cpp
@@ -1121,7 +1127,13 @@ msgid "Errors loading!"
 msgstr "Fouten bij het laden!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "%d bestand(en) voorgoed verwijderen? (Onomkeerbaar!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "%d bestand(en) voorgoed verwijderen? (Onomkeerbaar!)"
 
 #: editor/dependency_editor.cpp
@@ -1237,7 +1249,14 @@ msgid "%s (already exists)"
 msgstr "%s (bestaat al)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+"Inhoud van asset \"%s\" - Geen bestanden hebben een conflict met uw project:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 "Inhoud van asset \"%s\" - %d bestand(en) zijn in conflict met uw project:"
 
@@ -1867,7 +1886,8 @@ msgid "Rebel Feature Profile"
 msgstr "Godotfunctieprofiel"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Profiel(en) importeren"
 
 #: editor/editor_feature_profile.cpp
@@ -1924,9 +1944,10 @@ msgstr "Alle Bestanden (*)"
 msgid "Open a File"
 msgstr "Open een Bestand"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Open Bestand(en)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Open een Bestand"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2553,8 +2574,17 @@ msgstr "%s bestaat niet meer! Geef een nieuwe opslaglocatie op."
 #: editor/editor_node.cpp
 #, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"De huidige scène heeft geen wortelknoop, maar %d gewijzigde externe "
+"bron(nen) zijn toch opgeslagen."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "De huidige scène heeft geen wortelknoop, maar %d gewijzigde externe "
 "bron(nen) zijn toch opgeslagen."
@@ -2663,12 +2693,13 @@ msgid "Save & Quit"
 msgstr "Opslaan & Afsluiten"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Wijzigen aan de volgende scène(s) opslaan voor het afsluiten?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Wijzigen aan de volgende scène(s) opslaan voor het openen van Projectbeheer?"
 
@@ -3640,7 +3671,8 @@ msgstr ""
 "ingedrukt voor preciezere veranderingen."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Selecteer een of meer knopen om te importeren"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4820,14 +4852,14 @@ msgid "Set Animation"
 msgstr "Animatie Instellen"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Knoop Verwijderen"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr "Knoop/knopen verwijderen"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
+msgstr "VisualShader-knoop/knopen verwijderen"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5098,6 +5130,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Cross-animatie mixtijden"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Knoop verplaatsen"
 
@@ -5866,7 +5899,8 @@ msgid "Clear Guides"
 msgstr "Wis hulplijnen"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Stel bot(ten) op uit knoop/knopen"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6068,7 +6102,8 @@ msgid "Show Bones"
 msgstr "Laat Botten Zien"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Stel bot(ten) op uit knoop/knopen"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8507,7 +8542,13 @@ msgid "No Frames Selected"
 msgstr "Geen frames geselecteerd"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Voeg Frame toe"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Voeg %d Frame(s) toe"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8660,8 +8701,14 @@ msgid "Styleboxes"
 msgstr "Stijl"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "Kleur"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "Constanten"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8670,7 +8717,12 @@ msgstr "Geen deel-hulpbronnen gevonden."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "Constante"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "Constanten"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8679,8 +8731,13 @@ msgid "No constants found."
 msgstr "Kleur Constante."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "Constanten"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8688,8 +8745,13 @@ msgid "No fonts found."
 msgstr "Niet gevonden!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "Constanten"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8697,8 +8759,14 @@ msgid "No icons found."
 msgstr "Niet gevonden!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "Stijl"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "Stijl"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9344,7 +9412,8 @@ msgid "Clear Transform"
 msgstr "Transform wissen"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Texture(n) aan TileSet toevoegen."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9525,7 +9594,13 @@ msgid "Remove Texture"
 msgstr "Verwijder Textuur"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s bestand(en) niet toegevoegd omdat deze al op de lijst staan."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s bestand(en) niet toegevoegd omdat deze al op de lijst staan."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9841,8 +9916,9 @@ msgid "Add Node to Visual Shader"
 msgstr "VisualShader-knoop toevoegen"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "Knoop/knopen verplaatst"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "Knoop verwijderd"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9852,10 +9928,6 @@ msgstr "Knopen dupliceren"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Knopen plakken"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "VisualShader-knoop/knopen verwijderen"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11052,14 +11124,20 @@ msgid "Remove Translation"
 msgstr "Verwijder vertaling"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Bronomleiding toevoegen"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Bronomleiding toevoegen"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11425,7 +11503,13 @@ msgstr ""
 "knopen bestaat."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Scène(s) instantiëren"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Scène(s) instantiëren"
 
 #: editor/scene_tree_dock.cpp
@@ -11441,7 +11525,13 @@ msgid "Can't paste root node into the same scene."
 msgstr "Kan de wortelknoop niet in dezelfde scène plakken."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
+#, fuzzy
+msgid "Paste node"
+msgstr "Knopen plakken"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "Knopen plakken"
 
 #: editor/scene_tree_dock.cpp
@@ -11461,8 +11551,14 @@ msgid "Move Nodes In Parent"
 msgstr "Knopen in ouder verplaatsen"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "Dupliceer knoop/knopen"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Knopen dupliceren"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Knopen dupliceren"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11608,15 +11704,33 @@ msgid "Attach Script"
 msgstr "Script toevoegen"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
+#, fuzzy
+msgid "Cut node"
 msgstr "Knopen knippen"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Knopen knippen"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Verwijder knoop/knopen"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Verwijder knoop/knopen"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Knooptypes veranderen"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Knooptypes veranderen"
 
 #: editor/scene_tree_dock.cpp
@@ -11756,28 +11870,48 @@ msgid "Node configuration warning:"
 msgstr "Waarschuwing over knoopconfiguratie:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Knoop heeft %s verbinding(en) en %s groep(en).\n"
-"Klik hier om signaalbeheer te tonen."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Knopen in de groep"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Knopen in de groep"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Knoop heeft %s verbinding(en).\n"
 "Klik hier om signaalbeheer te tonen."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Selecteer één knoop om zijn signalen groepen aan te passen."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"Knoop zit in %s groep(en).\n"
-"Klik om groepenbeheer weer te geven."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Knoop heeft %s verbinding(en).\n"
+"Klik hier om signaalbeheer te tonen."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Knoop heeft %s verbinding(en).\n"
+"Klik hier om signaalbeheer te tonen."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12766,11 +12900,22 @@ msgstr "Preload-knoop toevoegen"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "Knoop toevoegen"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "Knoop toevoegen"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Knoop/knopen uit de scèneboom toevoegen"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Knoop/knopen uit de scèneboom toevoegen"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12793,10 +12938,6 @@ msgstr "Setter Property Toevoegen"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Verander basis type"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Verplaats knoop(en)"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14642,6 +14783,10 @@ msgstr "Alarm!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Bevestig alstublieft..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Open Bestand(en)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

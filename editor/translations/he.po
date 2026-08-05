@@ -117,12 +117,24 @@ msgstr "ערך:"
 msgid "Insert Key Here"
 msgstr "הכנס כאן מפתח"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "שכפול מפתח(ות) שנבחרו"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "מחיקת מפתח(ות) שנבחרו"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "שכפול מפתח(ות) שנבחרו"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "מחיקת מפתח(ות) שנבחרו"
 
 #: editor/animation_bezier_editor.cpp
@@ -316,14 +328,6 @@ msgstr "אינטרפולצית לולאה מסוג Wrap"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "הכנס מפתח"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "שכפול מפתח(ות)"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "מחיקת מפתח(ות)"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -609,7 +613,8 @@ msgid "Use Bezier Curves"
 msgstr "שימוש בעקומות בזייה"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "יצירת רצועה(ות) איפוס"
 
 #: editor/animation_track_editor.cpp
@@ -645,7 +650,8 @@ msgid "Clean-up all animations"
 msgstr "ניקוי כל ההנפשות"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "ניקוי הנפשות (ללא ביטול!)"
 
 #: editor/animation_track_editor.cpp
@@ -1104,7 +1110,13 @@ msgid "Errors loading!"
 msgstr "שגיאה בטעינה!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "למחוק לצמיתות d% פריט(ים)? (בלתי הפיך!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "למחוק לצמיתות d% פריט(ים)? (בלתי הפיך!)"
 
 #: editor/dependency_editor.cpp
@@ -1219,7 +1231,13 @@ msgid "%s (already exists)"
 msgstr "%s (כבר קיים)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr "תוכן המשאב \"%s\" -אין התנגשויות עם הפרוייקט שלך:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "תוכן המשאב \"%s\" - %d קובץ(ים) מתנגשים עם הפרוייקט שלך:"
 
 #: editor/editor_asset_installer.cpp
@@ -1838,7 +1856,8 @@ msgid "Rebel Feature Profile"
 msgstr "פרופיל התכונות של Godot"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "ייבוא פרופיל(ים)"
 
 #: editor/editor_feature_profile.cpp
@@ -1896,9 +1915,10 @@ msgstr "כל הקבצים (*)"
 msgid "Open a File"
 msgstr "פתיחת קובץ"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "פתיחת קבצים"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "פתיחת קובץ"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2503,8 +2523,14 @@ msgstr ""
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2610,12 +2636,13 @@ msgid "Save & Quit"
 msgstr "לשמור ולצאת"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "לשמור את השינויים לסצנות הבאות לפני היציאה?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr "לשמור את הסצנות הבאות לפני פתיחת מנהל המיזמים?"
 
 #: editor/editor_node.cpp
@@ -3560,7 +3587,8 @@ msgstr ""
 "החזק את %s כדי להוסיף Getter. החזק את מקש Shift כדי להוסיף חתימה גנרית."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "נא לבחור מפרקים לייצוא"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4762,15 +4790,16 @@ msgid "Set Animation"
 msgstr "קביעת הנפשה"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 #, fuzzy
 msgid "Delete Node"
 msgstr "מחק מפרק"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr ""
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Delete Nodes"
+msgstr "מחיקת שורה"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 #, fuzzy
@@ -5042,6 +5071,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "זמני מיזוג בין הנפשות"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "הזזת מפרק"
 
@@ -5822,7 +5852,7 @@ msgstr "נגינת סצנה בהתאמה אישית"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
-msgid "Create Custom Bone(s) from Node(s)"
+msgid "Create Custom Bones from Nodes"
 msgstr "נגינת סצנה בהתאמה אישית"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6023,8 +6053,9 @@ msgid "Show Bones"
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
+msgstr "נגינת סצנה בהתאמה אישית"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
@@ -8484,8 +8515,14 @@ msgid "No Frames Selected"
 msgstr "מחובר"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
-msgstr ""
+#, fuzzy
+msgid "Add frame"
+msgstr "הוספת רצועה"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
+msgstr "הוספת מעברון"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Frame"
@@ -8647,8 +8684,14 @@ msgid "Styleboxes"
 msgstr ""
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "בחירת צבע"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "קבועים"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8657,7 +8700,12 @@ msgstr "לא נמצא!"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "קבוע"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "קבועים"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8666,8 +8714,13 @@ msgid "No constants found."
 msgstr "קבוע"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "קבועים"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8675,8 +8728,13 @@ msgid "No fonts found."
 msgstr "לא נמצא!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "קבועים"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8684,8 +8742,14 @@ msgid "No icons found."
 msgstr "לא נמצא!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "צעד 1"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "לא נמצא!"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9331,8 +9395,9 @@ msgid "Clear Transform"
 msgstr "התמרה"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
-msgstr ""
+#, fuzzy
+msgid "Add Texture to TileSet."
+msgstr "להסיר את הקבצים הנבחרים מהמיזם? (אי אפשר לשחזר)"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 #, fuzzy
@@ -9533,7 +9598,11 @@ msgid "Remove Texture"
 msgstr "הסרת תבנית"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+msgid "1 file was not added, because it was already on the list."
+msgstr ""
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+msgid "%d files were not added, because they were already on the list."
 msgstr ""
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9871,8 +9940,8 @@ msgstr ""
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "שם המפרק:"
+msgid "Nodes moved"
+msgstr "הוסר מפרק"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
@@ -9883,11 +9952,6 @@ msgstr "שכפול"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "הדבקת מפרקים"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Delete Nodes"
-msgstr "מחיקת שורה"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11004,11 +11068,19 @@ msgid "Remove Translation"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
+msgid "Add localization remap resource"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -11385,7 +11457,13 @@ msgstr ""
 "שלה."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "יצירת מופע לסצנה (סצנות)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "יצירת מופע לסצנה (סצנות)"
 
 #: editor/scene_tree_dock.cpp
@@ -11405,7 +11483,12 @@ msgstr "לא יכול לפעול על מפרקים מסצנה זרה!"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "הדבקת מפרקים"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "הדבקת מפרקים"
 
 #: editor/scene_tree_dock.cpp
@@ -11425,8 +11508,14 @@ msgid "Move Nodes In Parent"
 msgstr "העברת מפרקים בהורה"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "שכפול מפרק(ים)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "שכפול"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "שכפול"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11569,15 +11658,32 @@ msgstr "חיבור סקריפט"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "גזירת מפרקים"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "גזירת מפרקים"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "הסרת מפרק(ים)"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "הסרת מפרק(ים)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "שינוי סוג מפרק(ים)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "שינוי סוג מפרק(ים)"
 
 #: editor/scene_tree_dock.cpp
@@ -11713,28 +11819,48 @@ msgid "Node configuration warning:"
 msgstr "אזהרת תצורת מפרק:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"למפרק יש %s חיבורים ו-%s קבוצות.\n"
-"לחיצה תציג את פנל האותות."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "הוספה לקבוצה"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "הוספה לקבוצה"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "למפרק יש %s חיבור(ים).\n"
 "לחיצה תציג את פנל האותות."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "יש לבחור מפרק כדי לערוך אותות וקבוצות."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"הצומת נמצא ב-%s קבוצות.\n"
-"לחיצה תציג את פנל הקבוצות."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"למפרק יש %s חיבור(ים).\n"
+"לחיצה תציג את פנל האותות."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"למפרק יש %s חיבור(ים).\n"
+"לחיצה תציג את פנל האותות."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12714,11 +12840,22 @@ msgstr "הוספת מפרק קדם טעינה"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "הוספת מפרק"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "הוספת מפרק"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "הוספת מפרק/ים מהעץ"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "הוספת מפרק/ים מהעץ"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12740,10 +12877,6 @@ msgstr "הוספת מאפיין ל-Setter"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "שינוי סוג בסיס"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "הזזת מפרק(ים)"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14504,6 +14637,10 @@ msgstr "אזהרה!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "נא לאשר…"
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "פתיחת קבצים"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

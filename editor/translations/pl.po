@@ -118,12 +118,24 @@ msgstr "Wartość:"
 msgid "Insert Key Here"
 msgstr "Wstaw klucz tutaj"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Duplikuj klucz(e)"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Usuń klucz(e)"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Duplikuj klucz(e)"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Usuń klucz(e)"
 
 #: editor/animation_bezier_editor.cpp
@@ -317,14 +329,6 @@ msgstr "Zawiń pętlę interpolacji"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Wprowadź klucz"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Duplikuj klucz(e)"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Usuń klucz(e)"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -614,7 +618,8 @@ msgid "Use Bezier Curves"
 msgstr "Użyj krzywych Beziera"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "Utwórz ścieżki RESET"
 
 #: editor/animation_track_editor.cpp
@@ -650,7 +655,8 @@ msgid "Clean-up all animations"
 msgstr "Wyczyść wszystkie animacje"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Oczyść animacje (NIE MOŻNA COFNĄĆ!)"
 
 #: editor/animation_track_editor.cpp
@@ -1114,7 +1120,13 @@ msgid "Errors loading!"
 msgstr "Błędy ładowania!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Permanentnie usuń %d obiekt(ów) (Nie można tego cofnąć)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Permanentnie usuń %d obiekt(ów) (Nie można tego cofnąć)"
 
 #: editor/dependency_editor.cpp
@@ -1230,7 +1242,14 @@ msgid "%s (already exists)"
 msgstr "%s (już istnieje)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+"Zawartość zasobu \"%s\" - Żaden plik nie konfliktuje z twoim projektem:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "Zawartość zasobu \"%s\" - %d plik(ów) konfliktuje z twoim projektem:"
 
 #: editor/editor_asset_installer.cpp
@@ -1858,7 +1877,8 @@ msgid "Rebel Feature Profile"
 msgstr "Profil funkcjonalności Godota"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Importuj profil(e)"
 
 #: editor/editor_feature_profile.cpp
@@ -1915,9 +1935,10 @@ msgstr "Wszystkie pliki (*)"
 msgid "Open a File"
 msgstr "Otwórz plik"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Otwórz plik(i)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Otwórz plik"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2534,9 +2555,19 @@ msgid "%s no longer exists! Please specify a new save location."
 msgstr "%s już nie istnieje! Określ nową lokalizację zapisu."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"Aktualna scena nie ma korzenia, ale %s zmodyfikowane zasoby zostały zapisane "
+"i tak."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "Aktualna scena nie ma korzenia, ale %s zmodyfikowane zasoby zostały zapisane "
 "i tak."
@@ -2643,12 +2674,13 @@ msgid "Save & Quit"
 msgstr "Zapisz i wyjdź"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Czy zapisać zmiany w aktualnej scenie/scenach przed wyjściem?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Zapisać zmiany w następujących scenach przed otwarciem menedżera projektów?"
 
@@ -3612,7 +3644,8 @@ msgstr ""
 "bardziej precyzyjnych zmian."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Wybierz węzły do importu"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4762,14 +4795,14 @@ msgid "Set Animation"
 msgstr "Ustaw animację"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Usuń węzeł"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr "Usuń węzeł (węzły)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
+msgstr "Usuń węzły"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5042,6 +5075,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Czasy Blendowania Pomiędzy Animacjami"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Przesuń węzeł"
 
@@ -5814,7 +5848,8 @@ msgid "Clear Guides"
 msgstr "Wyczyść prowadnice"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Utwórz własne kości z węzłów"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6007,7 +6042,8 @@ msgid "Show Bones"
 msgstr "Pokaż kości"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Utwórz własne kości z węzłów"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8396,7 +8432,13 @@ msgid "No Frames Selected"
 msgstr "Nie wybrano klatek"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Dodaj klatkę"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Dodaj %d klatek"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8548,7 +8590,13 @@ msgid "Styleboxes"
 msgstr "Styleboxy"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+#, fuzzy
+msgid "1 color"
+msgstr "Kolory"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
 msgstr "{num} kolor(y)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8556,7 +8604,13 @@ msgid "No colors found."
 msgstr "Nie znaleziono kolorów."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} constant(s)"
+#, fuzzy
+msgid "1 constant"
+msgstr "Stała"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "{num} stałych"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8564,7 +8618,12 @@ msgid "No constants found."
 msgstr "Nie znaleziono stałych."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
 msgstr "{num} czcionki"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8572,7 +8631,12 @@ msgid "No fonts found."
 msgstr "Nie znaleziono czcionek."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
+msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
 msgstr "{num} ikon"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8580,7 +8644,13 @@ msgid "No icons found."
 msgstr "Nie znaleziono ikon."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
+#, fuzzy
+msgid "1 stylebox"
+msgstr "Styleboxy"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
 msgstr "{num} stylebox(y)"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -9180,7 +9250,8 @@ msgid "Clear Transform"
 msgstr "Wyczyść przekształcenie"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Dodaj teksturę/y do TileSetu."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9360,7 +9431,13 @@ msgid "Remove Texture"
 msgstr "Usuń teksturę"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s plik(ów) nie zostało dodane, bo był(y) już na liście."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s plik(ów) nie zostało dodane, bo był(y) już na liście."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9674,8 +9751,9 @@ msgid "Add Node to Visual Shader"
 msgstr "Dodaj Węzeł do Wizualnego Shadera"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "Węzeł/y przesunięte"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "Węzeł usunięty"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9685,10 +9763,6 @@ msgstr "Duplikuj węzły"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Wklej węzły"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Usuń węzły"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10871,12 +10945,20 @@ msgid "Remove Translation"
 msgstr "Usuń tłumaczenie"
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Przemapowanie tłumaczenia zasobu: Dodaj %d ścieżek"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Przemapowanie tłumaczenia zasobu: Dodaj %d przemapowań"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11240,7 +11322,13 @@ msgstr ""
 "węzłów."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Dodaj instancję sceny"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Dodaj instancję sceny"
 
 #: editor/scene_tree_dock.cpp
@@ -11256,8 +11344,14 @@ msgid "Can't paste root node into the same scene."
 msgstr "Nie można wkleić korzenia do tej samej sceny."
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
-msgstr "Wklej węzeł/y"
+#, fuzzy
+msgid "Paste node"
+msgstr "Wklej węzły"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
+msgstr "Wklej węzły"
 
 #: editor/scene_tree_dock.cpp
 msgid "Detach Script"
@@ -11276,8 +11370,14 @@ msgid "Move Nodes In Parent"
 msgstr "Przenieś węzły w nadrzędnym"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "Duplikuj węzeł(y)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Duplikuj węzły"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Duplikuj węzły"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11431,15 +11531,33 @@ msgid "Attach Script"
 msgstr "Dołącz skrypt"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
-msgstr "Wytnij węzeł/y"
+#, fuzzy
+msgid "Cut node"
+msgstr "Wytnij węzły"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Wytnij węzły"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Usuń węzeł(y)"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "Usuń węzeł(y)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Zmień typ węzła/ów"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Zmień typ węzła/ów"
 
 #: editor/scene_tree_dock.cpp
@@ -11583,28 +11701,48 @@ msgid "Node configuration warning:"
 msgstr "Ostrzeżenie konfiguracji węzła:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"Węzeł posiada %s połączeń i %s grup.\n"
-"Kliknij, aby wyświetlić panel sygnałów."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "Węzły w grupie"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "Węzły w grupie"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "Węzeł posiada %s połączenia.\n"
 "Kliknij, aby wyświetlić panel sygnałów."
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Wybierz pojedynczy węzeł, aby edytować jego sygnały i grupy."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"Węzeł jest w %s grupach.\n"
-"Kliknij, aby wyświetlić panel grup."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"Węzeł posiada %s połączenia.\n"
+"Kliknij, aby wyświetlić panel sygnałów."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"Węzeł posiada %s połączenia.\n"
+"Kliknij, aby wyświetlić panel sygnałów."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12581,11 +12719,23 @@ msgid "Add Preload Node"
 msgstr "Dodaj wstępnie wczytany węzeł"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s)"
+#, fuzzy
+msgid "Add Node)"
+msgstr "Dodaj węzeł"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes)"
 msgstr "Dodaj węzeł(y)"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Dodaj węzeł(y) z drzewa"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Dodaj węzeł(y) z drzewa"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12608,10 +12758,6 @@ msgstr "Dodaj właściwość Settera"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Zmień typ podstawowy"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Przenieś węzły"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14466,6 +14612,10 @@ msgstr "Alarm!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Proszę potwierdzić..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Otwórz plik(i)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

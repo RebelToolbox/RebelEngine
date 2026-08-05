@@ -120,12 +120,24 @@ msgstr "ค่า:"
 msgid "Insert Key Here"
 msgstr "เพิ่มคีย์ที่นี่"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "คัดลอกคีย์ที่เลือก"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "ลบคีย์ที่เลือก"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "คัดลอกคีย์ที่เลือก"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "ลบคีย์ที่เลือก"
 
 #: editor/animation_bezier_editor.cpp
@@ -322,14 +334,6 @@ msgstr "ล้อมการวนซ้ำ"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "เพิ่มคีย์"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "สร้างคีย์ซ้ำอีกอัน"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "ลบคีย์"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -617,7 +621,8 @@ msgid "Use Bezier Curves"
 msgstr "ใช้เส้นโค้งเบซิเยร์"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "สร้างแทร็กรีเซ็ท"
 
 #: editor/animation_track_editor.cpp
@@ -654,7 +659,8 @@ msgid "Clean-up all animations"
 msgstr "เก็บกวาดแอนิเมชันทั้งหมด"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "เก็บกวาดแอนิเมชัน (ย้อนกลับไม่ได้!)"
 
 #: editor/animation_track_editor.cpp
@@ -1116,7 +1122,13 @@ msgid "Errors loading!"
 msgstr "ผิดพลาดขณะโหลด!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "ลบไอเทม %d ถาวรหรือไม่? (ย้อนกลับไม่ได้!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "ลบไอเทม %d ถาวรหรือไม่? (ย้อนกลับไม่ได้!)"
 
 #: editor/dependency_editor.cpp
@@ -1233,7 +1245,13 @@ msgid "%s (already exists)"
 msgstr "%s (มีอยู่ก่อนแล้ว)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+#, fuzzy
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr "ไฟล์ของเนื้อหาที่เพิ่ม \"%s\" - ไม่พบความขัดแย้งกับไฟล์ของโปรเจกต์:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr "ไฟล์ของเนื้อหาเสริมที่เพิ่ม \"%s\" - %d ขัดแย้งกับโปรเจกต์"
 
 #: editor/editor_asset_installer.cpp
@@ -1868,7 +1886,8 @@ msgid "Rebel Feature Profile"
 msgstr "รายละเอียดคุณสมบัติ Godot"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "นำเข้าโปรไฟล์"
 
 #: editor/editor_feature_profile.cpp
@@ -1926,8 +1945,9 @@ msgstr "ทุกไฟล์ (*)"
 msgid "Open a File"
 msgstr "เปิดไฟล์"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
 msgstr "เปิดไฟล์"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
@@ -2533,8 +2553,14 @@ msgstr ""
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2639,12 +2665,13 @@ msgid "Save & Quit"
 msgstr "บันทึกและปิด"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "บันทึกฉากต่อไปนี้ก่อนปิดโปรแกรมหรือไม่?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr "บันทึกฉากต่อไปนี้ก่อนกลับสู่ตัวจัดการโปรเจกต์หรือไม่?"
 
 #: editor/editor_node.cpp
@@ -3590,7 +3617,8 @@ msgstr ""
 "กด Ctrl ค้างเพื่อปัดเศษเป็นจำนวนเต็ม กด Shift ค้างเพื่อเพิ่มความแม่นยำสำหรับการเปลี่ยนแปลง"
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "เลือกโหนดเพื่อนำเข้า"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4751,13 +4779,13 @@ msgid "Set Animation"
 msgstr "ตั้งแอนิเมชัน"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "ลบโหนด"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
 msgstr "ลบโหนด"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
@@ -5027,6 +5055,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "ระยะเวลาการผสาน Cross-Animation"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "เคลื่อนย้ายโหนด"
 
@@ -5784,7 +5813,8 @@ msgid "Clear Guides"
 msgstr "ล้างเส้นไกด์"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "สร้างโครงแบบปรับแต่งเองจากโหนด"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -5976,7 +6006,8 @@ msgid "Show Bones"
 msgstr "แสดงโครง"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "สร้างโครงจากโหนด"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8395,7 +8426,13 @@ msgid "No Frames Selected"
 msgstr "ไม่มีเฟรมที่เลือก"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "เพิ่มเฟรม"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "เพิ่ม %d เฟรม(วินาที)"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8548,8 +8585,14 @@ msgid "Styleboxes"
 msgstr "StyleBox"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "สี"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "ค่าคงที่"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8558,7 +8601,12 @@ msgstr "ไม่พบทรัพยากรย่อย"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "คงที่"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "ค่าคงที่"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8567,8 +8615,13 @@ msgid "No constants found."
 msgstr "ค่าคงที่สี"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "ค่าคงที่"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8576,8 +8629,13 @@ msgid "No fonts found."
 msgstr "ไม่พบ!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "ค่าคงที่"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8585,8 +8643,14 @@ msgid "No icons found."
 msgstr "ไม่พบ!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "StyleBox"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "StyleBox"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9232,7 +9296,8 @@ msgid "Clear Transform"
 msgstr "เคลียร์การแปลง"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "เพิ่มเทกเจอร์ให้ไทล์เซต"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9409,7 +9474,13 @@ msgid "Remove Texture"
 msgstr "ลบเทกเจอร์"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s ไฟล์ไม่สามารถเพิ่มเข้าได้ เนื่องจากอยู่ในลิสต์เรียบร้อยแล้ว"
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s ไฟล์ไม่สามารถเพิ่มเข้าได้ เนื่องจากอยู่ในลิสต์เรียบร้อยแล้ว"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9722,8 +9793,9 @@ msgid "Add Node to Visual Shader"
 msgstr "เพิ่มโหนดไปยังเวอร์ชวลเชดเดอร์"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Node(s) Moved"
-msgstr "เลื่อนโหนดแล้ว"
+#, fuzzy
+msgid "Nodes moved"
+msgstr "ลบโหนดแล้ว"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9733,10 +9805,6 @@ msgstr "ทำซ้ำโหนด"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "วางโหนด"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "ลบโหนด"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -10885,14 +10953,20 @@ msgid "Remove Translation"
 msgstr "ลบการแปลง"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "เพิ่มการแทนที่"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "เพิ่มการแทนที่"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11254,7 +11328,13 @@ msgid ""
 msgstr "อินสแตนซ์ฉาก '%s' ไม่ได้เนื่องจากฉากปัจจุบันเป็นโหนดของฉากนั้น"
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "อินสแตนซ์ฉาก"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "อินสแตนซ์ฉาก"
 
 #: editor/scene_tree_dock.cpp
@@ -11270,7 +11350,13 @@ msgid "Can't paste root node into the same scene."
 msgstr "ไม่สามารถวางโหนดรากในฉากเดียวกัน"
 
 #: editor/scene_tree_dock.cpp
-msgid "Paste Node(s)"
+#, fuzzy
+msgid "Paste node"
+msgstr "วางโหนด"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "วางโหนด"
 
 #: editor/scene_tree_dock.cpp
@@ -11290,7 +11376,13 @@ msgid "Move Nodes In Parent"
 msgstr "ย้ายโหนดในโหนดแม่"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "ทำซ้ำโหนด"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
 msgstr "ทำซ้ำโหนด"
 
 #: editor/scene_tree_dock.cpp
@@ -11435,15 +11527,33 @@ msgid "Attach Script"
 msgstr "แนบสคริปต์"
 
 #: editor/scene_tree_dock.cpp
-msgid "Cut Node(s)"
+#, fuzzy
+msgid "Cut node"
 msgstr "ตัดโหนด"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "ตัดโหนด"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "ลบโหนด"
 
 #: editor/scene_tree_dock.cpp
-msgid "Change type of node(s)"
+#, fuzzy
+msgid "Remove nodes"
+msgstr "ลบโหนด"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "เปลี่ยนชนิดของโหนด"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "เปลี่ยนชนิดของโหนด"
 
 #: editor/scene_tree_dock.cpp
@@ -11581,28 +11691,48 @@ msgid "Node configuration warning:"
 msgstr "คำเตือนการตั้งค่าโหนด:"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"โหนดมีการเชื่อมต่อ% s และกลุ่ม% s\n"
-"คลิกเพื่อแสดงแผงสัญญาณ"
+#, fuzzy
+msgid "Node is in a group."
+msgstr "โหนดในกลุ่ม"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "โหนดในกลุ่ม"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "โหนดมีการเชื่อมต่อ% s\n"
 "คลิกเพื่อแสดงแผงสัญญาณ"
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+#, fuzzy
+msgid "Node has a signal connection and is in %d groups"
+msgstr "เลือกโหนดเพื่อแก้ไขสัญญาณและกลุ่ม"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"โหนดอยู่ในกลุ่ม% s\n"
-"คลิกเพื่อแสดงแผงกลุ่ม"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"โหนดมีการเชื่อมต่อ% s\n"
+"คลิกเพื่อแสดงแผงสัญญาณ"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"โหนดมีการเชื่อมต่อ% s\n"
+"คลิกเพื่อแสดงแผงสัญญาณ"
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12575,11 +12705,22 @@ msgstr "เพิ่มโหนด Preload"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "เพิ่มโหนด"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "เพิ่มโหนด"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "เพิ่มโหนดจากผัง"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "เพิ่มโหนดจากผัง"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12601,10 +12742,6 @@ msgstr "เพิ่มตัวกำหนดคุณสมบัติ"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "เปลี่ยนประเภท"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "ย้ายโหนด"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14366,6 +14503,10 @@ msgstr "แจ้งเตือน!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "กรุณายืนยัน..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "เปิดไฟล์"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

@@ -118,12 +118,24 @@ msgstr "مقدار:"
 msgid "Insert Key Here"
 msgstr "کلید را اینجا وارد کنید"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "تکرار کلید(های) منتخب"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "حذف کلید(های) منتخب"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "تکرار کلید(های) منتخب"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "حذف کلید(های) منتخب"
 
 #: editor/animation_bezier_editor.cpp
@@ -317,14 +329,6 @@ msgstr "رابط پوشش حلقه"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "درج کلید"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "تکرار کلید(ها)"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "حذف کلید(key)"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -613,7 +617,8 @@ msgid "Use Bezier Curves"
 msgstr "بکارگیری منحنی بِزیِر"
 
 #: editor/animation_track_editor.cpp
-msgid "Create RESET Track(s)"
+#, fuzzy
+msgid "Create RESET Tracks"
 msgstr "ایجاد آهنگ (های) بازنشانی"
 
 #: editor/animation_track_editor.cpp
@@ -649,7 +654,8 @@ msgid "Clean-up all animations"
 msgstr "تمام انیمیشن‌ها را پاکسازی کن"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "انیمیشن(ها) را پاکسازی کن (نه UNDO !)"
 
 #: editor/animation_track_editor.cpp
@@ -1118,7 +1124,13 @@ msgid "Errors loading!"
 msgstr "خطا در بارگذاری!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "به طور دائمی تعداد '%d' آیتم را حذف کند؟ (بدون undo !)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "به طور دائمی تعداد '%d' آیتم را حذف کند؟ (بدون undo !)"
 
 #: editor/dependency_editor.cpp
@@ -1235,7 +1247,11 @@ msgid "%s (already exists)"
 msgstr "%s (موجود است)"
 
 #: editor/editor_asset_installer.cpp
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+
+#: editor/editor_asset_installer.cpp
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 
 #: editor/editor_asset_installer.cpp
@@ -1856,7 +1872,8 @@ msgid "Rebel Feature Profile"
 msgstr "ویژگی نمایه Godot"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "وارد کردن نمایه(ها)"
 
 #: editor/editor_feature_profile.cpp
@@ -1914,9 +1931,10 @@ msgstr "همهٔ پرونده‌ها (*)"
 msgid "Open a File"
 msgstr "یک پرونده را باز کن"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "پرونده(ها) را باز کن"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "یک پرونده را باز کن"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2500,8 +2518,14 @@ msgstr ""
 
 #: editor/editor_node.cpp
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+
+#: editor/editor_node.cpp
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -2604,11 +2628,11 @@ msgid "Save & Quit"
 msgstr "ذخیره و خروج"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+msgid "Save changes to the following scenes before quitting?"
 msgstr ""
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 
 #: editor/editor_node.cpp
@@ -3527,7 +3551,8 @@ msgid "Hold %s to round to integers. Hold Shift for more precise changes."
 msgstr ""
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "انتخاب گره (ها) برای وارد شدن"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4738,14 +4763,15 @@ msgid "Set Animation"
 msgstr "تغییر نام انیمیشن"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 #, fuzzy
 msgid "Delete Node"
 msgstr "حذف گره(ها)"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Delete Nodes"
 msgstr "حذف گره(ها)"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
@@ -5032,6 +5058,7 @@ msgid "Cross-Animation Blend Times"
 msgstr ""
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
 msgid "Move Node"
 msgstr "حرکت دادن گره(ها)"
@@ -5821,7 +5848,7 @@ msgstr "پخش سفارشی صحنه"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
-msgid "Create Custom Bone(s) from Node(s)"
+msgid "Create Custom Bones from Nodes"
 msgstr "پخش سفارشی صحنه"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6021,8 +6048,9 @@ msgid "Show Bones"
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
+msgstr "پخش سفارشی صحنه"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
@@ -8499,8 +8527,14 @@ msgid "No Frames Selected"
 msgstr "انتخاب شده را حذف کن"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
-msgstr ""
+#, fuzzy
+msgid "Add frame"
+msgstr "ترک را اضافه کن"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
+msgstr "افزودن ترجمه"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Frame"
@@ -8661,8 +8695,13 @@ msgid "Styleboxes"
 msgstr ""
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
+msgid "1 color"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "ثابت ها"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8671,7 +8710,12 @@ msgstr "زیرمنبع‌ها:"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "ثابت"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "ثابت ها"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8680,8 +8724,13 @@ msgid "No constants found."
 msgstr "مقدار ثابت رنگ"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "ثابت ها"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8689,8 +8738,13 @@ msgid "No fonts found."
 msgstr "چیزی یافت نشد!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "ثابت ها"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8698,8 +8752,14 @@ msgid "No icons found."
 msgstr "چیزی یافت نشد!"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "زیرمنبع‌ها:"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "زیرمنبع‌ها:"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9352,7 +9412,7 @@ msgstr "انتقال را در انیمیشن تغییر بده"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 #, fuzzy
-msgid "Add Texture(s) to TileSet."
+msgid "Add Texture to TileSet."
 msgstr "گره(ها) را از درخت اضافه کن"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9552,7 +9612,11 @@ msgid "Remove Texture"
 msgstr "حذف قالب"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+msgid "1 file was not added, because it was already on the list."
+msgstr ""
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+msgid "%d files were not added, because they were already on the list."
 msgstr ""
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9894,8 +9958,8 @@ msgstr ""
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "نام گره:"
+msgid "Nodes moved"
+msgstr "برداشته شده:"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
@@ -9907,11 +9971,6 @@ msgstr "تکرار کلید‌های انیمیشن"
 #, fuzzy
 msgid "Paste Nodes"
 msgstr "مسیر به سمت گره:"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Delete Nodes"
-msgstr "حذف گره(ها)"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Visual Shader Input Type Changed"
@@ -11039,11 +11098,19 @@ msgid "Remove Translation"
 msgstr "حذف ترجمه"
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Path(s)"
+msgid "Add localization remap resource"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
-msgid "Translation Resource Remap: Add %d Remap(s)"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -11420,8 +11487,14 @@ msgid ""
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
-msgstr ""
+#, fuzzy
+msgid "Instance scene"
+msgstr "ارث‌بری صحنهٔ فرزند"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
+msgstr "ارث‌بری صحنهٔ فرزند"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
@@ -11438,7 +11511,12 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "مسیر به سمت گره:"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "مسیر به سمت گره:"
 
 #: editor/scene_tree_dock.cpp
@@ -11459,8 +11537,14 @@ msgid "Move Nodes In Parent"
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr ""
+#, fuzzy
+msgid "Duplicate node"
+msgstr "تکرار کلید‌های انیمیشن"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "تکرار کلید‌های انیمیشن"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11610,16 +11694,32 @@ msgstr "پیوست کردن اسکریپت"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "ساختن گره"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "ساختن گره"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "حذف گره(ها)"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Change type of node(s)"
+msgid "Remove nodes"
+msgstr "حذف گره(ها)"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "مقدار آرایه را تغییر بده"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "مقدار آرایه را تغییر بده"
 
 #: editor/scene_tree_dock.cpp
@@ -11763,21 +11863,37 @@ msgid "Node configuration warning:"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
+#, fuzzy
+msgid "Node is in a group."
+msgstr "گره ها در گروه"
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node is in %d groups."
+msgstr "گره ها در گروه"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+msgid "Node has a signal connection and is in %d groups"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections and is in %d groups"
 msgstr ""
 
 #: editor/scene_tree_editor.cpp
@@ -12825,11 +12941,22 @@ msgstr "افزودن گره"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "افزودن گره"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "افزودن گره"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "گره(ها) را از درخت اضافه کن"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "گره(ها) را از درخت اضافه کن"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12849,10 +12976,6 @@ msgstr "افزودن ویژگی تنظیم‌کننده"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "تغییر نوع پایه"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "حرکت دادن گره(ها)"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14596,6 +14719,10 @@ msgstr "هشدار!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "لطفاً تأیید کنید…"
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "پرونده(ها) را باز کن"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."

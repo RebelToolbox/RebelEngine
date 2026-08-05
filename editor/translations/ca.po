@@ -116,12 +116,24 @@ msgstr "Valor:"
 msgid "Insert Key Here"
 msgstr "Insereix una Clau aquí"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Duplicate Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Key"
 msgstr "Duplica les Claus seleccionades"
 
-#: editor/animation_bezier_editor.cpp
-msgid "Delete Selected Key(s)"
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Key"
+msgstr "Elimina les Claus seleccionades"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Duplicate Selected Keys"
+msgstr "Duplica les Claus seleccionades"
+
+#: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
+#, fuzzy
+msgid "Delete Selected Keys"
 msgstr "Elimina les Claus seleccionades"
 
 #: editor/animation_bezier_editor.cpp
@@ -315,14 +327,6 @@ msgstr "Embolcalla la interpolació"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Insert Key"
 msgstr "Insereix una clau"
-
-#: editor/animation_track_editor.cpp
-msgid "Duplicate Key(s)"
-msgstr "Duplica les Claus"
-
-#: editor/animation_track_editor.cpp
-msgid "Delete Key(s)"
-msgstr "Elimina les Claus"
 
 #: editor/animation_track_editor.cpp
 msgid "Change Animation Update Mode"
@@ -616,7 +620,7 @@ msgstr "Fés servir Corbes Bézier"
 
 #: editor/animation_track_editor.cpp
 #, fuzzy
-msgid "Create RESET Track(s)"
+msgid "Create RESET Tracks"
 msgstr "Enganxa les Pistes"
 
 #: editor/animation_track_editor.cpp
@@ -652,7 +656,8 @@ msgid "Clean-up all animations"
 msgstr "Poleix totes les animacions"
 
 #: editor/animation_track_editor.cpp
-msgid "Clean-Up Animation(s) (NO UNDO!)"
+#, fuzzy
+msgid "Clean-Up Animation (NO UNDO!)"
 msgstr "Poleix les Animacions (No es pot desfer!)"
 
 #: editor/animation_track_editor.cpp
@@ -1120,7 +1125,13 @@ msgid "Errors loading!"
 msgstr "Errors de càrrega!"
 
 #: editor/dependency_editor.cpp
-msgid "Permanently delete %d item(s)? (No undo!)"
+#, fuzzy
+msgid "Permanently delete item? (No undo!)"
+msgstr "Voleu Eliminar permanentment %d element(s)? (No es pot desfer!)"
+
+#: editor/dependency_editor.cpp
+#, fuzzy
+msgid "Permanently delete %d items? (No undo!)"
 msgstr "Voleu Eliminar permanentment %d element(s)? (No es pot desfer!)"
 
 #: editor/dependency_editor.cpp
@@ -1240,7 +1251,14 @@ msgstr "%s (ja existeix)"
 
 #: editor/editor_asset_installer.cpp
 #, fuzzy
-msgid "Contents of asset \"%s\" - %d file(s) conflict with your project:"
+msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
+msgstr ""
+"Continguts de l'asset \"%s\" - Cap fitxer entra en conflicte amb el vostre "
+"projecte:"
+
+#: editor/editor_asset_installer.cpp
+#, fuzzy
+msgid "Contents of asset \"%s\" - %d files conflict with your project:"
 msgstr ""
 "El contingut del(s) fitxer(s) d'asset \"%s\" - %d entra en conflicte amb el "
 "vostre project:"
@@ -1887,7 +1905,8 @@ msgid "Rebel Feature Profile"
 msgstr "Perfil de les funcionalitats del Godot"
 
 #: editor/editor_feature_profile.cpp
-msgid "Import Profile(s)"
+#, fuzzy
+msgid "Import Profile"
 msgstr "Importar Perfil(s)"
 
 #: editor/editor_feature_profile.cpp
@@ -1945,9 +1964,10 @@ msgstr "Tots els Fitxers (*)"
 msgid "Open a File"
 msgstr "Obre un Fitxer"
 
-#: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
-msgid "Open File(s)"
-msgstr "Obre Fitxer(s)"
+#: editor/editor_file_dialog.cpp
+#, fuzzy
+msgid "Open Files"
+msgstr "Obrir Fitxer"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2572,9 +2592,19 @@ msgstr ""
 "%s ja no existeix! Si us plau especifiqueu una nova localització de guardat."
 
 #: editor/editor_node.cpp
+#, fuzzy
 msgid ""
-"The current scene has no root node, but %d modified external resource(s) "
-"were saved anyway."
+"The current scene has no root node, but the modified external resource was "
+"saved anyway."
+msgstr ""
+"L'escena actual no té cap node arrel, però %d recurs(os) modificat(s) "
+"externament s'ha(n) desat igualment."
+
+#: editor/editor_node.cpp
+#, fuzzy
+msgid ""
+"The current scene has no root node, but %d modified external resources were "
+"saved anyway."
 msgstr ""
 "L'escena actual no té cap node arrel, però %d recurs(os) modificat(s) "
 "externament s'ha(n) desat igualment."
@@ -2682,12 +2712,13 @@ msgid "Save & Quit"
 msgstr "Desar i Sortir"
 
 #: editor/editor_node.cpp
-msgid "Save changes to the following scene(s) before quitting?"
+#, fuzzy
+msgid "Save changes to the following scenes before quitting?"
 msgstr "Voleu Desar els canvis en les escenes següents abans de Sortir?"
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Save changes to the following scene(s) before opening Projects Manager?"
+msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
 "Desar els canvis a la(les) següent(s) escenes abans d'obrir el Gestor de "
 "Projectes?"
@@ -3666,7 +3697,8 @@ msgstr ""
 "dipositar una firma genèrica."
 
 #: editor/editor_sub_scene.cpp
-msgid "Select Node(s) to Import"
+#, fuzzy
+msgid "Select Nodes to Import"
 msgstr "Selecciona Node(s) per Importar"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
@@ -4853,14 +4885,14 @@ msgid "Set Animation"
 msgstr "Establir Animació"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
 msgid "Delete Node"
 msgstr "Eliminar Node"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/scene_tree_dock.cpp
-msgid "Delete Node(s)"
-msgstr "Elimina els Nodes"
+#: editor/plugins/visual_shader_editor_plugin.cpp editor/scene_tree_dock.cpp
+msgid "Delete Nodes"
+msgstr "Eliminar Nodes"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
 msgid "Toggle Filter On/Off"
@@ -5138,6 +5170,7 @@ msgid "Cross-Animation Blend Times"
 msgstr "Temps de mescla entre Animacions"
 
 #: editor/plugins/animation_state_machine_editor.cpp
+#: modules/visual_script/visual_script_editor.cpp
 msgid "Move Node"
 msgstr "Moure Node"
 
@@ -5931,7 +5964,8 @@ msgid "Clear Guides"
 msgstr "Reestableix la Postura"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Create Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Create Custom Bones from Nodes"
 msgstr "Crea Os(sos) Personalitzat(s) a partir de Node(s)"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6127,7 +6161,8 @@ msgid "Show Bones"
 msgstr "Mostra els Ossos"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Make Custom Bone(s) from Node(s)"
+#, fuzzy
+msgid "Make Custom Bones from Nodes"
 msgstr "Crear os(sos) personalitzat(s) a partir de Node(s)"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -8576,7 +8611,13 @@ msgid "No Frames Selected"
 msgstr "No s'ha seleccionat cap fotograma"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-msgid "Add %d Frame(s)"
+#, fuzzy
+msgid "Add frame"
+msgstr "Afegeix Fotograma"
+
+#: editor/plugins/sprite_frames_editor_plugin.cpp
+#, fuzzy
+msgid "Add %d frames"
 msgstr "Afegir %d Fotograma(es)"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
@@ -8734,8 +8775,14 @@ msgid "Styleboxes"
 msgstr "StyleBox"
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} color(s)"
-msgstr ""
+#, fuzzy
+msgid "1 color"
+msgstr "Color"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} colors"
+msgstr "Constants"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -8744,7 +8791,12 @@ msgstr "Manca una superfície d'origen."
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
-msgid "{num} constant(s)"
+msgid "1 constant"
+msgstr "Constant"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} constants"
 msgstr "Constants"
 
 #: editor/plugins/theme_editor_plugin.cpp
@@ -8753,24 +8805,40 @@ msgid "No constants found."
 msgstr "Constant de color."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} font(s)"
+msgid "1 font"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} fonts"
+msgstr "Constants"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No fonts found."
 msgstr "No s'ha trobat cap tipus de lletra."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} icon(s)"
+msgid "1 icon"
 msgstr ""
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} icons"
+msgstr "Constants"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No icons found."
 msgstr "No s'ha trobat cap icona."
 
 #: editor/plugins/theme_editor_plugin.cpp
-msgid "{num} stylebox(es)"
-msgstr ""
+#, fuzzy
+msgid "1 stylebox"
+msgstr "StyleBox"
+
+#: editor/plugins/theme_editor_plugin.cpp
+#, fuzzy
+msgid "{num} styleboxes"
+msgstr "StyleBox"
 
 #: editor/plugins/theme_editor_plugin.cpp
 #, fuzzy
@@ -9412,7 +9480,8 @@ msgid "Clear Transform"
 msgstr "Restablir Transformació"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "Add Texture(s) to TileSet."
+#, fuzzy
+msgid "Add Texture to TileSet."
 msgstr "Afegir Textura(es) al TileSet."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9607,7 +9676,13 @@ msgid "Remove Texture"
 msgstr "Eliminar Textura"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-msgid "%s file(s) were not added because was already on the list."
+#, fuzzy
+msgid "1 file was not added, because it was already on the list."
+msgstr "%s fitxer(s) no s'han afegit perquè ja estaven en la llista."
+
+#: editor/plugins/tile_set_editor_plugin.cpp
+#, fuzzy
+msgid "%d files were not added, because they were already on the list."
 msgstr "%s fitxer(s) no s'han afegit perquè ja estaven en la llista."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
@@ -9957,8 +10032,8 @@ msgstr "Afegir node al VisualShader"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
-msgid "Node(s) Moved"
-msgstr "Node mogut"
+msgid "Nodes moved"
+msgstr "Node Eliminat"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -9968,10 +10043,6 @@ msgstr "Duplicar Nodes"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Paste Nodes"
 msgstr "Enganxa els Nodes"
-
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Delete Nodes"
-msgstr "Eliminar Nodes"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #, fuzzy
@@ -11185,14 +11256,20 @@ msgid "Remove Translation"
 msgstr "Elimina la Traducció"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Path(s)"
-msgstr "Afegeix un Remapatge de Recursos"
+msgid "Add localization remap resource"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
-msgid "Translation Resource Remap: Add %d Remap(s)"
-msgstr "Afegeix un Remapatge de Recursos"
+msgid "Add %d localization remap resources"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add localization locale remap"
+msgstr ""
+
+#: editor/project_settings_editor.cpp
+msgid "Add %d localization locale remaps"
+msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -11563,7 +11640,13 @@ msgstr ""
 "dels seus nodes."
 
 #: editor/scene_tree_dock.cpp
-msgid "Instance Scene(s)"
+#, fuzzy
+msgid "Instance scene"
+msgstr "Instància les Escenes"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Instance scenes"
 msgstr "Instància les Escenes"
 
 #: editor/scene_tree_dock.cpp
@@ -11581,7 +11664,12 @@ msgstr "No es pot enganxar el node arrel a la mateixa escena."
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Paste Node(s)"
+msgid "Paste node"
+msgstr "Enganxa els Nodes"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Paste nodes"
 msgstr "Enganxa els Nodes"
 
 #: editor/scene_tree_dock.cpp
@@ -11602,8 +11690,14 @@ msgid "Move Nodes In Parent"
 msgstr "Mou els Nodes dins del Pare"
 
 #: editor/scene_tree_dock.cpp
-msgid "Duplicate Node(s)"
-msgstr "Duplica els Nodes"
+#, fuzzy
+msgid "Duplicate node"
+msgstr "Duplicar Nodes"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Duplicate nodes"
+msgstr "Duplicar Nodes"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
@@ -11761,16 +11855,32 @@ msgstr "Adjunta-li un Script"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Cut Node(s)"
+msgid "Cut node"
 msgstr "Talla els Nodes"
 
 #: editor/scene_tree_dock.cpp
-msgid "Remove Node(s)"
+#, fuzzy
+msgid "Cut nodes"
+msgstr "Talla els Nodes"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Remove node"
 msgstr "Elimina els Nodes"
 
 #: editor/scene_tree_dock.cpp
 #, fuzzy
-msgid "Change type of node(s)"
+msgid "Remove nodes"
+msgstr "Elimina els Nodes"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of node"
+msgstr "Modifica el Nom de l'Entrada"
+
+#: editor/scene_tree_dock.cpp
+#, fuzzy
+msgid "Change type of nodes"
 msgstr "Modifica el Nom de l'Entrada"
 
 #: editor/scene_tree_dock.cpp
@@ -11915,30 +12025,47 @@ msgstr "Avís de Configuració del Node:"
 
 #: editor/scene_tree_editor.cpp
 #, fuzzy
-msgid ""
-"Node has %s connection(s) and %s group(s).\n"
-"Click to show signals dock."
-msgstr ""
-"El Node té connexions i grups\n"
-"Feu Clic per mostrar el Tauler de Senyals."
+msgid "Node is in a group."
+msgstr "Nodes del Grup"
 
 #: editor/scene_tree_editor.cpp
 #, fuzzy
-msgid ""
-"Node has %s connection(s).\n"
-"Click to show signals dock."
+msgid "Node is in %d groups."
+msgstr "Nodes del Grup"
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has a signal connection."
+msgstr ""
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has a signal connection and is in a group"
 msgstr ""
 "El Node té connexions.\n"
 "Feu Clic per mostrar el Tauler de Senyals."
 
 #: editor/scene_tree_editor.cpp
 #, fuzzy
-msgid ""
-"Node is in %s group(s).\n"
-"Click to show groups dock."
+msgid "Node has a signal connection and is in %d groups"
+msgstr "Seleccioneu un únic node per editar les seves senyals i grups."
+
+#: editor/scene_tree_editor.cpp
+msgid "Node has %d signal connections"
 msgstr ""
-"El Node està agrupat.\n"
-"Clic per mostrar el Tauler de Grups."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in a group"
+msgstr ""
+"El Node té connexions.\n"
+"Feu Clic per mostrar el Tauler de Senyals."
+
+#: editor/scene_tree_editor.cpp
+#, fuzzy
+msgid "Node has %d signal connections and is in %d groups"
+msgstr ""
+"El Node té connexions.\n"
+"Feu Clic per mostrar el Tauler de Senyals."
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12963,11 +13090,22 @@ msgstr "Afegeix un Node de Precàrrega"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Node(s)"
+msgid "Add Node)"
 msgstr "Afegeix un Node"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Node(s) From Tree"
+#, fuzzy
+msgid "Add Nodes)"
+msgstr "Afegeix un Node"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Node from Tree"
+msgstr "Afegeix Nodes des d'Arbre"
+
+#: modules/visual_script/visual_script_editor.cpp
+#, fuzzy
+msgid "Add Nodes from Tree"
 msgstr "Afegeix Nodes des d'Arbre"
 
 #: modules/visual_script/visual_script_editor.cpp
@@ -12987,10 +13125,6 @@ msgstr "Afegeix una Propietat d'Actualització"
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Change Base Type"
 msgstr "Modifica el Tipus de Base"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Move Node(s)"
-msgstr "Mou els Nodes"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid "Remove VisualScript Node"
@@ -14842,6 +14976,10 @@ msgstr "Ep!"
 #: scene/gui/dialogs.cpp
 msgid "Please Confirm..."
 msgstr "Confirmeu..."
+
+#: scene/gui/file_dialog.cpp
+msgid "Open File(s)"
+msgstr "Obre Fitxer(s)"
 
 #: scene/gui/file_dialog.cpp
 msgid "Must use a valid extension."
