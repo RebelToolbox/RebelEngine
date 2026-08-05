@@ -52,8 +52,7 @@
 #define MIN_FOV 0.01
 #define MAX_FOV 179
 
-namespace {
-constexpr real_t lerp_weight_from_inertia(real_t inertia, real_t delta) {
+static constexpr real_t lerp_weight_from_inertia(real_t inertia, real_t delta) {
     // A higher inertia should increase lag, which requires a lower lerp weight.
     // An inertia of zero should produce instant movement: a lerp weight of 1.
     if (inertia == 0.0) {
@@ -65,7 +64,6 @@ constexpr real_t lerp_weight_from_inertia(real_t inertia, real_t delta) {
     }
     return weight;
 }
-} // namespace
 
 void ViewportRotationControl::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {

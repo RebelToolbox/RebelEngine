@@ -63,15 +63,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdlib.h> /* strtol */
 #include <zlib.h>
 
-using namespace FBXDocParser;
-
-namespace {
+namespace FBXDocParser {
 
 // Initially, we did reinterpret_cast, breaking strict aliasing rules.
 // This actually caused trouble on Android, so let's be safe this time.
 // https://github.com/assimp/assimp/issues/24
 template <typename T>
-T SafeParse(const char* data, const char* end) {
+static T SafeParse(const char* data, const char* end) {
     // Actual size validation happens during Tokenization so
     // this is valid as an assertion.
     (void)(end);
@@ -80,9 +78,6 @@ T SafeParse(const char* data, const char* end) {
     ::memcpy(&result, data, sizeof(T));
     return result;
 }
-} // namespace
-
-namespace FBXDocParser {
 
 // ------------------------------------------------------------------------------------------------
 Element::Element(const TokenPtr key_token, Parser& parser) :
@@ -509,11 +504,8 @@ std::string ParseTokenAsString(const TokenPtr t, const char*& err_out) {
     return std::string(s + 1, length - 2);
 }
 
-namespace {
-
-// ------------------------------------------------------------------------------------------------
 // read the type code and element count of a binary data array and stop there
-void ReadBinaryDataArrayHead(
+static void ReadBinaryDataArrayHead(
     const char*& data,
     const char* end,
     char& type,
@@ -540,10 +532,9 @@ void ReadBinaryDataArrayHead(
     data  += 5;
 }
 
-// ------------------------------------------------------------------------------------------------
 // read binary data array, assume cursor points to the 'compression mode' field
 // (i.e. behind the header)
-void ReadBinaryDataArray(
+static void ReadBinaryDataArray(
     char type,
     uint32_t count,
     const char*& data,
@@ -625,9 +616,6 @@ void ReadBinaryDataArray(
     // ai_assert(data == end);
 }
 
-} // namespace
-
-// ------------------------------------------------------------------------------------------------
 // read an array of float3 tuples
 void ParseVectorDataArray(std::vector<Vector3>& out, const ElementPtr el) {
     out.resize(0);

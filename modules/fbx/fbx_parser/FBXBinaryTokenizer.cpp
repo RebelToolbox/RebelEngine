@@ -58,7 +58,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdint.h>
 
 namespace FBXDocParser {
-// ------------------------------------------------------------------------------------------------
 Token::Token(
     const char* sbegin,
     const char* send,
@@ -77,25 +76,20 @@ Token::Token(
     // measure from sBegin to sEnd and validate?
 }
 
-namespace {
-
-// ------------------------------------------------------------------------------------------------
-// signal tokenization error
-void TokenizeError(const std::string& message, size_t offset) {
+static void TokenizeError(const std::string& message, size_t offset) {
     print_error(
         "[FBX-Tokenize] " + String(message.c_str()) + ", offset " + itos(offset)
     );
 }
 
 // ------------------------------------------------------------------------------------------------
-size_t Offset(const char* begin, const char* cursor) {
+static size_t Offset(const char* begin, const char* cursor) {
     // ai_assert(begin <= cursor);
 
     return cursor - begin;
 }
 
-// ------------------------------------------------------------------------------------------------
-void TokenizeError(
+static void TokenizeError(
     const std::string& message,
     const char* begin,
     const char* cursor
@@ -103,8 +97,11 @@ void TokenizeError(
     TokenizeError(message, Offset(begin, cursor));
 }
 
-// ------------------------------------------------------------------------------------------------
-uint32_t ReadWord(const char* input, const char*& cursor, const char* end) {
+static uint32_t ReadWord(
+    const char* input,
+    const char*& cursor,
+    const char* end
+) {
     const size_t k_to_read = sizeof(uint32_t);
     if (Offset(cursor, end) < k_to_read) {
         TokenizeError("cannot ReadWord, out of bounds", input, cursor);
@@ -119,8 +116,7 @@ uint32_t ReadWord(const char* input, const char*& cursor, const char* end) {
     return word;
 }
 
-// ------------------------------------------------------------------------------------------------
-uint64_t ReadDoubleWord(
+static uint64_t ReadDoubleWord(
     const char* input,
     const char*& cursor,
     const char* end
@@ -139,8 +135,11 @@ uint64_t ReadDoubleWord(
     return dword;
 }
 
-// ------------------------------------------------------------------------------------------------
-uint8_t ReadByte(const char* input, const char*& cursor, const char* end) {
+static uint8_t ReadByte(
+    const char* input,
+    const char*& cursor,
+    const char* end
+) {
     if (Offset(cursor, end) < sizeof(uint8_t)) {
         TokenizeError("cannot ReadByte, out of bounds", input, cursor);
     }
@@ -152,8 +151,7 @@ uint8_t ReadByte(const char* input, const char*& cursor, const char* end) {
     return word;
 }
 
-// ------------------------------------------------------------------------------------------------
-unsigned int ReadString(
+static unsigned int ReadString(
     const char*& sbegin_out,
     const char*& send_out,
     const char* input,
@@ -202,8 +200,7 @@ unsigned int ReadString(
     return length;
 }
 
-// ------------------------------------------------------------------------------------------------
-void ReadData(
+static void ReadData(
     const char*& sbegin_out,
     const char*& send_out,
     const char* input,
@@ -352,8 +349,7 @@ void ReadData(
     send_out = cursor;
 }
 
-// ------------------------------------------------------------------------------------------------
-bool ReadScope(
+static bool ReadScope(
     TokenList& output_tokens,
     const char* input,
     const char*& cursor,
@@ -485,9 +481,6 @@ bool ReadScope(
     return true;
 }
 
-} // anonymous namespace
-
-// ------------------------------------------------------------------------------------------------
 // TODO: Test FBX Binary files newer than the 7500 version to check if the 64
 // bits address behaviour is consistent
 void TokenizeBinary(

@@ -18,8 +18,7 @@
 #include "drivers/gles3/rasterizer_gles3.h"
 #endif // SERVER_ENABLED
 
-namespace {
-bool create_project(
+static bool create_project(
     const String& project_folder,
     const ProjectSettings::CustomSettings& project_settings
 ) {
@@ -61,7 +60,6 @@ bool create_project(
 
     return true;
 }
-} // namespace
 
 NewProjectDialog::NewProjectDialog() {
     set_theme(create_custom_theme());
