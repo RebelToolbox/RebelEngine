@@ -10,8 +10,7 @@
 #include "core/os/keyboard.h"
 #include "core/variant_parser.h"
 
-namespace {
-FileAccessEncrypted* get_file_access_encrypted(
+static FileAccessEncrypted* get_file_access_encrypted(
     Error& error,
     FileAccess* file_access,
     const FileAccessEncrypted::Mode& mode,
@@ -28,7 +27,7 @@ FileAccessEncrypted* get_file_access_encrypted(
     return file_access_encrypted;
 }
 
-Error load_stream(
+static Error load_stream(
     ConfigFile& config_file,
     VariantParser::Stream& stream,
     const String& source_name
@@ -75,7 +74,7 @@ Error load_stream(
     return error;
 }
 
-Error load_file_access(
+static Error load_file_access(
     ConfigFile& config_file,
     FileAccess* file_access,
     const String& source_name
@@ -85,7 +84,7 @@ Error load_file_access(
     return load_stream(config_file, stream, source_name);
 }
 
-void save_file_access(
+static void save_file_access(
     const OrderedHashMap<String, OrderedHashMap<String, Variant>>& values,
     FileAccess* file
 ) {
@@ -107,7 +106,7 @@ void save_file_access(
     }
 }
 
-Error load_file(
+static Error load_file(
     ConfigFile& config_file,
     const String& path,
     const String& password     = String(),
@@ -143,7 +142,7 @@ Error load_file(
     return error;
 }
 
-Error save_file(
+static Error save_file(
     const OrderedHashMap<String, OrderedHashMap<String, Variant>>& values,
     const String& path,
     const String& password     = String(),
@@ -178,7 +177,6 @@ Error save_file(
     memdelete(file_access);
     return OK;
 }
-} // namespace
 
 Variant ConfigFile::get_value(
     const String& section,

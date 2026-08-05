@@ -9,8 +9,7 @@
 #include "core/project_settings.h"
 #include "core/ustring.h"
 
-namespace {
-bool create_rebel_project_from_godot_project(
+static bool create_rebel_project_from_godot_project(
     const String& source_project_file,
     const String& destination_folder
 ) {
@@ -55,7 +54,7 @@ bool create_rebel_project_from_godot_project(
     return true;
 }
 
-void convert_physics_engine(const String& project_file) {
+static void convert_physics_engine(const String& project_file) {
     const String physics_section = "physics";
     ConfigFile config_file;
     config_file.load(project_file);
@@ -79,7 +78,6 @@ void convert_physics_engine(const String& project_file) {
 
     config_file.save(project_file);
 }
-} // namespace
 
 namespace ImportProject {
 bool import_godot_project(

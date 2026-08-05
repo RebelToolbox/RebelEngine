@@ -59,7 +59,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace FBXDocParser {
 
-// ------------------------------------------------------------------------------------------------
 Token::Token(
     const char* p_sbegin,
     const char* p_send,
@@ -77,13 +76,9 @@ Token::Token(
 #endif
 }
 
-// ------------------------------------------------------------------------------------------------
 Token::~Token() {}
 
-namespace {
-
-// ------------------------------------------------------------------------------------------------
-void TokenizeError(
+static void TokenizeError(
     const std::string& message,
     unsigned int line,
     unsigned int column
@@ -95,8 +90,7 @@ void TokenizeError(
 }
 
 // process a potential data token up to 'cur', adding it to 'output_tokens'.
-// ------------------------------------------------------------------------------------------------
-void ProcessDataToken(
+static void ProcessDataToken(
     TokenList& output_tokens,
     const char*& start,
     const char*& end,
@@ -136,9 +130,6 @@ void ProcessDataToken(
     start = end = nullptr;
 }
 
-} // namespace
-
-// ------------------------------------------------------------------------------------------------
 void Tokenize(TokenList& output_tokens, const char* input, size_t length) {
     // line and column numbers numbers are one-based
     unsigned int line   = 1;

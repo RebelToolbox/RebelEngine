@@ -11,9 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-namespace {
-
-int sfind(const String& p_text, int p_from) {
+static int sfind(const String& p_text, int p_from) {
     if (p_from < 0) {
         return -1;
     }
@@ -60,7 +58,6 @@ int sfind(const String& p_text, int p_from) {
 
     return -1;
 }
-} // namespace
 
 String sformat(
     const String& p_text,
