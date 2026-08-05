@@ -490,7 +490,7 @@ void EditorAssetLibraryItemDownload::_notification(int p_what) {
             if (cstatus == HTTPClient::STATUS_BODY) {
                 if (download->get_body_size() > 0) {
                     status->set_text(vformat(
-                        TTR("Downloading (%s / %s)..."),
+                        TTR(L"Downloading (%s / %s)…"),
                         String::humanize_size(download->get_downloaded_bytes()),
                         String::humanize_size(download->get_body_size())
                     ));
@@ -498,7 +498,7 @@ void EditorAssetLibraryItemDownload::_notification(int p_what) {
                     // Total file size is unknown, so it cannot be displayed.
                     progress->set_modulate(Color(0, 0, 0, 0));
                     status->set_text(vformat(
-                        TTR("Downloading...") + " (%s)",
+                        TTR(L"Downloading…") + " (%s)",
                         String::humanize_size(download->get_downloaded_bytes())
                     ));
                 }
@@ -507,17 +507,17 @@ void EditorAssetLibraryItemDownload::_notification(int p_what) {
             if (cstatus != prev_status) {
                 switch (cstatus) {
                     case HTTPClient::STATUS_RESOLVING: {
-                        status->set_text(TTR("Resolving..."));
+                        status->set_text(TTR(L"Resolving…"));
                         progress->set_max(1);
                         progress->set_value(0);
                     } break;
                     case HTTPClient::STATUS_CONNECTING: {
-                        status->set_text(TTR("Connecting..."));
+                        status->set_text(TTR(L"Connecting…"));
                         progress->set_max(1);
                         progress->set_value(0);
                     } break;
                     case HTTPClient::STATUS_REQUESTING: {
-                        status->set_text(TTR("Requesting..."));
+                        status->set_text(TTR(L"Requesting…"));
                         progress->set_max(1);
                         progress->set_value(0);
                     } break;
@@ -622,7 +622,7 @@ EditorAssetLibraryItemDownload::EditorAssetLibraryItemDownload() {
     hb2->add_spacer();
 
     install = memnew(Button);
-    install->set_text(TTR("Install..."));
+    install->set_text(TTR(L"Install…"));
     install->set_disabled(true);
     install->connect("pressed", this, "_install");
 
@@ -1698,12 +1698,12 @@ EditorAssetLibrary::EditorAssetLibrary(bool p_templates_only) {
     }
 
     Button* open_asset = memnew(Button);
-    open_asset->set_text(TTR("Import..."));
+    open_asset->set_text(TTR(L"Import…"));
     search_hb->add_child(open_asset);
     open_asset->connect("pressed", this, "_asset_open");
 
     Button* plugins = memnew(Button);
-    plugins->set_text(TTR("Plugins..."));
+    plugins->set_text(TTR(L"Plugins…"));
     search_hb->add_child(plugins);
     plugins->connect("pressed", this, "_manage_plugins");
 
@@ -1790,7 +1790,7 @@ EditorAssetLibrary::EditorAssetLibrary(bool p_templates_only) {
 
     library_vb_border->add_child(library_vb);
 
-    library_loading = memnew(Label(TTR("Loading...")));
+    library_loading = memnew(Label(TTR(L"Loading…")));
     library_loading->set_align(Label::ALIGN_CENTER);
     library_vb->add_child(library_loading);
 

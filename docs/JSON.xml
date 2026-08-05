@@ -53,20 +53,20 @@ SPDX-License-Identifier: MIT
                     ]
                 }
 
-                ## JSON.print(my_dictionary, "...")
+                ## JSON.print(my_dictionary, "➝")
                 {
-                ..."name": "my_dictionary",
-                ..."version": "1.0.0",
-                ..."entities": [
-                ......{
-                ........."name": "entity_0",
-                ........."value": "value_0"
-                ......},
-                ......{
-                ........."name": "entity_1",
-                ........."value": "value_1"
-                ......}
-                ...]
+                ➝"name": "my_dictionary",
+                ➝"version": "1.0.0",
+                ➝"entities": [
+                ➝➝{
+                ➝➝➝"name": "entity_0",
+                ➝➝➝"value": "value_0"
+                ➝➝},
+                ➝➝{
+                ➝➝➝"name": "entity_1",
+                ➝➝➝"value": "value_1"
+                ➝➝}
+                ➝]
                 }
                 [/codeblock]
             </description>

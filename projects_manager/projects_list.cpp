@@ -38,7 +38,7 @@ ProjectsList::ProjectsList() {
     HBoxContainer* projects_list_tools_container = memnew(HBoxContainer);
     add_child(projects_list_tools_container);
 
-    loading_label = memnew(Label(TTR("Loading, please wait...")));
+    loading_label = memnew(Label(TTR(L"Loading, please wait…")));
     loading_label->add_font_override("font", get_font("bold", "EditorFonts"));
     loading_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     // Hide the label until it's needed.

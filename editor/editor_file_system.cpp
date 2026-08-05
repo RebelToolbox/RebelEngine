@@ -1212,7 +1212,7 @@ void EditorFileSystem::_notification(int p_what) {
                     OS::get_singleton()->delay_usec(1000);
                 }
                 active_thread.wait_to_finish();
-                WARN_PRINT("Scan thread aborted...");
+                WARN_PRINT(L"Scan thread aborted…");
                 set_process(false);
             }
 

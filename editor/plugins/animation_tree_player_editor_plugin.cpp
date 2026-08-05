@@ -1501,7 +1501,7 @@ AnimationTreePlayerEditor::AnimationTreePlayerEditor() {
     p->add_item(TTR("TimeSeek Node"), AnimationTreePlayer::NODE_TIMESEEK);
     p->add_item(TTR("Transition Node"), AnimationTreePlayer::NODE_TRANSITION);
     p->add_separator();
-    p->add_item(TTR("Import Animations..."), MENU_IMPORT_ANIMATIONS); // wtf
+    p->add_item(TTR(L"Import Animations…"), MENU_IMPORT_ANIMATIONS); // wtf
     p->add_separator();
     p->add_item(TTR("Clear"), MENU_GRAPH_CLEAR);
 
@@ -1609,7 +1609,7 @@ AnimationTreePlayerEditor::AnimationTreePlayerEditor() {
     filter_button->set_margin(MARGIN_RIGHT, -10);
     vb->add_child(filter_button);
     filter_button->hide();
-    filter_button->set_text(TTR("Filters..."));
+    filter_button->set_text(TTR(L"Filters…"));
     filter_button->connect("pressed", this, "_edit_filters");
 
     set_clip_contents(true);

@@ -545,7 +545,7 @@ MeshInstanceEditor::MeshInstanceEditor() {
     );
     options->get_popup()->add_separator();
     options->get_popup()->add_item(
-        TTR("Create Outline Mesh..."),
+        TTR(L"Create Outline Mesh…"),
         MENU_OPTION_CREATE_OUTLINE_MESH
     );
     options->get_popup()->set_item_tooltip(

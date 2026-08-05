@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT
         Resource for environment nodes (like [WorldEnvironment]) that define multiple rendering options.
     </brief_description>
     <description>
-        Resource for environment nodes (like [WorldEnvironment]) that define multiple environment operations (such as background [Sky] or [Color], ambient light, fog, depth-of-field...). These parameters affect the final render of the scene. The order of these operations is:
+        Resource for environment nodes (like [WorldEnvironment]) that define multiple environment operations (such as background [Sky] or [Color], ambient light, fog, depth-of-field…). These parameters affect the final render of the scene. The order of these operations is:
         - Depth of Field Blur
         - Glow
         - Tonemap (Auto Exposure)

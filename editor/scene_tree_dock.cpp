@@ -1126,11 +1126,11 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
 
             if (tocopy == scene) {
                 accept->set_text(
-                    TTR("Can't save the root node branch as an instanced "
-                        "scene.\nTo create an editable copy of the current "
-                        "scene, duplicate it using the FileSystem dock context "
-                        "menu\nor create an inherited scene using Scene > New "
-                        "Inherited Scene... instead.")
+                    TTR(L"Can't save the root node branch as an instanced "
+                        L"scene.\nTo create an editable copy of the current "
+                        L"scene, duplicate it using the FileSystem dock "
+                        L"context menu\nor create an inherited scene using "
+                        L"Scene > New Inherited Scene… instead.")
                 );
                 accept->popup_centered_minsize();
                 break;
@@ -1139,10 +1139,10 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
             if (tocopy != editor_data->get_edited_scene_root()
                 && tocopy->get_filename() != "") {
                 accept->set_text(
-                    TTR("Can't save the branch of an already instanced "
-                        "scene.\nTo create a variation of a scene, you can "
-                        "make an inherited scene based on the instanced scene "
-                        "using Scene > New Inherited Scene... instead.")
+                    TTR(L"Can't save the branch of an already instanced "
+                        L"scene.\nTo create a variation of a scene, you can "
+                        L"make an inherited scene based on the instanced scene "
+                        L"using Scene > New Inherited Scene… instead.")
                 );
                 accept->popup_centered_minsize();
                 break;
@@ -1194,7 +1194,7 @@ void SceneTreeDock::_tool_selected(int p_tool, bool p_confirm_override) {
             new_scene_from_dialog->set_current_path(existing);
 
             new_scene_from_dialog->popup_centered_ratio();
-            new_scene_from_dialog->set_title(TTR("Save New Scene As..."));
+            new_scene_from_dialog->set_title(TTR(L"Save New Scene As…"));
         } break;
         case TOOL_COPY_NODE_PATH: {
             List<Node*> selection = editor_selection->get_selected_node_list();

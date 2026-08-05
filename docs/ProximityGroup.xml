@@ -25,7 +25,7 @@ SPDX-License-Identifier: MIT
         - "planets|5|4|7"
         - "planets|5|4|8"
         - "planets|5|4|9"
-        - ...
+        - …
         [/codeblock]
         If there is another [ProximityGroup] named [code]"PlanetMars"[/code] with group name [code]"planets"[/code], and one of its coordinates is [code]Vector3(5, 4, 7)[/code], it would normally create the [SceneTree] group called [code]"planets|5|4|7"[/code]. However, since this group name already exists, this [ProximityGroup] object will be [i]added[/i] to the existing one. [code]"PlanetEarth"[/code] is already in this group. As long as both nodes don't change their transform and stop intersecting (or exit the scene tree), they are grouped together. As long as this intersection exists, any call to [method broadcast] will affect [i]both[/i] [ProximityGroup] nodes.
         There are 3 caveats to keep in mind when using [ProximityGroup]:

@@ -538,7 +538,7 @@ bool CustomPropertyEditor::edit(
                     ANCHOR_END,
                     -7 * EDSCALE
                 );
-                type_button->set_text(TTR("Preset..."));
+                type_button->set_text(TTR(L"Preset…"));
                 type_button->get_popup()->clear();
                 type_button->get_popup()->add_item(
                     TTR("Linear"),
@@ -601,14 +601,14 @@ bool CustomPropertyEditor::edit(
             if (hint == PROPERTY_HINT_FILE
                 || hint == PROPERTY_HINT_GLOBAL_FILE) {
                 List<String> names;
-                names.push_back(TTR("File..."));
+                names.push_back(TTR(L"File…"));
                 names.push_back(TTR("Clear"));
                 config_action_buttons(names);
 
             } else if (hint == PROPERTY_HINT_DIR
                        || hint == PROPERTY_HINT_GLOBAL_DIR) {
                 List<String> names;
-                names.push_back(TTR("Dir..."));
+                names.push_back(TTR(L"Dir…"));
                 names.push_back(TTR("Clear"));
                 config_action_buttons(names);
             } else if (hint == PROPERTY_HINT_ENUM) {

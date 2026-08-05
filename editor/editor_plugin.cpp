@@ -131,7 +131,7 @@ Vector<Ref<Texture>> EditorInterface::make_mesh_previews(
                 * Transform().looking_at(Vector3(+1, -1, -2), Vector3(0, 1, 0))
         );
 
-        ep.step(TTR("Thumbnail..."), i);
+        ep.step(TTR(L"Thumbnail…"), i);
         Main::iteration();
         Main::iteration();
         Ref<Image> img =
