@@ -1681,8 +1681,14 @@ void EditorExport::load_config() {
         }
 
         if (!preset.is_valid()) {
-            index++;
-            ERR_CONTINUE(!preset.is_valid());
+            ERR_CONTINUE_MSG(
+                !preset.is_valid(),
+                vformat(
+                    "Export preset %d: %s name not recognized.",
+                    index++,
+                    platform
+                )
+            );
         }
 
         preset->set_name(config->get_value(section, "name"));
