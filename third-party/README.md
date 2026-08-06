@@ -246,7 +246,7 @@ Patch file for the changes is included in the patches/ folder.
 
 - Project: https://www.trustedfirmware.org/projects/mbed-tls/
 - Source: https://github.com/Mbed-TLS/mbedtls
-- Version: 3.6.6 (0bebf8b8c7f07abe3571ded48a11aa907a1ffb20, March 2026)
+- Version: 3.6.7 (068ff080b369adfac81509f9b57b2afabaf82dc5, July 2026)
 - License: Apache 2.0
 
 Files copied from the library source:
