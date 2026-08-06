@@ -942,10 +942,6 @@ msgid "Disconnect all from signal: '%s'"
 msgstr "Frakoble alt fra signal: '%s'"
 
 #: editor/connections_dialog.cpp
-msgid "Connect..."
-msgstr "Forbind..."
-
-#: editor/connections_dialog.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Disconnect"
 msgstr "Afbryd"
@@ -980,10 +976,6 @@ msgstr "Er du sikker på at du vil fjerne alle forbindelser fra dette signal?"
 #: editor/connections_dialog.cpp
 msgid "Disconnect All"
 msgstr "Frakoble Alt"
-
-#: editor/connections_dialog.cpp
-msgid "Edit..."
-msgstr "Rediger..."
 
 #: editor/connections_dialog.cpp
 #, fuzzy
@@ -1441,14 +1433,6 @@ msgid "Move Audio Bus"
 msgstr "Flyt Audio Bus"
 
 #: editor/editor_audio_buses.cpp
-msgid "Save Audio Bus Layout As..."
-msgstr "Gem Audio Bus Layout Som..."
-
-#: editor/editor_audio_buses.cpp
-msgid "Location for New Layout..."
-msgstr "Placering for Ny Layout..."
-
-#: editor/editor_audio_buses.cpp
 msgid "Open Audio Bus Layout"
 msgstr "Åben Audio Bus Layout"
 
@@ -1614,14 +1598,6 @@ msgstr "Indsæt Parametre"
 #: editor/editor_data.cpp
 msgid "Updating Scene"
 msgstr "Opdatere Scene"
-
-#: editor/editor_data.cpp
-msgid "Storing local changes..."
-msgstr "Gemmer lokale ændringer..."
-
-#: editor/editor_data.cpp
-msgid "Updating scene..."
-msgstr "Opdatere scene..."
 
 #: editor/editor_data.cpp editor/editor_resource_picker.cpp
 msgid "[empty]"
@@ -1995,10 +1971,6 @@ msgstr "Åbn i Filhåndtering"
 #: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "Vis i Filhåndtering"
-
-#: editor/editor_file_dialog.cpp editor/filesystem_dock.cpp
-msgid "New Folder..."
-msgstr "Opret mappe..."
 
 #: editor/editor_file_dialog.cpp editor/find_in_files.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
@@ -2433,10 +2405,6 @@ msgid ""
 "Make it unique first."
 msgstr ""
 
-#: editor/editor_node.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Save Resource As..."
-msgstr "Gem Ressource Som..."
-
 #: editor/editor_node.cpp
 msgid "Can't open file for writing:"
 msgstr "Kan ikke åbne fil til skrivning:"
@@ -2607,10 +2575,6 @@ msgid "There is no defined scene to run."
 msgstr "Der er ingen defineret scene at køre."
 
 #: editor/editor_node.cpp
-msgid "Save scene before running..."
-msgstr ""
-
-#: editor/editor_node.cpp
 msgid "Could not start subprocess!"
 msgstr "Kunne ikke starte underproces!"
 
@@ -2621,19 +2585,6 @@ msgstr "Åbn Scene"
 #: editor/editor_node.cpp
 msgid "Open Base Scene"
 msgstr "Åbn Grund Scene"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Quick Open..."
-msgstr "Hurtig Åbn Scene..."
-
-#: editor/editor_node.cpp
-msgid "Quick Open Scene..."
-msgstr "Hurtig Åbn Scene..."
-
-#: editor/editor_node.cpp
-msgid "Quick Open Script..."
-msgstr "Hurtig Åbn Script..."
 
 #: editor/editor_node.cpp
 msgid "Save & Close"
@@ -2664,10 +2615,6 @@ msgid ""
 "A root node is required to save the scene. You can add a root node using the "
 "Scene tree dock."
 msgstr ""
-
-#: editor/editor_node.cpp
-msgid "Save Scene As..."
-msgstr "Gem Scene Som..."
 
 #: editor/editor_node.cpp modules/gltf/editor_scene_exporter_gltf_plugin.cpp
 msgid "This operation can't be done without a scene."
@@ -2733,10 +2680,6 @@ msgid ""
 "The current scene has unsaved changes.\n"
 "Reload the saved scene anyway? This action cannot be undone."
 msgstr ""
-
-#: editor/editor_node.cpp
-msgid "Quick Run Scene..."
-msgstr "Hurtig Kør Scene..."
 
 #: editor/editor_node.cpp
 msgid "Quit"
@@ -2979,24 +2922,12 @@ msgid "Previous tab"
 msgstr "Forrige fane"
 
 #: editor/editor_node.cpp
-msgid "Filter Files..."
-msgstr "Filtrer filer..."
-
-#: editor/editor_node.cpp
 msgid "Operations with scene files."
 msgstr "Handlinger med scene filer."
 
 #: editor/editor_node.cpp
 msgid "New Scene"
 msgstr "Ny Scene"
-
-#: editor/editor_node.cpp
-msgid "New Inherited Scene..."
-msgstr "Ny Nedarvet Scene..."
-
-#: editor/editor_node.cpp
-msgid "Open Scene..."
-msgstr "Åbn Scene..."
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 msgid "Open Recent"
@@ -3005,18 +2936,6 @@ msgstr "Åben Seneste"
 #: editor/editor_node.cpp
 msgid "Save Scene"
 msgstr "Gem Scene"
-
-#: editor/editor_node.cpp
-msgid "Convert To..."
-msgstr "Konverter Til..."
-
-#: editor/editor_node.cpp
-msgid "MeshLibrary..."
-msgstr "MaskeBibliotek..."
-
-#: editor/editor_node.cpp
-msgid "TileSet..."
-msgstr "Flisesæt..."
 
 #: editor/editor_node.cpp editor/plugins/script_text_editor.cpp
 #: scene/gui/line_edit.cpp scene/gui/text_edit.cpp
@@ -3037,11 +2956,6 @@ msgstr "Diverse projekt eller scene redskaber."
 msgid "Project"
 msgstr "Projekt"
 
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Project Settings..."
-msgstr "Projekt Indstillinger"
-
 #: editor/editor_node.cpp editor/plugins/version_control_editor_plugin.cpp
 #, fuzzy
 msgid "Version Control"
@@ -3056,27 +2970,12 @@ msgid "Shut Down Version Control"
 msgstr ""
 
 #: editor/editor_node.cpp
-#, fuzzy
-msgid "Export..."
-msgstr "Eksport"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Install Android Project Template..."
-msgstr "Ugyldigt navn."
-
-#: editor/editor_node.cpp
 msgid "Open Project Data Folder"
 msgstr "Åbn Projekt datamappe"
 
 #: editor/editor_node.cpp editor/plugins/tile_set_editor_plugin.cpp
 msgid "Tools"
 msgstr "Værktøjer"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Orphan Resource Explorer..."
-msgstr "Forældreløs ressource udforsker"
 
 #: editor/editor_node.cpp
 #, fuzzy
@@ -3195,11 +3094,6 @@ msgid "Editor"
 msgstr "Redaktør"
 
 #: editor/editor_node.cpp
-#, fuzzy
-msgid "Editor Settings..."
-msgstr "Editor Indstillinger"
-
-#: editor/editor_node.cpp
 msgid "Editor Layout"
 msgstr "Redaktør opsætning"
 
@@ -3233,16 +3127,6 @@ msgstr ""
 #: editor/editor_node.cpp
 msgid "Open Editor Settings Folder"
 msgstr "Åbn redaktør Indstillinger mappe"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Manage Editor Features..."
-msgstr "Organiser Eksport Skabeloner"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Manage Export Templates..."
-msgstr "Organiser Eksport Skabeloner"
 
 #: editor/editor_node.cpp editor/plugins/shader_editor_plugin.cpp
 msgid "Help"
@@ -3488,10 +3372,6 @@ msgstr "Sub-Ressourcer:"
 msgid "Creating Mesh Previews"
 msgstr "Opretter Maske Forhåndsvisninger"
 
-#: editor/editor_plugin.cpp
-msgid "Thumbnail..."
-msgstr "Miniature..."
-
 #: editor/editor_plugin_settings.cpp
 #, fuzzy
 msgid "Main Script:"
@@ -3596,10 +3476,6 @@ msgstr ""
 
 #: editor/editor_properties.cpp
 msgid "[Empty]"
-msgstr ""
-
-#: editor/editor_properties.cpp editor/plugins/root_motion_editor_plugin.cpp
-msgid "Assign..."
 msgstr ""
 
 #: editor/editor_properties.cpp
@@ -3773,22 +3649,8 @@ msgstr "Der er ingen '%s' fil."
 
 #: editor/export_template_manager.cpp
 #, fuzzy
-msgid "Retrieving the mirror list..."
-msgstr "Henter spejle, vent venligst ..."
-
-#: editor/export_template_manager.cpp
-msgid "Starting the download..."
-msgstr ""
-
-#: editor/export_template_manager.cpp
-#, fuzzy
 msgid "Error requesting URL:"
 msgstr "Fejl ved anmodning af url: "
-
-#: editor/export_template_manager.cpp
-#, fuzzy
-msgid "Connecting to the mirror..."
-msgstr "Forbinder til spejl..."
 
 #: editor/export_template_manager.cpp
 msgid "Can't resolve the requested address."
@@ -3818,10 +3680,6 @@ msgstr ""
 #, fuzzy
 msgid "Request failed:"
 msgstr "Forespørgsel mislykkedes."
-
-#: editor/export_template_manager.cpp
-msgid "Download complete; extracting templates..."
-msgstr ""
 
 #: editor/export_template_manager.cpp
 #, fuzzy
@@ -3867,22 +3725,12 @@ msgid "Can't Resolve"
 msgstr "Kan ikke løses"
 
 #: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Connecting..."
-msgstr "Forbinder..."
-
-#: editor/export_template_manager.cpp
 msgid "Can't Connect"
 msgstr "Kan ikke forbinde"
 
 #: editor/export_template_manager.cpp
 msgid "Connected"
 msgstr "Tilsluttet"
-
-#: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Requesting..."
-msgstr "Anmoder..."
 
 #: editor/export_template_manager.cpp
 msgid "Downloading"
@@ -4159,33 +4007,6 @@ msgstr "Favoritter:"
 msgid "Remove from Favorites"
 msgstr "Fjern fra Gruppe"
 
-#: editor/filesystem_dock.cpp
-msgid "Edit Dependencies..."
-msgstr "Rediger Afhængigheder..."
-
-#: editor/filesystem_dock.cpp
-msgid "View Owners..."
-msgstr "Vis Ejere..."
-
-#: editor/filesystem_dock.cpp
-msgid "Move To..."
-msgstr "Flyt Til..."
-
-#: editor/filesystem_dock.cpp
-#, fuzzy
-msgid "New Scene..."
-msgstr "Ny Scene"
-
-#: editor/filesystem_dock.cpp editor/plugins/script_editor_plugin.cpp
-#, fuzzy
-msgid "New Script..."
-msgstr "Hurtig Åbn Script..."
-
-#: editor/filesystem_dock.cpp
-#, fuzzy
-msgid "New Resource..."
-msgstr "Gem Ressource Som..."
-
 #: editor/filesystem_dock.cpp editor/inspector_dock.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/script_editor_debugger.cpp
@@ -4230,15 +4051,6 @@ msgid "Sort by First Modified"
 msgstr ""
 
 #: editor/filesystem_dock.cpp
-#, fuzzy
-msgid "Duplicate..."
-msgstr "Duplikere"
-
-#: editor/filesystem_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Rename..."
-msgstr "Omdøb..."
-
-#: editor/filesystem_dock.cpp
 msgid "Focus the search box"
 msgstr ""
 
@@ -4265,14 +4077,6 @@ msgstr "Skifter Modus"
 #, fuzzy
 msgid "Search files"
 msgstr "Søg Classes"
-
-#: editor/filesystem_dock.cpp
-msgid ""
-"Scanning Files,\n"
-"Please Wait..."
-msgstr ""
-"Scanner Filer,\n"
-"Vent Venligst..."
 
 #: editor/filesystem_dock.cpp
 msgid "Move"
@@ -4325,15 +4129,6 @@ msgid ""
 "ProjectSettings."
 msgstr ""
 
-#: editor/find_in_files.cpp editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/script_text_editor.cpp
-msgid "Find..."
-msgstr ""
-
-#: editor/find_in_files.cpp editor/plugins/script_text_editor.cpp
-msgid "Replace..."
-msgstr ""
-
 #: editor/find_in_files.cpp
 #, fuzzy
 msgid "Find: "
@@ -4348,11 +4143,6 @@ msgstr "Erstat"
 #, fuzzy
 msgid "Replace all (no undo)"
 msgstr "Erstat Alle"
-
-#: editor/find_in_files.cpp
-#, fuzzy
-msgid "Searching..."
-msgstr "Gemmer..."
 
 #: editor/find_in_files.cpp
 #, fuzzy
@@ -4476,20 +4266,12 @@ msgid "Import Scene"
 msgstr "Importer Scene"
 
 #: editor/import/resource_importer_scene.cpp
-msgid "Importing Scene..."
-msgstr "Importerer Scene..."
-
-#: editor/import/resource_importer_scene.cpp
 msgid "Generating Lightmaps"
 msgstr "Generering af lightmaps"
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Generating for Mesh: "
 msgstr "Generering til Mesh: "
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Running Custom Script..."
-msgstr "Kører Brugerdefineret Script..."
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Couldn't load post-import script:"
@@ -4506,10 +4288,6 @@ msgstr "Fejl ved kørsel af efter-import script:"
 #: editor/import/resource_importer_scene.cpp
 msgid "Did you return a Node-derived object in the `post_import()` method?"
 msgstr ""
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Saving..."
-msgstr "Gemmer..."
 
 #: editor/import_defaults_editor.cpp
 #, fuzzy
@@ -4605,12 +4383,6 @@ msgstr "Indlæs en eksisterende ressource fra disk og rediger den."
 #: editor/inspector_dock.cpp
 msgid "Save the currently edited resource."
 msgstr "Gem den aktuelt redigerede ressource."
-
-#: editor/inspector_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-#: editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/theme_editor_plugin.cpp
-msgid "Save As..."
-msgstr "Gem Som..."
 
 #: editor/inspector_dock.cpp
 #, fuzzy
@@ -4772,14 +4544,6 @@ msgstr "Fjern Poly og Punkt"
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Animation"
 msgstr "Tilføj animation"
-
-#: editor/plugins/animation_blend_space_1d_editor.cpp
-#: editor/plugins/animation_blend_space_2d_editor.cpp
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/animation_state_machine_editor.cpp
-#, fuzzy
-msgid "Load..."
-msgstr "Indlæs"
 
 #: editor/plugins/animation_blend_space_1d_editor.cpp
 #: editor/plugins/animation_blend_space_2d_editor.cpp
@@ -5027,12 +4791,6 @@ msgid "Node Renamed"
 msgstr "Node Navn:"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Add Node..."
-msgstr "Tilføj Node"
-
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
 #: editor/plugins/root_motion_editor_plugin.cpp
 #, fuzzy
 msgid "Edit Filtered Tracks:"
@@ -5164,10 +4922,6 @@ msgstr "Animation"
 #: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "Ny"
-
-#: editor/plugins/animation_player_editor_plugin.cpp
-msgid "Edit Transitions..."
-msgstr "Rediger Overgange..."
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 msgid "Open in Inspector"
@@ -5483,18 +5237,8 @@ msgstr "Overgangs Node"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 #, fuzzy
-msgid "Import Animations..."
-msgstr "Importer Animationer..."
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-#, fuzzy
 msgid "Edit Node Filters"
 msgstr "Rediger Node Filtre"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-#, fuzzy
-msgid "Filters..."
-msgstr "Filtre..."
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Contents:"
@@ -5592,29 +5336,12 @@ msgid "Asset Download Error:"
 msgstr "Asset Download Fejl:"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Downloading (%s / %s)..."
-msgstr "Downloader (%s / %s)..."
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Downloading..."
-msgstr "Downloader..."
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Resolving..."
-msgstr "Løser..."
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Error making request"
 msgstr "Fejl ved forespørgsel"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Idle"
 msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Install..."
-msgstr "Installere.."
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 #, fuzzy
@@ -5684,14 +5411,6 @@ msgid "Search assets (excluding templates, projects, and demos)"
 msgstr "Søge assets (undtagen skabeloner, projekter og demoer)"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Import..."
-msgstr "Importer..."
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Plugins..."
-msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 #: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Sorter:"
@@ -5719,10 +5438,6 @@ msgstr "Fællesskab"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
 msgstr "Tester"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Loading..."
-msgstr "Indlæser..."
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Assets ZIP File"
@@ -6189,11 +5904,6 @@ msgid "Smart Snapping"
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid "Configure Snap..."
-msgstr ""
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Snap to Parent"
 msgstr ""
 
@@ -6421,10 +6131,6 @@ msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Add %s"
-msgstr ""
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Adding %s..."
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6791,10 +6497,6 @@ msgid ""
 "Creates a polygon-based collision shape.\n"
 "This is a performance middle-ground between a single convex collision and a "
 "polygon-based collision."
-msgstr ""
-
-#: editor/plugins/mesh_instance_editor_plugin.cpp
-msgid "Create Outline Mesh..."
 msgstr ""
 
 #: editor/plugins/mesh_instance_editor_plugin.cpp
@@ -7530,18 +7232,8 @@ msgstr "Fejl i flytning:\n"
 
 #: editor/plugins/script_editor_plugin.cpp
 #, fuzzy
-msgid "New Text File..."
-msgstr "Opret mappe..."
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
 msgid "Open File"
 msgstr "Åben en Fil"
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
-msgid "Save File As..."
-msgstr "Gem Som..."
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Can't obtain the script for running."
@@ -7570,10 +7262,6 @@ msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Error saving"
-msgstr ""
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Save Theme As..."
 msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
@@ -7636,11 +7324,6 @@ msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
 #, fuzzy
-msgid "Open..."
-msgstr "Åben"
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
 msgid "Reopen Closed Script"
 msgstr "Åben script"
 
@@ -7670,11 +7353,6 @@ msgstr ""
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Theme"
 msgstr ""
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
-msgid "Import Theme..."
-msgstr "Importerer Scene..."
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Reload Theme"
@@ -7931,11 +7609,6 @@ msgid "Auto Indent"
 msgstr ""
 
 #: editor/plugins/script_text_editor.cpp
-#, fuzzy
-msgid "Find in Files..."
-msgstr "Filtrer filer..."
-
-#: editor/plugins/script_text_editor.cpp
 msgid "Contextual Help"
 msgstr ""
 
@@ -7958,16 +7631,6 @@ msgstr "Skift/Toggle Breakpoint"
 #, fuzzy
 msgid "Remove All Bookmarks"
 msgstr "Fjern Alt"
-
-#: editor/plugins/script_text_editor.cpp
-#, fuzzy
-msgid "Go to Function..."
-msgstr "Fjern Funktion"
-
-#: editor/plugins/script_text_editor.cpp
-#, fuzzy
-msgid "Go to Line..."
-msgstr "Gå til linje"
 
 #: editor/plugins/script_text_editor.cpp
 #: modules/visual_script/visual_script_editor.cpp
@@ -8363,11 +8026,6 @@ msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid ""
-"To zoom further, change the camera's clipping planes (View -> Settings...)"
-msgstr ""
-
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid ""
 "Note: The FPS value displayed is the editor's framerate.\n"
 "It cannot be used as a reliable indication of in-game performance."
 msgstr ""
@@ -8485,10 +8143,6 @@ msgid "Snap Object to Floor"
 msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid "Transform Dialog..."
-msgstr ""
-
-#: editor/plugins/spatial_editor_plugin.cpp
 msgid "1 Viewport"
 msgstr ""
 
@@ -8532,12 +8186,6 @@ msgstr ""
 #, fuzzy
 msgid "View Occlusion Culling"
 msgstr "Rediger Poly"
-
-#: editor/plugins/spatial_editor_plugin.cpp
-#: modules/gridmap/grid_map_editor_plugin.cpp
-#, fuzzy
-msgid "Settings..."
-msgstr "Tester"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "Snap Settings"
@@ -9348,11 +8996,6 @@ msgstr ""
 #, fuzzy
 msgid "Theme:"
 msgstr "Medlemmer"
-
-#: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
-msgid "Manage Items..."
-msgstr "Organiser Eksport Skabeloner"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Add, remove, organize and import Theme items."
@@ -10932,10 +10575,6 @@ msgstr ""
 msgid "Presets"
 msgstr ""
 
-#: editor/project_export.cpp editor/project_settings_editor.cpp
-msgid "Add..."
-msgstr ""
-
 #: editor/project_export.cpp
 msgid ""
 "If checked, the preset will be available for use in one-click deploy.\n"
@@ -11118,10 +10757,6 @@ msgstr "Enhed"
 
 #: editor/project_settings_editor.cpp
 msgid "(Physical)"
-msgstr ""
-
-#: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
-msgid "Press a Key..."
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -11318,10 +10953,6 @@ msgstr "Projekt Indstillinger"
 msgid "General"
 msgstr "Generelt"
 
-#: editor/project_settings_editor.cpp
-msgid "Override For..."
-msgstr ""
-
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
 msgid "The editor must be restarted for changes to take effect."
 msgstr ""
@@ -11414,10 +11045,6 @@ msgid "Import Defaults"
 msgstr "Indlæs Default"
 
 #: editor/property_editor.cpp
-msgid "Preset..."
-msgstr "Forudindstillet..."
-
-#: editor/property_editor.cpp
 msgid "Zero"
 msgstr ""
 
@@ -11427,14 +11054,6 @@ msgstr ""
 
 #: editor/property_editor.cpp
 msgid "Easing Out-In"
-msgstr ""
-
-#: editor/property_editor.cpp
-msgid "File..."
-msgstr ""
-
-#: editor/property_editor.cpp
-msgid "Dir..."
 msgstr ""
 
 #: editor/property_editor.cpp
@@ -11771,21 +11390,6 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 msgid ""
-"Can't save the root node branch as an instanced scene.\n"
-"To create an editable copy of the current scene, duplicate it using the "
-"FileSystem dock context menu\n"
-"or create an inherited scene using Scene > New Inherited Scene... instead."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid ""
-"Can't save the branch of an already instanced scene.\n"
-"To create a variation of a scene, you can make an inherited scene based on "
-"the instanced scene using Scene > New Inherited Scene... instead."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid ""
 "Can't save a branch which is a child of an already instantiated scene.\n"
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
@@ -11796,10 +11400,6 @@ msgid ""
 "Can't save a branch which is part of an inherited scene.\n"
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid "Save New Scene As..."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -12643,11 +12243,6 @@ msgstr ""
 msgid "Export Mesh GLTF2"
 msgstr "Eksporter Maske Bibliotek"
 
-#: modules/gltf/editor_scene_exporter_gltf_plugin.cpp
-#, fuzzy
-msgid "Export GLTF..."
-msgstr "Eksport"
-
 #: modules/gridmap/grid_map_editor_plugin.cpp
 #, fuzzy
 msgid "Next Plane"
@@ -12842,51 +12437,7 @@ msgid "Clear the navigation mesh."
 msgstr ""
 
 #: modules/recast/navigation_mesh_generator.cpp
-msgid "Setting up Configuration..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Calculating grid size..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating heightfield..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Marking walkable triangles..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Constructing compact heightfield..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Eroding walkable area..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Partitioning..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating contours..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating polymesh..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Converting to native navigation mesh..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
 msgid "Navigation Mesh Generator Setup:"
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Parsing Geometry..."
 msgstr ""
 
 #: modules/recast/navigation_mesh_generator.cpp
@@ -13224,16 +12775,6 @@ msgstr "Skift Base Type"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Nodes..."
-msgstr "Tilføj Node"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
-msgid "Add Function..."
-msgstr "Tilføj Funktion"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
 msgid "function_name"
 msgstr "Funktioner:"
 
@@ -13374,28 +12915,8 @@ msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
-msgid "Exporting APK..."
-msgstr "Eksporter"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Uninstalling..."
-msgstr "Afinstaller"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Installing to device, please wait..."
-msgstr "Henter spejle, vent venligst ..."
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid "Could not install to device: %s"
 msgstr "Kunne ikke starte underproces!"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Running on device..."
-msgstr "Kører Brugerdefineret Script..."
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
@@ -13525,17 +13046,6 @@ msgid ""
 msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
-msgid "Signing debug %s..."
-msgstr ""
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Signing release %s..."
-msgstr ""
-"Scanner Filer,\n"
-"Vent Venligst..."
-
-#: platforms/android/export/export_plugin.cpp
 #, fuzzy
 msgid "Could not find keystore, unable to export."
 msgstr "Kan ikke åbne skabelon til eksport:\n"
@@ -13543,11 +13053,6 @@ msgstr "Kan ikke åbne skabelon til eksport:\n"
 #: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
 msgstr ""
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Verifying %s..."
-msgstr "Tester"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' verification of %s failed."
@@ -13631,11 +13136,6 @@ msgstr "Animations Længde (i sekunder)."
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
-msgid "Creating APK..."
-msgstr "Forbinder..."
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
@@ -13651,17 +13151,8 @@ msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
-msgid "Adding files..."
-msgstr "Filtrer filer..."
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid "Could not export project files"
 msgstr "Kunne ikke skrive til fil:\n"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Aligning APK..."
-msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
@@ -13989,11 +13480,6 @@ msgstr "Ugyldigt navn."
 #, fuzzy
 msgid "Couldn't create a project in this project folder."
 msgstr "Kunne ikke oprette mappe."
-
-#: projects_manager/projects_list.cpp
-#, fuzzy
-msgid "Loading, please wait..."
-msgstr "Henter spejle, vent venligst ..."
 
 #: projects_manager/projects_list.cpp
 msgid "Last Modified"
