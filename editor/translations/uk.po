@@ -915,10 +915,6 @@ msgid "Disconnect all from signal: '%s'"
 msgstr "Від'єднати усе від сигналу: «%s»"
 
 #: editor/connections_dialog.cpp
-msgid "Connect..."
-msgstr "Приєднати..."
-
-#: editor/connections_dialog.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Disconnect"
 msgstr "Роз'єднати"
@@ -950,10 +946,6 @@ msgstr "Ви справді хочете вилучити усі з'єднанн
 #: editor/connections_dialog.cpp
 msgid "Disconnect All"
 msgstr "Роз'єднати усі"
-
-#: editor/connections_dialog.cpp
-msgid "Edit..."
-msgstr "Змінити…"
 
 #: editor/connections_dialog.cpp
 msgid "Go to Method"
@@ -1400,14 +1392,6 @@ msgid "Move Audio Bus"
 msgstr "Перемістити аудіо шину"
 
 #: editor/editor_audio_buses.cpp
-msgid "Save Audio Bus Layout As..."
-msgstr "Зберегти компонування аудіо шини як..."
-
-#: editor/editor_audio_buses.cpp
-msgid "Location for New Layout..."
-msgstr "Розташування для нового компонування..."
-
-#: editor/editor_audio_buses.cpp
 msgid "Open Audio Bus Layout"
 msgstr "Відкрити компонування аудіо шини"
 
@@ -1561,14 +1545,6 @@ msgstr "Вставити параметри"
 #: editor/editor_data.cpp
 msgid "Updating Scene"
 msgstr "Оновлення сцени"
-
-#: editor/editor_data.cpp
-msgid "Storing local changes..."
-msgstr "Збереження локальних змін..."
-
-#: editor/editor_data.cpp
-msgid "Updating scene..."
-msgstr "Оновлення сцени..."
 
 #: editor/editor_data.cpp editor/editor_resource_picker.cpp
 msgid "[empty]"
@@ -1929,10 +1905,6 @@ msgstr "Відкрити у менеджері файлів"
 #: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "Показати у менеджері файлів"
-
-#: editor/editor_file_dialog.cpp editor/filesystem_dock.cpp
-msgid "New Folder..."
-msgstr "Створити теку..."
 
 #: editor/editor_file_dialog.cpp editor/find_in_files.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
@@ -2356,10 +2328,6 @@ msgstr ""
 "Цей ресурс неможливо зберегти, оскільки він не належить до редагованої "
 "сцени. Спочатку, зробіть його унікальним."
 
-#: editor/editor_node.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Save Resource As..."
-msgstr "Зберегти ресурс як..."
-
 #: editor/editor_node.cpp
 msgid "Can't open file for writing:"
 msgstr "Неможливо відкрити файл для запису:"
@@ -2532,10 +2500,6 @@ msgid "There is no defined scene to run."
 msgstr "Немає визначеної сцени для виконання."
 
 #: editor/editor_node.cpp
-msgid "Save scene before running..."
-msgstr "Зберегти сцену перед запуском…"
-
-#: editor/editor_node.cpp
 msgid "Could not start subprocess!"
 msgstr "Не вдалося запустити підпроцес!"
 
@@ -2546,18 +2510,6 @@ msgstr "Відкрити сцену"
 #: editor/editor_node.cpp
 msgid "Open Base Scene"
 msgstr "Відкрити основну сцену"
-
-#: editor/editor_node.cpp
-msgid "Quick Open..."
-msgstr "Швидке відкриття…"
-
-#: editor/editor_node.cpp
-msgid "Quick Open Scene..."
-msgstr "Швидке відкриття сцени..."
-
-#: editor/editor_node.cpp
-msgid "Quick Open Script..."
-msgstr "Швидке відкриття скрипту..."
 
 #: editor/editor_node.cpp
 msgid "Save & Close"
@@ -2596,10 +2548,6 @@ msgid ""
 msgstr ""
 "Для збереження сцени потрібен кореневий вузол. Ви можете додати кореневий "
 "вузол за допомогою бічної панелі ієрархії сцени."
-
-#: editor/editor_node.cpp
-msgid "Save Scene As..."
-msgstr "Зберегти сцену як..."
 
 #: editor/editor_node.cpp modules/gltf/editor_scene_exporter_gltf_plugin.cpp
 msgid "This operation can't be done without a scene."
@@ -2665,10 +2613,6 @@ msgstr ""
 "Зміни до поточної сцени не збережено.\n"
 "Перезавантажити збережену сцену попри це? Наслідки перезавантаження не можна "
 "буде скасувати."
-
-#: editor/editor_node.cpp
-msgid "Quick Run Scene..."
-msgstr "Швидкий запуск сцени..."
 
 #: editor/editor_node.cpp
 msgid "Quit"
@@ -2909,24 +2853,12 @@ msgid "Previous tab"
 msgstr "Попередня вкладка"
 
 #: editor/editor_node.cpp
-msgid "Filter Files..."
-msgstr "Фільтрувати файли..."
-
-#: editor/editor_node.cpp
 msgid "Operations with scene files."
 msgstr "Операції з файлами сцени."
 
 #: editor/editor_node.cpp
 msgid "New Scene"
 msgstr "Нова сцена"
-
-#: editor/editor_node.cpp
-msgid "New Inherited Scene..."
-msgstr "Нова успадкована сцена..."
-
-#: editor/editor_node.cpp
-msgid "Open Scene..."
-msgstr "Відкрити сцену..."
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 msgid "Open Recent"
@@ -2935,18 +2867,6 @@ msgstr "Відкрити останні"
 #: editor/editor_node.cpp
 msgid "Save Scene"
 msgstr "Зберегти сцену"
-
-#: editor/editor_node.cpp
-msgid "Convert To..."
-msgstr "Перетворити на..."
-
-#: editor/editor_node.cpp
-msgid "MeshLibrary..."
-msgstr "Бібліотека сітки..."
-
-#: editor/editor_node.cpp
-msgid "TileSet..."
-msgstr "Набір тайлів..."
 
 #: editor/editor_node.cpp editor/plugins/script_text_editor.cpp
 #: scene/gui/line_edit.cpp scene/gui/text_edit.cpp
@@ -2967,10 +2887,6 @@ msgstr "Різні проєктні або сценографічні інстр
 msgid "Project"
 msgstr "Проєкт"
 
-#: editor/editor_node.cpp
-msgid "Project Settings..."
-msgstr "Параметри проєкту…"
-
 #: editor/editor_node.cpp editor/plugins/version_control_editor_plugin.cpp
 msgid "Version Control"
 msgstr "Керування версіями"
@@ -2984,25 +2900,12 @@ msgid "Shut Down Version Control"
 msgstr "Вимикання керування версіями"
 
 #: editor/editor_node.cpp
-msgid "Export..."
-msgstr "Експортувати…"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Install Android Project Template..."
-msgstr "Встановити шаблон збирання для Android…"
-
-#: editor/editor_node.cpp
 msgid "Open Project Data Folder"
 msgstr "Відкриття теки даних проєкту"
 
 #: editor/editor_node.cpp editor/plugins/tile_set_editor_plugin.cpp
 msgid "Tools"
 msgstr "Інструменти"
-
-#: editor/editor_node.cpp
-msgid "Orphan Resource Explorer..."
-msgstr "Керування осиротілими ресурсами…"
 
 #: editor/editor_node.cpp
 msgid "Reload Current Project"
@@ -3120,10 +3023,6 @@ msgid "Editor"
 msgstr "Редактор"
 
 #: editor/editor_node.cpp
-msgid "Editor Settings..."
-msgstr "Параметри редактора…"
-
-#: editor/editor_node.cpp
 msgid "Editor Layout"
 msgstr "Редактор компонування"
 
@@ -3154,14 +3053,6 @@ msgstr "Відкриття теки даних редактора"
 #: editor/editor_node.cpp
 msgid "Open Editor Settings Folder"
 msgstr "Відкрити теку параметрів редактора"
-
-#: editor/editor_node.cpp
-msgid "Manage Editor Features..."
-msgstr "Керування можливостями редактора…"
-
-#: editor/editor_node.cpp
-msgid "Manage Export Templates..."
-msgstr "Керування шаблонами експортування…"
 
 #: editor/editor_node.cpp editor/plugins/shader_editor_plugin.cpp
 msgid "Help"
@@ -3411,10 +3302,6 @@ msgstr "Відкрити список підлеглих ресурсів."
 msgid "Creating Mesh Previews"
 msgstr "Створення попереднього перегляду сітки"
 
-#: editor/editor_plugin.cpp
-msgid "Thumbnail..."
-msgstr "Мініатюра..."
-
 #: editor/editor_plugin_settings.cpp
 msgid "Main Script:"
 msgstr "Основний скрипт:"
@@ -3520,10 +3407,6 @@ msgstr "Біт %d, значення %d"
 #: editor/editor_properties.cpp
 msgid "[Empty]"
 msgstr "[Порожньо]"
-
-#: editor/editor_properties.cpp editor/plugins/root_motion_editor_plugin.cpp
-msgid "Assign..."
-msgstr "Призначити…"
 
 #: editor/editor_properties.cpp
 msgid "Invalid RID"
@@ -3703,20 +3586,8 @@ msgid "There are no mirrors available."
 msgstr "Немає доступних дзеркал."
 
 #: editor/export_template_manager.cpp
-msgid "Retrieving the mirror list..."
-msgstr "Отримуємо список дзеркал…"
-
-#: editor/export_template_manager.cpp
-msgid "Starting the download..."
-msgstr "Розпочинаємо отримання даних…"
-
-#: editor/export_template_manager.cpp
 msgid "Error requesting URL:"
 msgstr "Помилка під час запиту за такою адресою:"
-
-#: editor/export_template_manager.cpp
-msgid "Connecting to the mirror..."
-msgstr "Встановлюємо з'єднання із дзеркалом…"
 
 #: editor/export_template_manager.cpp
 msgid "Can't resolve the requested address."
@@ -3742,10 +3613,6 @@ msgstr "Спроба виконати запит завершилася цикл
 #: editor/export_template_manager.cpp
 msgid "Request failed:"
 msgstr "Не вдалося виконати запит:"
-
-#: editor/export_template_manager.cpp
-msgid "Download complete; extracting templates..."
-msgstr "Отримання даних завершено; видобуваємо шаблони…"
 
 #: editor/export_template_manager.cpp
 msgid "Cannot remove temporary file:"
@@ -3794,22 +3661,12 @@ msgid "Can't Resolve"
 msgstr "Не вдається вирішити"
 
 #: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Connecting..."
-msgstr "З’єднання..."
-
-#: editor/export_template_manager.cpp
 msgid "Can't Connect"
 msgstr "Не вдається з’єднатися"
 
 #: editor/export_template_manager.cpp
 msgid "Connected"
 msgstr "З’єднано"
-
-#: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Requesting..."
-msgstr "Запит..."
 
 #: editor/export_template_manager.cpp
 msgid "Downloading"
@@ -4072,30 +3929,6 @@ msgstr "Додати до улюблених"
 msgid "Remove from Favorites"
 msgstr "Вилучити з улюблених"
 
-#: editor/filesystem_dock.cpp
-msgid "Edit Dependencies..."
-msgstr "Редагувати залежності..."
-
-#: editor/filesystem_dock.cpp
-msgid "View Owners..."
-msgstr "Переглянути власників..."
-
-#: editor/filesystem_dock.cpp
-msgid "Move To..."
-msgstr "Перемістити до..."
-
-#: editor/filesystem_dock.cpp
-msgid "New Scene..."
-msgstr "Створити сцену…"
-
-#: editor/filesystem_dock.cpp editor/plugins/script_editor_plugin.cpp
-msgid "New Script..."
-msgstr "Створити скрипт…"
-
-#: editor/filesystem_dock.cpp
-msgid "New Resource..."
-msgstr "Створити ресурс…"
-
 #: editor/filesystem_dock.cpp editor/inspector_dock.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/script_editor_debugger.cpp
@@ -4137,14 +3970,6 @@ msgid "Sort by First Modified"
 msgstr "Упорядкувати за початковим внесенням змін"
 
 #: editor/filesystem_dock.cpp
-msgid "Duplicate..."
-msgstr "Дублювати..."
-
-#: editor/filesystem_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Rename..."
-msgstr "Перейменувати..."
-
-#: editor/filesystem_dock.cpp
 msgid "Focus the search box"
 msgstr "Фокусувати поле для пошуку"
 
@@ -4167,14 +3992,6 @@ msgstr "Перемкнути режим поділу"
 #: editor/filesystem_dock.cpp
 msgid "Search files"
 msgstr "Шукати файли"
-
-#: editor/filesystem_dock.cpp
-msgid ""
-"Scanning Files,\n"
-"Please Wait..."
-msgstr ""
-"Сканування файлів,\n"
-"будь ласка, зачекайте..."
 
 #: editor/filesystem_dock.cpp
 msgid "Move"
@@ -4224,15 +4041,6 @@ msgstr ""
 "Включити файли із вказаними нижче суфіксами назв. Додати і вилучити суфікси "
 "можна у параметрах проєкту."
 
-#: editor/find_in_files.cpp editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/script_text_editor.cpp
-msgid "Find..."
-msgstr "Знайти..."
-
-#: editor/find_in_files.cpp editor/plugins/script_text_editor.cpp
-msgid "Replace..."
-msgstr "Замінити..."
-
 #: editor/find_in_files.cpp
 msgid "Find: "
 msgstr "Знайти: "
@@ -4244,10 +4052,6 @@ msgstr "Замінити: "
 #: editor/find_in_files.cpp
 msgid "Replace all (no undo)"
 msgstr "Замінити все (без скасовування)"
-
-#: editor/find_in_files.cpp
-msgid "Searching..."
-msgstr "Шукаємо…"
 
 #: editor/find_in_files.cpp
 msgid "%d match in %d file."
@@ -4360,20 +4164,12 @@ msgid "Import Scene"
 msgstr "Імпортувати сцену"
 
 #: editor/import/resource_importer_scene.cpp
-msgid "Importing Scene..."
-msgstr "Імпортування сцени..."
-
-#: editor/import/resource_importer_scene.cpp
 msgid "Generating Lightmaps"
 msgstr "Створення карт освітлення"
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Generating for Mesh: "
 msgstr "Створення для сітки: "
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Running Custom Script..."
-msgstr "Запуск користувацького скрипту..."
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Couldn't load post-import script:"
@@ -4390,10 +4186,6 @@ msgstr "Помилка запуску після імпорту скрипту:"
 #: editor/import/resource_importer_scene.cpp
 msgid "Did you return a Node-derived object in the `post_import()` method?"
 msgstr "Повернули об'єкт, що походить від Node, у методі «post_import()»?"
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Saving..."
-msgstr "Збереження..."
 
 #: editor/import_defaults_editor.cpp
 msgid "Select Importer"
@@ -4490,12 +4282,6 @@ msgstr "Завантажити наявний ресурс із диска та 
 #: editor/inspector_dock.cpp
 msgid "Save the currently edited resource."
 msgstr "Зберегти поточний редагований ресурс."
-
-#: editor/inspector_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-#: editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/theme_editor_plugin.cpp
-msgid "Save As..."
-msgstr "Зберегти як..."
 
 #: editor/inspector_dock.cpp
 msgid "Extra resource options."
@@ -4639,13 +4425,6 @@ msgstr "Вилучити полігон та точку"
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Animation"
 msgstr "Додавання анімації"
-
-#: editor/plugins/animation_blend_space_1d_editor.cpp
-#: editor/plugins/animation_blend_space_2d_editor.cpp
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/animation_state_machine_editor.cpp
-msgid "Load..."
-msgstr "Завантажити…"
 
 #: editor/plugins/animation_blend_space_1d_editor.cpp
 #: editor/plugins/animation_blend_space_2d_editor.cpp
@@ -4883,11 +4662,6 @@ msgid "Node Renamed"
 msgstr "Перейменовано вузол"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Add Node..."
-msgstr "Додати вузол…"
-
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
 #: editor/plugins/root_motion_editor_plugin.cpp
 msgid "Edit Filtered Tracks:"
 msgstr "Редагувати фільтровані доріжки:"
@@ -5013,10 +4787,6 @@ msgstr "Анімація"
 #: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "Новий"
-
-#: editor/plugins/animation_player_editor_plugin.cpp
-msgid "Edit Transitions..."
-msgstr "Редагувати переходи…"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 msgid "Open in Inspector"
@@ -5325,16 +5095,8 @@ msgid "Transition Node"
 msgstr "Вузол переходу"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Import Animations..."
-msgstr "Імпортувати анімації..."
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Edit Node Filters"
 msgstr "Редагувати фільтри вузла"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Filters..."
-msgstr "Фільтри..."
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Contents:"
@@ -5429,28 +5191,12 @@ msgid "Asset Download Error:"
 msgstr "Помилка завантаження ресурсу:"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Downloading (%s / %s)..."
-msgstr "Отримання (%s з %s)…"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Downloading..."
-msgstr "Отримання даних…"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Resolving..."
-msgstr "Вирішення..."
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Error making request"
 msgstr "Помилка створення запиту"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Idle"
 msgstr "Простій"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Install..."
-msgstr "Встановити…"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Retry"
@@ -5517,14 +5263,6 @@ msgid "Search assets (excluding templates, projects, and demos)"
 msgstr "Пошук пакунків (із виключенням шаблонів, проєктів та демонстрацій)"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Import..."
-msgstr "Імпортувати…"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Plugins..."
-msgstr "Додатки…"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 #: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Сортувати:"
@@ -5552,10 +5290,6 @@ msgstr "Спільнота"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
 msgstr "Тестування"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Loading..."
-msgstr "Завантаження…"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Assets ZIP File"
@@ -6019,11 +5753,6 @@ msgid "Smart Snapping"
 msgstr "Інтелектуальне прилипання"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid "Configure Snap..."
-msgstr "Налаштування прив'язки..."
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Snap to Parent"
 msgstr "Прилипання до предка"
 
@@ -6241,10 +5970,6 @@ msgstr "Масштаб у 1600%"
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Add %s"
 msgstr "Додати %s"
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Adding %s..."
-msgstr "Додавання %s..."
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Cannot instantiate multiple nodes without root."
@@ -6610,10 +6335,6 @@ msgstr ""
 "Створює засновану на багатокутниках форму зіткнення.\n"
 "Цей проміжний за швидкодією варіант між єдиною опуклою формою зіткнення і "
 "заснованою на багатокутниках формою зіткнення."
-
-#: editor/plugins/mesh_instance_editor_plugin.cpp
-msgid "Create Outline Mesh..."
-msgstr "Створити контурну сітку ..."
 
 #: editor/plugins/mesh_instance_editor_plugin.cpp
 msgid ""
@@ -7325,16 +7046,8 @@ msgid "Error Importing"
 msgstr "Помилка імпортування"
 
 #: editor/plugins/script_editor_plugin.cpp
-msgid "New Text File..."
-msgstr "Створити текстовий файл…"
-
-#: editor/plugins/script_editor_plugin.cpp
 msgid "Open File"
 msgstr "Відкрити файл"
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Save File As..."
-msgstr "Зберегти файл як…"
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Can't obtain the script for running."
@@ -7368,10 +7081,6 @@ msgstr "Помилка під час збереження теми"
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Error saving"
 msgstr "Помилка збереження"
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Save Theme As..."
-msgstr "Зберегти тему як..."
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "%s Class Reference"
@@ -7428,10 +7137,6 @@ msgid "File"
 msgstr "Файл"
 
 #: editor/plugins/script_editor_plugin.cpp
-msgid "Open..."
-msgstr "Відкрити..."
-
-#: editor/plugins/script_editor_plugin.cpp
 msgid "Reopen Closed Script"
 msgstr "Повторно відкрити закритий скрипт"
 
@@ -7459,10 +7164,6 @@ msgstr "Наступний файл"
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Theme"
 msgstr "Тема"
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Import Theme..."
-msgstr "Імпортувати тему…"
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Reload Theme"
@@ -7712,10 +7413,6 @@ msgid "Auto Indent"
 msgstr "Автовідступ"
 
 #: editor/plugins/script_text_editor.cpp
-msgid "Find in Files..."
-msgstr "Знайти у файлах…"
-
-#: editor/plugins/script_text_editor.cpp
 msgid "Contextual Help"
 msgstr "Контекстна довідка"
 
@@ -7734,14 +7431,6 @@ msgstr "Перейти до попередньої закладки"
 #: editor/plugins/script_text_editor.cpp
 msgid "Remove All Bookmarks"
 msgstr "Вилучити всі закладки"
-
-#: editor/plugins/script_text_editor.cpp
-msgid "Go to Function..."
-msgstr "Перейти до функції..."
-
-#: editor/plugins/script_text_editor.cpp
-msgid "Go to Line..."
-msgstr "Перейти до рядка..."
 
 #: editor/plugins/script_text_editor.cpp
 #: modules/visual_script/visual_script_editor.cpp
@@ -8121,13 +7810,6 @@ msgstr "Обертання перегляду заблоковано"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid ""
-"To zoom further, change the camera's clipping planes (View -> Settings...)"
-msgstr ""
-"Для подальшого масштабування змініть площини обрізання камери (Перегляд -> "
-"Параметри...)"
-
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid ""
 "Note: The FPS value displayed is the editor's framerate.\n"
 "It cannot be used as a reliable indication of in-game performance."
 msgstr ""
@@ -8251,10 +7933,6 @@ msgid "Snap Object to Floor"
 msgstr "Приліпити об'єкт до підлоги"
 
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid "Transform Dialog..."
-msgstr "Вікно перетворення..."
-
-#: editor/plugins/spatial_editor_plugin.cpp
 msgid "1 Viewport"
 msgstr "1 панель перегляду"
 
@@ -8297,11 +7975,6 @@ msgstr "Переглянути відбраковування Portal"
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "View Occlusion Culling"
 msgstr "Переглянути відбраковування замикання"
-
-#: editor/plugins/spatial_editor_plugin.cpp
-#: modules/gridmap/grid_map_editor_plugin.cpp
-msgid "Settings..."
-msgstr "Параметри…"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "Snap Settings"
@@ -9055,10 +8728,6 @@ msgstr "Перевизначити усі записи стандартних т
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Theme:"
 msgstr "Тема:"
-
-#: editor/plugins/theme_editor_plugin.cpp
-msgid "Manage Items..."
-msgstr "Керувати записами…"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Add, remove, organize and import Theme items."
@@ -10650,10 +10319,6 @@ msgstr ""
 msgid "Presets"
 msgstr "Набори"
 
-#: editor/project_export.cpp editor/project_settings_editor.cpp
-msgid "Add..."
-msgstr "Додати..."
-
 #: editor/project_export.cpp
 msgid ""
 "If checked, the preset will be available for use in one-click deploy.\n"
@@ -10840,10 +10505,6 @@ msgstr "Пристрій"
 #, fuzzy
 msgid "(Physical)"
 msgstr " (фізичний)"
-
-#: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
-msgid "Press a Key..."
-msgstr "Натисніть клавішу,..."
 
 #: editor/project_settings_editor.cpp
 msgid "Mouse Button Index:"
@@ -11034,10 +10695,6 @@ msgstr "Параметри проєкту (project.godot)"
 msgid "General"
 msgstr "Загальне"
 
-#: editor/project_settings_editor.cpp
-msgid "Override For..."
-msgstr "Перевизначити на..."
-
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
 msgid "The editor must be restarted for changes to take effect."
 msgstr "Щоб зміни набули чинності, редактор слід перезапустити."
@@ -11127,10 +10784,6 @@ msgid "Import Defaults"
 msgstr "Типові параметри імпортування"
 
 #: editor/property_editor.cpp
-msgid "Preset..."
-msgstr "Заздалегідь установлений..."
-
-#: editor/property_editor.cpp
 msgid "Zero"
 msgstr "Нуль"
 
@@ -11141,14 +10794,6 @@ msgstr "Перейти у-з"
 #: editor/property_editor.cpp
 msgid "Easing Out-In"
 msgstr "Перейти з-у"
-
-#: editor/property_editor.cpp
-msgid "File..."
-msgstr "Файл..."
-
-#: editor/property_editor.cpp
-msgid "Dir..."
-msgstr "Каталог..."
 
 #: editor/property_editor.cpp
 msgid "Assign"
@@ -11480,30 +11125,6 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 msgid ""
-"Can't save the root node branch as an instanced scene.\n"
-"To create an editable copy of the current scene, duplicate it using the "
-"FileSystem dock context menu\n"
-"or create an inherited scene using Scene > New Inherited Scene... instead."
-msgstr ""
-"Не вдалося зберегти гілку кореневого вузла як екземпляр сцени.\n"
-"Щоб створити редаговану копію поточної сцени, здублюйте її за допомогою "
-"контекстного меню бічної панелі файлової системи\n"
-"або створіть успадковану сцену за допомогою пункту меню «Сцена > Створити "
-"успадковану сцену...»."
-
-#: editor/scene_tree_dock.cpp
-msgid ""
-"Can't save the branch of an already instanced scene.\n"
-"To create a variation of a scene, you can make an inherited scene based on "
-"the instanced scene using Scene > New Inherited Scene... instead."
-msgstr ""
-"Не вдалося зберегти гілку вже створеного екземпляра сцени.\n"
-"Щоб створити варіацію сцени, ви можете створити успадковану сцену на основі "
-"екземпляра сцени за допомогою пункту меню «Сцена > Створити успадковану "
-"сцену...»."
-
-#: editor/scene_tree_dock.cpp
-msgid ""
 "Can't save a branch which is a child of an already instantiated scene.\n"
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
@@ -11515,10 +11136,6 @@ msgid ""
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid "Save New Scene As..."
-msgstr "Зберегти нову сцену як..."
 
 #: editor/scene_tree_dock.cpp
 msgid ""
@@ -12341,10 +11958,6 @@ msgstr "Об'єкт не може надавати довжину."
 msgid "Export Mesh GLTF2"
 msgstr "Експортувати GLTF2 сітки"
 
-#: modules/gltf/editor_scene_exporter_gltf_plugin.cpp
-msgid "Export GLTF..."
-msgstr "Експортувати GLTF…"
-
 #: modules/gridmap/grid_map_editor_plugin.cpp
 msgid "Next Plane"
 msgstr "Наступна площина"
@@ -12527,52 +12140,8 @@ msgid "Clear the navigation mesh."
 msgstr "Очистити навігаційну сітку."
 
 #: modules/recast/navigation_mesh_generator.cpp
-msgid "Setting up Configuration..."
-msgstr "Налаштування конфігурації..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Calculating grid size..."
-msgstr "Розрахунок розміру сітки..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating heightfield..."
-msgstr "Створення карти висот..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Marking walkable triangles..."
-msgstr "Позначення прохідних трикутників..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Constructing compact heightfield..."
-msgstr "Створення компактної карти висот..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Eroding walkable area..."
-msgstr "Розмиття прохідної ділянки..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Partitioning..."
-msgstr "Розбиття..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating contours..."
-msgstr "Створення контурів..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating polymesh..."
-msgstr "Створення сітки..."
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Converting to native navigation mesh..."
-msgstr "Перетворення на власну навігаційну сітку..."
-
-#: modules/recast/navigation_mesh_generator.cpp
 msgid "Navigation Mesh Generator Setup:"
 msgstr "Налаштування генератора навігаційної сітки:"
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Parsing Geometry..."
-msgstr "Аналіз геометрії..."
 
 #: modules/recast/navigation_mesh_generator.cpp
 msgid "Done!"
@@ -12898,14 +12467,6 @@ msgid "Change Base Type:"
 msgstr "Змінити базовий тип:"
 
 #: modules/visual_script/visual_script_editor.cpp
-msgid "Add Nodes..."
-msgstr "Додати вузли…"
-
-#: modules/visual_script/visual_script_editor.cpp
-msgid "Add Function..."
-msgstr "Додати функцію…"
-
-#: modules/visual_script/visual_script_editor.cpp
 msgid "function_name"
 msgstr "назва_функції"
 
@@ -13040,24 +12601,8 @@ msgid "Running on %s"
 msgstr "Запущено на %s"
 
 #: platforms/android/export/export_plugin.cpp
-msgid "Exporting APK..."
-msgstr "Експортування APK…"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Uninstalling..."
-msgstr "Вилучення…"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Installing to device, please wait..."
-msgstr "Встановлення на пристрій. Будь ласка, зачекайте..."
-
-#: platforms/android/export/export_plugin.cpp
 msgid "Could not install to device: %s"
 msgstr "Не вдалося встановити на пристрій: %s"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Running on device..."
-msgstr "Запуск на пристрої…"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Could not execute on device."
@@ -13213,24 +12758,12 @@ msgstr ""
 "Отриманий у результаті %s не підписано."
 
 #: platforms/android/export/export_plugin.cpp
-msgid "Signing debug %s..."
-msgstr "Підписування діагностики %s…"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Signing release %s..."
-msgstr "Підписування випуску %s…"
-
-#: platforms/android/export/export_plugin.cpp
 msgid "Could not find keystore, unable to export."
 msgstr "Не вдалося знайти сховище ключів. Неможливо виконати експортування."
 
 #: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
 msgstr "«apksigner» повернуто повідомлення про помилку із номером %d"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Verifying %s..."
-msgstr "Перевіряємо %s…"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' verification of %s failed."
@@ -13332,10 +12865,6 @@ msgid "Package not found: %s"
 msgstr "Пакунок не знайдено: %s"
 
 #: platforms/android/export/export_plugin.cpp
-msgid "Creating APK..."
-msgstr "Створення APK…"
-
-#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
@@ -13355,16 +12884,8 @@ msgstr ""
 "позначку з архітектур із пропущеними бібліотеками у стилі експортування."
 
 #: platforms/android/export/export_plugin.cpp
-msgid "Adding files..."
-msgstr "Додавання файлів…"
-
-#: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files"
 msgstr "Не вдалося експортувати файли проєкту"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Aligning APK..."
-msgstr "Вирівнюємо APK..."
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
@@ -13699,10 +13220,6 @@ msgstr "Некоректна назва проєкту."
 #, fuzzy
 msgid "Couldn't create a project in this project folder."
 msgstr "Не вдалося створити project.godot у каталозі проєкту."
-
-#: projects_manager/projects_list.cpp
-msgid "Loading, please wait..."
-msgstr "Завантаження. Будь ласка, зачекайте..."
 
 #: projects_manager/projects_list.cpp
 msgid "Last Modified"
