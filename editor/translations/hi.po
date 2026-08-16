@@ -904,10 +904,6 @@ msgid "Disconnect all from signal: '%s'"
 msgstr "सभी इशारो से डिस्कनेक्ट करें: '%s'"
 
 #: editor/connections_dialog.cpp
-msgid "Connect..."
-msgstr "जोड़ना..."
-
-#: editor/connections_dialog.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Disconnect"
 msgstr "विलगन"
@@ -939,10 +935,6 @@ msgstr "क्या आप सुनिश्चित हैं कि आप 
 #: editor/connections_dialog.cpp
 msgid "Disconnect All"
 msgstr "सभी को डिस्कनेक्ट करें"
-
-#: editor/connections_dialog.cpp
-msgid "Edit..."
-msgstr "संपादित करें..."
 
 #: editor/connections_dialog.cpp
 #, fuzzy
@@ -1392,14 +1384,6 @@ msgid "Move Audio Bus"
 msgstr "ऑडियो बस हटाइये"
 
 #: editor/editor_audio_buses.cpp
-msgid "Save Audio Bus Layout As..."
-msgstr "ऑडियो बस लेआउट इस तरह बचा के रखिये..."
-
-#: editor/editor_audio_buses.cpp
-msgid "Location for New Layout..."
-msgstr "नए लेआउट के लिए स्थान..."
-
-#: editor/editor_audio_buses.cpp
 msgid "Open Audio Bus Layout"
 msgstr "ऑडियो बस लेआउट खोलिये"
 
@@ -1554,14 +1538,6 @@ msgstr "पैरैमिटर्स पेस्ट कीजिये"
 #: editor/editor_data.cpp
 msgid "Updating Scene"
 msgstr "सीन अपडेट कर रहा है"
-
-#: editor/editor_data.cpp
-msgid "Storing local changes..."
-msgstr "लोकल बदलीया स्टोर कर रहा है..."
-
-#: editor/editor_data.cpp
-msgid "Updating scene..."
-msgstr "सीन अपडेट कर रहा है..."
 
 #: editor/editor_data.cpp editor/editor_resource_picker.cpp
 msgid "[empty]"
@@ -1916,10 +1892,6 @@ msgstr "फ़ाइल मैनेजर में खोलिये"
 #: editor/filesystem_dock.cpp projects_manager/projects_list_item.cpp
 msgid "Show in File Manager"
 msgstr "फ़ाइल मैनेजर मे दिखाइए"
-
-#: editor/editor_file_dialog.cpp editor/filesystem_dock.cpp
-msgid "New Folder..."
-msgstr "नया फ़ोल्डर..."
 
 #: editor/editor_file_dialog.cpp editor/find_in_files.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
@@ -2337,10 +2309,6 @@ msgid ""
 "Make it unique first."
 msgstr "रेसोर्स सेव नहीं कर सकते क्योंकि यह संपादित सीन से संबंधित नहीं. इसे पहले युनिक बनाय."
 
-#: editor/editor_node.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Save Resource As..."
-msgstr "रेसोर्स इसप्रकार सेव कीजिये..."
-
 #: editor/editor_node.cpp
 msgid "Can't open file for writing:"
 msgstr "फ़ाइल रायटिंग के लिए नहीं खोल सकते:"
@@ -2510,10 +2478,6 @@ msgid "There is no defined scene to run."
 msgstr "चलाने के लिए कोई परिभाषित दृश्य नहीं है ।"
 
 #: editor/editor_node.cpp
-msgid "Save scene before running..."
-msgstr "अंजाम देने से पहले सीन को बचाएं ..."
-
-#: editor/editor_node.cpp
 msgid "Could not start subprocess!"
 msgstr "उपप्रक्रिया शुरू नहीं कर सका!"
 
@@ -2524,18 +2488,6 @@ msgstr "खुला दृश्य"
 #: editor/editor_node.cpp
 msgid "Open Base Scene"
 msgstr "ओपन बेस सीन"
-
-#: editor/editor_node.cpp
-msgid "Quick Open..."
-msgstr "तुरंत खोलिये..."
-
-#: editor/editor_node.cpp
-msgid "Quick Open Scene..."
-msgstr "क्विक ओपन सीन..."
-
-#: editor/editor_node.cpp
-msgid "Quick Open Script..."
-msgstr "क्विक ओपन स्क्रिप्ट..."
 
 #: editor/editor_node.cpp
 msgid "Save & Close"
@@ -2567,10 +2519,6 @@ msgid ""
 "A root node is required to save the scene. You can add a root node using the "
 "Scene tree dock."
 msgstr "दृश्य को बचाने के लिए एक रूट नोड की आवश्यकता होती है।"
-
-#: editor/editor_node.cpp
-msgid "Save Scene As..."
-msgstr "दृश्य के रूप में सहेजें ..."
 
 #: editor/editor_node.cpp modules/gltf/editor_scene_exporter_gltf_plugin.cpp
 msgid "This operation can't be done without a scene."
@@ -2637,10 +2585,6 @@ msgid ""
 msgstr ""
 "वर्तमान सीन मे कुछ अनसेव्ड बदलाव है|\n"
 "फिर भी सीन रेलोड करे? यह क्रिया पूर्ववत नहीं की जा सकती|"
-
-#: editor/editor_node.cpp
-msgid "Quick Run Scene..."
-msgstr "क्विक रन सीन..."
 
 #: editor/editor_node.cpp
 msgid "Quit"
@@ -2870,24 +2814,12 @@ msgid "Previous tab"
 msgstr "पिछला टैब"
 
 #: editor/editor_node.cpp
-msgid "Filter Files..."
-msgstr "फ़िल्टर फ़ाइलें..."
-
-#: editor/editor_node.cpp
 msgid "Operations with scene files."
 msgstr "दृश्य फ़ाइलों के साथ संचालन।"
 
 #: editor/editor_node.cpp
 msgid "New Scene"
 msgstr "नया दृश्य"
-
-#: editor/editor_node.cpp
-msgid "New Inherited Scene..."
-msgstr "नया विरासत में मिला दृश्य..."
-
-#: editor/editor_node.cpp
-msgid "Open Scene..."
-msgstr "खुला दृश्य..."
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 msgid "Open Recent"
@@ -2896,18 +2828,6 @@ msgstr "खुला हाल"
 #: editor/editor_node.cpp
 msgid "Save Scene"
 msgstr "दृश्य बचाओ"
-
-#: editor/editor_node.cpp
-msgid "Convert To..."
-msgstr "बदलने के लिए..."
-
-#: editor/editor_node.cpp
-msgid "MeshLibrary..."
-msgstr "मेष लाइब्रेरी..."
-
-#: editor/editor_node.cpp
-msgid "TileSet..."
-msgstr "Tileset ..."
 
 #: editor/editor_node.cpp editor/plugins/script_text_editor.cpp
 #: scene/gui/line_edit.cpp scene/gui/text_edit.cpp
@@ -2928,10 +2848,6 @@ msgstr "विविध परियोजना या दृश्य-व्�
 msgid "Project"
 msgstr "परियोजना"
 
-#: editor/editor_node.cpp
-msgid "Project Settings..."
-msgstr "प्रोजेक्ट सेटिंग ..."
-
 #: editor/editor_node.cpp editor/plugins/version_control_editor_plugin.cpp
 msgid "Version Control"
 msgstr "वर्जन कंट्रोल"
@@ -2945,25 +2861,12 @@ msgid "Shut Down Version Control"
 msgstr "वर्जन नियंत्रण बंद करें"
 
 #: editor/editor_node.cpp
-msgid "Export..."
-msgstr "निर्यात..."
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Install Android Project Template..."
-msgstr "एंड्रॉयड बिल्ड टेम्पलेट स्थापित करें..."
-
-#: editor/editor_node.cpp
 msgid "Open Project Data Folder"
 msgstr "प्रोजेक्ट डेटा फ़ोल्डर खोलिये"
 
 #: editor/editor_node.cpp editor/plugins/tile_set_editor_plugin.cpp
 msgid "Tools"
 msgstr "उपकरण"
-
-#: editor/editor_node.cpp
-msgid "Orphan Resource Explorer..."
-msgstr "असहाय रेसोर्स खोजकर्ता..."
 
 #: editor/editor_node.cpp
 #, fuzzy
@@ -3078,10 +2981,6 @@ msgid "Editor"
 msgstr "संपादक"
 
 #: editor/editor_node.cpp
-msgid "Editor Settings..."
-msgstr "एडीटर सेटिन्गस..."
-
-#: editor/editor_node.cpp
 msgid "Editor Layout"
 msgstr "संपादक लेआउट"
 
@@ -3112,14 +3011,6 @@ msgstr "संपादक डेटा फ़ोल्डर खोलें"
 #: editor/editor_node.cpp
 msgid "Open Editor Settings Folder"
 msgstr "ओपन एडिटर सेटिंगफ़र"
-
-#: editor/editor_node.cpp
-msgid "Manage Editor Features..."
-msgstr "संपादक सुविधाएँ प्रबंधित करें ..."
-
-#: editor/editor_node.cpp
-msgid "Manage Export Templates..."
-msgstr "निर्यात टेम्पलेट्स का प्रबंधन करें ..."
 
 #: editor/editor_node.cpp editor/plugins/shader_editor_plugin.cpp
 msgid "Help"
@@ -3371,10 +3262,6 @@ msgstr "सब-रिसोर्स नहीं मिला."
 msgid "Creating Mesh Previews"
 msgstr "मेष पूर्वावलोकन बनाना"
 
-#: editor/editor_plugin.cpp
-msgid "Thumbnail..."
-msgstr "थंबनेल..."
-
 #: editor/editor_plugin_settings.cpp
 msgid "Main Script:"
 msgstr "मेन स्क्रिप्ट:"
@@ -3478,10 +3365,6 @@ msgstr "बिट%d, मूल्य % डी"
 #: editor/editor_properties.cpp
 msgid "[Empty]"
 msgstr "[खाली]"
-
-#: editor/editor_properties.cpp editor/plugins/root_motion_editor_plugin.cpp
-msgid "Assign..."
-msgstr "सौंपना..."
 
 #: editor/editor_properties.cpp
 msgid "Invalid RID"
@@ -3657,22 +3540,8 @@ msgid "There are no mirrors available."
 msgstr "कोई '%s' फ़ाइल नहीं."
 
 #: editor/export_template_manager.cpp
-#, fuzzy
-msgid "Retrieving the mirror list..."
-msgstr "दर्पण को पुनः प्राप्त करना, कृपया प्रतीक्षा करें ..."
-
-#: editor/export_template_manager.cpp
-msgid "Starting the download..."
-msgstr ""
-
-#: editor/export_template_manager.cpp
 msgid "Error requesting URL:"
 msgstr "लोड होने मे त्रुटि:"
-
-#: editor/export_template_manager.cpp
-#, fuzzy
-msgid "Connecting to the mirror..."
-msgstr "मिरर से कनेक्ट..."
 
 #: editor/export_template_manager.cpp
 msgid "Can't resolve the requested address."
@@ -3699,10 +3568,6 @@ msgstr ""
 #, fuzzy
 msgid "Request failed:"
 msgstr "अनुरोध विफल रहा।"
-
-#: editor/export_template_manager.cpp
-msgid "Download complete; extracting templates..."
-msgstr ""
 
 #: editor/export_template_manager.cpp
 msgid "Cannot remove temporary file:"
@@ -3750,22 +3615,12 @@ msgid "Can't Resolve"
 msgstr "हल नहीं कर सकते"
 
 #: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Connecting..."
-msgstr "जोड़ने..."
-
-#: editor/export_template_manager.cpp
 msgid "Can't Connect"
 msgstr "कनेक्ट नहीं कर सकते"
 
 #: editor/export_template_manager.cpp
 msgid "Connected"
 msgstr "जुड़ा"
-
-#: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Requesting..."
-msgstr "अनुरोध..."
 
 #: editor/export_template_manager.cpp
 msgid "Downloading"
@@ -4032,30 +3887,6 @@ msgstr "पसंदीदा में जोड़ें"
 msgid "Remove from Favorites"
 msgstr "पसंदीदा से निकालें"
 
-#: editor/filesystem_dock.cpp
-msgid "Edit Dependencies..."
-msgstr "निर्भरित फ़ाइलें संपादित करें..."
-
-#: editor/filesystem_dock.cpp
-msgid "View Owners..."
-msgstr "ओनर्स देखे..."
-
-#: editor/filesystem_dock.cpp
-msgid "Move To..."
-msgstr "मे ले जाएँ..."
-
-#: editor/filesystem_dock.cpp
-msgid "New Scene..."
-msgstr "नया दृश्य..."
-
-#: editor/filesystem_dock.cpp editor/plugins/script_editor_plugin.cpp
-msgid "New Script..."
-msgstr "नई स्क्रिप्ट..."
-
-#: editor/filesystem_dock.cpp
-msgid "New Resource..."
-msgstr "नया संसाधन..."
-
 #: editor/filesystem_dock.cpp editor/inspector_dock.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/script_editor_debugger.cpp
@@ -4098,14 +3929,6 @@ msgid "Sort by First Modified"
 msgstr ""
 
 #: editor/filesystem_dock.cpp
-msgid "Duplicate..."
-msgstr "डुप्लिकेट..."
-
-#: editor/filesystem_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Rename..."
-msgstr "नाम बदली..."
-
-#: editor/filesystem_dock.cpp
 msgid "Focus the search box"
 msgstr ""
 
@@ -4128,14 +3951,6 @@ msgstr "स्प्लिट मोड टॉगल कीजिये"
 #: editor/filesystem_dock.cpp
 msgid "Search files"
 msgstr "फाइलें खोजें"
-
-#: editor/filesystem_dock.cpp
-msgid ""
-"Scanning Files,\n"
-"Please Wait..."
-msgstr ""
-"फ़ाइले स्कैन कर रहा है,\n"
-"कृपया रुकिये..."
 
 #: editor/filesystem_dock.cpp
 msgid "Move"
@@ -4184,15 +3999,6 @@ msgid ""
 msgstr ""
 "निम्नलिखित एक्सटेंशन कि फ़ाइले शामिल कि गई है. इन्हे प्रोजेक्ट सेटिंग्स मे डालिये या निकालिये."
 
-#: editor/find_in_files.cpp editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/script_text_editor.cpp
-msgid "Find..."
-msgstr "तलाशिये..."
-
-#: editor/find_in_files.cpp editor/plugins/script_text_editor.cpp
-msgid "Replace..."
-msgstr "बदली करे..."
-
 #: editor/find_in_files.cpp
 msgid "Find: "
 msgstr "तलाशिये: "
@@ -4204,10 +4010,6 @@ msgstr "बदली करे: "
 #: editor/find_in_files.cpp
 msgid "Replace all (no undo)"
 msgstr "सभी बदली करे (इसे अंडू नहीं किया जा सकता है)"
-
-#: editor/find_in_files.cpp
-msgid "Searching..."
-msgstr "खोज..."
 
 #: editor/find_in_files.cpp
 msgid "%d match in %d file."
@@ -4320,20 +4122,12 @@ msgid "Import Scene"
 msgstr "सीन इंपोर्ट किजिये"
 
 #: editor/import/resource_importer_scene.cpp
-msgid "Importing Scene..."
-msgstr "सीन इंपोर्ट कर रहा है..."
-
-#: editor/import/resource_importer_scene.cpp
 msgid "Generating Lightmaps"
 msgstr "लाईटमॅप बना रहा है"
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Generating for Mesh: "
 msgstr "मेश के लिये बना रहा है: "
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Running Custom Script..."
-msgstr "कस्टम स्क्रिप्ट चला रहा है..."
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Couldn't load post-import script:"
@@ -4349,10 +4143,6 @@ msgstr ""
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Did you return a Node-derived object in the `post_import()` method?"
-msgstr ""
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Saving..."
 msgstr ""
 
 #: editor/import_defaults_editor.cpp
@@ -4447,12 +4237,6 @@ msgstr ""
 
 #: editor/inspector_dock.cpp
 msgid "Save the currently edited resource."
-msgstr ""
-
-#: editor/inspector_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-#: editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/theme_editor_plugin.cpp
-msgid "Save As..."
 msgstr ""
 
 #: editor/inspector_dock.cpp
@@ -4596,13 +4380,6 @@ msgstr ""
 #: editor/plugins/animation_state_machine_editor.cpp
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Animation"
-msgstr ""
-
-#: editor/plugins/animation_blend_space_1d_editor.cpp
-#: editor/plugins/animation_blend_space_2d_editor.cpp
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/animation_state_machine_editor.cpp
-msgid "Load..."
 msgstr ""
 
 #: editor/plugins/animation_blend_space_1d_editor.cpp
@@ -4828,11 +4605,6 @@ msgid "Node Renamed"
 msgstr ""
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
-msgid "Add Node..."
-msgstr ""
-
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
 #: editor/plugins/root_motion_editor_plugin.cpp
 msgid "Edit Filtered Tracks:"
 msgstr ""
@@ -4957,10 +4729,6 @@ msgstr ""
 #: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr "नई"
-
-#: editor/plugins/animation_player_editor_plugin.cpp
-msgid "Edit Transitions..."
-msgstr "एडिट ट्रांजिशन..."
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 msgid "Open in Inspector"
@@ -5264,15 +5032,7 @@ msgid "Transition Node"
 msgstr ""
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Import Animations..."
-msgstr ""
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Edit Node Filters"
-msgstr ""
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Filters..."
 msgstr ""
 
 #: editor/plugins/asset_library_editor_plugin.cpp
@@ -5368,28 +5128,12 @@ msgid "Asset Download Error:"
 msgstr ""
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Downloading (%s / %s)..."
-msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Downloading..."
-msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Resolving..."
-msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Error making request"
 msgstr ""
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Idle"
 msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Install..."
-msgstr "स्थापित..."
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Retry"
@@ -5456,14 +5200,6 @@ msgid "Search assets (excluding templates, projects, and demos)"
 msgstr ""
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Import..."
-msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Plugins..."
-msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 #: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr ""
@@ -5491,10 +5227,6 @@ msgstr "समुदाय"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
 msgstr ""
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Loading..."
-msgstr "लोड..."
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Assets ZIP File"
@@ -5933,11 +5665,6 @@ msgid "Smart Snapping"
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid "Configure Snap..."
-msgstr ""
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Snap to Parent"
 msgstr ""
 
@@ -6156,10 +5883,6 @@ msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Add %s"
-msgstr ""
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Adding %s..."
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6516,10 +6239,6 @@ msgid ""
 "Creates a polygon-based collision shape.\n"
 "This is a performance middle-ground between a single convex collision and a "
 "polygon-based collision."
-msgstr ""
-
-#: editor/plugins/mesh_instance_editor_plugin.cpp
-msgid "Create Outline Mesh..."
 msgstr ""
 
 #: editor/plugins/mesh_instance_editor_plugin.cpp
@@ -7233,17 +6952,9 @@ msgid "Error Importing"
 msgstr "इंपोर्ट लोड होने मे त्रुटि:"
 
 #: editor/plugins/script_editor_plugin.cpp
-msgid "New Text File..."
-msgstr ""
-
-#: editor/plugins/script_editor_plugin.cpp
 #, fuzzy
 msgid "Open File"
 msgstr "खोलो इसे"
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Save File As..."
-msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Can't obtain the script for running."
@@ -7272,10 +6983,6 @@ msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Error saving"
-msgstr ""
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Save Theme As..."
 msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
@@ -7336,11 +7043,6 @@ msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
 #, fuzzy
-msgid "Open..."
-msgstr "खोलो इसे"
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
 msgid "Reopen Closed Script"
 msgstr "निर्भरता संपादक"
 
@@ -7367,10 +7069,6 @@ msgstr ""
 #: editor/plugins/script_editor_plugin.cpp
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Theme"
-msgstr ""
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Import Theme..."
 msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
@@ -7620,10 +7318,6 @@ msgid "Auto Indent"
 msgstr ""
 
 #: editor/plugins/script_text_editor.cpp
-msgid "Find in Files..."
-msgstr ""
-
-#: editor/plugins/script_text_editor.cpp
 msgid "Contextual Help"
 msgstr ""
 
@@ -7641,14 +7335,6 @@ msgstr ""
 
 #: editor/plugins/script_text_editor.cpp
 msgid "Remove All Bookmarks"
-msgstr ""
-
-#: editor/plugins/script_text_editor.cpp
-msgid "Go to Function..."
-msgstr ""
-
-#: editor/plugins/script_text_editor.cpp
-msgid "Go to Line..."
 msgstr ""
 
 #: editor/plugins/script_text_editor.cpp
@@ -8032,11 +7718,6 @@ msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid ""
-"To zoom further, change the camera's clipping planes (View -> Settings...)"
-msgstr ""
-
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid ""
 "Note: The FPS value displayed is the editor's framerate.\n"
 "It cannot be used as a reliable indication of in-game performance."
 msgstr ""
@@ -8154,10 +7835,6 @@ msgid "Snap Object to Floor"
 msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid "Transform Dialog..."
-msgstr ""
-
-#: editor/plugins/spatial_editor_plugin.cpp
 msgid "1 Viewport"
 msgstr ""
 
@@ -8201,11 +7878,6 @@ msgstr ""
 #, fuzzy
 msgid "View Occlusion Culling"
 msgstr "सदस्यता बनाएं"
-
-#: editor/plugins/spatial_editor_plugin.cpp
-#: modules/gridmap/grid_map_editor_plugin.cpp
-msgid "Settings..."
-msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "Snap Settings"
@@ -8999,11 +8671,6 @@ msgstr ""
 #, fuzzy
 msgid "Theme:"
 msgstr "खोलो इसे"
-
-#: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
-msgid "Manage Items..."
-msgstr "निर्यात टेम्पलेट्स का प्रबंधन करें ..."
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Add, remove, organize and import Theme items."
@@ -10537,10 +10204,6 @@ msgstr ""
 msgid "Presets"
 msgstr ""
 
-#: editor/project_export.cpp editor/project_settings_editor.cpp
-msgid "Add..."
-msgstr ""
-
 #: editor/project_export.cpp
 msgid ""
 "If checked, the preset will be available for use in one-click deploy.\n"
@@ -10716,10 +10379,6 @@ msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "(Physical)"
-msgstr ""
-
-#: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
-msgid "Press a Key..."
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -10910,10 +10569,6 @@ msgstr "प्रोजेक्ट सेटिंग ..."
 msgid "General"
 msgstr "सामान्य"
 
-#: editor/project_settings_editor.cpp
-msgid "Override For..."
-msgstr ""
-
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
 msgid "The editor must be restarted for changes to take effect."
 msgstr ""
@@ -11004,10 +10659,6 @@ msgid "Import Defaults"
 msgstr "प्रायिक लोड कीजिये"
 
 #: editor/property_editor.cpp
-msgid "Preset..."
-msgstr ""
-
-#: editor/property_editor.cpp
 msgid "Zero"
 msgstr ""
 
@@ -11017,14 +10668,6 @@ msgstr ""
 
 #: editor/property_editor.cpp
 msgid "Easing Out-In"
-msgstr ""
-
-#: editor/property_editor.cpp
-msgid "File..."
-msgstr ""
-
-#: editor/property_editor.cpp
-msgid "Dir..."
 msgstr ""
 
 #: editor/property_editor.cpp
@@ -11350,21 +10993,6 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 msgid ""
-"Can't save the root node branch as an instanced scene.\n"
-"To create an editable copy of the current scene, duplicate it using the "
-"FileSystem dock context menu\n"
-"or create an inherited scene using Scene > New Inherited Scene... instead."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid ""
-"Can't save the branch of an already instanced scene.\n"
-"To create a variation of a scene, you can make an inherited scene based on "
-"the instanced scene using Scene > New Inherited Scene... instead."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid ""
 "Can't save a branch which is a child of an already instantiated scene.\n"
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
@@ -11375,10 +11003,6 @@ msgid ""
 "Can't save a branch which is part of an inherited scene.\n"
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid "Save New Scene As..."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -12185,11 +11809,6 @@ msgstr ""
 msgid "Export Mesh GLTF2"
 msgstr "निर्यात मेष पुस्तकालय"
 
-#: modules/gltf/editor_scene_exporter_gltf_plugin.cpp
-#, fuzzy
-msgid "Export GLTF..."
-msgstr "निर्यात..."
-
 #: modules/gridmap/grid_map_editor_plugin.cpp
 msgid "Next Plane"
 msgstr ""
@@ -12379,51 +11998,7 @@ msgid "Clear the navigation mesh."
 msgstr ""
 
 #: modules/recast/navigation_mesh_generator.cpp
-msgid "Setting up Configuration..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Calculating grid size..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating heightfield..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Marking walkable triangles..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Constructing compact heightfield..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Eroding walkable area..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Partitioning..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating contours..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating polymesh..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Converting to native navigation mesh..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
 msgid "Navigation Mesh Generator Setup:"
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Parsing Geometry..."
 msgstr ""
 
 #: modules/recast/navigation_mesh_generator.cpp
@@ -12748,16 +12323,6 @@ msgstr ""
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Nodes..."
-msgstr "पसंदीदा:"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
-msgid "Add Function..."
-msgstr "कार्यों:"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
 msgid "function_name"
 msgstr "कार्यों:"
 
@@ -12890,28 +12455,8 @@ msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
-msgid "Exporting APK..."
-msgstr "निर्यात..."
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Uninstalling..."
-msgstr "अनइंस्टाल करें"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Installing to device, please wait..."
-msgstr "दर्पण को पुनः प्राप्त करना, कृपया प्रतीक्षा करें ..."
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid "Could not install to device: %s"
 msgstr "उपप्रक्रिया शुरू नहीं कर सका!"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Running on device..."
-msgstr "कस्टम स्क्रिप्ट चला रहा है..."
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
@@ -13041,26 +12586,11 @@ msgid ""
 msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
-msgid "Signing debug %s..."
-msgstr ""
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Signing release %s..."
-msgstr ""
-"फ़ाइले स्कैन कर रहा है,\n"
-"कृपया रुकिये..."
-
-#: platforms/android/export/export_plugin.cpp
 msgid "Could not find keystore, unable to export."
 msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
-msgstr ""
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Verifying %s..."
 msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
@@ -13142,11 +12672,6 @@ msgid "Package not found: %s"
 msgstr "पैकेज में है:"
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Creating APK..."
-msgstr "जोड़ने..."
-
-#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
@@ -13162,17 +12687,8 @@ msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
-msgid "Adding files..."
-msgstr "पसंदीदा:"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid "Could not export project files"
 msgstr "उपप्रक्रिया शुरू नहीं कर सका!"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Aligning APK..."
-msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
@@ -13495,11 +13011,6 @@ msgstr "गलत फॉण्ट का आकार |"
 #, fuzzy
 msgid "Couldn't create a project in this project folder."
 msgstr "उपप्रक्रिया शुरू नहीं कर सका!"
-
-#: projects_manager/projects_list.cpp
-#, fuzzy
-msgid "Loading, please wait..."
-msgstr "दर्पण को पुनः प्राप्त करना, कृपया प्रतीक्षा करें ..."
 
 #: projects_manager/projects_list.cpp
 msgid "Last Modified"

@@ -950,10 +950,6 @@ msgid "Disconnect all from signal: '%s'"
 msgstr "Odklopite '%s' iz '%s'"
 
 #: editor/connections_dialog.cpp
-msgid "Connect..."
-msgstr "Poveži..."
-
-#: editor/connections_dialog.cpp
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Disconnect"
 msgstr "Odklopi"
@@ -989,11 +985,6 @@ msgstr ""
 #, fuzzy
 msgid "Disconnect All"
 msgstr "Odklopi"
-
-#: editor/connections_dialog.cpp
-#, fuzzy
-msgid "Edit..."
-msgstr "Uredi"
 
 #: editor/connections_dialog.cpp
 #, fuzzy
@@ -1446,14 +1437,6 @@ msgid "Move Audio Bus"
 msgstr "Premakni Zvočno Vodilo"
 
 #: editor/editor_audio_buses.cpp
-msgid "Save Audio Bus Layout As..."
-msgstr "Shrani Postavitev Zvočnega Vodila Kot..."
-
-#: editor/editor_audio_buses.cpp
-msgid "Location for New Layout..."
-msgstr "Lokacija za Novo Postavitev..."
-
-#: editor/editor_audio_buses.cpp
 msgid "Open Audio Bus Layout"
 msgstr "Odpri Zvočno Vodilo"
 
@@ -1616,14 +1599,6 @@ msgstr "Prilepi Parametre"
 #: editor/editor_data.cpp
 msgid "Updating Scene"
 msgstr "Posodabljanje Scene"
-
-#: editor/editor_data.cpp
-msgid "Storing local changes..."
-msgstr "Shranjevanje lokalnih sprememb..."
-
-#: editor/editor_data.cpp
-msgid "Updating scene..."
-msgstr "Posodabljanje scene..."
 
 #: editor/editor_data.cpp editor/editor_resource_picker.cpp
 msgid "[empty]"
@@ -1987,10 +1962,6 @@ msgstr "Pokaži V Upravitelju Datotek"
 #, fuzzy
 msgid "Show in File Manager"
 msgstr "Pokaži V Upravitelju Datotek"
-
-#: editor/editor_file_dialog.cpp editor/filesystem_dock.cpp
-msgid "New Folder..."
-msgstr "Nova Mapa..."
 
 #: editor/editor_file_dialog.cpp editor/find_in_files.cpp
 #: editor/plugins/version_control_editor_plugin.cpp
@@ -2441,10 +2412,6 @@ msgid ""
 "Make it unique first."
 msgstr ""
 
-#: editor/editor_node.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Save Resource As..."
-msgstr "Shrani Vire Kot..."
-
 #: editor/editor_node.cpp
 msgid "Can't open file for writing:"
 msgstr "Datoteke ni mogoče odpreti za pisanje:"
@@ -2612,10 +2579,6 @@ msgid "There is no defined scene to run."
 msgstr "Ni določene scene za zagon."
 
 #: editor/editor_node.cpp
-msgid "Save scene before running..."
-msgstr ""
-
-#: editor/editor_node.cpp
 msgid "Could not start subprocess!"
 msgstr "Nemorem začeti podprocesa!"
 
@@ -2626,19 +2589,6 @@ msgstr "Odpri Sceno"
 #: editor/editor_node.cpp
 msgid "Open Base Scene"
 msgstr "Odpri Osnovno Sceno"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Quick Open..."
-msgstr "Hitro Odpri Sceno..."
-
-#: editor/editor_node.cpp
-msgid "Quick Open Scene..."
-msgstr "Hitro Odpri Sceno..."
-
-#: editor/editor_node.cpp
-msgid "Quick Open Script..."
-msgstr "Hitro Odpri Skripto..."
 
 #: editor/editor_node.cpp
 msgid "Save & Close"
@@ -2669,10 +2619,6 @@ msgid ""
 "A root node is required to save the scene. You can add a root node using the "
 "Scene tree dock."
 msgstr ""
-
-#: editor/editor_node.cpp
-msgid "Save Scene As..."
-msgstr "Shrani Sceno Kot..."
 
 #: editor/editor_node.cpp modules/gltf/editor_scene_exporter_gltf_plugin.cpp
 msgid "This operation can't be done without a scene."
@@ -2738,10 +2684,6 @@ msgid ""
 "The current scene has unsaved changes.\n"
 "Reload the saved scene anyway? This action cannot be undone."
 msgstr ""
-
-#: editor/editor_node.cpp
-msgid "Quick Run Scene..."
-msgstr "Hitro Zaženi Sceno..."
 
 #: editor/editor_node.cpp
 msgid "Quit"
@@ -2988,24 +2930,12 @@ msgid "Previous tab"
 msgstr "Prejšnji zavihek"
 
 #: editor/editor_node.cpp
-msgid "Filter Files..."
-msgstr "Filtriraj datoteke..."
-
-#: editor/editor_node.cpp
 msgid "Operations with scene files."
 msgstr "Operacije z datotekami prizora."
 
 #: editor/editor_node.cpp
 msgid "New Scene"
 msgstr "Nov Prizor"
-
-#: editor/editor_node.cpp
-msgid "New Inherited Scene..."
-msgstr "Nov Podedovan Prizor..."
-
-#: editor/editor_node.cpp
-msgid "Open Scene..."
-msgstr "Odpri Prizor..."
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 msgid "Open Recent"
@@ -3014,18 +2944,6 @@ msgstr "Odpri Nedavne"
 #: editor/editor_node.cpp
 msgid "Save Scene"
 msgstr "Shrani Prizor"
-
-#: editor/editor_node.cpp
-msgid "Convert To..."
-msgstr "Pretvori V..."
-
-#: editor/editor_node.cpp
-msgid "MeshLibrary..."
-msgstr "Knjižnica Modelov..."
-
-#: editor/editor_node.cpp
-msgid "TileSet..."
-msgstr ""
 
 #: editor/editor_node.cpp editor/plugins/script_text_editor.cpp
 #: scene/gui/line_edit.cpp scene/gui/text_edit.cpp
@@ -3046,11 +2964,6 @@ msgstr "Različna projektna ali prizorska orodja."
 msgid "Project"
 msgstr "Projekt"
 
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Project Settings..."
-msgstr "Nastavitve Projekta"
-
 #: editor/editor_node.cpp editor/plugins/version_control_editor_plugin.cpp
 #, fuzzy
 msgid "Version Control"
@@ -3066,27 +2979,12 @@ msgstr ""
 
 #: editor/editor_node.cpp
 #, fuzzy
-msgid "Export..."
-msgstr "Izvozi"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Install Android Project Template..."
-msgstr "Neveljavno Ime Projekta."
-
-#: editor/editor_node.cpp
-#, fuzzy
 msgid "Open Project Data Folder"
 msgstr "Odprem Upravljalnik Projekta?"
 
 #: editor/editor_node.cpp editor/plugins/tile_set_editor_plugin.cpp
 msgid "Tools"
 msgstr "Orodja"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Orphan Resource Explorer..."
-msgstr "Raziskovalec Osamljenih Virov"
 
 #: editor/editor_node.cpp
 #, fuzzy
@@ -3203,11 +3101,6 @@ msgid "Editor"
 msgstr "Urejevalnik"
 
 #: editor/editor_node.cpp
-#, fuzzy
-msgid "Editor Settings..."
-msgstr "Nastavitve Urejevalnika"
-
-#: editor/editor_node.cpp
 msgid "Editor Layout"
 msgstr "Postavitev Urejevalnika"
 
@@ -3243,16 +3136,6 @@ msgstr ""
 #, fuzzy
 msgid "Open Editor Settings Folder"
 msgstr "Nastavitve Urejevalnika"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Manage Editor Features..."
-msgstr "Upravljaj Izvozne Predloge"
-
-#: editor/editor_node.cpp
-#, fuzzy
-msgid "Manage Export Templates..."
-msgstr "Upravljaj Izvozne Predloge"
 
 #: editor/editor_node.cpp editor/plugins/shader_editor_plugin.cpp
 msgid "Help"
@@ -3496,10 +3379,6 @@ msgstr ""
 msgid "Creating Mesh Previews"
 msgstr "Ustvari Predogled Modela"
 
-#: editor/editor_plugin.cpp
-msgid "Thumbnail..."
-msgstr "Sličica..."
-
 #: editor/editor_plugin_settings.cpp
 #, fuzzy
 msgid "Main Script:"
@@ -3606,10 +3485,6 @@ msgstr ""
 #: editor/editor_properties.cpp
 msgid "[Empty]"
 msgstr "[Prazen]"
-
-#: editor/editor_properties.cpp editor/plugins/root_motion_editor_plugin.cpp
-msgid "Assign..."
-msgstr ""
 
 #: editor/editor_properties.cpp
 #, fuzzy
@@ -3783,22 +3658,8 @@ msgstr ""
 
 #: editor/export_template_manager.cpp
 #, fuzzy
-msgid "Retrieving the mirror list..."
-msgstr "Pridobivanje virov, počakajte..."
-
-#: editor/export_template_manager.cpp
-msgid "Starting the download..."
-msgstr ""
-
-#: editor/export_template_manager.cpp
-#, fuzzy
 msgid "Error requesting URL:"
 msgstr "Napaka pri zahtevi URL-ja: "
-
-#: editor/export_template_manager.cpp
-#, fuzzy
-msgid "Connecting to the mirror..."
-msgstr "Povezovanje z Virom..."
 
 #: editor/export_template_manager.cpp
 #, fuzzy
@@ -3830,10 +3691,6 @@ msgstr "Zahteva ni uspela, preveč preusmeritev"
 #, fuzzy
 msgid "Request failed:"
 msgstr "Zahteva Ni Uspela."
-
-#: editor/export_template_manager.cpp
-msgid "Download complete; extracting templates..."
-msgstr ""
 
 #: editor/export_template_manager.cpp
 #, fuzzy
@@ -3879,22 +3736,12 @@ msgid "Can't Resolve"
 msgstr "Ni Mogoče Razrešiti"
 
 #: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Connecting..."
-msgstr "Povezovanje..."
-
-#: editor/export_template_manager.cpp
 msgid "Can't Connect"
 msgstr "Nemogoče se je Povezati"
 
 #: editor/export_template_manager.cpp
 msgid "Connected"
 msgstr "Povezano"
-
-#: editor/export_template_manager.cpp
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Requesting..."
-msgstr "Zahtevam..."
 
 #: editor/export_template_manager.cpp
 msgid "Downloading"
@@ -4164,33 +4011,6 @@ msgstr "Priljubljene:"
 msgid "Remove from Favorites"
 msgstr "Odstrani iz Skupine"
 
-#: editor/filesystem_dock.cpp
-msgid "Edit Dependencies..."
-msgstr "Uredi Odvisnosti..."
-
-#: editor/filesystem_dock.cpp
-msgid "View Owners..."
-msgstr "Poglej Lastnike..."
-
-#: editor/filesystem_dock.cpp
-msgid "Move To..."
-msgstr "Premakni V..."
-
-#: editor/filesystem_dock.cpp
-#, fuzzy
-msgid "New Scene..."
-msgstr "Nov Prizor"
-
-#: editor/filesystem_dock.cpp editor/plugins/script_editor_plugin.cpp
-#, fuzzy
-msgid "New Script..."
-msgstr "Hitro Odpri Skripto..."
-
-#: editor/filesystem_dock.cpp
-#, fuzzy
-msgid "New Resource..."
-msgstr "Shrani Vire Kot..."
-
 #: editor/filesystem_dock.cpp editor/inspector_dock.cpp
 #: editor/plugins/visual_shader_editor_plugin.cpp
 #: editor/script_editor_debugger.cpp
@@ -4235,14 +4055,6 @@ msgid "Sort by First Modified"
 msgstr ""
 
 #: editor/filesystem_dock.cpp
-msgid "Duplicate..."
-msgstr "Podvoji..."
-
-#: editor/filesystem_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-msgid "Rename..."
-msgstr "Preimenuj..."
-
-#: editor/filesystem_dock.cpp
 msgid "Focus the search box"
 msgstr ""
 
@@ -4269,14 +4081,6 @@ msgstr "Preklopi Način"
 #, fuzzy
 msgid "Search files"
 msgstr "Išči Razrede"
-
-#: editor/filesystem_dock.cpp
-msgid ""
-"Scanning Files,\n"
-"Please Wait..."
-msgstr ""
-"Pregledovanje Datotek,\n"
-"Prosimo, Počakajte..."
 
 #: editor/filesystem_dock.cpp
 msgid "Move"
@@ -4329,15 +4133,6 @@ msgid ""
 "ProjectSettings."
 msgstr ""
 
-#: editor/find_in_files.cpp editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/script_text_editor.cpp
-msgid "Find..."
-msgstr ""
-
-#: editor/find_in_files.cpp editor/plugins/script_text_editor.cpp
-msgid "Replace..."
-msgstr ""
-
 #: editor/find_in_files.cpp
 #, fuzzy
 msgid "Find: "
@@ -4352,11 +4147,6 @@ msgstr "Zamenjaj"
 #, fuzzy
 msgid "Replace all (no undo)"
 msgstr "Zamenjaj Vse"
-
-#: editor/find_in_files.cpp
-#, fuzzy
-msgid "Searching..."
-msgstr "Shranjevanje..."
 
 #: editor/find_in_files.cpp
 #, fuzzy
@@ -4480,20 +4270,12 @@ msgid "Import Scene"
 msgstr "Uvozi Prizor"
 
 #: editor/import/resource_importer_scene.cpp
-msgid "Importing Scene..."
-msgstr "Uvažanje Prizora..."
-
-#: editor/import/resource_importer_scene.cpp
 msgid "Generating Lightmaps"
 msgstr "Ustvarjanje Svetlobnih Kart"
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Generating for Mesh: "
 msgstr "Ustvarjanje za Model: "
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Running Custom Script..."
-msgstr "Izvajanje Skripte Po Meri..."
 
 #: editor/import/resource_importer_scene.cpp
 msgid "Couldn't load post-import script:"
@@ -4510,10 +4292,6 @@ msgstr "Napaka pri zagonu skripte po uvozu:"
 #: editor/import/resource_importer_scene.cpp
 msgid "Did you return a Node-derived object in the `post_import()` method?"
 msgstr ""
-
-#: editor/import/resource_importer_scene.cpp
-msgid "Saving..."
-msgstr "Shranjevanje..."
 
 #: editor/import_defaults_editor.cpp
 #, fuzzy
@@ -4610,12 +4388,6 @@ msgstr "Naloži obstoječi vir iz spomina in ga uredi."
 #: editor/inspector_dock.cpp
 msgid "Save the currently edited resource."
 msgstr "Shrani trenutno urejani vir."
-
-#: editor/inspector_dock.cpp editor/plugins/animation_player_editor_plugin.cpp
-#: editor/plugins/script_editor_plugin.cpp
-#: editor/plugins/theme_editor_plugin.cpp
-msgid "Save As..."
-msgstr "Shrani Kot..."
 
 #: editor/inspector_dock.cpp
 #, fuzzy
@@ -4779,14 +4551,6 @@ msgstr "Odstrani Poligon in Točko"
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Animation"
 msgstr "Dodaj Animacijo"
-
-#: editor/plugins/animation_blend_space_1d_editor.cpp
-#: editor/plugins/animation_blend_space_2d_editor.cpp
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/animation_state_machine_editor.cpp
-#, fuzzy
-msgid "Load..."
-msgstr "Naloži"
 
 #: editor/plugins/animation_blend_space_1d_editor.cpp
 #: editor/plugins/animation_blend_space_2d_editor.cpp
@@ -5038,12 +4802,6 @@ msgid "Node Renamed"
 msgstr "Ime Gradnika:"
 
 #: editor/plugins/animation_blend_tree_editor_plugin.cpp
-#: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
-msgid "Add Node..."
-msgstr "Dodaj vozlišče"
-
-#: editor/plugins/animation_blend_tree_editor_plugin.cpp
 #: editor/plugins/root_motion_editor_plugin.cpp
 #, fuzzy
 msgid "Edit Filtered Tracks:"
@@ -5175,11 +4933,6 @@ msgstr "Animacija"
 #: projects_manager/projects_manager.cpp
 msgid "New"
 msgstr ""
-
-#: editor/plugins/animation_player_editor_plugin.cpp
-#, fuzzy
-msgid "Edit Transitions..."
-msgstr "Prehodi"
 
 #: editor/plugins/animation_player_editor_plugin.cpp
 #, fuzzy
@@ -5497,16 +5250,8 @@ msgid "Transition Node"
 msgstr "Gradnik Prehod"
 
 #: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Import Animations..."
-msgstr "Uvozi Animacije..."
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
 msgid "Edit Node Filters"
 msgstr "Uredi Gradnike Filtri"
-
-#: editor/plugins/animation_tree_player_editor_plugin.cpp
-msgid "Filters..."
-msgstr "Filtri..."
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Contents:"
@@ -5606,31 +5351,12 @@ msgid "Asset Download Error:"
 msgstr "Napaka pri prenosu sredstev:"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Downloading (%s / %s)..."
-msgstr "Prenašanje"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Downloading..."
-msgstr "Prenašanje"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-msgid "Resolving..."
-msgstr "Razreševanje..."
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Error making request"
 msgstr "Napaka pri izdelavi zahteve"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Idle"
 msgstr "Nedejaven"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Install..."
-msgstr "Namesti"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Retry"
@@ -5702,16 +5428,6 @@ msgid "Search assets (excluding templates, projects, and demos)"
 msgstr ""
 
 #: editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Import..."
-msgstr "Uvozi"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Plugins..."
-msgstr "Vtičniki"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
 #: projects_manager/projects_list.cpp
 msgid "Sort:"
 msgstr "Razvrsti:"
@@ -5740,11 +5456,6 @@ msgstr "Skupnost"
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Testing"
 msgstr "Preskušanje"
-
-#: editor/plugins/asset_library_editor_plugin.cpp
-#, fuzzy
-msgid "Loading..."
-msgstr "Naloži"
 
 #: editor/plugins/asset_library_editor_plugin.cpp
 msgid "Assets ZIP File"
@@ -6239,11 +5950,6 @@ msgid "Smart Snapping"
 msgstr "Pametno pripenjanje"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid "Configure Snap..."
-msgstr "Nastavi Pripenjanje..."
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
 #, fuzzy
 msgid "Snap to Parent"
 msgstr "Pripni na Predhodnika"
@@ -6475,10 +6181,6 @@ msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Add %s"
-msgstr ""
-
-#: editor/plugins/canvas_item_editor_plugin.cpp
-msgid "Adding %s..."
 msgstr ""
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
@@ -6844,10 +6546,6 @@ msgid ""
 "Creates a polygon-based collision shape.\n"
 "This is a performance middle-ground between a single convex collision and a "
 "polygon-based collision."
-msgstr ""
-
-#: editor/plugins/mesh_instance_editor_plugin.cpp
-msgid "Create Outline Mesh..."
 msgstr ""
 
 #: editor/plugins/mesh_instance_editor_plugin.cpp
@@ -7582,18 +7280,8 @@ msgstr "Napaka pri premikanju:"
 
 #: editor/plugins/script_editor_plugin.cpp
 #, fuzzy
-msgid "New Text File..."
-msgstr "Nova Mapa..."
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
 msgid "Open File"
 msgstr "Odpri v Datoteki"
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
-msgid "Save File As..."
-msgstr "Shrani Kot..."
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Can't obtain the script for running."
@@ -7622,10 +7310,6 @@ msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Error saving"
-msgstr ""
-
-#: editor/plugins/script_editor_plugin.cpp
-msgid "Save Theme As..."
 msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
@@ -7688,11 +7372,6 @@ msgstr ""
 
 #: editor/plugins/script_editor_plugin.cpp
 #, fuzzy
-msgid "Open..."
-msgstr "Odpri"
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
 msgid "Reopen Closed Script"
 msgstr "Zaženi Skripto"
 
@@ -7721,11 +7400,6 @@ msgstr ""
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Theme"
 msgstr ""
-
-#: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
-msgid "Import Theme..."
-msgstr "Uvažanje Prizora..."
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Reload Theme"
@@ -7979,11 +7653,6 @@ msgid "Auto Indent"
 msgstr ""
 
 #: editor/plugins/script_text_editor.cpp
-#, fuzzy
-msgid "Find in Files..."
-msgstr "Filtriraj datoteke..."
-
-#: editor/plugins/script_text_editor.cpp
 msgid "Contextual Help"
 msgstr ""
 
@@ -8006,16 +7675,6 @@ msgstr "Preklopi na Zaustavitev"
 #, fuzzy
 msgid "Remove All Bookmarks"
 msgstr "Odstrani Vse Stvari"
-
-#: editor/plugins/script_text_editor.cpp
-#, fuzzy
-msgid "Go to Function..."
-msgstr "Odstrani Funkcijo"
-
-#: editor/plugins/script_text_editor.cpp
-#, fuzzy
-msgid "Go to Line..."
-msgstr "Pojdi na Vrstico"
 
 #: editor/plugins/script_text_editor.cpp
 #: modules/visual_script/visual_script_editor.cpp
@@ -8411,11 +8070,6 @@ msgstr ""
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid ""
-"To zoom further, change the camera's clipping planes (View -> Settings...)"
-msgstr ""
-
-#: editor/plugins/spatial_editor_plugin.cpp
-msgid ""
 "Note: The FPS value displayed is the editor's framerate.\n"
 "It cannot be used as a reliable indication of in-game performance."
 msgstr ""
@@ -8535,10 +8189,6 @@ msgid "Snap Object to Floor"
 msgstr "Pripni na mrežo"
 
 #: editor/plugins/spatial_editor_plugin.cpp
-msgid "Transform Dialog..."
-msgstr "Preoblikovanje Dialoga..."
-
-#: editor/plugins/spatial_editor_plugin.cpp
 msgid "1 Viewport"
 msgstr ""
 
@@ -8582,12 +8232,6 @@ msgstr ""
 #, fuzzy
 msgid "View Occlusion Culling"
 msgstr "Uredi Poligon"
-
-#: editor/plugins/spatial_editor_plugin.cpp
-#: modules/gridmap/grid_map_editor_plugin.cpp
-#, fuzzy
-msgid "Settings..."
-msgstr "Nastavitve Zaskočenja"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "Snap Settings"
@@ -9398,11 +9042,6 @@ msgstr ""
 #, fuzzy
 msgid "Theme:"
 msgstr "Člani"
-
-#: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
-msgid "Manage Items..."
-msgstr "Upravljaj Izvozne Predloge"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "Add, remove, organize and import Theme items."
@@ -10988,10 +10627,6 @@ msgstr ""
 msgid "Presets"
 msgstr ""
 
-#: editor/project_export.cpp editor/project_settings_editor.cpp
-msgid "Add..."
-msgstr ""
-
 #: editor/project_export.cpp
 msgid ""
 "If checked, the preset will be available for use in one-click deploy.\n"
@@ -11174,10 +10809,6 @@ msgstr ""
 
 #: editor/project_settings_editor.cpp
 msgid "(Physical)"
-msgstr ""
-
-#: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
-msgid "Press a Key..."
 msgstr ""
 
 #: editor/project_settings_editor.cpp
@@ -11368,10 +10999,6 @@ msgstr "Nastavitve Projekta"
 msgid "General"
 msgstr ""
 
-#: editor/project_settings_editor.cpp
-msgid "Override For..."
-msgstr ""
-
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
 msgid "The editor must be restarted for changes to take effect."
 msgstr ""
@@ -11464,10 +11091,6 @@ msgid "Import Defaults"
 msgstr "Naložite Prevzeto"
 
 #: editor/property_editor.cpp
-msgid "Preset..."
-msgstr "Prednastavitev..."
-
-#: editor/property_editor.cpp
 msgid "Zero"
 msgstr ""
 
@@ -11477,14 +11100,6 @@ msgstr ""
 
 #: editor/property_editor.cpp
 msgid "Easing Out-In"
-msgstr ""
-
-#: editor/property_editor.cpp
-msgid "File..."
-msgstr ""
-
-#: editor/property_editor.cpp
-msgid "Dir..."
 msgstr ""
 
 #: editor/property_editor.cpp
@@ -11821,21 +11436,6 @@ msgstr ""
 
 #: editor/scene_tree_dock.cpp
 msgid ""
-"Can't save the root node branch as an instanced scene.\n"
-"To create an editable copy of the current scene, duplicate it using the "
-"FileSystem dock context menu\n"
-"or create an inherited scene using Scene > New Inherited Scene... instead."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid ""
-"Can't save the branch of an already instanced scene.\n"
-"To create a variation of a scene, you can make an inherited scene based on "
-"the instanced scene using Scene > New Inherited Scene... instead."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid ""
 "Can't save a branch which is a child of an already instantiated scene.\n"
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
@@ -11846,10 +11446,6 @@ msgid ""
 "Can't save a branch which is part of an inherited scene.\n"
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
-msgstr ""
-
-#: editor/scene_tree_dock.cpp
-msgid "Save New Scene As..."
 msgstr ""
 
 #: editor/scene_tree_dock.cpp
@@ -12693,11 +12289,6 @@ msgstr ""
 msgid "Export Mesh GLTF2"
 msgstr "Izvozi Knjižnico Modelov"
 
-#: modules/gltf/editor_scene_exporter_gltf_plugin.cpp
-#, fuzzy
-msgid "Export GLTF..."
-msgstr "Izvozi"
-
 #: modules/gridmap/grid_map_editor_plugin.cpp
 msgid "Next Plane"
 msgstr ""
@@ -12889,51 +12480,7 @@ msgid "Clear the navigation mesh."
 msgstr ""
 
 #: modules/recast/navigation_mesh_generator.cpp
-msgid "Setting up Configuration..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Calculating grid size..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating heightfield..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Marking walkable triangles..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Constructing compact heightfield..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Eroding walkable area..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Partitioning..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating contours..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Creating polymesh..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Converting to native navigation mesh..."
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
 msgid "Navigation Mesh Generator Setup:"
-msgstr ""
-
-#: modules/recast/navigation_mesh_generator.cpp
-msgid "Parsing Geometry..."
 msgstr ""
 
 #: modules/recast/navigation_mesh_generator.cpp
@@ -13271,16 +12818,6 @@ msgstr "Spremeni Osnovni Tip"
 
 #: modules/visual_script/visual_script_editor.cpp
 #, fuzzy
-msgid "Add Nodes..."
-msgstr "Dodaj vozlišče"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
-msgid "Add Function..."
-msgstr "Dodaj Funkcijo"
-
-#: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
 msgid "function_name"
 msgstr "Funkcije:"
 
@@ -13419,28 +12956,8 @@ msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
-msgid "Exporting APK..."
-msgstr "Izvozi"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Uninstalling..."
-msgstr "Odstrani"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Installing to device, please wait..."
-msgstr "Pridobivanje virov, počakajte..."
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid "Could not install to device: %s"
 msgstr "Nemorem začeti podprocesa!"
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Running on device..."
-msgstr "Izvajanje Skripte Po Meri..."
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
@@ -13570,28 +13087,12 @@ msgid ""
 msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
-msgid "Signing debug %s..."
-msgstr ""
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Signing release %s..."
-msgstr ""
-"Pregledovanje Datotek,\n"
-"Prosimo, Počakajte..."
-
-#: platforms/android/export/export_plugin.cpp
 msgid "Could not find keystore, unable to export."
 msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' returned with error #%d"
 msgstr ""
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Verifying %s..."
-msgstr "Nastavitve Zaskočenja"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "'apksigner' verification of %s failed."
@@ -13673,11 +13174,6 @@ msgid "Package not found: %s"
 msgstr "Animacijska Orodja"
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
-msgid "Creating APK..."
-msgstr "Povezovanje..."
-
-#: platforms/android/export/export_plugin.cpp
 msgid ""
 "Could not find template APK to export:\n"
 "%s"
@@ -13693,17 +13189,8 @@ msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 #, fuzzy
-msgid "Adding files..."
-msgstr "Filtriraj datoteke..."
-
-#: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid "Could not export project files"
 msgstr "Nemorem začeti podprocesa!"
-
-#: platforms/android/export/export_plugin.cpp
-msgid "Aligning APK..."
-msgstr ""
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Could not unzip temporary unaligned APK."
@@ -14029,11 +13516,6 @@ msgstr "Neveljavno Ime Projekta."
 #, fuzzy
 msgid "Couldn't create a project in this project folder."
 msgstr "Nemorem začeti podprocesa!"
-
-#: projects_manager/projects_list.cpp
-#, fuzzy
-msgid "Loading, please wait..."
-msgstr "Pridobivanje virov, počakajte..."
 
 #: projects_manager/projects_list.cpp
 msgid "Last Modified"
