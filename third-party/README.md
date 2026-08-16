@@ -124,7 +124,7 @@ Patch files for the changes are included in the patches/ folder.
 
 - Project: https://freetype.org/
 - Source: https://gitlab.freedesktop.org/freetype/freetype
-- Version: 2.13.2 (42608f77f20749dd6ddc9e0536788eaad70ea4b5, August 2023)
+- Version: 2.14.3 (0a0221a1347e2f1e07c395263540026e9a0aa7c7, March 2026)
 - License: FreeType License (BSD-like)
 
 Files copied from the library source:
