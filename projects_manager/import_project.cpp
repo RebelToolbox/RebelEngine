@@ -81,6 +81,50 @@ void convert_physics_engine(const String& project_file) {
 }
 } // namespace
 
+static void update_export_presets(const String& destination_folder) {
+    const String export_presets_file =
+        destination_folder.plus_file("export_presets.cfg");
+    ConfigFile export_presets;
+    if (export_presets.load(export_presets_file) != OK) {
+        return;
+    }
+    Vector<Pair<String, String>> platform_renames;
+    platform_renames.push_back(Pair<String, String>("Linux/X11", "Linux"));
+    platform_renames.push_back(Pair<String, String>("HTML5", "Web"));
+    platform_renames.push_back(Pair<String, String>("Mac OSX", "MacOS"));
+
+    const String preset_section("preset.");
+    const String name("name");
+    const String platform("platform");
+    bool export_presets_updated = false;
+    bool section_found          = true;
+    int section_index           = 0;
+    while (section_found) {
+        const String section = preset_section + itos(section_index++);
+        if (!export_presets.has_section(section)) {
+            section_found = false;
+            continue;
+        }
+        for (int i = 0; i < platform_renames.size(); i++) {
+            const Pair<String, String>& platform_rename = platform_renames[i];
+            String old_name                             = platform_rename.first;
+            if (export_presets.get_value(section, name) == old_name
+                && export_presets.get_value(section, platform) == old_name) {
+                String new_name = platform_rename.second;
+                export_presets.set_value(section, name, new_name);
+                export_presets.set_value(section, platform, new_name);
+                export_presets_updated = true;
+            }
+        }
+    }
+    if (export_presets_updated) {
+        ERR_FAIL_COND_MSG(
+            export_presets.save(export_presets_file) != OK,
+            "Failed to update export_presets.cfg"
+        );
+    }
+}
+
 namespace ImportProject {
 bool import_godot_project(
     const String& source_project_file,
@@ -95,6 +139,7 @@ bool import_godot_project(
     );
     const String project_file = destination_folder.plus_file("project.rebel");
     convert_physics_engine(project_file);
+    update_export_presets(destination_folder);
     return true;
 }
 } // namespace ImportProject
