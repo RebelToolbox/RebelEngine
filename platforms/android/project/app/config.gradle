@@ -3,7 +3,7 @@ ext.versions = [
     // Also update platforms/android/export/export_plugin.cpp:
     // - DEFAULT_MIN_SDK_VERSION
     // - DEFAULT_TARGET_SDK_VERSION
-    minSdk             : 21,
+    minSdk             : 23,
     targetSdk          : 36,
     javaVersion        : 17,
     // Also update platforms/android/detect.py get_ndk_version()
