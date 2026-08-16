@@ -214,7 +214,7 @@ static const char* AAB_ASSETS_DIRECTORY =
 // Also update platforms/android/project/app/config.gradle:
 // - minSdk
 // - targetSdk
-static const int DEFAULT_MIN_SDK_VERSION    = 21;
+static const int DEFAULT_MIN_SDK_VERSION    = 23;
 static const int DEFAULT_TARGET_SDK_VERSION = 36;
 
 const String SDK_VERSION_RANGE = vformat(
