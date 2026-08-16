@@ -33,8 +33,7 @@
 #include "drivers/gles3/rasterizer_gles3.h"
 #endif
 
-namespace {
-void apply_editor_settings() {
+static void apply_editor_settings() {
     if (!EditorSettings::get_singleton()) {
         EditorSettings::create();
     }
@@ -77,7 +76,7 @@ void apply_editor_settings() {
     );
 }
 
-void apply_window_settings() {
+static void apply_window_settings() {
     OS* os = OS::get_singleton();
     os->set_min_window_size(Size2(750, 420) * EDSCALE);
     // TODO: Automatically resize hiDPI display windows on Windows and Linux.
@@ -89,7 +88,7 @@ void apply_window_settings() {
     os->set_low_processor_usage_mode(true);
 }
 
-void create_project_directories() {
+static void create_project_directories() {
     DirAccessRef dir_access =
         DirAccess::create(DirAccess::AccessType::ACCESS_FILESYSTEM);
 
@@ -116,7 +115,10 @@ void create_project_directories() {
     }
 }
 
-void edit_project(const String& project_name, const String& project_folder) {
+static void edit_project(
+    const String& project_name,
+    const String& project_folder
+) {
     print_line(vformat("Editing project: %s (%s)", project_name, project_folder)
     );
     OS* os = OS::get_singleton();
@@ -139,7 +141,10 @@ void edit_project(const String& project_name, const String& project_folder) {
     ERR_FAIL_COND(error);
 }
 
-void run_project(const String& project_name, const String& project_folder) {
+static void run_project(
+    const String& project_name,
+    const String& project_folder
+) {
     print_line(vformat("Running project: %s (%s)", project_name, project_folder)
     );
     OS* os = OS::get_singleton();
@@ -154,7 +159,6 @@ void run_project(const String& project_name, const String& project_folder) {
     Error error       = os->execute(exec, args, false, &pid);
     ERR_FAIL_COND(error);
 }
-} // namespace
 
 ProjectsManager::ProjectsManager() {
     apply_editor_settings();

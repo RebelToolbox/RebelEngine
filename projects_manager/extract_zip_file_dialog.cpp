@@ -14,8 +14,7 @@
 #include "editor/editor_themes.h"
 #include "scene/gui/container.h"
 
-namespace {
-String get_zipped_project_folder(const unzFile& unz_file) {
+static String get_zipped_project_folder(const unzFile& unz_file) {
     int error = unzGoToFirstFile(unz_file);
     while (error == UNZ_OK) {
         unz_file_info file_info;
@@ -39,7 +38,7 @@ String get_zipped_project_folder(const unzFile& unz_file) {
     return {};
 }
 
-void create_folder(
+static void create_folder(
     const String& folder_path,
     const String& zipped_project_folder,
     const String& project_folder
@@ -51,7 +50,7 @@ void create_folder(
     memdelete(dir_access);
 }
 
-void uncompress_file(
+static void uncompress_file(
     const unzFile& unz_file,
     const String& file_name,
     const unsigned long uncompressed_size,
@@ -74,7 +73,7 @@ void uncompress_file(
     }
 }
 
-void unzip_project_files(
+static void unzip_project_files(
     const unzFile& unz_file,
     const String& zipped_project_folder,
     const String& project_folder
@@ -111,7 +110,6 @@ void unzip_project_files(
         error = unzGoToNextFile(unz_file);
     }
 }
-} // namespace
 
 ExtractZipFileDialog::ExtractZipFileDialog() {
     set_theme(create_custom_theme());

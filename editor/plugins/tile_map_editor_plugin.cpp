@@ -449,22 +449,16 @@ void TileMapEditor::_sbox_input(const Ref<InputEvent>& p_ie) {
     }
 }
 
-// Implementation detail of TileMapEditor::_update_palette();
-// In modern C++ this could have been inside its body.
-namespace {
-struct _PaletteEntry {
-    int id;
-    String name;
-
-    bool operator<(const _PaletteEntry& p_rhs) const {
-        // Natural no case comparison will compare strings based on CharType
-        // order (except digits) and on numbers that start on the same position.
-        return name.naturalnocasecmp_to(p_rhs.name) < 0;
-    }
-};
-} // namespace
-
 void TileMapEditor::_update_palette() {
+    struct PaletteEntry {
+        int id = 0;
+        String name;
+
+        bool operator<(const PaletteEntry& p_rhs) const {
+            return name.naturalnocasecmp_to(p_rhs.name) < 0;
+        }
+    };
+
     if (!node) {
         return;
     }
@@ -520,7 +514,7 @@ void TileMapEditor::_update_palette() {
 
     String filter = search_box->get_text().strip_edges();
 
-    Vector<_PaletteEntry> entries;
+    Vector<PaletteEntry> entries;
 
     for (List<int>::Element* E = tiles.front(); E; E = E->next()) {
         String name = tileset->tile_get_name(E->get());
@@ -541,7 +535,7 @@ void TileMapEditor::_update_palette() {
             continue;
         }
 
-        const _PaletteEntry entry = {E->get(), name};
+        const PaletteEntry entry = {E->get(), name};
         entries.push_back(entry);
     }
 

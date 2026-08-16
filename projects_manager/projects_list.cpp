@@ -15,8 +15,7 @@
 #include "scene/gui/label.h"
 #include "scene/gui/panel_container.h"
 
-namespace {
-Set<String> get_favorites(List<PropertyInfo>& properties) {
+static Set<String> get_favorites(List<PropertyInfo>& properties) {
     Set<String> favorites;
     for (List<PropertyInfo>::Element* E = properties.front(); E;
          E                              = E->next()) {
@@ -28,7 +27,6 @@ Set<String> get_favorites(List<PropertyInfo>& properties) {
     }
     return favorites;
 }
-} // namespace
 
 ProjectsList::ProjectsList() {
     set_theme(create_custom_theme());

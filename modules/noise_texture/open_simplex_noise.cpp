@@ -6,12 +6,10 @@
 
 #include "open_simplex_noise.h"
 
-namespace {
-constexpr uint8_t byte_from_noise(const double noise) {
+static constexpr uint8_t byte_from_noise(const double noise) {
     // Convert noise value [-1:1] to byte [0:255].
     return static_cast<uint8_t>(CLAMP((noise + 1) / 2 * 255, 0, 255));
 }
-} // namespace
 
 OpenSimplexNoise::OpenSimplexNoise() {
     initialise_contexts();

@@ -66,12 +66,9 @@ Property::Property() {}
 // ------------------------------------------------------------------------------------------------
 Property::~Property() {}
 
-namespace {
-
-// ------------------------------------------------------------------------------------------------
 // read a typed property out of a FBX element. The return value is NULL if the
 // property cannot be read.
-PropertyPtr ReadTypedProperty(const ElementPtr element) {
+static PropertyPtr ReadTypedProperty(const ElementPtr element) {
     // ai_assert(element.KeyToken().StringContents() == "P");
 
     const TokenList& tok = element->Tokens();
@@ -109,10 +106,9 @@ PropertyPtr ReadTypedProperty(const ElementPtr element) {
     return nullptr;
 }
 
-// ------------------------------------------------------------------------------------------------
 // peek into an element and check if it contains a FBX property, if so return
 // its name.
-std::string PeekPropertyName(const Element& element) {
+static std::string PeekPropertyName(const Element& element) {
     // ai_assert(element.KeyToken().StringContents() == "P");
     const TokenList& tok = element.Tokens();
     if (tok.size() < 4) {
@@ -122,9 +118,6 @@ std::string PeekPropertyName(const Element& element) {
     return ParseTokenAsString(tok[0]);
 }
 
-} // namespace
-
-// ------------------------------------------------------------------------------------------------
 PropertyTable::PropertyTable() : templateProps(), element() {}
 
 // ------------------------------------------------------------------------------------------------
