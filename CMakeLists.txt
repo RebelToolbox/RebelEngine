@@ -4,10 +4,8 @@
 cmake_minimum_required(VERSION 3.18)
 project(RebelEngine)
 
-file(GLOB_RECURSE HEADERS **/*.h)
-file(GLOB_RECURSE SOURCES
-        **/*.c
-        **/*.cpp
-)
-include_directories(.)
-add_library(${PROJECT_NAME} STATIC ${SOURCES})
+file(GLOB_RECURSE project_source_files *.c *.cpp)
+# Modules include third-party libraries that expect different header search paths.
+add_subdirectory(modules)
+add_executable(${PROJECT_NAME} ${project_source_files})
+target_include_directories(${PROJECT_NAME} PRIVATE .)
