@@ -1,0 +1,100 @@
+name: 🏗️ Build Tests
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+jobs:
+  build-tests:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux builds
+          - name: Linux Rebel Editor using GCC
+            os: ubuntu-latest
+            artifact: rebel-linux-gcc
+            build-options: dev=yes
+
+          - name: Linux Rebel Editor using Clang
+            os: ubuntu-latest
+            artifact: rebel-linux-clang
+            build-options: dev=yes use_llvm=yes use_lld=yes
+
+          # macOS builds
+          - name: macOS Rebel Editor
+            os: macos-15
+            artifact: rebel-macos
+            build-options: dev=yes
+
+          # Windows builds
+          - name: Windows Rebel Editor using MSVC
+            os: windows-latest
+            artifact: rebel-windows-msvc
+            build-options: dev=yes
+
+          - name: Windows Rebel Editor using MinGW
+            os: windows-latest
+            artifact: rebel-windows-mingw
+            build-options: dev=yes use_mingw=yes
+
+          - name: Windows Rebel Editor on Linux
+            os: ubuntu-latest
+            artifact: rebel-windows-linux
+            build-options: platform=windows dev=yes
+
+          # Android builds
+          - name: Android arm64v8 library on Linux
+            os: ubuntu-latest
+            artifact: android-arm64v8-linux
+            build-options: platform=android dev=yes
+
+          - name: Android arm64v8 library on macOS
+            os: macos-latest
+            artifact: android-arm64v8-macos
+            build-options: platform=android dev=yes
+
+          - name: Android arm64v8 library on Windows
+            os: windows-latest
+            artifact: android-arm64v8-windows
+            build-options: platform=android dev=yes
+
+          # iOS builds
+          - name: iOS arm64 library
+            os: macOS-latest
+            artifact: rebel-ios-arm64
+            build-options: platform=ios dev=yes
+
+          # Web builds
+          - name: Web library on Linux
+            os: ubuntu-latest
+            artifact: rebel-web-linux
+            build-options: platform=web dev=yes
+
+          - name: Web library on macOS
+            os: macos-latest
+            artifact: rebel-web-macos
+            build-options: platform=web dev=yes
+
+          - name: Web library on Windows
+            os: windows-latest
+            artifact: rebel-web-windows
+            build-options: platform=web dev=yes
+
+          # Server builds
+          - name: Server Engine on Linux
+            os: ubuntu-latest
+            artifact: rebel-server-linux
+            build-options: platform=server dev=yes
+
+    steps:
+      - name: Build Rebel
+        uses: RebelToolbox/RebelBuildAction@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          build-options: ${{ matrix.build-options }}
+          artifact: ${{ matrix.artifact }}

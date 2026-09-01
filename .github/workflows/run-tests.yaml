@@ -1,0 +1,57 @@
+name: 🕹️ Run Tests
+on: [push, pull_request]
+
+jobs:
+  run-tests:
+    name: Run Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux run tests
+            os: ubuntu-latest
+            artifact: rebel-linux
+            command-prefix: xvfb-run
+            logs: linux-run-tests-logs
+
+    steps:
+      - name: Build Rebel
+        id: build
+        uses: RebelToolbox/RebelBuildAction@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          build-options: production=yes target=release_debug
+          artifact: ${{ matrix.artifact }}
+
+      # If the test project needs to be updated,
+      # modify these settings to point to the updated test project.
+      # - repository: Your fork of the test project i.e. <username>/RebelTestProject
+      # - ref: Your branch with the updated test project e.g. fix-test-project
+      # - path: Do not change this. It's used by the rest of the test.
+      - name: Checkout Rebel Test Project
+        uses: actions/checkout@v5
+        with:
+          repository: RebelToolbox/RebelTestProject
+          ref: main
+          path: RebelTestProject
+
+      - name: Run Rebel Editor
+        run: |
+          #rebel -e -q --path RebelTestProject
+          ${{ matrix.command-prefix }} RebelEngine/bin/${{ steps.build.outputs.build-filename }} -e -q --audio-driver Dummy --path RebelTestProject 2>&1 | tee editor.log
+
+      - name: Run Rebel Test Project
+        run: |
+          #rebel --path RebelTestProject
+          ${{ matrix.command-prefix }} RebelEngine/bin/${{ steps.build.outputs.build-filename }} 30 --video-driver GLES3 --audio-driver Dummy --path RebelTestProject 2>&1 | tee project.log
+
+      - name: Upload tests' logs
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ matrix.logs }}
+          path: |
+            editor.log
+            project.log
