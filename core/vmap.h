@@ -8,178 +8,193 @@
 #define VMAP_H
 
 #include "core/cowdata.h"
-#include "core/typedefs.h"
 
-template <class T, class V>
+template <class Key, class Value>
 class VMap {
 public:
     struct Pair {
-        T key;
-        V value;
+        Key key;
+        Value value;
 
-        _FORCE_INLINE_ Pair() = default;
+        Pair() = default;
 
-        _FORCE_INLINE_ Pair(const T& p_key, const V& p_value) {
-            key   = p_key;
-            value = p_value;
-        }
+        Pair(const Key& key, const Value& value) : key(key), value(value) {}
     };
 
+    VMap() = default;
+    VMap(const VMap& other);
+    VMap& operator=(const VMap& other);
+
+    Value& operator[](const Key& key);
+    const Value& operator[](const Key& key) const;
+
+    // Returns -1 if not found.
+    int get_position(const Key& key) const;
+    // If not found, returns the position where this key would be inserted.
+    int get_best_position(const Key& key) const;
+    bool has(const Key& key) const;
+
+    [[nodiscard]]
+    bool empty() const;
+    [[nodiscard]]
+    int size() const;
+
+    int insert(const Key& key, const Value& value);
+    void erase(const Key& key);
+
+    Key& get_key_at(int index);
+    const Key& get_key_at(int index) const;
+
+    Value& get_value_at(int index);
+    const Value& get_value_at(int index) const;
+
+    Pair* get_array();
+    const Pair* get_array() const;
+
 private:
-    CowData<Pair> _cowdata;
+    CowData<Pair> cow_data;
 
-    _FORCE_INLINE_ int _find(const T& p_val, bool& r_exact) const {
-        r_exact = false;
-        if (_cowdata.empty()) {
-            return 0;
-        }
+    int get_best_position(const Key& key, bool& found) const;
+};
 
-        int low       = 0;
-        int high      = _cowdata.size() - 1;
-        const Pair* a = _cowdata.ptr();
-        int middle    = 0;
+template <class Key, class Value>
+VMap<Key, Value>::VMap(const VMap& other) {
+    cow_data._ref(other.cow_data);
+}
 
-#ifdef DEBUG_ENABLED
-        if (low > high) {
-            ERR_PRINT("low > high, this may be a bug");
-        }
-#endif
-        while (low <= high) {
-            middle = (low + high) / 2;
+template <class Key, class Value>
+VMap<Key, Value>& VMap<Key, Value>::operator=(const VMap& other) {
+    cow_data._ref(other.cow_data);
+    return *this;
+}
 
-            if (p_val < a[middle].key) {
-                high = middle - 1; // search low end of array
-            } else if (a[middle].key < p_val) {
-                low = middle + 1; // search high end of array
-            } else {
-                r_exact = true;
-                return middle;
-            }
-        }
-
-        // return the position where this would be inserted
-        if (a[middle].key < p_val) {
-            middle++;
-        }
-        return middle;
+template <class Key, class Value>
+Value& VMap<Key, Value>::operator[](const Key& key) {
+    int position = get_position(key);
+    if (position < 0) {
+        position = insert(key, Value());
     }
+    return cow_data.get_m(position).value;
+}
 
-    _FORCE_INLINE_ int _find_exact(const T& p_val) const {
-        if (_cowdata.empty()) {
-            return -1;
-        }
+template <class Key, class Value>
+const Value& VMap<Key, Value>::operator[](const Key& key) const {
+    int position = get_position(key);
+    CRASH_COND(position < 0);
+    return cow_data.get(position).value;
+}
 
-        int low  = 0;
-        int high = _cowdata.size() - 1;
-        int middle;
-        const Pair* a = _cowdata.ptr();
-
-        while (low <= high) {
-            middle = (low + high) / 2;
-
-            if (p_val < a[middle].key) {
-                high = middle - 1; // search low end of array
-            } else if (a[middle].key < p_val) {
-                low = middle + 1; // search high end of array
-            } else {
-                return middle;
-            }
-        }
-
+template <class Key, class Value>
+int VMap<Key, Value>::get_position(const Key& key) const {
+    bool found;
+    const int position = get_best_position(key, found);
+    if (!found) {
         return -1;
     }
+    return position;
+}
 
-public:
-    int insert(const T& p_key, const V& p_val) {
-        bool exact;
-        int pos = _find(p_key, exact);
-        if (exact) {
-            _cowdata.get_m(pos).value = p_val;
-            return pos;
+template <class Key, class Value>
+int VMap<Key, Value>::get_best_position(const Key& key) const {
+    bool found;
+    return get_best_position(key, found);
+}
+
+template <class Key, class Value>
+bool VMap<Key, Value>::has(const Key& key) const {
+    return get_position(key) != -1;
+}
+
+template <class Key, class Value>
+bool VMap<Key, Value>::empty() const {
+    return cow_data.empty();
+}
+
+template <class Key, class Value>
+int VMap<Key, Value>::size() const {
+    return cow_data.size();
+}
+
+template <class Key, class Value>
+int VMap<Key, Value>::insert(const Key& key, const Value& value) {
+    bool found;
+    int position = get_best_position(key, found);
+    if (found) {
+        cow_data.get_m(position).value = value;
+    } else {
+        cow_data.insert(position, Pair(key, value));
+    }
+    return position;
+}
+
+template <class Key, class Value>
+void VMap<Key, Value>::erase(const Key& key) {
+    int position = get_position(key);
+    if (position < 0) {
+        return;
+    }
+    cow_data.remove(position);
+}
+
+template <class Key, class Value>
+const Key& VMap<Key, Value>::get_key_at(int index) const {
+    return cow_data.get(index).key;
+}
+
+template <class Key, class Value>
+Key& VMap<Key, Value>::get_key_at(int index) {
+    return cow_data.get_m(index).key;
+}
+
+template <class Key, class Value>
+Value& VMap<Key, Value>::get_value_at(int index) {
+    return cow_data.get_m(index).value;
+}
+
+template <class Key, class Value>
+const Value& VMap<Key, Value>::get_value_at(int index) const {
+    return cow_data.get(index).value;
+}
+
+template <class Key, class Value>
+typename VMap<Key, Value>::Pair* VMap<Key, Value>::get_array() {
+    return cow_data.ptrw();
+}
+
+template <class Key, class Value>
+const typename VMap<Key, Value>::Pair* VMap<Key, Value>::get_array() const {
+    return cow_data.ptr();
+}
+
+template <class Key, class Value>
+int VMap<Key, Value>::get_best_position(const Key& key, bool& found) const {
+    found = false;
+    if (cow_data.empty()) {
+        return 0;
+    }
+
+    int position      = 0;
+    int begin         = 0;
+    int end           = cow_data.size() - 1;
+    const Pair* pairs = cow_data.ptr();
+    while (begin <= end) {
+        position = (begin + end) / 2;
+        if (key < pairs[position].key) {
+            // Search first half of the map.
+            end = position - 1;
+        } else if (pairs[position].key < key) {
+            // Search second half of the map.
+            begin = position + 1;
+        } else {
+            found = true;
+            return position;
         }
-        _cowdata.insert(pos, Pair(p_key, p_val));
-        return pos;
     }
 
-    bool has(const T& p_val) const {
-        return _find_exact(p_val) != -1;
+    if (pairs[position].key < key) {
+        position++;
     }
+    return position;
+}
 
-    void erase(const T& p_val) {
-        int pos = _find_exact(p_val);
-        if (pos < 0) {
-            return;
-        }
-        _cowdata.remove(pos);
-    }
-
-    int find(const T& p_val) const {
-        return _find_exact(p_val);
-    }
-
-    int find_nearest(const T& p_val) const {
-        bool exact;
-        return _find(p_val, exact);
-    }
-
-    _FORCE_INLINE_ int size() const {
-        return _cowdata.size();
-    }
-
-    _FORCE_INLINE_ bool empty() const {
-        return _cowdata.empty();
-    }
-
-    const Pair* get_array() const {
-        return _cowdata.ptr();
-    }
-
-    Pair* get_array() {
-        return _cowdata.ptrw();
-    }
-
-    const V& getv(int p_index) const {
-        return _cowdata.get(p_index).value;
-    }
-
-    V& getv(int p_index) {
-        return _cowdata.get_m(p_index).value;
-    }
-
-    const T& getk(int p_index) const {
-        return _cowdata.get(p_index).key;
-    }
-
-    T& getk(int p_index) {
-        return _cowdata.get_m(p_index).key;
-    }
-
-    inline const V& operator[](const T& p_key) const {
-        int pos = _find_exact(p_key);
-
-        CRASH_COND(pos < 0);
-
-        return _cowdata.get(pos).value;
-    }
-
-    inline V& operator[](const T& p_key) {
-        int pos = _find_exact(p_key);
-        if (pos < 0) {
-            pos = insert(p_key, V());
-        }
-
-        return _cowdata.get_m(pos).value;
-    }
-
-    _FORCE_INLINE_ VMap() = default;
-
-    _FORCE_INLINE_ VMap(const VMap& p_from) {
-        _cowdata._ref(p_from._cowdata);
-    }
-
-    inline VMap& operator=(const VMap& p_from) {
-        _cowdata._ref(p_from._cowdata);
-        return *this;
-    }
-};
 #endif // VMAP_H

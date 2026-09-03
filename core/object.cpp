@@ -1378,9 +1378,9 @@ Error Object::emit_signal(
     Error err = OK;
 
     for (int i = 0; i < ssize; i++) {
-        const Connection& c = slot_map.getv(i).conn;
+        const Connection& c = slot_map.get_value_at(i).conn;
 
-        Object* target = ObjectDB::get_instance(slot_map.getk(i)._id);
+        Object* target = ObjectDB::get_instance(slot_map.get_key_at(i)._id);
         if (!target) {
             // Target might have been deleted during signal callback, this is
             // expected and OK.
@@ -1611,7 +1611,7 @@ void Object::get_all_signal_connections(List<Connection>* p_connections) const {
         const Signal* s = &signal_map[*S];
 
         for (int i = 0; i < s->slot_map.size(); i++) {
-            p_connections->push_back(s->slot_map.getv(i).conn);
+            p_connections->push_back(s->slot_map.get_value_at(i).conn);
         }
     }
 }
@@ -1626,7 +1626,7 @@ void Object::get_signal_connection_list(
     }
 
     for (int i = 0; i < s->slot_map.size(); i++) {
-        p_connections->push_back(s->slot_map.getv(i).conn);
+        p_connections->push_back(s->slot_map.get_value_at(i).conn);
     }
 }
 
@@ -1638,7 +1638,7 @@ int Object::get_persistent_signal_connection_count() const {
         const Signal* s = &signal_map[*S];
 
         for (int i = 0; i < s->slot_map.size(); i++) {
-            if (s->slot_map.getv(i).conn.flags & CONNECT_PERSIST) {
+            if (s->slot_map.get_value_at(i).conn.flags & CONNECT_PERSIST) {
                 count += 1;
             }
         }

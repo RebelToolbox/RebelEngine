@@ -1505,8 +1505,10 @@ Variant::Type GDScriptTokenizerBuffer::get_token_type(int p_offset) const {
 
 int GDScriptTokenizerBuffer::get_token_line(int p_offset) const {
     int offset = token + p_offset;
-    int pos    = lines.find_nearest(offset);
-
+    int pos    = lines.get_best_position(offset);
+    // TODO: Check for possible bug.
+    // get_best_position() will never return -1.
+    // If not found, it will return the index where the key will be inserted.
     if (pos < 0) {
         return -1;
     }
@@ -1514,13 +1516,16 @@ int GDScriptTokenizerBuffer::get_token_line(int p_offset) const {
         pos = lines.size() - 1;
     }
 
-    uint32_t l = lines.getv(pos);
+    uint32_t l = lines.get_value_at(pos);
     return l & TOKEN_LINE_MASK;
 }
 
 int GDScriptTokenizerBuffer::get_token_column(int p_offset) const {
     int offset = token + p_offset;
-    int pos    = lines.find_nearest(offset);
+    int pos    = lines.get_best_position(offset);
+    // TODO: Check for possible bug.
+    // get_best_position() will never return -1.
+    // If not found, it will return the index where the key will be inserted.
     if (pos < 0) {
         return -1;
     }
@@ -1528,7 +1533,7 @@ int GDScriptTokenizerBuffer::get_token_column(int p_offset) const {
         pos = lines.size() - 1;
     }
 
-    uint32_t l = lines.getv(pos);
+    uint32_t l = lines.get_value_at(pos);
     return l >> TOKEN_LINE_BITS;
 }
 
