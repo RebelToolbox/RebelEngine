@@ -418,16 +418,21 @@ Patch files for the changes are included in the patches/ folder.
 
 - Project: https://pcre2project.github.io/pcre2/
 - Source: https://github.com/PCRE2Project/pcre2
-- Version: 10.36 (r1288, 2020)
+- Version: 10.48 (7978954dbd2efc6f2196869290553cf1871b4ce6, August 2026)
 - License: BSD-3-Clause
 
 Files copied from the library source:
-- Files listed in the file NON-AUTOTOOLS-BUILD steps 1-4
-- All .h files in src/ apart from pcre2posix.h
-- src/pcre2_jit_match.c
-- src/pcre2_jit_misc.c
-- src/sljit/
-- AUTHORS and LICENCE
+- src/config.h.generic as src/config.h
+- src/pcre2.h.generic as src/pcre2.h
+- src/pcre2_chartables.c.dist as src/pcre2_chartables.c
+- All .h and .c files in src/
+- All .h and .c files in deps/
+- LICENCE.md
+- deps/sljit/LICENSE
+- NON-AUTOTOOLS-BUILD
+
+Note: The file NON-AUTOTOOLS-BUILD contains instructions for building PCRE2.
+Update modules/regex/SCsub to build the files listed in step 4.
 
 
 ## pvrtccompressor
