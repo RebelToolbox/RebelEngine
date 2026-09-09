@@ -115,7 +115,7 @@ public:                                                                        \
     static String get_category_static() {                                      \
         String category = m_inherits::get_category_static();                   \
         if (_get_category != m_inherits::_get_category) {                      \
-            if (category != "") category += "/";                               \
+            if (!category.empty()) category += "/";                            \
             category += _get_category();                                       \
         }                                                                      \
         return category;                                                       \
