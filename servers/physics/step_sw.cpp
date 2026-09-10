@@ -148,10 +148,10 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
 
     int active_count = 0;
 
-    const SelfList<BodySW>* b = body_list->first();
+    const SelfList<BodySW>* b = body_list->get_first();
     while (b) {
-        b->self()->integrate_forces(p_delta);
-        b = b->next();
+        b->get_self()->integrate_forces(p_delta);
+        b = b->get_next();
         active_count++;
     }
 
@@ -173,12 +173,12 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
 
     BodySW* island_list                  = nullptr;
     ConstraintSW* constraint_island_list = nullptr;
-    b                                    = body_list->first();
+    b                                    = body_list->get_first();
 
     int island_count = 0;
 
     while (b) {
-        BodySW* body = b->self();
+        BodySW* body = b->get_self();
 
         if (body->get_island_step() != _step) {
             BodySW* island                  = nullptr;
@@ -194,16 +194,16 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
                 island_count++;
             }
         }
-        b = b->next();
+        b = b->get_next();
     }
 
     p_space->set_island_count(island_count);
 
     const SelfList<AreaSW>::List& aml = p_space->get_moved_area_list();
 
-    while (aml.first()) {
+    while (aml.get_first()) {
         for (const Set<ConstraintSW*>::Element* E =
-                 aml.first()->self()->get_constraints().front();
+                 aml.get_first()->get_self()->get_constraints().front();
              E;
              E = E->next()) {
             ConstraintSW* c = E->get();
@@ -215,7 +215,7 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
             c->set_island_list_next(constraint_island_list);
             constraint_island_list = c;
         }
-        p_space->area_remove_from_moved_list((SelfList<AreaSW>*)aml.first()
+        p_space->area_remove_from_moved_list((SelfList<AreaSW>*)aml.get_first()
         ); // faster to remove here
     }
 
@@ -269,10 +269,10 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
 
     /* INTEGRATE VELOCITIES */
 
-    b = body_list->first();
+    b = body_list->get_first();
     while (b) {
-        const SelfList<BodySW>* n = b->next();
-        b->self()->integrate_velocities(p_delta);
+        const SelfList<BodySW>* n = b->get_next();
+        b->get_self()->integrate_velocities(p_delta);
         b = n;
     }
 

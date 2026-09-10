@@ -52,10 +52,10 @@ future: no idea
 void Spatial::_notify_dirty() {
 #ifdef TOOLS_ENABLED
     if ((data.gizmo.is_valid() || data.notify_transform)
-        && !data.ignore_notification && !xform_change.in_list()) {
+        && !data.ignore_notification && !xform_change.is_in_list()) {
 #else
     if (data.notify_transform && !data.ignore_notification
-        && !xform_change.in_list()) {
+        && !xform_change.is_in_list()) {
 
 #endif
         get_tree()->xform_change_list.add(&xform_change);
@@ -88,10 +88,10 @@ void Spatial::_propagate_transform_changed(Spatial* p_origin) {
     }
 #ifdef TOOLS_ENABLED
     if ((data.gizmo.is_valid() || data.notify_transform)
-        && !data.ignore_notification && !xform_change.in_list()) {
+        && !data.ignore_notification && !xform_change.is_in_list()) {
 #else
     if (data.notify_transform && !data.ignore_notification
-        && !xform_change.in_list()) {
+        && !xform_change.is_in_list()) {
 #endif
         get_tree()->xform_change_list.add(&xform_change);
     }
@@ -154,7 +154,7 @@ void Spatial::_notification(int p_what) {
         } break;
         case NOTIFICATION_EXIT_TREE: {
             notification(NOTIFICATION_EXIT_WORLD, true);
-            if (xform_change.in_list()) {
+            if (xform_change.is_in_list()) {
                 get_tree()->xform_change_list.remove(&xform_change);
             }
             if (data.C) {
@@ -732,7 +732,7 @@ bool Spatial::is_local_transform_notification_enabled() const {
 
 void Spatial::force_update_transform() {
     ERR_FAIL_COND(!is_inside_tree());
-    if (!xform_change.in_list()) {
+    if (!xform_change.is_in_list()) {
         return; // nothing to update
     }
     get_tree()->xform_change_list.remove(&xform_change);

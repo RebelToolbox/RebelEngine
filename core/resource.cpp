@@ -312,7 +312,7 @@ void Resource::setup_local_to_scene() {
 Node* (*Resource::_get_local_scene_func)() = nullptr;
 
 void Resource::set_as_translation_remapped(bool p_remapped) {
-    if (remapped_list.in_list() == p_remapped) {
+    if (remapped_list.is_in_list() == p_remapped) {
         return;
     }
 
@@ -328,7 +328,7 @@ void Resource::set_as_translation_remapped(bool p_remapped) {
 }
 
 bool Resource::is_translation_remapped() const {
-    return remapped_list.in_list();
+    return remapped_list.is_in_list();
 }
 
 #ifdef TOOLS_ENABLED

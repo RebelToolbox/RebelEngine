@@ -164,8 +164,8 @@ void CanvasItemMaterial::_update_shader() {
 void CanvasItemMaterial::flush_changes() {
     material_mutex.lock();
 
-    while (dirty_materials->first()) {
-        dirty_materials->first()->self()->_update_shader();
+    while (dirty_materials->get_first()) {
+        dirty_materials->get_first()->get_self()->_update_shader();
     }
 
     material_mutex.unlock();
@@ -174,7 +174,7 @@ void CanvasItemMaterial::flush_changes() {
 void CanvasItemMaterial::_queue_shader_change() {
     material_mutex.lock();
 
-    if (is_initialized && !element.in_list()) {
+    if (is_initialized && !element.is_in_list()) {
         dirty_materials->add(&element);
     }
 
@@ -186,7 +186,7 @@ bool CanvasItemMaterial::_is_shader_dirty() const {
 
     material_mutex.lock();
 
-    dirty = element.in_list();
+    dirty = element.is_in_list();
 
     material_mutex.unlock();
 
@@ -685,7 +685,7 @@ void CanvasItem::_notification(int p_what) {
                 }
             }
             _enter_canvas();
-            if (!block_transform_notify && !xform_change.in_list()) {
+            if (!block_transform_notify && !xform_change.is_in_list()) {
                 get_tree()->xform_change_list.add(&xform_change);
             }
         } break;
@@ -711,7 +711,7 @@ void CanvasItem::_notification(int p_what) {
 
         } break;
         case NOTIFICATION_EXIT_TREE: {
-            if (xform_change.in_list()) {
+            if (xform_change.is_in_list()) {
                 get_tree()->xform_change_list.remove(&xform_change);
             }
             _exit_canvas();
@@ -1372,7 +1372,7 @@ void CanvasItem::_notify_transform(CanvasItem* p_node) {
 
     p_node->global_invalid = true;
 
-    if (p_node->notify_transform && !p_node->xform_change.in_list()) {
+    if (p_node->notify_transform && !p_node->xform_change.is_in_list()) {
         if (!p_node->block_transform_notify) {
             if (p_node->is_inside_tree()) {
                 get_tree()->xform_change_list.add(&p_node->xform_change);
@@ -1525,7 +1525,7 @@ Vector2 CanvasItem::get_local_mouse_position() const {
 
 void CanvasItem::force_update_transform() {
     ERR_FAIL_COND(!is_inside_tree());
-    if (!xform_change.in_list()) {
+    if (!xform_change.is_in_list()) {
         return;
     }
 

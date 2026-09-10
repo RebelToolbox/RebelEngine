@@ -402,8 +402,8 @@ void TileMap::update_dirty_quadrants() {
         debug_navigation_color = st->get_debug_navigation_color();
     }
 
-    while (dirty_quadrant_list.first()) {
-        Quadrant& q = *dirty_quadrant_list.first()->self();
+    while (dirty_quadrant_list.get_first()) {
+        Quadrant& q = *dirty_quadrant_list.get_first()->get_self();
 
         for (List<RID>::Element* E = q.canvas_items.front(); E; E = E->next()) {
             if (E->get().is_valid()) {
@@ -862,7 +862,7 @@ void TileMap::update_dirty_quadrants() {
             }
         }
 
-        dirty_quadrant_list.remove(dirty_quadrant_list.first());
+        dirty_quadrant_list.remove(dirty_quadrant_list.get_first());
         quadrant_order_dirty = true;
     }
 
@@ -1020,7 +1020,7 @@ void TileMap::_erase_quadrant(Map<PosKey, Quadrant>::Element* Q) {
         }
     }
     q.canvas_items.clear();
-    if (q.dirty_list.in_list()) {
+    if (q.dirty_list.is_in_list()) {
         dirty_quadrant_list.remove(&q.dirty_list);
     }
 
@@ -1052,7 +1052,7 @@ void TileMap::_make_quadrant_dirty(
     bool update
 ) {
     Quadrant& q = Q->get();
-    if (!q.dirty_list.in_list()) {
+    if (!q.dirty_list.is_in_list()) {
         dirty_quadrant_list.add(&q.dirty_list);
     }
 
