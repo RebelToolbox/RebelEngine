@@ -1426,35 +1426,37 @@ void DynamicFont::update_oversampling() {
 
     dynamic_font_mutex.lock();
 
-    SelfList<DynamicFont>* E = dynamic_fonts->first();
+    SelfList<DynamicFont>* E = dynamic_fonts->get_first();
     while (E) {
-        if (E->self()->data_at_size.is_valid()) {
-            E->self()->data_at_size->update_oversampling();
+        if (E->get_self()->data_at_size.is_valid()) {
+            E->get_self()->data_at_size->update_oversampling();
 
-            if (E->self()->outline_data_at_size.is_valid()) {
-                E->self()->outline_data_at_size->update_oversampling();
+            if (E->get_self()->outline_data_at_size.is_valid()) {
+                E->get_self()->outline_data_at_size->update_oversampling();
             }
 
-            for (int i = 0; i < E->self()->fallback_data_at_size.size(); i++) {
-                if (E->self()->fallback_data_at_size[i].is_valid()) {
-                    E->self()
+            for (int i = 0; i < E->get_self()->fallback_data_at_size.size();
+                 i++) {
+                if (E->get_self()->fallback_data_at_size[i].is_valid()) {
+                    E->get_self()
                         ->fallback_data_at_size.write[i]
                         ->update_oversampling();
 
-                    if (E->self()->has_outline()
-                        && E->self()->fallback_outline_data_at_size[i].is_valid(
-                        )) {
-                        E->self()
+                    if (E->get_self()->has_outline()
+                        && E->get_self()
+                               ->fallback_outline_data_at_size[i]
+                               .is_valid()) {
+                        E->get_self()
                             ->fallback_outline_data_at_size.write[i]
                             ->update_oversampling();
                     }
                 }
             }
 
-            changed.push_back(Ref<DynamicFont>(E->self()));
+            changed.push_back(Ref<DynamicFont>(E->get_self()));
         }
 
-        E = E->next();
+        E = E->get_next();
     }
 
     dynamic_font_mutex.unlock();

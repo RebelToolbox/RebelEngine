@@ -32,13 +32,13 @@ AreaSW::BodyKey::BodyKey(
 }
 
 void AreaSW::_shapes_changed() {
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 }
 
 void AreaSW::set_transform(const Transform& p_transform) {
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 
@@ -48,11 +48,11 @@ void AreaSW::set_transform(const Transform& p_transform) {
 
 void AreaSW::set_space(SpaceSW* p_space) {
     if (get_space()) {
-        if (monitor_query_list.in_list()) {
+        if (monitor_query_list.is_in_list()) {
             get_space()->area_remove_from_monitor_query_list(&monitor_query_list
             );
         }
-        if (moved_list.in_list()) {
+        if (moved_list.is_in_list()) {
             get_space()->area_remove_from_moved_list(&moved_list);
         }
     }
@@ -79,7 +79,7 @@ void AreaSW::set_monitor_callback(ObjectID p_id, const StringName& p_method) {
 
     _shape_changed();
 
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 }
@@ -103,7 +103,7 @@ void AreaSW::set_area_monitor_callback(
 
     _shape_changed();
 
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 }
@@ -179,7 +179,7 @@ Variant AreaSW::get_param(PhysicsServer::AreaParameter p_param) const {
 void AreaSW::_queue_monitor_update() {
     ERR_FAIL_COND(!get_space());
 
-    if (!monitor_query_list.in_list()) {
+    if (!monitor_query_list.is_in_list()) {
         get_space()->area_add_to_monitor_query_list(&monitor_query_list);
     }
 }

@@ -11,7 +11,7 @@
 #include "space_2d_sw.h"
 
 void Body2DSW::_update_inertia() {
-    if (!user_inertia && get_space() && !inertia_update_list.in_list()) {
+    if (!user_inertia && get_space() && !inertia_update_list.is_in_list()) {
         get_space()->body_add_to_inertia_update_list(&inertia_update_list);
     }
 }
@@ -347,15 +347,15 @@ void Body2DSW::set_space(Space2DSW* p_space) {
     if (get_space()) {
         wakeup_neighbours();
 
-        if (inertia_update_list.in_list()) {
+        if (inertia_update_list.is_in_list()) {
             get_space()->body_remove_from_inertia_update_list(
                 &inertia_update_list
             );
         }
-        if (active_list.in_list()) {
+        if (active_list.is_in_list()) {
             get_space()->body_remove_from_active_list(&active_list);
         }
-        if (direct_state_query_list.in_list()) {
+        if (direct_state_query_list.is_in_list()) {
             get_space()->body_remove_from_state_query_list(
                 &direct_state_query_list
             );

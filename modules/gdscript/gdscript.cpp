@@ -59,12 +59,13 @@ Object* GDScriptNativeClass::instance() {
 
 void GDScript::_clear_pending_func_states() {
     GDScriptLanguage::get_singleton()->lock.lock();
-    while (SelfList<GDScriptFunctionState>* E = pending_func_states.first()) {
+    while (SelfList<GDScriptFunctionState>* E =
+               pending_func_states.get_first()) {
         // Order matters since clearing the stack may already cause
         // the GDSCriptFunctionState to be destroyed and thus removed from the
         // list.
         pending_func_states.remove(E);
-        E->self()->_clear_stack();
+        E->get_self()->_clear_stack();
     }
     GDScriptLanguage::get_singleton()->lock.unlock();
 }
@@ -1586,12 +1587,13 @@ GDScriptInstance::GDScriptInstance() {
 GDScriptInstance::~GDScriptInstance() {
     GDScriptLanguage::singleton->lock.lock();
 
-    while (SelfList<GDScriptFunctionState>* E = pending_func_states.first()) {
+    while (SelfList<GDScriptFunctionState>* E =
+               pending_func_states.get_first()) {
         // Order matters since clearing the stack may already cause
         // the GDSCriptFunctionState to be destroyed and thus removed from the
         // list.
         pending_func_states.remove(E);
-        E->self()->_clear_stack();
+        E->get_self()->_clear_stack();
     }
 
     if (script.is_valid() && owner) {
@@ -1706,18 +1708,18 @@ void GDScriptLanguage::profiling_start() {
 #ifdef DEBUG_ENABLED
     lock.lock();
 
-    SelfList<GDScriptFunction>* elem = function_list.first();
+    SelfList<GDScriptFunction>* elem = function_list.get_first();
     while (elem) {
-        elem->self()->profile.call_count            = 0;
-        elem->self()->profile.self_time             = 0;
-        elem->self()->profile.total_time            = 0;
-        elem->self()->profile.frame_call_count      = 0;
-        elem->self()->profile.frame_self_time       = 0;
-        elem->self()->profile.frame_total_time      = 0;
-        elem->self()->profile.last_frame_call_count = 0;
-        elem->self()->profile.last_frame_self_time  = 0;
-        elem->self()->profile.last_frame_total_time = 0;
-        elem                                        = elem->next();
+        elem->get_self()->profile.call_count            = 0;
+        elem->get_self()->profile.self_time             = 0;
+        elem->get_self()->profile.total_time            = 0;
+        elem->get_self()->profile.frame_call_count      = 0;
+        elem->get_self()->profile.frame_self_time       = 0;
+        elem->get_self()->profile.frame_total_time      = 0;
+        elem->get_self()->profile.last_frame_call_count = 0;
+        elem->get_self()->profile.last_frame_self_time  = 0;
+        elem->get_self()->profile.last_frame_total_time = 0;
+        elem                                            = elem->get_next();
     }
 
     profiling = true;
@@ -1741,16 +1743,16 @@ int GDScriptLanguage::profiling_get_accumulated_data(
 #ifdef DEBUG_ENABLED
     lock.lock();
 
-    SelfList<GDScriptFunction>* elem = function_list.first();
+    SelfList<GDScriptFunction>* elem = function_list.get_first();
     while (elem) {
         if (current >= p_info_max) {
             break;
         }
-        p_info_arr[current].call_count = elem->self()->profile.call_count;
-        p_info_arr[current].self_time  = elem->self()->profile.self_time;
-        p_info_arr[current].total_time = elem->self()->profile.total_time;
-        p_info_arr[current].signature  = elem->self()->profile.signature;
-        elem                           = elem->next();
+        p_info_arr[current].call_count = elem->get_self()->profile.call_count;
+        p_info_arr[current].self_time  = elem->get_self()->profile.self_time;
+        p_info_arr[current].total_time = elem->get_self()->profile.total_time;
+        p_info_arr[current].signature  = elem->get_self()->profile.signature;
+        elem                           = elem->get_next();
         current++;
     }
 
@@ -1769,22 +1771,22 @@ int GDScriptLanguage::profiling_get_frame_data(
 #ifdef DEBUG_ENABLED
     lock.lock();
 
-    SelfList<GDScriptFunction>* elem = function_list.first();
+    SelfList<GDScriptFunction>* elem = function_list.get_first();
     while (elem) {
         if (current >= p_info_max) {
             break;
         }
-        if (elem->self()->profile.last_frame_call_count > 0) {
+        if (elem->get_self()->profile.last_frame_call_count > 0) {
             p_info_arr[current].call_count =
-                elem->self()->profile.last_frame_call_count;
+                elem->get_self()->profile.last_frame_call_count;
             p_info_arr[current].self_time =
-                elem->self()->profile.last_frame_self_time;
+                elem->get_self()->profile.last_frame_self_time;
             p_info_arr[current].total_time =
-                elem->self()->profile.last_frame_total_time;
-            p_info_arr[current].signature = elem->self()->profile.signature;
+                elem->get_self()->profile.last_frame_total_time;
+            p_info_arr[current].signature = elem->get_self()->profile.signature;
             current++;
         }
-        elem = elem->next();
+        elem = elem->get_next();
     }
 
     lock.unlock();
@@ -1821,14 +1823,14 @@ void GDScriptLanguage::reload_all_scripts() {
 
     List<Ref<GDScript>> scripts;
 
-    SelfList<GDScript>* elem = script_list.first();
+    SelfList<GDScript>* elem = script_list.get_first();
     while (elem) {
-        if (elem->self()->get_path().is_resource_file()) {
-            print_verbose("GDScript: Found: " + elem->self()->get_path());
-            scripts.push_back(Ref<GDScript>(elem->self())
+        if (elem->get_self()->get_path().is_resource_file()) {
+            print_verbose("GDScript: Found: " + elem->get_self()->get_path());
+            scripts.push_back(Ref<GDScript>(elem->get_self())
             ); // cast to gdscript to avoid being erased by accident
         }
-        elem = elem->next();
+        elem = elem->get_next();
     }
 
     lock.unlock();
@@ -1856,13 +1858,13 @@ void GDScriptLanguage::reload_tool_script(
 
     List<Ref<GDScript>> scripts;
 
-    SelfList<GDScript>* elem = script_list.first();
+    SelfList<GDScript>* elem = script_list.get_first();
     while (elem) {
-        if (elem->self()->get_path().is_resource_file()) {
-            scripts.push_back(Ref<GDScript>(elem->self())
+        if (elem->get_self()->get_path().is_resource_file()) {
+            scripts.push_back(Ref<GDScript>(elem->get_self())
             ); // cast to gdscript to avoid being erased by accident
         }
-        elem = elem->next();
+        elem = elem->get_next();
     }
 
     lock.unlock();
@@ -2021,18 +2023,18 @@ void GDScriptLanguage::frame() {
     if (profiling) {
         lock.lock();
 
-        SelfList<GDScriptFunction>* elem = function_list.first();
+        SelfList<GDScriptFunction>* elem = function_list.get_first();
         while (elem) {
-            elem->self()->profile.last_frame_call_count =
-                elem->self()->profile.frame_call_count;
-            elem->self()->profile.last_frame_self_time =
-                elem->self()->profile.frame_self_time;
-            elem->self()->profile.last_frame_total_time =
-                elem->self()->profile.frame_total_time;
-            elem->self()->profile.frame_call_count = 0;
-            elem->self()->profile.frame_self_time  = 0;
-            elem->self()->profile.frame_total_time = 0;
-            elem                                   = elem->next();
+            elem->get_self()->profile.last_frame_call_count =
+                elem->get_self()->profile.frame_call_count;
+            elem->get_self()->profile.last_frame_self_time =
+                elem->get_self()->profile.frame_self_time;
+            elem->get_self()->profile.last_frame_total_time =
+                elem->get_self()->profile.frame_total_time;
+            elem->get_self()->profile.frame_call_count = 0;
+            elem->get_self()->profile.frame_self_time  = 0;
+            elem->get_self()->profile.frame_total_time = 0;
+            elem                                       = elem->get_next();
         }
 
         lock.unlock();
@@ -2546,9 +2548,9 @@ GDScriptLanguage::~GDScriptLanguage() {
 
     // Clear dependencies between scripts, to ensure cyclic references are
     // broken (to avoid leaks at exit).
-    SelfList<GDScript>* s = script_list.first();
+    SelfList<GDScript>* s = script_list.get_first();
     while (s) {
-        GDScript* script = s->self();
+        GDScript* script = s->get_self();
         // This ensures the current script is not released before we can check
         // what's the next one in the list (we can't get the next upfront
         // because we don't know if the reference breaking will cause it -or any
@@ -2573,7 +2575,7 @@ GDScriptLanguage::~GDScriptLanguage() {
             E->get().data_type.script_type_ref = Ref<Script>();
         }
 
-        s = s->next();
+        s = s->get_next();
         script->unreference();
     }
 

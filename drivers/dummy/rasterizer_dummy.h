@@ -1312,20 +1312,20 @@ public:
             bool p_materials = true
         ) {
             SelfList<RasterizerScene::InstanceBase>* instances =
-                instance_list.first();
+                instance_list.get_first();
             while (instances) {
-                instances->self()->base_changed(p_aabb, p_materials);
-                instances = instances->next();
+                instances->get_self()->base_changed(p_aabb, p_materials);
+                instances = instances->get_next();
             }
         }
 
         _FORCE_INLINE_ void instance_remove_deps() {
             SelfList<RasterizerScene::InstanceBase>* instances =
-                instance_list.first();
+                instance_list.get_first();
             while (instances) {
                 SelfList<RasterizerScene::InstanceBase>* next =
-                    instances->next();
-                instances->self()->base_removed();
+                    instances->get_next();
+                instances->get_self()->base_removed();
                 instances = next;
             }
         }

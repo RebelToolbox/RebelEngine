@@ -867,8 +867,8 @@ void ParticlesMaterial::_update_shader() {
 void ParticlesMaterial::flush_changes() {
     material_mutex.lock();
 
-    while (dirty_materials->first()) {
-        dirty_materials->first()->self()->_update_shader();
+    while (dirty_materials->get_first()) {
+        dirty_materials->get_first()->get_self()->_update_shader();
     }
 
     material_mutex.unlock();
@@ -877,7 +877,7 @@ void ParticlesMaterial::flush_changes() {
 void ParticlesMaterial::_queue_shader_change() {
     material_mutex.lock();
 
-    if (is_initialized && !element.in_list()) {
+    if (is_initialized && !element.is_in_list()) {
         dirty_materials->add(&element);
     }
 
@@ -889,7 +889,7 @@ bool ParticlesMaterial::_is_shader_dirty() const {
 
     material_mutex.lock();
 
-    dirty = element.in_list();
+    dirty = element.is_in_list();
 
     material_mutex.unlock();
 

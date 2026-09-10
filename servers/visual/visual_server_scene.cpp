@@ -665,7 +665,7 @@ void VisualServerScene::_instance_queue_update(
         p_instance->update_materials = true;
     }
 
-    if (p_instance->update_item.in_list()) {
+    if (p_instance->update_item.is_in_list()) {
         return;
     }
 
@@ -734,7 +734,7 @@ void VisualServerScene::instance_set_base(RID p_instance, RID p_base) {
                         instance->base_data
                     );
                 VSG::scene_render->free(reflection_probe->instance);
-                if (reflection_probe->update_list.in_list()) {
+                if (reflection_probe->update_list.is_in_list()) {
                     reflection_probe_render_list.remove(
                         &reflection_probe->update_list
                     );
@@ -760,7 +760,7 @@ void VisualServerScene::instance_set_base(RID p_instance, RID p_base) {
                 InstanceGIProbeData* gi_probe =
                     static_cast<InstanceGIProbeData*>(instance->base_data);
 
-                if (gi_probe->update_element.in_list()) {
+                if (gi_probe->update_element.is_in_list()) {
                     gi_probe_update_list.remove(&gi_probe->update_element);
                 }
                 if (gi_probe->dynamic.probe_data.is_valid()) {
@@ -858,7 +858,7 @@ void VisualServerScene::instance_set_base(RID p_instance, RID p_base) {
                 instance->base_data           = gi_probe;
                 gi_probe->owner               = instance;
 
-                if (scenario && !gi_probe->update_element.in_list()) {
+                if (scenario && !gi_probe->update_element.is_in_list()) {
                     gi_probe_update_list.add(&gi_probe->update_element);
                 }
 
@@ -919,7 +919,7 @@ void VisualServerScene::instance_set_scenario(RID p_instance, RID p_scenario) {
             case VS::INSTANCE_GI_PROBE: {
                 InstanceGIProbeData* gi_probe =
                     static_cast<InstanceGIProbeData*>(instance->base_data);
-                if (gi_probe->update_element.in_list()) {
+                if (gi_probe->update_element.is_in_list()) {
                     gi_probe_update_list.remove(&gi_probe->update_element);
                 }
             } break;
@@ -951,7 +951,7 @@ void VisualServerScene::instance_set_scenario(RID p_instance, RID p_scenario) {
             case VS::INSTANCE_GI_PROBE: {
                 InstanceGIProbeData* gi_probe =
                     static_cast<InstanceGIProbeData*>(instance->base_data);
-                if (!gi_probe->update_element.in_list()) {
+                if (!gi_probe->update_element.is_in_list()) {
                     gi_probe_update_list.add(&gi_probe->update_element);
                 }
             } break;
@@ -1023,7 +1023,7 @@ void VisualServerScene::instance_set_blend_shape_weight(
     Instance* instance = instance_owner.get(p_instance);
     ERR_FAIL_COND(!instance);
 
-    if (instance->update_item.in_list()) {
+    if (instance->update_item.is_in_list()) {
         _update_dirty_instance(instance);
     }
 
@@ -3664,7 +3664,7 @@ void VisualServerScene::_prepare_scene(
                                    ->reflection_probe_instance_needs_redraw(
                                        reflection_probe->instance
                                    )) {
-                            if (!reflection_probe->update_list.in_list()) {
+                            if (!reflection_probe->update_list.is_in_list()) {
                                 reflection_probe->render_step = 0;
                                 reflection_probe_render_list.add_last(
                                     &reflection_probe->update_list
@@ -3690,7 +3690,7 @@ void VisualServerScene::_prepare_scene(
         } else if (ins->base_type == VS::INSTANCE_GI_PROBE && ins->visible) {
             InstanceGIProbeData* gi_probe =
                 static_cast<InstanceGIProbeData*>(ins->base_data);
-            if (!gi_probe->update_element.in_list()) {
+            if (!gi_probe->update_element.is_in_list()) {
                 gi_probe_update_list.add(&gi_probe->update_element);
             }
 
@@ -5331,13 +5331,13 @@ void VisualServerScene::render_probes() {
     /* REFLECTION PROBES */
 
     SelfList<InstanceReflectionProbeData>* ref_probe =
-        reflection_probe_render_list.first();
+        reflection_probe_render_list.get_first();
 
     bool busy = false;
 
     while (ref_probe) {
-        SelfList<InstanceReflectionProbeData>* next = ref_probe->next();
-        RID base = ref_probe->self()->owner->base;
+        SelfList<InstanceReflectionProbeData>* next = ref_probe->get_next();
+        RID base = ref_probe->get_self()->owner->base;
 
         switch (VSG::storage->reflection_probe_get_update_mode(base)) {
             case VS::REFLECTION_PROBE_UPDATE_ONCE: {
@@ -5346,13 +5346,13 @@ void VisualServerScene::render_probes() {
                 }
 
                 bool done = _render_reflection_probe_step(
-                    ref_probe->self()->owner,
-                    ref_probe->self()->render_step
+                    ref_probe->get_self()->owner,
+                    ref_probe->get_self()->render_step
                 );
                 if (done) {
                     reflection_probe_render_list.remove(ref_probe);
                 } else {
-                    ref_probe->self()->render_step++;
+                    ref_probe->get_self()->render_step++;
                 }
 
                 busy = true; // do not render another one of this kind
@@ -5362,7 +5362,7 @@ void VisualServerScene::render_probes() {
                 bool done = false;
                 while (!done) {
                     done = _render_reflection_probe_step(
-                        ref_probe->self()->owner,
+                        ref_probe->get_self()->owner,
                         step
                     );
                     step++;
@@ -5377,12 +5377,12 @@ void VisualServerScene::render_probes() {
 
     /* GI PROBES */
 
-    SelfList<InstanceGIProbeData>* gi_probe = gi_probe_update_list.first();
+    SelfList<InstanceGIProbeData>* gi_probe = gi_probe_update_list.get_first();
 
     while (gi_probe) {
-        SelfList<InstanceGIProbeData>* next = gi_probe->next();
+        SelfList<InstanceGIProbeData>* next = gi_probe->get_next();
 
-        InstanceGIProbeData* probe = gi_probe->self();
+        InstanceGIProbeData* probe = gi_probe->get_self();
         Instance* instance_probe   = probe->owner;
 
         // check if probe must be setup, but don't do if on the lighting thread
@@ -5658,12 +5658,12 @@ void VisualServerScene::update_dirty_instances() {
     // this is just to get access to scenario so we can update the spatial
     // partitioning scheme
     Scenario* scenario = nullptr;
-    if (_instance_update_list.first()) {
-        scenario = _instance_update_list.first()->self()->scenario;
+    if (_instance_update_list.get_first()) {
+        scenario = _instance_update_list.get_first()->get_self()->scenario;
     }
 
-    while (_instance_update_list.first()) {
-        _update_dirty_instance(_instance_update_list.first()->self());
+    while (_instance_update_list.get_first()) {
+        _update_dirty_instance(_instance_update_list.get_first()->get_self());
     }
 
     if (scenario) {
@@ -5681,9 +5681,9 @@ bool VisualServerScene::free(RID p_rid) {
     } else if (scenario_owner.owns(p_rid)) {
         Scenario* scenario = scenario_owner.get(p_rid);
 
-        while (scenario->instances.first()) {
+        while (scenario->instances.get_first()) {
             instance_set_scenario(
-                scenario->instances.first()->self()->self,
+                scenario->instances.get_first()->get_self()->self,
                 RID()
             );
         }
