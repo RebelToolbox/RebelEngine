@@ -1,0 +1,46 @@
+name: 📝 Style Tests
+on: [push, pull_request]
+
+jobs:
+  style-tests:
+    name: Style Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: |
+          #Install dependencies
+          sudo apt-get update
+          sudo apt-get install -y \
+          recode \
+          dos2unix \
+          perl \
+          clang-format
+          python3 -m pip install black
+
+      - name: File formatting checks
+        run: |
+          bash tools/scripts/file-format.sh
+
+      - name: Code style checks via clang-format
+        run: |
+          bash tools/scripts/clang-format.sh
+
+      - name: Python style checks via black
+        run: |
+          bash tools/scripts/black-format.sh
+
+      - name: Create patch file
+        if: failure()
+        run: |
+          git diff > style-tests.patch
+
+      - name: Upload patch file
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: patch-files
+          path: |
+            style-tests.patch

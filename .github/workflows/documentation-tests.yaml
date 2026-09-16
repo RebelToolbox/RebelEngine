@@ -1,0 +1,82 @@
+name: 📖 Documentation Tests
+on: [push, pull_request]
+
+jobs:
+  documentation-tests:
+    name: Documentation Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: |
+          #Install dependencies
+          sudo apt-get update
+          sudo apt-get install -y \
+          codespell
+
+      - name: Spelling test
+        run: |
+          codespell                           \
+          -I tools/codespell-ignore-words.txt \
+          -x tools/codespell-ignore-lines.txt \
+          docs modules/*/docs
+
+      - name: Documentation syntax test
+        run: |
+          tools/scripts/rst_from_xml.py --dry-run docs modules
+
+      - name: JavaScript style and documentation tests
+        run: |
+          #JavaScript style and documentation checks
+          echo "::group::Install dependencies"
+          cd platforms/web
+          npm ci
+          echo "::endgroup::"
+          npm run lint
+          npm run docs -- -d dry-run
+
+  api-update-test:
+    name: API Updates Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Rebel
+        id: build
+        uses: RebelToolbox/RebelBuildAction@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          build-options:
+          artifact: rebel-linux
+
+      - name: Generate docs
+        working-directory: RebelEngine
+        run: |
+          #rebel --generate-docs
+          xvfb-run bin/${{ steps.build.outputs.build-filename }} --generate-docs
+
+      - name: Check for updates
+        run: |
+          #Check if XML documentation files were updated
+          cd RebelEngine
+          if git diff --color --exit-code; then
+            echo "API is up to date."
+          else
+            echo "The Rebel API documentation needs to be updated!"
+            exit 1
+          fi
+
+      - name: Create patch file
+        if: failure()
+        run: |
+          cd RebelEngine
+          git diff > api-updates.patch
+
+      - name: Upload patch file
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: patch-files
+          path: |
+            RebelEngine/api-updates.patch
