@@ -3,6 +3,7 @@
 # Debian 11(Bullseye) supported until August 2026 uses CMake 3.18.
 cmake_minimum_required(VERSION 3.18)
 project(RebelEngine)
+set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB_RECURSE project_source_files *.c *.cpp)
 # Modules include third-party libraries that expect different header search paths.
