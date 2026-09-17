@@ -827,10 +827,10 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
     {
         MutexLock lock(script_instances_mutex);
 
-        for (SelfList<CSharpScript>* elem = script_list.first(); elem;
-             elem                         = elem->next()) {
+        for (SelfList<CSharpScript>* elem = script_list.get_first(); elem;
+             elem                         = elem->get_next()) {
             // Cast to CSharpScript to avoid being erased by accident
-            scripts.push_back(Ref<CSharpScript>(elem->self()));
+            scripts.push_back(Ref<CSharpScript>(elem->get_self()));
         }
     }
 

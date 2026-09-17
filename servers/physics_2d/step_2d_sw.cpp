@@ -139,10 +139,10 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
 
     int active_count = 0;
 
-    const SelfList<Body2DSW>* b = body_list->first();
+    const SelfList<Body2DSW>* b = body_list->get_first();
     while (b) {
-        b->self()->integrate_forces(p_delta);
-        b = b->next();
+        b->get_self()->integrate_forces(p_delta);
+        b = b->get_next();
         active_count++;
     }
 
@@ -164,12 +164,12 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
 
     Body2DSW* island_list                  = nullptr;
     Constraint2DSW* constraint_island_list = nullptr;
-    b                                      = body_list->first();
+    b                                      = body_list->get_first();
 
     int island_count = 0;
 
     while (b) {
-        Body2DSW* body = b->self();
+        Body2DSW* body = b->get_self();
 
         if (body->get_island_step() != _step) {
             Body2DSW* island                  = nullptr;
@@ -185,16 +185,16 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
                 island_count++;
             }
         }
-        b = b->next();
+        b = b->get_next();
     }
 
     p_space->set_island_count(island_count);
 
     const SelfList<Area2DSW>::List& aml = p_space->get_moved_area_list();
 
-    while (aml.first()) {
+    while (aml.get_first()) {
         for (const Set<Constraint2DSW*>::Element* E =
-                 aml.first()->self()->get_constraints().front();
+                 aml.get_first()->get_self()->get_constraints().front();
              E;
              E = E->next()) {
             Constraint2DSW* c = E->get();
@@ -206,8 +206,8 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
             c->set_island_list_next(constraint_island_list);
             constraint_island_list = c;
         }
-        p_space->area_remove_from_moved_list((SelfList<Area2DSW>*)aml.first()
-        ); // faster to remove here
+        p_space->area_remove_from_moved_list((SelfList<Area2DSW>*)aml.get_first(
+        )); // faster to remove here
     }
 
     { // profile
@@ -290,10 +290,10 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
 
     /* INTEGRATE VELOCITIES */
 
-    b = body_list->first();
+    b = body_list->get_first();
     while (b) {
-        const SelfList<Body2DSW>* n = b->next();
-        b->self()->integrate_velocities(p_delta);
+        const SelfList<Body2DSW>* n = b->get_next();
+        b->get_self()->integrate_velocities(p_delta);
         b = n; // in case it shuts itself down
     }
 

@@ -1008,11 +1008,11 @@ void ResourceLoader::reload_translation_remaps() {
     ResourceCache::lock.read_lock();
 
     List<Resource*> to_reload;
-    SelfList<Resource>* E = remapped_list.first();
+    SelfList<Resource>* E = remapped_list.get_first();
 
     while (E) {
-        to_reload.push_back(E->self());
-        E = E->next();
+        to_reload.push_back(E->get_self());
+        E = E->get_next();
     }
 
     ResourceCache::lock.read_unlock();
@@ -1050,8 +1050,8 @@ void ResourceLoader::load_translation_remaps() {
 
 void ResourceLoader::clear_translation_remaps() {
     translation_remaps.clear();
-    while (remapped_list.first() != nullptr) {
-        remapped_list.remove(remapped_list.first());
+    while (remapped_list.get_first() != nullptr) {
+        remapped_list.remove(remapped_list.get_first());
     }
 }
 

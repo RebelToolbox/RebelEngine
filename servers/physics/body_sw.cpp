@@ -10,7 +10,7 @@
 #include "space_sw.h"
 
 void BodySW::_update_inertia() {
-    if (get_space() && !inertia_update_list.in_list()) {
+    if (get_space() && !inertia_update_list.is_in_list()) {
         get_space()->body_add_to_inertia_update_list(&inertia_update_list);
     }
 }
@@ -384,15 +384,15 @@ Variant BodySW::get_state(PhysicsServer::BodyState p_state) const {
 
 void BodySW::set_space(SpaceSW* p_space) {
     if (get_space()) {
-        if (inertia_update_list.in_list()) {
+        if (inertia_update_list.is_in_list()) {
             get_space()->body_remove_from_inertia_update_list(
                 &inertia_update_list
             );
         }
-        if (active_list.in_list()) {
+        if (active_list.is_in_list()) {
             get_space()->body_remove_from_active_list(&active_list);
         }
-        if (direct_state_query_list.in_list()) {
+        if (direct_state_query_list.is_in_list()) {
             get_space()->body_remove_from_state_query_list(
                 &direct_state_query_list
             );

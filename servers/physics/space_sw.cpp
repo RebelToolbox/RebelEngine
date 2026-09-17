@@ -1590,24 +1590,24 @@ const SelfList<AreaSW>::List& SpaceSW::get_moved_area_list() const {
 }
 
 void SpaceSW::call_queries() {
-    while (state_query_list.first()) {
-        BodySW* b = state_query_list.first()->self();
-        state_query_list.remove(state_query_list.first());
+    while (state_query_list.get_first()) {
+        BodySW* b = state_query_list.get_first()->get_self();
+        state_query_list.remove(state_query_list.get_first());
         b->call_queries();
     }
 
-    while (monitor_query_list.first()) {
-        AreaSW* a = monitor_query_list.first()->self();
-        monitor_query_list.remove(monitor_query_list.first());
+    while (monitor_query_list.get_first()) {
+        AreaSW* a = monitor_query_list.get_first()->get_self();
+        monitor_query_list.remove(monitor_query_list.get_first());
         a->call_queries();
     }
 }
 
 void SpaceSW::setup() {
     contact_debug_count = 0;
-    while (inertia_update_list.first()) {
-        inertia_update_list.first()->self()->update_inertias();
-        inertia_update_list.remove(inertia_update_list.first());
+    while (inertia_update_list.get_first()) {
+        inertia_update_list.get_first()->get_self()->update_inertias();
+        inertia_update_list.remove(inertia_update_list.get_first());
     }
 }
 

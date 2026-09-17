@@ -1694,7 +1694,7 @@ RID RasterizerStorageGLES2::shader_create() {
 }
 
 void RasterizerStorageGLES2::_shader_make_dirty(Shader* p_shader) {
-    if (p_shader->dirty_list.in_list()) {
+    if (p_shader->dirty_list.is_in_list()) {
         return;
     }
 
@@ -2056,9 +2056,9 @@ void RasterizerStorageGLES2::_update_shader(Shader* p_shader) const {
 
     // cache uniform locations
 
-    for (SelfList<Material>* E = p_shader->materials.first(); E;
-         E                     = E->next()) {
-        _material_make_dirty(E->self());
+    for (SelfList<Material>* E = p_shader->materials.get_first(); E;
+         E                     = E->get_next()) {
+        _material_make_dirty(E->get_self());
     }
 
     p_shader->valid = true;
@@ -2066,8 +2066,8 @@ void RasterizerStorageGLES2::_update_shader(Shader* p_shader) const {
 }
 
 void RasterizerStorageGLES2::update_dirty_shaders() {
-    while (_shader_dirty_list.first()) {
-        _update_shader(_shader_dirty_list.first()->self());
+    while (_shader_dirty_list.get_first()) {
+        _update_shader(_shader_dirty_list.get_first()->get_self());
     }
 }
 
@@ -2078,7 +2078,7 @@ void RasterizerStorageGLES2::shader_get_param_list(
     Shader* shader = shader_owner.get(p_shader);
     ERR_FAIL_COND(!shader);
 
-    if (shader->dirty_list.in_list()) {
+    if (shader->dirty_list.is_in_list()) {
         _update_shader(shader);
     }
 
@@ -2290,7 +2290,7 @@ void RasterizerStorageGLES2::shader_remove_custom_define(
 /* COMMON MATERIAL API */
 
 void RasterizerStorageGLES2::_material_make_dirty(Material* p_material) const {
-    if (p_material->dirty_list.in_list()) {
+    if (p_material->dirty_list.is_in_list()) {
         return;
     }
 
@@ -2411,7 +2411,7 @@ void RasterizerStorageGLES2::material_set_next_pass(
 bool RasterizerStorageGLES2::material_is_animated(RID p_material) {
     Material* material = material_owner.get(p_material);
     ERR_FAIL_COND_V(!material, false);
-    if (material->dirty_list.in_list()) {
+    if (material->dirty_list.is_in_list()) {
         _update_material(material);
     }
 
@@ -2425,7 +2425,7 @@ bool RasterizerStorageGLES2::material_is_animated(RID p_material) {
 bool RasterizerStorageGLES2::material_casts_shadows(RID p_material) {
     Material* material = material_owner.get(p_material);
     ERR_FAIL_COND_V(!material, false);
-    if (material->dirty_list.in_list()) {
+    if (material->dirty_list.is_in_list()) {
         _update_material(material);
     }
 
@@ -2446,7 +2446,7 @@ bool RasterizerStorageGLES2::material_uses_tangents(RID p_material) {
         return false;
     }
 
-    if (material->shader->dirty_list.in_list()) {
+    if (material->shader->dirty_list.is_in_list()) {
         _update_shader(material->shader);
     }
 
@@ -2462,7 +2462,7 @@ bool RasterizerStorageGLES2::material_uses_ensure_correct_normals(RID p_material
         return false;
     }
 
-    if (material->shader->dirty_list.in_list()) {
+    if (material->shader->dirty_list.is_in_list()) {
         _update_shader(material->shader);
     }
 
@@ -2517,11 +2517,11 @@ void RasterizerStorageGLES2::material_set_render_priority(
 }
 
 void RasterizerStorageGLES2::_update_material(Material* p_material) {
-    if (p_material->dirty_list.in_list()) {
+    if (p_material->dirty_list.is_in_list()) {
         _material_dirty_list.remove(&p_material->dirty_list);
     }
 
-    if (p_material->shader && p_material->shader->dirty_list.in_list()) {
+    if (p_material->shader && p_material->shader->dirty_list.is_in_list()) {
         _update_shader(p_material->shader);
     }
 
@@ -2652,8 +2652,8 @@ void RasterizerStorageGLES2::_material_remove_geometry(
 }
 
 void RasterizerStorageGLES2::update_dirty_materials() {
-    while (_material_dirty_list.first()) {
-        Material* material = _material_dirty_list.first()->self();
+    while (_material_dirty_list.get_first()) {
+        Material* material = _material_dirty_list.get_first()->get_self();
         _update_material(material);
     }
 }
@@ -3267,7 +3267,7 @@ void RasterizerStorageGLES2::mesh_set_blend_shape_count(
 
     mesh->blend_shape_count = p_amount;
     mesh->instance_change_notify(true, false);
-    if (!mesh->update_list.in_list()) {
+    if (!mesh->update_list.is_in_list()) {
         blend_shapes_update_list.add(&mesh->update_list);
     }
 }
@@ -3286,7 +3286,7 @@ void RasterizerStorageGLES2::mesh_set_blend_shape_mode(
     ERR_FAIL_COND(!mesh);
 
     mesh->blend_shape_mode = p_mode;
-    if (!mesh->update_list.in_list()) {
+    if (!mesh->update_list.is_in_list()) {
         blend_shapes_update_list.add(&mesh->update_list);
     }
 }
@@ -3307,7 +3307,7 @@ void RasterizerStorageGLES2::mesh_set_blend_shape_values(
     ERR_FAIL_COND(!mesh);
 
     mesh->blend_shape_values = p_values;
-    if (!mesh->update_list.in_list()) {
+    if (!mesh->update_list.is_in_list()) {
         blend_shapes_update_list.add(&mesh->update_list);
     }
 }
@@ -3795,7 +3795,7 @@ void RasterizerStorageGLES2::multimesh_allocate(
     multimesh->dirty_aabb = true;
     multimesh->dirty_data = true;
 
-    if (!multimesh->update_list.in_list()) {
+    if (!multimesh->update_list.is_in_list()) {
         multimesh_update_list.add(&multimesh->update_list);
     }
 }
@@ -3830,7 +3830,7 @@ void RasterizerStorageGLES2::multimesh_set_mesh(RID p_multimesh, RID p_mesh) {
 
     multimesh->dirty_aabb = true;
 
-    if (!multimesh->update_list.in_list()) {
+    if (!multimesh->update_list.is_in_list()) {
         multimesh_update_list.add(&multimesh->update_list);
     }
 }
@@ -3866,7 +3866,7 @@ void RasterizerStorageGLES2::multimesh_instance_set_transform(
     multimesh->dirty_data = true;
     multimesh->dirty_aabb = true;
 
-    if (!multimesh->update_list.in_list()) {
+    if (!multimesh->update_list.is_in_list()) {
         multimesh_update_list.add(&multimesh->update_list);
     }
 }
@@ -3897,7 +3897,7 @@ void RasterizerStorageGLES2::multimesh_instance_set_transform_2d(
     multimesh->dirty_data = true;
     multimesh->dirty_aabb = true;
 
-    if (!multimesh->update_list.in_list()) {
+    if (!multimesh->update_list.is_in_list()) {
         multimesh_update_list.add(&multimesh->update_list);
     }
 }
@@ -3935,7 +3935,7 @@ void RasterizerStorageGLES2::multimesh_instance_set_color(
     multimesh->dirty_data = true;
     multimesh->dirty_aabb = true;
 
-    if (!multimesh->update_list.in_list()) {
+    if (!multimesh->update_list.is_in_list()) {
         multimesh_update_list.add(&multimesh->update_list);
     }
 }
@@ -3980,7 +3980,7 @@ void RasterizerStorageGLES2::multimesh_instance_set_custom_data(
     multimesh->dirty_data = true;
     multimesh->dirty_aabb = true;
 
-    if (!multimesh->update_list.in_list()) {
+    if (!multimesh->update_list.is_in_list()) {
         multimesh_update_list.add(&multimesh->update_list);
     }
 }
@@ -4161,7 +4161,7 @@ void RasterizerStorageGLES2::multimesh_set_as_bulk_array(
     multimesh->dirty_data = true;
     multimesh->dirty_aabb = true;
 
-    if (!multimesh->update_list.in_list()) {
+    if (!multimesh->update_list.is_in_list()) {
         multimesh_update_list.add(&multimesh->update_list);
     }
 }
@@ -4194,8 +4194,8 @@ AABB RasterizerStorageGLES2::multimesh_get_aabb(RID p_multimesh) const {
 }
 
 void RasterizerStorageGLES2::update_dirty_multimeshes() {
-    while (multimesh_update_list.first()) {
-        MultiMesh* multimesh = multimesh_update_list.first()->self();
+    while (multimesh_update_list.get_first()) {
+        MultiMesh* multimesh = multimesh_update_list.get_first()->get_self();
 
         if (multimesh->size && multimesh->dirty_aabb) {
             AABB mesh_aabb;
@@ -4274,7 +4274,7 @@ void RasterizerStorageGLES2::update_dirty_multimeshes() {
 
         multimesh->instance_change_notify(true, false);
 
-        multimesh_update_list.remove(multimesh_update_list.first());
+        multimesh_update_list.remove(multimesh_update_list.get_first());
     }
 }
 
@@ -4546,7 +4546,7 @@ void RasterizerStorageGLES2::skeleton_bone_set_transform(
     bone_data[base_offset + 10] = p_transform.basis[2].z;
     bone_data[base_offset + 11] = p_transform.origin.z;
 
-    if (!skeleton->update_list.in_list()) {
+    if (!skeleton->update_list.is_in_list()) {
         skeleton_update_list.add(&skeleton->update_list);
     }
 }
@@ -4609,7 +4609,7 @@ void RasterizerStorageGLES2::skeleton_bone_set_transform_2d(
     bone_data[base_offset + 6] = 0;
     bone_data[base_offset + 7] = p_transform[2][1];
 
-    if (!skeleton->update_list.in_list()) {
+    if (!skeleton->update_list.is_in_list()) {
         skeleton_update_list.add(&skeleton->update_list);
     }
 }
@@ -4651,8 +4651,8 @@ void RasterizerStorageGLES2::skeleton_set_base_transform_2d(
 }
 
 void RasterizerStorageGLES2::update_dirty_blend_shapes() {
-    while (blend_shapes_update_list.first()) {
-        Mesh* mesh = blend_shapes_update_list.first()->self();
+    while (blend_shapes_update_list.get_first()) {
+        Mesh* mesh = blend_shapes_update_list.get_first()->get_self();
         for (int is = 0; is < mesh->surfaces.size(); is++) {
             RasterizerStorageGLES2::Surface* s = mesh->surfaces[is];
             if (!s->blend_shape_data.empty()) {
@@ -5145,7 +5145,7 @@ void RasterizerStorageGLES2::update_dirty_blend_shapes() {
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
         }
-        blend_shapes_update_list.remove(blend_shapes_update_list.first());
+        blend_shapes_update_list.remove(blend_shapes_update_list.get_first());
     }
 }
 
@@ -5191,8 +5191,8 @@ void RasterizerStorageGLES2::update_dirty_skeletons() {
 
     glActiveTexture(GL_TEXTURE0);
 
-    while (skeleton_update_list.first()) {
-        Skeleton* skeleton = skeleton_update_list.first()->self();
+    while (skeleton_update_list.get_first()) {
+        Skeleton* skeleton = skeleton_update_list.get_first()->get_self();
 
         if (skeleton->size) {
             glBindTexture(GL_TEXTURE_2D, skeleton->tex_id);
@@ -5217,7 +5217,7 @@ void RasterizerStorageGLES2::update_dirty_skeletons() {
             E->get()->base_changed(true, false);
         }
 
-        skeleton_update_list.remove(skeleton_update_list.first());
+        skeleton_update_list.remove(skeleton_update_list.get_first());
     }
 }
 
@@ -6026,7 +6026,7 @@ void RasterizerStorageGLES2::lightmap_capture_set_energy(
     ERR_FAIL_COND(!capture);
     capture->energy = p_energy;
 
-    if (!capture->update_list.in_list()) {
+    if (!capture->update_list.is_in_list()) {
         capture_update_list.add(&capture->update_list);
     }
 }
@@ -6046,7 +6046,7 @@ void RasterizerStorageGLES2::lightmap_capture_set_interior(
     ERR_FAIL_COND(!capture);
     capture->interior = p_interior;
 
-    if (!capture->update_list.in_list()) {
+    if (!capture->update_list.is_in_list()) {
         capture_update_list.add(&capture->update_list);
     }
 }
@@ -6059,10 +6059,10 @@ bool RasterizerStorageGLES2::lightmap_capture_is_interior(RID p_capture) const {
 }
 
 void RasterizerStorageGLES2::update_dirty_captures() {
-    while (capture_update_list.first()) {
-        LightmapCapture* capture = capture_update_list.first()->self();
+    while (capture_update_list.get_first()) {
+        LightmapCapture* capture = capture_update_list.get_first()->get_self();
         capture->instance_change_notify(false, true);
-        capture_update_list.remove(capture_update_list.first());
+        capture_update_list.remove(capture_update_list.get_first());
     }
 }
 
@@ -7673,17 +7673,17 @@ bool RasterizerStorageGLES2::free(RID p_rid) {
             shader->shader->free_custom_shader(shader->custom_code_id);
         }
 
-        if (shader->dirty_list.in_list()) {
+        if (shader->dirty_list.is_in_list()) {
             _shader_dirty_list.remove(&shader->dirty_list);
         }
 
-        while (shader->materials.first()) {
-            Material* m = shader->materials.first()->self();
+        while (shader->materials.get_first()) {
+            Material* m = shader->materials.get_first()->get_self();
 
             m->shader = nullptr;
             _material_make_dirty(m);
 
-            shader->materials.remove(shader->materials.first());
+            shader->materials.remove(shader->materials.get_first());
         }
 
         shader_owner.free(p_rid);
@@ -7727,7 +7727,7 @@ bool RasterizerStorageGLES2::free(RID p_rid) {
     } else if (skeleton_owner.owns(p_rid)) {
         Skeleton* s = skeleton_owner.get(p_rid);
 
-        if (s->update_list.in_list()) {
+        if (s->update_list.is_in_list()) {
             skeleton_update_list.remove(&s->update_list);
         }
 
@@ -7754,14 +7754,14 @@ bool RasterizerStorageGLES2::free(RID p_rid) {
         mesh->instance_remove_deps();
         mesh_clear(p_rid);
 
-        while (mesh->multimeshes.first()) {
-            MultiMesh* multimesh  = mesh->multimeshes.first()->self();
+        while (mesh->multimeshes.get_first()) {
+            MultiMesh* multimesh  = mesh->multimeshes.get_first()->get_self();
             multimesh->mesh       = RID();
             multimesh->dirty_aabb = true;
 
-            mesh->multimeshes.remove(mesh->multimeshes.first());
+            mesh->multimeshes.remove(mesh->multimeshes.get_first());
 
-            if (!multimesh->update_list.in_list()) {
+            if (!multimesh->update_list.is_in_list()) {
                 multimesh_update_list.add(&multimesh->update_list);
             }
         }

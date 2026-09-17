@@ -2061,11 +2061,11 @@ bool GDScriptFunctionState::is_valid(bool p_extended_check) const {
         MutexLock lock(GDScriptLanguage::get_singleton()->lock);
 #endif
         // Script gone?
-        if (!scripts_list.in_list()) {
+        if (!scripts_list.is_in_list()) {
             return false;
         }
         // Class instance gone? (if not static function)
-        if (state.instance && !instances_list.in_list()) {
+        if (state.instance && !instances_list.is_in_list()) {
             return false;
         }
     }
@@ -2079,7 +2079,7 @@ Variant GDScriptFunctionState::resume(const Variant& p_arg) {
 #ifndef NO_THREADS
         MutexLock lock(GDScriptLanguage::singleton->lock);
 #endif
-        if (!scripts_list.in_list()) {
+        if (!scripts_list.is_in_list()) {
 #ifdef DEBUG_ENABLED
             ERR_FAIL_V_MSG(
                 Variant(),
@@ -2091,7 +2091,7 @@ Variant GDScriptFunctionState::resume(const Variant& p_arg) {
             return Variant();
 #endif
         }
-        if (state.instance && !instances_list.in_list()) {
+        if (state.instance && !instances_list.is_in_list()) {
 #ifdef DEBUG_ENABLED
             ERR_FAIL_V_MSG(
                 Variant(),

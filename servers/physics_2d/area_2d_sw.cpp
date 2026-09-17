@@ -32,13 +32,13 @@ Area2DSW::BodyKey::BodyKey(
 }
 
 void Area2DSW::_shapes_changed() {
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 }
 
 void Area2DSW::set_transform(const Transform2D& p_transform) {
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 
@@ -48,11 +48,11 @@ void Area2DSW::set_transform(const Transform2D& p_transform) {
 
 void Area2DSW::set_space(Space2DSW* p_space) {
     if (get_space()) {
-        if (monitor_query_list.in_list()) {
+        if (monitor_query_list.is_in_list()) {
             get_space()->area_remove_from_monitor_query_list(&monitor_query_list
             );
         }
-        if (moved_list.in_list()) {
+        if (moved_list.is_in_list()) {
             get_space()->area_remove_from_moved_list(&moved_list);
         }
     }
@@ -79,7 +79,7 @@ void Area2DSW::set_monitor_callback(ObjectID p_id, const StringName& p_method) {
 
     _shape_changed();
 
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 }
@@ -103,7 +103,7 @@ void Area2DSW::set_area_monitor_callback(
 
     _shape_changed();
 
-    if (!moved_list.in_list() && get_space()) {
+    if (!moved_list.is_in_list() && get_space()) {
         get_space()->area_add_to_moved_list(&moved_list);
     }
 }
@@ -180,7 +180,7 @@ Variant Area2DSW::get_param(Physics2DServer::AreaParameter p_param) const {
 void Area2DSW::_queue_monitor_update() {
     ERR_FAIL_COND(!get_space());
 
-    if (!monitor_query_list.in_list()) {
+    if (!monitor_query_list.is_in_list()) {
         get_space()->area_add_to_monitor_query_list(&monitor_query_list);
     }
 }

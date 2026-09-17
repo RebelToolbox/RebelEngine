@@ -149,10 +149,10 @@ void SceneTree::make_group_changed(const StringName& p_group) {
 }
 
 void SceneTree::flush_transform_notifications() {
-    SelfList<Node>* n = xform_change_list.first();
+    SelfList<Node>* n = xform_change_list.get_first();
     while (n) {
-        Node* node         = n->self();
-        SelfList<Node>* nx = n->next();
+        Node* node         = n->get_self();
+        SelfList<Node>* nx = n->get_next();
         xform_change_list.remove(n);
         n = nx;
         node->notification(NOTIFICATION_TRANSFORM_CHANGED);

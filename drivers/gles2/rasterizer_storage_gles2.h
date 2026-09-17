@@ -164,20 +164,20 @@ public:
             bool p_materials
         ) {
             SelfList<RasterizerScene::InstanceBase>* instances =
-                instance_list.first();
+                instance_list.get_first();
             while (instances) {
-                instances->self()->base_changed(p_aabb, p_materials);
-                instances = instances->next();
+                instances->get_self()->base_changed(p_aabb, p_materials);
+                instances = instances->get_next();
             }
         }
 
         _FORCE_INLINE_ void instance_remove_deps() {
             SelfList<RasterizerScene::InstanceBase>* instances =
-                instance_list.first();
+                instance_list.get_first();
 
             while (instances) {
-                instances->self()->base_removed();
-                instances = instances->next();
+                instances->get_self()->base_removed();
+                instances = instances->get_next();
             }
         }
 
@@ -747,11 +747,11 @@ public:
         SelfList<MultiMesh>::List multimeshes;
 
         _FORCE_INLINE_ void update_multimeshes() {
-            SelfList<MultiMesh>* mm = multimeshes.first();
+            SelfList<MultiMesh>* mm = multimeshes.get_first();
 
             while (mm) {
-                mm->self()->instance_change_notify(false, true);
-                mm = mm->next();
+                mm->get_self()->instance_change_notify(false, true);
+                mm = mm->get_next();
             }
         }
 

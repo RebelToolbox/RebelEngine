@@ -241,7 +241,7 @@ void Area2DSW::add_body_to_query(
 ) {
     BodyKey bk(p_body, p_body_shape, p_area_shape);
     monitored_bodies[bk].inc();
-    if (!monitor_query_list.in_list()) {
+    if (!monitor_query_list.is_in_list()) {
         _queue_monitor_update();
     }
 }
@@ -253,7 +253,7 @@ void Area2DSW::remove_body_from_query(
 ) {
     BodyKey bk(p_body, p_body_shape, p_area_shape);
     monitored_bodies[bk].dec();
-    if (!monitor_query_list.in_list()) {
+    if (!monitor_query_list.is_in_list()) {
         _queue_monitor_update();
     }
 }
@@ -265,7 +265,7 @@ void Area2DSW::add_area_to_query(
 ) {
     BodyKey bk(p_area, p_area_shape, p_self_shape);
     monitored_areas[bk].inc();
-    if (!monitor_query_list.in_list()) {
+    if (!monitor_query_list.is_in_list()) {
         _queue_monitor_update();
     }
 }
@@ -277,7 +277,7 @@ void Area2DSW::remove_area_from_query(
 ) {
     BodyKey bk(p_area, p_area_shape, p_self_shape);
     monitored_areas[bk].dec();
-    if (!monitor_query_list.in_list()) {
+    if (!monitor_query_list.is_in_list()) {
         _queue_monitor_update();
     }
 }

@@ -25,7 +25,7 @@ void CollisionObject2DSW::add_shape(
     shapes.push_back(s);
     p_shape->add_owner(this);
 
-    if (!pending_shape_update_list.in_list()) {
+    if (!pending_shape_update_list.is_in_list()) {
         Physics2DServerSW::singletonsw->pending_shape_update_list.add(
             &pending_shape_update_list
         );
@@ -39,7 +39,7 @@ void CollisionObject2DSW::set_shape(int p_index, Shape2DSW* p_shape) {
 
     p_shape->add_owner(this);
 
-    if (!pending_shape_update_list.in_list()) {
+    if (!pending_shape_update_list.is_in_list()) {
         Physics2DServerSW::singletonsw->pending_shape_update_list.add(
             &pending_shape_update_list
         );
@@ -63,7 +63,7 @@ void CollisionObject2DSW::set_shape_transform(
     shapes.write[p_index].xform     = p_transform;
     shapes.write[p_index].xform_inv = p_transform.affine_inverse();
 
-    if (!pending_shape_update_list.in_list()) {
+    if (!pending_shape_update_list.is_in_list()) {
         Physics2DServerSW::singletonsw->pending_shape_update_list.add(
             &pending_shape_update_list
         );
@@ -87,13 +87,13 @@ void CollisionObject2DSW::set_shape_disabled(int p_idx, bool p_disabled) {
     if (p_disabled && shape.bpid != 0) {
         space->get_broadphase()->remove(shape.bpid);
         shape.bpid = 0;
-        if (!pending_shape_update_list.in_list()) {
+        if (!pending_shape_update_list.is_in_list()) {
             Physics2DServerSW::singletonsw->pending_shape_update_list.add(
                 &pending_shape_update_list
             );
         }
     } else if (!p_disabled && shape.bpid == 0) {
-        if (!pending_shape_update_list.in_list()) {
+        if (!pending_shape_update_list.is_in_list()) {
             Physics2DServerSW::singletonsw->pending_shape_update_list.add(
                 &pending_shape_update_list
             );
@@ -126,7 +126,7 @@ void CollisionObject2DSW::remove_shape(int p_index) {
     shapes[p_index].shape->remove_owner(this);
     shapes.remove(p_index);
 
-    if (!pending_shape_update_list.in_list()) {
+    if (!pending_shape_update_list.is_in_list()) {
         Physics2DServerSW::singletonsw->pending_shape_update_list.add(
             &pending_shape_update_list
         );

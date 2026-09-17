@@ -1616,9 +1616,9 @@ void Physics2DServerSW::finish() {
 };
 
 void Physics2DServerSW::_update_shapes() {
-    while (pending_shape_update_list.first()) {
-        pending_shape_update_list.first()->self()->_shape_changed();
-        pending_shape_update_list.remove(pending_shape_update_list.first());
+    while (pending_shape_update_list.get_first()) {
+        pending_shape_update_list.get_first()->get_self()->_shape_changed();
+        pending_shape_update_list.remove(pending_shape_update_list.get_first());
     }
 }
 
