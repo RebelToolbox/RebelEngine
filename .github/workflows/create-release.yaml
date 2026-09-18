@@ -21,7 +21,7 @@ jobs:
             build-options: production=yes target=release_debug
 
           - name: Windows Editor
-            os: windows-2022
+            os: windows-latest
             artifact: windows-editor
             build-options: production=yes target=release_debug
 
@@ -48,22 +48,22 @@ jobs:
 
           # Rebel Engine Windows builds
           - name: Windows Engine 64 bit
-            os: windows-2022
+            os: windows-latest
             artifact: windows-engine-x86-64
             build-options: production=yes tools=no target=release
 
           - name: Windows Engine 64 bit Debug
-            os: windows-2022
+            os: windows-latest
             artifact: windows-engine-x86-64-debug
             build-options: production=yes tools=no target=release_debug
 
           - name: Windows Engine 32 bit
-            os: windows-2022
+            os: windows-latest
             artifact: windows-engine-x86-32
             build-options: production=yes tools=no target=release bits=32
 
           - name: Windows Engine 32 bit Debug
-            os: windows-2022
+            os: windows-latest
             artifact: windows-engine-x86-32-debug
             build-options: production=yes tools=no target=release_debug bits=32
 
