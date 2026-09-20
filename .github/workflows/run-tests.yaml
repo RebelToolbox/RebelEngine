@@ -31,7 +31,7 @@ jobs:
       # - ref: Your branch with the updated test project e.g. fix-test-project
       # - path: Do not change this. It's used by the rest of the test.
       - name: Checkout Rebel Test Project
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           repository: RebelToolbox/RebelTestProject
           ref: main
