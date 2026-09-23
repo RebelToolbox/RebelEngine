@@ -9,6 +9,6 @@
 
 #include "scene/resources/theme.h"
 
-void editor_register_fonts(Ref<Theme> p_theme);
+void register_editor_fonts(Ref<Theme> theme);
 
-#endif
+#endif // EDITOR_FONTS_H
