@@ -220,63 +220,77 @@ void register_editor_fonts(Ref<Theme> theme) {
 
     // Get built-in font data.
     Ref<DynamicFontData> main_font_data = create_dynamic_font_data_from_source(
-        _font_NotoSansUI_Regular,
-        _font_NotoSansUI_Regular_size
+        font_NotoSans_Regular,
+        font_NotoSans_Regular_size
     );
     configure_dynamic_font_data(main_font_data, antialiased, hinting);
     Ref<DynamicFontData> bold_font_data = create_dynamic_font_data_from_source(
-        _font_NotoSansUI_Bold,
-        _font_NotoSansUI_Bold_size
+        font_NotoSans_Bold,
+        font_NotoSans_Bold_size
     );
     configure_dynamic_font_data(bold_font_data, antialiased, hinting);
-    Ref<DynamicFontData> droid_fallback_font_data =
-        create_dynamic_font_data_from_source(
-            _font_DroidSansFallback,
-            _font_DroidSansFallback_size
-        );
-    configure_dynamic_font_data(droid_fallback_font_data, antialiased, hinting);
-    Ref<DynamicFontData> japanese_font_data =
-        create_dynamic_font_data_from_source(
-            _font_DroidSansJapanese,
-            _font_DroidSansJapanese_size
-        );
-    configure_dynamic_font_data(japanese_font_data, antialiased, hinting);
+    Ref<DynamicFontData> code_font_data = create_dynamic_font_data_from_source(
+        font_NotoSansMono_Regular,
+        font_NotoSansMono_Regular_size
+    );
+    configure_dynamic_font_data(code_font_data, antialiased, hinting);
     Ref<DynamicFontData> arabic_font_data =
         create_dynamic_font_data_from_source(
-            _font_NotoNaskhArabicUI_Regular,
-            _font_NotoNaskhArabicUI_Regular_size
+            font_NotoSansArabic_Regular,
+            font_NotoSansArabic_Regular_size
+        );
+    configure_dynamic_font_data(arabic_font_data, antialiased, hinting);
+    Ref<DynamicFontData> chinese_simplified_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansSC_Regular,
+            font_NotoSansSC_Regular_size
+        );
+    configure_dynamic_font_data(arabic_font_data, antialiased, hinting);
+    Ref<DynamicFontData> chinese_traditional_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansTC_Regular,
+            font_NotoSansTC_Regular_size
         );
     configure_dynamic_font_data(arabic_font_data, antialiased, hinting);
     Ref<DynamicFontData> hebrew_font_data =
         create_dynamic_font_data_from_source(
-            _font_NotoSansHebrew_Regular,
-            _font_NotoSansHebrew_Regular_size
+            font_NotoSansHebrew_Regular,
+            font_NotoSansHebrew_Regular_size
         );
     configure_dynamic_font_data(hebrew_font_data, antialiased, hinting);
+    Ref<DynamicFontData> japanese_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansJP_Regular,
+            font_NotoSansJP_Regular_size
+        );
+    configure_dynamic_font_data(japanese_font_data, antialiased, hinting);
+    Ref<DynamicFontData> korean_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansKR_Regular,
+            font_NotoSansKR_Regular_size
+        );
+    configure_dynamic_font_data(japanese_font_data, antialiased, hinting);
+    Ref<DynamicFontData> tamil_font_data = create_dynamic_font_data_from_source(
+        font_NotoSansTamil_Regular,
+        font_NotoSansTamil_Regular_size
+    );
+    configure_dynamic_font_data(tamil_font_data, antialiased, hinting);
     Ref<DynamicFontData> thai_font_data = create_dynamic_font_data_from_source(
-        _font_NotoSansThaiUI_Regular,
-        _font_NotoSansThaiUI_Regular_size
+        font_NotoSansThai_Regular,
+        font_NotoSansThai_Regular_size
     );
     configure_dynamic_font_data(thai_font_data, antialiased, hinting);
-    Ref<DynamicFontData> hindi_font_data = create_dynamic_font_data_from_source(
-        _font_NotoSansDevanagariUI_Regular,
-        _font_NotoSansDevanagariUI_Regular_size
-    );
-    configure_dynamic_font_data(hindi_font_data, antialiased, hinting);
-    Ref<DynamicFontData> code_font_data = create_dynamic_font_data_from_source(
-        _font_Hack_Regular,
-        _font_Hack_Regular_size
-    );
-    configure_dynamic_font_data(code_font_data, antialiased, hinting);
 
     // Create fallback font data.
     Vector<Ref<DynamicFontData>> fallback_font_data;
     fallback_font_data.push_back(arabic_font_data);
+    fallback_font_data.push_back(chinese_simplified_font_data);
+    fallback_font_data.push_back(chinese_traditional_font_data);
     fallback_font_data.push_back(hebrew_font_data);
-    fallback_font_data.push_back(thai_font_data);
-    fallback_font_data.push_back(hindi_font_data);
     fallback_font_data.push_back(japanese_font_data);
-    fallback_font_data.push_back(droid_fallback_font_data);
+    fallback_font_data.push_back(korean_font_data);
+    fallback_font_data.push_back(tamil_font_data);
+    fallback_font_data.push_back(thai_font_data);
 
     // Create fonts.
     const Ref<DynamicFont> main_font = create_font(
