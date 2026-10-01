@@ -764,7 +764,7 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         );
     }
 
-    editor_register_fonts(theme);
+    register_editor_fonts(theme);
 
     // Highlighted tabs and border width
     Color tab_color        = highlight_tabs

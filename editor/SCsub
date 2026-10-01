@@ -130,13 +130,12 @@ if env["tools"]:
     )
 
     # Fonts
-    flist = glob.glob(env.Dir("#third-party").abspath + "/fonts/*.ttf")
-    flist.extend(glob.glob(env.Dir("#third-party").abspath + "/fonts/*.otf"))
-    flist.sort()
-    env.Depends("#editor/builtin_fonts.gen.h", flist)
+    fonts = glob.glob(env.Dir("#third-party").abspath + "/fonts/*.ttf")
+    fonts.sort()
+    env.Depends("#editor/builtin_fonts.gen.h", fonts)
     env.CommandNoCache(
         "#editor/builtin_fonts.gen.h",
-        flist,
+        fonts,
         run_in_subprocess(editor_builders.make_fonts_header),
     )
 

@@ -47,32 +47,32 @@ def make_docs_header(target, source, env):
 
 
 def make_fonts_header(target, source, env):
-    dst = target[0]
-
-    g = open_utf8(dst, "w")
-
-    g.write("/* THIS FILE IS GENERATED DO NOT EDIT */\n")
-    g.write("#ifndef _EDITOR_FONTS_H\n")
-    g.write("#define _EDITOR_FONTS_H\n")
-
-    # saving uncompressed, since freetype will reference from memory pointer
-    xl_names = []
-    for i in range(len(source)):
-        with open(source[i], "rb") as f:
-            buf = f.read()
-
-        name = os.path.splitext(os.path.basename(source[i]))[0]
-
-        g.write("static const int _font_" + name + "_size = " + str(len(buf)) + ";\n")
-        g.write("static const unsigned char _font_" + name + "[] = {\n")
-        for j in range(len(buf)):
-            g.write("\t" + byte_to_str(buf[j]) + ",\n")
-
-        g.write("};\n")
-
-    g.write("#endif")
-
-    g.close()
+    with open(target[0], "w") as file:
+        file.write("// THIS FILE IS GENERATED DO NOT EDIT\n\n")
+        file.write("#ifndef BUILTIN_FONTS_GEN_H\n")
+        file.write("#define BUILTIN_FONTS_GEN_H\n")
+        for filename in source:
+            column = 0
+            with open(filename, "rb") as source_file:
+                buffer = source_file.read()
+            name = os.path.splitext(os.path.basename(filename))[0]
+            name = name.replace("-", "_")
+            file.write(
+                "static const int font_" + name + "_size = " + str(len(buffer)) + ";\n"
+            )
+            file.write("static const unsigned char font_" + name + "[] = {\n")
+            for byte in buffer:
+                if column == 0:
+                    file.write("\t")
+                file.write(byte_to_str(byte) + ",")
+                if column == 10:
+                    file.write("\n")
+                    column = 0
+                else:
+                    file.write(" ")
+                    column += 1
+            file.write("\n};\n\n")
+        file.write("#endif // BUILTIN_FONTS_GEN_H\n")
 
 
 def make_translations_header(target, source, env, category):

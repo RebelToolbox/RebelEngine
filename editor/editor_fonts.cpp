@@ -13,82 +13,83 @@
 #include "scene/resources/default_theme/default_theme.h"
 #include "scene/resources/dynamic_font.h"
 
-#define MAKE_FALLBACKS(m_name)                                                 \
-    m_name->add_fallback(FontArabic);                                          \
-    m_name->add_fallback(FontHebrew);                                          \
-    m_name->add_fallback(FontThai);                                            \
-    m_name->add_fallback(FontHindi);                                           \
-    m_name->add_fallback(FontJapanese);                                        \
-    m_name->add_fallback(FontFallback);
+static void configure_dynamic_font_data(
+    Ref<DynamicFontData>& font_data,
+    const bool antialiased,
+    const DynamicFontData::Hinting hinting
+) {
+    font_data->set_antialiased(antialiased);
+    font_data->set_hinting(hinting);
+    font_data->set_force_autohinter(true);
+}
 
-// Enable filtering and mipmaps on the editor fonts to improve text appearance
-// in editors that are zoomed in/out without having dedicated fonts to generate.
-// This is the case in GraphEdit-based editors such as the visual script and
-// visual shader editors.
+static Ref<DynamicFontData> create_dynamic_font_data_from_file(
+    const String& font_path
+) {
+    Ref<DynamicFontData> font_data;
+    if (!font_path.empty()) {
+        font_data.instance();
+        font_data->set_font_path(font_path);
+    }
+    return font_data;
+}
 
-// the custom spacings might only work with Noto Sans
-#define MAKE_DEFAULT_FONT(m_name, m_size)                                      \
-    Ref<DynamicFont> m_name;                                                   \
-    m_name.instance();                                                         \
-    m_name->set_size(m_size);                                                  \
-    m_name->set_use_filter(true);                                              \
-    m_name->set_use_mipmaps(true);                                             \
-    if (CustomFont.is_valid()) {                                               \
-        m_name->set_font_data(CustomFont);                                     \
-        m_name->add_fallback(DefaultFont);                                     \
-    } else {                                                                   \
-        m_name->set_font_data(DefaultFont);                                    \
-    }                                                                          \
-    m_name->set_spacing(DynamicFont::SPACING_TOP, -EDSCALE);                   \
-    m_name->set_spacing(DynamicFont::SPACING_BOTTOM, -EDSCALE);                \
-    MAKE_FALLBACKS(m_name);
+static Ref<DynamicFontData> create_dynamic_font_data_from_source(
+    const unsigned char* font_bytes,
+    const int font_bytes_length
+) {
+    Ref<DynamicFontData> font_data;
+    font_data.instance();
+    font_data->set_font_ptr(font_bytes, font_bytes_length);
+    return font_data;
+}
 
-#define MAKE_BOLD_FONT(m_name, m_size)                                         \
-    Ref<DynamicFont> m_name;                                                   \
-    m_name.instance();                                                         \
-    m_name->set_size(m_size);                                                  \
-    m_name->set_use_filter(true);                                              \
-    m_name->set_use_mipmaps(true);                                             \
-    if (CustomFontBold.is_valid()) {                                           \
-        m_name->set_font_data(CustomFontBold);                                 \
-        m_name->add_fallback(DefaultFontBold);                                 \
-    } else {                                                                   \
-        m_name->set_font_data(DefaultFontBold);                                \
-    }                                                                          \
-    m_name->set_spacing(DynamicFont::SPACING_TOP, -EDSCALE);                   \
-    m_name->set_spacing(DynamicFont::SPACING_BOTTOM, -EDSCALE);                \
-    MAKE_FALLBACKS(m_name);
+static void add_fallbacks(
+    Ref<DynamicFont> font,
+    const Vector<Ref<DynamicFontData>>& fallback_font_data
+) {
+    for (int index = 0; index < fallback_font_data.size(); index++) {
+        const Ref<DynamicFontData>& font_data = fallback_font_data[index];
+        font->add_fallback(font_data);
+    }
+}
 
-#define MAKE_SOURCE_FONT(m_name, m_size)                                       \
-    Ref<DynamicFont> m_name;                                                   \
-    m_name.instance();                                                         \
-    m_name->set_size(m_size);                                                  \
-    m_name->set_use_filter(true);                                              \
-    m_name->set_use_mipmaps(true);                                             \
-    if (CustomFontSource.is_valid()) {                                         \
-        m_name->set_font_data(CustomFontSource);                               \
-        m_name->add_fallback(dfmono);                                          \
-    } else {                                                                   \
-        m_name->set_font_data(dfmono);                                         \
-    }                                                                          \
-    m_name->set_spacing(DynamicFont::SPACING_TOP, -EDSCALE);                   \
-    m_name->set_spacing(DynamicFont::SPACING_BOTTOM, -EDSCALE);                \
-    MAKE_FALLBACKS(m_name);
+static Ref<DynamicFont> create_font(
+    const Ref<DynamicFontData>& font_data,
+    const int font_size
+) {
+    Ref<DynamicFont> font;
+    font.instance();
+    font->set_size(font_size);
+    font->set_use_filter(true);
+    font->set_use_mipmaps(true);
+    font->set_font_data(font_data);
+    font->set_spacing(DynamicFont::SPACING_TOP, -static_cast<int>(EDSCALE));
+    font->set_spacing(DynamicFont::SPACING_BOTTOM, -static_cast<int>(EDSCALE));
+    return font;
+}
 
-void editor_register_fonts(Ref<Theme> p_theme) {
-    DirAccess* dir = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+static Ref<DynamicFont> create_font(
+    const Ref<DynamicFontData>& custom_font_data,
+    const Ref<DynamicFontData>& builtin_font_data,
+    const int font_size,
+    const Vector<Ref<DynamicFontData>>& fallback_font_data
+) {
+    Ref<DynamicFont> font;
+    if (custom_font_data.is_valid()) {
+        font = create_font(custom_font_data, font_size);
+        font->add_fallback(builtin_font_data);
+    } else {
+        font = create_font(builtin_font_data, font_size);
+    }
+    add_fallbacks(font, fallback_font_data);
+    return font;
+}
 
-    /* Custom font */
-
-    bool font_antialiased = (bool)EditorSettings::get_singleton()->get(
-        "interface/editor/font_antialiased"
-    );
-    int font_hinting_setting = (int)EditorSettings::get_singleton()->get(
-        "interface/editor/font_hinting"
-    );
-
-    DynamicFontData::Hinting font_hinting;
-    switch (font_hinting_setting) {
+static DynamicFontData::Hinting get_hinting() {
+    const int hinting_setting =
+        EditorSettings::get_singleton()->get("interface/editor/font_hinting");
+    switch (hinting_setting) {
         case 0:
             // The "Auto" setting uses the setting that best matches the OS'
             // font rendering:
@@ -98,234 +99,292 @@ void editor_register_fonts(Ref<Theme> p_theme) {
             // - Linux has configurable font hinting, but most distributions
             // including Ubuntu default to "Light".
 #ifdef MACOS_ENABLED
-            font_hinting = DynamicFontData::HINTING_NONE;
-#else
-            font_hinting = DynamicFontData::HINTING_LIGHT;
-#endif
-            break;
+            return DynamicFontData::HINTING_NONE;
+#else  // !MACOS_ENABLED
+            return DynamicFontData::HINTING_LIGHT;
+#endif // !MACOS_ENABLED
         case 1:
-            font_hinting = DynamicFontData::HINTING_NONE;
-            break;
+            return DynamicFontData::HINTING_NONE;
         case 2:
-            font_hinting = DynamicFontData::HINTING_LIGHT;
-            break;
+            return DynamicFontData::HINTING_LIGHT;
         default:
-            font_hinting = DynamicFontData::HINTING_NORMAL;
-            break;
+            return DynamicFontData::HINTING_NORMAL;
     }
+}
 
-    String custom_font_path =
+void register_editor_fonts(Ref<Theme> theme) {
+    // Get editor font settings.
+    const int main_font_size = static_cast<int>(
+        static_cast<float>(EDITOR_GET("interface/editor/main_font_size"))
+        * EDSCALE
+    );
+    const int code_font_size = static_cast<int>(
+        static_cast<float>(EDITOR_GET("interface/editor/code_font_size"))
+        * EDSCALE
+    );
+    const int help_font_size = static_cast<int>(
+        static_cast<float>(EDITOR_GET("text_editor/help/help_font_size"))
+        * EDSCALE
+    );
+    const int help_source_font_size = static_cast<int>(
+        static_cast<float>(EDITOR_GET("text_editor/help/help_source_font_size"))
+        * EDSCALE
+    );
+    const int help_title_font_size = static_cast<int>(
+        static_cast<float>(EDITOR_GET("text_editor/help/help_title_font_size"))
+        * EDSCALE
+    );
+    const int output_font_size = static_cast<int>(
+        static_cast<float>(EDITOR_GET("run/output/font_size")) * EDSCALE
+    );
+    const bool antialiased =
+        EditorSettings::get_singleton()->get("interface/editor/font_antialiased"
+        );
+    const DynamicFontData::Hinting hinting = get_hinting();
+
+    // Fixed and relative size values.
+    const int title_font_size  = main_font_size + static_cast<int>(2 * EDSCALE);
+    const int rulers_font_size = static_cast<int>(8 * EDSCALE);
+    const int rotation_control_font_size = static_cast<int>(14 * EDSCALE);
+    const int expression_font_size       = static_cast<int>(
+        (static_cast<float>(EDITOR_GET("interface/editor/code_font_size")) - 1)
+        * EDSCALE
+    );
+
+    // Get custom editor font data.
+    DirAccess* dir = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+    String main_font_path =
         EditorSettings::get_singleton()->get("interface/editor/main_font");
-    Ref<DynamicFontData> CustomFont;
-    if (custom_font_path.length() > 0 && dir->file_exists(custom_font_path)) {
-        CustomFont.instance();
-        CustomFont->set_antialiased(font_antialiased);
-        CustomFont->set_hinting(font_hinting);
-        CustomFont->set_font_path(custom_font_path);
-        CustomFont->set_force_autohinter(true); // just looks better..i think?
-    } else {
+    if (!dir->file_exists(main_font_path)) {
+        // Clear main font setting.
         EditorSettings::get_singleton()->set_manually(
             "interface/editor/main_font",
             ""
         );
+        main_font_path = "";
     }
+    Ref<DynamicFontData> custom_main_font_data =
+        create_dynamic_font_data_from_file(main_font_path);
 
-    /* Custom Bold font */
-
-    String custom_font_path_bold =
+    String main_font_bold_path =
         EditorSettings::get_singleton()->get("interface/editor/main_font_bold");
-    Ref<DynamicFontData> CustomFontBold;
-    if (custom_font_path_bold.length() > 0
-        && dir->file_exists(custom_font_path_bold)) {
-        CustomFontBold.instance();
-        CustomFontBold->set_antialiased(font_antialiased);
-        CustomFontBold->set_hinting(font_hinting);
-        CustomFontBold->set_font_path(custom_font_path_bold);
-        CustomFontBold->set_force_autohinter(true
-        ); // just looks better..i think?
-    } else {
+    if (!dir->file_exists(main_font_bold_path)) {
+        // Clear main font bold setting.
         EditorSettings::get_singleton()->set_manually(
             "interface/editor/main_font_bold",
             ""
         );
+        main_font_bold_path = "";
     }
+    Ref<DynamicFontData> custom_bold_font_data =
+        create_dynamic_font_data_from_file(main_font_bold_path);
 
-    /* Custom source code font */
-
-    String custom_font_path_source =
+    String code_font_path =
         EditorSettings::get_singleton()->get("interface/editor/code_font");
-    Ref<DynamicFontData> CustomFontSource;
-    if (custom_font_path_source.length() > 0
-        && dir->file_exists(custom_font_path_source)) {
-        CustomFontSource.instance();
-        CustomFontSource->set_antialiased(font_antialiased);
-        CustomFontSource->set_hinting(font_hinting);
-        CustomFontSource->set_font_path(custom_font_path_source);
-    } else {
+    if (!dir->file_exists(code_font_path)) {
+        // Clear code font setting.
         EditorSettings::get_singleton()->set_manually(
             "interface/editor/code_font",
             ""
         );
+        code_font_path = "";
     }
-
+    Ref<DynamicFontData> custom_code_font_data =
+        create_dynamic_font_data_from_file(code_font_path);
     memdelete(dir);
 
-    /* Droid Sans */
+    // Configure user custom font data.
+    if (custom_main_font_data.is_valid()) {
+        configure_dynamic_font_data(
+            custom_main_font_data,
+            antialiased,
+            hinting
+        );
+    }
+    if (custom_bold_font_data.is_valid()) {
+        configure_dynamic_font_data(
+            custom_bold_font_data,
+            antialiased,
+            hinting
+        );
+    }
+    if (custom_code_font_data.is_valid()) {
+        configure_dynamic_font_data(
+            custom_code_font_data,
+            antialiased,
+            hinting
+        );
+        // Don't force auto hinting for source code font.
+        custom_code_font_data->set_force_autohinter(false);
+    }
 
-    Ref<DynamicFontData> DefaultFont;
-    DefaultFont.instance();
-    DefaultFont->set_antialiased(font_antialiased);
-    DefaultFont->set_hinting(font_hinting);
-    DefaultFont->set_font_ptr(
-        _font_NotoSansUI_Regular,
-        _font_NotoSansUI_Regular_size
+    // Get built-in font data.
+    Ref<DynamicFontData> main_font_data = create_dynamic_font_data_from_source(
+        font_NotoSans_Regular,
+        font_NotoSans_Regular_size
     );
-    DefaultFont->set_force_autohinter(true); // just looks better..i think?
-
-    Ref<DynamicFontData> DefaultFontBold;
-    DefaultFontBold.instance();
-    DefaultFontBold->set_antialiased(font_antialiased);
-    DefaultFontBold->set_hinting(font_hinting);
-    DefaultFontBold->set_font_ptr(
-        _font_NotoSansUI_Bold,
-        _font_NotoSansUI_Bold_size
+    configure_dynamic_font_data(main_font_data, antialiased, hinting);
+    Ref<DynamicFontData> bold_font_data = create_dynamic_font_data_from_source(
+        font_NotoSans_Bold,
+        font_NotoSans_Bold_size
     );
-    DefaultFontBold->set_force_autohinter(true); // just looks better..i think?
-
-    Ref<DynamicFontData> FontFallback;
-    FontFallback.instance();
-    FontFallback->set_antialiased(font_antialiased);
-    FontFallback->set_hinting(font_hinting);
-    FontFallback->set_font_ptr(
-        _font_DroidSansFallback,
-        _font_DroidSansFallback_size
+    configure_dynamic_font_data(bold_font_data, antialiased, hinting);
+    Ref<DynamicFontData> code_font_data = create_dynamic_font_data_from_source(
+        font_NotoSansMono_Regular,
+        font_NotoSansMono_Regular_size
     );
-    FontFallback->set_force_autohinter(true); // just looks better..i think?
-
-    Ref<DynamicFontData> FontJapanese;
-    FontJapanese.instance();
-    FontJapanese->set_antialiased(font_antialiased);
-    FontJapanese->set_hinting(font_hinting);
-    FontJapanese->set_font_ptr(
-        _font_DroidSansJapanese,
-        _font_DroidSansJapanese_size
+    configure_dynamic_font_data(code_font_data, antialiased, hinting);
+    Ref<DynamicFontData> arabic_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansArabic_Regular,
+            font_NotoSansArabic_Regular_size
+        );
+    configure_dynamic_font_data(arabic_font_data, antialiased, hinting);
+    Ref<DynamicFontData> chinese_simplified_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansSC_Regular,
+            font_NotoSansSC_Regular_size
+        );
+    configure_dynamic_font_data(arabic_font_data, antialiased, hinting);
+    Ref<DynamicFontData> chinese_traditional_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansTC_Regular,
+            font_NotoSansTC_Regular_size
+        );
+    configure_dynamic_font_data(arabic_font_data, antialiased, hinting);
+    Ref<DynamicFontData> hebrew_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansHebrew_Regular,
+            font_NotoSansHebrew_Regular_size
+        );
+    configure_dynamic_font_data(hebrew_font_data, antialiased, hinting);
+    Ref<DynamicFontData> japanese_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansJP_Regular,
+            font_NotoSansJP_Regular_size
+        );
+    configure_dynamic_font_data(japanese_font_data, antialiased, hinting);
+    Ref<DynamicFontData> korean_font_data =
+        create_dynamic_font_data_from_source(
+            font_NotoSansKR_Regular,
+            font_NotoSansKR_Regular_size
+        );
+    configure_dynamic_font_data(japanese_font_data, antialiased, hinting);
+    Ref<DynamicFontData> tamil_font_data = create_dynamic_font_data_from_source(
+        font_NotoSansTamil_Regular,
+        font_NotoSansTamil_Regular_size
     );
-    FontJapanese->set_force_autohinter(true); // just looks better..i think?
-
-    Ref<DynamicFontData> FontArabic;
-    FontArabic.instance();
-    FontArabic->set_antialiased(font_antialiased);
-    FontArabic->set_hinting(font_hinting);
-    FontArabic->set_font_ptr(
-        _font_NotoNaskhArabicUI_Regular,
-        _font_NotoNaskhArabicUI_Regular_size
+    configure_dynamic_font_data(tamil_font_data, antialiased, hinting);
+    Ref<DynamicFontData> thai_font_data = create_dynamic_font_data_from_source(
+        font_NotoSansThai_Regular,
+        font_NotoSansThai_Regular_size
     );
-    FontArabic->set_force_autohinter(true); // just looks better..i think?
+    configure_dynamic_font_data(thai_font_data, antialiased, hinting);
 
-    Ref<DynamicFontData> FontHebrew;
-    FontHebrew.instance();
-    FontHebrew->set_antialiased(font_antialiased);
-    FontHebrew->set_hinting(font_hinting);
-    FontHebrew->set_font_ptr(
-        _font_NotoSansHebrew_Regular,
-        _font_NotoSansHebrew_Regular_size
+    // Create fallback font data.
+    Vector<Ref<DynamicFontData>> fallback_font_data;
+    fallback_font_data.push_back(arabic_font_data);
+    fallback_font_data.push_back(chinese_simplified_font_data);
+    fallback_font_data.push_back(chinese_traditional_font_data);
+    fallback_font_data.push_back(hebrew_font_data);
+    fallback_font_data.push_back(japanese_font_data);
+    fallback_font_data.push_back(korean_font_data);
+    fallback_font_data.push_back(tamil_font_data);
+    fallback_font_data.push_back(thai_font_data);
+
+    // Create fonts.
+    const Ref<DynamicFont> main_font = create_font(
+        custom_main_font_data,
+        main_font_data,
+        main_font_size,
+        fallback_font_data
     );
-    FontHebrew->set_force_autohinter(true); // just looks better..i think?
-
-    Ref<DynamicFontData> FontThai;
-    FontThai.instance();
-    FontThai->set_antialiased(font_antialiased);
-    FontThai->set_hinting(font_hinting);
-    FontThai->set_font_ptr(
-        _font_NotoSansThaiUI_Regular,
-        _font_NotoSansThaiUI_Regular_size
+    const Ref<DynamicFont> bold_font = create_font(
+        custom_bold_font_data,
+        bold_font_data,
+        main_font_size,
+        fallback_font_data
     );
-    FontThai->set_force_autohinter(true); // just looks better..i think?
-
-    Ref<DynamicFontData> FontHindi;
-    FontHindi.instance();
-    FontHindi->set_antialiased(font_antialiased);
-    FontHindi->set_hinting(font_hinting);
-    FontHindi->set_font_ptr(
-        _font_NotoSansDevanagariUI_Regular,
-        _font_NotoSansDevanagariUI_Regular_size
+    const Ref<DynamicFont> title_font = create_font(
+        custom_bold_font_data,
+        bold_font_data,
+        title_font_size,
+        fallback_font_data
     );
-    FontHindi->set_force_autohinter(true); // just looks better..i think?
-
-    /* Hack */
-
-    Ref<DynamicFontData> dfmono;
-    dfmono.instance();
-    dfmono->set_antialiased(font_antialiased);
-    dfmono->set_hinting(font_hinting);
-    dfmono->set_font_ptr(_font_Hack_Regular, _font_Hack_Regular_size);
-
-    int default_font_size =
-        int(EDITOR_GET("interface/editor/main_font_size")) * EDSCALE;
-
-    // Default font
-    MAKE_DEFAULT_FONT(df, default_font_size);
-    p_theme->set_default_theme_font(df);
-    p_theme->set_font("main", "EditorFonts", df);
-
-    // Bold font
-    MAKE_BOLD_FONT(df_bold, default_font_size);
-    p_theme->set_font("bold", "EditorFonts", df_bold);
-
-    // Title font
-    MAKE_BOLD_FONT(df_title, default_font_size + 2 * EDSCALE);
-    p_theme->set_font("title", "EditorFonts", df_title);
-
-    // Documentation fonts
-    MAKE_DEFAULT_FONT(
-        df_doc,
-        int(EDITOR_GET("text_editor/help/help_font_size")) * EDSCALE
+    const Ref<DynamicFont> documentation_font = create_font(
+        custom_main_font_data,
+        main_font_data,
+        help_font_size,
+        fallback_font_data
     );
-    MAKE_BOLD_FONT(
-        df_doc_bold,
-        int(EDITOR_GET("text_editor/help/help_font_size")) * EDSCALE
+    const Ref<DynamicFont> documentation_bold_font = create_font(
+        custom_bold_font_data,
+        bold_font_data,
+        help_font_size,
+        fallback_font_data
     );
-    MAKE_BOLD_FONT(
-        df_doc_title,
-        int(EDITOR_GET("text_editor/help/help_title_font_size")) * EDSCALE
+    const Ref<DynamicFont> documentation_title_font = create_font(
+        custom_bold_font_data,
+        bold_font_data,
+        help_title_font_size,
+        fallback_font_data
     );
-    MAKE_SOURCE_FONT(
-        df_doc_code,
-        int(EDITOR_GET("text_editor/help/help_source_font_size")) * EDSCALE
+    const Ref<DynamicFont> documentation_code_font = create_font(
+        custom_code_font_data,
+        code_font_data,
+        help_source_font_size,
+        fallback_font_data
     );
-    p_theme->set_font("doc", "EditorFonts", df_doc);
-    p_theme->set_font("doc_bold", "EditorFonts", df_doc_bold);
-    p_theme->set_font("doc_title", "EditorFonts", df_doc_title);
-    p_theme->set_font("doc_source", "EditorFonts", df_doc_code);
-
-    // Ruler font
-    MAKE_DEFAULT_FONT(df_rulers, 8 * EDSCALE);
-    p_theme->set_font("rulers", "EditorFonts", df_rulers);
-
-    // Rotation widget font
-    MAKE_DEFAULT_FONT(df_rotation_control, 14 * EDSCALE);
-    p_theme->set_font("rotation_control", "EditorFonts", df_rotation_control);
-
-    // Code font
-    MAKE_SOURCE_FONT(
-        df_code,
-        int(EDITOR_GET("interface/editor/code_font_size")) * EDSCALE
+    const Ref<DynamicFont> rulers_font = create_font(
+        custom_main_font_data,
+        main_font_data,
+        rulers_font_size,
+        fallback_font_data
     );
-    p_theme->set_font("source", "EditorFonts", df_code);
-
-    MAKE_SOURCE_FONT(
-        df_expression,
-        (int(EDITOR_GET("interface/editor/code_font_size")) - 1) * EDSCALE
+    const Ref<DynamicFont> rotation_control_font = create_font(
+        custom_main_font_data,
+        main_font_data,
+        rotation_control_font_size,
+        fallback_font_data
     );
-    p_theme->set_font("expression", "EditorFonts", df_expression);
-
-    MAKE_SOURCE_FONT(
-        df_output_code,
-        int(EDITOR_GET("run/output/font_size")) * EDSCALE
+    const Ref<DynamicFont> source_font = create_font(
+        custom_code_font_data,
+        code_font_data,
+        code_font_size,
+        fallback_font_data
     );
-    p_theme->set_font("output_source", "EditorFonts", df_output_code);
+    const Ref<DynamicFont> expression_font = create_font(
+        custom_code_font_data,
+        code_font_data,
+        expression_font_size,
+        fallback_font_data
+    );
+    const Ref<DynamicFont> output_source_font = create_font(
+        custom_code_font_data,
+        code_font_data,
+        output_font_size,
+        fallback_font_data
+    );
+    const Ref<DynamicFont> status_source_font = create_font(
+        custom_code_font_data,
+        code_font_data,
+        main_font_size,
+        fallback_font_data
+    );
 
-    MAKE_SOURCE_FONT(df_text_editor_status_code, default_font_size);
-    p_theme
-        ->set_font("status_source", "EditorFonts", df_text_editor_status_code);
+    // Set theme fonts.
+    theme->set_default_theme_font(main_font);
+    theme->set_font("main", "EditorFonts", main_font);
+    theme->set_font("bold", "EditorFonts", bold_font);
+    theme->set_font("title", "EditorFonts", title_font);
+    theme->set_font("doc", "EditorFonts", documentation_font);
+    theme->set_font("doc_bold", "EditorFonts", documentation_bold_font);
+    theme->set_font("doc_title", "EditorFonts", documentation_title_font);
+    theme->set_font("doc_source", "EditorFonts", documentation_code_font);
+    theme->set_font("rulers", "EditorFonts", rulers_font);
+    theme->set_font("rotation_control", "EditorFonts", rotation_control_font);
+    theme->set_font("source", "EditorFonts", source_font);
+    theme->set_font("expression", "EditorFonts", expression_font);
+    theme->set_font("output_source", "EditorFonts", output_source_font);
+    theme->set_font("status_source", "EditorFonts", status_source_font);
 }
