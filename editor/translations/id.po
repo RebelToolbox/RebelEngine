@@ -14226,8 +14226,8 @@ msgid ""
 "Default Environment as specified in Project Settings (Rendering -> "
 "Environment -> Default Environment) could not be loaded."
 msgstr ""
-"Lingkungan Baku yang ditetapkan di Pengaturan Proyek (Rendering -> Viewport -"
-"> Lingkungan Baku) tidak dapat dimuat."
+"Lingkungan Baku yang ditetapkan di Pengaturan Proyek (Rendering -> Viewport "
+"-> Lingkungan Baku) tidak dapat dimuat."
 
 #: scene/main/timer.cpp
 msgid ""

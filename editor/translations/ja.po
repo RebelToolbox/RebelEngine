@@ -11062,8 +11062,8 @@ msgid ""
 "Saving the branch as a scene requires selecting only one node, but you have "
 "selected %d nodes."
 msgstr ""
-"ブランチをシーンとして保存するには、1つだけノードを選択する必要がありま"
-"す。%d 個のノードが選択されています。"
+"ブランチをシーンとして保存するには、1つだけノードを選択する必要があります。"
+"%d 個のノードが選択されています。"
 
 #: editor/scene_tree_dock.cpp
 msgid ""

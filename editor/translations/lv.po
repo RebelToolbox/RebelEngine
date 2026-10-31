@@ -13527,9 +13527,9 @@ msgid ""
 "functions. Making them visible for editing is fine, but they will hide upon "
 "running."
 msgstr ""
-"Uznirstošie logi ir paslēpti pēc noklusējuma, lai tos parādītu, izmanto ."
-"popup() vai jebkuru no to funkcijām. Padarīt tos redzamus rediģēšanai ir "
-"labi, bet tie tiks paslēpti pēc palaišanas."
+"Uznirstošie logi ir paslēpti pēc noklusējuma, lai tos parādītu, "
+"izmanto .popup() vai jebkuru no to funkcijām. Padarīt tos redzamus "
+"rediģēšanai ir labi, bet tie tiks paslēpti pēc palaišanas."
 
 #: scene/gui/range.cpp
 msgid "If \"Exp Edit\" is enabled, \"Min Value\" must be greater than 0."

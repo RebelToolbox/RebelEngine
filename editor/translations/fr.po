@@ -13531,8 +13531,8 @@ msgid ""
 "A SpriteFrames resource must be created or set in the \"Frames\" property in "
 "order for AnimatedSprite to display frames."
 msgstr ""
-"Une ressource SpriteFrames doit être créée ou assignée à la propriété « "
-"Frames » afin qu'AnimatedSprite affiche les frames."
+"Une ressource SpriteFrames doit être créée ou assignée à la propriété "
+"« Frames » afin qu'AnimatedSprite affiche les frames."
 
 #: scene/2d/canvas_modulate.cpp
 msgid ""
@@ -13688,8 +13688,8 @@ msgid ""
 msgstr ""
 "Les particules de type GPU ne sont pas supportées par le pilote graphique "
 "GLES2.\n"
-"Utilisez le nœud CPUParticles2D à la place. Vous pouvez utiliser l'option « "
-"Convertir en CPUParticles » pour ce faire."
+"Utilisez le nœud CPUParticles2D à la place. Vous pouvez utiliser l'option "
+"« Convertir en CPUParticles » pour ce faire."
 
 #: scene/2d/particles_2d.cpp
 msgid ""
@@ -13961,8 +13961,8 @@ msgid ""
 msgstr ""
 "Les particules de type GPU ne sont pas supportées par le pilote graphique "
 "GLES2.\n"
-"Utilisez le nœud CPUParticles à la place. Vous pouvez utiliser l'option « "
-"Convertir en CPUParticles » pour ce faire."
+"Utilisez le nœud CPUParticles à la place. Vous pouvez utiliser l'option "
+"« Convertir en CPUParticles » pour ce faire."
 
 #: scene/3d/particles.cpp
 msgid ""

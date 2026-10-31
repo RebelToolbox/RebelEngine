@@ -12776,8 +12776,8 @@ msgstr "Експорт на Android"
 #: platforms/android/export/export_plugin.cpp
 msgid "Invalid filename! Android App Bundle requires the *.aab extension."
 msgstr ""
-"Некоректна назва файла! Пакет програми Android повинен мати суфікс назви *."
-"aab."
+"Некоректна назва файла! Пакет програми Android повинен мати суфікс назви "
+"*.aab."
 
 #: platforms/android/export/export_plugin.cpp
 msgid "APK Expansion not compatible with Android App Bundle."

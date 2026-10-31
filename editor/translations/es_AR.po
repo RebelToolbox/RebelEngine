@@ -14278,8 +14278,8 @@ msgid ""
 "Default Environment as specified in Project Settings (Rendering -> "
 "Environment -> Default Environment) could not be loaded."
 msgstr ""
-"El Entorno por Defecto especificado en Configuración del Editor (Rendering -"
-"> Viewport -> Entorno por Defecto) no pudo ser cargado."
+"El Entorno por Defecto especificado en Configuración del Editor (Rendering "
+"-> Viewport -> Entorno por Defecto) no pudo ser cargado."
 
 #: scene/main/timer.cpp
 msgid ""
