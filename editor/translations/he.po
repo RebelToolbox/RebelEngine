@@ -507,8 +507,8 @@ msgstr ""
 "\n"
 "להפעלת האפשרות להוספת רצועות מותאמות-אישית, יש לקבוע בהגדרות ייבוא של הסצנה "
 "את\n"
-"\"הנפשה > אחסון\" ל-\"קבצים\", להפעיל את \"הנפשה > השאר רצועות "
-"מותאמות-אישית\", ולבסוף לייבא מחדש.\n"
+"\"הנפשה > אחסון\" ל-\"קבצים\", להפעיל את \"הנפשה > השאר רצועות מותאמות-"
+"אישית\", ולבסוף לייבא מחדש.\n"
 "דרך אחרת, להשתמש בהגדרות ייבוא אשר מייבאים הנפשות לקבצים נפרדים."
 
 #: editor/animation_track_editor.cpp
@@ -1706,8 +1706,8 @@ msgid ""
 "Allows to configure import settings for individual assets. Requires the "
 "FileSystem dock to function."
 msgstr ""
-"מאפשר התאמת הגדרות ייבוא עבור משאבים בודדים. דורש את השימוש בחלון "
-"מערכת-הקבצים."
+"מאפשר התאמת הגדרות ייבוא עבור משאבים בודדים. דורש את השימוש בחלון מערכת-"
+"הקבצים."
 
 #: editor/editor_feature_profile.cpp
 msgid "(current)"
@@ -14190,8 +14190,8 @@ msgid ""
 "Default Environment as specified in Project Settings (Rendering -> "
 "Environment -> Default Environment) could not be loaded."
 msgstr ""
-"לא היתה אפשרות לטעון את הסביבה שנקבעה כברירת המחדל בהגדרות המיזם (Rendering -"
-"> Environment -> Default Environment)."
+"לא היתה אפשרות לטעון את הסביבה שנקבעה כברירת המחדל בהגדרות המיזם (Rendering "
+"-> Environment -> Default Environment)."
 
 #: scene/main/timer.cpp
 msgid ""

@@ -10956,8 +10956,8 @@ msgid ""
 "Filters to exclude files/folders from project\n"
 "(comma-separated, e.g: *.json, *.txt, docs/*)"
 msgstr ""
-"এক্সপোর্ট (export) হতে বর্জনকৃত ফিল্টারসমূহ (filter) (কমা-বিভক্ত, যেমন: *.json, *."
-"txt):"
+"এক্সপোর্ট (export) হতে বর্জনকৃত ফিল্টারসমূহ (filter) (কমা-বিভক্ত, যেমন: *.json, "
+"*.txt):"
 
 #: editor/project_export.cpp
 #, fuzzy
