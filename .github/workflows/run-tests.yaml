@@ -10,7 +10,7 @@ jobs:
       matrix:
         include:
           - name: Linux run tests
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: rebel-linux
             command-prefix: xvfb-run
             logs: linux-run-tests-logs

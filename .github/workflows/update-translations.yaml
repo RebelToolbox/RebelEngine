@@ -10,7 +10,7 @@ jobs:
     name: Update Translation Files
     # Don't run on forks.
     if: github.repository == 'RebelToolbox/RebelEngine'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout Rebel Engine
@@ -135,7 +135,7 @@ jobs:
     name: Update Translations
     # Don't run on forks.
     if: github.repository == 'RebelToolbox/RebelEngine'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout Rebel Engine

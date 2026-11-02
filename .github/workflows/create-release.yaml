@@ -90,42 +90,42 @@ jobs:
 
           # Rebel Engine Android Library builds
           - name: Android Engine Library armv8 64 bit
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-arm64
             build-options: platform=android production=yes tools=no target=release
 
           - name: Android Engine Library armv8 64 bit Debug
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-arm64-debug
             build-options: platform=android production=yes tools=no target=release_debug
 
           - name: Android Engine Library armv7 Neon
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-arm-neon
             build-options: platform=android production=yes tools=no target=release android_arch=armv7
 
           - name: Android Engine Library armv7 Neon Debug
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-arm-neon-debug
             build-options: platform=android production=yes tools=no target=release_debug android_arch=armv7
 
           - name: Android Engine Library x86 64 bit
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-x86-64
             build-options: platform=android production=yes tools=no target=release android_arch=x86_64
 
           - name: Android Engine Library x86 64 bit Debug
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-x86-64-debug
             build-options: platform=android production=yes tools=no target=release_debug android_arch=x86_64
 
           - name: Android Engine Library x86 32 bit
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-x86-32
             build-options: platform=android production=yes tools=no target=release android_arch=x86
 
           - name: Android Engine Library x86 32 bit Debug
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-engine-library-x86-32-debug
             build-options: platform=android production=yes tools=no target=release_debug android_arch=x86
 
@@ -152,32 +152,32 @@ jobs:
 
           # Rebel Engine Web builds
           - name: Web Engine
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: web-engine
             build-options: platform=web production=yes tools=no target=release
 
           - name: Web Engine Debug
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: web-engine-debug
             build-options: platform=web production=yes tools=no target=release_debug
 
           - name: Web Engine Threads
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: web-engine-threads
             build-options: platform=web production=yes tools=no threads_enabled=yes target=release
 
           - name: Web Engine Threads Debug
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: web-engine-threads-debug
             build-options: platform=web production=yes tools=no threads_enabled=yes target=release_debug
 
           - name: Web Engine GDNative
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: web-engine-gdnative
             build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release
 
           - name: Web Engine GDNative Debug
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: web-engine-gdnative-debug
             build-options: platform=web production=yes tools=no gdnative_enabled=yes target=release_debug
 
@@ -194,7 +194,7 @@ jobs:
   android-templates:
     name: Create Android Templates
     needs: builds
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       java_version: 17
 
@@ -418,7 +418,7 @@ jobs:
   create-templates-zip:
     name: Create Templates Zip File
     needs: [builds, android-templates, macos-apps, ios-template]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Rebel Engine
         uses: actions/checkout@v7
@@ -487,7 +487,7 @@ jobs:
   create-release:
     name: Create Release
     needs: [builds, create-templates-zip]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Rebel Engine
         uses: actions/checkout@v7
