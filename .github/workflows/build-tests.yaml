@@ -15,12 +15,12 @@ jobs:
         include:
           # Linux builds
           - name: Linux Rebel Editor using GCC
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: rebel-linux-gcc
             build-options: dev=yes
 
           - name: Linux Rebel Editor using Clang
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: rebel-linux-clang
             build-options: dev=yes use_llvm=yes use_lld=yes
 
@@ -42,13 +42,13 @@ jobs:
             build-options: dev=yes use_mingw=yes
 
           - name: Windows Rebel Editor on Linux
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: rebel-windows-linux
             build-options: platform=windows dev=yes
 
           # Android builds
           - name: Android arm64v8 library on Linux
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: android-arm64v8-linux
             build-options: platform=android dev=yes
 
@@ -70,7 +70,7 @@ jobs:
 
           # Web builds
           - name: Web library on Linux
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: rebel-web-linux
             build-options: platform=web dev=yes
 
@@ -86,7 +86,7 @@ jobs:
 
           # Server builds
           - name: Server Engine on Linux
-            os: ubuntu-latest
+            os: ubuntu-24.04
             artifact: rebel-server-linux
             build-options: platform=server dev=yes
 
