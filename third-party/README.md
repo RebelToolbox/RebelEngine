@@ -418,7 +418,7 @@ Patch files for the changes are included in the patches/ folder.
 
 - Project: https://pcre2project.github.io/pcre2/
 - Source: https://github.com/PCRE2Project/pcre2
-- Version: 10.48 (7978954dbd2efc6f2196869290553cf1871b4ce6, August 2026)
+- Version: 10.49 (6f9d7c1373262c541324a16a358785b33ef116cf, September 2026)
 - License: BSD-3-Clause
 
 Files copied from the library source:
