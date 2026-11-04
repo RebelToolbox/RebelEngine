@@ -435,8 +435,8 @@ const MeshGeometry::MappingData<Color>& MeshGeometry::get_colors() const {
     return m_colors;
 }
 
-const MeshGeometry::MappingData<int>& MeshGeometry::get_material_allocation_id(
-) const {
+const MeshGeometry::MappingData<int>& MeshGeometry::
+    get_material_allocation_id() const {
     return m_material_allocation_ids;
 }
 

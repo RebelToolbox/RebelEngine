@@ -55,7 +55,8 @@ public:
     void set_orientation(const Basis& p_orientation);
     Basis get_orientation() const;
     bool get_tracks_position() const;
-    void set_position(const Vector3& p_position
+    void set_position(
+        const Vector3& p_position
     );                            // set position with world_scale applied
     Vector3 get_position() const; // get position with world_scale applied
     void set_rw_position(const Vector3& p_rw_position);

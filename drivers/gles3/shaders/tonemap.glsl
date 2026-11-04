@@ -128,8 +128,8 @@ vec4 texture2D_bicubic(sampler2D tex, vec2 uv, int p_lod) {
     return (g0(fuv.y)
             * (g0x * textureLod(tex, p0, lod) + g1x * textureLod(tex, p1, lod)))
          + (g1(fuv.y)
-            * (g0x * textureLod(tex, p2, lod) + g1x * textureLod(tex, p3, lod))
-         );
+            * (g0x * textureLod(tex, p2, lod)
+               + g1x * textureLod(tex, p3, lod)));
 }
 
 #define GLOW_TEXTURE_SAMPLE(m_tex, m_uv, m_lod)                                \
@@ -237,7 +237,8 @@ vec3 tonemap_reinhard(vec3 color, float white) {
     );
 }
 
-vec3 linear_to_srgb(vec3 color
+vec3 linear_to_srgb(
+    vec3 color
 ) { // convert linear rgb to srgb, assumes clamped input in range [0;1]
     const vec3 a = vec3(0.055f);
     return mix(
@@ -563,7 +564,8 @@ void main() {
 #else
     // need color clamping
     color = clamp(color, vec3(0.0f), vec3(1.0f));
-    color = linear_to_srgb(color
+    color = linear_to_srgb(
+        color
     ); // regular linear -> SRGB conversion (needs clamped values)
 #endif
 

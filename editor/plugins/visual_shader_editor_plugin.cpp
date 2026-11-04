@@ -89,7 +89,8 @@ void VisualShaderEditor::edit(VisualShader* p_visual_shader) {
     }
 }
 
-void VisualShaderEditor::add_plugin(const Ref<VisualShaderNodePlugin>& p_plugin
+void VisualShaderEditor::add_plugin(
+    const Ref<VisualShaderNodePlugin>& p_plugin
 ) {
     if (plugins.find(p_plugin) != -1) {
         return;
@@ -897,7 +898,8 @@ void VisualShaderEditor::_update_graph() {
 
                         LineEdit* name_box = memnew(LineEdit);
                         hb->add_child(name_box);
-                        name_box->set_custom_minimum_size(Size2(65 * EDSCALE, 0)
+                        name_box->set_custom_minimum_size(
+                            Size2(65 * EDSCALE, 0)
                         );
                         name_box->set_h_size_flags(SIZE_EXPAND_FILL);
                         name_box->set_text(name_left);
@@ -986,7 +988,8 @@ void VisualShaderEditor::_update_graph() {
 
                         LineEdit* name_box = memnew(LineEdit);
                         hb->add_child(name_box);
-                        name_box->set_custom_minimum_size(Size2(65 * EDSCALE, 0)
+                        name_box->set_custom_minimum_size(
+                            Size2(65 * EDSCALE, 0)
                         );
                         name_box->set_h_size_flags(SIZE_EXPAND_FILL);
                         name_box->set_text(name_right);
@@ -1130,9 +1133,9 @@ void VisualShaderEditor::_update_graph() {
                 EDITOR_GET("text_editor/highlighting/text_color");
             Color keyword_color =
                 EDITOR_GET("text_editor/highlighting/keyword_color");
-            Color control_flow_keyword_color =
-                EDITOR_GET("text_editor/highlighting/control_flow_keyword_color"
-                );
+            Color control_flow_keyword_color = EDITOR_GET(
+                "text_editor/highlighting/control_flow_keyword_color"
+            );
             Color comment_color =
                 EDITOR_GET("text_editor/highlighting/comment_color");
             Color symbol_color =
@@ -1939,39 +1942,44 @@ VisualShaderNode* VisualShaderEditor::_add_node(int p_idx, int p_op_idx) {
                 Object::cast_to<VisualShaderNodeColorOp>(vsn);
 
             if (colorOp) {
-                colorOp->set_operator((VisualShaderNodeColorOp::Operator
-                )p_op_idx);
+                colorOp->set_operator(
+                    (VisualShaderNodeColorOp::Operator)p_op_idx
+                );
             }
 
             VisualShaderNodeColorFunc* colorFunc =
                 Object::cast_to<VisualShaderNodeColorFunc>(vsn);
 
             if (colorFunc) {
-                colorFunc->set_function((VisualShaderNodeColorFunc::Function
-                )p_op_idx);
+                colorFunc->set_function(
+                    (VisualShaderNodeColorFunc::Function)p_op_idx
+                );
             }
 
             VisualShaderNodeScalarOp* scalarOp =
                 Object::cast_to<VisualShaderNodeScalarOp>(vsn);
 
             if (scalarOp) {
-                scalarOp->set_operator((VisualShaderNodeScalarOp::Operator
-                )p_op_idx);
+                scalarOp->set_operator(
+                    (VisualShaderNodeScalarOp::Operator)p_op_idx
+                );
             }
 
             VisualShaderNodeScalarFunc* scalarFunc =
                 Object::cast_to<VisualShaderNodeScalarFunc>(vsn);
 
             if (scalarFunc) {
-                scalarFunc->set_function((VisualShaderNodeScalarFunc::Function
-                )p_op_idx);
+                scalarFunc->set_function(
+                    (VisualShaderNodeScalarFunc::Function)p_op_idx
+                );
             }
 
             VisualShaderNodeVectorOp* vecOp =
                 Object::cast_to<VisualShaderNodeVectorOp>(vsn);
 
             if (vecOp) {
-                vecOp->set_operator((VisualShaderNodeVectorOp::Operator)p_op_idx
+                vecOp->set_operator(
+                    (VisualShaderNodeVectorOp::Operator)p_op_idx
                 );
             }
 
@@ -1979,16 +1987,18 @@ VisualShaderNode* VisualShaderEditor::_add_node(int p_idx, int p_op_idx) {
                 Object::cast_to<VisualShaderNodeVectorFunc>(vsn);
 
             if (vecFunc) {
-                vecFunc->set_function((VisualShaderNodeVectorFunc::Function
-                )p_op_idx);
+                vecFunc->set_function(
+                    (VisualShaderNodeVectorFunc::Function)p_op_idx
+                );
             }
 
             VisualShaderNodeTransformFunc* matFunc =
                 Object::cast_to<VisualShaderNodeTransformFunc>(vsn);
 
             if (matFunc) {
-                matFunc->set_function((VisualShaderNodeTransformFunc::Function
-                )p_op_idx);
+                matFunc->set_function(
+                    (VisualShaderNodeTransformFunc::Function)p_op_idx
+                );
             }
 
             VisualShaderNodeScalarDerivativeFunc* sderFunc =
@@ -2477,9 +2487,9 @@ void VisualShaderEditor::_notification(int p_what) {
                 EDITOR_GET("text_editor/highlighting/text_color");
             Color keyword_color =
                 EDITOR_GET("text_editor/highlighting/keyword_color");
-            Color control_flow_keyword_color =
-                EDITOR_GET("text_editor/highlighting/control_flow_keyword_color"
-                );
+            Color control_flow_keyword_color = EDITOR_GET(
+                "text_editor/highlighting/control_flow_keyword_color"
+            );
             Color comment_color =
                 EDITOR_GET("text_editor/highlighting/comment_color");
             Color symbol_color =
@@ -2521,10 +2531,12 @@ void VisualShaderEditor::_notification(int p_what) {
             );
         }
 
-        tools->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-            "Tools",
-            "EditorIcons"
-        ));
+        tools->set_icon(
+            EditorNode::get_singleton()->get_gui_base()->get_icon(
+                "Tools",
+                "EditorIcons"
+            )
+        );
 
         if (p_what == NOTIFICATION_THEME_CHANGED && is_visible_in_tree()) {
             _update_graph();
@@ -3432,7 +3444,8 @@ VisualShaderEditor::VisualShaderEditor() {
     graph->add_valid_right_disconnect_type(VisualShaderNode::PORT_TYPE_SCALAR);
     graph->add_valid_right_disconnect_type(VisualShaderNode::PORT_TYPE_BOOLEAN);
     graph->add_valid_right_disconnect_type(VisualShaderNode::PORT_TYPE_VECTOR);
-    graph->add_valid_right_disconnect_type(VisualShaderNode::PORT_TYPE_TRANSFORM
+    graph->add_valid_right_disconnect_type(
+        VisualShaderNode::PORT_TYPE_TRANSFORM
     );
     graph->add_valid_right_disconnect_type(VisualShaderNode::PORT_TYPE_SAMPLER);
     // graph->add_valid_left_disconnect_type(0);
@@ -7071,19 +7084,22 @@ void VisualShaderNodePortPreview::_shader_changed() {
          i >= 0;
          i--) {
         Object* object = ObjectDB::get_instance(
-            EditorNode::get_singleton()->get_editor_history()->get_path_object(i
+            EditorNode::get_singleton()->get_editor_history()->get_path_object(
+                i
             )
         );
         ShaderMaterial* src_mat;
         if (!object) {
             continue;
         }
-        if (object->has_method("get_material_override"
+        if (object->has_method(
+                "get_material_override"
             )) { // trying getting material from MeshInstance
             src_mat = Object::cast_to<ShaderMaterial>(
                 object->call("get_material_override")
             );
-        } else if (object->has_method("get_material"
+        } else if (object->has_method(
+                       "get_material"
                    )) { // from CanvasItem/Node2D
             src_mat =
                 Object::cast_to<ShaderMaterial>(object->call("get_material"));
@@ -7159,7 +7175,8 @@ String VisualShaderConversionPlugin::converts_to() const {
     return "Shader";
 }
 
-bool VisualShaderConversionPlugin::handles(const Ref<Resource>& p_resource
+bool VisualShaderConversionPlugin::handles(
+    const Ref<Resource>& p_resource
 ) const {
     Ref<VisualShader> vshader = p_resource;
     return vshader.is_valid();

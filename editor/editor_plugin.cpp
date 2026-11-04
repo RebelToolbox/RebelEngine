@@ -255,8 +255,9 @@ String EditorInterface::get_selected_path() const {
 }
 
 String EditorInterface::get_current_path() const {
-    return EditorNode::get_singleton()->get_filesystem_dock()->get_current_path(
-    );
+    return EditorNode::get_singleton()
+        ->get_filesystem_dock()
+        ->get_current_path();
 }
 
 void EditorInterface::inspect_object(
@@ -574,7 +575,8 @@ void EditorPlugin::add_control_to_container(
         } break;
 
         case CONTAINER_SPATIAL_EDITOR_MENU: {
-            SpatialEditor::get_singleton()->add_control_to_menu_panel(p_control
+            SpatialEditor::get_singleton()->add_control_to_menu_panel(
+                p_control
             );
 
         } break;
@@ -757,8 +759,8 @@ void EditorPlugin::remove_tool_menu_item(const String& p_name) {
 void EditorPlugin::set_input_event_forwarding_always_enabled() {
     input_event_forwarding_always_enabled = true;
     EditorPluginList* always_input_forwarding_list =
-        EditorNode::get_singleton()->get_editor_plugins_force_input_forwarding(
-        );
+        EditorNode::get_singleton()
+            ->get_editor_plugins_force_input_forwarding();
     always_input_forwarding_list->add_plugin(this);
 }
 
@@ -800,7 +802,8 @@ bool EditorPlugin::forward_canvas_gui_input(const Ref<InputEvent>& p_event) {
 
 void EditorPlugin::forward_canvas_draw_over_viewport(Control* p_overlay) {
     if (get_script_instance()
-        && get_script_instance()->has_method("forward_canvas_draw_over_viewport"
+        && get_script_instance()->has_method(
+            "forward_canvas_draw_over_viewport"
         )) {
         get_script_instance()->call(
             "forward_canvas_draw_over_viewport",
@@ -867,7 +870,8 @@ void EditorPlugin::forward_spatial_draw_over_viewport(Control* p_overlay) {
     }
 }
 
-void EditorPlugin::forward_spatial_force_draw_over_viewport(Control* p_overlay
+void EditorPlugin::forward_spatial_force_draw_over_viewport(
+    Control* p_overlay
 ) {
     if (get_script_instance()
         && get_script_instance()->has_method(
@@ -991,7 +995,8 @@ void EditorPlugin::restore_global_state() {}
 
 void EditorPlugin::save_global_state() {}
 
-void EditorPlugin::add_import_plugin(const Ref<EditorImportPlugin>& p_importer
+void EditorPlugin::add_import_plugin(
+    const Ref<EditorImportPlugin>& p_importer
 ) {
     ERR_FAIL_COND(!p_importer.is_valid());
     ResourceFormatImporter::get_singleton()->add_importer(p_importer);
@@ -1006,7 +1011,8 @@ void EditorPlugin::remove_import_plugin(
     EditorFileSystem::get_singleton()->call_deferred("scan");
 }
 
-void EditorPlugin::add_export_plugin(const Ref<EditorExportPlugin>& p_exporter
+void EditorPlugin::add_export_plugin(
+    const Ref<EditorExportPlugin>& p_exporter
 ) {
     ERR_FAIL_COND(!p_exporter.is_valid());
     EditorExport::get_singleton()->add_export_plugin(p_exporter);

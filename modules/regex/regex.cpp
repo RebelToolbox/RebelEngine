@@ -221,8 +221,11 @@ Error RegEx::compile(const String& p_pattern) {
     return OK;
 }
 
-Ref<RegExMatch> RegEx::search(const String& p_subject, int p_offset, int p_end)
-    const {
+Ref<RegExMatch> RegEx::search(
+    const String& p_subject,
+    int p_offset,
+    int p_end
+) const {
     ERR_FAIL_COND_V(!is_valid(), nullptr);
 
     Ref<RegExMatch> result = memnew(RegExMatch);
@@ -321,8 +324,11 @@ Ref<RegExMatch> RegEx::search(const String& p_subject, int p_offset, int p_end)
     return result;
 }
 
-Array RegEx::search_all(const String& p_subject, int p_offset, int p_end)
-    const {
+Array RegEx::search_all(
+    const String& p_subject,
+    int p_offset,
+    int p_end
+) const {
     int last_end = -1;
     Array result;
     Ref<RegExMatch> match = search(p_subject, p_offset, p_end);

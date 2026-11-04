@@ -36,7 +36,8 @@ void GDAPI rebel_net_bind_webrtc_data_channel(
 rebel_error GDAPI
 rebel_net_set_webrtc_library(const rebel_net_webrtc_library* p_lib) {
 #ifdef WEBRTC_GDNATIVE_ENABLED
-    return (rebel_error)WebRTCPeerConnectionGDNative::set_default_library(p_lib
+    return (rebel_error)WebRTCPeerConnectionGDNative::set_default_library(
+        p_lib
     );
 #else
     return (rebel_error)ERR_UNAVAILABLE;

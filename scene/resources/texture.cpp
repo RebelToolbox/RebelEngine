@@ -815,7 +815,8 @@ Error StreamTexture::_load_data(
             }
 
             if (i != 0) {
-                img->convert(mipmap_images[0]->get_format()
+                img->convert(
+                    mipmap_images[0]->get_format()
                 ); // ensure the same format for all mipmaps
             }
 
@@ -1187,12 +1188,14 @@ void ResourceFormatLoaderStreamTexture::get_recognized_extensions(
     p_extensions->push_back("stex");
 }
 
-bool ResourceFormatLoaderStreamTexture::handles_type(const String& p_type
+bool ResourceFormatLoaderStreamTexture::handles_type(
+    const String& p_type
 ) const {
     return p_type == "StreamTexture";
 }
 
-String ResourceFormatLoaderStreamTexture::get_resource_type(const String& p_path
+String ResourceFormatLoaderStreamTexture::get_resource_type(
+    const String& p_path
 ) const {
     if (p_path.get_extension().to_lower() == "stex") {
         return "StreamTexture";
@@ -3464,7 +3467,8 @@ void ResourceFormatLoaderTextureLayered::get_recognized_extensions(
     p_extensions->push_back("texarr");
 }
 
-bool ResourceFormatLoaderTextureLayered::handles_type(const String& p_type
+bool ResourceFormatLoaderTextureLayered::handles_type(
+    const String& p_type
 ) const {
     return p_type == "Texture3D" || p_type == "TextureArray";
 }

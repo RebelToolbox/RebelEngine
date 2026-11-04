@@ -98,7 +98,7 @@ ModelLimbNode::ModelLimbNode(
     const Document& doc,
     const std::string& name
 ) :
-    Model(id, element, doc, name){
+    Model(id, element, doc, name) {
 
     };
 

@@ -127,7 +127,8 @@ protected:
 
 public:
     virtual void get_parameter_list(List<PropertyInfo>* r_list) const;
-    virtual Variant get_parameter_default_value(const StringName& p_parameter
+    virtual Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const;
 
     void set_parameter(const StringName& p_name, const Variant& p_value);
@@ -345,8 +346,10 @@ public:
 
     Transform get_root_motion_transform() const;
 
-    float get_connection_activity(const StringName& p_path, int p_connection)
-        const;
+    float get_connection_activity(
+        const StringName& p_path,
+        int p_connection
+    ) const;
     void advance(float p_time);
 
     void rename_parameter(const String& p_base, const String& p_new_base);

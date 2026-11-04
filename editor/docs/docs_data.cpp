@@ -265,7 +265,8 @@ void DocsData::generate(bool p_basic_types) {
 
         String name = classes.front()->get();
         if (!ClassDB::is_class_exposed(name)) {
-            print_verbose(vformat("Class '%s' is not exposed, skipping.", name)
+            print_verbose(
+                vformat("Class '%s' is not exposed, skipping.", name)
             );
             classes.pop_front();
             continue;
@@ -320,7 +321,8 @@ void DocsData::generate(bool p_basic_types) {
                 // Special case for project settings, so that settings are not
                 // taken from the current project's settings
                 if (E->get().name == "script"
-                    || ProjectSettings::get_singleton()->get_order(E->get().name
+                    || ProjectSettings::get_singleton()->get_order(
+                           E->get().name
                        ) >= ProjectSettings::CUSTOM_SETTINGS_START) {
                     continue;
                 }

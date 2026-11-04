@@ -107,7 +107,8 @@ void Physics2DServerSW::shape_set_custom_solver_bias(
     shape->set_custom_bias(p_bias);
 }
 
-Physics2DServer::ShapeType Physics2DServerSW::shape_get_type(RID p_shape
+Physics2DServer::ShapeType Physics2DServerSW::shape_get_type(
+    RID p_shape
 ) const {
     const Shape2DSW* shape = shape_owner.get(p_shape);
     ERR_FAIL_COND_V(!shape, SHAPE_CUSTOM);
@@ -144,8 +145,8 @@ void Physics2DServerSW::_shape_col_cbk(
         if (cbk->valid_depth < 10e20) {
             if (rel_length2 > cbk->valid_depth * cbk->valid_depth
                 || (rel_length2 > CMP_EPSILON
-                    && cbk->valid_dir.dot(rel_dir.normalized()) < CMP_EPSILON
-                )) {
+                    && cbk->valid_dir.dot(rel_dir.normalized())
+                           < CMP_EPSILON)) {
                 cbk->invalid_by_dir++;
                 return;
             }
@@ -276,8 +277,10 @@ void Physics2DServerSW::space_set_param(
     space->set_param(p_param, p_value);
 }
 
-real_t Physics2DServerSW::space_get_param(RID p_space, SpaceParameter p_param)
-    const {
+real_t Physics2DServerSW::space_get_param(
+    RID p_space,
+    SpaceParameter p_param
+) const {
     const Space2DSW* space = space_owner.get(p_space);
     ERR_FAIL_COND_V(!space, 0);
     return space->get_param(p_param);
@@ -304,7 +307,8 @@ int Physics2DServerSW::space_get_contact_count(RID p_space) const {
     return space->get_debug_contact_count();
 }
 
-Physics2DDirectSpaceState* Physics2DServerSW::space_get_direct_state(RID p_space
+Physics2DDirectSpaceState* Physics2DServerSW::space_get_direct_state(
+    RID p_space
 ) {
     Space2DSW* space = space_owner.get(p_space);
     ERR_FAIL_COND_V(!space, nullptr);
@@ -538,8 +542,10 @@ void Physics2DServerSW::area_set_transform(
     area->set_transform(p_transform);
 };
 
-Variant Physics2DServerSW::area_get_param(RID p_area, AreaParameter p_param)
-    const {
+Variant Physics2DServerSW::area_get_param(
+    RID p_area,
+    AreaParameter p_param
+) const {
     if (space_owner.owns(p_area)) {
         Space2DSW* space = space_owner.get(p_area);
         p_area           = space->get_default_area()->get_self();
@@ -716,8 +722,10 @@ void Physics2DServerSW::body_set_shape_metadata(
     body->set_shape_metadata(p_shape_idx, p_metadata);
 }
 
-Variant Physics2DServerSW::body_get_shape_metadata(RID p_body, int p_shape_idx)
-    const {
+Variant Physics2DServerSW::body_get_shape_metadata(
+    RID p_body,
+    int p_shape_idx
+) const {
     Body2DSW* body = body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, Variant());
     return body->get_shape_metadata(p_shape_idx);
@@ -881,8 +889,10 @@ void Physics2DServerSW::body_set_param(
     body->set_param(p_param, p_value);
 };
 
-real_t Physics2DServerSW::body_get_param(RID p_body, BodyParameter p_param)
-    const {
+real_t Physics2DServerSW::body_get_param(
+    RID p_body,
+    BodyParameter p_param
+) const {
     Body2DSW* body = body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, 0);
 
@@ -1061,7 +1071,8 @@ void Physics2DServerSW::body_set_contacts_reported_depth_threshold(
     ERR_FAIL_COND(!body);
 };
 
-real_t Physics2DServerSW::body_get_contacts_reported_depth_threshold(RID p_body
+real_t Physics2DServerSW::body_get_contacts_reported_depth_threshold(
+    RID p_body
 ) const {
     Body2DSW* body = body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, 0);
@@ -1254,8 +1265,10 @@ void Physics2DServerSW::joint_set_param(
     }
 }
 
-real_t Physics2DServerSW::joint_get_param(RID p_joint, JointParam p_param)
-    const {
+real_t Physics2DServerSW::joint_get_param(
+    RID p_joint,
+    JointParam p_param
+) const {
     const Joint2DSW* joint = joint_owner.get(p_joint);
     ERR_FAIL_COND_V(!joint, -1);
 
@@ -1309,7 +1322,8 @@ void Physics2DServerSW::joint_disable_collisions_between_bodies(
     }
 }
 
-bool Physics2DServerSW::joint_is_disabled_collisions_between_bodies(RID p_joint
+bool Physics2DServerSW::joint_is_disabled_collisions_between_bodies(
+    RID p_joint
 ) const {
     const Joint2DSW* joint = joint_owner.get(p_joint);
     ERR_FAIL_COND_V(!joint, true);
@@ -1426,7 +1440,8 @@ real_t Physics2DServerSW::damped_string_joint_get_param(
     return dsj->get_param(p_param);
 }
 
-Physics2DServer::JointType Physics2DServerSW::joint_get_type(RID p_joint
+Physics2DServer::JointType Physics2DServerSW::joint_get_type(
+    RID p_joint
 ) const {
     Joint2DSW* joint = joint_owner.get(p_joint);
     ERR_FAIL_COND_V(!joint, JOINT_PIN);
@@ -1678,6 +1693,6 @@ Physics2DServerSW::Physics2DServerSW() {
     flushing_queries = false;
 };
 
-Physics2DServerSW::~Physics2DServerSW(){
+Physics2DServerSW::~Physics2DServerSW() {
 
 };

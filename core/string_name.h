@@ -118,8 +118,10 @@ public:
     static StringName search(const String& p_name);
 
     struct AlphCompare {
-        _FORCE_INLINE_ bool operator()(const StringName& l, const StringName& r)
-            const {
+        _FORCE_INLINE_ bool operator()(
+            const StringName& l,
+            const StringName& r
+        ) const {
             const char* l_cname = l._data ? l._data->cname : "";
             const char* r_cname = r._data ? r._data->cname : "";
 

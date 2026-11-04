@@ -2514,7 +2514,8 @@ Vector<int> _Geometry::triangulate_polygon(const Vector<Vector2>& p_polygon) {
     return Geometry::triangulate_polygon(p_polygon);
 }
 
-Vector<int> _Geometry::triangulate_delaunay_2d(const Vector<Vector2>& p_points
+Vector<int> _Geometry::triangulate_delaunay_2d(
+    const Vector<Vector2>& p_points
 ) {
     return Geometry::triangulate_delaunay_2d(p_points);
 }
@@ -4111,7 +4112,8 @@ PoolStringArray _ClassDB::get_class_list() const {
     return ret;
 }
 
-PoolStringArray _ClassDB::get_inheriters_from_class(const StringName& p_class
+PoolStringArray _ClassDB::get_inheriters_from_class(
+    const StringName& p_class
 ) const {
     List<StringName> classes;
     ClassDB::get_inheriters_from_class(p_class, &classes);
@@ -4172,8 +4174,10 @@ Dictionary _ClassDB::get_signal(StringName p_class, StringName p_signal) const {
     }
 }
 
-Array _ClassDB::get_signal_list(StringName p_class, bool p_no_inheritance)
-    const {
+Array _ClassDB::get_signal_list(
+    StringName p_class,
+    bool p_no_inheritance
+) const {
     List<MethodInfo> signals;
     ClassDB::get_signal_list(p_class, &signals, p_no_inheritance);
     Array ret;
@@ -4185,8 +4189,10 @@ Array _ClassDB::get_signal_list(StringName p_class, bool p_no_inheritance)
     return ret;
 }
 
-Array _ClassDB::get_property_list(StringName p_class, bool p_no_inheritance)
-    const {
+Array _ClassDB::get_property_list(
+    StringName p_class,
+    bool p_no_inheritance
+) const {
     List<PropertyInfo> plist;
     ClassDB::get_property_list(p_class, &plist, p_no_inheritance);
     Array ret;
@@ -4197,8 +4203,10 @@ Array _ClassDB::get_property_list(StringName p_class, bool p_no_inheritance)
     return ret;
 }
 
-Variant _ClassDB::get_property(Object* p_object, const StringName& p_property)
-    const {
+Variant _ClassDB::get_property(
+    Object* p_object,
+    const StringName& p_property
+) const {
     Variant ret;
     ClassDB::get_property(p_object, p_property, ret);
     return ret;
@@ -4227,8 +4235,10 @@ bool _ClassDB::has_method(
     return ClassDB::has_method(p_class, p_method, p_no_inheritance);
 }
 
-Array _ClassDB::get_method_list(StringName p_class, bool p_no_inheritance)
-    const {
+Array _ClassDB::get_method_list(
+    StringName p_class,
+    bool p_no_inheritance
+) const {
     List<MethodInfo> methods;
     ClassDB::get_method_list(p_class, &methods, p_no_inheritance);
     Array ret;

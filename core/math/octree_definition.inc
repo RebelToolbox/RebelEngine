@@ -40,7 +40,16 @@ public:
         T*,
         int
     );
-    typedef void (*UnpairCallback)(void*, OctreeElementID, T*, int, OctreeElementID, T*, int, void*);
+    typedef void (*UnpairCallback)(
+        void*,
+        OctreeElementID,
+        T*,
+        int,
+        OctreeElementID,
+        T*,
+        int,
+        void*
+    );
 
 private:
     enum {
@@ -1922,13 +1931,15 @@ OCTREE_FUNC(int)::cull_point(
     return result_count;
 }
 
-OCTREE_FUNC(void
+OCTREE_FUNC(
+    void
 )::set_pair_callback(PairCallback p_callback, void* p_userdata) {
     pair_callback          = p_callback;
     pair_callback_userdata = p_userdata;
 }
 
-OCTREE_FUNC(void
+OCTREE_FUNC(
+    void
 )::set_unpair_callback(UnpairCallback p_callback, void* p_userdata) {
     unpair_callback          = p_callback;
     unpair_callback_userdata = p_userdata;

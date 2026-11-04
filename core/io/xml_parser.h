@@ -78,7 +78,8 @@ public:
     String get_attribute_value(int p_idx) const;
     bool has_attribute(const String& p_name) const;
     String get_attribute_value(const String& p_name) const;
-    String get_attribute_value_safe(const String& p_name
+    String get_attribute_value_safe(
+        const String& p_name
     ) const; // do not print error if doesn't exist
     bool is_empty() const;
     int get_current_line() const;

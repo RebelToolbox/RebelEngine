@@ -136,8 +136,10 @@ private:
     ) const;
 
     /// Returns true if this polygon_vertex_index is the end of a new polygon.
-    bool is_end_of_polygon(const std::vector<int>& p_face_indices, int p_index)
-        const;
+    bool is_end_of_polygon(
+        const std::vector<int>& p_face_indices,
+        int p_index
+    ) const;
 
     /// Returns true if this polygon_vertex_index is the begin of a new polygon.
     bool is_start_of_polygon(

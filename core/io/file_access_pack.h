@@ -142,8 +142,10 @@ public:
         bool p_replace_files,
         uint64_t p_offset
     ) override;
-    FileAccess* get_file(const String& p_path, PackedData::PackedFile* p_file)
-        override;
+    FileAccess* get_file(
+        const String& p_path,
+        PackedData::PackedFile* p_file
+    ) override;
 };
 
 class FileAccessPack : public FileAccess {
@@ -163,8 +165,10 @@ class FileAccessPack : public FileAccess {
         return 0;
     }
 
-    Error _set_unix_permissions(const String& p_file, uint32_t p_permissions)
-        override {
+    Error _set_unix_permissions(
+        const String& p_file,
+        uint32_t p_permissions
+    ) override {
         return FAILED;
     }
 

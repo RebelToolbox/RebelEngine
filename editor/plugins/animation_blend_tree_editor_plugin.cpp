@@ -47,7 +47,8 @@ void AnimationNodeBlendTreeEditor::remove_custom_type(
     _update_options_menu();
 }
 
-void AnimationNodeBlendTreeEditor::_update_options_menu(bool p_has_input_ports
+void AnimationNodeBlendTreeEditor::_update_options_menu(
+    bool p_has_input_ports
 ) {
     add_node->get_popup()->clear();
     add_node->get_popup()->set_size(Size2i(-1, -1));
@@ -725,11 +726,12 @@ bool AnimationNodeBlendTreeEditor::_update_filters(
         return false;
     }
 
-    NodePath player_path =
-        AnimationTreeEditor::get_singleton()->get_tree()->get_animation_player(
-        );
+    NodePath player_path = AnimationTreeEditor::get_singleton()
+                               ->get_tree()
+                               ->get_animation_player();
 
-    if (!AnimationTreeEditor::get_singleton()->get_tree()->has_node(player_path
+    if (!AnimationTreeEditor::get_singleton()->get_tree()->has_node(
+            player_path
         )) {
         EditorNode::get_singleton()->show_warning(
             TTR("No animation player set, so unable to retrieve track names.")
@@ -1261,8 +1263,8 @@ void AnimationNodeBlendTreeEditor::_node_renamed(
         }
     }
 
-    _update_graph(
-    ); // Needed to update the signal connections with the new name.
+    _update_graph(); // Needed to update the signal connections with the new
+                     // name.
 }
 
 void AnimationNodeBlendTreeEditor::_node_renamed_focus_out(
@@ -1355,11 +1357,14 @@ AnimationNodeBlendTreeEditor::AnimationNodeBlendTreeEditor() {
     add_options.push_back(AddOption("TimeScale", "AnimationNodeTimeScale", 1));
     add_options.push_back(AddOption("Transition", "AnimationNodeTransition"));
     add_options.push_back(AddOption("BlendTree", "AnimationNodeBlendTree"));
-    add_options.push_back(AddOption("BlendSpace1D", "AnimationNodeBlendSpace1D")
+    add_options.push_back(
+        AddOption("BlendSpace1D", "AnimationNodeBlendSpace1D")
     );
-    add_options.push_back(AddOption("BlendSpace2D", "AnimationNodeBlendSpace2D")
+    add_options.push_back(
+        AddOption("BlendSpace2D", "AnimationNodeBlendSpace2D")
     );
-    add_options.push_back(AddOption("StateMachine", "AnimationNodeStateMachine")
+    add_options.push_back(
+        AddOption("StateMachine", "AnimationNodeStateMachine")
     );
     _update_options_menu();
 

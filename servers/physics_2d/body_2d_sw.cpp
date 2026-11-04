@@ -641,7 +641,8 @@ bool Body2DSW::sleep_test(real_t p_step) {
 
     if (Math::abs(angular_velocity)
             < get_space()->get_body_angular_velocity_sleep_threshold()
-        && Math::abs(linear_velocity.length_squared()
+        && Math::abs(
+               linear_velocity.length_squared()
            ) < get_space()->get_body_linear_velocity_sleep_threshold()
                    * get_space()->get_body_linear_velocity_sleep_threshold()) {
         still_time += p_step;

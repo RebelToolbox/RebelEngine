@@ -984,7 +984,8 @@ void SoftBody::set_simulation_precision(int p_simulation_precision) {
 }
 
 real_t SoftBody::get_total_mass() {
-    return PhysicsServer::get_singleton()->soft_body_get_total_mass(physics_rid
+    return PhysicsServer::get_singleton()->soft_body_get_total_mass(
+        physics_rid
     );
 }
 
@@ -1040,7 +1041,8 @@ real_t SoftBody::get_pressure_coefficient() {
     );
 }
 
-void SoftBody::set_pose_matching_coefficient(real_t p_pose_matching_coefficient
+void SoftBody::set_pose_matching_coefficient(
+    real_t p_pose_matching_coefficient
 ) {
     PhysicsServer::get_singleton()->soft_body_set_pose_matching_coefficient(
         physics_rid,
@@ -1166,9 +1168,9 @@ void SoftBody::_update_cache_pin_points_datas() {
     PoolVector<PinnedPoint>::Write w = pinned_points.write();
     for (int i = pinned_points.size() - 1; 0 <= i; --i) {
         if (!w[i].spatial_attachment_path.is_empty()) {
-            w[i].spatial_attachment =
-                Object::cast_to<Spatial>(get_node(w[i].spatial_attachment_path)
-                );
+            w[i].spatial_attachment = Object::cast_to<Spatial>(
+                get_node(w[i].spatial_attachment_path)
+            );
         }
         if (!w[i].spatial_attachment) {
             ERR_PRINT(
@@ -1202,11 +1204,13 @@ void SoftBody::_add_pinned_point(
             pp.offset =
                 (pp.spatial_attachment->get_global_transform().affine_inverse()
                  * get_global_transform())
-                    .xform(PhysicsServer::get_singleton()
-                               ->soft_body_get_point_global_position(
-                                   physics_rid,
-                                   pp.point_index
-                               ));
+                    .xform(
+                        PhysicsServer::get_singleton()
+                            ->soft_body_get_point_global_position(
+                                physics_rid,
+                                pp.point_index
+                            )
+                    );
         }
 
         pinned_points.push_back(pp);
@@ -1223,11 +1227,13 @@ void SoftBody::_add_pinned_point(
                 (pinned_point->spatial_attachment->get_global_transform()
                      .affine_inverse()
                  * get_global_transform())
-                    .xform(PhysicsServer::get_singleton()
-                               ->soft_body_get_point_global_position(
-                                   physics_rid,
-                                   pinned_point->point_index
-                               ));
+                    .xform(
+                        PhysicsServer::get_singleton()
+                            ->soft_body_get_point_global_position(
+                                physics_rid,
+                                pinned_point->point_index
+                            )
+                    );
         }
     }
 }
@@ -1256,11 +1262,13 @@ void SoftBody::_reset_points_offsets() {
         w[i].offset =
             (r[i].spatial_attachment->get_global_transform().affine_inverse()
              * get_global_transform())
-                .xform(PhysicsServer::get_singleton()
-                           ->soft_body_get_point_global_position(
-                               physics_rid,
-                               r[i].point_index
-                           ));
+                .xform(
+                    PhysicsServer::get_singleton()
+                        ->soft_body_get_point_global_position(
+                            physics_rid,
+                            r[i].point_index
+                        )
+                );
     }
 }
 

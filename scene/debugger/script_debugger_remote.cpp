@@ -101,8 +101,8 @@ void ScriptDebuggerRemote::_put_variable(
         ERR_PRINT("Failed to encode variant.");
     }
 
-    if (len > packet_peer_stream->get_output_buffer_max_size(
-        )) { // limit to max size
+    if (len > packet_peer_stream
+                  ->get_output_buffer_max_size()) { // limit to max size
         packet_peer_stream->put_var(Variant());
     } else {
         packet_peer_stream->put_var(var);
@@ -670,7 +670,8 @@ void ScriptDebuggerRemote::_send_object_id(ObjectID p_id) {
 
             ScriptConstantsMap constants;
             constants[si->get_script().ptr()] = Map<StringName, Variant>();
-            si->get_script()->get_constants(&(constants[si->get_script().ptr()])
+            si->get_script()->get_constants(
+                &(constants[si->get_script().ptr()])
             );
 
             Ref<Script> base = si->get_script()->get_base_script();
@@ -776,7 +777,8 @@ void ScriptDebuggerRemote::_send_object_id(ObjectID p_id) {
     for (List<PropertyInfo>::Element* E = pinfo.front(); E; E = E->next()) {
         if (E->get().usage
             & (PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_CATEGORY)) {
-            properties.push_back(PropertyDesc(E->get(), obj->get(E->get().name))
+            properties.push_back(
+                PropertyDesc(E->get(), obj->get(E->get().name))
             );
         }
     }
@@ -795,8 +797,8 @@ void ScriptDebuggerRemote::_send_object_id(ObjectID p_id) {
         // only send information that can be sent..
         int len = 0; // test how big is this to encode
         encode_variant(var, nullptr, len);
-        if (len > packet_peer_stream->get_output_buffer_max_size(
-            )) { // limit to max size
+        if (len > packet_peer_stream
+                      ->get_output_buffer_max_size()) { // limit to max size
             prop.push_back(PROPERTY_HINT_OBJECT_TOO_BIG);
             prop.push_back("");
             prop.push_back(pi.usage);
@@ -914,14 +916,16 @@ void ScriptDebuggerRemote::_poll_events() {
             bool enforce = cmd[1];
 
             if (scene_tree) {
-                scene_tree->get_root()->enable_canvas_transform_override(enforce
+                scene_tree->get_root()->enable_canvas_transform_override(
+                    enforce
                 );
             }
         } else if (command == "override_camera_2D:transform") {
             Transform2D transform = cmd[1];
 
             if (scene_tree) {
-                scene_tree->get_root()->set_canvas_transform_override(transform
+                scene_tree->get_root()->set_canvas_transform_override(
+                    transform
                 );
             }
         } else if (command == "override_camera_3D:set") {
@@ -951,7 +955,8 @@ void ScriptDebuggerRemote::_poll_events() {
                         far
                     );
                 }
-                scene_tree->get_root()->set_camera_override_transform(transform
+                scene_tree->get_root()->set_camera_override_transform(
+                    transform
                 );
             }
 
@@ -1003,7 +1008,8 @@ void ScriptDebuggerRemote::_send_profiling_data(bool p_for_frame) {
     uint64_t total_script_time = 0;
 
     for (int i = 0; i < to_send; i++) {
-        if (!profiler_function_signature_map.has(profile_info_ptrs[i]->signature
+        if (!profiler_function_signature_map.has(
+                profile_info_ptrs[i]->signature
             )) {
             int idx = profiler_function_signature_map.size();
             packet_peer_stream->put_var("profile_sig");
@@ -1030,20 +1036,24 @@ void ScriptDebuggerRemote::_send_profiling_data(bool p_for_frame) {
         packet_peer_stream->put_var(8 + to_send * 4);
     }
 
-    packet_peer_stream->put_var(Engine::get_singleton()->get_idle_frames()
+    packet_peer_stream->put_var(
+        Engine::get_singleton()->get_idle_frames()
     );                                               // total frame time
     packet_peer_stream->put_var(frame_time);         // total frame time
     packet_peer_stream->put_var(idle_time);          // idle frame time
     packet_peer_stream->put_var(physics_time);       // fixed frame time
     packet_peer_stream->put_var(physics_frame_time); // fixed frame time
 
-    packet_peer_stream->put_var(USEC_TO_SEC(total_script_time)
+    packet_peer_stream->put_var(
+        USEC_TO_SEC(total_script_time)
     ); // total script execution time
 
     if (p_for_frame) {
-        packet_peer_stream->put_var(profile_frame_data.size()
+        packet_peer_stream->put_var(
+            profile_frame_data.size()
         ); // how many profile framedatas to send
-        packet_peer_stream->put_var(to_send
+        packet_peer_stream->put_var(
+            to_send
         ); // how many script functions to send
         for (int i = 0; i < profile_frame_data.size(); i++) {
             packet_peer_stream->put_var(profile_frame_data[i].name);
@@ -1051,14 +1061,16 @@ void ScriptDebuggerRemote::_send_profiling_data(bool p_for_frame) {
         }
     } else {
         packet_peer_stream->put_var(0); // how many script functions to send
-        packet_peer_stream->put_var(to_send
+        packet_peer_stream->put_var(
+            to_send
         ); // how many script functions to send
     }
 
     for (int i = 0; i < to_send; i++) {
         int sig_id = -1;
 
-        if (profiler_function_signature_map.has(profile_info_ptrs[i]->signature
+        if (profiler_function_signature_map.has(
+                profile_info_ptrs[i]->signature
             )) {
             sig_id = profiler_function_signature_map[profile_info_ptrs[i]
                                                          ->signature];

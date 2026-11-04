@@ -323,8 +323,8 @@ void StyleBoxTexture::set_h_axis_stretch_mode(AxisStretchMode p_mode) {
     emit_changed();
 }
 
-StyleBoxTexture::AxisStretchMode StyleBoxTexture::get_h_axis_stretch_mode(
-) const {
+StyleBoxTexture::AxisStretchMode StyleBoxTexture::
+    get_h_axis_stretch_mode() const {
     return axis_h;
 }
 
@@ -334,8 +334,8 @@ void StyleBoxTexture::set_v_axis_stretch_mode(AxisStretchMode p_mode) {
     emit_changed();
 }
 
-StyleBoxTexture::AxisStretchMode StyleBoxTexture::get_v_axis_stretch_mode(
-) const {
+StyleBoxTexture::AxisStretchMode StyleBoxTexture::
+    get_v_axis_stretch_mode() const {
     return axis_v;
 }
 

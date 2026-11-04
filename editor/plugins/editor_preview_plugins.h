@@ -18,8 +18,10 @@ class EditorTexturePreviewPlugin : public EditorResourcePreviewGenerator {
 public:
     bool handles(const String& p_type) const override;
     bool generate_small_preview_automatically() const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
 
     EditorTexturePreviewPlugin();
 };
@@ -30,8 +32,10 @@ class EditorImagePreviewPlugin : public EditorResourcePreviewGenerator {
 public:
     bool handles(const String& p_type) const override;
     bool generate_small_preview_automatically() const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
 
     EditorImagePreviewPlugin();
 };
@@ -42,8 +46,10 @@ class EditorBitmapPreviewPlugin : public EditorResourcePreviewGenerator {
 public:
     bool handles(const String& p_type) const override;
     bool generate_small_preview_automatically() const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
 
     EditorBitmapPreviewPlugin();
 };
@@ -51,10 +57,14 @@ public:
 class EditorPackedScenePreviewPlugin : public EditorResourcePreviewGenerator {
 public:
     bool handles(const String& p_type) const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
-    Ref<Texture> generate_from_path(const String& p_path, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
+    Ref<Texture> generate_from_path(
+        const String& p_path,
+        const Size2& p_size
+    ) const override;
 
     EditorPackedScenePreviewPlugin();
 };
@@ -82,8 +92,10 @@ protected:
 public:
     bool handles(const String& p_type) const override;
     bool generate_small_preview_automatically() const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
 
     EditorMaterialPreviewPlugin();
     ~EditorMaterialPreviewPlugin() override;
@@ -92,8 +104,10 @@ public:
 class EditorScriptPreviewPlugin : public EditorResourcePreviewGenerator {
 public:
     bool handles(const String& p_type) const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
 
     EditorScriptPreviewPlugin();
 };
@@ -101,8 +115,10 @@ public:
 class EditorAudioStreamPreviewPlugin : public EditorResourcePreviewGenerator {
 public:
     bool handles(const String& p_type) const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
 
     EditorAudioStreamPreviewPlugin();
 };
@@ -128,8 +144,10 @@ protected:
 
 public:
     bool handles(const String& p_type) const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
 
     EditorMeshPreviewPlugin();
     ~EditorMeshPreviewPlugin() override;
@@ -151,10 +169,14 @@ protected:
 
 public:
     bool handles(const String& p_type) const override;
-    Ref<Texture> generate(const RES& p_from, const Size2& p_size)
-        const override;
-    Ref<Texture> generate_from_path(const String& p_path, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const RES& p_from,
+        const Size2& p_size
+    ) const override;
+    Ref<Texture> generate_from_path(
+        const String& p_path,
+        const Size2& p_size
+    ) const override;
 
     EditorFontPreviewPlugin();
     ~EditorFontPreviewPlugin() override;

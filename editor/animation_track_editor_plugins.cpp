@@ -1052,11 +1052,11 @@ Rect2 AnimationTrackEditTypeAudio::get_key_rect(
     }
 
     if (get_animation()->track_get_key_count(get_track()) > p_index + 1) {
-        len =
-            MIN(len,
-                get_animation()->track_get_key_time(get_track(), p_index + 1)
-                    - get_animation()->track_get_key_time(get_track(), p_index)
-            );
+        len = MIN(
+            len,
+            get_animation()->track_get_key_time(get_track(), p_index + 1)
+                - get_animation()->track_get_key_time(get_track(), p_index)
+        );
     }
 
     return Rect2(0, 0, len * p_pixels_sec, get_size().height);
@@ -1149,11 +1149,11 @@ void AnimationTrackEditTypeAudio::draw_key(
     int to_x   = MIN(pixel_end, p_clip_right);
 
     if (get_animation()->track_get_key_count(get_track()) > p_index + 1) {
-        float limit =
-            MIN(len,
-                get_animation()->track_get_key_time(get_track(), p_index + 1)
-                    - get_animation()->track_get_key_time(get_track(), p_index)
-            );
+        float limit = MIN(
+            len,
+            get_animation()->track_get_key_time(get_track(), p_index + 1)
+                - get_animation()->track_get_key_time(get_track(), p_index)
+        );
         int limit_x = pixel_begin + limit * p_pixels_sec;
         to_x        = MIN(limit_x, to_x);
     }
@@ -1280,8 +1280,8 @@ void AnimationTrackEditTypeAudio::drop_data(
 
             ofs = get_editor()->snap_time(ofs);
 
-            while (get_animation()->track_find_key(get_track(), ofs, true) != -1
-            ) { // make sure insertion point is valid
+            while (get_animation()->track_find_key(get_track(), ofs, true)
+                   != -1) { // make sure insertion point is valid
                 ofs += 0.001f;
             }
 

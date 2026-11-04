@@ -50,7 +50,8 @@ void EditorRunNative::_notification(int p_what) {
             for (Map<int, MenuButton*>::Element* E = menus.front(); E;
                  E                                 = E->next()) {
                 Ref<EditorExportPlatform> eep =
-                    EditorExport::get_singleton()->get_export_platform(E->key()
+                    EditorExport::get_singleton()->get_export_platform(
+                        E->key()
                     );
                 MenuButton* mb = E->get();
                 int dc         = eep->get_options_count();

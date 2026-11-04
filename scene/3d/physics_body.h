@@ -398,8 +398,9 @@ public:
     Vector3 get_normal() const;
     Vector3 get_travel() const;
     Vector3 get_remainder() const;
-    real_t get_angle(const Vector3& p_up_direction = Vector3(0.0, 1.0, 0.0))
-        const;
+    real_t get_angle(
+        const Vector3& p_up_direction = Vector3(0.0, 1.0, 0.0)
+    ) const;
     Object* get_local_shape() const;
     Object* get_collider() const;
     ObjectID get_collider_id() const;
@@ -447,8 +448,11 @@ public:
             return JOINT_TYPE_PIN;
         }
 
-        bool _set(const StringName& p_name, const Variant& p_value, RID j)
-            override;
+        bool _set(
+            const StringName& p_name,
+            const Variant& p_value,
+            RID j
+        ) override;
         bool _get(const StringName& p_name, Variant& r_ret) const override;
         void _get_property_list(List<PropertyInfo>* p_list) const override;
 
@@ -464,8 +468,11 @@ public:
             return JOINT_TYPE_CONE;
         }
 
-        bool _set(const StringName& p_name, const Variant& p_value, RID j)
-            override;
+        bool _set(
+            const StringName& p_name,
+            const Variant& p_value,
+            RID j
+        ) override;
         bool _get(const StringName& p_name, Variant& r_ret) const override;
         void _get_property_list(List<PropertyInfo>* p_list) const override;
 
@@ -488,8 +495,11 @@ public:
             return JOINT_TYPE_HINGE;
         }
 
-        bool _set(const StringName& p_name, const Variant& p_value, RID j)
-            override;
+        bool _set(
+            const StringName& p_name,
+            const Variant& p_value,
+            RID j
+        ) override;
         bool _get(const StringName& p_name, Variant& r_ret) const override;
         void _get_property_list(List<PropertyInfo>* p_list) const override;
 
@@ -514,8 +524,11 @@ public:
             return JOINT_TYPE_SLIDER;
         }
 
-        bool _set(const StringName& p_name, const Variant& p_value, RID j)
-            override;
+        bool _set(
+            const StringName& p_name,
+            const Variant& p_value,
+            RID j
+        ) override;
         bool _get(const StringName& p_name, Variant& r_ret) const override;
         void _get_property_list(List<PropertyInfo>* p_list) const override;
 
@@ -595,8 +608,11 @@ public:
             return JOINT_TYPE_6DOF;
         }
 
-        bool _set(const StringName& p_name, const Variant& p_value, RID j)
-            override;
+        bool _set(
+            const StringName& p_name,
+            const Variant& p_value,
+            RID j
+        ) override;
         bool _get(const StringName& p_name, Variant& r_ret) const override;
         void _get_property_list(List<PropertyInfo>* p_list) const override;
 

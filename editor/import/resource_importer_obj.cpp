@@ -360,8 +360,8 @@ static Error _parse_obj(
                 surf_tool->add_smooth_group(true);
             }
         } else if (/*l.begins_with("g ") ||*/ l.begins_with("usemtl ")
-                   || (l.begins_with("o ") || f->eof_reached()
-                   )) { // commit group to mesh
+                   || (l.begins_with("o ")
+                       || f->eof_reached())) { // commit group to mesh
             // groups are too annoying
             if (surf_tool->get_vertex_array().size()) {
                 // another group going on, commit it
@@ -453,9 +453,9 @@ static Error _parse_obj(
                 Map<String, Ref<SpatialMaterial>> lib;
                 String lib_path = current_material_library;
                 if (lib_path.is_rel_path()) {
-                    lib_path =
-                        p_path.get_base_dir().plus_file(current_material_library
-                        );
+                    lib_path = p_path.get_base_dir().plus_file(
+                        current_material_library
+                    );
                 }
                 Error err =
                     _parse_material_library(lib_path, lib, r_missing_deps);
@@ -542,7 +542,8 @@ String ResourceImporterOBJ::get_visible_name() const {
     return "OBJ As Mesh";
 }
 
-void ResourceImporterOBJ::get_recognized_extensions(List<String>* p_extensions
+void ResourceImporterOBJ::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("obj");
 }

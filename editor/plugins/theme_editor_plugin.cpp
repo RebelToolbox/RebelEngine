@@ -279,7 +279,8 @@ void ThemeItemImportTree::_update_items_tree() {
         if (font_amount == 1) {
             select_fonts_label->set_text(TTR("1 font"));
         } else {
-            select_fonts_label->set_text(TTR("{num} fonts").format(arr, "{num}")
+            select_fonts_label->set_text(
+                TTR("{num} fonts").format(arr, "{num}")
             );
         }
         select_all_fonts_button->set_visible(true);
@@ -298,7 +299,8 @@ void ThemeItemImportTree::_update_items_tree() {
         if (icon_amount == 1) {
             select_icons_label->set_text(TTR("1 icon"));
         } else {
-            select_icons_label->set_text(TTR("{num} icons").format(arr, "{num}")
+            select_icons_label->set_text(
+                TTR("{num} icons").format(arr, "{num}")
             );
         }
         select_all_icons_button->set_visible(true);
@@ -2074,7 +2076,8 @@ void ThemeItemEditorDialog::_notification(int p_what) {
                 get_icon("StyleBoxFlat", "EditorIcons")
             );
 
-            edit_items_remove_class->set_icon(get_icon("Control", "EditorIcons")
+            edit_items_remove_class->set_icon(
+                get_icon("Control", "EditorIcons")
             );
             edit_items_remove_custom->set_icon(
                 get_icon("ThemeRemoveCustomItems", "EditorIcons")
@@ -2375,7 +2378,8 @@ ThemeItemEditorDialog::ThemeItemEditorDialog() {
 
     import_another_theme_dialog = memnew(EditorFileDialog);
     import_another_theme_dialog->set_mode(EditorFileDialog::MODE_OPEN_FILE);
-    import_another_theme_dialog->set_title(TTR("Select Another Theme Resource:")
+    import_another_theme_dialog->set_title(
+        TTR("Select Another Theme Resource:")
     );
     List<String> ext;
     ResourceLoader::get_recognized_extensions_for_type("Theme", &ext);
@@ -3719,8 +3723,9 @@ ThemeTypeEditor::ThemeTypeEditor() {
     Button* add_default_items_button = memnew(Button);
     add_default_items_button->set_h_size_flags(SIZE_EXPAND_FILL);
     add_default_items_button->set_text(TTR("Override All"));
-    add_default_items_button->set_tooltip(TTR("Override all default type items."
-    ));
+    add_default_items_button->set_tooltip(
+        TTR("Override all default type items.")
+    );
     type_controls->add_child(add_default_items_button);
     add_default_items_button
         ->connect("pressed", this, "_add_default_type_items");

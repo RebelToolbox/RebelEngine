@@ -830,8 +830,9 @@ void Variant::reference(const Variant& p_variant) {
         case NODE_PATH: {
             memnew_placement(
                 _data._mem,
-                NodePath(*reinterpret_cast<const NodePath*>(p_variant._data._mem
-                ))
+                NodePath(
+                    *reinterpret_cast<const NodePath*>(p_variant._data._mem)
+                )
             );
 
         } break;
@@ -2552,7 +2553,8 @@ void Variant::operator=(const Variant& p_variant) {
         } break;
         case POOL_COLOR_ARRAY: {
             *reinterpret_cast<PoolVector<Color>*>(_data._mem) =
-                *reinterpret_cast<const PoolVector<Color>*>(p_variant._data._mem
+                *reinterpret_cast<const PoolVector<Color>*>(
+                    p_variant._data._mem
                 );
         } break;
         default: {
@@ -2681,9 +2683,9 @@ uint32_t Variant::hash() const {
 
         } break;
         case QUAT: {
-            uint32_t hash =
-                hash_djb2_one_float(reinterpret_cast<const Quat*>(_data._mem)->x
-                );
+            uint32_t hash = hash_djb2_one_float(
+                reinterpret_cast<const Quat*>(_data._mem)->x
+            );
             hash = hash_djb2_one_float(
                 reinterpret_cast<const Quat*>(_data._mem)->y,
                 hash
@@ -2751,7 +2753,8 @@ uint32_t Variant::hash() const {
             );
         } break;
         case OBJECT: {
-            return hash_djb2_one_64(make_uint64_t(_UNSAFE_OBJ_PROXY_PTR(*this))
+            return hash_djb2_one_64(
+                make_uint64_t(_UNSAFE_OBJ_PROXY_PTR(*this))
             );
         } break;
         case NODE_PATH: {
@@ -2910,13 +2913,15 @@ uint32_t Variant::hash() const {
     const PoolVector<p_type>& r =                                              \
         *reinterpret_cast<const PoolVector<p_type>*>(p_rhs);                   \
                                                                                \
-    if (l.size() != r.size()) return false;                                    \
+    if (l.size() != r.size())                                                  \
+        return false;                                                          \
                                                                                \
     PoolVector<p_type>::Read lr = l.read();                                    \
     PoolVector<p_type>::Read rr = r.read();                                    \
                                                                                \
     for (int i = 0; i < l.size(); ++i) {                                       \
-        if (!p_compare_func((lr[i]), (rr[i]))) return false;                   \
+        if (!p_compare_func((lr[i]), (rr[i])))                                 \
+            return false;                                                      \
     }                                                                          \
                                                                                \
     return true

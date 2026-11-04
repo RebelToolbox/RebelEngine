@@ -457,8 +457,8 @@ String ProjectSettings::get_resource_path() const {
     return resource_path;
 };
 
-const Map<StringName, PropertyInfo>& ProjectSettings::get_custom_property_info(
-) const {
+const Map<StringName, PropertyInfo>& ProjectSettings::
+    get_custom_property_info() const {
     return custom_property_info;
 }
 
@@ -555,8 +555,8 @@ String ProjectSettings::globalize_path(const String& local_path) const {
 String ProjectSettings::localize_path(const String& global_path) const {
     if (resource_path.empty() || global_path.begins_with("res://")
         || global_path.begins_with("user://")
-        || (global_path.is_abs_path() && !global_path.begins_with(resource_path)
-        )) {
+        || (global_path.is_abs_path()
+            && !global_path.begins_with(resource_path))) {
         return global_path.simplify_path();
     }
 

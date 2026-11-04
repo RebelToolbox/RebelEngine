@@ -95,8 +95,10 @@ Variant AbstractPolygon2DEditor::_get_polygon(int p_idx) const {
     return _get_node()->get("polygon");
 }
 
-void AbstractPolygon2DEditor::_set_polygon(int p_idx, const Variant& p_polygon)
-    const {
+void AbstractPolygon2DEditor::_set_polygon(
+    int p_idx,
+    const Variant& p_polygon
+) const {
     _get_node()->set("polygon", p_polygon);
 }
 
@@ -177,9 +179,12 @@ void AbstractPolygon2DEditor::_notification(int p_what) {
                     "EditorIcons"
                 )
             );
-            button_edit->set_icon(EditorNode::get_singleton()
-                                      ->get_gui_base()
-                                      ->get_icon("CurveEdit", "EditorIcons"));
+            button_edit->set_icon(
+                EditorNode::get_singleton()->get_gui_base()->get_icon(
+                    "CurveEdit",
+                    "EditorIcons"
+                )
+            );
             button_delete->set_icon(
                 EditorNode::get_singleton()->get_gui_base()->get_icon(
                     "CurveDelete",
@@ -280,7 +285,8 @@ void AbstractPolygon2DEditor::disable_polygon_editing(
     }
 }
 
-bool AbstractPolygon2DEditor::forward_gui_input(const Ref<InputEvent>& p_event
+bool AbstractPolygon2DEditor::forward_gui_input(
+    const Ref<InputEvent>& p_event
 ) {
     if (!_get_node() || !_polygon_editing_enabled) {
         return false;
@@ -766,8 +772,8 @@ void AbstractPolygon2DEditor::remove_point(const Vertex& p_vertex) {
     }
 }
 
-AbstractPolygon2DEditor::Vertex AbstractPolygon2DEditor::get_active_point(
-) const {
+AbstractPolygon2DEditor::Vertex AbstractPolygon2DEditor::
+    get_active_point() const {
     return hover_point.valid() ? hover_point : selected_point;
 }
 
@@ -915,7 +921,8 @@ AbstractPolygon2DEditorPlugin::AbstractPolygon2DEditorPlugin(
     polygon_editor(p_polygon_editor),
     editor(p_node),
     klass(p_class) {
-    CanvasItemEditor::get_singleton()->add_control_to_menu_panel(polygon_editor
+    CanvasItemEditor::get_singleton()->add_control_to_menu_panel(
+        polygon_editor
     );
     polygon_editor->hide();
 }

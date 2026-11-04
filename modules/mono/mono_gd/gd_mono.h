@@ -215,8 +215,9 @@ public:
 
     _FORCE_INLINE_ bool is_runtime_initialized() const {
         return runtime_initialized
-            && !mono_runtime_is_shutting_down(
-            ) /* stays true after shutdown finished */;
+            && !mono_runtime_is_shutting_down() /* stays true after shutdown
+                                                   finished */
+            ;
     }
 
     _FORCE_INLINE_ bool is_finalizing_scripts_domain() {

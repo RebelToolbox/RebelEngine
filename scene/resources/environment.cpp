@@ -462,10 +462,14 @@ void Environment::_validate_property(PropertyInfo& property) const {
 
     };
 
-    static const char* high_end_prefixes[] =
-        {"auto_exposure_", "tonemap_", "ss_reflections_", "ssao_", nullptr
+    static const char* high_end_prefixes[] = {
+        "auto_exposure_",
+        "tonemap_",
+        "ss_reflections_",
+        "ssao_",
+        nullptr
 
-        };
+    };
 
     const char** prefixes = hide_prefixes;
     while (*prefixes) {

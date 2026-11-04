@@ -216,9 +216,8 @@ void OccluderEditorPlugin::_center() {
                 if (Engine::get_singleton()->is_editor_hint()) {
                     if (SpatialEditor::get_singleton()
                         && SpatialEditor::get_singleton()->is_snap_enabled()) {
-                        snap =
-                            SpatialEditor::get_singleton()->get_translate_snap(
-                            );
+                        snap = SpatialEditor::get_singleton()
+                                   ->get_translate_snap();
                     }
                 }
 

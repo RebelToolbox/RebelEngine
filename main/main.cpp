@@ -170,10 +170,11 @@ void initialize_physics() {
     );
 
     /// 3D Physics Server
-    physics_server =
-        PhysicsServerManager::new_server(ProjectSettings::get_singleton()->get(
+    physics_server = PhysicsServerManager::new_server(
+        ProjectSettings::get_singleton()->get(
             PhysicsServerManager::setting_property_name
-        ));
+        )
+    );
     if (!physics_server) {
         // Physics server not found, Use the default physics
         physics_server = PhysicsServerManager::new_default_server();
@@ -551,8 +552,10 @@ Error Main::setup(
 
     GLOBAL_DEF(
         "debug/settings/crash_handler/message",
-        String("Please include this when reporting the bug on "
-               "https://github.com/RebelToolbox/RebelEngine/issues")
+        String(
+            "Please include this when reporting the bug on "
+            "https://github.com/RebelToolbox/RebelEngine/issues"
+        )
     );
 
     MAIN_PRINT("Main: Parse CMDLine");
@@ -1167,7 +1170,8 @@ Error Main::setup(
             goto error;
         }
 
-        FileAccess::make_default<FileAccessNetwork>(FileAccess::ACCESS_RESOURCES
+        FileAccess::make_default<FileAccessNetwork>(
+            FileAccess::ACCESS_RESOURCES
         );
     }
 
@@ -1385,9 +1389,11 @@ Error Main::setup(
         _print_line_enabled = false;
     }
 
-    Logger::set_flush_stdout_on_print(ProjectSettings::get_singleton()->get(
-        "application/run/flush_stdout_on_print"
-    ));
+    Logger::set_flush_stdout_on_print(
+        ProjectSettings::get_singleton()->get(
+            "application/run/flush_stdout_on_print"
+        )
+    );
 
     OS::get_singleton()->set_cmdline(execpath, main_args);
 
@@ -1821,7 +1827,8 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
     arvr_server = memnew(ARVRServer);
 
     // and finally setup this property under visual_server
-    VisualServer::get_singleton()->set_render_loop_enabled(!disable_render_loop
+    VisualServer::get_singleton()->set_render_loop_enabled(
+        !disable_render_loop
     );
 
     register_core_singletons();
@@ -1924,7 +1931,8 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 #endif
 
             MAIN_PRINT("Main: ClearColor");
-            VisualServer::get_singleton()->set_default_clear_color(boot_bg_color
+            VisualServer::get_singleton()->set_default_clear_color(
+                boot_bg_color
             );
             MAIN_PRINT("Main: Image");
             VisualServer::get_singleton()
@@ -1995,9 +2003,12 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
             }
         }
 
-        id->set_emulate_mouse_from_touch(bool(
-            GLOBAL_DEF("input_devices/pointing/emulate_mouse_from_touch", true)
-        ));
+        id->set_emulate_mouse_from_touch(
+            bool(GLOBAL_DEF(
+                "input_devices/pointing/emulate_mouse_from_touch",
+                true
+            ))
+        );
     }
 
     MAIN_PRINT("Main: Load Translations and Remaps");
@@ -2045,14 +2056,17 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
         )
     );
 
-    if (String(ProjectSettings::get_singleton()->get(
-            "display/mouse_cursor/custom_image"
-        ))
-        != String()) {
-        Ref<Texture> cursor =
-            ResourceLoader::load(ProjectSettings::get_singleton()->get(
+    if (String(
+            ProjectSettings::get_singleton()->get(
                 "display/mouse_cursor/custom_image"
-            ));
+            )
+        )
+        != String()) {
+        Ref<Texture> cursor = ResourceLoader::load(
+            ProjectSettings::get_singleton()->get(
+                "display/mouse_cursor/custom_image"
+            )
+        );
         if (cursor.is_valid()) {
             Vector2 hotspot = ProjectSettings::get_singleton()->get(
                 "display/mouse_cursor/custom_image_hotspot"
@@ -2084,7 +2098,8 @@ Error Main::setup2(Thread::ID p_main_tid_override) {
 
     _start_success = true;
 
-    ClassDB::set_current_api(ClassDB::API_NONE
+    ClassDB::set_current_api(
+        ClassDB::API_NONE
     ); // no more api is registered at this point
 
     print_verbose(
@@ -2194,7 +2209,8 @@ bool Main::start() {
 
 #ifdef TOOLS_ENABLED
     if (docs_path != "") {
-        Engine::get_singleton()->set_editor_hint(true
+        Engine::get_singleton()->set_editor_hint(
+            true
         ); // Needed to instance editor-only classes for their default values
 
         // Translate the class reference only when `-l LOCALE` parameter is
@@ -2574,16 +2590,17 @@ bool Main::start() {
             sml->set_quit_on_go_back(
                 GLOBAL_DEF("application/config/quit_on_go_back", true)
             );
-            String appname =
-                ProjectSettings::get_singleton()->get("application/config/name"
-                );
+            String appname = ProjectSettings::get_singleton()->get(
+                "application/config/name"
+            );
             appname = TranslationServer::get_singleton()->translate(appname);
 #ifdef DEBUG_ENABLED
             // Append a suffix to the window title to denote that the project is
             // running from a debug build (including the editor). Since this
             // results in lower performance, this should be clearly presented to
             // the user.
-            OS::get_singleton()->set_window_title(vformat("%s (DEBUG)", appname)
+            OS::get_singleton()->set_window_title(
+                vformat("%s (DEBUG)", appname)
             );
 #else
             OS::get_singleton()->set_window_title(appname);
@@ -2621,9 +2638,11 @@ bool Main::start() {
                 3,
                 Viewport::ShadowAtlasQuadrantSubdiv(shadow_atlas_q3_subdiv)
             );
-            Viewport::Usage usage = Viewport::Usage(int(GLOBAL_GET(
-                "rendering/quality/intended_usage/framebuffer_allocation"
-            )));
+            Viewport::Usage usage = Viewport::Usage(
+                int(GLOBAL_GET(
+                    "rendering/quality/intended_usage/framebuffer_allocation"
+                ))
+            );
             sml->get_root()->set_usage(usage);
 
             bool snap_controls =
@@ -2699,9 +2718,9 @@ bool Main::start() {
                         if (sep == -1) {
                             DirAccess* da =
                                 DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
-                            local_game_path =
-                                da->get_current_dir().plus_file(local_game_path
-                                );
+                            local_game_path = da->get_current_dir().plus_file(
+                                local_game_path
+                            );
                             memdelete(da);
                         } else {
                             DirAccess* da =
@@ -2721,9 +2740,9 @@ bool Main::start() {
                 }
             }
 
-            local_game_path =
-                ProjectSettings::get_singleton()->localize_path(local_game_path
-                );
+            local_game_path = ProjectSettings::get_singleton()->localize_path(
+                local_game_path
+            );
 
 #ifdef TOOLS_ENABLED
             if (editor) {
@@ -2957,10 +2976,10 @@ bool Main::iteration() {
 
         message_queue->flush();
 
-        physics_process_ticks =
-            MAX(physics_process_ticks,
-                OS::get_singleton()->get_ticks_usec() - physics_begin
-            ); // keep the largest one for reference
+        physics_process_ticks = MAX(
+            physics_process_ticks,
+            OS::get_singleton()->get_ticks_usec() - physics_begin
+        ); // keep the largest one for reference
         physics_process_max =
             MAX(OS::get_singleton()->get_ticks_usec() - physics_begin,
                 physics_process_max);
@@ -2982,8 +3001,8 @@ bool Main::iteration() {
     visual_server_callbacks->flush();
     message_queue->flush();
 
-    VisualServer::get_singleton()->sync(
-    ); // sync if still drawing from previous frames.
+    VisualServer::get_singleton()
+        ->sync(); // sync if still drawing from previous frames.
 
     if (OS::get_singleton()->can_draw()
         && VisualServer::get_singleton()->is_render_loop_enabled()) {

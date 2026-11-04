@@ -146,8 +146,10 @@ protected:
 public:
     void _gui_input(const Ref<InputEvent>& p_event) override;
 
-    bool can_drop_data(const Point2& p_point, const Variant& p_data)
-        const override;
+    bool can_drop_data(
+        const Point2& p_point,
+        const Variant& p_data
+    ) const override;
     void drop_data(const Point2& p_point, const Variant& p_data) override;
 
     int get_key_height() const override;

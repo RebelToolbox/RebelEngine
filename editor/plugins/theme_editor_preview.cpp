@@ -363,8 +363,9 @@ DefaultThemeEditorPreview::DefaultThemeEditorPreview() {
     test_menu_button->get_popup()->set_item_checked(4, true);
     test_menu_button->get_popup()->add_separator();
     test_menu_button->get_popup()->add_radio_check_item(TTR("Radio Item"));
-    test_menu_button->get_popup()->add_radio_check_item(TTR("Checked Radio Item"
-    ));
+    test_menu_button->get_popup()->add_radio_check_item(
+        TTR("Checked Radio Item")
+    );
     test_menu_button->get_popup()->set_item_checked(7, true);
     test_menu_button->get_popup()->add_separator(TTR("Named Separator"));
 

@@ -182,8 +182,10 @@ struct BVH_ABB {
         return bb.inside_convex_shape(p_hull.planes, p_hull.num_planes);
     }
 
-    bool is_point_within_hull(const ConvexHull& p_hull, const Vector3& p_pt)
-        const {
+    bool is_point_within_hull(
+        const ConvexHull& p_hull,
+        const Vector3& p_pt
+    ) const {
         for (int n = 0; n < p_hull.num_planes; n++) {
             if (p_hull.planes[n].distance_to(p_pt) > 0.0f) {
                 return false;

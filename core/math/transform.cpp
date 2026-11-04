@@ -46,8 +46,10 @@ void Transform::rotate_basis(const Vector3& p_axis, real_t p_phi) {
     basis.rotate(p_axis, p_phi);
 }
 
-Transform Transform::looking_at(const Vector3& p_target, const Vector3& p_up)
-    const {
+Transform Transform::looking_at(
+    const Vector3& p_target,
+    const Vector3& p_up
+) const {
     Transform t = *this;
     t.set_look_at(origin, p_target, p_up);
     return t;
@@ -90,8 +92,10 @@ void Transform::set_look_at(
     origin = p_eye;
 }
 
-Transform Transform::interpolate_with(const Transform& p_transform, real_t p_c)
-    const {
+Transform Transform::interpolate_with(
+    const Transform& p_transform,
+    real_t p_c
+) const {
     /* not sure if very "efficient" but good enough? */
 
     Vector3 src_scale = basis.get_scale();

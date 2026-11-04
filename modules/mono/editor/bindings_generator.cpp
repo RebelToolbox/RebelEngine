@@ -329,7 +329,8 @@ String BindingsGenerator::bbcode_to_xml(
                         target_itype->find_method_by_name(target_cname);
 
                     if (target_imethod) {
-                        xml_output.append("<see cref=\"" BINDINGS_NAMESPACE "."
+                        xml_output.append(
+                            "<see cref=\"" BINDINGS_NAMESPACE "."
                         );
                         xml_output.append(target_itype->proxy_name);
                         xml_output.append(".");
@@ -364,7 +365,8 @@ String BindingsGenerator::bbcode_to_xml(
                         target_itype->find_property_by_name(target_cname);
 
                     if (target_iprop) {
-                        xml_output.append("<see cref=\"" BINDINGS_NAMESPACE "."
+                        xml_output.append(
+                            "<see cref=\"" BINDINGS_NAMESPACE "."
                         );
                         xml_output.append(target_itype->proxy_name);
                         xml_output.append(".");
@@ -398,7 +400,8 @@ String BindingsGenerator::bbcode_to_xml(
                         enum_match->value();
 
                     xml_output.append("<see cref=\"" BINDINGS_NAMESPACE ".");
-                    xml_output.append(target_enum_itype.proxy_name
+                    xml_output.append(
+                        target_enum_itype.proxy_name
                     ); // Includes nesting class if any
                     xml_output.append("\"/>");
                 } else {
@@ -443,8 +446,10 @@ String BindingsGenerator::bbcode_to_xml(
 
                     if (target_iconst) {
                         // Found global constant
-                        xml_output.append("<see cref=\"" BINDINGS_NAMESPACE
-                                          "." BINDINGS_GLOBAL_SCOPE_CLASS ".");
+                        xml_output.append(
+                            "<see cref=\"" BINDINGS_NAMESPACE
+                            "." BINDINGS_GLOBAL_SCOPE_CLASS "."
+                        );
                         xml_output.append(target_iconst->proxy_name);
                         xml_output.append("\"/>");
                     } else {
@@ -466,8 +471,9 @@ String BindingsGenerator::bbcode_to_xml(
                         }
 
                         if (target_iconst) {
-                            xml_output.append("<see cref=\"" BINDINGS_NAMESPACE
-                                              ".");
+                            xml_output.append(
+                                "<see cref=\"" BINDINGS_NAMESPACE "."
+                            );
                             xml_output.append(target_ienum->cname);
                             xml_output.append(".");
                             xml_output.append(target_iconst->proxy_name);
@@ -496,7 +502,8 @@ String BindingsGenerator::bbcode_to_xml(
 
                     if (target_iconst) {
                         // Found constant in current class
-                        xml_output.append("<see cref=\"" BINDINGS_NAMESPACE "."
+                        xml_output.append(
+                            "<see cref=\"" BINDINGS_NAMESPACE "."
                         );
                         xml_output.append(target_itype->proxy_name);
                         xml_output.append(".");
@@ -521,8 +528,9 @@ String BindingsGenerator::bbcode_to_xml(
                         }
 
                         if (target_iconst) {
-                            xml_output.append("<see cref=\"" BINDINGS_NAMESPACE
-                                              ".");
+                            xml_output.append(
+                                "<see cref=\"" BINDINGS_NAMESPACE "."
+                            );
                             xml_output.append(target_itype->proxy_name);
                             xml_output.append(".");
                             xml_output.append(target_ienum->cname);
@@ -547,8 +555,9 @@ String BindingsGenerator::bbcode_to_xml(
             pos = brk_end + 1;
         } else if (doc->class_list.has(tag)) {
             if (tag == "Array" || tag == "Dictionary") {
-                xml_output.append("<see cref=\"" BINDINGS_NAMESPACE_COLLECTIONS
-                                  ".");
+                xml_output.append(
+                    "<see cref=\"" BINDINGS_NAMESPACE_COLLECTIONS "."
+                );
                 xml_output.append(tag);
                 xml_output.append("\"/>");
             } else if (tag == "bool" || tag == "int") {
@@ -591,13 +600,16 @@ String BindingsGenerator::bbcode_to_xml(
             } else if (tag == "PoolStringArray") {
                 xml_output.append("<see cref=\"string\"/>");
             } else if (tag == "PoolVector2Array") {
-                xml_output.append("<see cref=\"" BINDINGS_NAMESPACE
-                                  ".Vector2\"/>");
+                xml_output.append(
+                    "<see cref=\"" BINDINGS_NAMESPACE ".Vector2\"/>"
+                );
             } else if (tag == "PoolVector3Array") {
-                xml_output.append("<see cref=\"" BINDINGS_NAMESPACE
-                                  ".Vector3\"/>");
+                xml_output.append(
+                    "<see cref=\"" BINDINGS_NAMESPACE ".Vector3\"/>"
+                );
             } else if (tag == "PoolColorArray") {
-                xml_output.append("<see cref=\"" BINDINGS_NAMESPACE ".Color\"/>"
+                xml_output.append(
+                    "<see cref=\"" BINDINGS_NAMESPACE ".Color\"/>"
                 );
             } else {
                 const TypeInterface* target_itype =
@@ -897,9 +909,10 @@ void BindingsGenerator::_generate_global_constants(StringBuilder& p_output) {
     );
 
     p_output.append("namespace " BINDINGS_NAMESPACE "\n" OPEN_BLOCK);
-    p_output.append(INDENT1
-                    "public static partial class " BINDINGS_GLOBAL_SCOPE_CLASS
-                    "\n" INDENT1 "{");
+    p_output.append(
+        INDENT1 "public static partial class " BINDINGS_GLOBAL_SCOPE_CLASS
+                "\n" INDENT1 "{"
+    );
 
     for (const List<ConstantInterface>::Element* E = global_constants.front();
          E;
@@ -1098,22 +1111,26 @@ Error BindingsGenerator::generate_cs_core_project(const String& p_proj_dir) {
         "\n"
     );
     cs_icalls_content.append("namespace " BINDINGS_NAMESPACE "\n" OPEN_BLOCK);
-    cs_icalls_content.append(INDENT1
-                             "internal static class " BINDINGS_CLASS_NATIVECALLS
-                             "\n" INDENT1 OPEN_BLOCK);
+    cs_icalls_content.append(
+        INDENT1 "internal static class " BINDINGS_CLASS_NATIVECALLS
+                "\n" INDENT1 OPEN_BLOCK
+    );
 
-    cs_icalls_content.append(MEMBER_BEGIN
-                             "internal static ulong rebel_api_hash = ");
+    cs_icalls_content.append(
+        MEMBER_BEGIN "internal static ulong rebel_api_hash = "
+    );
     cs_icalls_content.append(
         String::num_uint64(GDMono::get_singleton()->get_api_core_hash()) + ";\n"
     );
-    cs_icalls_content.append(MEMBER_BEGIN
-                             "internal static uint bindings_version = ");
+    cs_icalls_content.append(
+        MEMBER_BEGIN "internal static uint bindings_version = "
+    );
     cs_icalls_content.append(
         String::num_uint64(BINDINGS_GENERATOR_VERSION) + ";\n"
     );
-    cs_icalls_content.append(MEMBER_BEGIN
-                             "internal static uint cs_glue_version = ");
+    cs_icalls_content.append(
+        MEMBER_BEGIN "internal static uint cs_glue_version = "
+    );
     cs_icalls_content.append(String::num_uint64(CS_GLUE_VERSION) + ";\n");
 
     // We have issues with beforefieldinit and AOT, so we use explicitly declare
@@ -1249,7 +1266,8 @@ Error BindingsGenerator::generate_cs_editor_project(const String& p_proj_dir) {
         String::num_uint64(GDMono::get_singleton()->get_api_editor_hash())
         + ";\n"
     );
-    cs_icalls_content.append(INDENT2 "internal static uint bindings_version = "
+    cs_icalls_content.append(
+        INDENT2 "internal static uint bindings_version = "
     );
     cs_icalls_content.append(
         String::num_uint64(BINDINGS_GENERATOR_VERSION) + ";\n"
@@ -1588,22 +1606,27 @@ Error BindingsGenerator::_generate_cs_type(
         // Add the type name and the singleton pointer as static fields
 
         output.append(MEMBER_BEGIN "private static Rebel.Object singleton;\n");
-        output.append(MEMBER_BEGIN
-                      "public static Rebel.Object Singleton\n" INDENT2
-                      "{\n" INDENT3 "get\n" INDENT3 "{\n" INDENT4
-                      "if (singleton == null)\n" INDENT5
-                      "singleton = Engine.GetSingleton(typeof(");
+        output.append(
+            MEMBER_BEGIN "public static Rebel.Object Singleton\n" INDENT2
+                         "{\n" INDENT3 "get\n" INDENT3 "{\n" INDENT4
+                         "if (singleton == null)\n" INDENT5
+                         "singleton = Engine.GetSingleton(typeof("
+        );
         output.append(itype.proxy_name);
-        output.append(").Name);\n" INDENT4 "return singleton;\n" INDENT3
-                      "}\n" INDENT2 "}\n");
+        output.append(
+            ").Name);\n" INDENT4 "return singleton;\n" INDENT3 "}\n" INDENT2
+            "}\n"
+        );
 
-        output.append(MEMBER_BEGIN
-                      "private const string " BINDINGS_NATIVE_NAME_FIELD " = \""
+        output.append(
+            MEMBER_BEGIN "private const string " BINDINGS_NATIVE_NAME_FIELD
+                         " = \""
         );
         output.append(itype.name);
         output.append("\";\n");
 
-        output.append(INDENT2 "internal static IntPtr " BINDINGS_PTR_FIELD " = "
+        output.append(
+            INDENT2 "internal static IntPtr " BINDINGS_PTR_FIELD " = "
         );
         output.append(
             itype.api_type == ClassDB::API_EDITOR
@@ -1616,8 +1639,9 @@ Error BindingsGenerator::_generate_cs_type(
     } else if (is_derived_type) {
         // Add member fields
 
-        output.append(MEMBER_BEGIN
-                      "private const string " BINDINGS_NATIVE_NAME_FIELD " = \""
+        output.append(
+            MEMBER_BEGIN "private const string " BINDINGS_NATIVE_NAME_FIELD
+                         " = \""
         );
         output.append(itype.name);
         output.append("\";\n");
@@ -1634,8 +1658,9 @@ Error BindingsGenerator::_generate_cs_type(
             // pointer field of the managed side before calling the constructor
             // This is why we only allocate a new native object from the
             // constructor if the pointer field is not set
-            output.append(")\n" OPEN_BLOCK_L2 "if (" BINDINGS_PTR_FIELD
-                          " == IntPtr.Zero)\n" INDENT4 BINDINGS_PTR_FIELD " = "
+            output.append(
+                ")\n" OPEN_BLOCK_L2 "if (" BINDINGS_PTR_FIELD
+                " == IntPtr.Zero)\n" INDENT4 BINDINGS_PTR_FIELD " = "
             );
             output.append(
                 itype.api_type == ClassDB::API_EDITOR
@@ -1654,8 +1679,9 @@ Error BindingsGenerator::_generate_cs_type(
         // Add.. em.. trick constructor. Sort of.
         output.append(MEMBER_BEGIN "internal ");
         output.append(itype.proxy_name);
-        output.append("(bool " CS_FIELD_MEMORYOWN ") : base(" CS_FIELD_MEMORYOWN
-                      ") {}\n");
+        output.append(
+            "(bool " CS_FIELD_MEMORYOWN ") : base(" CS_FIELD_MEMORYOWN ") {}\n"
+        );
     }
 
     int method_bind_count = 0;
@@ -1697,8 +1723,10 @@ Error BindingsGenerator::_generate_cs_type(
         }
     }
 
-    output.append(INDENT1 CLOSE_BLOCK /* class */
-                      CLOSE_BLOCK /* namespace */);
+    output.append(
+        INDENT1 CLOSE_BLOCK /* class */
+            CLOSE_BLOCK     /* namespace */
+    );
 
     output.append(
         "\n"
@@ -2248,8 +2276,10 @@ Error BindingsGenerator::generate_glue(const String& p_output_dir) {
 
             output.append("Object* ");
             output.append(ctor_method);
-            output.append("(MonoObject* obj) " OPEN_BLOCK
-                          "\t" C_MACRO_OBJECT_CONSTRUCT "(instance, \"");
+            output.append(
+                "(MonoObject* obj) " OPEN_BLOCK "\t" C_MACRO_OBJECT_CONSTRUCT
+                "(instance, \""
+            );
             output.append(itype.name);
             output.append(
                 "\");\n"
@@ -2527,8 +2557,9 @@ Error BindingsGenerator::_generate_glue_method(
                                 : return_type->c_type_out + "()";
 
             if (return_type->ret_as_byref_arg) {
-                p_output.append("\tif (" CS_PARAM_INSTANCE
-                                " == NULL) { *arg_ret = ");
+                p_output.append(
+                    "\tif (" CS_PARAM_INSTANCE " == NULL) { *arg_ret = "
+                );
                 p_output.append(fail_ret);
                 p_output.append(
                     "; ERR_FAIL_MSG(\"Parameter ' arg_ret ' is null.\"); }\n"
@@ -2593,7 +2624,8 @@ Error BindingsGenerator::_generate_glue_method(
                 }
             }
 
-            p_output.append(CS_PARAM_METHODBIND "->call(" CS_PARAM_INSTANCE ", "
+            p_output.append(
+                CS_PARAM_METHODBIND "->call(" CS_PARAM_INSTANCE ", "
             );
             p_output.append(
                 p_imethod.arguments.size() ? C_LOCAL_PTRCALL_ARGS ".ptr()"
@@ -2604,13 +2636,15 @@ Error BindingsGenerator::_generate_glue_method(
             if (!ret_void) {
                 // See the comment on the C_LOCAL_VARARG_RET declaration
                 if (return_type->cname != name_cache.type_Variant) {
-                    p_output.append("\t" C_LOCAL_RET " = " C_LOCAL_VARARG_RET
-                                    ";\n");
+                    p_output.append(
+                        "\t" C_LOCAL_RET " = " C_LOCAL_VARARG_RET ";\n"
+                    );
                 }
             }
         } else {
-            p_output.append("\t" CS_PARAM_METHODBIND
-                            "->ptrcall(" CS_PARAM_INSTANCE ", ");
+            p_output.append(
+                "\t" CS_PARAM_METHODBIND "->ptrcall(" CS_PARAM_INSTANCE ", "
+            );
             p_output.append(
                 p_imethod.arguments.size() ? C_LOCAL_PTRCALL_ARGS ", "
                                            : "NULL, "
@@ -3774,7 +3808,8 @@ void BindingsGenerator::_populate_global_constants() {
             // except 'OK' and 'FAILED'.
             if (ienum.cname == name_cache.enum_Error) {
                 if (prefix_length > 0) { // Just in case it ever changes
-                    ERR_PRINT("Prefix for enum '" _STR(Error) "' is not empty."
+                    ERR_PRINT(
+                        "Prefix for enum '" _STR(Error) "' is not empty."
                     );
                 }
 
@@ -3803,11 +3838,14 @@ void BindingsGenerator::_populate_global_constants() {
 }
 
 void BindingsGenerator::_initialize_blacklisted_methods() {
-    blacklisted_methods["Object"].push_back("to_string"
+    blacklisted_methods["Object"].push_back(
+        "to_string"
     ); // there is already ToString
-    blacklisted_methods["Object"].push_back("_to_string"
+    blacklisted_methods["Object"].push_back(
+        "_to_string"
     ); // override ToString instead
-    blacklisted_methods["Object"].push_back("_init"
+    blacklisted_methods["Object"].push_back(
+        "_init"
     ); // never called in C# (TODO: implement it)
 }
 
@@ -3910,7 +3948,8 @@ static void handle_cmdline_options(
     }
 }
 
-void BindingsGenerator::handle_cmdline_args(const List<String>& p_cmdline_args
+void BindingsGenerator::handle_cmdline_args(
+    const List<String>& p_cmdline_args
 ) {
     const int NUM_OPTIONS = 2;
 

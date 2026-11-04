@@ -120,8 +120,10 @@ public:
 
     static bool is_md_type_allowed(mbedtls_md_type_t p_md_type);
 
-    Error start(HashingContext::HashType p_hash_type, PoolByteArray p_key)
-        override;
+    Error start(
+        HashingContext::HashType p_hash_type,
+        PoolByteArray p_key
+    ) override;
     Error update(PoolByteArray p_data) override;
     PoolByteArray finish() override;
 
@@ -166,10 +168,14 @@ public:
         Vector<uint8_t> p_signature,
         Ref<CryptoKey> p_key
     ) override;
-    Vector<uint8_t> encrypt(Ref<CryptoKey> p_key, Vector<uint8_t> p_plaintext)
-        override;
-    Vector<uint8_t> decrypt(Ref<CryptoKey> p_key, Vector<uint8_t> p_ciphertext)
-        override;
+    Vector<uint8_t> encrypt(
+        Ref<CryptoKey> p_key,
+        Vector<uint8_t> p_plaintext
+    ) override;
+    Vector<uint8_t> decrypt(
+        Ref<CryptoKey> p_key,
+        Vector<uint8_t> p_ciphertext
+    ) override;
 
     CryptoMbedTLS();
     ~CryptoMbedTLS() override;

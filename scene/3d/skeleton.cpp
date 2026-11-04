@@ -160,7 +160,8 @@ void Skeleton::_get_property_list(List<PropertyInfo>* p_list) const {
             "",
             PROPERTY_USAGE_EDITOR
         ));
-        p_list->push_back(PropertyInfo(Variant::ARRAY, prep + "bound_children")
+        p_list->push_back(
+            PropertyInfo(Variant::ARRAY, prep + "bound_children")
         );
     }
 }
@@ -590,8 +591,10 @@ void Skeleton::unbind_child_node_from_bone(int p_bone, Node* p_node) {
     bones.write[p_bone].nodes_bound.erase(id);
 }
 
-void Skeleton::get_bound_child_nodes_to_bone(int p_bone, List<Node*>* p_bound)
-    const {
+void Skeleton::get_bound_child_nodes_to_bone(
+    int p_bone,
+    List<Node*>* p_bound
+) const {
     ERR_FAIL_INDEX(p_bone, bones.size());
 
     for (const List<uint32_t>::Element* E = bones[p_bone].nodes_bound.front();
@@ -791,7 +794,8 @@ void _pb_start_simulation(
 void Skeleton::physical_bones_start_simulation_on(const Array& p_bones) {
     Vector<int> sim_bones;
     if (p_bones.size() <= 0) {
-        sim_bones.push_back(0
+        sim_bones.push_back(
+            0
         ); // if no bones is specified, activate ragdoll on full body
     } else {
         sim_bones.resize(p_bones.size());

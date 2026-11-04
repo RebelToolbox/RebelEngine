@@ -371,7 +371,8 @@ public:
         String& r_error,
         bool& r_missing_templates
     ) const override;
-    List<String> get_binary_extensions(const Ref<EditorExportPreset>& p_preset
+    List<String> get_binary_extensions(
+        const Ref<EditorExportPreset>& p_preset
     ) const override;
     Error export_project(
         const Ref<EditorExportPreset>& p_preset,
@@ -580,7 +581,8 @@ void WebEditorExportPlatform::_fix_html(
     Map<String, String> replaces;
     replaces["$GAME_URL"] = p_name + ".js";
     replaces["$REBEL_PROJECT_NAME"] =
-        ProjectSettings::get_singleton()->get_setting("application/config/name"
+        ProjectSettings::get_singleton()->get_setting(
+            "application/config/name"
         );
     replaces["$HEAD_INCLUDE"] = head_include + custom_head_include;
     replaces["$GAME_CONFIG"]  = str_config;
@@ -717,9 +719,9 @@ Error WebEditorExportPlatform::_build_pwa(
         CLAMP(int(p_preset->get("progressive_web_app/orientation")), 0, 3);
 
     Dictionary manifest;
-    String proj_name =
-        ProjectSettings::get_singleton()->get_setting("application/config/name"
-        );
+    String proj_name = ProjectSettings::get_singleton()->get_setting(
+        "application/config/name"
+    );
     if (proj_name.empty()) {
         proj_name = "Rebel Game";
     }
@@ -798,7 +800,8 @@ void WebEditorExportPlatform::get_preset_features(
     }
 }
 
-void WebEditorExportPlatform::get_export_options(List<ExportOption>* r_options
+void WebEditorExportPlatform::get_export_options(
+    List<ExportOption>* r_options
 ) {
     r_options->push_back(ExportOption(
         PropertyInfo(

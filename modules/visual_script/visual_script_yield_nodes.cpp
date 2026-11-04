@@ -92,9 +92,9 @@ public:
         } else {
             // yield
 
-            SceneTree* tree =
-                Object::cast_to<SceneTree>(OS::get_singleton()->get_main_loop()
-                );
+            SceneTree* tree = Object::cast_to<SceneTree>(
+                OS::get_singleton()->get_main_loop()
+            );
             if (!tree) {
                 r_error_str   = "Main Loop is not SceneTree";
                 r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
@@ -344,12 +344,14 @@ int VisualScriptYieldSignal::get_output_value_port_count() const {
     return sr.arguments.size();
 }
 
-String VisualScriptYieldSignal::get_output_sequence_port_text(int p_port
+String VisualScriptYieldSignal::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptYieldSignal::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptYieldSignal::get_input_value_port_info(
+    int p_idx
 ) const {
     if (call_mode == CALL_MODE_INSTANCE) {
         return PropertyInfo(Variant::OBJECT, "instance");
@@ -358,7 +360,8 @@ PropertyInfo VisualScriptYieldSignal::get_input_value_port_info(int p_idx
     }
 }
 
-PropertyInfo VisualScriptYieldSignal::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptYieldSignal::get_output_value_port_info(
+    int p_idx
 ) const {
     MethodInfo sr;
 
@@ -443,8 +446,8 @@ void VisualScriptYieldSignal::set_call_mode(CallMode p_mode) {
     ports_changed_notify();
 }
 
-VisualScriptYieldSignal::CallMode VisualScriptYieldSignal::get_call_mode(
-) const {
+VisualScriptYieldSignal::CallMode VisualScriptYieldSignal::
+    get_call_mode() const {
     return call_mode;
 }
 
@@ -685,15 +688,25 @@ VisualScriptYieldSignal::VisualScriptYieldSignal() {
 }
 
 void register_visual_script_yield_nodes() {
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/wait/wait_frame", create_yield_node<VisualScriptYield::YIELD_FRAME>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/wait/wait_physics_frame", create_yield_node<VisualScriptYield::YIELD_PHYSICS_FRAME>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/wait/wait_time", create_yield_node<VisualScriptYield::YIELD_WAIT>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/wait/wait_frame",
+        create_yield_node<VisualScriptYield::YIELD_FRAME>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/wait/wait_physics_frame",
+        create_yield_node<VisualScriptYield::YIELD_PHYSICS_FRAME>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/wait/wait_time",
+        create_yield_node<VisualScriptYield::YIELD_WAIT>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/yield", create_yield_node<VisualScriptYield::YIELD_RETURN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/yield_signal", create_node_generic<VisualScriptYieldSignal>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/yield",
+        create_yield_node<VisualScriptYield::YIELD_RETURN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/yield_signal",
+        create_node_generic<VisualScriptYieldSignal>
+    );
 }

@@ -280,11 +280,12 @@ void RasterizerGLES2::initialize() {
     }
 #else
     if (OS::get_singleton()->is_stdout_verbose()) {
-        DebugMessageCallbackARB callback = (DebugMessageCallbackARB
-        )eglGetProcAddress("glDebugMessageCallback");
+        DebugMessageCallbackARB callback = (DebugMessageCallbackARB)
+            eglGetProcAddress("glDebugMessageCallback");
         if (!callback) {
-            callback = (DebugMessageCallbackARB
-            )eglGetProcAddress("glDebugMessageCallbackKHR");
+            callback = (DebugMessageCallbackARB)eglGetProcAddress(
+                "glDebugMessageCallbackKHR"
+            );
         }
 
         if (callback) {

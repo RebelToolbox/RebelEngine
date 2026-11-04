@@ -514,7 +514,8 @@ public:
         int p_quadrant,
         ShadowAtlasQuadrantSubdiv p_subdiv
     );
-    ShadowAtlasQuadrantSubdiv get_shadow_atlas_quadrant_subdiv(int p_quadrant
+    ShadowAtlasQuadrantSubdiv get_shadow_atlas_quadrant_subdiv(
+        int p_quadrant
     ) const;
 
     void set_msaa(MSAA p_msaa);

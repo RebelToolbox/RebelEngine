@@ -174,8 +174,10 @@ public:
     void set_device(int p_device);
     int get_device() const;
 
-    bool is_action(const StringName& p_action, bool p_exact_match = false)
-        const;
+    bool is_action(
+        const StringName& p_action,
+        bool p_exact_match = false
+    ) const;
     bool is_action_pressed(
         const StringName& p_action,
         bool p_allow_echo  = false,

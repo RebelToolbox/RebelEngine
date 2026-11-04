@@ -78,7 +78,8 @@ TexturePreview::TexturePreview(Ref<Texture> p_texture, bool p_show_metadata) {
     texture_display = memnew(TextureRect);
     texture_display->set_texture(p_texture);
     texture_display->set_anchors_preset(TextureRect::PRESET_WIDE);
-    texture_display->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED
+    texture_display->set_stretch_mode(
+        TextureRect::STRETCH_KEEP_ASPECT_CENTERED
     );
     texture_display->set_expand(true);
     add_child(texture_display);

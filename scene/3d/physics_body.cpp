@@ -104,8 +104,8 @@ PhysicsBody::PhysicsBody(PhysicsServer::BodyMode p_mode) :
 #ifndef DISABLE_DEPRECATED
 void StaticBody::set_friction(real_t p_friction) {
     if (p_friction == 1.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -141,8 +141,8 @@ real_t StaticBody::get_friction() const {
 
 void StaticBody::set_bounce(real_t p_bounce) {
     if (p_bounce == 0.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -664,7 +664,8 @@ void RigidBody::_notification(int p_what) {
 #ifdef TOOLS_ENABLED
     if (p_what == NOTIFICATION_ENTER_TREE) {
         if (Engine::get_singleton()->is_editor_hint()) {
-            set_notify_local_transform(true
+            set_notify_local_transform(
+                true
             ); // used for warnings and only in editor
         }
     }
@@ -739,8 +740,8 @@ real_t RigidBody::get_weight() const {
 #ifndef DISABLE_DEPRECATED
 void RigidBody::set_friction(real_t p_friction) {
     if (p_friction == 1.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -773,8 +774,8 @@ real_t RigidBody::get_friction() const {
 
 void RigidBody::set_bounce(real_t p_bounce) {
     if (p_bounce == 0.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -1785,7 +1786,8 @@ Vector3 KinematicBody::_move_and_slide_internal(
         // This approach makes sure there is less delay between the actual body
         // velocity and the one we saved.
         PhysicsDirectBodyState* bs =
-            PhysicsServer::get_singleton()->body_get_direct_state(on_floor_body
+            PhysicsServer::get_singleton()->body_get_direct_state(
+                on_floor_body
             );
         if (bs) {
             Transform gt           = get_global_transform();
@@ -2152,7 +2154,8 @@ int KinematicBody::get_slide_count() const {
     return colliders.size();
 }
 
-KinematicBody::Collision KinematicBody::get_slide_collision(int p_bounce
+KinematicBody::Collision KinematicBody::get_slide_collision(
+    int p_bounce
 ) const {
     ERR_FAIL_INDEX_V(p_bounce, colliders.size(), Collision());
     return colliders[p_bounce];
@@ -2679,12 +2682,15 @@ bool PhysicalBone::JointData::_set(
     return false;
 }
 
-bool PhysicalBone::JointData::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool PhysicalBone::JointData::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     return false;
 }
 
-void PhysicalBone::JointData::_get_property_list(List<PropertyInfo>* p_list
+void PhysicalBone::JointData::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {}
 
 void PhysicalBone::apply_central_impulse(const Vector3& p_impulse) {
@@ -2745,8 +2751,10 @@ bool PhysicalBone::PinJointData::_set(
     return true;
 }
 
-bool PhysicalBone::PinJointData::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool PhysicalBone::PinJointData::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     if (JointData::_get(p_name, r_ret)) {
         return true;
     }
@@ -2764,7 +2772,8 @@ bool PhysicalBone::PinJointData::_get(const StringName& p_name, Variant& r_ret)
     return true;
 }
 
-void PhysicalBone::PinJointData::_get_property_list(List<PropertyInfo>* p_list
+void PhysicalBone::PinJointData::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     JointData::_get_property_list(p_list);
 
@@ -2854,8 +2863,10 @@ bool PhysicalBone::ConeJointData::_set(
     return true;
 }
 
-bool PhysicalBone::ConeJointData::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool PhysicalBone::ConeJointData::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     if (JointData::_get(p_name, r_ret)) {
         return true;
     }
@@ -2877,7 +2888,8 @@ bool PhysicalBone::ConeJointData::_get(const StringName& p_name, Variant& r_ret)
     return true;
 }
 
-void PhysicalBone::ConeJointData::_get_property_list(List<PropertyInfo>* p_list
+void PhysicalBone::ConeJointData::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     JointData::_get_property_list(p_list);
 
@@ -3016,7 +3028,8 @@ bool PhysicalBone::HingeJointData::_get(
     return true;
 }
 
-void PhysicalBone::HingeJointData::_get_property_list(List<PropertyInfo>* p_list
+void PhysicalBone::HingeJointData::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     JointData::_get_property_list(p_list);
 
@@ -4062,7 +4075,8 @@ void PhysicalBone::_reload_joint() {
                 get_rid(),
                 joint_offset.origin
             );
-            const PinJointData* pjd(static_cast<const PinJointData*>(joint_data)
+            const PinJointData* pjd(
+                static_cast<const PinJointData*>(joint_data)
             );
             PhysicsServer::get_singleton()->pin_joint_set_param(
                 joint,

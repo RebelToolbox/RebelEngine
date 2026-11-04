@@ -39,9 +39,11 @@ RenameProjectDialog::RenameProjectDialog() {
     project_path_container->add_child(project_folder_label);
 
     project_path_error_icon = memnew(TextureRect);
-    project_path_error_icon->set_texture(get_icon("StatusError", "EditorIcons")
+    project_path_error_icon->set_texture(
+        get_icon("StatusError", "EditorIcons")
     );
-    project_path_error_icon->set_stretch_mode(TextureRect::STRETCH_KEEP_CENTERED
+    project_path_error_icon->set_stretch_mode(
+        TextureRect::STRETCH_KEEP_CENTERED
     );
     project_path_container->add_child(project_path_error_icon);
 

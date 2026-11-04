@@ -458,9 +458,9 @@ bool PathEditorPlugin::forward_spatial_gui_input(
                 if (c->get_point_count() == 0) {
                     org = path->get_transform().get_origin();
                 } else {
-                    org =
-                        gt.xform(c->get_point_position(c->get_point_count() - 1)
-                        );
+                    org = gt.xform(
+                        c->get_point_position(c->get_point_count() - 1)
+                    );
                 }
                 Plane p(org, p_camera->get_transform().basis.get_axis(2));
                 Vector3 ray_from = p_camera->project_ray_origin(mbpos);
@@ -700,10 +700,12 @@ PathEditorPlugin::PathEditorPlugin(EditorNode* p_node) {
     sep->hide();
     SpatialEditor::get_singleton()->add_control_to_menu_panel(sep);
     curve_edit = memnew(ToolButton);
-    curve_edit->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "CurveEdit",
-        "EditorIcons"
-    ));
+    curve_edit->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "CurveEdit",
+            "EditorIcons"
+        )
+    );
     curve_edit->set_toggle_mode(true);
     curve_edit->hide();
     curve_edit->set_focus_mode(Control::FOCUS_NONE);
@@ -714,9 +716,12 @@ PathEditorPlugin::PathEditorPlugin(EditorNode* p_node) {
     );
     SpatialEditor::get_singleton()->add_control_to_menu_panel(curve_edit);
     curve_create = memnew(ToolButton);
-    curve_create->set_icon(EditorNode::get_singleton()
-                               ->get_gui_base()
-                               ->get_icon("CurveCreate", "EditorIcons"));
+    curve_create->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "CurveCreate",
+            "EditorIcons"
+        )
+    );
     curve_create->set_toggle_mode(true);
     curve_create->hide();
     curve_create->set_focus_mode(Control::FOCUS_NONE);
@@ -726,20 +731,24 @@ PathEditorPlugin::PathEditorPlugin(EditorNode* p_node) {
     );
     SpatialEditor::get_singleton()->add_control_to_menu_panel(curve_create);
     curve_del = memnew(ToolButton);
-    curve_del->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "CurveDelete",
-        "EditorIcons"
-    ));
+    curve_del->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "CurveDelete",
+            "EditorIcons"
+        )
+    );
     curve_del->set_toggle_mode(true);
     curve_del->hide();
     curve_del->set_focus_mode(Control::FOCUS_NONE);
     curve_del->set_tooltip(TTR("Delete Point"));
     SpatialEditor::get_singleton()->add_control_to_menu_panel(curve_del);
     curve_close = memnew(ToolButton);
-    curve_close->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "CurveClose",
-        "EditorIcons"
-    ));
+    curve_close->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "CurveClose",
+            "EditorIcons"
+        )
+    );
     curve_close->hide();
     curve_close->set_focus_mode(Control::FOCUS_NONE);
     curve_close->set_tooltip(TTR("Close Curve"));
@@ -764,7 +773,8 @@ PathEditorPlugin::PathEditorPlugin(EditorNode* p_node) {
 
 PathEditorPlugin::~PathEditorPlugin() {}
 
-Ref<EditorSpatialGizmo> PathSpatialGizmoPlugin::create_gizmo(Spatial* p_spatial
+Ref<EditorSpatialGizmo> PathSpatialGizmoPlugin::create_gizmo(
+    Spatial* p_spatial
 ) {
     Ref<PathSpatialGizmo> ref;
 

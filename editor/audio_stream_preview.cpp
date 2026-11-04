@@ -217,7 +217,8 @@ void AudioStreamPreviewGenerator::_notification(int p_what) {
                     memdelete(E->get().thread);
                     E->get().thread = nullptr;
                 }
-                if (!ObjectDB::get_instance(E->key()
+                if (!ObjectDB::get_instance(
+                        E->key()
                     )) { // no longer in use, get rid of preview
                     to_erase.push_back(E->key());
                 }

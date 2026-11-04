@@ -334,8 +334,8 @@ void Camera2D::_notification(int p_what) {
                 };
 
                 Transform2D inv_transform =
-                    get_global_transform().affine_inverse(
-                    ); // undo global space
+                    get_global_transform()
+                        .affine_inverse(); // undo global space
 
                 for (int i = 0; i < 4; i++) {
                     draw_line(
@@ -397,15 +397,17 @@ void Camera2D::_notification(int p_what) {
                         (screen_size.width / 2)
                             - ((screen_size.width / 2)
                                * drag_margin[MARGIN_LEFT]),
-                        (screen_size.height / 2
-                        ) - ((screen_size.height / 2) * drag_margin[MARGIN_TOP])
+                        (screen_size.height / 2)
+                            - ((screen_size.height / 2)
+                               * drag_margin[MARGIN_TOP])
                     )),
                     inv_camera_transform.xform(Vector2(
                         (screen_size.width / 2)
                             + ((screen_size.width / 2)
                                * drag_margin[MARGIN_RIGHT]),
-                        (screen_size.height / 2
-                        ) - ((screen_size.height / 2) * drag_margin[MARGIN_TOP])
+                        (screen_size.height / 2)
+                            - ((screen_size.height / 2)
+                               * drag_margin[MARGIN_TOP])
                     )),
                     inv_camera_transform.xform(Vector2(
                         (screen_size.width / 2)
@@ -426,8 +428,8 @@ void Camera2D::_notification(int p_what) {
                 };
 
                 Transform2D inv_transform =
-                    get_global_transform().affine_inverse(
-                    ); // undo global space
+                    get_global_transform()
+                        .affine_inverse(); // undo global space
 
                 for (int i = 0; i < 4; i++) {
                     draw_line(

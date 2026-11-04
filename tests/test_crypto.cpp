@@ -44,13 +44,17 @@ class _MockCrypto : public Crypto {
         return false;
     }
 
-    Vector<uint8_t> encrypt(Ref<CryptoKey> p_key, Vector<uint8_t> p_plaintext)
-        override {
+    Vector<uint8_t> encrypt(
+        Ref<CryptoKey> p_key,
+        Vector<uint8_t> p_plaintext
+    ) override {
         return Vector<uint8_t>();
     }
 
-    Vector<uint8_t> decrypt(Ref<CryptoKey> p_key, Vector<uint8_t> p_ciphertext)
-        override {
+    Vector<uint8_t> decrypt(
+        Ref<CryptoKey> p_key,
+        Vector<uint8_t> p_ciphertext
+    ) override {
         return Vector<uint8_t>();
     }
 

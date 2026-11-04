@@ -127,7 +127,8 @@ void WebXRInterface::_bind_methods() {
     ADD_SIGNAL(
         MethodInfo("selectstart", PropertyInfo(Variant::INT, "controller_id"))
     );
-    ADD_SIGNAL(MethodInfo("select", PropertyInfo(Variant::INT, "controller_id"))
+    ADD_SIGNAL(
+        MethodInfo("select", PropertyInfo(Variant::INT, "controller_id"))
     );
     ADD_SIGNAL(
         MethodInfo("selectend", PropertyInfo(Variant::INT, "controller_id"))

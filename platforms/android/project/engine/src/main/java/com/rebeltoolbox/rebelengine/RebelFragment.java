@@ -159,7 +159,8 @@ public class RebelFragment
                         break;
                     }
                 }
-                if (!found) continue;
+                if (!found)
+                    continue;
 
                 List<String> ptr = new ArrayList<String>();
 
@@ -472,9 +473,9 @@ public class RebelFragment
     @Keep
     private void vibrate(int durationMs) {
         if (durationMs > 0 && requestPermission("VIBRATE")) {
-            Vibrator v =
-                (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE
-                );
+            Vibrator v = (Vibrator)getContext().getSystemService(
+                Context.VIBRATOR_SERVICE
+            );
             if (v != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     v.vibrate(VibrationEffect.createOneShot(
@@ -677,8 +678,9 @@ public class RebelFragment
         final Activity activity = getActivity();
         Window window           = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        mClipboard          = (ClipboardManager
-        )activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        mClipboard = (ClipboardManager)activity.getSystemService(
+            Context.CLIPBOARD_SERVICE
+        );
         rebelPluginRegistry = RebelPluginRegistry.initialize(this);
 
         // check for apk expansion API
@@ -840,26 +842,33 @@ public class RebelFragment
                 container,
                 false
             );
-            mPB               = (ProgressBar
-            )downloadingExpansionView.findViewById(R.id.progressBar);
-            mStatusText       = (TextView
-            )downloadingExpansionView.findViewById(R.id.statusText);
-            mProgressFraction = (TextView
-            )downloadingExpansionView.findViewById(R.id.progressAsFraction);
-            mProgressPercent  = (TextView
-            )downloadingExpansionView.findViewById(R.id.progressAsPercentage);
-            mAverageSpeed     = (TextView
-            )downloadingExpansionView.findViewById(R.id.progressAverageSpeed);
-            mTimeRemaining    = (TextView
-            )downloadingExpansionView.findViewById(R.id.progressTimeRemaining);
+            mPB = (ProgressBar)downloadingExpansionView.findViewById(
+                R.id.progressBar
+            );
+            mStatusText = (TextView)downloadingExpansionView.findViewById(
+                R.id.statusText
+            );
+            mProgressFraction = (TextView)downloadingExpansionView.findViewById(
+                R.id.progressAsFraction
+            );
+            mProgressPercent = (TextView)downloadingExpansionView.findViewById(
+                R.id.progressAsPercentage
+            );
+            mAverageSpeed = (TextView)downloadingExpansionView.findViewById(
+                R.id.progressAverageSpeed
+            );
+            mTimeRemaining = (TextView)downloadingExpansionView.findViewById(
+                R.id.progressTimeRemaining
+            );
             mDashboard =
                 downloadingExpansionView.findViewById(R.id.downloaderDashboard);
             mCellMessage =
                 downloadingExpansionView.findViewById(R.id.approveCellular);
             mPauseButton =
                 (Button)downloadingExpansionView.findViewById(R.id.pauseButton);
-            mWiFiSettingsButton = (Button
-            )downloadingExpansionView.findViewById(R.id.wifiSettingsButton);
+            mWiFiSettingsButton = (Button)downloadingExpansionView.findViewById(
+                R.id.wifiSettingsButton
+            );
 
             return downloadingExpansionView;
         }
@@ -910,9 +919,11 @@ public class RebelFragment
 
     public String getClipboard() {
         ClipData clipData = mClipboard.getPrimaryClip();
-        if (clipData == null) return "";
+        if (clipData == null)
+            return "";
         CharSequence text = clipData.getItemAt(0).getText();
-        if (text == null) return "";
+        if (text == null)
+            return "";
         return text.toString();
     }
 

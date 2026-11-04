@@ -49,7 +49,8 @@ Variant DictionaryPropertyEdit::get_dictionary() const {
     return dict;
 }
 
-void DictionaryPropertyEdit::_get_property_list(List<PropertyInfo>* p_list
+void DictionaryPropertyEdit::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     Dictionary dict = get_dictionary();
 
@@ -156,8 +157,10 @@ bool DictionaryPropertyEdit::_set(
     return false;
 }
 
-bool DictionaryPropertyEdit::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool DictionaryPropertyEdit::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     Dictionary dict = get_dictionary();
     Array keys      = dict.keys();
     keys.sort();

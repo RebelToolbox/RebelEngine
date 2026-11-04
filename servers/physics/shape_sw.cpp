@@ -1167,7 +1167,8 @@ bool ConvexPolygonShapeSW::intersect_point(const Vector3& p_point) const {
     return true;
 }
 
-Vector3 ConvexPolygonShapeSW::get_closest_point_to(const Vector3& p_point
+Vector3 ConvexPolygonShapeSW::get_closest_point_to(
+    const Vector3& p_point
 ) const {
     const Geometry::MeshData::Face* faces = mesh.faces.ptr();
     int fc                                = mesh.faces.size();
@@ -1564,7 +1565,8 @@ bool ConcavePolygonShapeSW::intersect_point(const Vector3& p_point) const {
     return false; // face is flat
 }
 
-Vector3 ConcavePolygonShapeSW::get_closest_point_to(const Vector3& p_point
+Vector3 ConcavePolygonShapeSW::get_closest_point_to(
+    const Vector3& p_point
 ) const {
     return Vector3();
 }

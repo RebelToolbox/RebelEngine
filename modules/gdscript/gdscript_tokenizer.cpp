@@ -217,8 +217,10 @@ const char* GDScriptTokenizer::get_token_name(Token p_token) {
     return token_names[p_token];
 }
 
-bool GDScriptTokenizer::is_token_literal(int p_offset, bool variable_safe)
-    const {
+bool GDScriptTokenizer::is_token_literal(
+    int p_offset,
+    bool variable_safe
+) const {
     switch (get_token(p_offset)) {
         // Can always be literal:
         case TK_IDENTIFIER:
@@ -904,8 +906,8 @@ void GDScriptTokenizerText::_advance() {
                             if (hexa_found || bin_found || str.length() != 1
                                 || !(
                                     (i == 1 && str[0] == '0')
-                                    || (i == 2 && str[1] == '0' && str[0] == '-'
-                                    )
+                                    || (i == 2 && str[1] == '0'
+                                        && str[0] == '-')
                                 )) {
                                 _make_error("Invalid numeric constant at 'x'");
                                 return;
@@ -916,8 +918,8 @@ void GDScriptTokenizerText::_advance() {
                             if (bin_found || str.length() != 1
                                 || !(
                                     (i == 1 && str[0] == '0')
-                                    || (i == 2 && str[1] == '0' && str[0] == '-'
-                                    )
+                                    || (i == 2 && str[1] == '0'
+                                        && str[0] == '-')
                                 )) {
                                 _make_error("Invalid numeric constant at 'b'");
                                 return;
@@ -1098,7 +1100,8 @@ void GDScriptTokenizerText::set_code(const String& p_code) {
     }
 }
 
-GDScriptTokenizerText::Token GDScriptTokenizerText::get_token(int p_offset
+GDScriptTokenizerText::Token GDScriptTokenizerText::get_token(
+    int p_offset
 ) const {
     ERR_FAIL_COND_V(p_offset <= -MAX_LOOKAHEAD, TK_ERROR);
     ERR_FAIL_COND_V(p_offset >= MAX_LOOKAHEAD, TK_ERROR);
@@ -1212,7 +1215,8 @@ void GDScriptTokenizerText::advance(int p_amount) {
 
 #define BYTECODE_VERSION 13
 
-Error GDScriptTokenizerBuffer::set_code_buffer(const Vector<uint8_t>& p_buffer
+Error GDScriptTokenizerBuffer::set_code_buffer(
+    const Vector<uint8_t>& p_buffer
 ) {
     const uint8_t* buf = p_buffer.ptr();
     int total_len      = p_buffer.size();
@@ -1304,7 +1308,8 @@ Error GDScriptTokenizerBuffer::set_code_buffer(const Vector<uint8_t>& p_buffer
     return OK;
 }
 
-Vector<uint8_t> GDScriptTokenizerBuffer::parse_code_string(const String& p_code
+Vector<uint8_t> GDScriptTokenizerBuffer::parse_code_string(
+    const String& p_code
 ) {
     Vector<uint8_t> buf;
 
@@ -1463,7 +1468,8 @@ Vector<uint8_t> GDScriptTokenizerBuffer::parse_code_string(const String& p_code
     return buf;
 }
 
-GDScriptTokenizerBuffer::Token GDScriptTokenizerBuffer::get_token(int p_offset
+GDScriptTokenizerBuffer::Token GDScriptTokenizerBuffer::get_token(
+    int p_offset
 ) const {
     int offset = token + p_offset;
 

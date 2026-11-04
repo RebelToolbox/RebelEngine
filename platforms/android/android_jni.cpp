@@ -650,11 +650,13 @@ Java_com_rebeltoolbox_rebelengine_RebelEngine_getGlobal(
     jstring path
 ) {
     String js = string_from_jstring(env, path);
-    return env->NewStringUTF(ProjectSettings::get_singleton()
-                                 ->get(js)
-                                 .operator String()
-                                 .utf8()
-                                 .get_data());
+    return env->NewStringUTF(
+        ProjectSettings::get_singleton()
+            ->get(js)
+            .operator String()
+            .utf8()
+            .get_data()
+    );
 }
 
 JNIEXPORT void JNICALL Java_com_rebeltoolbox_rebelengine_RebelEngine_callobject(

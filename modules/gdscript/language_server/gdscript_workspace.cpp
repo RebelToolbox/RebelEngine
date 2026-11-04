@@ -284,7 +284,8 @@ ExtendGDScriptParser* GDScriptWorkspace::get_parse_successed_script(
     return nullptr;
 }
 
-ExtendGDScriptParser* GDScriptWorkspace::get_parse_result(const String& p_path
+ExtendGDScriptParser* GDScriptWorkspace::get_parse_result(
+    const String& p_path
 ) {
     const Map<String, ExtendGDScriptParser*>::Element* S =
         parse_results.find(p_path);

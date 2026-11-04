@@ -194,8 +194,10 @@ public:
     float get_auto_display_scale() const;
 
     void add_shortcut(const String& p_name, Ref<ShortCut>& p_shortcut);
-    bool is_shortcut(const String& p_name, const Ref<InputEvent>& p_event)
-        const;
+    bool is_shortcut(
+        const String& p_name,
+        const Ref<InputEvent>& p_event
+    ) const;
     Ref<ShortCut> get_shortcut(const String& p_name) const;
     void get_shortcut_list(List<String>* r_shortcuts);
 

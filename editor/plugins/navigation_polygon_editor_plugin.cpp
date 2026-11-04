@@ -41,8 +41,10 @@ Variant NavigationPolygonEditor::_get_polygon(int p_idx) const {
     }
 }
 
-void NavigationPolygonEditor::_set_polygon(int p_idx, const Variant& p_polygon)
-    const {
+void NavigationPolygonEditor::_set_polygon(
+    int p_idx,
+    const Variant& p_polygon
+) const {
     Ref<NavigationPolygon> navpoly = _ensure_navpoly();
     navpoly->set_outline(p_idx, p_polygon);
     navpoly->make_polygons_from_outlines();
@@ -111,7 +113,8 @@ NavigationPolygonEditor::NavigationPolygonEditor(EditorNode* p_editor) :
     node = nullptr;
 }
 
-NavigationPolygonEditorPlugin::NavigationPolygonEditorPlugin(EditorNode* p_node
+NavigationPolygonEditorPlugin::NavigationPolygonEditorPlugin(
+    EditorNode* p_node
 ) :
     AbstractPolygon2DEditorPlugin(
         p_node,

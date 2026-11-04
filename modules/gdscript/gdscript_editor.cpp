@@ -15,7 +15,8 @@
 #include "editor/editor_settings.h"
 #endif
 
-void GDScriptLanguage::get_comment_delimiters(List<String>* p_delimiters
+void GDScriptLanguage::get_comment_delimiters(
+    List<String>* p_delimiters
 ) const {
     p_delimiters->push_back("#");
 }
@@ -362,7 +363,8 @@ void GDScriptLanguage::debug_get_stack_level_members(
          E;
          E = E->next()) {
         p_members->push_back(E->key());
-        p_values->push_back(instance->debug_get_member_by_index(E->get().index)
+        p_values->push_back(
+            instance->debug_get_member_by_index(E->get().index)
         );
     }
 }
@@ -445,12 +447,14 @@ String GDScriptLanguage::debug_parse_stack_level_expression(
     return "";
 }
 
-void GDScriptLanguage::get_recognized_extensions(List<String>* p_extensions
+void GDScriptLanguage::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("gd");
 }
 
-void GDScriptLanguage::get_public_functions(List<MethodInfo>* p_functions
+void GDScriptLanguage::get_public_functions(
+    List<MethodInfo>* p_functions
 ) const {
     for (int i = 0; i < GDScriptFunctions::FUNC_MAX; i++) {
         p_functions->push_back(
@@ -802,14 +806,16 @@ static bool _guess_expression_type(
         } break;
         case GDScriptParser::Node::TYPE_IDENTIFIER: {
             const GDScriptParser::IdentifierNode* id =
-                static_cast<const GDScriptParser::IdentifierNode*>(p_expression
+                static_cast<const GDScriptParser::IdentifierNode*>(
+                    p_expression
                 );
             found = _guess_identifier_type(p_context, id->name, r_type);
         } break;
         case GDScriptParser::Node::TYPE_DICTIONARY: {
             // Try to recreate the dictionary
             const GDScriptParser::DictionaryNode* dn =
-                static_cast<const GDScriptParser::DictionaryNode*>(p_expression
+                static_cast<const GDScriptParser::DictionaryNode*>(
+                    p_expression
                 );
             Dictionary d;
             bool full = true;
@@ -1027,16 +1033,15 @@ static bool _guess_expression_type(
                                                 arg1.get_slice("/", 2);
                                             if (which != "") {
                                                 // Try singletons first
-                                                if (GDScriptLanguage::get_singleton(
-                                                    )
-                                                        ->get_named_globals_map(
-                                                        )
-                                                        .has(which)) {
+                                                if (GDScriptLanguage::
+                                                        get_singleton()
+                                                            ->get_named_globals_map()
+                                                            .has(which)) {
                                                     r_type = _type_from_variant(
                                                         GDScriptLanguage::
                                                             get_singleton()
-                                                                ->get_named_globals_map(
-                                                                )[which]
+                                                                ->get_named_globals_map()
+                                                                    [which]
                                                     );
                                                     found = true;
                                                 } else {
@@ -1064,9 +1069,9 @@ static bool _guess_expression_type(
                                                         if (name == which) {
                                                             String script =
                                                                 ProjectSettings::
-                                                                    get_singleton(
-                                                                    )
-                                                                        ->get(s
+                                                                    get_singleton()
+                                                                        ->get(
+                                                                            s
                                                                         );
 
                                                             if (script
@@ -1075,7 +1080,8 @@ static bool _guess_expression_type(
                                                                     )) {
                                                                 script =
                                                                     script
-                                                                        .right(1
+                                                                        .right(
+                                                                            1
                                                                         );
                                                             }
 
@@ -1101,8 +1107,7 @@ static bool _guess_expression_type(
                                                                 // success
                                                                 script =
                                                                     script
-                                                                        .get_basename(
-                                                                        )
+                                                                        .get_basename()
                                                                     + ".gd";
                                                             }
 
@@ -1112,12 +1117,10 @@ static bool _guess_expression_type(
                                                                     )) {
                                                                 Ref<Script> scr;
                                                                 if (ScriptCodeCompletionCache::
-                                                                        get_singleton(
-                                                                        )) {
+                                                                        get_singleton()) {
                                                                     scr =
                                                                         ScriptCodeCompletionCache::
-                                                                            get_singleton(
-                                                                            )
+                                                                            get_singleton()
                                                                                 ->get_cached_resource(
                                                                                     script
                                                                                 );
@@ -1127,8 +1130,7 @@ static bool _guess_expression_type(
                                                                             script
                                                                         );
                                                                 }
-                                                                if (scr.is_valid(
-                                                                    )) {
+                                                                if (scr.is_valid()) {
                                                                     r_type.type
                                                                         .has_type =
                                                                         true;
@@ -1141,8 +1143,7 @@ static bool _guess_expression_type(
                                                                     Ref<GDScript>
                                                                         gds =
                                                                             scr;
-                                                                    if (gds.is_valid(
-                                                                        )) {
+                                                                    if (gds.is_valid()) {
                                                                         r_type
                                                                             .type
                                                                             .kind = GDScriptParser::
@@ -1157,8 +1158,7 @@ static bool _guess_expression_type(
                                                                     }
                                                                     r_type
                                                                         .value =
-                                                                        Variant(
-                                                                        );
+                                                                        Variant();
                                                                     found =
                                                                         true;
                                                                 }
@@ -1261,7 +1261,8 @@ static bool _guess_expression_type(
                     }
 
                     if (base.value.get_type() == Variant::DICTIONARY
-                        && base.value.operator Dictionary().has(String(id->name)
+                        && base.value.operator Dictionary().has(
+                            String(id->name)
                         )) {
                         Variant value =
                             base.value.operator Dictionary()[String(id->name)];
@@ -1752,8 +1753,9 @@ static bool _guess_identifier_type(
                     Ref<GDScript> gds = base_type.script_type;
                     if (gds.is_valid()
                         && gds->has_method(p_context.function->name)) {
-                        GDScriptFunction* func = gds->get_member_functions(
-                        )[p_context.function->name];
+                        GDScriptFunction* func =
+                            gds->get_member_functions()[p_context.function
+                                                            ->name];
                         if (func) {
                             for (int i = 0; i < func->get_argument_count();
                                  i++) {
@@ -1891,8 +1893,8 @@ static bool _guess_identifier_type(
             p_identifier
         )) {
         r_type = _type_from_variant(
-            GDScriptLanguage::get_singleton()->get_named_globals_map(
-            )[p_identifier]
+            GDScriptLanguage::get_singleton()
+                ->get_named_globals_map()[p_identifier]
         );
         return true;
     }
@@ -1911,7 +1913,8 @@ static bool _guess_identifier_type_from_base(
     while (base_type.has_type) {
         switch (base_type.kind) {
             case GDScriptParser::DataType::CLASS: {
-                if (base_type.class_type->constant_expressions.has(p_identifier
+                if (base_type.class_type->constant_expressions.has(
+                        p_identifier
                     )) {
                     GDScriptParser::ClassNode::Constant c =
                         base_type.class_type
@@ -1965,8 +1968,9 @@ static bool _guess_identifier_type_from_base(
                 Ref<GDScript> gds = base_type.script_type;
                 if (gds.is_valid()) {
                     if (gds->get_constants().has(p_identifier)) {
-                        r_type = _type_from_variant(gds->get_constants(
-                        )[p_identifier]);
+                        r_type = _type_from_variant(
+                            gds->get_constants()[p_identifier]
+                        );
                         return true;
                     }
                     if (!_static) {
@@ -2231,9 +2235,10 @@ static bool _guess_method_return_type_from_base(
                 Ref<GDScript> gds = base_type.script_type;
                 if (gds.is_valid()) {
                     if (gds->get_member_functions().has(p_method)) {
-                        r_type = _type_from_gdtype(gds->get_member_functions(
-                        )[p_method]
-                                                       ->get_return_type());
+                        r_type = _type_from_gdtype(
+                            gds->get_member_functions()[p_method]
+                                ->get_return_type()
+                        );
                         return true;
                     }
                     Ref<GDScript> base_script = gds->get_base_script();
@@ -3775,12 +3780,12 @@ Error GDScriptLanguage::complete_code(
                             if (mi.arguments[i].type == Variant::OBJECT
                                 && mi.arguments[i].class_name != StringName()) {
                                 method_hint +=
-                                    mi.arguments[i].class_name.operator String(
-                                    );
+                                    mi.arguments[i]
+                                        .class_name.operator String();
                             } else {
-                                method_hint +=
-                                    Variant::get_type_name(mi.arguments[i].type
-                                    );
+                                method_hint += Variant::get_type_name(
+                                    mi.arguments[i].type
+                                );
                             }
                         }
                     }
@@ -4231,7 +4236,8 @@ void GDScriptLanguage::auto_indent_code(
             }
 
             if (indent_stack.size() && indent_stack.back()->get() != tc) {
-                indent_stack.push_back(tc
+                indent_stack.push_back(
+                    tc
                 ); // this is not right but gets the job done
             }
         }
@@ -4585,9 +4591,9 @@ Error GDScriptLanguage::lookup_code(
     switch (parser.get_completion_type()) {
         case GDScriptParser::COMPLETION_BUILT_IN_TYPE_CONSTANT: {
             r_result.type = ScriptLanguage::LookupResult::RESULT_CLASS_CONSTANT;
-            r_result.class_name =
-                Variant::get_type_name(parser.get_completion_built_in_constant()
-                );
+            r_result.class_name = Variant::get_type_name(
+                parser.get_completion_built_in_constant()
+            );
             r_result.class_member = p_symbol;
             return OK;
         } break;
@@ -4690,9 +4696,8 @@ Error GDScriptLanguage::lookup_code(
                 Map<StringName, int> classes =
                     GDScriptLanguage::get_singleton()->get_global_map();
                 if (classes.has(p_symbol)) {
-                    Variant value =
-                        GDScriptLanguage::get_singleton()->get_global_array(
-                        )[classes[p_symbol]];
+                    Variant value = GDScriptLanguage::get_singleton()
+                                        ->get_global_array()[classes[p_symbol]];
                     if (value.get_type() == Variant::OBJECT) {
                         Object* obj = value;
                         if (obj) {

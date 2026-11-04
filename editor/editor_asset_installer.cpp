@@ -264,7 +264,8 @@ void EditorAssetInstaller::open(const String& p_path, int p_depth) {
 
     if (num_file_conflicts == 1) {
         asset_contents->set_text(vformat(
-            TTR("Contents of asset \"%s\" - 1 file conflicts with your project:"
+            TTR(
+                "Contents of asset \"%s\" - 1 file conflicts with your project:"
             ),
             asset_name
         ));

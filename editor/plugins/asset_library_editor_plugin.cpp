@@ -674,7 +674,8 @@ void EditorAssetLibrary::_notification(int p_what) {
                 filter->grab_focus();
 
                 if (initial_loading) {
-                    _repository_changed(0
+                    _repository_changed(
+                        0
                     ); // Update when shown for the first time.
                 }
             }

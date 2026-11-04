@@ -47,7 +47,8 @@ public:
         singleton->deltaTime = p_deltaTime;
     }
 
-    static BulletPhysicsDirectBodyState* get_singleton(RigidBodyBullet* p_body
+    static BulletPhysicsDirectBodyState* get_singleton(
+        RigidBodyBullet* p_body
     ) {
         singleton->body = p_body;
         return singleton;
@@ -78,7 +79,8 @@ public:
     void set_transform(const Transform& p_transform) override;
     Transform get_transform() const override;
 
-    Vector3 get_velocity_at_local_position(const Vector3& p_position
+    Vector3 get_velocity_at_local_position(
+        const Vector3& p_position
     ) const override;
 
     void add_central_force(const Vector3& p_force) override;
@@ -102,7 +104,8 @@ public:
     Vector3 get_contact_collider_position(int p_contact_idx) const override;
     ObjectID get_contact_collider_id(int p_contact_idx) const override;
     int get_contact_collider_shape(int p_contact_idx) const override;
-    Vector3 get_contact_collider_velocity_at_position(int p_contact_idx
+    Vector3 get_contact_collider_velocity_at_position(
+        int p_contact_idx
     ) const override;
 
     real_t get_step() const override {

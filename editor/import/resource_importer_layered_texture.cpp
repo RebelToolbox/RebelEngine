@@ -150,7 +150,8 @@ void ResourceImporterLayeredTexture::_save_tex(
         // vram needs to do a first compression to tell what the format is, for
         // the rest its ok
         f->store_32(p_images[0]->get_format());
-        f->store_32(p_compress_mode
+        f->store_32(
+            p_compress_mode
         ); // 0 - lossless (PNG), 1 - vram, 2 - uncompressed
     }
 
@@ -193,7 +194,8 @@ void ResourceImporterLayeredTexture::_save_tex(
                 if (i == 0) {
                     // hack so we can properly tell the format
                     f->store_32(image->get_format());
-                    f->store_32(p_compress_mode
+                    f->store_32(
+                        p_compress_mode
                     ); // 0 - lossless (PNG), 1 - vram, 2 - uncompressed
                 }
 

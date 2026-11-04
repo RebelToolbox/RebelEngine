@@ -57,7 +57,8 @@ ImportProjectDialog::ImportProjectDialog() {
     project_file_container->add_child(project_file_line_edit);
 
     project_file_error_icon = memnew(TextureRect);
-    project_file_error_icon->set_stretch_mode(TextureRect::STRETCH_KEEP_CENTERED
+    project_file_error_icon->set_stretch_mode(
+        TextureRect::STRETCH_KEEP_CENTERED
     );
     project_file_container->add_child(project_file_error_icon);
 

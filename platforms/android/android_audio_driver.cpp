@@ -13,7 +13,8 @@
 
 /* Structure for passing information to callback function */
 
-void AndroidAudioDriver::_buffer_callback(SLAndroidSimpleBufferQueueItf queueItf
+void AndroidAudioDriver::_buffer_callback(
+    SLAndroidSimpleBufferQueueItf queueItf
 ) {
     bool mix = true;
 

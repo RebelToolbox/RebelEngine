@@ -674,8 +674,8 @@ const lsp::DocumentSymbol* ExtendGDScriptParser::get_member_symbol(
     return nullptr;
 }
 
-const List<lsp::DocumentLink>& ExtendGDScriptParser::get_document_links(
-) const {
+const List<lsp::DocumentLink>& ExtendGDScriptParser::
+    get_document_links() const {
     return document_links;
 }
 
@@ -858,7 +858,8 @@ Dictionary ExtendGDScriptParser::dump_class_api(
 
     Array static_functions;
     for (int i = 0; i < p_class->static_functions.size(); ++i) {
-        static_functions.append(dump_function_api(p_class->static_functions[i])
+        static_functions.append(
+            dump_function_api(p_class->static_functions[i])
         );
     }
     class_api["static_functions"] = static_functions;

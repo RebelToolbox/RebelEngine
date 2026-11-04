@@ -56,8 +56,10 @@ struct joypad {
     void add_hid_elements(CFArrayRef p_array);
     void add_hid_element(IOHIDElementRef p_element);
 
-    bool has_element(IOHIDElementCookie p_cookie, Vector<rec_element>* p_list)
-        const;
+    bool has_element(
+        IOHIDElementCookie p_cookie,
+        Vector<rec_element>* p_list
+    ) const;
     bool config_force_feedback(io_service_t p_service);
     bool check_ff_features();
 

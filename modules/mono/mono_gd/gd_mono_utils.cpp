@@ -54,8 +54,9 @@ MonoObject* unmanaged_get_managed(Object* unmanaged) {
         ((Map<Object*, CSharpScriptBinding>::Element*)data)->value();
 
     if (!script_binding.inited) {
-        MutexLock lock(CSharpLanguage::get_singleton()->get_language_bind_mutex(
-        ));
+        MutexLock lock(
+            CSharpLanguage::get_singleton()->get_language_bind_mutex()
+        );
 
         if (!script_binding.inited) { // Other thread may have set it up
             // Already had a binding that needs to be setup
@@ -618,7 +619,8 @@ namespace Marshal {
 #ifdef TOOLS_ENABLED
 #define NO_GLUE_RET(m_ret)                                                     \
     {                                                                          \
-        if (!GDMonoCache::cached_data.rebel_api_cache_updated) return m_ret;   \
+        if (!GDMonoCache::cached_data.rebel_api_cache_updated)                 \
+            return m_ret;                                                      \
     }
 #else
 #define NO_GLUE_RET(m_ret)                                                     \

@@ -1015,7 +1015,8 @@ void VisualScriptEditor::_update_graph(int p_only_id) {
                     if (t.is_valid()) {
                         TextureRect* tf = memnew(TextureRect);
                         tf->set_texture(t);
-                        tf->set_stretch_mode(TextureRect::STRETCH_KEEP_CENTERED
+                        tf->set_stretch_mode(
+                            TextureRect::STRETCH_KEEP_CENTERED
                         );
                         hbc->add_child(tf);
                     }
@@ -1068,9 +1069,10 @@ void VisualScriptEditor::_update_graph(int p_only_id) {
                         }
 
                         Button* rmbtn = memnew(Button);
-                        rmbtn->set_icon(EditorNode::get_singleton()
-                                            ->get_gui_base()
-                                            ->get_icon("Remove", "EditorIcons")
+                        rmbtn->set_icon(
+                            EditorNode::get_singleton()
+                                ->get_gui_base()
+                                ->get_icon("Remove", "EditorIcons")
                         );
                         hbc->add_child(rmbtn);
                         rmbtn->connect(
@@ -1166,9 +1168,10 @@ void VisualScriptEditor::_update_graph(int p_only_id) {
                 if (right_ok) {
                     if (is_vslist) {
                         Button* rmbtn = memnew(Button);
-                        rmbtn->set_icon(EditorNode::get_singleton()
-                                            ->get_gui_base()
-                                            ->get_icon("Remove", "EditorIcons")
+                        rmbtn->set_icon(
+                            EditorNode::get_singleton()
+                                ->get_gui_base()
+                                ->get_icon("Remove", "EditorIcons")
                         );
                         hbc->add_child(rmbtn);
                         rmbtn->connect(
@@ -1235,7 +1238,8 @@ void VisualScriptEditor::_update_graph(int p_only_id) {
                     if (t.is_valid()) {
                         TextureRect* tf = memnew(TextureRect);
                         tf->set_texture(t);
-                        tf->set_stretch_mode(TextureRect::STRETCH_KEEP_CENTERED
+                        tf->set_stretch_mode(
+                            TextureRect::STRETCH_KEEP_CENTERED
                         );
                         hbc->add_child(tf);
                     }
@@ -1341,7 +1345,8 @@ void VisualScriptEditor::_change_port_type(
 void VisualScriptEditor::_update_node_size(int p_id) {
     Node* node = graph->get_node(itos(p_id));
     if (Object::cast_to<Control>(node)) {
-        Object::cast_to<Control>(node)->set_size(Vector2(1, 1)
+        Object::cast_to<Control>(node)->set_size(
+            Vector2(1, 1)
         ); // shrink if text is smaller
     }
 }
@@ -1742,9 +1747,9 @@ void VisualScriptEditor::_create_function() {
         OptionButton* opbtn = Object::cast_to<OptionButton>(
             func_input_vbox->get_child(i)->get_child(3)
         );
-        LineEdit* lne =
-            Object::cast_to<LineEdit>(func_input_vbox->get_child(i)->get_child(1
-            ));
+        LineEdit* lne = Object::cast_to<LineEdit>(
+            func_input_vbox->get_child(i)->get_child(1)
+        );
         if (!opbtn || !lne) {
             continue;
         }
@@ -1810,9 +1815,12 @@ void VisualScriptEditor::_add_func_input() {
     hbox->add_child(type_box);
 
     Button* delete_button = memnew(Button);
-    delete_button->set_icon(EditorNode::get_singleton()
-                                ->get_gui_base()
-                                ->get_icon("Remove", "EditorIcons"));
+    delete_button->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "Remove",
+            "EditorIcons"
+        )
+    );
     delete_button->set_tooltip(vformat(TTR("Delete input port")));
     hbox->add_child(delete_button);
 
@@ -1839,9 +1847,9 @@ void VisualScriptEditor::_remove_func_input(Node* p_node) {
 void VisualScriptEditor::_deselect_input_names() {
     int cn = func_input_vbox->get_child_count();
     for (int i = 0; i < cn; i++) {
-        LineEdit* lne =
-            Object::cast_to<LineEdit>(func_input_vbox->get_child(i)->get_child(1
-            ));
+        LineEdit* lne = Object::cast_to<LineEdit>(
+            func_input_vbox->get_child(i)->get_child(1)
+        );
         if (lne) {
             lne->deselect();
         }
@@ -2172,7 +2180,8 @@ void VisualScriptEditor::_expression_text_changed(
 
     Node* node = graph->get_node(itos(p_id));
     if (Object::cast_to<Control>(node)) {
-        Object::cast_to<Control>(node)->set_size(Vector2(1, 1)
+        Object::cast_to<Control>(node)->set_size(
+            Vector2(1, 1)
         ); // shrink if text is smaller
     }
 
@@ -2189,8 +2198,10 @@ Vector2 VisualScriptEditor::_get_pos_in_graph(Vector2 p_point) const {
     return pos;
 }
 
-Vector2 VisualScriptEditor::_get_available_pos(bool p_centered, Vector2 p_pos)
-    const {
+Vector2 VisualScriptEditor::_get_available_pos(
+    bool p_centered,
+    Vector2 p_pos
+) const {
     if (p_centered) {
         p_pos = _get_pos_in_graph(graph->get_size() * 0.5);
     }
@@ -2719,8 +2730,8 @@ void VisualScriptEditor::_members_gui_input(const Ref<InputEvent>& p_event) {
         TreeItem* ti = members->get_selected();
         if (ti
             && ti->get_parent()
-                   == members->get_root()->get_children(
-                   )) { // to check if it's a function
+                   == members->get_root()
+                          ->get_children()) { // to check if it's a function
             _center_on_node(
                 ti->get_metadata(0),
                 script->get_function_node_id(ti->get_metadata(0))
@@ -3346,14 +3357,16 @@ void VisualScriptEditor::drop_data_fw(
             if (!use_get) {
                 Ref<VisualScriptPropertySet> pset;
                 pset.instance();
-                pset->set_call_mode(VisualScriptPropertySet::CALL_MODE_INSTANCE
+                pset->set_call_mode(
+                    VisualScriptPropertySet::CALL_MODE_INSTANCE
                 );
                 pset->set_base_type(obj->get_class());
                 vnode = pset;
             } else {
                 Ref<VisualScriptPropertyGet> pget;
                 pget.instance();
-                pget->set_call_mode(VisualScriptPropertyGet::CALL_MODE_INSTANCE
+                pget->set_call_mode(
+                    VisualScriptPropertyGet::CALL_MODE_INSTANCE
                 );
                 pget->set_base_type(obj->get_class());
 
@@ -3405,7 +3418,8 @@ void VisualScriptEditor::drop_data_fw(
                 Ref<VisualScriptPropertySet> pset;
                 pset.instance();
                 if (sn == node) {
-                    pset->set_call_mode(VisualScriptPropertySet::CALL_MODE_SELF
+                    pset->set_call_mode(
+                        VisualScriptPropertySet::CALL_MODE_SELF
                     );
                 } else {
                     pset->set_call_mode(
@@ -3419,7 +3433,8 @@ void VisualScriptEditor::drop_data_fw(
                 Ref<VisualScriptPropertyGet> pget;
                 pget.instance();
                 if (sn == node) {
-                    pget->set_call_mode(VisualScriptPropertyGet::CALL_MODE_SELF
+                    pget->set_call_mode(
+                        VisualScriptPropertyGet::CALL_MODE_SELF
                     );
                 } else {
                     pget->set_call_mode(
@@ -3537,7 +3552,8 @@ void VisualScriptEditor::set_edited_resource(const RES& p_res) {
 
     default_func = script->get_default_func();
 
-    if (!script->has_function(default_func
+    if (!script->has_function(
+            default_func
         )) // this is the supposed default function
     {
         script->add_function(default_func);
@@ -3807,7 +3823,8 @@ void VisualScriptEditor::_node_selected(Node* p_node) {
         return;
     }
 
-    EditorNode::get_singleton()->push_item(vnode.ptr()
+    EditorNode::get_singleton()->push_item(
+        vnode.ptr()
     ); // edit node in inspector
 }
 
@@ -5229,7 +5246,8 @@ void VisualScriptEditor::_selected_connect_node(
                 _guess_output_type(port_action_node, port_action_output, vn);
 
             if (tg.type == Variant::OBJECT) {
-                vsfc->set_call_mode(VisualScriptFunctionCall::CALL_MODE_INSTANCE
+                vsfc->set_call_mode(
+                    VisualScriptFunctionCall::CALL_MODE_INSTANCE
                 );
                 vsfc->set_base_type(String(""));
                 if (tg.gdclass != StringName()) {
@@ -5258,7 +5276,8 @@ void VisualScriptEditor::_selected_connect_node(
                     vsfc->set_base_script(tg.script->get_path());
                 }
             } else if (tg.type == Variant::NIL) {
-                vsfc->set_call_mode(VisualScriptFunctionCall::CALL_MODE_INSTANCE
+                vsfc->set_call_mode(
+                    VisualScriptFunctionCall::CALL_MODE_INSTANCE
                 );
                 vsfc->set_base_type(String(""));
             } else {
@@ -5305,7 +5324,8 @@ void VisualScriptEditor::_selected_connect_node(
                 vsp->set_call_mode(VisualScriptPropertySet::CALL_MODE_INSTANCE);
                 vsp->set_base_type(String(""));
             } else {
-                vsp->set_call_mode(VisualScriptPropertySet::CALL_MODE_BASIC_TYPE
+                vsp->set_call_mode(
+                    VisualScriptPropertySet::CALL_MODE_BASIC_TYPE
                 );
                 vsp->set_basic_type(tg.type);
             }
@@ -5344,7 +5364,8 @@ void VisualScriptEditor::_selected_connect_node(
                 vsp->set_call_mode(VisualScriptPropertyGet::CALL_MODE_INSTANCE);
                 vsp->set_base_type(String(""));
             } else {
-                vsp->set_call_mode(VisualScriptPropertyGet::CALL_MODE_BASIC_TYPE
+                vsp->set_call_mode(
+                    VisualScriptPropertyGet::CALL_MODE_BASIC_TYPE
                 );
                 vsp->set_basic_type(tg.type);
             }
@@ -5741,10 +5762,12 @@ void VisualScriptEditor::_notification(int p_what) {
 
             List<Pair<String, Color>> colors;
             if (dark_theme) {
-                colors.push_back(Pair<String, Color>(
-                    "flow_control",
-                    Color(0.96f, 0.96f, 0.96f)
-                ));
+                colors.push_back(
+                    Pair<String, Color>(
+                        "flow_control",
+                        Color(0.96f, 0.96f, 0.96f)
+                    )
+                );
                 colors.push_back(
                     Pair<String, Color>("functions", Color(0.96f, 0.52f, 0.51f))
                 );
@@ -5761,10 +5784,12 @@ void VisualScriptEditor::_notification(int p_what) {
                     Pair<String, Color>("constants", Color(0.96f, 0.5f, 0.69f))
                 );
             } else {
-                colors.push_back(Pair<String, Color>(
-                    "flow_control",
-                    Color(0.26f, 0.26f, 0.26f)
-                ));
+                colors.push_back(
+                    Pair<String, Color>(
+                        "flow_control",
+                        Color(0.26f, 0.26f, 0.26f)
+                    )
+                );
                 colors.push_back(
                     Pair<String, Color>("functions", Color(0.95f, 0.4f, 0.38f))
                 );
@@ -6087,14 +6112,16 @@ void VisualScriptEditor::_menu_option(int p_what) {
                             script->get_node(function, E->get().to_node);
                         if (node.is_valid()) {
                             dataext.insert(E->get());
-                            PropertyInfo pi =
-                                node->get_input_value_port_info(E->get().to_port
-                                );
-                            inputs.push_back(pi.type);
-                            input_connections.push_back(Pair<int, int>(
-                                E->get().to_node,
+                            PropertyInfo pi = node->get_input_value_port_info(
                                 E->get().to_port
-                            ));
+                            );
+                            inputs.push_back(pi.type);
+                            input_connections.push_back(
+                                Pair<int, int>(
+                                    E->get().to_node,
+                                    E->get().to_port
+                                )
+                            );
                         }
                     } else if (nodes.has(E->get().from_node)
                                && !nodes.has(E->get().to_node)) {
@@ -6601,10 +6628,12 @@ void VisualScriptEditor::_member_option(int p_option) {
     }
 }
 
-void VisualScriptEditor::add_syntax_highlighter(SyntaxHighlighter* p_highlighter
+void VisualScriptEditor::add_syntax_highlighter(
+    SyntaxHighlighter* p_highlighter
 ) {}
 
-void VisualScriptEditor::set_syntax_highlighter(SyntaxHighlighter* p_highlighter
+void VisualScriptEditor::set_syntax_highlighter(
+    SyntaxHighlighter* p_highlighter
 ) {}
 
 void VisualScriptEditor::_bind_methods() {

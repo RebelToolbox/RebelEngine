@@ -151,8 +151,9 @@ void CollisionPolygon2D::_notification(int p_what) {
             }
 
             if (one_way_collision) {
-                Color dcol = get_tree()->get_debug_collisions_color(
-                ); // 0.9,0.2,0.2,0.4);
+                Color dcol =
+                    get_tree()
+                        ->get_debug_collisions_color(); // 0.9,0.2,0.2,0.4);
                 dcol.a = 1.0;
                 Vector2 line_to(0, 20);
                 draw_line(Vector2(), line_to, dcol, 3);

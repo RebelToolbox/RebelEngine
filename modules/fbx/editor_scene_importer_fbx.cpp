@@ -610,7 +610,8 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
                 VertexWeightMapping& vm =
                     mesh_vertex_data->vertex_weights[vertex_index];
                 vm.weights.push_back(influence_weight);
-                vm.bones.push_back(0
+                vm.bones.push_back(
+                    0
                 ); // bone id is pushed on here during sanitization phase
                 vm.bones_ref.push_back(bone_element);
             }
@@ -873,7 +874,8 @@ Spatial* EditorSceneImporterFBX::_generate_scene(
 
             // assign parent if valid
             if (fbx_node->fbx_parent.is_valid()) {
-                fbx_node->fbx_parent->rebel_node->add_child(fbx_node->rebel_node
+                fbx_node->fbx_parent->rebel_node->add_child(
+                    fbx_node->rebel_node
                 );
                 fbx_node->rebel_node->set_owner(state.root_owner);
             }

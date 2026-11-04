@@ -119,7 +119,8 @@ static void edit_project(
     const String& project_name,
     const String& project_folder
 ) {
-    print_line(vformat("Editing project: %s (%s)", project_name, project_folder)
+    print_line(
+        vformat("Editing project: %s (%s)", project_name, project_folder)
     );
     OS* os = OS::get_singleton();
     List<String> args;
@@ -145,7 +146,8 @@ static void run_project(
     const String& project_name,
     const String& project_folder
 ) {
-    print_line(vformat("Running project: %s (%s)", project_name, project_folder)
+    print_line(
+        vformat("Running project: %s (%s)", project_name, project_folder)
     );
     OS* os = OS::get_singleton();
     List<String> args;
@@ -567,9 +569,9 @@ Control* ProjectsManager::_create_language_options() {
         }
     }
 
-    String current_language_code =
-        EditorSettings::get_singleton()->get("interface/editor/editor_language"
-        );
+    String current_language_code = EditorSettings::get_singleton()->get(
+        "interface/editor/editor_language"
+    );
     for (int i = 0; i < language_codes.size(); i++) {
         const String& language_code = language_codes[i];
         String language_name =
@@ -632,8 +634,9 @@ Control* ProjectsManager::_create_open_asset_library_confirmation() {
             "Would you like to explore official example projects in the Asset "
             "Library?")
     );
-    open_asset_library_confirmation->get_ok()->set_text(TTR("Open Asset Library"
-    ));
+    open_asset_library_confirmation->get_ok()->set_text(
+        TTR("Open Asset Library")
+    );
     open_asset_library_confirmation
         ->connect("confirmed", this, "_on_open_asset_library_confirmed");
     return open_asset_library_confirmation;
@@ -667,7 +670,8 @@ Control* ProjectsManager::_create_remove_confirmation() {
     remove_confirmation_vb->add_child(remove_confirmation_label);
 
     delete_project_folder_check_box = memnew(CheckBox);
-    delete_project_folder_check_box->set_text(TTR("Also delete project folder?")
+    delete_project_folder_check_box->set_text(
+        TTR("Also delete project folder?")
     );
     remove_confirmation_vb->add_child(delete_project_folder_check_box);
 
@@ -719,9 +723,11 @@ Control* ProjectsManager::_create_select_search_folder() {
     select_search_folder->set_access(FileDialog::ACCESS_FILESYSTEM);
     select_search_folder->set_mode(FileDialog::MODE_OPEN_DIR);
     select_search_folder->set_title(TTR("Select a Folder to Search"));
-    select_search_folder->set_current_dir(EditorSettings::get_singleton()->get(
-        "filesystem/directories/default_project_path"
-    ));
+    select_search_folder->set_current_dir(
+        EditorSettings::get_singleton()->get(
+            "filesystem/directories/default_project_path"
+        )
+    );
     select_search_folder
         ->connect("dir_selected", this, "_on_search_folder_selected");
     return select_search_folder;
@@ -1120,7 +1126,8 @@ void ProjectsManager::_on_tab_changed(int p_tab) {
     // library editor plugin code.
 }
 
-void ProjectsManager::_on_upgrade_settings_confirmed(const String& p_project_key
+void ProjectsManager::_on_upgrade_settings_confirmed(
+    const String& p_project_key
 ) {
     _edit_project(p_project_key);
 }

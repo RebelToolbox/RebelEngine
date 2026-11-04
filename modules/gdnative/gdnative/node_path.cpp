@@ -65,8 +65,8 @@ rebel_node_path_get_name(const rebel_node_path* p_self, const rebel_int p_idx) {
     return dest;
 }
 
-rebel_int GDAPI rebel_node_path_get_subname_count(const rebel_node_path* p_self
-) {
+rebel_int GDAPI
+rebel_node_path_get_subname_count(const rebel_node_path* p_self) {
     const NodePath* self = (const NodePath*)p_self;
     return self->get_subname_count();
 }

@@ -142,8 +142,10 @@ Dictionary BitMap::_get_data() const {
     return d;
 }
 
-Vector<Vector2> BitMap::_march_square(const Rect2i& rect, const Point2i& start)
-    const {
+Vector<Vector2> BitMap::_march_square(
+    const Rect2i& rect,
+    const Point2i& start
+) const {
     int stepx          = 0;
     int stepy          = 0;
     int prevx          = 0;
@@ -591,8 +593,10 @@ void BitMap::shrink_mask(int p_pixels, const Rect2& p_rect) {
     grow_mask(-p_pixels, p_rect);
 }
 
-Array BitMap::_opaque_to_polygons_bind(const Rect2& p_rect, float p_epsilon)
-    const {
+Array BitMap::_opaque_to_polygons_bind(
+    const Rect2& p_rect,
+    float p_epsilon
+) const {
     Vector<Vector<Vector2>> result = clip_opaque_to_polygons(p_rect, p_epsilon);
 
     // Convert result to bindable types

@@ -738,8 +738,8 @@ int64_t GDAPI rebel_string_hex_to_int64(const rebel_string* p_self) {
     return self->hex_to_int64(false);
 }
 
-int64_t GDAPI rebel_string_hex_to_int64_with_prefix(const rebel_string* p_self
-) {
+int64_t GDAPI
+rebel_string_hex_to_int64_with_prefix(const rebel_string* p_self) {
     const String* self = (const String*)p_self;
 
     return self->hex_to_int64();
@@ -1134,8 +1134,8 @@ rebel_char_string GDAPI rebel_string_ascii(const rebel_string* p_self) {
     return result;
 }
 
-rebel_char_string GDAPI rebel_string_ascii_extended(const rebel_string* p_self
-) {
+rebel_char_string GDAPI
+rebel_string_ascii_extended(const rebel_string* p_self) {
     const String* self = (const String*)p_self;
 
     rebel_char_string result;
@@ -1217,8 +1217,8 @@ rebel_string_hash_utf8_chars_with_len(const wchar_t* p_str, rebel_int p_len) {
     return String::hash(p_str, p_len);
 }
 
-rebel_pool_byte_array GDAPI rebel_string_md5_buffer(const rebel_string* p_self
-) {
+rebel_pool_byte_array GDAPI
+rebel_string_md5_buffer(const rebel_string* p_self) {
     const String* self         = (const String*)p_self;
     Vector<uint8_t> tmp_result = self->md5_buffer();
 

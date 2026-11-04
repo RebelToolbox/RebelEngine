@@ -48,7 +48,8 @@ class ExtendGDScriptParser : public GDScriptParser {
         lsp::DocumentSymbol& r_symbol
     );
 
-    Dictionary dump_function_api(const GDScriptParser::FunctionNode* p_func
+    Dictionary dump_function_api(
+        const GDScriptParser::FunctionNode* p_func
     ) const;
     Dictionary dump_class_api(const GDScriptParser::ClassNode* p_class) const;
 
@@ -81,8 +82,8 @@ public:
         return members;
     }
 
-    _FORCE_INLINE_ const HashMap<String, ClassMembers>& get_inner_classes(
-    ) const {
+    _FORCE_INLINE_ const HashMap<String, ClassMembers>&
+    get_inner_classes() const {
         return inner_classes;
     }
 

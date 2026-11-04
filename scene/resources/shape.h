@@ -36,8 +36,8 @@ public:
     }
 
     Ref<ArrayMesh> get_debug_mesh();
-    virtual Vector<Vector3> get_debug_mesh_lines(
-    ) = 0; // { return Vector<Vector3>(); }
+    virtual Vector<Vector3> get_debug_mesh_lines() = 0; // { return
+                                                        // Vector<Vector3>(); }
 
     void add_vertices_to_array(
         PoolVector<Vector3>& array,

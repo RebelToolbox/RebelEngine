@@ -22,7 +22,8 @@ String ResourceImporterWAV::get_visible_name() const {
     return "Microsoft WAV";
 }
 
-void ResourceImporterWAV::get_recognized_extensions(List<String>* p_extensions
+void ResourceImporterWAV::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("wav");
 }
@@ -172,8 +173,8 @@ Error ResourceImporterWAV::import(
 
         /* chunk size */
         uint32_t chunksize = file->get_32();
-        uint32_t file_pos  = file->get_position(
-        ); // save file pos, so we can skip to next chunk safely
+        uint32_t file_pos  = file->get_position(); // save file pos, so we can
+                                                   // skip to next chunk safely
 
         if (file->eof_reached()) {
             // ERR_PRINT("EOF REACH");
@@ -309,8 +310,8 @@ Error ResourceImporterWAV::import(
              **/
 
             for (int i = 0; i < 10; i++) {
-                file->get_32(
-                ); // i wish to know why should i do this... no doc!
+                file->get_32(); // i wish to know why should i do this... no
+                                // doc!
             }
 
             // only read 0x00 (loop forward), 0x01 (loop ping-pong) and 0x02

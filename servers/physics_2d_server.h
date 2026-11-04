@@ -20,16 +20,16 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual Vector2 get_total_gravity(
-    ) const = 0; // get gravity vector working on this body space/area
-    virtual float get_total_linear_damp(
-    ) const = 0; // get density of this body space/area
-    virtual float get_total_angular_damp(
-    ) const = 0; // get density of this body space/area
+    virtual Vector2 get_total_gravity() const = 0; // get gravity vector working
+                                                   // on this body space/area
+    virtual float get_total_linear_damp() const = 0; // get density of this body
+                                                     // space/area
+    virtual float get_total_angular_damp() const = 0; // get density of this
+                                                      // body space/area
 
-    virtual float get_inverse_mass() const = 0; // get the mass
-    virtual real_t get_inverse_inertia(
-    ) const = 0; // get density of this body space
+    virtual float get_inverse_mass() const     = 0; // get the mass
+    virtual real_t get_inverse_inertia() const = 0; // get density of this body
+                                                    // space
 
     virtual void set_linear_velocity(const Vector2& p_velocity) = 0;
     virtual Vector2 get_linear_velocity() const                 = 0;
@@ -40,7 +40,8 @@ public:
     virtual void set_transform(const Transform2D& p_transform) = 0;
     virtual Transform2D get_transform() const                  = 0;
 
-    virtual Vector2 get_velocity_at_local_position(const Vector2& p_position
+    virtual Vector2 get_velocity_at_local_position(
+        const Vector2& p_position
     ) const = 0;
 
     virtual void add_central_force(const Vector2& p_force)                  = 0;
@@ -67,10 +68,12 @@ public:
     virtual ObjectID get_contact_collider_id(int p_contact_idx) const      = 0;
     virtual Object* get_contact_collider_object(int p_contact_idx) const;
     virtual int get_contact_collider_shape(int p_contact_idx) const = 0;
-    virtual Variant get_contact_collider_shape_metadata(int p_contact_idx
-    ) const                                                         = 0;
-    virtual Vector2 get_contact_collider_velocity_at_position(int p_contact_idx
-    ) const                                                         = 0;
+    virtual Variant get_contact_collider_shape_metadata(
+        int p_contact_idx
+    ) const = 0;
+    virtual Vector2 get_contact_collider_velocity_at_position(
+        int p_contact_idx
+    ) const = 0;
 
     virtual real_t get_step() const = 0;
     virtual void integrate_forces();
@@ -387,8 +390,10 @@ public:
         SpaceParameter p_param,
         real_t p_value
     ) = 0;
-    virtual real_t space_get_param(RID p_space, SpaceParameter p_param)
-        const = 0;
+    virtual real_t space_get_param(
+        RID p_space,
+        SpaceParameter p_param
+    ) const = 0;
 
     // this function only works on physics process, errors and returns null
     // otherwise
@@ -434,8 +439,9 @@ public:
     virtual void area_set_space_override_mode(
         RID p_area,
         AreaSpaceOverrideMode p_mode
-    )       = 0;
-    virtual AreaSpaceOverrideMode area_get_space_override_mode(RID p_area
+    ) = 0;
+    virtual AreaSpaceOverrideMode area_get_space_override_mode(
+        RID p_area
     ) const = 0;
 
     virtual void area_add_shape(
@@ -453,8 +459,10 @@ public:
 
     virtual int area_get_shape_count(RID p_area) const            = 0;
     virtual RID area_get_shape(RID p_area, int p_shape_idx) const = 0;
-    virtual Transform2D area_get_shape_transform(RID p_area, int p_shape_idx)
-        const = 0;
+    virtual Transform2D area_get_shape_transform(
+        RID p_area,
+        int p_shape_idx
+    ) const = 0;
 
     virtual void area_remove_shape(RID p_area, int p_shape_idx) = 0;
     virtual void area_clear_shapes(RID p_area)                  = 0;
@@ -481,8 +489,10 @@ public:
         const Transform2D& p_transform
     ) = 0;
 
-    virtual Variant area_get_param(RID p_parea, AreaParameter p_param)
-        const                                                = 0;
+    virtual Variant area_get_param(
+        RID p_parea,
+        AreaParameter p_param
+    ) const                                                  = 0;
     virtual Transform2D area_get_transform(RID p_area) const = 0;
 
     virtual void area_set_collision_mask(RID p_area, uint32_t p_mask)   = 0;
@@ -541,10 +551,14 @@ public:
 
     virtual int body_get_shape_count(RID p_body) const            = 0;
     virtual RID body_get_shape(RID p_body, int p_shape_idx) const = 0;
-    virtual Transform2D body_get_shape_transform(RID p_body, int p_shape_idx)
-        const = 0;
-    virtual Variant body_get_shape_metadata(RID p_body, int p_shape_idx)
-        const = 0;
+    virtual Transform2D body_get_shape_transform(
+        RID p_body,
+        int p_shape_idx
+    ) const = 0;
+    virtual Variant body_get_shape_metadata(
+        RID p_body,
+        int p_shape_idx
+    ) const = 0;
 
     virtual void body_set_shape_disabled(
         RID p_body,
@@ -576,8 +590,9 @@ public:
     virtual void body_set_continuous_collision_detection_mode(
         RID p_body,
         CCDMode p_mode
-    )       = 0;
-    virtual CCDMode body_get_continuous_collision_detection_mode(RID p_body
+    ) = 0;
+    virtual CCDMode body_get_continuous_collision_detection_mode(
+        RID p_body
     ) const = 0;
 
     virtual void body_set_collision_layer(RID p_body, uint32_t p_layer) = 0;
@@ -666,8 +681,9 @@ public:
     virtual void body_set_contacts_reported_depth_threshold(
         RID p_body,
         float p_threshold
-    )       = 0;
-    virtual float body_get_contacts_reported_depth_threshold(RID p_body
+    ) = 0;
+    virtual float body_get_contacts_reported_depth_threshold(
+        RID p_body
     ) const = 0;
 
     virtual void body_set_omit_force_integration(RID p_body, bool p_omit) = 0;
@@ -771,8 +787,9 @@ public:
     virtual void joint_disable_collisions_between_bodies(
         RID p_joint,
         const bool p_disable
-    )       = 0;
-    virtual bool joint_is_disabled_collisions_between_bodies(RID p_joint
+    ) = 0;
+    virtual bool joint_is_disabled_collisions_between_bodies(
+        RID p_joint
     ) const = 0;
 
     virtual RID pin_joint_create(
@@ -803,8 +820,10 @@ public:
         PinJointParam p_param,
         real_t p_value
     ) = 0;
-    virtual real_t pin_joint_get_param(RID p_joint, PinJointParam p_param)
-        const = 0;
+    virtual real_t pin_joint_get_param(
+        RID p_joint,
+        PinJointParam p_param
+    ) const = 0;
 
     enum DampedStringParam {
         DAMPED_STRING_REST_LENGTH,

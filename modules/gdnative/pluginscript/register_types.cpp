@@ -19,7 +19,8 @@
 
 static List<PluginScriptLanguage*> pluginscript_languages;
 
-static Error _check_language_desc(const rebel_pluginscript_language_desc* desc
+static Error _check_language_desc(
+    const rebel_pluginscript_language_desc* desc
 ) {
     ERR_FAIL_COND_V(!desc->name || desc->name == String(), ERR_BUG);
     ERR_FAIL_COND_V(!desc->type || desc->type == String(), ERR_BUG);

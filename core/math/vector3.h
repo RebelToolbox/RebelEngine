@@ -191,8 +191,10 @@ Vector3 Vector3::round() const {
     return Vector3(Math::round(x), Math::round(y), Math::round(z));
 }
 
-Vector3 Vector3::linear_interpolate(const Vector3& p_to, real_t p_weight)
-    const {
+Vector3 Vector3::linear_interpolate(
+    const Vector3& p_to,
+    real_t p_weight
+) const {
     return Vector3(
         x + (p_weight * (p_to.x - x)),
         y + (p_weight * (p_to.y - y)),
@@ -237,8 +239,10 @@ real_t Vector3::angle_to(const Vector3& p_to) const {
     return Math::atan2(cross(p_to).length(), dot(p_to));
 }
 
-real_t Vector3::signed_angle_to(const Vector3& p_to, const Vector3& p_axis)
-    const {
+real_t Vector3::signed_angle_to(
+    const Vector3& p_to,
+    const Vector3& p_axis
+) const {
     Vector3 cross_to      = cross(p_to);
     real_t unsigned_angle = Math::atan2(cross_to.length(), dot(p_to));
     real_t sign           = cross_to.dot(p_axis);

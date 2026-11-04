@@ -104,11 +104,14 @@ public:
     void set_rpc_call_mode(RPCCallMode p_mode);
     RPCCallMode get_rpc_call_mode() const;
 
-    VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    VisualScriptNodeInstance* instance(
+        VisualScriptInstance* p_instance
     ) override;
 
-    TypeGuess guess_output_type(TypeGuess* p_inputs, int p_output)
-        const override;
+    TypeGuess guess_output_type(
+        TypeGuess* p_inputs,
+        int p_output
+    ) const override;
 
     VisualScriptFunctionCall();
 };
@@ -214,10 +217,13 @@ public:
     void set_assign_op(AssignOp p_op);
     AssignOp get_assign_op() const;
 
-    VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    VisualScriptNodeInstance* instance(
+        VisualScriptInstance* p_instance
     ) override;
-    TypeGuess guess_output_type(TypeGuess* p_inputs, int p_output)
-        const override;
+    TypeGuess guess_output_type(
+        TypeGuess* p_inputs,
+        int p_output
+    ) const override;
 
     VisualScriptPropertySet();
 };
@@ -303,7 +309,8 @@ public:
     void set_index(const StringName& p_type);
     StringName get_index() const;
 
-    VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    VisualScriptNodeInstance* instance(
+        VisualScriptInstance* p_instance
     ) override;
 
     VisualScriptPropertyGet();
@@ -343,7 +350,8 @@ public:
     void set_signal(const StringName& p_type);
     StringName get_signal() const;
 
-    VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    VisualScriptNodeInstance* instance(
+        VisualScriptInstance* p_instance
     ) override;
 
     VisualScriptEmitSignal();

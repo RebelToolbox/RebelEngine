@@ -306,9 +306,10 @@ Vector3 Basis::rotref_posscale_decomposition(Basis& rotref) const {
     ERR_FAIL_COND_V(!m.is_diagonal(), Vector3());
 #endif
     Vector3 scale   = get_scale();
-    Basis inv_scale = Basis().scaled(scale.inverse()
+    Basis inv_scale = Basis().scaled(
+        scale.inverse()
     ); // this will also absorb the sign of scale
-    rotref          = (*this) * inv_scale;
+    rotref = (*this) * inv_scale;
 
 #ifdef MATH_CHECKS
     ERR_FAIL_COND_V(!rotref.is_orthogonal(), Vector3());
@@ -405,8 +406,10 @@ void Basis::get_rotation_axis_angle(Vector3& p_axis, real_t& p_angle) const {
     m.get_axis_angle(p_axis, p_angle);
 }
 
-void Basis::get_rotation_axis_angle_local(Vector3& p_axis, real_t& p_angle)
-    const {
+void Basis::get_rotation_axis_angle_local(
+    Vector3& p_axis,
+    real_t& p_angle
+) const {
     // Assumes that the matrix can be decomposed into a proper rotation and
     // scaling matrix as M = R.S, and returns the Euler angles corresponding to
     // the rotation part, complementing get_scale(). See the comment in

@@ -129,8 +129,10 @@ Point2 ARVRCamera::unproject_position(const Vector3& p_pos) const {
     return res;
 };
 
-Vector3 ARVRCamera::project_position(const Point2& p_point, float p_z_depth)
-    const {
+Vector3 ARVRCamera::project_position(
+    const Point2& p_point,
+    float p_z_depth
+) const {
     // get our ARVRServer
     ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, Vector3());
@@ -191,11 +193,11 @@ Vector<Plane> ARVRCamera::get_frustum() const {
     return cm.get_projection_planes(get_camera_transform());
 };
 
-ARVRCamera::ARVRCamera(){
+ARVRCamera::ARVRCamera() {
     // nothing to do here yet for now..
 };
 
-ARVRCamera::~ARVRCamera(){
+ARVRCamera::~ARVRCamera() {
     // nothing to do here yet for now..
 };
 
@@ -499,7 +501,7 @@ ARVRController::ARVRController() {
     button_states = 0;
 };
 
-ARVRController::~ARVRController(){
+ARVRController::~ARVRController() {
     // nothing to do here yet for now..
 };
 
@@ -535,9 +537,10 @@ void ARVRAnchor::_notification(int p_what) {
                 real_t world_scale = arvr_server->get_world_scale();
 
                 // get our info from our tracker
-                transform.basis  = tracker->get_orientation();
-                transform.origin = tracker->get_position(
-                ); // <-- already adjusted to world scale
+                transform.basis = tracker->get_orientation();
+                transform.origin =
+                    tracker
+                        ->get_position(); // <-- already adjusted to world scale
 
                 // our basis is scaled to the size of the plane the anchor is
                 // tracking extract the size from our basis and reset the scale
@@ -673,7 +676,7 @@ ARVRAnchor::ARVRAnchor() {
     is_active = true;
 };
 
-ARVRAnchor::~ARVRAnchor(){
+ARVRAnchor::~ARVRAnchor() {
     // nothing to do here yet for now..
 };
 
@@ -785,6 +788,6 @@ ARVROrigin::ARVROrigin() {
     tracked_camera = nullptr;
 };
 
-ARVROrigin::~ARVROrigin(){
+ARVROrigin::~ARVROrigin() {
     // nothing to do here yet for now..
 };

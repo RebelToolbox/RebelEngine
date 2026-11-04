@@ -279,7 +279,8 @@ MonoString* rebel_icall_Internal_SimplifyRebelPath(MonoString* p_path) {
     return GDMonoMarshal::mono_string_from_rebel(path.simplify_path());
 }
 
-MonoBoolean rebel_icall_Internal_IsOsxAppBundleInstalled(MonoString* p_bundle_id
+MonoBoolean rebel_icall_Internal_IsOsxAppBundleInstalled(
+    MonoString* p_bundle_id
 ) {
 #ifdef MACOS_ENABLED
     String bundle_id = GDMonoMarshal::mono_string_to_rebel(p_bundle_id);

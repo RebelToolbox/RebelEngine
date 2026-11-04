@@ -305,10 +305,12 @@ MeshLibraryEditor::MeshLibraryEditor(EditorNode* p_editor) {
     SpatialEditor::get_singleton()->add_control_to_menu_panel(menu);
     menu->set_position(Point2(1, 1));
     menu->set_text(TTR("Mesh Library"));
-    menu->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "MeshLibrary",
-        "EditorIcons"
-    ));
+    menu->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "MeshLibrary",
+            "EditorIcons"
+        )
+    );
     menu->get_popup()->add_item(TTR("Add Item"), MENU_OPTION_ADD_ITEM);
     menu->get_popup()->add_item(
         TTR("Remove Selected Item"),
@@ -375,7 +377,8 @@ MeshLibraryEditorPlugin::MeshLibraryEditorPlugin(EditorNode* p_node) {
     mesh_library_editor = memnew(MeshLibraryEditor(p_node));
 
     p_node->get_viewport()->add_child(mesh_library_editor);
-    mesh_library_editor->set_anchors_and_margins_preset(Control::PRESET_TOP_WIDE
+    mesh_library_editor->set_anchors_and_margins_preset(
+        Control::PRESET_TOP_WIDE
     );
     mesh_library_editor->set_end(Point2(0, 22));
     mesh_library_editor->hide();

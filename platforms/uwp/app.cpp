@@ -43,8 +43,9 @@ inline float ConvertDipsToPixels(float dips, float dpi) {
 ref class RebelUWPViewSource sealed :
     Windows::ApplicationModel::Core::IFrameworkViewSource {
 public:
-    virtual Windows::ApplicationModel::Core::IFrameworkView
-        ^ CreateView() { return ref new App(); }
+    virtual Windows::ApplicationModel::Core::IFrameworkView ^ CreateView() {
+        return ref new App();
+    }
 };
 
 // The main function creates an IFrameworkViewSource for our app, and runs the

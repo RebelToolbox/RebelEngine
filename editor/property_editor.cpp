@@ -60,7 +60,8 @@ String EditorResourceConversionPlugin::converts_to() const {
     return "";
 }
 
-bool EditorResourceConversionPlugin::handles(const Ref<Resource>& p_resource
+bool EditorResourceConversionPlugin::handles(
+    const Ref<Resource>& p_resource
 ) const {
     if (get_script_instance()) {
         return get_script_instance()->call("_handles", p_resource);
@@ -213,8 +214,8 @@ void CustomPropertyEditor::_menu_option(int p_which) {
 
                 } break;
                 case OBJ_MENU_PASTE: {
-                    v = EditorSettings::get_singleton()->get_resource_clipboard(
-                    );
+                    v = EditorSettings::get_singleton()
+                            ->get_resource_clipboard();
                     emit_signal("variant_changed");
 
                 } break;
@@ -479,9 +480,11 @@ bool CustomPropertyEditor::edit(
                     for (int j = 0; j < 10; j++) {
                         int idx     = i * 10 + j;
                         CheckBox* c = checks20[idx];
-                        c->set_text(ProjectSettings::get_singleton()->get(
-                            basename + "/layer_" + itos(idx + 1)
-                        ));
+                        c->set_text(
+                            ProjectSettings::get_singleton()->get(
+                                basename + "/layer_" + itos(idx + 1)
+                            )
+                        );
                         c->set_pressed(flgs & (1 << (i * 10 + j)));
                         c->show();
                     }
@@ -976,9 +979,8 @@ bool CustomPropertyEditor::edit(
                 if (EditorNode::get_editor_data().get_custom_types().has(
                         "Resource"
                     )) {
-                    custom_resources =
-                        EditorNode::get_editor_data().get_custom_types(
-                        )["Resource"];
+                    custom_resources = EditorNode::get_editor_data()
+                                           .get_custom_types()["Resource"];
                 }
 
                 for (int i = 0; i < hint_text.get_slice_count(","); i++) {
@@ -1424,8 +1426,9 @@ void CustomPropertyEditor::_action_pressed(int p_which) {
                     && Object::cast_to<Node>(owner)->has_node(v)) {
                     Node* target_node =
                         Object::cast_to<Node>(owner)->get_node(v);
-                    EditorNode::get_singleton()->get_editor_selection()->clear(
-                    );
+                    EditorNode::get_singleton()
+                        ->get_editor_selection()
+                        ->clear();
                     EditorNode::get_singleton()
                         ->get_scene_tree_dock()
                         ->set_selected(target_node);
@@ -1872,7 +1875,8 @@ void CustomPropertyEditor::_focus_exit() {
     }
 }
 
-void CustomPropertyEditor::config_action_buttons(const List<String>& p_strings
+void CustomPropertyEditor::config_action_buttons(
+    const List<String>& p_strings
 ) {
     Ref<StyleBox> sb  = get_stylebox("panel");
     int margin_top    = sb->get_margin(MARGIN_TOP);

@@ -96,9 +96,9 @@ void GDNativeLibrarySingletonEditor::_update_libraries() {
     if (ProjectSettings::get_singleton()->has_setting(
             "gdnative/singletons_disabled"
         )) {
-        singletons_disabled =
-            ProjectSettings::get_singleton()->get("gdnative/singletons_disabled"
-            );
+        singletons_disabled = ProjectSettings::get_singleton()->get(
+            "gdnative/singletons_disabled"
+        );
     }
 
     Array updated_disabled;
@@ -149,9 +149,9 @@ void GDNativeLibrarySingletonEditor::_item_edited() {
     if (ProjectSettings::get_singleton()->has_setting(
             "gdnative/singletons_disabled"
         )) {
-        disabled_paths =
-            ProjectSettings::get_singleton()->get("gdnative/singletons_disabled"
-            );
+        disabled_paths = ProjectSettings::get_singleton()->get(
+            "gdnative/singletons_disabled"
+        );
         // Duplicate so redo works (not a reference)
         disabled_paths = disabled_paths.duplicate();
         // For undo, so we can reset the property.

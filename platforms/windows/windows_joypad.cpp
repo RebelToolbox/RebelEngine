@@ -115,8 +115,9 @@ bool WindowsJoypad::is_xinput_device(const GUID* p_guid) {
         == (UINT)-1) {
         return false;
     }
-    dev_list = (PRAWINPUTDEVICELIST
-    )memalloc(sizeof(RAWINPUTDEVICELIST) * dev_list_count);
+    dev_list = (PRAWINPUTDEVICELIST)memalloc(
+        sizeof(RAWINPUTDEVICELIST) * dev_list_count
+    );
     ERR_FAIL_NULL_V_MSG(dev_list, false, "Out of memory.");
 
     if (GetRawInputDeviceList(

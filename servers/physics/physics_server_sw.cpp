@@ -150,8 +150,10 @@ void PhysicsServerSW::space_set_param(
     space->set_param(p_param, p_value);
 }
 
-real_t PhysicsServerSW::space_get_param(RID p_space, SpaceParameter p_param)
-    const {
+real_t PhysicsServerSW::space_get_param(
+    RID p_space,
+    SpaceParameter p_param
+) const {
     const SpaceSW* space = space_owner.get(p_space);
     ERR_FAIL_COND_V(!space, 0);
     return space->get_param(p_param);
@@ -299,8 +301,10 @@ RID PhysicsServerSW::area_get_shape(RID p_area, int p_shape_idx) const {
     return shape->get_self();
 }
 
-Transform PhysicsServerSW::area_get_shape_transform(RID p_area, int p_shape_idx)
-    const {
+Transform PhysicsServerSW::area_get_shape_transform(
+    RID p_area,
+    int p_shape_idx
+) const {
     AreaSW* area = area_owner.get(p_area);
     ERR_FAIL_COND_V(!area, Transform());
 
@@ -381,8 +385,10 @@ void PhysicsServerSW::area_set_transform(
     area->set_transform(p_transform);
 };
 
-Variant PhysicsServerSW::area_get_param(RID p_area, AreaParameter p_param)
-    const {
+Variant PhysicsServerSW::area_get_param(
+    RID p_area,
+    AreaParameter p_param
+) const {
     if (space_owner.owns(p_area)) {
         SpaceSW* space = space_owner.get(p_area);
         p_area         = space->get_default_area()->get_self();
@@ -589,8 +595,10 @@ void PhysicsServerSW::body_set_shape_disabled(
     body->set_shape_disabled(p_shape_idx, p_disabled);
 }
 
-Transform PhysicsServerSW::body_get_shape_transform(RID p_body, int p_shape_idx)
-    const {
+Transform PhysicsServerSW::body_get_shape_transform(
+    RID p_body,
+    int p_shape_idx
+) const {
     BodySW* body = body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, Transform());
 
@@ -623,7 +631,8 @@ void PhysicsServerSW::body_set_enable_continuous_collision_detection(
     body->set_continuous_collision_detection(p_enable);
 }
 
-bool PhysicsServerSW::body_is_continuous_collision_detection_enabled(RID p_body
+bool PhysicsServerSW::body_is_continuous_collision_detection_enabled(
+    RID p_body
 ) const {
     BodySW* body = body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, false);
@@ -701,8 +710,10 @@ void PhysicsServerSW::body_set_param(
     body->set_param(p_param, p_value);
 };
 
-real_t PhysicsServerSW::body_get_param(RID p_body, BodyParameter p_param)
-    const {
+real_t PhysicsServerSW::body_get_param(
+    RID p_body,
+    BodyParameter p_param
+) const {
     BodySW* body = body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, 0);
 
@@ -923,7 +934,8 @@ void PhysicsServerSW::body_set_contacts_reported_depth_threshold(
     ERR_FAIL_COND(!body);
 };
 
-real_t PhysicsServerSW::body_get_contacts_reported_depth_threshold(RID p_body
+real_t PhysicsServerSW::body_get_contacts_reported_depth_threshold(
+    RID p_body
 ) const {
     BodySW* body = body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, 0);
@@ -1102,8 +1114,10 @@ void PhysicsServerSW::pin_joint_set_param(
     pin_joint->set_param(p_param, p_value);
 }
 
-real_t PhysicsServerSW::pin_joint_get_param(RID p_joint, PinJointParam p_param)
-    const {
+real_t PhysicsServerSW::pin_joint_get_param(
+    RID p_joint,
+    PinJointParam p_param
+) const {
     JointSW* joint = joint_owner.get(p_joint);
     ERR_FAIL_COND_V(!joint, 0);
     ERR_FAIL_COND_V(joint->get_type() != JOINT_PIN, 0);
@@ -1232,8 +1246,10 @@ void PhysicsServerSW::hinge_joint_set_flag(
     hinge_joint->set_flag(p_flag, p_value);
 }
 
-bool PhysicsServerSW::hinge_joint_get_flag(RID p_joint, HingeJointFlag p_flag)
-    const {
+bool PhysicsServerSW::hinge_joint_get_flag(
+    RID p_joint,
+    HingeJointFlag p_flag
+) const {
     JointSW* joint = joint_owner.get(p_joint);
     ERR_FAIL_COND_V(!joint, false);
     ERR_FAIL_COND_V(joint->get_type() != JOINT_HINGE, false);
@@ -1288,7 +1304,8 @@ void PhysicsServerSW::joint_disable_collisions_between_bodies(
     }
 }
 
-bool PhysicsServerSW::joint_is_disabled_collisions_between_bodies(RID p_joint
+bool PhysicsServerSW::joint_is_disabled_collisions_between_bodies(
+    RID p_joint
 ) const {
     JointSW* joint = joint_owner.get(p_joint);
     ERR_FAIL_COND_V(!joint, true);
@@ -1752,6 +1769,6 @@ PhysicsServerSW::PhysicsServerSW() {
     flushing_queries = false;
 };
 
-PhysicsServerSW::~PhysicsServerSW(){
+PhysicsServerSW::~PhysicsServerSW() {
 
 };

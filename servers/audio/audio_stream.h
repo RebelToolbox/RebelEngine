@@ -61,7 +61,8 @@ public:
 
 class AudioStream : public Resource {
     GDCLASS(AudioStream, Resource);
-    OBJ_SAVE_TYPE(AudioStream
+    OBJ_SAVE_TYPE(
+        AudioStream
     ); // Saves derived classes with common type so they can be interchanged.
 
 protected:

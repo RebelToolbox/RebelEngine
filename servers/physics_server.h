@@ -26,10 +26,10 @@ public:
     virtual Vector3 get_center_of_mass() const       = 0;
     virtual Basis get_principal_inertia_axes() const = 0;
     virtual float get_inverse_mass() const           = 0; // get the mass
-    virtual Vector3 get_inverse_inertia(
-    ) const = 0; // get density of this body space
-    virtual Basis get_inverse_inertia_tensor(
-    ) const = 0; // get density of this body space
+    virtual Vector3 get_inverse_inertia() const = 0; // get density of this body
+                                                     // space
+    virtual Basis get_inverse_inertia_tensor() const = 0; // get density of this
+                                                          // body space
 
     virtual void set_linear_velocity(const Vector3& p_velocity) = 0;
     virtual Vector3 get_linear_velocity() const                 = 0;
@@ -40,7 +40,8 @@ public:
     virtual void set_transform(const Transform& p_transform) = 0;
     virtual Transform get_transform() const                  = 0;
 
-    virtual Vector3 get_velocity_at_local_position(const Vector3& p_position
+    virtual Vector3 get_velocity_at_local_position(
+        const Vector3& p_position
     ) const = 0;
 
     virtual void add_central_force(const Vector3& p_force)               = 0;
@@ -65,8 +66,9 @@ public:
     virtual ObjectID get_contact_collider_id(int p_contact_idx) const      = 0;
     virtual Object* get_contact_collider_object(int p_contact_idx) const;
     virtual int get_contact_collider_shape(int p_contact_idx) const = 0;
-    virtual Vector3 get_contact_collider_velocity_at_position(int p_contact_idx
-    ) const                                                         = 0;
+    virtual Vector3 get_contact_collider_velocity_at_position(
+        int p_contact_idx
+    ) const = 0;
 
     virtual real_t get_step() const = 0;
     virtual void integrate_forces();
@@ -338,8 +340,10 @@ public:
         SpaceParameter p_param,
         real_t p_value
     ) = 0;
-    virtual real_t space_get_param(RID p_space, SpaceParameter p_param)
-        const = 0;
+    virtual real_t space_get_param(
+        RID p_space,
+        SpaceParameter p_param
+    ) const = 0;
 
     // this function only works on physics process, errors and returns null
     // otherwise
@@ -382,8 +386,9 @@ public:
     virtual void area_set_space_override_mode(
         RID p_area,
         AreaSpaceOverrideMode p_mode
-    )       = 0;
-    virtual AreaSpaceOverrideMode area_get_space_override_mode(RID p_area
+    ) = 0;
+    virtual AreaSpaceOverrideMode area_get_space_override_mode(
+        RID p_area
     ) const = 0;
 
     virtual void area_add_shape(
@@ -401,8 +406,10 @@ public:
 
     virtual int area_get_shape_count(RID p_area) const            = 0;
     virtual RID area_get_shape(RID p_area, int p_shape_idx) const = 0;
-    virtual Transform area_get_shape_transform(RID p_area, int p_shape_idx)
-        const = 0;
+    virtual Transform area_get_shape_transform(
+        RID p_area,
+        int p_shape_idx
+    ) const = 0;
 
     virtual void area_remove_shape(RID p_area, int p_shape_idx) = 0;
     virtual void area_clear_shapes(RID p_area)                  = 0;
@@ -426,8 +433,10 @@ public:
         const Transform& p_transform
     ) = 0;
 
-    virtual Variant area_get_param(RID p_parea, AreaParameter p_param)
-        const                                              = 0;
+    virtual Variant area_get_param(
+        RID p_parea,
+        AreaParameter p_param
+    ) const                                                = 0;
     virtual Transform area_get_transform(RID p_area) const = 0;
 
     virtual void area_set_collision_mask(RID p_area, uint32_t p_mask)   = 0;
@@ -486,8 +495,10 @@ public:
 
     virtual int body_get_shape_count(RID p_body) const            = 0;
     virtual RID body_get_shape(RID p_body, int p_shape_idx) const = 0;
-    virtual Transform body_get_shape_transform(RID p_body, int p_shape_idx)
-        const = 0;
+    virtual Transform body_get_shape_transform(
+        RID p_body,
+        int p_shape_idx
+    ) const = 0;
 
     virtual void body_remove_shape(RID p_body, int p_shape_idx) = 0;
     virtual void body_clear_shapes(RID p_body)                  = 0;
@@ -504,8 +515,9 @@ public:
     virtual void body_set_enable_continuous_collision_detection(
         RID p_body,
         bool p_enable
-    )       = 0;
-    virtual bool body_is_continuous_collision_detection_enabled(RID p_body
+    ) = 0;
+    virtual bool body_is_continuous_collision_detection_enabled(
+        RID p_body
     ) const = 0;
 
     virtual void body_set_collision_layer(RID p_body, uint32_t p_layer) = 0;
@@ -624,8 +636,9 @@ public:
     virtual void body_set_contacts_reported_depth_threshold(
         RID p_body,
         float p_threshold
-    )       = 0;
-    virtual float body_get_contacts_reported_depth_threshold(RID p_body
+    ) = 0;
+    virtual float body_get_contacts_reported_depth_threshold(
+        RID p_body
     ) const = 0;
 
     virtual void body_set_omit_force_integration(RID p_body, bool p_omit) = 0;
@@ -735,15 +748,19 @@ public:
         BodyState p_state,
         const Variant& p_variant
     ) = 0;
-    virtual Variant soft_body_get_state(RID p_body, BodyState p_state)
-        const = 0;
+    virtual Variant soft_body_get_state(
+        RID p_body,
+        BodyState p_state
+    ) const = 0;
 
     virtual void soft_body_set_transform(
         RID p_body,
         const Transform& p_transform
     ) = 0;
-    virtual Vector3 soft_body_get_vertex_position(RID p_body, int vertex_index)
-        const = 0;
+    virtual Vector3 soft_body_get_vertex_position(
+        RID p_body,
+        int vertex_index
+    ) const = 0;
 
     virtual void soft_body_set_ray_pickable(RID p_body, bool p_enable) = 0;
     virtual bool soft_body_is_ray_pickable(RID p_body) const           = 0;
@@ -809,8 +826,10 @@ public:
         int p_point_index
     ) = 0;
 
-    virtual Vector3 soft_body_get_point_offset(RID p_body, int p_point_index)
-        const = 0;
+    virtual Vector3 soft_body_get_point_offset(
+        RID p_body,
+        int p_point_index
+    ) const = 0;
 
     virtual void soft_body_remove_all_pinned_points(RID p_body) = 0;
     virtual void soft_body_pin_point(
@@ -838,8 +857,9 @@ public:
     virtual void joint_disable_collisions_between_bodies(
         RID p_joint,
         const bool p_disable
-    )       = 0;
-    virtual bool joint_is_disabled_collisions_between_bodies(RID p_joint
+    ) = 0;
+    virtual bool joint_is_disabled_collisions_between_bodies(
+        RID p_joint
     ) const = 0;
 
     virtual RID joint_create_pin(
@@ -860,8 +880,10 @@ public:
         PinJointParam p_param,
         float p_value
     ) = 0;
-    virtual float pin_joint_get_param(RID p_joint, PinJointParam p_param)
-        const = 0;
+    virtual float pin_joint_get_param(
+        RID p_joint,
+        PinJointParam p_param
+    ) const = 0;
 
     virtual void pin_joint_set_local_a(RID p_joint, const Vector3& p_A) = 0;
     virtual Vector3 pin_joint_get_local_a(RID p_joint) const            = 0;
@@ -907,16 +929,20 @@ public:
         HingeJointParam p_param,
         float p_value
     ) = 0;
-    virtual float hinge_joint_get_param(RID p_joint, HingeJointParam p_param)
-        const = 0;
+    virtual float hinge_joint_get_param(
+        RID p_joint,
+        HingeJointParam p_param
+    ) const = 0;
 
     virtual void hinge_joint_set_flag(
         RID p_joint,
         HingeJointFlag p_flag,
         bool p_value
     ) = 0;
-    virtual bool hinge_joint_get_flag(RID p_joint, HingeJointFlag p_flag)
-        const = 0;
+    virtual bool hinge_joint_get_flag(
+        RID p_joint,
+        HingeJointFlag p_flag
+    ) const = 0;
 
     enum SliderJointParam {
         SLIDER_JOINT_LINEAR_LIMIT_UPPER,
@@ -957,8 +983,10 @@ public:
         SliderJointParam p_param,
         float p_value
     ) = 0;
-    virtual float slider_joint_get_param(RID p_joint, SliderJointParam p_param)
-        const = 0;
+    virtual float slider_joint_get_param(
+        RID p_joint,
+        SliderJointParam p_param
+    ) const = 0;
 
     enum ConeTwistJointParam {
         CONE_TWIST_JOINT_SWING_SPAN,

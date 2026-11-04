@@ -120,8 +120,8 @@ void Tabs::_gui_input(const Ref<InputEvent>& p_event) {
             if (scrolling_enabled && buttons_visible) {
                 if (missing_right) {
                     offset++;
-                    _ensure_no_over_offset(
-                    ); // Avoid overreaching when scrolling fast.
+                    _ensure_no_over_offset(); // Avoid overreaching when
+                                              // scrolling fast.
                     update();
                 }
             }
@@ -151,8 +151,8 @@ void Tabs::_gui_input(const Ref<InputEvent>& p_event) {
 
         if (mb->is_pressed()
             && (mb->get_button_index() == BUTTON_LEFT
-                || (select_with_rmb && mb->get_button_index() == BUTTON_RIGHT)
-            )) {
+                || (select_with_rmb
+                    && mb->get_button_index() == BUTTON_RIGHT))) {
             // Clicks.
             Point2 pos(mb->get_position().x, mb->get_position().y);
 

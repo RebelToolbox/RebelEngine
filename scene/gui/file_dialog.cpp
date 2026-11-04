@@ -100,8 +100,9 @@ Vector<String> FileDialog::get_selected_files() const {
 
     TreeItem* item = tree->get_root();
     while ((item = tree->get_next_selected(item))) {
-        list.push_back(dir_access->get_current_dir().plus_file(item->get_text(0)
-        ));
+        list.push_back(
+            dir_access->get_current_dir().plus_file(item->get_text(0))
+        );
     };
 
     return list;
@@ -956,7 +957,8 @@ void FileDialog::_bind_methods() {
         "files_selected",
         PropertyInfo(Variant::POOL_STRING_ARRAY, "paths")
     ));
-    ADD_SIGNAL(MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir"))
+    ADD_SIGNAL(
+        MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir"))
     );
 
     BIND_ENUM_CONSTANT(MODE_OPEN_FILE);

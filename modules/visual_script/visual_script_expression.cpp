@@ -68,8 +68,10 @@ bool VisualScriptExpression::_set(
     return false;
 }
 
-bool VisualScriptExpression::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool VisualScriptExpression::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     if (String(p_name) == "expression") {
         r_ret = expression;
         return true;
@@ -110,7 +112,8 @@ bool VisualScriptExpression::_get(const StringName& p_name, Variant& r_ret)
     return false;
 }
 
-void VisualScriptExpression::_get_property_list(List<PropertyInfo>* p_list
+void VisualScriptExpression::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     String argt = "Any";
     for (int i = 1; i < Variant::VARIANT_MAX; i++) {
@@ -165,12 +168,14 @@ int VisualScriptExpression::get_output_value_port_count() const {
     return 1;
 }
 
-PropertyInfo VisualScriptExpression::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptExpression::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(inputs[p_idx].type, inputs[p_idx].name);
 }
 
-PropertyInfo VisualScriptExpression::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptExpression::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(output_type, "result");
 }
@@ -1308,7 +1313,8 @@ public:
         switch (p_node->type) {
             case VisualScriptExpression::ENode::TYPE_INPUT: {
                 const VisualScriptExpression::InputNode* in =
-                    static_cast<const VisualScriptExpression::InputNode*>(p_node
+                    static_cast<const VisualScriptExpression::InputNode*>(
+                        p_node
                     );
                 r_ret = *p_inputs[in->index];
             } break;
@@ -1357,7 +1363,8 @@ public:
             } break;
             case VisualScriptExpression::ENode::TYPE_INDEX: {
                 const VisualScriptExpression::IndexNode* index =
-                    static_cast<const VisualScriptExpression::IndexNode*>(p_node
+                    static_cast<const VisualScriptExpression::IndexNode*>(
+                        p_node
                     );
 
                 Variant base;
@@ -1410,7 +1417,8 @@ public:
             } break;
             case VisualScriptExpression::ENode::TYPE_ARRAY: {
                 const VisualScriptExpression::ArrayNode* array =
-                    static_cast<const VisualScriptExpression::ArrayNode*>(p_node
+                    static_cast<const VisualScriptExpression::ArrayNode*>(
+                        p_node
                     );
 
                 Array arr;
@@ -1555,7 +1563,8 @@ public:
             } break;
             case VisualScriptExpression::ENode::TYPE_CALL: {
                 const VisualScriptExpression::CallNode* call =
-                    static_cast<const VisualScriptExpression::CallNode*>(p_node
+                    static_cast<const VisualScriptExpression::CallNode*>(
+                        p_node
                     );
 
                 Variant base;
@@ -1673,6 +1682,8 @@ VisualScriptExpression::~VisualScriptExpression() {
 }
 
 void register_visual_script_expression_node() {
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/expression", create_node_generic<VisualScriptExpression>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/expression",
+        create_node_generic<VisualScriptExpression>
+    );
 }

@@ -568,8 +568,8 @@ void NavigationPolygonInstance::set_navigation_polygon(
     update_configuration_warning();
 }
 
-Ref<NavigationPolygon> NavigationPolygonInstance::get_navigation_polygon(
-) const {
+Ref<NavigationPolygon> NavigationPolygonInstance::
+    get_navigation_polygon() const {
     return navpoly;
 }
 

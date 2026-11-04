@@ -20,8 +20,10 @@
 
 /* HELPERS */
 
-String Collada::Effect::get_texture_path(const String& p_source, Collada& state)
-    const {
+String Collada::Effect::get_texture_path(
+    const String& p_source,
+    Collada& state
+) const {
     const String& image = p_source;
     ERR_FAIL_COND_V(!state.state.image_map.has(image), "");
     return state.state.image_map[image].path;
@@ -122,7 +124,8 @@ Transform Collada::Node::compute_transform(Collada& state) const {
             } break;
             case XForm::OP_SCALE: {
                 if (xf.data.size() >= 3) {
-                    xform_step.scale(Vector3(xf.data[0], xf.data[1], xf.data[2])
+                    xform_step.scale(
+                        Vector3(xf.data[0], xf.data[1], xf.data[2])
                     );
                 }
 
@@ -307,9 +310,9 @@ void Collada::_parse_image(XMLParser& parser) {
 
                     } else if (path.find("file:///") == 0) {
                         path = path.replace_first("file:///", "");
-                        path =
-                            ProjectSettings::get_singleton()->localize_path(path
-                            );
+                        path = ProjectSettings::get_singleton()->localize_path(
+                            path
+                        );
                     }
 
                     image.path = path;
@@ -623,7 +626,8 @@ void Collada::_parse_effect_material(
                                     } else if (parser.get_node_name()
                                                == "texture") {
                                         String sampler =
-                                            parser.get_attribute_value("texture"
+                                            parser.get_attribute_value(
+                                                "texture"
                                             );
                                         if (!effect.params.has(sampler)) {
                                             ERR_PRINT(
@@ -753,7 +757,8 @@ void Collada::_parse_effect_material(
                                     String uri = effect.params[surface];
 
                                     if (parser.has_attribute("bumptype")
-                                        && parser.get_attribute_value("bumptype"
+                                        && parser.get_attribute_value(
+                                               "bumptype"
                                            ) != "NORMALMAP") {
                                         WARN_PRINT(
                                             "'bump' texture type is not "
@@ -1012,9 +1017,9 @@ void Collada::_parse_curve_geometry(
                         if (parser.get_node_name() == "input") {
                             String semantic =
                                 parser.get_attribute_value("semantic");
-                            String source =
-                                _uri_to_id(parser.get_attribute_value("source")
-                                );
+                            String source = _uri_to_id(
+                                parser.get_attribute_value("source")
+                            );
 
                             curvedata.control_vertices[semantic] = source;
 
@@ -1112,9 +1117,9 @@ void Collada::_parse_mesh_geometry(
                         if (parser.get_node_name() == "input") {
                             String semantic =
                                 parser.get_attribute_value("semantic");
-                            String source =
-                                _uri_to_id(parser.get_attribute_value("source")
-                                );
+                            String source = _uri_to_id(
+                                parser.get_attribute_value("source")
+                            );
 
                             if (semantic == "TEXCOORD") {
                                 semantic = "TEXCOORD" + itos(last_ref++);
@@ -1161,9 +1166,9 @@ void Collada::_parse_mesh_geometry(
                         if (parser.get_node_name() == "input") {
                             String semantic =
                                 parser.get_attribute_value("semantic");
-                            String source =
-                                _uri_to_id(parser.get_attribute_value("source")
-                                );
+                            String source = _uri_to_id(
+                                parser.get_attribute_value("source")
+                            );
 
                             if (semantic == "TEXCOORD") {
                                 /*
@@ -1337,9 +1342,9 @@ void Collada::_parse_skin_controller(XMLParser& parser, String p_id) {
                         if (parser.get_node_name() == "input") {
                             String semantic =
                                 parser.get_attribute_value("semantic");
-                            String source =
-                                _uri_to_id(parser.get_attribute_value("source")
-                                );
+                            String source = _uri_to_id(
+                                parser.get_attribute_value("source")
+                            );
 
                             joint.sources[semantic] = source;
 
@@ -1367,9 +1372,9 @@ void Collada::_parse_skin_controller(XMLParser& parser, String p_id) {
                         if (parser.get_node_name() == "input") {
                             String semantic =
                                 parser.get_attribute_value("semantic");
-                            String source =
-                                _uri_to_id(parser.get_attribute_value("source")
-                                );
+                            String source = _uri_to_id(
+                                parser.get_attribute_value("source")
+                            );
 
                             int offset =
                                 parser.get_attribute_value("offset").to_int();
@@ -1529,9 +1534,9 @@ void Collada::_parse_morph_controller(XMLParser& parser, String p_id) {
                         if (parser.get_node_name() == "input") {
                             String semantic =
                                 parser.get_attribute_value("semantic");
-                            String source =
-                                _uri_to_id(parser.get_attribute_value("source")
-                                );
+                            String source = _uri_to_id(
+                                parser.get_attribute_value("source")
+                            );
 
                             morphdata.targets[semantic] = source;
 
@@ -2369,12 +2374,14 @@ void Collada::_merge_skeletons(VisualScene* p_vscene, Node* p_node) {
             for (int i = 0; i < gnode->skeletons.size(); i++) {
                 String nodeid = gnode->skeletons[i];
 
-                ERR_CONTINUE(!state.scene_map.has(nodeid)
+                ERR_CONTINUE(
+                    !state.scene_map.has(nodeid)
                 ); // weird, it should have it...
 
                 NodeJoint* nj = SAFE_CAST<NodeJoint*>(state.scene_map[nodeid]);
                 ERR_CONTINUE(!nj); // broken collada
-                ERR_CONTINUE(!nj->owner
+                ERR_CONTINUE(
+                    !nj->owner
                 ); // weird, node should have a skeleton owner
 
                 skeletons.insert(nj->owner);

@@ -176,8 +176,10 @@ public:
     bool is_port_types_compatible(int p_a, int p_b) const;
 
     void rebuild();
-    void get_node_connections(Type p_type, List<Connection>* r_connections)
-        const;
+    void get_node_connections(
+        Type p_type,
+        List<Connection>* r_connections
+    ) const;
 
     void set_mode(Mode p_mode);
     Mode get_mode() const override;
@@ -248,7 +250,8 @@ public:
         int p_port,
         const Variant& p_value
     );
-    virtual Variant get_input_port_default_value(int p_port
+    virtual Variant get_input_port_default_value(
+        int p_port
     ) const; // if NIL (default if node does not set anything) is returned, it
              // means no default value is wanted if disconnected, thus no input
              // var must be supplied (empty string will be supplied)
@@ -304,8 +307,10 @@ public:
                  // empty. if no input is connected and input is NIL, the input
                  // var passed will be empty
 
-    virtual String get_warning(Shader::Mode p_mode, VisualShader::Type p_type)
-        const;
+    virtual String get_warning(
+        Shader::Mode p_mode,
+        VisualShader::Type p_type
+    ) const;
 
     VisualShaderNode();
 };
@@ -337,8 +342,10 @@ protected:
     PortType get_output_port_type(int p_port) const override;
     String get_output_port_name(int p_port) const override;
 
-    void set_input_port_default_value(int p_port, const Variant& p_value)
-        override;
+    void set_input_port_default_value(
+        int p_port,
+        const Variant& p_value
+    ) override;
     void set_default_input_values(const Array& p_values) override;
 
 protected:

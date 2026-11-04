@@ -33,7 +33,8 @@ Adapted from corresponding SDL 2.0 code.
 
 #include "core/error_macros.h"
 
-static void LocalReferenceHolder_Cleanup(struct LocalReferenceHolder* refholder
+static void LocalReferenceHolder_Cleanup(
+    struct LocalReferenceHolder* refholder
 ) {
     if (refholder->m_env) {
         JNIEnv* env = refholder->m_env;
@@ -42,7 +43,8 @@ static void LocalReferenceHolder_Cleanup(struct LocalReferenceHolder* refholder
     }
 }
 
-static struct LocalReferenceHolder LocalReferenceHolder_Setup(const char* func
+static struct LocalReferenceHolder LocalReferenceHolder_Setup(
+    const char* func
 ) {
     struct LocalReferenceHolder refholder;
     refholder.m_env  = NULL;

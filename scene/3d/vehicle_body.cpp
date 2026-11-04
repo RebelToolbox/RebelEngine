@@ -22,7 +22,7 @@ public:
         return m_Adiag;
     }
 
-    btVehicleJacobianEntry(){};
+    btVehicleJacobianEntry() {};
 
     // constraint between two different rigidbodies
     btVehicleJacobianEntry(
@@ -108,9 +108,9 @@ void VehicleWheel::_update(PhysicsDirectBodyState* s) {
     if (m_raycastInfo.m_isInContact)
 
     {
-        real_t project =
-            m_raycastInfo.m_contactNormalWS.dot(m_raycastInfo.m_wheelDirectionWS
-            );
+        real_t project = m_raycastInfo.m_contactNormalWS.dot(
+            m_raycastInfo.m_wheelDirectionWS
+        );
         Vector3 chassis_velocity_at_contactPoint;
         Vector3 relpos =
             m_raycastInfo.m_contactPointWS - s->get_transform().origin;
@@ -119,9 +119,9 @@ void VehicleWheel::_update(PhysicsDirectBodyState* s) {
             s->get_linear_velocity()
             + (s->get_angular_velocity()).cross(relpos); // * mPos);
 
-        real_t projVel =
-            m_raycastInfo.m_contactNormalWS.dot(chassis_velocity_at_contactPoint
-            );
+        real_t projVel = m_raycastInfo.m_contactNormalWS.dot(
+            chassis_velocity_at_contactPoint
+        );
         if (project >= real_t(-0.1)) {
             m_suspensionRelativeVelocity     = real_t(0.0);
             m_clippedInvContactDotSuspension = real_t(1.0) / real_t(0.1);
@@ -1049,8 +1049,9 @@ void VehicleBody::_update_friction(PhysicsDirectBodyState* s) {
 
 #if defined ROLLING_INFLUENCE_FIX // fix. It only worked if car's up was along Y
                                   // - VT.
-                Vector3 vChassisWorldUp = s->get_transform().basis.transposed(
-                )[1]; // getRigidBody()->getCenterOfMassTransform().getBasis().getColumn(m_indexUpAxis);
+                Vector3 vChassisWorldUp =
+                    s->get_transform().basis.transposed()
+                        [1]; // getRigidBody()->getCenterOfMassTransform().getBasis().getColumn(m_indexUpAxis);
                 rel_pos -= vChassisWorldUp
                          * (vChassisWorldUp.dot(rel_pos)
                             * (1.f - wheelInfo.m_rollInfluence));

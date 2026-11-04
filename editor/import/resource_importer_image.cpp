@@ -19,7 +19,8 @@ String ResourceImporterImage::get_visible_name() const {
     return "Image";
 }
 
-void ResourceImporterImage::get_recognized_extensions(List<String>* p_extensions
+void ResourceImporterImage::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     ImageLoader::get_recognized_extensions(p_extensions);
 }

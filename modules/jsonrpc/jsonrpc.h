@@ -27,8 +27,10 @@ public:
         INTERNAL_ERROR   = -32603,
     };
 
-    Dictionary make_notification(const String& method, const Variant& params)
-        const;
+    Dictionary make_notification(
+        const String& method,
+        const Variant& params
+    ) const;
     Dictionary make_request(
         const String& method,
         const Variant& params,

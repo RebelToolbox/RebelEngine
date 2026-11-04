@@ -56,7 +56,8 @@ WebRTCPeerConnectionGDNative::~WebRTCPeerConnectionGDNative() {}
 
 Error WebRTCPeerConnectionGDNative::initialize(Dictionary p_config) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
-    return (Error
+    return (
+               Error
     )interface->initialize(interface->data, (const rebel_dictionary*)&p_config);
 }
 

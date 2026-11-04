@@ -114,7 +114,8 @@ Variant PluginScript::_new(
 
 #ifdef TOOLS_ENABLED
 
-void PluginScript::_placeholder_erased(PlaceHolderScriptInstance* p_placeholder
+void PluginScript::_placeholder_erased(
+    PlaceHolderScriptInstance* p_placeholder
 ) {
     placeholders.erase(p_placeholder);
 }
@@ -371,7 +372,8 @@ void PluginScript::get_script_method_list(List<MethodInfo>* r_methods) const {
     }
 }
 
-void PluginScript::get_script_property_list(List<PropertyInfo>* r_properties
+void PluginScript::get_script_property_list(
+    List<PropertyInfo>* r_properties
 ) const {
     ASSERT_SCRIPT_VALID();
     for (Map<StringName, PropertyInfo>::Element* e = _properties_info.front();
@@ -402,7 +404,8 @@ bool PluginScript::has_property(const StringName& p_method) const {
     return _properties_info.has(p_method);
 }
 
-PropertyInfo PluginScript::get_property_info(const StringName& p_property
+PropertyInfo PluginScript::get_property_info(
+    const StringName& p_property
 ) const {
     ASSERT_SCRIPT_VALID_V(PropertyInfo());
     const Map<StringName, PropertyInfo>::Element* e =
@@ -484,7 +487,8 @@ int PluginScript::get_member_line(const StringName& p_member) const {
     return -1;
 }
 
-MultiplayerAPI::RPCMode PluginScript::get_rpc_mode(const StringName& p_method
+MultiplayerAPI::RPCMode PluginScript::get_rpc_mode(
+    const StringName& p_method
 ) const {
     ASSERT_SCRIPT_VALID_V(MultiplayerAPI::RPC_MODE_DISABLED);
     const Map<StringName, MultiplayerAPI::RPCMode>::Element* e =
@@ -496,7 +500,8 @@ MultiplayerAPI::RPCMode PluginScript::get_rpc_mode(const StringName& p_method
     }
 }
 
-MultiplayerAPI::RPCMode PluginScript::get_rset_mode(const StringName& p_variable
+MultiplayerAPI::RPCMode PluginScript::get_rset_mode(
+    const StringName& p_variable
 ) const {
     ASSERT_SCRIPT_VALID_V(MultiplayerAPI::RPC_MODE_DISABLED);
     const Map<StringName, MultiplayerAPI::RPCMode>::Element* e =

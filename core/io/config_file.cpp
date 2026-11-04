@@ -217,8 +217,10 @@ bool ConfigFile::has_section(const String& section) const {
     return values.has(section);
 }
 
-bool ConfigFile::has_section_key(const String& section, const String& key)
-    const {
+bool ConfigFile::has_section_key(
+    const String& section,
+    const String& key
+) const {
     if (!values.has(section)) {
         return false;
     }
@@ -231,8 +233,10 @@ void ConfigFile::get_sections(List<String>* sections) const {
     }
 }
 
-void ConfigFile::get_section_keys(const String& section, List<String>* keys)
-    const {
+void ConfigFile::get_section_keys(
+    const String& section,
+    List<String>* keys
+) const {
     ERR_FAIL_COND_MSG(
         !values.has(section),
         vformat("Cannot get keys from nonexistent section \"%s\".", section)
@@ -309,8 +313,10 @@ Error ConfigFile::save_encrypted_pass(
     return save_file(values, path, password);
 }
 
-Error ConfigFile::save_encrypted(const String& path, const Vector<uint8_t>& key)
-    const {
+Error ConfigFile::save_encrypted(
+    const String& path,
+    const Vector<uint8_t>& key
+) const {
     return save_file(values, path, String(), key);
 }
 

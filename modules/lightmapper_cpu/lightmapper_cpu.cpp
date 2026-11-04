@@ -987,8 +987,8 @@ void LightmapperCPU::_compute_direct_light(uint32_t p_idx, void* r_lightmap) {
                 float spot_rim = (1.0f - scos) / (1.0f - spot_cutoff);
                 attenuation =
                     norm_light_attenuation
-                    * (1.0f - pow(MAX(spot_rim, 0.001f), light.spot_attenuation)
-                    );
+                    * (1.0f
+                       - pow(MAX(spot_rim, 0.001f), light.spot_attenuation));
             }
         } else /*if (light.type == LIGHT_TYPE_DIRECTIONAL)*/ {
             dist                     = INFINITY;

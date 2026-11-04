@@ -54,16 +54,17 @@ public:
     bool is_primary();
     void set_is_primary(bool p_is_primary);
 
-    virtual bool is_initialized(
-    ) const = 0; /* returns true if we've initialized this interface */
-    void set_is_initialized(bool p_initialized
+    virtual bool is_initialized() const = 0; /* returns true if we've
+                                                initialized this interface */
+    void set_is_initialized(
+        bool p_initialized
     ); /* helper function, will call initialize or uninitialize */
     virtual bool initialize() = 0; /* initialize this interface, if this has an
                                       HMD it becomes the primary interface */
     virtual void uninitialize() = 0; /* deinitialize this interface */
 
-    Tracking_status get_tracking_status(
-    ) const; /* get the status of our current tracking */
+    Tracking_status get_tracking_status() const; /* get the status of our
+                                                    current tracking */
 
     /** specific to VR **/
     // nothing yet
@@ -75,12 +76,13 @@ public:
 
     /** rendering and internal **/
 
-    virtual Size2 get_render_targetsize(
-    ) = 0; /* returns the recommended render target size per eye for this device
-            */
-    virtual bool is_stereo(
-    ) = 0; /* returns true if this interface requires stereo rendering (for VR
-              HMDs) or mono rendering (for mobile AR) */
+    virtual Size2 get_render_targetsize() = 0; /* returns the recommended render
+                                                * target size per eye for this
+                                                * device
+                                                */
+    virtual bool is_stereo() = 0; /* returns true if this interface requires
+                                     stereo rendering (for VR HMDs) or mono
+                                     rendering (for mobile AR) */
     virtual Transform get_transform_for_eye(
         ARVRInterface::Eyes p_eye,
         const Transform& p_cam_transform
@@ -91,9 +93,11 @@ public:
         real_t p_z_near,
         real_t p_z_far
     ) = 0; /* get each eyes projection matrix */
-    virtual unsigned int get_external_texture_for_eye(ARVRInterface::Eyes p_eye
+    virtual unsigned int get_external_texture_for_eye(
+        ARVRInterface::Eyes p_eye
     ); /* if applicable return external texture to render to */
-    virtual unsigned int get_external_depth_for_eye(ARVRInterface::Eyes p_eye
+    virtual unsigned int get_external_depth_for_eye(
+        ARVRInterface::Eyes p_eye
     ); /* if applicable return external depth texture to render to */
     virtual void commit_for_eye(
         ARVRInterface::Eyes p_eye,

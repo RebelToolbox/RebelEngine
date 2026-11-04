@@ -143,8 +143,10 @@ class String {
     void copy_from(const CharType* p_cstr, const int p_clip_to = -1);
     void copy_from(const CharType& p_char);
     void copy_from_unchecked(const CharType* p_char, const int p_length);
-    bool _base_is_subsequence_of(const String& p_string, bool case_insensitive)
-        const;
+    bool _base_is_subsequence_of(
+        const String& p_string,
+        bool case_insensitive
+    ) const;
     int _count(
         const String& p_string,
         int p_from,
@@ -241,18 +243,28 @@ public:
 
     /* complex helpers */
     String substr(int p_from, int p_chars = -1) const;
-    int find(const String& p_str, int p_from = 0)
-        const;                                         ///< return <0 if failed
+    int find(
+        const String& p_str,
+        int p_from = 0
+    ) const;                                           ///< return <0 if failed
     int find(const char* p_str, int p_from = 0) const; ///< return <0 if failed
-    int find_char(const CharType& p_char, int p_from = 0)
-        const;                                ///< return <0 if failed
+    int find_char(
+        const CharType& p_char,
+        int p_from = 0
+    ) const;                                  ///< return <0 if failed
     int find_last(const String& p_str) const; ///< return <0 if failed
-    int findn(const String& p_str, int p_from = 0)
-        const; ///< return <0 if failed, case insensitive
-    int rfind(const String& p_str, int p_from = -1)
-        const; ///< return <0 if failed
-    int rfindn(const String& p_str, int p_from = -1)
-        const; ///< return <0 if failed, case insensitive
+    int findn(
+        const String& p_str,
+        int p_from = 0
+    ) const; ///< return <0 if failed, case insensitive
+    int rfind(
+        const String& p_str,
+        int p_from = -1
+    ) const; ///< return <0 if failed
+    int rfindn(
+        const String& p_str,
+        int p_from = -1
+    ) const; ///< return <0 if failed, case insensitive
     int findmk(
         const Vector<String>& p_keys,
         int p_from = 0,
@@ -343,8 +355,10 @@ public:
         const Vector<String>& p_splitters,
         bool p_allow_empty = true
     ) const;
-    Vector<int> split_ints(const String& p_splitter, bool p_allow_empty = true)
-        const;
+    Vector<int> split_ints(
+        const String& p_splitter,
+        bool p_allow_empty = true
+    ) const;
     Vector<int> split_ints_mk(
         const Vector<String>& p_splitters,
         bool p_allow_empty = true

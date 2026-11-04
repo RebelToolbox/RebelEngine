@@ -139,7 +139,8 @@ Error PCKPacker::flush(bool p_verbose) {
         };
 
         uint64_t pos = file->get_position();
-        file->seek(files[i].offset_offset
+        file->seek(
+            files[i].offset_offset
         ); // go back to store the file's offset
         file->store_64(ofs);
         file->seek(pos);

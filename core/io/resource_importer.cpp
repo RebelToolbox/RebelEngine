@@ -133,7 +133,8 @@ RES ResourceFormatImporter::load(
 
 #ifdef TOOLS_ENABLED
     if (res.is_valid()) {
-        res->set_import_last_modified_time(res->get_last_modified_time()
+        res->set_import_last_modified_time(
+            res->get_last_modified_time()
         ); // pass this, if used
         res->set_import_path(pat.path);
     }
@@ -241,7 +242,8 @@ bool ResourceFormatImporter::handles_type(const String& p_type) const {
     return true;
 }
 
-String ResourceFormatImporter::get_internal_resource_path(const String& p_path
+String ResourceFormatImporter::get_internal_resource_path(
+    const String& p_path
 ) const {
     PathAndType pat;
     Error err = _get_path_and_type(p_path, pat);
@@ -314,7 +316,8 @@ void ResourceFormatImporter::get_internal_resource_path_list(
     memdelete(f);
 }
 
-String ResourceFormatImporter::get_import_group_file(const String& p_path
+String ResourceFormatImporter::get_import_group_file(
+    const String& p_path
 ) const {
     bool valid = true;
     PathAndType pat;
@@ -340,7 +343,8 @@ String ResourceFormatImporter::get_resource_type(const String& p_path) const {
     return pat.type;
 }
 
-Variant ResourceFormatImporter::get_resource_metadata(const String& p_path
+Variant ResourceFormatImporter::get_resource_metadata(
+    const String& p_path
 ) const {
     PathAndType pat;
     Error err = _get_path_and_type(p_path, pat);
@@ -423,14 +427,16 @@ Ref<ResourceImporter> ResourceFormatImporter::get_importer_by_extension(
     return importer;
 }
 
-String ResourceFormatImporter::get_import_base_path(const String& p_for_file
+String ResourceFormatImporter::get_import_base_path(
+    const String& p_for_file
 ) const {
     return ProjectSettings::get_singleton()->get_project_data_path().plus_file(
         p_for_file.get_file() + "-" + p_for_file.md5_text()
     );
 }
 
-bool ResourceFormatImporter::are_import_settings_valid(const String& p_path
+bool ResourceFormatImporter::are_import_settings_valid(
+    const String& p_path
 ) const {
     bool valid = true;
     PathAndType pat;
@@ -442,7 +448,8 @@ bool ResourceFormatImporter::are_import_settings_valid(const String& p_path
 
     for (int i = 0; i < importers.size(); i++) {
         if (importers[i]->get_importer_name() == pat.importer) {
-            if (!importers[i]->are_import_settings_valid(p_path
+            if (!importers[i]->are_import_settings_valid(
+                    p_path
                 )) { // importer thinks this is not valid
                 return false;
             }

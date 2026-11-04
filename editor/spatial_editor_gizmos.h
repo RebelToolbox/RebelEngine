@@ -20,10 +20,14 @@ public:
     String get_name() const override;
     int get_priority() const override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -49,10 +53,14 @@ public:
     String get_name() const override;
     int get_priority() const override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -91,10 +99,14 @@ public:
     String get_name() const override;
     int get_priority() const override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -223,18 +235,24 @@ public:
     bool is_selectable_when_hidden() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void commit_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
         const Variant& p_restore,
         bool p_cancel
     ) override;
-    bool is_handle_highlighted(const EditorSpatialGizmo* p_gizmo, int idx)
-        const override;
+    bool is_handle_highlighted(
+        const EditorSpatialGizmo* p_gizmo,
+        int idx
+    ) const override;
 
     SoftBodySpatialGizmoPlugin();
 };
@@ -248,10 +266,14 @@ public:
     int get_priority() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -290,10 +312,14 @@ public:
     bool is_selectable_when_hidden() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -319,10 +345,14 @@ public:
     int get_priority() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -348,10 +378,14 @@ public:
     int get_priority() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -377,10 +411,14 @@ public:
     int get_priority() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -418,10 +456,14 @@ public:
     int get_priority() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,
@@ -614,8 +656,11 @@ class RoomSpatialGizmo : public EditorSpatialGizmo {
 public:
     String get_handle_name(int p_idx) const override;
     Variant get_handle_value(int p_idx) override;
-    void set_handle(int p_idx, Camera* p_camera, const Point2& p_point)
-        override;
+    void set_handle(
+        int p_idx,
+        Camera* p_camera,
+        const Point2& p_point
+    ) override;
     void commit_handle(
         int p_idx,
         const Variant& p_restore,
@@ -651,8 +696,11 @@ class PortalSpatialGizmo : public EditorSpatialGizmo {
 public:
     String get_handle_name(int p_idx) const override;
     Variant get_handle_value(int p_idx) override;
-    void set_handle(int p_idx, Camera* p_camera, const Point2& p_point)
-        override;
+    void set_handle(
+        int p_idx,
+        Camera* p_camera,
+        const Point2& p_point
+    ) override;
     void commit_handle(
         int p_idx,
         const Variant& p_restore,
@@ -690,8 +738,11 @@ class OccluderSpatialGizmo : public EditorSpatialGizmo {
 public:
     String get_handle_name(int p_idx) const override;
     Variant get_handle_value(int p_idx) override;
-    void set_handle(int p_idx, Camera* p_camera, const Point2& p_point)
-        override;
+    void set_handle(
+        int p_idx,
+        Camera* p_camera,
+        const Point2& p_point
+    ) override;
     void commit_handle(
         int p_idx,
         const Variant& p_restore,

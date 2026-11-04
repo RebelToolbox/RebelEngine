@@ -26,8 +26,10 @@ public:
     String get_resource_type() const override;
     float get_priority() const override;
     int get_import_order() const override;
-    void get_import_options(List<ImportOption>* r_options, int p_preset)
-        const override;
+    void get_import_options(
+        List<ImportOption>* r_options,
+        int p_preset
+    ) const override;
     bool get_option_visibility(
         const String& p_option,
         const Map<StringName, Variant>& p_options

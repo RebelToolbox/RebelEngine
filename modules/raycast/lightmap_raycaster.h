@@ -24,7 +24,8 @@ private:
     RTCDevice embree_device;
     RTCScene embree_scene;
 
-    static void filter_function(const struct RTCFilterFunctionNArguments* p_args
+    static void filter_function(
+        const struct RTCFilterFunctionNArguments* p_args
     );
 
     Map<unsigned int, AlphaTextureData> alpha_textures;
@@ -41,8 +42,10 @@ public:
         const Vector<Vector2>& p_uv2s,
         unsigned int p_id
     ) override;
-    void set_mesh_alpha_texture(Ref<Image> p_alpha_texture, unsigned int p_id)
-        override;
+    void set_mesh_alpha_texture(
+        Ref<Image> p_alpha_texture,
+        unsigned int p_id
+    ) override;
     void commit() override;
 
     void set_mesh_filter(const Set<int>& p_mesh_ids) override;

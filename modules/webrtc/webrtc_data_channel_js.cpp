@@ -34,9 +34,11 @@ extern int rebel_js_rtc_datachannel_max_packet_lifetime_get(int p_id);
 extern int rebel_js_rtc_datachannel_max_retransmits_get(int p_id);
 extern int rebel_js_rtc_datachannel_is_negotiated(int p_id);
 extern int rebel_js_rtc_datachannel_get_buffered_amount(int p_id);
-extern char* rebel_js_rtc_datachannel_label_get(int p_id
+extern char* rebel_js_rtc_datachannel_label_get(
+    int p_id
 ); // Must free the returned string.
-extern char* rebel_js_rtc_datachannel_protocol_get(int p_id
+extern char* rebel_js_rtc_datachannel_protocol_get(
+    int p_id
 ); // Must free the returned string.
 extern void rebel_js_rtc_datachannel_destroy(int p_id);
 extern void rebel_js_rtc_datachannel_connect(

@@ -1795,7 +1795,8 @@ void reflection_process(
     vec3 local_pos   = (reflections[idx].local_matrix * vec4(vertex, 1.0)).xyz;
     vec3 box_extents = reflections[idx].box_extents.xyz;
 
-    if (any(greaterThan(abs(local_pos), box_extents)
+    if (any(
+            greaterThan(abs(local_pos), box_extents)
         )) { // out of the reflection box
         return;
     }
@@ -2385,7 +2386,8 @@ FRAGMENT_SHADER_CODE
 #if defined(ENABLE_NORMALMAP)
 
     normalmap.xy = normalmap.xy * 2.0 - 1.0;
-    normalmap.z  = sqrt(max(0.0, 1.0 - dot(normalmap.xy, normalmap.xy))
+    normalmap.z  = sqrt(
+        max(0.0, 1.0 - dot(normalmap.xy, normalmap.xy))
     ); // always ignore Z, as it can be RG packed, Z may be pos/neg, etc.
 
     normal = normalize(mix(
@@ -2547,9 +2549,10 @@ FRAGMENT_SHADER_CODE
         vec4 captured     = vec4(0.0);
         float sum         = 0.0;
         for (int i = 0; i < 12; i++) {
-            float amount =
-                max(0.0, dot(local_normal, cone_dirs[i])
-                ); // not correct, but creates a nice wrap around effect
+            float amount = max(
+                0.0,
+                dot(local_normal, cone_dirs[i])
+            ); // not correct, but creates a nice wrap around effect
             captured += lightmap_captures[i] * amount;
             sum      += amount;
         }

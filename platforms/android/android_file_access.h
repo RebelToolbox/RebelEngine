@@ -53,8 +53,10 @@ public:
         return 0;
     }
 
-    Error _set_unix_permissions(const String& p_file, uint32_t p_permissions)
-        override {
+    Error _set_unix_permissions(
+        const String& p_file,
+        uint32_t p_permissions
+    ) override {
         return FAILED;
     }
 

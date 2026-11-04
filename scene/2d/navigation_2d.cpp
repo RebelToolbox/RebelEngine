@@ -555,7 +555,8 @@ Vector<Vector2> Navigation2D::get_simple_path(
                         portal_left  = apex_point;
                         portal_right = apex_point;
                         if (!path.size()
-                            || !path[path.size() - 1].is_equal_approx(apex_point
+                            || !path[path.size() - 1].is_equal_approx(
+                                apex_point
                             )) {
                             path.push_back(apex_point);
                         }
@@ -577,7 +578,8 @@ Vector<Vector2> Navigation2D::get_simple_path(
                         portal_right = apex_point;
                         portal_left  = apex_point;
                         if (!path.size()
-                            || !path[path.size() - 1].is_equal_approx(apex_point
+                            || !path[path.size() - 1].is_equal_approx(
+                                apex_point
                             )) {
                             path.push_back(apex_point);
                         }

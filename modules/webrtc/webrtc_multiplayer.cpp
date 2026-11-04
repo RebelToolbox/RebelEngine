@@ -40,8 +40,8 @@ void WebRTCMultiplayer::set_transfer_mode(TransferMode p_mode) {
     transfer_mode = p_mode;
 }
 
-NetworkedMultiplayerPeer::TransferMode WebRTCMultiplayer::get_transfer_mode(
-) const {
+NetworkedMultiplayerPeer::TransferMode WebRTCMultiplayer::
+    get_transfer_mode() const {
     return transfer_mode;
 }
 

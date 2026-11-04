@@ -938,8 +938,11 @@ class EditorExportPlatformUWP : public EditorExportPlatform {
         return false;
     }
 
-    bool _valid_image(const StreamTexture* p_image, int p_width, int p_height)
-        const {
+    bool _valid_image(
+        const StreamTexture* p_image,
+        int p_width,
+        int p_height
+    ) const {
         if (!p_image) {
             return false;
         }
@@ -1309,7 +1312,8 @@ public:
         return "UWP";
     }
 
-    List<String> get_binary_extensions(const Ref<EditorExportPreset>& p_preset
+    List<String> get_binary_extensions(
+        const Ref<EditorExportPreset>& p_preset
     ) const override {
         List<String> list;
         list.push_back("appx");
@@ -1668,8 +1672,9 @@ public:
             err   += TTR("Invalid package unique name.") + "\n";
         }
 
-        if (!_valid_resource_name(p_preset->get("package/publisher_display_name"
-            ))) {
+        if (!_valid_resource_name(
+                p_preset->get("package/publisher_display_name")
+            )) {
             valid  = false;
             err   += TTR("Invalid package publisher display name.") + "\n";
         }
@@ -2037,9 +2042,9 @@ public:
 
         static String algs[] = {"MD5", "SHA1", "SHA256"};
 
-        String cert_path =
-            EditorSettings::get_singleton()->get("export/uwp/debug_certificate"
-            );
+        String cert_path = EditorSettings::get_singleton()->get(
+            "export/uwp/debug_certificate"
+        );
         String cert_pass =
             EditorSettings::get_singleton()->get("export/uwp/debug_password");
         int cert_alg =

@@ -211,8 +211,10 @@ public:
     Vector2 get_closest_point(const Vector2& p_to_point) const;
     float get_closest_offset(const Vector2& p_to_point) const;
 
-    PoolVector2Array tessellate(int p_max_stages = 5, float p_tolerance = 4)
-        const; // useful for display
+    PoolVector2Array tessellate(
+        int p_max_stages  = 5,
+        float p_tolerance = 4
+    ) const; // useful for display
 
     Curve2D();
 };
@@ -307,8 +309,10 @@ public:
     Vector3 get_closest_point(const Vector3& p_to_point) const;
     float get_closest_offset(const Vector3& p_to_point) const;
 
-    PoolVector3Array tessellate(int p_max_stages = 5, float p_tolerance = 4)
-        const; // useful for display
+    PoolVector3Array tessellate(
+        int p_max_stages  = 5,
+        float p_tolerance = 4
+    ) const; // useful for display
 
     Curve3D();
 };

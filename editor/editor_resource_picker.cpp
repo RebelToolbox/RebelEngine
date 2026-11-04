@@ -28,10 +28,10 @@ void EditorResourcePicker::_update_resource() {
         assign_button->set_icon(Ref<Texture>());
         assign_button->set_text(TTR("[empty]"));
     } else {
-        assign_button->set_icon(EditorNode::get_singleton()->get_object_icon(
-            edited_resource.operator->(),
-            "Object"
-        ));
+        assign_button->set_icon(
+            EditorNode::get_singleton()
+                ->get_object_icon(edited_resource.operator->(), "Object")
+        );
 
         if (edited_resource->get_name() != String()) {
             assign_button->set_text(edited_resource->get_name());
@@ -1081,10 +1081,12 @@ void EditorResourcePicker::set_edited_resource(RES p_resource) {
         if (!is_custom
             && !_is_type_valid(p_resource->get_class(), allowed_types)) {
             String class_str =
-                (custom_class == StringName()
-                     ? p_resource->get_class()
-                     : vformat("%s (%s)", custom_class, p_resource->get_class())
-                );
+                (custom_class == StringName() ? p_resource->get_class()
+                                              : vformat(
+                                                    "%s (%s)",
+                                                    custom_class,
+                                                    p_resource->get_class()
+                                                ));
             ERR_FAIL_MSG(vformat(
                 "Failed to set a resource of the type '%s' because this "
                 "EditorResourcePicker only accepts '%s' and its derivatives.",

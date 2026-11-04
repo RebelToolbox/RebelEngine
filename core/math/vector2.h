@@ -251,8 +251,10 @@ _FORCE_INLINE_ bool Vector2::operator!=(const Vector2& p_vec2) const {
     return x != p_vec2.x || y != p_vec2.y;
 }
 
-Vector2 Vector2::linear_interpolate(const Vector2& p_to, real_t p_weight)
-    const {
+Vector2 Vector2::linear_interpolate(
+    const Vector2& p_to,
+    real_t p_weight
+) const {
     Vector2 res = *this;
 
     res.x += (p_weight * (p_to.x - x));

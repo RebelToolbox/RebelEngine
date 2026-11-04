@@ -1323,7 +1323,8 @@ void ParticlesMaterial::set_emission_box_extents(Vector3 p_extents) {
     );
 }
 
-void ParticlesMaterial::set_emission_point_texture(const Ref<Texture>& p_points
+void ParticlesMaterial::set_emission_point_texture(
+    const Ref<Texture>& p_points
 ) {
     emission_point_texture = p_points;
     VisualServer::get_singleton()->material_set_param(
@@ -1344,7 +1345,8 @@ void ParticlesMaterial::set_emission_normal_texture(
     );
 }
 
-void ParticlesMaterial::set_emission_color_texture(const Ref<Texture>& p_colors
+void ParticlesMaterial::set_emission_color_texture(
+    const Ref<Texture>& p_colors
 ) {
     emission_color_texture = p_colors;
     VisualServer::get_singleton()->material_set_param(

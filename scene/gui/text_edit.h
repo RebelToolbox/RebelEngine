@@ -102,7 +102,8 @@ public:
         int get_char_width(CharType c, CharType next_c, int px) const;
         void set_line_wrap_amount(int p_line, int p_wrap_amount) const;
         int get_line_wrap_amount(int p_line) const;
-        const Map<int, ColorRegionInfo>& get_color_region_info(int p_line
+        const Map<int, ColorRegionInfo>& get_color_region_info(
+            int p_line
         ) const;
 
         void set(int p_line, const String& p_text);
@@ -636,7 +637,8 @@ public:
 
     int _is_line_in_region(int p_line);
     ColorRegion _get_color_region(int p_region) const;
-    Map<int, Text::ColorRegionInfo> _get_line_color_region_info(int p_line
+    Map<int, Text::ColorRegionInfo> _get_line_color_region_info(
+        int p_line
     ) const;
 
     enum MenuItems {
@@ -661,8 +663,9 @@ public:
         SEARCH_RESULT_LINE,
     };
 
-    CursorShape get_cursor_shape(const Point2& p_pos = Point2i())
-        const override;
+    CursorShape get_cursor_shape(
+        const Point2& p_pos = Point2i()
+    ) const override;
 
     void _get_mouse_pos(const Point2i& p_mouse, int& r_row, int& r_col) const;
     void _get_minimap_mouse_row(const Point2i& p_mouse, int& r_row) const;

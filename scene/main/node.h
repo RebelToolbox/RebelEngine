@@ -146,8 +146,10 @@ private:
         Node* p_child,
         bool p_force_human_readable = false
     );
-    void _generate_serial_child_name(const Node* p_child, StringName& name)
-        const;
+    void _generate_serial_child_name(
+        const Node* p_child,
+        StringName& name
+    ) const;
 
     void _propagate_reverse_notification(int p_notification);
     void _propagate_deferred_notification(int p_notification, bool p_reverse);
@@ -165,8 +167,10 @@ private:
         Node* p_new_parent,
         const Map<Node*, Node*>& p_reown_map
     ) const;
-    Node* _duplicate(int p_flags, Map<const Node*, Node*>* r_duplimap = nullptr)
-        const;
+    Node* _duplicate(
+        int p_flags,
+        Map<const Node*, Node*>* r_duplimap = nullptr
+    ) const;
 
     Array _get_children() const;
     Array _get_groups() const;
@@ -451,7 +455,8 @@ public:
         data.parent_owned = true;
     } // hack to avoid duplicate nodes
 
-    void set_import_path(const NodePath& p_import_path
+    void set_import_path(
+        const NodePath& p_import_path
     ); // path used when imported, used by scene editors to keep tracking
     NodePath get_import_path() const;
 

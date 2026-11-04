@@ -32,7 +32,8 @@
 // Includes the ISO build date after a '+'.
 // E.g. 1.0-dev+2025.8.22
 #define VERSION_FULL_BUILD                                                     \
-    VERSION_FULL "+" _MKSTR(VERSION_YEAR) "." _MKSTR(VERSION_MONTH             \
+    VERSION_FULL "+" _MKSTR(VERSION_YEAR) "." _MKSTR(                          \
+        VERSION_MONTH                                                          \
     ) "." _MKSTR(VERSION_DAY)
 
 #define VERSION_FULL_NAME VERSION_NAME " v" VERSION_FULL

@@ -49,8 +49,10 @@ Dictionary JSONRPC::make_request(
     return request;
 }
 
-Dictionary JSONRPC::make_response(const Variant& value, const Variant& id)
-    const {
+Dictionary JSONRPC::make_response(
+    const Variant& value,
+    const Variant& id
+) const {
     Dictionary response;
     response["jsonrpc"] = "2.0";
     response["id"]      = id;

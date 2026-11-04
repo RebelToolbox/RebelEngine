@@ -199,7 +199,8 @@ public:
 
     virtual void on_collision_filters_change() = 0;
 
-    _FORCE_INLINE_ bool test_collision_mask(CollisionObjectBullet* p_other
+    _FORCE_INLINE_ bool test_collision_mask(
+        CollisionObjectBullet* p_other
     ) const {
         return collisionLayer & p_other->collisionMask
             || p_other->collisionLayer & collisionMask;

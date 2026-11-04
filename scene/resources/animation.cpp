@@ -744,7 +744,8 @@ void Animation::track_set_interpolation_type(
     emit_changed();
 }
 
-Animation::InterpolationType Animation::track_get_interpolation_type(int p_track
+Animation::InterpolationType Animation::track_get_interpolation_type(
+    int p_track
 ) const {
     ERR_FAIL_INDEX_V(p_track, tracks.size(), INTERPOLATION_NEAREST);
     return tracks[p_track]->interpolation;
@@ -1542,8 +1543,11 @@ Vector3 Animation::_interpolate(
     return p_a.linear_interpolate(p_b, p_c);
 }
 
-Quat Animation::_interpolate(const Quat& p_a, const Quat& p_b, float p_c)
-    const {
+Quat Animation::_interpolate(
+    const Quat& p_a,
+    const Quat& p_b,
+    float p_c
+) const {
     return p_a.slerp(p_b, p_c);
 }
 
@@ -1557,8 +1561,11 @@ Variant Animation::_interpolate(
     return dst;
 }
 
-float Animation::_interpolate(const float& p_a, const float& p_b, float p_c)
-    const {
+float Animation::_interpolate(
+    const float& p_a,
+    const float& p_b,
+    float p_c
+) const {
     return p_a * (1.0 - p_c) + p_b * p_c;
 }
 
@@ -2055,7 +2062,8 @@ void Animation::value_track_set_update_mode(int p_track, UpdateMode p_mode) {
     emit_changed();
 }
 
-Animation::UpdateMode Animation::value_track_get_update_mode(int p_track
+Animation::UpdateMode Animation::value_track_get_update_mode(
+    int p_track
 ) const {
     ERR_FAIL_INDEX_V(p_track, tracks.size(), UPDATE_CONTINUOUS);
     Track* t = tracks[p_track];
@@ -2412,8 +2420,10 @@ void Animation::method_track_get_key_indices(
     _method_track_get_key_indices_in_range(mt, from_time, to_time, p_indices);
 }
 
-Vector<Variant> Animation::method_track_get_params(int p_track, int p_key_idx)
-    const {
+Vector<Variant> Animation::method_track_get_params(
+    int p_track,
+    int p_key_idx
+) const {
     ERR_FAIL_INDEX_V(p_track, tracks.size(), Vector<Variant>());
     Track* t = tracks[p_track];
     ERR_FAIL_COND_V(t->type != TYPE_METHOD, Vector<Variant>());
@@ -2540,8 +2550,10 @@ float Animation::bezier_track_get_key_value(int p_track, int p_index) const {
     return bt->values[p_index].value.value;
 }
 
-Vector2 Animation::bezier_track_get_key_in_handle(int p_track, int p_index)
-    const {
+Vector2 Animation::bezier_track_get_key_in_handle(
+    int p_track,
+    int p_index
+) const {
     ERR_FAIL_INDEX_V(p_track, tracks.size(), Vector2());
     Track* t = tracks[p_track];
     ERR_FAIL_COND_V(t->type != TYPE_BEZIER, Vector2());
@@ -2553,8 +2565,10 @@ Vector2 Animation::bezier_track_get_key_in_handle(int p_track, int p_index)
     return bt->values[p_index].value.in_handle;
 }
 
-Vector2 Animation::bezier_track_get_key_out_handle(int p_track, int p_index)
-    const {
+Vector2 Animation::bezier_track_get_key_out_handle(
+    int p_track,
+    int p_index
+) const {
     ERR_FAIL_INDEX_V(p_track, tracks.size(), Vector2());
     Track* t = tracks[p_track];
     ERR_FAIL_COND_V(t->type != TYPE_BEZIER, Vector2());
@@ -2759,8 +2773,10 @@ RES Animation::audio_track_get_key_stream(int p_track, int p_key) const {
     return at->values[p_key].value.stream;
 }
 
-float Animation::audio_track_get_key_start_offset(int p_track, int p_key)
-    const {
+float Animation::audio_track_get_key_start_offset(
+    int p_track,
+    int p_key
+) const {
     ERR_FAIL_INDEX_V(p_track, tracks.size(), 0);
     const Track* t = tracks[p_track];
     ERR_FAIL_COND_V(t->type != TYPE_AUDIO, 0);
@@ -2826,8 +2842,10 @@ void Animation::animation_track_set_key_animation(
     emit_changed();
 }
 
-StringName Animation::animation_track_get_key_animation(int p_track, int p_key)
-    const {
+StringName Animation::animation_track_get_key_animation(
+    int p_track,
+    int p_key
+) const {
     ERR_FAIL_INDEX_V(p_track, tracks.size(), StringName());
     const Track* t = tracks[p_track];
     ERR_FAIL_COND_V(t->type != TYPE_ANIMATION, StringName());

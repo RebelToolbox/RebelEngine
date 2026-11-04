@@ -94,8 +94,10 @@ class EditorAudioBus : public PanelContainer {
     void _update_visible_channels();
 
     Variant get_drag_data(const Point2& p_point) override;
-    bool can_drop_data(const Point2& p_point, const Variant& p_data)
-        const override;
+    bool can_drop_data(
+        const Point2& p_point,
+        const Variant& p_data
+    ) const override;
     void drop_data(const Point2& p_point, const Variant& p_data) override;
 
     Variant get_drag_data_fw(const Point2& p_point, Control* p_from);
@@ -131,8 +133,10 @@ public:
 class EditorAudioBusDrop : public Control {
     GDCLASS(EditorAudioBusDrop, Control);
 
-    bool can_drop_data(const Point2& p_point, const Variant& p_data)
-        const override;
+    bool can_drop_data(
+        const Point2& p_point,
+        const Variant& p_data
+    ) const override;
     void drop_data(const Point2& p_point, const Variant& p_data) override;
 
     mutable bool hovering_drop;

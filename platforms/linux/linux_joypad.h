@@ -79,8 +79,10 @@ private:
     );
     void joypad_vibration_stop(int p_id, uint64_t p_timestamp);
 
-    InputDefault::JoyAxis axis_correct(const input_absinfo* p_abs, int p_value)
-        const;
+    InputDefault::JoyAxis axis_correct(
+        const input_absinfo* p_abs,
+        int p_value
+    ) const;
 };
 
 #endif

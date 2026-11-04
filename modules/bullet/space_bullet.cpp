@@ -952,7 +952,8 @@ void SpaceBullet::check_ghost_overlaps() {
 
             if (overlapped_bt_co->getUserIndex()
                 == CollisionObjectBullet::TYPE_AREA) {
-                if (!static_cast<AreaBullet*>(overlapped_bt_co->getUserPointer()
+                if (!static_cast<AreaBullet*>(
+                         overlapped_bt_co->getUserPointer()
                     )
                          ->is_monitorable()) {
                     continue;
@@ -968,8 +969,9 @@ void SpaceBullet::check_ghost_overlaps() {
                     continue;
                 }
 
-                btTransform area_shape_treansform(area->get_bt_shape_transform(y
-                ));
+                btTransform area_shape_treansform(
+                    area->get_bt_shape_transform(y)
+                );
                 area_shape_treansform.getOrigin() *= area_scale;
 
                 gjk_input.m_transformA =
@@ -1388,8 +1390,8 @@ bool SpaceBullet::test_body_motion(
                             p_body->get_kinematic_utilities()->safe_margin;
                         safe_fraction = MAX(
                             hit_fraction
-                                - (1 - ((total_length - margin) / total_length)
-                                ),
+                                - (1
+                                   - ((total_length - margin) / total_length)),
                             0
                         );
                     }
@@ -1432,8 +1434,9 @@ bool SpaceBullet::test_body_motion(
                     r_recover_result.other_collision_object
                 );
                 CollisionObjectBullet* collisionObject =
-                    static_cast<CollisionObjectBullet*>(btRigid->getUserPointer(
-                    ));
+                    static_cast<CollisionObjectBullet*>(
+                        btRigid->getUserPointer()
+                    );
 
                 B_TO_R(
                     motion,
@@ -1768,8 +1771,8 @@ bool SpaceBullet::recover_from_penetration(
 
             if (p_infinite_inertia
                 && !otherObject->isStaticOrKinematicObject()) {
-                otherObject->activate(
-                ); // Force activation of hitten rigid, soft body
+                otherObject
+                    ->activate(); // Force activation of hitten rigid, soft body
                 continue;
             } else if (!p_body->get_bt_collision_object()->checkCollideWith(
                            otherObject
@@ -1830,8 +1833,9 @@ bool SpaceBullet::recover_from_penetration(
                         penetration = true;
                     }
                 }
-            } else if (otherObject->getCollisionShape()->isConvex(
-                       )) { /// Execute GJK test against object shape
+            } else if (otherObject->getCollisionShape()
+                           ->isConvex()) { /// Execute GJK test against object
+                                           /// shape
                 if (RFP_convex_convex_test(
                         kin_shape.shape,
                         static_cast<const btConvexShape*>(
@@ -1994,7 +1998,8 @@ int SpaceBullet::add_separation_result(
         const btRigidBody* btRigid =
             static_cast<const btRigidBody*>(p_other_object);
         CollisionObjectBullet* collisionObject =
-            static_cast<CollisionObjectBullet*>(p_other_object->getUserPointer()
+            static_cast<CollisionObjectBullet*>(
+                p_other_object->getUserPointer()
             );
 
         r_result->collision_depth = p_recover_result.penetration_distance;
@@ -2130,8 +2135,8 @@ int SpaceBullet::recover_from_penetration_ray(
                 recover_broad_result.results[i].collision_object;
             if (p_infinite_inertia
                 && !otherObject->isStaticOrKinematicObject()) {
-                otherObject->activate(
-                ); // Force activation of hitten rigid, soft body
+                otherObject
+                    ->activate(); // Force activation of hitten rigid, soft body
                 continue;
             } else if (!p_body->get_bt_collision_object()->checkCollideWith(
                            otherObject

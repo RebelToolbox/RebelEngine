@@ -317,7 +317,8 @@ void ScriptServer::save_global_classes() {
 }
 
 ////////////////////
-void ScriptInstance::get_property_state(List<Pair<StringName, Variant>>& state
+void ScriptInstance::get_property_state(
+    List<Pair<StringName, Variant>>& state
 ) {
     List<PropertyInfo> pinfo;
     get_property_list(&pinfo);
@@ -454,8 +455,10 @@ void ScriptDebugger::remove_breakpoint(int p_line, const StringName& p_source) {
     }
 }
 
-bool ScriptDebugger::is_breakpoint(int p_line, const StringName& p_source)
-    const {
+bool ScriptDebugger::is_breakpoint(
+    int p_line,
+    const StringName& p_source
+) const {
     if (!breakpoints.has(p_line)) {
         return false;
     }
@@ -523,8 +526,10 @@ bool PlaceHolderScriptInstance::set(
     return false;
 }
 
-bool PlaceHolderScriptInstance::get(const StringName& p_name, Variant& r_ret)
-    const {
+bool PlaceHolderScriptInstance::get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     if (values.has(p_name)) {
         r_ret = values[p_name];
         return true;
@@ -591,7 +596,8 @@ Variant::Type PlaceHolderScriptInstance::get_property_type(
     return Variant::NIL;
 }
 
-void PlaceHolderScriptInstance::get_method_list(List<MethodInfo>* p_list
+void PlaceHolderScriptInstance::get_method_list(
+    List<MethodInfo>* p_list
 ) const {
     if (script->is_placeholder_fallback_enabled()) {
         return;

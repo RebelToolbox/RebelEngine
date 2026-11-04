@@ -194,7 +194,7 @@ public:
         resize(p_power);
     };
 
-    ~RingBuffer(){};
+    ~RingBuffer() {};
 };
 
 #endif

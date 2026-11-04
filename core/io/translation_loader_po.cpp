@@ -205,7 +205,8 @@ RES TranslationLoaderPO::load(
     return load_translation(f, r_error);
 }
 
-void TranslationLoaderPO::get_recognized_extensions(List<String>* p_extensions
+void TranslationLoaderPO::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("po");
 }

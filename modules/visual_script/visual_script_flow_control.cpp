@@ -206,7 +206,8 @@ PropertyInfo VisualScriptCondition::get_input_value_port_info(int p_idx) const {
     return pinfo;
 }
 
-PropertyInfo VisualScriptCondition::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptCondition::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
@@ -1004,22 +1005,38 @@ VisualScriptTypeCast::VisualScriptTypeCast() {
 }
 
 void register_visual_script_flow_control_nodes() {
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/return", create_return_node<false>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/return_with_value", create_return_node<true>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/condition", create_node_generic<VisualScriptCondition>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/while", create_node_generic<VisualScriptWhile>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/iterator", create_node_generic<VisualScriptIterator>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/sequence", create_node_generic<VisualScriptSequence>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/switch", create_node_generic<VisualScriptSwitch>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/return",
+        create_return_node<false>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/return_with_value",
+        create_return_node<true>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/condition",
+        create_node_generic<VisualScriptCondition>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/while",
+        create_node_generic<VisualScriptWhile>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/iterator",
+        create_node_generic<VisualScriptIterator>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/sequence",
+        create_node_generic<VisualScriptSequence>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/switch",
+        create_node_generic<VisualScriptSwitch>
+    );
     // VisualScriptLanguage::singleton->add_register_func("flow_control/input_filter",
     // create_node_generic<VisualScriptInputFilter>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("flow_control/type_cast", create_node_generic<VisualScriptTypeCast>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "flow_control/type_cast",
+        create_node_generic<VisualScriptTypeCast>
+    );
 }

@@ -291,8 +291,11 @@ PoolVector<int> AStar::get_point_connections(int p_id) {
     return point_list;
 }
 
-bool AStar::are_points_connected(int p_id, int p_with_id, bool bidirectional)
-    const {
+bool AStar::are_points_connected(
+    int p_id,
+    int p_with_id,
+    bool bidirectional
+) const {
     Segment s(p_id, p_with_id);
     const Set<Segment>::Element* element = segments.find(s);
 
@@ -339,8 +342,10 @@ void AStar::reserve_space(int p_num_nodes) {
     points.reserve(p_num_nodes);
 }
 
-int AStar::get_closest_point(const Vector3& p_point, bool p_include_disabled)
-    const {
+int AStar::get_closest_point(
+    const Vector3& p_point,
+    bool p_include_disabled
+) const {
     int closest_id      = -1;
     real_t closest_dist = 1e20f;
 
@@ -883,8 +888,10 @@ void AStar2D::reserve_space(int p_num_nodes) {
     astar.reserve_space(p_num_nodes);
 }
 
-int AStar2D::get_closest_point(const Vector2& p_point, bool p_include_disabled)
-    const {
+int AStar2D::get_closest_point(
+    const Vector2& p_point,
+    bool p_include_disabled
+) const {
     return astar.get_closest_point(
         Vector3(p_point.x, p_point.y, 0),
         p_include_disabled

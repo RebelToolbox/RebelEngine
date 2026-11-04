@@ -1397,8 +1397,8 @@ void EditorSettings::create() {
         }
     }
 
-    ClassDB::register_class<EditorSettings>(
-    ); // otherwise it can't be unserialized
+    ClassDB::register_class<EditorSettings>(); // otherwise it can't be
+                                               // unserialized
 
     String config_file_path;
 
@@ -1930,7 +1930,8 @@ void EditorSettings::list_text_editor_themes() {
         String file = d->get_next();
         while (file != String()) {
             if (file.get_extension() == "tet"
-                && !_is_default_text_editor_theme(file.get_basename().to_lower()
+                && !_is_default_text_editor_theme(
+                    file.get_basename().to_lower()
                 )) {
                 custom_themes.push_back(file.get_basename());
             }
@@ -2201,7 +2202,8 @@ Ref<ShortCut> ED_SHORTCUT(
 
     Ref<ShortCut> sc = EditorSettings::get_singleton()->get_shortcut(p_path);
     if (sc.is_valid()) {
-        sc->set_name(p_name
+        sc->set_name(
+            p_name
         ); // keep name (the ones that come from disk have no name)
         sc->set_meta("original", ie); // to compare against changes
         return sc;

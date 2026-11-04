@@ -102,8 +102,10 @@ struct Rect2 {
         }
     }
 
-    bool intersects_transformed(const Transform2D& p_xform, const Rect2& p_rect)
-        const;
+    bool intersects_transformed(
+        const Transform2D& p_xform,
+        const Rect2& p_rect
+    ) const;
 
     bool intersects_segment(
         const Point2& p_from,
@@ -234,7 +236,8 @@ struct Rect2 {
         return r;
     }
 
-    inline void expand_to(const Vector2& p_vector
+    inline void expand_to(
+        const Vector2& p_vector
     ) { // in place function for speed
 
         Vector2 begin = position;

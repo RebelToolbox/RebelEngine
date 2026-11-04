@@ -512,7 +512,8 @@ LRESULT WindowsOS::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
                     ScreenToClient(hWnd, &coords);
 
-                    mm->set_relative(Vector2(coords.x - old_x, coords.y - old_y)
+                    mm->set_relative(
+                        Vector2(coords.x - old_x, coords.y - old_y)
                     );
                     old_x = coords.x;
                     old_y = coords.y;
@@ -795,7 +796,8 @@ LRESULT WindowsOS::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 old_invalid = false;
             }
 
-            mm->set_relative(Vector2(mm->get_position() - Vector2(old_x, old_y))
+            mm->set_relative(
+                Vector2(mm->get_position() - Vector2(old_x, old_y))
             );
             old_x = mm->get_position().x;
             old_y = mm->get_position().y;
@@ -878,7 +880,8 @@ LRESULT WindowsOS::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
             mm->set_button_mask(last_button_state);
 
-            mm->set_position(Vector2(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam))
+            mm->set_position(
+                Vector2(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam))
             );
             mm->set_global_position(
                 Vector2(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam))
@@ -910,7 +913,8 @@ LRESULT WindowsOS::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 old_invalid = false;
             }
 
-            mm->set_relative(Vector2(mm->get_position() - Vector2(old_x, old_y))
+            mm->set_relative(
+                Vector2(mm->get_position() - Vector2(old_x, old_y))
             );
             old_x = mm->get_position().x;
             old_y = mm->get_position().y;
@@ -1054,7 +1058,8 @@ LRESULT WindowsOS::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
             }
             mb->set_button_mask(last_button_state);
 
-            mb->set_position(Vector2(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam))
+            mb->set_position(
+                Vector2(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam))
             );
 
             if (mouse_mode == MOUSE_MODE_CAPTURED && !use_raw_input) {
@@ -1338,8 +1343,8 @@ void WindowsOS::process_key_events() {
                 // extended keys should only be processed as WM_KEYDOWN message.
                 if (!WindowsKeyMapping::is_extended_key(ke.wParam)
                     && ((i == 0 && ke.uMsg == WM_CHAR)
-                        || (i > 0 && key_event_buffer[i - 1].uMsg == WM_CHAR)
-                    )) {
+                        || (i > 0
+                            && key_event_buffer[i - 1].uMsg == WM_CHAR))) {
                     Ref<InputEventKey> k;
                     k.instance();
 
@@ -1349,10 +1354,12 @@ void WindowsOS::process_key_events() {
                     k->set_metakey(ke.meta);
                     k->set_pressed(true);
                     k->set_scancode(WindowsKeyMapping::get_keysym(ke.wParam));
-                    k->set_physical_scancode(WindowsKeyMapping::get_scansym(
-                        (ke.lParam >> 16) & 0xFF,
-                        ke.lParam & (1 << 24)
-                    ));
+                    k->set_physical_scancode(
+                        WindowsKeyMapping::get_scansym(
+                            (ke.lParam >> 16) & 0xFF,
+                            ke.lParam & (1 << 24)
+                        )
+                    );
                     k->set_unicode(ke.wParam);
                     if (k->get_unicode() && gr_mem) {
                         k->set_alt(false);
@@ -1387,10 +1394,12 @@ void WindowsOS::process_key_events() {
                     k->set_scancode(WindowsKeyMapping::get_keysym(ke.wParam));
                 }
 
-                k->set_physical_scancode(WindowsKeyMapping::get_scansym(
-                    (ke.lParam >> 16) & 0xFF,
-                    ke.lParam & (1 << 24)
-                ));
+                k->set_physical_scancode(
+                    WindowsKeyMapping::get_scansym(
+                        (ke.lParam >> 16) & 0xFF,
+                        ke.lParam & (1 << 24)
+                    )
+                );
 
                 if (i + 1 < key_event_pos
                     && key_event_buffer[i + 1].uMsg == WM_CHAR) {
@@ -1439,10 +1448,11 @@ static int QueryDpiForMonitor(
     static GetDPIForMonitor_t getDPIForMonitor = NULL;
 
     if (Shcore == NULL) {
-        Shcore           = LoadLibraryW(L"Shcore.dll");
-        getDPIForMonitor = Shcore ? (GetDPIForMonitor_t
-                                    )GetProcAddress(Shcore, "GetDpiForMonitor")
-                                  : NULL;
+        Shcore = LoadLibraryW(L"Shcore.dll");
+        getDPIForMonitor =
+            Shcore
+                ? (GetDPIForMonitor_t)GetProcAddress(Shcore, "GetDpiForMonitor")
+                : NULL;
 
         if ((Shcore == NULL) || (getDPIForMonitor == NULL)) {
             if (Shcore) {
@@ -1508,8 +1518,8 @@ Error WindowsOS::initialize(
             );
 
             SetProcessDpiAwareness_t SetProcessDpiAwareness =
-                (SetProcessDpiAwareness_t
-                )GetProcAddress(Shcore, "SetProcessDpiAwareness");
+                (SetProcessDpiAwareness_t)
+                    GetProcAddress(Shcore, "SetProcessDpiAwareness");
 
             if (SetProcessDpiAwareness) {
                 SetProcessDpiAwareness(SHC_PROCESS_SYSTEM_DPI_AWARE);
@@ -2154,8 +2164,10 @@ OS::VideoMode WindowsOS::get_video_mode(int p_screen) const {
     return video_mode;
 }
 
-void WindowsOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
-    const {}
+void WindowsOS::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {}
 
 static BOOL CALLBACK _MonitorEnumProcCount(
     HMONITOR hMonitor,
@@ -2687,10 +2699,10 @@ Error WindowsOS::open_dynamic_library(
     typedef DLL_DIRECTORY_COOKIE(WINAPI * PAddDllDirectory)(PCWSTR);
     typedef BOOL(WINAPI * PRemoveDllDirectory)(DLL_DIRECTORY_COOKIE);
 
-    PAddDllDirectory add_dll_directory       = (PAddDllDirectory
-    )GetProcAddress(GetModuleHandle("kernel32.dll"), "AddDllDirectory");
-    PRemoveDllDirectory remove_dll_directory = (PRemoveDllDirectory
-    )GetProcAddress(GetModuleHandle("kernel32.dll"), "RemoveDllDirectory");
+    PAddDllDirectory add_dll_directory = (PAddDllDirectory)
+        GetProcAddress(GetModuleHandle("kernel32.dll"), "AddDllDirectory");
+    PRemoveDllDirectory remove_dll_directory = (PRemoveDllDirectory)
+        GetProcAddress(GetModuleHandle("kernel32.dll"), "RemoveDllDirectory");
 
     bool has_dll_directory_api =
         ((add_dll_directory != NULL) && (remove_dll_directory != NULL));
@@ -3572,8 +3584,10 @@ String WindowsOS::get_environment(const String& p_var) const {
     return "";
 }
 
-bool WindowsOS::set_environment(const String& p_var, const String& p_value)
-    const {
+bool WindowsOS::set_environment(
+    const String& p_var,
+    const String& p_value
+) const {
     return (bool)SetEnvironmentVariableW(p_var.c_str(), p_value.c_str());
 }
 
@@ -3662,8 +3676,8 @@ LPFN_ISWOW64PROCESS fnIsWow64Process;
 BOOL is_wow64() {
     BOOL wow64 = FALSE;
 
-    fnIsWow64Process = (LPFN_ISWOW64PROCESS
-    )GetProcAddress(GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS)
+        GetProcAddress(GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
 
     if (fnIsWow64Process) {
         if (!fnIsWow64Process(GetCurrentProcess(), &wow64)) {
@@ -3851,7 +3865,8 @@ String WindowsOS::keyboard_get_layout_name(int p_index) const {
     HKL* layouts = (HKL*)memalloc(layout_count * sizeof(HKL));
     GetKeyboardLayoutList(layout_count, layouts);
 
-    String ret = _get_full_layout_name_from_registry(layouts[p_index]
+    String ret = _get_full_layout_name_from_registry(
+        layouts[p_index]
     ); // Try reading full name from Windows registry, fallback to locale name
        // if failed (e.g. on Wine).
     if (ret == String()) {
@@ -4269,8 +4284,8 @@ WindowsOS::WindowsOS(HINSTANCE _hInstance) {
     if (user32_lib) {
         win8p_GetPointerType =
             (GetPointerTypePtr)GetProcAddress(user32_lib, "GetPointerType");
-        win8p_GetPointerPenInfo = (GetPointerPenInfoPtr
-        )GetProcAddress(user32_lib, "GetPointerPenInfo");
+        win8p_GetPointerPenInfo = (GetPointerPenInfoPtr)
+            GetProcAddress(user32_lib, "GetPointerPenInfo");
 
         winink_available = win8p_GetPointerType && win8p_GetPointerPenInfo;
     }

@@ -13,10 +13,14 @@
 
 #define FINDMINMAX(x0, x1, x2, min, max)                                       \
     min = max = x0;                                                            \
-    if (x1 < min) min = x1;                                                    \
-    if (x1 > max) max = x1;                                                    \
-    if (x2 < min) min = x2;                                                    \
-    if (x2 > max) max = x2;
+    if (x1 < min)                                                              \
+        min = x1;                                                              \
+    if (x1 > max)                                                              \
+        max = x1;                                                              \
+    if (x2 < min)                                                              \
+        min = x2;                                                              \
+    if (x2 > max)                                                              \
+        max = x2;
 
 static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
     int q;
@@ -52,7 +56,8 @@ static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
         max = p0;                                                              \
     }                                                                          \
     rad = fa * boxhalfsize.y + fb * boxhalfsize.z;                             \
-    if (min > rad || max < -rad) return false;
+    if (min > rad || max < -rad)                                               \
+        return false;
 
 #define AXISTEST_X2(a, b, fa, fb)                                              \
     p0 = a * v0.y - b * v0.z;                                                  \
@@ -65,7 +70,8 @@ static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
         max = p0;                                                              \
     }                                                                          \
     rad = fa * boxhalfsize.y + fb * boxhalfsize.z;                             \
-    if (min > rad || max < -rad) return false;
+    if (min > rad || max < -rad)                                               \
+        return false;
 
 /*======================== Y-tests ========================*/
 #define AXISTEST_Y02(a, b, fa, fb)                                             \
@@ -79,7 +85,8 @@ static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
         max = p0;                                                              \
     }                                                                          \
     rad = fa * boxhalfsize.x + fb * boxhalfsize.z;                             \
-    if (min > rad || max < -rad) return false;
+    if (min > rad || max < -rad)                                               \
+        return false;
 
 #define AXISTEST_Y1(a, b, fa, fb)                                              \
     p0 = -a * v0.x + b * v0.z;                                                 \
@@ -92,7 +99,8 @@ static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
         max = p0;                                                              \
     }                                                                          \
     rad = fa * boxhalfsize.x + fb * boxhalfsize.z;                             \
-    if (min > rad || max < -rad) return false;
+    if (min > rad || max < -rad)                                               \
+        return false;
 
 /*======================== Z-tests ========================*/
 
@@ -107,7 +115,8 @@ static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
         max = p2;                                                              \
     }                                                                          \
     rad = fa * boxhalfsize.x + fb * boxhalfsize.y;                             \
-    if (min > rad || max < -rad) return false;
+    if (min > rad || max < -rad)                                               \
+        return false;
 
 #define AXISTEST_Z0(a, b, fa, fb)                                              \
     p0 = a * v0.x - b * v0.y;                                                  \
@@ -120,7 +129,8 @@ static bool planeBoxOverlap(Vector3 normal, float d, Vector3 maxbox) {
         max = p0;                                                              \
     }                                                                          \
     rad = fa * boxhalfsize.x + fb * boxhalfsize.y;                             \
-    if (min > rad || max < -rad) return false;
+    if (min > rad || max < -rad)                                               \
+        return false;
 
 static bool fast_tri_box_overlap(
     const Vector3& boxcenter,
@@ -1073,9 +1083,10 @@ void VoxelLightBaker::plot_light_directional(
 
             if (p_direct) {
                 for (int i = 0; i < 6; i++) {
-                    float s =
-                        MAX(0.0, aniso_normal[i].dot(-light_axis)
-                        ); // light depending on normal for direct
+                    float s = MAX(
+                        0.0,
+                        aniso_normal[i].dot(-light_axis)
+                    ); // light depending on normal for direct
                     light->direct_accum[i][0] += light_energy.x * s;
                     light->direct_accum[i][1] += light_energy.y * s;
                     light->direct_accum[i][2] += light_energy.z * s;
@@ -1232,9 +1243,10 @@ void VoxelLightBaker::plot_light_omni(
 
             if (p_direct) {
                 for (int i = 0; i < 6; i++) {
-                    float s =
-                        MAX(0.0, aniso_normal[i].dot(-light_axis)
-                        ); // light depending on normal for direct
+                    float s = MAX(
+                        0.0,
+                        aniso_normal[i].dot(-light_axis)
+                    ); // light depending on normal for direct
                     light->direct_accum[i][0] += light_energy.x * s * att;
                     light->direct_accum[i][1] += light_energy.y * s * att;
                     light->direct_accum[i][2] += light_energy.z * s * att;
@@ -1396,9 +1408,10 @@ void VoxelLightBaker::plot_light_spot(
 
             if (p_direct) {
                 for (int i = 0; i < 6; i++) {
-                    float s =
-                        MAX(0.0, aniso_normal[i].dot(-light_axis)
-                        ); // light depending on normal for direct
+                    float s = MAX(
+                        0.0,
+                        aniso_normal[i].dot(-light_axis)
+                    ); // light depending on normal for direct
                     light->direct_accum[i][0] += light_energy.x * s * att;
                     light->direct_accum[i][1] += light_energy.y * s * att;
                     light->direct_accum[i][2] += light_energy.z * s * att;

@@ -169,7 +169,16 @@ public:
             Instance*,
             int
         );
-        typedef void (*UnpairCallback)(void*, uint32_t, Instance*, int, uint32_t, Instance*, int, void*);
+        typedef void (*UnpairCallback)(
+            void*,
+            uint32_t,
+            Instance*,
+            int,
+            uint32_t,
+            Instance*,
+            int,
+            void*
+        );
 
         virtual void set_pair_callback(
             PairCallback p_callback,
@@ -232,10 +241,14 @@ public:
             int* p_subindex_array = nullptr,
             uint32_t p_mask       = 0xFFFFFFFF
         ) override;
-        void set_pair_callback(PairCallback p_callback, void* p_userdata)
-            override;
-        void set_unpair_callback(UnpairCallback p_callback, void* p_userdata)
-            override;
+        void set_pair_callback(
+            PairCallback p_callback,
+            void* p_userdata
+        ) override;
+        void set_unpair_callback(
+            UnpairCallback p_callback,
+            void* p_userdata
+        ) override;
         void set_balance(float p_balance) override;
     };
 
@@ -288,10 +301,14 @@ public:
             int* p_subindex_array = nullptr,
             uint32_t p_mask       = 0xFFFFFFFF
         ) override;
-        void set_pair_callback(PairCallback p_callback, void* p_userdata)
-            override;
-        void set_unpair_callback(UnpairCallback p_callback, void* p_userdata)
-            override;
+        void set_pair_callback(
+            PairCallback p_callback,
+            void* p_userdata
+        ) override;
+        void set_unpair_callback(
+            UnpairCallback p_callback,
+            void* p_userdata
+        ) override;
 
         void params_set_node_expansion(real_t p_value) override {
             _bvh.params_set_node_expansion(p_value);
@@ -335,8 +352,16 @@ public:
         Instance* p_B,
         int
     );
-    static void
-    _instance_unpair(void* p_self, SpatialPartitionID, Instance* p_A, int, SpatialPartitionID, Instance* p_B, int, void*);
+    static void _instance_unpair(
+        void* p_self,
+        SpatialPartitionID,
+        Instance* p_A,
+        int,
+        SpatialPartitionID,
+        Instance* p_B,
+        int,
+        void*
+    );
 
     virtual RID scenario_create();
 
@@ -720,8 +745,10 @@ public:
 
     void* _instance_get_from_rid(RID p_instance);
 
-    bool _instance_cull_check(VSInstance* p_instance, uint32_t p_cull_mask)
-        const {
+    bool _instance_cull_check(
+        VSInstance* p_instance,
+        uint32_t p_cull_mask
+    ) const {
         uint32_t pairable_type = 1 << ((Instance*)p_instance)->base_type;
         return pairable_type & p_cull_mask;
     }
@@ -840,7 +867,8 @@ public:
 
         ~Occluder() override {
             if (scenario) {
-                scenario->_portal_renderer.occluder_destroy(scenario_occluder_id
+                scenario->_portal_renderer.occluder_destroy(
+                    scenario_occluder_id
                 );
                 scenario             = nullptr;
                 scenario_occluder_id = 0;
@@ -1005,7 +1033,8 @@ public:
     _FORCE_INLINE_ void _update_instance(Instance* p_instance);
     _FORCE_INLINE_ void _update_instance_aabb(Instance* p_instance);
     _FORCE_INLINE_ void _update_dirty_instance(Instance* p_instance);
-    _FORCE_INLINE_ void _update_instance_lightmap_captures(Instance* p_instance
+    _FORCE_INLINE_ void _update_instance_lightmap_captures(
+        Instance* p_instance
     );
 
     _FORCE_INLINE_ bool _light_instance_update_shadow(

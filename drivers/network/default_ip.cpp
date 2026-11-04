@@ -106,7 +106,8 @@ void DefaultIP::_resolve_hostname(
 
 #if defined(UWP_ENABLED)
 
-void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+void DefaultIP::get_local_interfaces(
+    Map<String, Interface_Info>* r_interfaces
 ) const {
     using namespace Windows::Networking;
     using namespace Windows::Networking::Connectivity;
@@ -142,7 +143,8 @@ void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 
 #else
 
-void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+void DefaultIP::get_local_interfaces(
+    Map<String, Interface_Info>* r_interfaces
 ) const {
     ULONG buf_size = 1024;
     IP_ADAPTER_ADDRESSES* addrs;
@@ -203,7 +205,8 @@ void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
 
 #else // UNIX
 
-void DefaultIP::get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+void DefaultIP::get_local_interfaces(
+    Map<String, Interface_Info>* r_interfaces
 ) const {
     struct ifaddrs* ifAddrStruct = nullptr;
     struct ifaddrs* ifa          = nullptr;

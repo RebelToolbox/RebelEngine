@@ -252,8 +252,8 @@ static NSCursor* cursorFromSelector(SEL selector, SEL fallback = nil) {
     return YES;
 }
 
-- (NSApplicationTerminateReply
-)applicationShouldTerminate:(NSApplication*)sender {
+- (NSApplicationTerminateReply)applicationShouldTerminate:
+    (NSApplication*)sender {
     if (MacOSOS::singleton->get_main_loop()) {
         MacOSOS::singleton->get_main_loop()->notification(
             MainLoop::NOTIFICATION_WM_QUIT_REQUEST
@@ -599,8 +599,8 @@ static const NSRange kEmptyRange = {NSNotFound, 0};
 }
 
 - (NSAttributedString*)attributedSubstringForProposedRange:(NSRange)aRange
-                                               actualRange:(NSRangePointer
-                                                           )actualRange {
+                                               actualRange:
+                                                   (NSRangePointer)actualRange {
     return nil;
 }
 
@@ -1527,9 +1527,9 @@ void MacOSOS::_update_global_menu() {
             }
         }
         NSMenuItem* menu_item = [main_menu
-            addItemWithTitle:[NSString
-                                 stringWithUTF8String:E->get().utf8().get_data(
-                                                      )]
+            addItemWithTitle:[NSString stringWithUTF8String:E->get()
+                                                                .utf8()
+                                                                .get_data()]
                       action:nil
                keyEquivalent:@""];
         [main_menu setSubmenu:menu forItem:menu_item];
@@ -2185,14 +2185,14 @@ void MacOSOS::set_cursor_shape(CursorShape p_shape) {
                 ) set];
                 break;
             case CURSOR_BDIAGSIZE:
-                [cursorFromSelector(@selector
-                                    (_windowResizeNorthEastSouthWestCursor))
-                    set];
+                [cursorFromSelector(
+                    @selector(_windowResizeNorthEastSouthWestCursor)
+                ) set];
                 break;
             case CURSOR_FDIAGSIZE:
-                [cursorFromSelector(@selector
-                                    (_windowResizeNorthWestSouthEastCursor))
-                    set];
+                [cursorFromSelector(
+                    @selector(_windowResizeNorthWestSouthEastCursor)
+                ) set];
                 break;
             case CURSOR_MOVE:
                 [[NSCursor arrowCursor] set];
@@ -2706,8 +2706,10 @@ OS::VideoMode MacOSOS::get_video_mode(int p_screen) const {
     return vm;
 }
 
-void MacOSOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
-    const {}
+void MacOSOS::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {}
 
 int MacOSOS::get_screen_count() const {
     NSArray* screenArray = [NSScreen screens];
@@ -3325,9 +3327,9 @@ Error MacOSOS::execute(
             for (const List<String>::Element* E = p_arguments.front(); E;
                  E                              = E->next()) {
                 [arguments
-                    addObject:[NSString
-                                  stringWithUTF8String:E->get().utf8().get_data(
-                                                       )]];
+                    addObject:[NSString stringWithUTF8String:E->get()
+                                                                 .utf8()
+                                                                 .get_data()]];
             }
             NSWorkspaceOpenConfiguration* configuration =
                 [[NSWorkspaceOpenConfiguration alloc] init];
@@ -3517,9 +3519,14 @@ void _update_keyboard_layouts() {
     // Update latin variant
     latin_variant = OS::LATIN_KEYBOARD_QWERTY;
 
-    CGKeyCode keys[] =
-        {kVK_ANSI_Q, kVK_ANSI_W, kVK_ANSI_E, kVK_ANSI_R, kVK_ANSI_T, kVK_ANSI_Y
-        };
+    CGKeyCode keys[] = {
+        kVK_ANSI_Q,
+        kVK_ANSI_W,
+        kVK_ANSI_E,
+        kVK_ANSI_R,
+        kVK_ANSI_T,
+        kVK_ANSI_Y
+    };
     NSString* test = createStringForKeys(keys, 6);
 
     if ([test isEqualToString:@"qwertz"]) {

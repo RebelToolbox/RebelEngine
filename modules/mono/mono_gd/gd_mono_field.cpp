@@ -30,9 +30,9 @@ void GDMonoField::set_value_from_variant(
 
 #define SET_FROM_ARRAY(m_type)                                                 \
     {                                                                          \
-        MonoArray* managed =                                                   \
-            GDMonoMarshal::m_type##_to_mono_array(p_value.operator ::m_type()  \
-            );                                                                 \
+        MonoArray* managed = GDMonoMarshal::m_type##_to_mono_array(            \
+            p_value.operator ::m_type()                                        \
+        );                                                                     \
         mono_field_set_value(p_object, mono_field, managed);                   \
     }
 
@@ -314,9 +314,9 @@ void GDMonoField::set_value_from_variant(
             }
 
             if (CACHED_CLASS(NodePath) == type_class) {
-                MonoObject* managed =
-                    GDMonoUtils::create_managed_from(p_value.operator NodePath()
-                    );
+                MonoObject* managed = GDMonoUtils::create_managed_from(
+                    p_value.operator NodePath()
+                );
                 mono_field_set_value(p_object, mono_field, managed);
                 break;
             }
@@ -420,9 +420,9 @@ void GDMonoField::set_value_from_variant(
                     mono_field_set_value(p_object, mono_field, managed);
                 } break;
                 case Variant::_RID: {
-                    MonoObject* managed =
-                        GDMonoUtils::create_managed_from(p_value.operator RID()
-                        );
+                    MonoObject* managed = GDMonoUtils::create_managed_from(
+                        p_value.operator RID()
+                    );
                     mono_field_set_value(p_object, mono_field, managed);
                 } break;
                 case Variant::OBJECT: {
@@ -499,7 +499,8 @@ void GDMonoField::set_value_from_variant(
             }
 
             // System.Collections.Generic.Dictionary<TKey, TValue>
-            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(reftype
+            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(
+                    reftype
                 )) {
                 MonoReflectionType* key_reftype   = nullptr;
                 MonoReflectionType* value_reftype = nullptr;
@@ -658,8 +659,8 @@ bool GDMonoField::is_static() {
 }
 
 IMonoClassMember::Visibility GDMonoField::get_visibility() {
-    switch (mono_field_get_flags(mono_field) & MONO_FIELD_ATTR_FIELD_ACCESS_MASK
-    ) {
+    switch (mono_field_get_flags(mono_field)
+            & MONO_FIELD_ATTR_FIELD_ACCESS_MASK) {
         case MONO_FIELD_ATTR_PRIVATE:
             return IMonoClassMember::PRIVATE;
         case MONO_FIELD_ATTR_FAM_AND_ASSEM:

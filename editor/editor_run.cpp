@@ -40,9 +40,11 @@ Error EditorRun::run(
     const String conn_string =
         ScriptEditor::get_singleton()->get_debugger()->get_connection_string();
     if (!conn_string.empty()) {
-        args.push_back(ScriptEditor::get_singleton()
-                           ->get_debugger()
-                           ->get_connection_string());
+        args.push_back(
+            ScriptEditor::get_singleton()
+                ->get_debugger()
+                ->get_connection_string()
+        );
     } else { // Try anyway with default settings
         const String remote_host =
             EditorSettings::get_singleton()->get("network/debug/remote_host");
@@ -105,9 +107,9 @@ Error EditorRun::run(
     Size2 test_size;
     test_size.x =
         ProjectSettings::get_singleton()->get("display/window/size/test_width");
-    test_size.y =
-        ProjectSettings::get_singleton()->get("display/window/size/test_height"
-        );
+    test_size.y = ProjectSettings::get_singleton()->get(
+        "display/window/size/test_height"
+    );
     if (test_size.x > 0 && test_size.y > 0) {
         desired_size = test_size;
     }
@@ -122,14 +124,18 @@ Error EditorRun::run(
             display_scale =
                 1; // Both editor and project runs in hiDPI mode, do not scale.
         } else {
-            display_scale = OS::get_singleton()->get_screen_max_scale(
-            ); // Editor is in hiDPI mode, project is not, scale down.
+            display_scale =
+                OS::get_singleton()
+                    ->get_screen_max_scale(); // Editor is in hiDPI mode,
+                                              // project is not, scale down.
         }
     } else {
         if (hidpi_proj) {
             display_scale =
-                (1.f / OS::get_singleton()->get_screen_max_scale()
-                ); // Editor is not in hiDPI mode, project is, scale up.
+                (1.f
+                 / OS::get_singleton()
+                       ->get_screen_max_scale()); // Editor is not in hiDPI
+                                                  // mode, project is, scale up.
         } else {
             display_scale =
                 1; // Both editor and project runs in lowDPI mode, do not scale.

@@ -204,9 +204,9 @@ void AudioStreamPlayer2D::_notification(int p_what) {
                 }
 
                 StringName bus_name = area2d->get_audio_bus_name();
-                bus_index =
-                    AudioServer::get_singleton()->thread_find_bus_index(bus_name
-                    );
+                bus_index = AudioServer::get_singleton()->thread_find_bus_index(
+                    bus_name
+                );
                 break;
             }
 
@@ -235,7 +235,8 @@ void AudioStreamPlayer2D::_notification(int p_what) {
                             to_listener.xform(global_pos) - screen_size * 0.5;
                     }
 
-                    float dist = global_pos.distance_to(listener_in_global
+                    float dist = global_pos.distance_to(
+                        listener_in_global
                     ); // Distance to listener, or screen if none.
 
                     if (dist > max_distance) {
@@ -302,7 +303,8 @@ void AudioStreamPlayer2D::set_stream(Ref<AudioStream> p_stream) {
 
     AudioServer::get_singleton()->lock();
 
-    mix_buffer.resize(AudioServer::get_singleton()->thread_get_mix_buffer_size()
+    mix_buffer.resize(
+        AudioServer::get_singleton()->thread_get_mix_buffer_size()
     );
 
     if (stream_playback.is_valid()) {

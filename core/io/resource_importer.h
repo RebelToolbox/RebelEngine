@@ -92,7 +92,8 @@ public:
     }
 
     Ref<ResourceImporter> get_importer_by_name(const String& p_name) const;
-    Ref<ResourceImporter> get_importer_by_extension(const String& p_extension
+    Ref<ResourceImporter> get_importer_by_extension(
+        const String& p_extension
     ) const;
     void get_importers_for_extension(
         const String& p_extension,
@@ -114,9 +115,10 @@ protected:
     static void _bind_methods();
 
 public:
-    virtual String get_importer_name() const  = 0;
-    virtual String get_visible_name() const   = 0;
-    virtual void get_recognized_extensions(List<String>* p_extensions
+    virtual String get_importer_name() const = 0;
+    virtual String get_visible_name() const  = 0;
+    virtual void get_recognized_extensions(
+        List<String>* p_extensions
     ) const                                   = 0;
     virtual String get_save_extension() const = 0;
     virtual String get_resource_type() const  = 0;

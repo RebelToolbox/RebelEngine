@@ -25,8 +25,11 @@ private:
     bool is_common_device(const String& dev) const;
     void add_device_to_list(UPNPDev* dev, UPNPDev* devlist);
     void parse_igd(Ref<UPNPDevice> dev, UPNPDev* devlist);
-    char* load_description(const String& url, int* size, int* status_code)
-        const;
+    char* load_description(
+        const String& url,
+        int* size,
+        int* status_code
+    ) const;
 
 protected:
     static void _bind_methods();

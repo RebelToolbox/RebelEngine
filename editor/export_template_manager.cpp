@@ -1183,7 +1183,8 @@ ExportTemplateManager::ExportTemplateManager() {
 
     install_file_button = memnew(Button);
     install_file_button->set_text(TTR("Install from File"));
-    install_file_button->set_tooltip(TTR("Install templates from a local file.")
+    install_file_button->set_tooltip(
+        TTR("Install templates from a local file.")
     );
     install_file_hb->add_child(install_file_button);
     install_file_button->connect("pressed", this, "_install_file");

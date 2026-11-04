@@ -123,7 +123,8 @@ struct VariantObjectClassChecker<Control*> {
                 p_args[m_arg - 1]->get_type(),                                  \
                 argtype                                                         \
             )                                                                   \
-            || !VariantObjectClassChecker<P##m_arg>::check(*p_args[m_arg - 1]   \
+            || !VariantObjectClassChecker<P##m_arg>::check(                     \
+                *p_args[m_arg - 1]                                              \
             )) {                                                                \
             r_error.error    = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT; \
             r_error.argument = m_arg - 1;                                       \
@@ -135,7 +136,8 @@ struct VariantObjectClassChecker<Control*> {
 #define CHECK_NOARG(m_arg)                                                     \
     {                                                                          \
         if (p_arg##m_arg.get_type() != Variant::NIL) {                         \
-            if (r_argerror) *r_argerror = (m_arg - 1);                         \
+            if (r_argerror)                                                    \
+                *r_argerror = (m_arg - 1);                                     \
             return CALL_ERROR_EXTRA_ARGUMENT;                                  \
         }                                                                      \
     }
@@ -245,7 +247,8 @@ public:
     PropertyInfo get_argument_info(int p_argument) const;
     PropertyInfo get_return_info() const;
 
-    void set_argument_names(const Vector<StringName>& p_names
+    void set_argument_names(
+        const Vector<StringName>& p_names
     ); // set by class, db, can't be inferred otherwise
     Vector<StringName> get_argument_names() const;
 

@@ -260,7 +260,8 @@ public:
         bool& r_missing_templates
     ) const override;
 
-    List<String> get_binary_extensions(const Ref<EditorExportPreset>& p_preset
+    List<String> get_binary_extensions(
+        const Ref<EditorExportPreset>& p_preset
     ) const override;
 
     void _update_custom_build_project();

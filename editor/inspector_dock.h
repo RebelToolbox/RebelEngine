@@ -87,8 +87,10 @@ class InspectorDock : public VBoxContainer {
 
     void _warning_pressed();
     void _resource_created() const;
-    void _resource_selected(const RES& p_res, const String& p_property = "")
-        const;
+    void _resource_selected(
+        const RES& p_res,
+        const String& p_property = ""
+    ) const;
     void _edit_forward();
     void _edit_back();
     void _menu_collapseall();

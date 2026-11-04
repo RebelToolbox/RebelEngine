@@ -197,7 +197,8 @@ public:
         _cull_using_pvs = p_enable;
     }
 
-    void rooms_update_gameplay_monitor(const Vector<Vector3>& p_camera_positions
+    void rooms_update_gameplay_monitor(
+        const Vector<Vector3>& p_camera_positions
     );
 
     // for use in the editor only, to allow a cheap way of turning off portals
@@ -383,7 +384,8 @@ public:
         return _occluder_pool[p_pool_id];
     }
 
-    const VSOccluder_Sphere& get_pool_occluder_sphere(uint32_t p_pool_id
+    const VSOccluder_Sphere& get_pool_occluder_sphere(
+        uint32_t p_pool_id
     ) const {
         return _occluder_sphere_pool[p_pool_id];
     }

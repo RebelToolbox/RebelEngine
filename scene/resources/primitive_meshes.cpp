@@ -607,7 +607,8 @@ void CubeMesh::_create_mesh_array(Array& p_arr) const {
             v       /= (2.0 * (subdivide_h + 1.0));
 
             // front
-            points.push_back(Vector3(x, -y, -start_pos.z)
+            points.push_back(
+                Vector3(x, -y, -start_pos.z)
             ); // double negative on the Z!
             normals.push_back(Vector3(0.0, 0.0, 1.0));
             ADD_TANGENT(1.0, 0.0, 0.0, 1.0);
@@ -1195,7 +1196,8 @@ void PlaneMesh::_create_mesh_array(Array& p_arr) const {
             points.push_back(Vector3(-x, 0.0, -z) + center_offset);
             normals.push_back(Vector3(0.0, 1.0, 0.0));
             ADD_TANGENT(1.0, 0.0, 0.0, 1.0);
-            uvs.push_back(Vector2(1.0 - u, 1.0 - v)
+            uvs.push_back(
+                Vector2(1.0 - u, 1.0 - v)
             ); /* 1.0 - uv to match orientation with Quad */
             point++;
 
@@ -1376,7 +1378,8 @@ void PrismMesh::_create_mesh_array(Array& p_arr) const {
             u *= scale;
 
             /* front */
-            points.push_back(Vector3(start_x + x, -y, -start_pos.z)
+            points.push_back(
+                Vector3(start_x + x, -y, -start_pos.z)
             ); // double negative on the Z!
             normals.push_back(Vector3(0.0, 0.0, 1.0));
             ADD_TANGENT(1.0, 0.0, 0.0, 1.0);

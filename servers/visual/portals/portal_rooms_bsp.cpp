@@ -142,8 +142,8 @@ int PortalRoomsBSP::find_room_within(
                 // the internal room) but with equal priority we just choose the
                 // regular best fit.
                 if ((room._priority > closest_priority)
-                    || ((room._priority == closest_priority) && (dist < closest)
-                    )) {
+                    || ((room._priority == closest_priority)
+                        && (dist < closest))) {
                     closest          = dist;
                     closest_room_id  = room_id;
                     closest_priority = room._priority;

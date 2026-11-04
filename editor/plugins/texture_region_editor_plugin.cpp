@@ -83,11 +83,13 @@ void TextureRegionEditor::_region_draw() {
         if (snap_step.x != 0) {
             if (snap_separation.x == 0) {
                 for (int i = 0; i < s.width; i++) {
-                    int cell = Math::fast_ftoi(Math::floor(
-                        (mtx.affine_inverse().xform(Vector2(i, 0)).x
-                         - snap_offset.x)
-                        / snap_step.x
-                    ));
+                    int cell = Math::fast_ftoi(
+                        Math::floor(
+                            (mtx.affine_inverse().xform(Vector2(i, 0)).x
+                             - snap_offset.x)
+                            / snap_step.x
+                        )
+                    );
                     if (i == 0) {
                         last_cell = cell;
                     }
@@ -102,11 +104,13 @@ void TextureRegionEditor::_region_draw() {
                 }
             } else {
                 for (int i = 0; i < s.width; i++) {
-                    int cell = Math::fast_ftoi(Math::floor(
-                        (mtx.affine_inverse().xform(Vector2(i, 0)).x
-                         - snap_offset.x)
-                        / (snap_step.x + snap_separation.x)
-                    ));
+                    int cell = Math::fast_ftoi(
+                        Math::floor(
+                            (mtx.affine_inverse().xform(Vector2(i, 0)).x
+                             - snap_offset.x)
+                            / (snap_step.x + snap_separation.x)
+                        )
+                    );
                     if (i == 0) {
                         last_cell = cell;
                     }
@@ -129,11 +133,13 @@ void TextureRegionEditor::_region_draw() {
         if (snap_step.y != 0) {
             if (snap_separation.y == 0) {
                 for (int i = 0; i < s.height; i++) {
-                    int cell = Math::fast_ftoi(Math::floor(
-                        (mtx.affine_inverse().xform(Vector2(0, i)).y
-                         - snap_offset.y)
-                        / snap_step.y
-                    ));
+                    int cell = Math::fast_ftoi(
+                        Math::floor(
+                            (mtx.affine_inverse().xform(Vector2(0, i)).y
+                             - snap_offset.y)
+                            / snap_step.y
+                        )
+                    );
                     if (i == 0) {
                         last_cell = cell;
                     }
@@ -148,11 +154,13 @@ void TextureRegionEditor::_region_draw() {
                 }
             } else {
                 for (int i = 0; i < s.height; i++) {
-                    int cell = Math::fast_ftoi(Math::floor(
-                        (mtx.affine_inverse().xform(Vector2(0, i)).y
-                         - snap_offset.y)
-                        / (snap_step.y + snap_separation.y)
-                    ));
+                    int cell = Math::fast_ftoi(
+                        Math::floor(
+                            (mtx.affine_inverse().xform(Vector2(0, i)).y
+                             - snap_offset.y)
+                            / (snap_step.y + snap_separation.y)
+                        )
+                    );
                     if (i == 0) {
                         last_cell = cell;
                     }
@@ -746,9 +754,9 @@ void TextureRegionEditor::_region_input(const Ref<InputEvent>& p_input) {
                         new_margin = Math::round(new_margin);
                     }
                 } else {
-                    Vector2 pos_snapped =
-                        snap_point(mtx.affine_inverse().xform(mm->get_position()
-                        ));
+                    Vector2 pos_snapped = snap_point(
+                        mtx.affine_inverse().xform(mm->get_position())
+                    );
                     Rect2 rect_rounded =
                         Rect2(rect.position.round(), rect.size.round());
 

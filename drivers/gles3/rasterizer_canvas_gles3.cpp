@@ -200,7 +200,8 @@ void RasterizerCanvasGLES3::_legacy_canvas_render_item(
                     VisualServerRaster::redraw_request();
                 }
 
-                state.canvas_shader.set_custom_shader(shader_ptr->custom_code_id
+                state.canvas_shader.set_custom_shader(
+                    shader_ptr->custom_code_id
                 );
                 state.canvas_shader.bind();
             }
@@ -921,8 +922,8 @@ void RasterizerCanvasGLES3::render_batches(
                                             nullptr,
                                             pline->line_colors.size() == 1
                                                 ? pline->line_colors.ptr()
-                                                : &pline->line_colors.ptr(
-                                                  )[offset],
+                                                : &pline->line_colors
+                                                       .ptr()[offset],
                                             pline->line_colors.size() == 1
                                         );
                                         todo   -= to_draw;
@@ -1768,7 +1769,8 @@ void RasterizerCanvasGLES3::render_batches(
                                 );
                             }
 
-                            glBindVertexArray(data.particle_quad_array
+                            glBindVertexArray(
+                                data.particle_quad_array
                             ); // use particle quad array
                             glBindBuffer(
                                 GL_ARRAY_BUFFER,
@@ -2252,7 +2254,8 @@ void RasterizerCanvasGLES3::render_joined_item(
                     VisualServerRaster::redraw_request();
                 }
 
-                state.canvas_shader.set_custom_shader(shader_ptr->custom_code_id
+                state.canvas_shader.set_custom_shader(
+                    shader_ptr->custom_code_id
                 );
                 state.canvas_shader.bind();
             }
@@ -3751,7 +3754,8 @@ void RasterizerCanvasGLES3::initialize() {
 
     // deal with ninepatch mode option
     if (bdata.settings_ninepatch_mode == 1) {
-        state.canvas_shader.add_custom_define("#define USE_NINEPATCH_SCALING\n"
+        state.canvas_shader.add_custom_define(
+            "#define USE_NINEPATCH_SCALING\n"
         );
     }
 

@@ -108,8 +108,10 @@ protected:
     void _get_property_list(List<PropertyInfo>* p_list) const override;
 
 public:
-    Variant getvar(const Variant& p_key, bool* r_valid = nullptr)
-        const override;
+    Variant getvar(
+        const Variant& p_key,
+        bool* r_valid = nullptr
+    ) const override;
     void setvar(
         const Variant& p_key,
         const Variant& p_value,
@@ -157,8 +159,10 @@ bool JavaScriptObjectImpl::_set(
     return true;
 }
 
-bool JavaScriptObjectImpl::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool JavaScriptObjectImpl::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     ERR_FAIL_COND_V_MSG(!_js_id, false, "Invalid JS instance");
     const String name = p_name;
     rebel_js_wrapper_ex exchange;
@@ -168,8 +172,10 @@ bool JavaScriptObjectImpl::_get(const StringName& p_name, Variant& r_ret)
     return true;
 }
 
-Variant JavaScriptObjectImpl::getvar(const Variant& p_key, bool* r_valid)
-    const {
+Variant JavaScriptObjectImpl::getvar(
+    const Variant& p_key,
+    bool* r_valid
+) const {
     if (r_valid) {
         *r_valid = false;
     }
@@ -217,7 +223,8 @@ void JavaScriptObjectImpl::setvar(
     }
 }
 
-void JavaScriptObjectImpl::_get_property_list(List<PropertyInfo>* p_list
+void JavaScriptObjectImpl::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {}
 
 void JavaScriptObjectImpl::_free_lock(void** p_lock, int p_type) {

@@ -177,14 +177,14 @@ class TooltipPanel : public PanelContainer {
     GDCLASS(TooltipPanel, PanelContainer);
 
 public:
-    TooltipPanel(){};
+    TooltipPanel() {};
 };
 
 class TooltipLabel : public Label {
     GDCLASS(TooltipLabel, Label);
 
 public:
-    TooltipLabel(){};
+    TooltipLabel() {};
 };
 
 /////////////////////////////////////
@@ -689,7 +689,8 @@ void Viewport::_process_picking(bool p_ignore_paused) {
                             bool send_event = true;
                             if (is_mouse) {
                                 Map<ObjectID, uint64_t>::Element* F =
-                                    physics_2d_mouseover.find(res[i].collider_id
+                                    physics_2d_mouseover.find(
+                                        res[i].collider_id
                                     );
 
                                 if (!F) {
@@ -2233,8 +2234,8 @@ void Viewport::_gui_input_event(Ref<InputEvent> p_event) {
             if (gui.mouse_focus_mask) {
                 // do not steal mouse focus and stuff while a focus mask exists
                 gui.mouse_focus_mask |= 1
-                                     << (mb->get_button_index() - 1
-                                        ); // add the button to the mask
+                                     << (mb->get_button_index()
+                                         - 1); // add the button to the mask
             } else {
                 bool is_handled = false;
 
@@ -2247,8 +2248,8 @@ void Viewport::_gui_input_event(Ref<InputEvent> p_event) {
                     if (!top->has_point(pos2)) {
                         if (top->data.modal_exclusive
                             || top->data.modal_frame
-                                   == Engine::get_singleton()->get_frames_drawn(
-                                   )) {
+                                   == Engine::get_singleton()
+                                          ->get_frames_drawn()) {
                             // cancel event, sorry, modal exclusive EATS UP ALL
                             // alternative, you can't pop out a window the same
                             // frame it was made modal (fixes many issues)
@@ -2574,9 +2575,9 @@ void Viewport::_gui_input_event(Ref<InputEvent> p_event) {
                                 popup_menu->get_parent()
                             );
                         }
-                        popup_menu_parent =
-                            Object::cast_to<MenuButton>(popup_menu->get_parent()
-                            );
+                        popup_menu_parent = Object::cast_to<MenuButton>(
+                            popup_menu->get_parent()
+                        );
                     }
                 }
 
@@ -2590,8 +2591,9 @@ void Viewport::_gui_input_event(Ref<InputEvent> p_event) {
                     && (popup_menu_parent->get_parent()->is_a_parent_of(
                             menu_button
                         )
-                        || menu_button->get_parent()->is_a_parent_of(popup_menu)
-                    )) {
+                        || menu_button->get_parent()->is_a_parent_of(
+                            popup_menu
+                        ))) {
                     popup_menu->notification(Control::NOTIFICATION_MODAL_CLOSE);
                     popup_menu->_modal_stack_remove();
                     popup_menu->hide();
@@ -2976,7 +2978,8 @@ List<Control*>::Element* Viewport::_gui_add_root_control(Control* p_control) {
     return gui.roots.push_back(p_control);
 }
 
-List<Control*>::Element* Viewport::_gui_add_subwindow_control(Control* p_control
+List<Control*>::Element* Viewport::_gui_add_subwindow_control(
+    Control* p_control
 ) {
     p_control
         ->connect("visibility_changed", this, "_subwindow_visibility_changed");
@@ -3064,7 +3067,8 @@ void Viewport::_gui_set_drag_preview(Control* p_base, Control* p_control) {
     }
     p_control->set_as_toplevel(true);
     p_control->set_position(gui.last_mouse_pos);
-    p_base->get_root_parent_control()->add_child(p_control
+    p_base->get_root_parent_control()->add_child(
+        p_control
     ); // add as child of viewport
     p_control->raise();
 
@@ -3075,9 +3079,9 @@ Control* Viewport::_gui_get_drag_preview() {
     if (!gui.drag_preview_id) {
         return nullptr;
     } else {
-        Control* drag_preview =
-            Object::cast_to<Control>(ObjectDB::get_instance(gui.drag_preview_id)
-            );
+        Control* drag_preview = Object::cast_to<Control>(
+            ObjectDB::get_instance(gui.drag_preview_id)
+        );
         if (!drag_preview) {
             ERR_PRINT("Don't free the control set as drag preview.");
             gui.drag_preview_id = 0;
@@ -3259,7 +3263,8 @@ void Viewport::_drop_physics_mouseover(bool p_paused_only) {
 List<Control*>::Element* Viewport::_gui_show_modal(Control* p_control) {
     List<Control*>::Element* node = gui.modal_stack.push_back(p_control);
     if (gui.key_focus) {
-        p_control->_modal_set_prev_focus_owner(gui.key_focus->get_instance_id()
+        p_control->_modal_set_prev_focus_owner(
+            gui.key_focus->get_instance_id()
         );
     } else {
         p_control->_modal_set_prev_focus_owner(0);
@@ -3319,8 +3324,8 @@ void Viewport::_post_gui_grab_click_focus() {
 
         gui.mouse_focus = focus_grabber;
         gui.focus_inv_xform =
-            gui.mouse_focus->get_global_transform_with_canvas().affine_inverse(
-            );
+            gui.mouse_focus->get_global_transform_with_canvas()
+                .affine_inverse();
         click = gui.mouse_focus->get_global_transform_with_canvas()
                     .affine_inverse()
                     .xform(gui.last_mouse_pos);
@@ -4362,7 +4367,8 @@ Viewport::Viewport() {
     listener                  = nullptr;
     camera                    = nullptr;
     override_canvas_transform = false;
-    canvas_layers.insert(NULL
+    canvas_layers.insert(
+        NULL
     ); // This eases picking code (interpreted as the canvas of the Viewport)
     arvr                  = false;
     size_override         = false;

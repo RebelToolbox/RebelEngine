@@ -206,8 +206,9 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
             c->set_island_list_next(constraint_island_list);
             constraint_island_list = c;
         }
-        p_space->area_remove_from_moved_list((SelfList<Area2DSW>*)aml.get_first(
-        )); // faster to remove here
+        p_space->area_remove_from_moved_list(
+            (SelfList<Area2DSW>*)aml.get_first()
+        ); // faster to remove here
     }
 
     { // profile
@@ -244,7 +245,8 @@ void Step2DSW::step(Space2DSW* p_space, real_t p_delta, int p_iterations) {
                 } else {
                     // list is empty, just skip
                     if (prev_ci) {
-                        prev_ci->set_island_list_next(ci->get_island_list_next()
+                        prev_ci->set_island_list_next(
+                            ci->get_island_list_next()
                         );
 
                     } else {

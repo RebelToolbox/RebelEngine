@@ -213,8 +213,9 @@ void ShaderTextEditor::_load_theme_settings() {
     if (shader.is_valid()) {
         for (const Map<StringName, ShaderLanguage::FunctionInfo>::Element* E =
                  ShaderTypes::get_singleton()
-                     ->get_functions(VisualServer::ShaderMode(shader->get_mode()
-                     ))
+                     ->get_functions(
+                         VisualServer::ShaderMode(shader->get_mode())
+                     )
                      .front();
              E;
              E = E->next()) {
@@ -231,9 +232,11 @@ void ShaderTextEditor::_load_theme_settings() {
                      ->get_modes(VisualServer::ShaderMode(shader->get_mode()))
                      .size();
              i++) {
-            built_ins.push_back(ShaderTypes::get_singleton()->get_modes(
-                VisualServer::ShaderMode(shader->get_mode())
-            )[i]);
+            built_ins.push_back(
+                ShaderTypes::get_singleton()->get_modes(
+                    VisualServer::ShaderMode(shader->get_mode())
+                )[i]
+            );
         }
     }
 

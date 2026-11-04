@@ -732,7 +732,8 @@ void WindowsAudioDriver::thread_func(void* p_udata) {
 
             if (invalidated) {
                 // Device is not valid anymore
-                WARN_PRINT("WASAPI: Current device invalidated, closing device"
+                WARN_PRINT(
+                    "WASAPI: Current device invalidated, closing device"
                 );
 
                 Error err = ad->finish_render_device();
@@ -780,9 +781,9 @@ void WindowsAudioDriver::thread_func(void* p_udata) {
             UINT32 num_frames_available;
             DWORD flags;
 
-            HRESULT hr =
-                ad->audio_input.capture_client->GetNextPacketSize(&packet_length
-                );
+            HRESULT hr = ad->audio_input.capture_client->GetNextPacketSize(
+                &packet_length
+            );
             if (hr == S_OK) {
                 while (packet_length != 0) {
                     hr = ad->audio_input.capture_client->GetBuffer(

@@ -369,7 +369,8 @@ bool CameraMatrix::get_endpoints(
     return true;
 }
 
-Vector<Plane> CameraMatrix::get_projection_planes(const Transform& p_transform
+Vector<Plane> CameraMatrix::get_projection_planes(
+    const Transform& p_transform
 ) const {
     /** Fast Plane Extraction from combined modelview/projection matrices.
      * References:

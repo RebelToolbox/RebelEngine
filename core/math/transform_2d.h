@@ -105,8 +105,10 @@ struct Transform2D {
     void operator*=(const Transform2D& p_transform);
     Transform2D operator*(const Transform2D& p_transform) const;
 
-    Transform2D interpolate_with(const Transform2D& p_transform, real_t p_c)
-        const;
+    Transform2D interpolate_with(
+        const Transform2D& p_transform,
+        real_t p_c
+    ) const;
 
     _FORCE_INLINE_ Vector2 basis_xform(const Vector2& p_vec) const;
     _FORCE_INLINE_ Vector2 basis_xform_inv(const Vector2& p_vec) const;
@@ -114,7 +116,8 @@ struct Transform2D {
     _FORCE_INLINE_ Vector2 xform_inv(const Vector2& p_vec) const;
     _FORCE_INLINE_ Rect2 xform(const Rect2& p_rect) const;
     _FORCE_INLINE_ Rect2 xform_inv(const Rect2& p_rect) const;
-    _FORCE_INLINE_ PoolVector<Vector2> xform(const PoolVector<Vector2>& p_array
+    _FORCE_INLINE_ PoolVector<Vector2> xform(
+        const PoolVector<Vector2>& p_array
     ) const;
     _FORCE_INLINE_ PoolVector<Vector2> xform_inv(
         const PoolVector<Vector2>& p_array
@@ -187,7 +190,8 @@ void Transform2D::set_rotation_and_scale(real_t p_rot, const Size2& p_scale) {
 Rect2 Transform2D::xform_inv(const Rect2& p_rect) const {
     Vector2 ends[4] = {
         xform_inv(p_rect.position),
-        xform_inv(Vector2(p_rect.position.x, p_rect.position.y + p_rect.size.y)
+        xform_inv(
+            Vector2(p_rect.position.x, p_rect.position.y + p_rect.size.y)
         ),
         xform_inv(Vector2(
             p_rect.position.x + p_rect.size.x,
@@ -205,7 +209,8 @@ Rect2 Transform2D::xform_inv(const Rect2& p_rect) const {
     return new_rect;
 }
 
-PoolVector<Vector2> Transform2D::xform(const PoolVector<Vector2>& p_array
+PoolVector<Vector2> Transform2D::xform(
+    const PoolVector<Vector2>& p_array
 ) const {
     PoolVector<Vector2> array;
     array.resize(p_array.size());
@@ -219,7 +224,8 @@ PoolVector<Vector2> Transform2D::xform(const PoolVector<Vector2>& p_array
     return array;
 }
 
-PoolVector<Vector2> Transform2D::xform_inv(const PoolVector<Vector2>& p_array
+PoolVector<Vector2> Transform2D::xform_inv(
+    const PoolVector<Vector2>& p_array
 ) const {
     PoolVector<Vector2> array;
     array.resize(p_array.size());

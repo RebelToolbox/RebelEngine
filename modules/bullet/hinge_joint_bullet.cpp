@@ -151,7 +151,8 @@ void HingeJointBullet::set_param(
     }
 }
 
-real_t HingeJointBullet::get_param(PhysicsServer::HingeJointParam p_param
+real_t HingeJointBullet::get_param(
+    PhysicsServer::HingeJointParam p_param
 ) const {
     switch (p_param) {
         case PhysicsServer::HINGE_JOINT_BIAS:

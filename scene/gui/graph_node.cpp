@@ -165,7 +165,8 @@ void GraphNode::_resort() {
     /** Second, pass successively to discard elements that can't be stretched,
        this will run while stretchable elements exist */
 
-    while (stretch_ratio_total > 0
+    while (
+        stretch_ratio_total > 0
     ) { // first of all, don't even be here if no stretchable objects exist
         bool refit_successful = true; // assume refit-test will go well
 

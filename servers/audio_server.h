@@ -98,8 +98,9 @@ public:
         return "Default";
     }
 
-    virtual Array capture_get_device_list(
-    ); // TODO: convert this and get_device_list to PoolStringArray
+    virtual Array capture_get_device_list(); // TODO: convert this and
+                                             // get_device_list to
+                                             // PoolStringArray
 
     virtual float get_latency() {
         return 0;

@@ -224,9 +224,11 @@ void HeightMapShape::_bind_methods() {
 }
 
 HeightMapShape::HeightMapShape() :
-    Shape(PhysicsServer::get_singleton()->shape_create(
-        PhysicsServer::SHAPE_HEIGHTMAP
-    )) {
+    Shape(
+        PhysicsServer::get_singleton()->shape_create(
+            PhysicsServer::SHAPE_HEIGHTMAP
+        )
+    ) {
     map_width = 2;
     map_depth = 2;
     map_data.resize(map_width * map_depth);

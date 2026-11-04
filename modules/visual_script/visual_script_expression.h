@@ -265,7 +265,8 @@ public:
         return "operators";
     }
 
-    VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    VisualScriptNodeInstance* instance(
+        VisualScriptInstance* p_instance
     ) override;
 
     VisualScriptExpression();

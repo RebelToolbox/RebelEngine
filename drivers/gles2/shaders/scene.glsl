@@ -969,7 +969,8 @@ void reflection_process(
 
     vec3 local_pos = (local_matrix * vec4(vertex, 1.0)).xyz;
 
-    if (any(greaterThan(abs(local_pos), box_extents)
+    if (any(
+            greaterThan(abs(local_pos), box_extents)
         )) { // out of the reflection box
         return;
     }
@@ -1283,8 +1284,9 @@ derivation.
 // alpha) See Filament docs, Specular G section.
 float V_GGX(float cos_theta_l, float cos_theta_v, float alpha) {
     return 0.5
-         / mix(2.0 * cos_theta_l * cos_theta_v, cos_theta_l + cos_theta_v, alpha
-         );
+         / mix(2.0 * cos_theta_l * cos_theta_v,
+               cos_theta_l + cos_theta_v,
+               alpha);
 }
 
 float D_GGX(float cos_theta_m, float alpha) {
@@ -2137,9 +2139,10 @@ FRAGMENT_SHADER_CODE
         vec4 captured     = vec4(0.0);
         float sum         = 0.0;
         for (int i = 0; i < 12; i++) {
-            float amount =
-                max(0.0, dot(local_normal, cone_dirs[i])
-                ); // not correct, but creates a nice wrap around effect
+            float amount = max(
+                0.0,
+                dot(local_normal, cone_dirs[i])
+            ); // not correct, but creates a nice wrap around effect
             captured += lightmap_captures[i] * amount;
             sum      += amount;
         }

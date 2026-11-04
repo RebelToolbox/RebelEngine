@@ -335,7 +335,8 @@ int Node2D::get_z_index() const {
     return z_index;
 }
 
-Transform2D Node2D::get_relative_transform_to_parent(const Node* p_parent
+Transform2D Node2D::get_relative_transform_to_parent(
+    const Node* p_parent
 ) const {
     if (p_parent == this) {
         return Transform2D();

@@ -76,13 +76,15 @@ public:
         const Edge& p_b
     ) {
         if (p_vertices[p_a.edge[0]].is_equal_approx(p_vertices[p_b.edge[0]])
-            && p_vertices[p_a.edge[1]].is_equal_approx(p_vertices[p_b.edge[1]]
+            && p_vertices[p_a.edge[1]].is_equal_approx(
+                p_vertices[p_b.edge[1]]
             )) {
             return true;
         }
 
         if (p_vertices[p_a.edge[0]].is_equal_approx(p_vertices[p_b.edge[1]])
-            && p_vertices[p_a.edge[1]].is_equal_approx(p_vertices[p_b.edge[0]]
+            && p_vertices[p_a.edge[1]].is_equal_approx(
+                p_vertices[p_b.edge[0]]
             )) {
             return true;
         }

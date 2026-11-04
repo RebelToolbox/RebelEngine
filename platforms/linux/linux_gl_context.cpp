@@ -21,7 +21,13 @@
 #define GLX_CONTEXT_MAJOR_VERSION_ARB 0x2091
 #define GLX_CONTEXT_MINOR_VERSION_ARB 0x2092
 
-typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
+typedef GLXContext (*GLXCREATECONTEXTATTRIBSARBPROC)(
+    Display*,
+    GLXFBConfig,
+    GLXContext,
+    Bool,
+    const int*
+);
 
 struct LinuxPrivateGLContext {
     ::GLXContext glx_context;
@@ -64,8 +70,9 @@ Error LinuxGLContext::initialize() {
     // DefaultScreen(x11_display));
 
     GLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB =
-        (GLXCREATECONTEXTATTRIBSARBPROC
-        )glXGetProcAddress((const GLubyte*)"glXCreateContextAttribsARB");
+        (GLXCREATECONTEXTATTRIBSARBPROC)glXGetProcAddress(
+            (const GLubyte*)"glXCreateContextAttribsARB"
+        );
 
     ERR_FAIL_COND_V(!glXCreateContextAttribsARB, ERR_UNCONFIGURED);
 
@@ -286,16 +293,16 @@ void LinuxGLContext::set_use_vsync(bool p_use) {
         String extensions =
             glXQueryExtensionsString(x11_display, DefaultScreen(x11_display));
         if (extensions.find("GLX_EXT_swap_control") != -1) {
-            glXSwapIntervalEXT = (PFNGLXSWAPINTERVALEXTPROC
-            )glXGetProcAddressARB((const GLubyte*)"glXSwapIntervalEXT");
+            glXSwapIntervalEXT = (PFNGLXSWAPINTERVALEXTPROC)
+                glXGetProcAddressARB((const GLubyte*)"glXSwapIntervalEXT");
         }
         if (extensions.find("GLX_MESA_swap_control") != -1) {
-            glXSwapIntervalMESA = (PFNGLXSWAPINTERVALSGIPROC
-            )glXGetProcAddressARB((const GLubyte*)"glXSwapIntervalMESA");
+            glXSwapIntervalMESA = (PFNGLXSWAPINTERVALSGIPROC)
+                glXGetProcAddressARB((const GLubyte*)"glXSwapIntervalMESA");
         }
         if (extensions.find("GLX_SGI_swap_control") != -1) {
-            glXSwapIntervalSGI = (PFNGLXSWAPINTERVALSGIPROC
-            )glXGetProcAddressARB((const GLubyte*)"glXSwapIntervalSGI");
+            glXSwapIntervalSGI = (PFNGLXSWAPINTERVALSGIPROC)
+                glXGetProcAddressARB((const GLubyte*)"glXSwapIntervalSGI");
         }
     }
     int val = p_use ? 1 : 0;

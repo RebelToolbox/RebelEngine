@@ -48,7 +48,8 @@ void ScriptCreateDialog::_notification(int p_what) {
 
             path_button->set_icon(get_icon("Folder", "EditorIcons"));
             parent_browse_button->set_icon(get_icon("Folder", "EditorIcons"));
-            parent_search_button->set_icon(get_icon("ClassList", "EditorIcons")
+            parent_search_button->set_icon(
+                get_icon("ClassList", "EditorIcons")
             );
             status_panel->add_style_override(
                 "panel",
@@ -337,8 +338,9 @@ void ScriptCreateDialog::_create_new() {
         Error err =
             ResourceSaver::save(lpath, scr, ResourceSaver::FLAG_CHANGE_PATH);
         if (err != OK) {
-            alert->set_text(TTR("Error - Could not create script in filesystem."
-            ));
+            alert->set_text(
+                TTR("Error - Could not create script in filesystem.")
+            );
             alert->popup_centered();
             return;
         }

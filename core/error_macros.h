@@ -527,8 +527,9 @@ void _err_flush_stdout();
             __FUNCTION__,                                                      \
             __FILE__,                                                          \
             __LINE__,                                                          \
-            "Condition \"" _STR(m_cond                                         \
-            ) "\" is true. Returning: " _STR(m_retval),                        \
+            "Condition \"" _STR(m_cond) "\" is true. Returning: " _STR(        \
+                m_retval                                                       \
+            ),                                                                 \
             m_msg                                                              \
         );                                                                     \
         return m_retval;                                                       \
@@ -545,8 +546,9 @@ void _err_flush_stdout();
             __FUNCTION__,                                                      \
             __FILE__,                                                          \
             __LINE__,                                                          \
-            "Condition \"" _STR(m_cond                                         \
-            ) "\" is true. Returning: " _STR(m_retval)                         \
+            "Condition \"" _STR(m_cond) "\" is true. Returning: " _STR(        \
+                m_retval                                                       \
+            )                                                                  \
         );                                                                     \
         return m_retval;                                                       \
     } else                                                                     \
@@ -895,7 +897,8 @@ void _err_flush_stdout();
 #ifdef DEV_ENABLED
 #define DEV_CHECK_ONCE(m_cond)                                                 \
     if (unlikely(!(m_cond))) {                                                 \
-        ERR_PRINT_ONCE("DEV_CHECK_ONCE failed  \"" _STR(m_cond) "\" is false." \
+        ERR_PRINT_ONCE(                                                        \
+            "DEV_CHECK_ONCE failed  \"" _STR(m_cond) "\" is false."            \
         );                                                                     \
     } else                                                                     \
         ((void)0)

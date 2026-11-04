@@ -996,10 +996,9 @@ int Space2DSW::test_body_ray_separation(
                                         == CollisionObject2DSW::TYPE_BODY) {
                                         Body2DSW* body = (Body2DSW*)col_obj;
 
-                                        Vector2 rel_vec =
-                                            b
-                                            - body->get_transform().get_origin(
-                                            );
+                                        Vector2 rel_vec = b
+                                                        - body->get_transform()
+                                                              .get_origin();
                                         result.collider_velocity =
                                             Vector2(
                                                 -body->get_angular_velocity()
@@ -1169,10 +1168,11 @@ bool Space2DSW::test_body_motion(
                             col_obj->get_shape_one_way_collision_margin(
                                 shape_idx
                             );
-                        cbk.valid_depth =
-                            MAX(owc_margin, p_margin
-                            ); // user specified, but never less than actual
-                               // margin or it won't work
+                        cbk.valid_depth = MAX(
+                            owc_margin,
+                            p_margin
+                        ); // user specified, but never less than actual
+                           // margin or it won't work
                         cbk.invalid_by_dir = 0;
 
                         if (col_obj->get_type()
@@ -1383,7 +1383,8 @@ bool Space2DSW::test_body_motion(
                         nullptr,
                         0
                     )) {
-                    if (col_obj->is_shape_set_as_one_way_collision(col_shape_idx
+                    if (col_obj->is_shape_set_as_one_way_collision(
+                            col_shape_idx
                         )) {
                         Vector2 direction =
                             col_obj_shape_xform.get_axis(1).normalized();
@@ -1729,16 +1730,16 @@ void* Space2DSW::_broadphase_pair(
     if (type_A == CollisionObject2DSW::TYPE_AREA) {
         Area2DSW* area_a = static_cast<Area2DSW*>(p_object_A);
         if (type_B == CollisionObject2DSW::TYPE_AREA) {
-            Area2DSW* area_b = static_cast<Area2DSW*>(p_object_B);
-            Area2Pair2DSW* area2_pair =
-                memnew(Area2Pair2DSW(area_b, p_subindex_B, area_a, p_subindex_A)
-                );
+            Area2DSW* area_b          = static_cast<Area2DSW*>(p_object_B);
+            Area2Pair2DSW* area2_pair = memnew(
+                Area2Pair2DSW(area_b, p_subindex_B, area_a, p_subindex_A)
+            );
             return area2_pair;
         } else {
-            Body2DSW* body_b = static_cast<Body2DSW*>(p_object_B);
-            AreaPair2DSW* area_pair =
-                memnew(AreaPair2DSW(body_b, p_subindex_B, area_a, p_subindex_A)
-                );
+            Body2DSW* body_b        = static_cast<Body2DSW*>(p_object_B);
+            AreaPair2DSW* area_pair = memnew(
+                AreaPair2DSW(body_b, p_subindex_B, area_a, p_subindex_A)
+            );
             return area_pair;
         }
 
@@ -1787,7 +1788,8 @@ void Space2DSW::body_add_to_inertia_update_list(SelfList<Body2DSW>* p_body) {
     inertia_update_list.add(p_body);
 }
 
-void Space2DSW::body_remove_from_inertia_update_list(SelfList<Body2DSW>* p_body
+void Space2DSW::body_remove_from_inertia_update_list(
+    SelfList<Body2DSW>* p_body
 ) {
     inertia_update_list.remove(p_body);
 }
@@ -1822,7 +1824,8 @@ void Space2DSW::area_add_to_monitor_query_list(SelfList<Area2DSW>* p_area) {
     monitor_query_list.add(p_area);
 }
 
-void Space2DSW::area_remove_from_monitor_query_list(SelfList<Area2DSW>* p_area
+void Space2DSW::area_remove_from_monitor_query_list(
+    SelfList<Area2DSW>* p_area
 ) {
     monitor_query_list.remove(p_area);
 }

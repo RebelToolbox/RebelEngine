@@ -653,7 +653,8 @@ void CollisionShape2DEditorPlugin::make_visible(bool visible) {
     }
 }
 
-CollisionShape2DEditorPlugin::CollisionShape2DEditorPlugin(EditorNode* p_editor
+CollisionShape2DEditorPlugin::CollisionShape2DEditorPlugin(
+    EditorNode* p_editor
 ) {
     editor = p_editor;
 

@@ -19,7 +19,8 @@ bool ConvexPolygonShape2D::_edit_is_selected_on_click(
 
 void ConvexPolygonShape2D::_update_shape() {
     Vector<Vector2> final_points = points;
-    if (Geometry::is_polygon_clockwise(final_points
+    if (Geometry::is_polygon_clockwise(
+            final_points
         )) { // needs to be counter clockwise
         final_points.invert();
     }
