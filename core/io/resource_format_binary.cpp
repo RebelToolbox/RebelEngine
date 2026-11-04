@@ -571,11 +571,13 @@ Error ResourceInteractiveLoaderBinary::parse_variant(Variant& r_v) {
                 Ref<Image> image;
 
                 if (encoding == IMAGE_ENCODING_LOSSY && Image::webp_unpacker) {
-                    image = Image::webp_unpacker(data
+                    image = Image::webp_unpacker(
+                        data
                     ); // IMAGE_ENCODING_LOSSY always meant WebP
                 } else if (encoding == IMAGE_ENCODING_LOSSLESS
                            && Image::png_unpacker) {
-                    image = Image::png_unpacker(data
+                    image = Image::png_unpacker(
+                        data
                     ); // IMAGE_ENCODING_LOSSLESS always meant png
                 }
                 _advance_padding(data.size());
@@ -593,7 +595,8 @@ Error ResourceInteractiveLoaderBinary::parse_variant(Variant& r_v) {
     return OK; // never reach anyway
 }
 
-void ResourceInteractiveLoaderBinary::set_local_path(const String& p_local_path
+void ResourceInteractiveLoaderBinary::set_local_path(
+    const String& p_local_path
 ) {
     res_path = p_local_path;
 }
@@ -751,7 +754,8 @@ int ResourceInteractiveLoaderBinary::get_stage_count() const {
     return external_resources.size() + internal_resources.size();
 }
 
-void ResourceInteractiveLoaderBinary::set_translation_remapped(bool p_remapped
+void ResourceInteractiveLoaderBinary::set_translation_remapped(
+    bool p_remapped
 ) {
     translation_remapped = p_remapped;
 }
@@ -1308,7 +1312,8 @@ Error ResourceFormatLoaderBinary::rename_dependencies(
     return OK;
 }
 
-String ResourceFormatLoaderBinary::get_resource_type(const String& p_path
+String ResourceFormatLoaderBinary::get_resource_type(
+    const String& p_path
 ) const {
     FileAccess* f = FileAccess::open(p_path, FileAccess::READ);
     if (!f) {
@@ -1808,7 +1813,8 @@ void ResourceFormatSaverBinaryInstance::save_unicode_string(
     f->store_buffer((const uint8_t*)utf8.get_data(), utf8.length() + 1);
 }
 
-int ResourceFormatSaverBinaryInstance::get_string_index(const String& p_string
+int ResourceFormatSaverBinaryInstance::get_string_index(
+    const String& p_string
 ) {
     StringName s = p_string;
     if (string_map.has(s)) {

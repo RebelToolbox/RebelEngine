@@ -215,7 +215,8 @@ void StepSW::step(SpaceSW* p_space, real_t p_delta, int p_iterations) {
             c->set_island_list_next(constraint_island_list);
             constraint_island_list = c;
         }
-        p_space->area_remove_from_moved_list((SelfList<AreaSW>*)aml.get_first()
+        p_space->area_remove_from_moved_list(
+            (SelfList<AreaSW>*)aml.get_first()
         ); // faster to remove here
     }
 

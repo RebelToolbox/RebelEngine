@@ -50,15 +50,19 @@ public:
         return RID();
     }
 
-    void environment_set_background(RID p_env, VS::EnvironmentBG p_bg)
-        override {}
+    void environment_set_background(
+        RID p_env,
+        VS::EnvironmentBG p_bg
+    ) override {}
 
     void environment_set_sky(RID p_env, RID p_sky) override {}
 
     void environment_set_sky_custom_fov(RID p_env, float p_scale) override {}
 
-    void environment_set_sky_orientation(RID p_env, const Basis& p_orientation)
-        override {}
+    void environment_set_sky_orientation(
+        RID p_env,
+        const Basis& p_orientation
+    ) override {}
 
     void environment_set_bg_color(RID p_env, const Color& p_color) override {}
 
@@ -74,8 +78,10 @@ public:
         float p_sky_contribution = 0.0
     ) override {}
 
-    void environment_set_camera_feed_id(RID p_env, int p_camera_feed_id)
-        override {};
+    void environment_set_camera_feed_id(
+        RID p_env,
+        int p_camera_feed_id
+    ) override {};
 
     void environment_set_dof_blur_near(
         RID p_env,
@@ -230,8 +236,10 @@ public:
 
     void reflection_atlas_set_size(RID p_ref_atlas, int p_size) override {}
 
-    void reflection_atlas_set_subdivision(RID p_ref_atlas, int p_subdiv)
-        override {}
+    void reflection_atlas_set_subdivision(
+        RID p_ref_atlas,
+        int p_subdiv
+    ) override {}
 
     RID reflection_probe_instance_create(RID p_probe) override {
         return RID();
@@ -267,16 +275,21 @@ public:
         return RID();
     }
 
-    void gi_probe_instance_set_light_data(RID p_probe, RID p_base, RID p_data)
-        override {}
+    void gi_probe_instance_set_light_data(
+        RID p_probe,
+        RID p_base,
+        RID p_data
+    ) override {}
 
     void gi_probe_instance_set_transform_to_data(
         RID p_probe,
         const Transform& p_xform
     ) override {}
 
-    void gi_probe_instance_set_bounds(RID p_probe, const Vector3& p_bounds)
-        override {}
+    void gi_probe_instance_set_bounds(
+        RID p_probe,
+        const Vector3& p_bounds
+    ) override {}
 
     void render_scene(
         const Transform& p_cam_transform,
@@ -376,8 +389,11 @@ public:
         t->image->create(p_width, p_height, false, p_format);
     }
 
-    void texture_set_data(RID p_texture, const Ref<Image>& p_image, int p_level)
-        override {
+    void texture_set_data(
+        RID p_texture,
+        const Ref<Image>& p_image,
+        int p_level
+    ) override {
         DummyTexture* t = texture_owner.getornull(p_texture);
         ERR_FAIL_COND(!t);
         t->width  = p_image->get_width();
@@ -498,8 +514,10 @@ public:
 
     void texture_debug_usage(List<VS::TextureInfo>* r_info) override {}
 
-    RID texture_create_radiance_cubemap(RID p_source, int p_resolution = -1)
-        const override {
+    RID texture_create_radiance_cubemap(
+        RID p_source,
+        int p_resolution = -1
+    ) const override {
         return RID();
     }
 
@@ -529,8 +547,10 @@ public:
         return Size2();
     }
 
-    void texture_set_force_redraw_if_visible(RID p_texture, bool p_enable)
-        override {}
+    void texture_set_force_redraw_if_visible(
+        RID p_texture,
+        bool p_enable
+    ) override {}
 
     /* SKY API */
 
@@ -538,8 +558,11 @@ public:
         return RID();
     }
 
-    void sky_set_texture(RID p_sky, RID p_cube_map, int p_radiance_size)
-        override {}
+    void sky_set_texture(
+        RID p_sky,
+        RID p_cube_map,
+        int p_radiance_size
+    ) override {}
 
     /* SHADER API */
 
@@ -553,8 +576,10 @@ public:
         return "";
     }
 
-    void shader_get_param_list(RID p_shader, List<PropertyInfo>* p_param_list)
-        const override {}
+    void shader_get_param_list(
+        RID p_shader,
+        List<PropertyInfo>* p_param_list
+    ) const override {}
 
     void shader_set_default_texture_param(
         RID p_shader,
@@ -562,19 +587,27 @@ public:
         RID p_texture
     ) override {}
 
-    RID shader_get_default_texture_param(RID p_shader, const StringName& p_name)
-        const override {
+    RID shader_get_default_texture_param(
+        RID p_shader,
+        const StringName& p_name
+    ) const override {
         return RID();
     }
 
-    void shader_add_custom_define(RID p_shader, const String& p_define)
-        override {}
+    void shader_add_custom_define(
+        RID p_shader,
+        const String& p_define
+    ) override {}
 
-    void shader_get_custom_defines(RID p_shader, Vector<String>* p_defines)
-        const override {}
+    void shader_get_custom_defines(
+        RID p_shader,
+        Vector<String>* p_defines
+    ) const override {}
 
-    void shader_remove_custom_define(RID p_shader, const String& p_define)
-        override {}
+    void shader_remove_custom_define(
+        RID p_shader,
+        const String& p_define
+    ) override {}
 
     /* COMMON MATERIAL API */
 
@@ -596,8 +629,10 @@ public:
         const Variant& p_value
     ) override {}
 
-    Variant material_get_param(RID p_material, const StringName& p_param)
-        const override {
+    Variant material_get_param(
+        RID p_material,
+        const StringName& p_param
+    ) const override {
         return Variant();
     }
 
@@ -681,8 +716,10 @@ public:
         return m->blend_shape_count;
     }
 
-    void mesh_set_blend_shape_mode(RID p_mesh, VS::BlendShapeMode p_mode)
-        override {
+    void mesh_set_blend_shape_mode(
+        RID p_mesh,
+        VS::BlendShapeMode p_mode
+    ) override {
         DummyMesh* m = mesh_owner.getornull(p_mesh);
         ERR_FAIL_COND(!m);
         m->blend_shape_mode = p_mode;
@@ -694,8 +731,10 @@ public:
         return m->blend_shape_mode;
     }
 
-    void mesh_set_blend_shape_values(RID p_mesh, PoolVector<float> p_values)
-        override {
+    void mesh_set_blend_shape_values(
+        RID p_mesh,
+        PoolVector<float> p_values
+    ) override {
         DummyMesh* m = mesh_owner.getornull(p_mesh);
         ERR_FAIL_COND(!m);
         m->blend_shape_values = p_values;
@@ -714,8 +753,11 @@ public:
         const PoolVector<uint8_t>& p_data
     ) override {}
 
-    void mesh_surface_set_material(RID p_mesh, int p_surface, RID p_material)
-        override {}
+    void mesh_surface_set_material(
+        RID p_mesh,
+        int p_surface,
+        RID p_material
+    ) override {}
 
     RID mesh_surface_get_material(RID p_mesh, int p_surface) const override {
         return RID();
@@ -728,24 +770,30 @@ public:
         return m->surfaces[p_surface].vertex_count;
     }
 
-    int mesh_surface_get_array_index_len(RID p_mesh, int p_surface)
-        const override {
+    int mesh_surface_get_array_index_len(
+        RID p_mesh,
+        int p_surface
+    ) const override {
         DummyMesh* m = mesh_owner.getornull(p_mesh);
         ERR_FAIL_COND_V(!m, 0);
 
         return m->surfaces[p_surface].index_count;
     }
 
-    PoolVector<uint8_t> mesh_surface_get_array(RID p_mesh, int p_surface)
-        const override {
+    PoolVector<uint8_t> mesh_surface_get_array(
+        RID p_mesh,
+        int p_surface
+    ) const override {
         DummyMesh* m = mesh_owner.getornull(p_mesh);
         ERR_FAIL_COND_V(!m, PoolVector<uint8_t>());
 
         return m->surfaces[p_surface].array;
     }
 
-    PoolVector<uint8_t> mesh_surface_get_index_array(RID p_mesh, int p_surface)
-        const override {
+    PoolVector<uint8_t> mesh_surface_get_index_array(
+        RID p_mesh,
+        int p_surface
+    ) const override {
         DummyMesh* m = mesh_owner.getornull(p_mesh);
         ERR_FAIL_COND_V(!m, PoolVector<uint8_t>());
 
@@ -759,8 +807,10 @@ public:
         return m->surfaces[p_surface].format;
     }
 
-    VS::PrimitiveType mesh_surface_get_primitive_type(RID p_mesh, int p_surface)
-        const override {
+    VS::PrimitiveType mesh_surface_get_primitive_type(
+        RID p_mesh,
+        int p_surface
+    ) const override {
         DummyMesh* m = mesh_owner.getornull(p_mesh);
         ERR_FAIL_COND_V(!m, VS::PRIMITIVE_POINTS);
 
@@ -784,8 +834,10 @@ public:
         return m->surfaces[p_surface].blend_shapes;
     }
 
-    Vector<AABB> mesh_surface_get_skeleton_aabb(RID p_mesh, int p_surface)
-        const override {
+    Vector<AABB> mesh_surface_get_skeleton_aabb(
+        RID p_mesh,
+        int p_surface
+    ) const override {
         DummyMesh* m = mesh_owner.getornull(p_mesh);
         ERR_FAIL_COND_V(!m, Vector<AABB>());
 
@@ -866,8 +918,10 @@ public:
         return RID();
     }
 
-    Transform multimesh_instance_get_transform(RID p_multimesh, int p_index)
-        const override {
+    Transform multimesh_instance_get_transform(
+        RID p_multimesh,
+        int p_index
+    ) const override {
         return Transform();
     }
 
@@ -878,13 +932,17 @@ public:
         return Transform2D();
     }
 
-    Color multimesh_instance_get_color(RID p_multimesh, int p_index)
-        const override {
+    Color multimesh_instance_get_color(
+        RID p_multimesh,
+        int p_index
+    ) const override {
         return Color();
     }
 
-    Color multimesh_instance_get_custom_data(RID p_multimesh, int p_index)
-        const override {
+    Color multimesh_instance_get_custom_data(
+        RID p_multimesh,
+        int p_index
+    ) const override {
         return Color();
     }
 
@@ -893,8 +951,10 @@ public:
         const PoolVector<float>& p_array
     ) override {}
 
-    void multimesh_set_visible_instances(RID p_multimesh, int p_visible)
-        override {}
+    void multimesh_set_visible_instances(
+        RID p_multimesh,
+        int p_visible
+    ) override {}
 
     int multimesh_get_visible_instances(RID p_multimesh) const override {
         return 0;
@@ -975,8 +1035,10 @@ public:
         const Transform& p_transform
     ) override {}
 
-    Transform skeleton_bone_get_transform(RID p_skeleton, int p_bone)
-        const override {
+    Transform skeleton_bone_get_transform(
+        RID p_skeleton,
+        int p_bone
+    ) const override {
         return Transform();
     }
 
@@ -986,8 +1048,10 @@ public:
         const Transform2D& p_transform
     ) override {}
 
-    Transform2D skeleton_bone_get_transform_2d(RID p_skeleton, int p_bone)
-        const override {
+    Transform2D skeleton_bone_get_transform_2d(
+        RID p_skeleton,
+        int p_bone
+    ) const override {
         return Transform2D();
     }
 
@@ -1011,8 +1075,11 @@ public:
 
     void light_set_color(RID p_light, const Color& p_color) override {}
 
-    void light_set_param(RID p_light, VS::LightParam p_param, float p_value)
-        override {}
+    void light_set_param(
+        RID p_light,
+        VS::LightParam p_param,
+        float p_value
+    ) override {}
 
     void light_set_shadow(RID p_light, bool p_enabled) override {}
 
@@ -1024,16 +1091,22 @@ public:
 
     void light_set_cull_mask(RID p_light, uint32_t p_mask) override {}
 
-    void light_set_reverse_cull_face_mode(RID p_light, bool p_enabled)
-        override {}
+    void light_set_reverse_cull_face_mode(
+        RID p_light,
+        bool p_enabled
+    ) override {}
 
     void light_set_use_gi(RID p_light, bool p_enabled) override {}
 
-    void light_set_bake_mode(RID p_light, VS::LightBakeMode p_bake_mode)
-        override {}
+    void light_set_bake_mode(
+        RID p_light,
+        VS::LightBakeMode p_bake_mode
+    ) override {}
 
-    void light_omni_set_shadow_mode(RID p_light, VS::LightOmniShadowMode p_mode)
-        override {}
+    void light_omni_set_shadow_mode(
+        RID p_light,
+        VS::LightOmniShadowMode p_mode
+    ) override {}
 
     void light_omni_set_shadow_detail(
         RID p_light,
@@ -1045,8 +1118,10 @@ public:
         VS::LightDirectionalShadowMode p_mode
     ) override {}
 
-    void light_directional_set_blend_splits(RID p_light, bool p_enable)
-        override {}
+    void light_directional_set_blend_splits(
+        RID p_light,
+        bool p_enable
+    ) override {}
 
     bool light_directional_get_blend_splits(RID p_light) const override {
         return false;
@@ -1062,7 +1137,8 @@ public:
         return VS::LIGHT_DIRECTIONAL_SHADOW_DEPTH_RANGE_STABLE;
     }
 
-    VS::LightDirectionalShadowMode light_directional_get_shadow_mode(RID p_light
+    VS::LightDirectionalShadowMode light_directional_get_shadow_mode(
+        RID p_light
     ) override {
         return VS::LIGHT_DIRECTIONAL_SHADOW_ORTHOGONAL;
     }
@@ -1114,8 +1190,10 @@ public:
         VS::ReflectionProbeUpdateMode p_mode
     ) override {}
 
-    void reflection_probe_set_intensity(RID p_probe, float p_intensity)
-        override {}
+    void reflection_probe_set_intensity(
+        RID p_probe,
+        float p_intensity
+    ) override {}
 
     void reflection_probe_set_interior_ambient(
         RID p_probe,
@@ -1132,11 +1210,15 @@ public:
         float p_contrib
     ) override {}
 
-    void reflection_probe_set_max_distance(RID p_probe, float p_distance)
-        override {}
+    void reflection_probe_set_max_distance(
+        RID p_probe,
+        float p_distance
+    ) override {}
 
-    void reflection_probe_set_extents(RID p_probe, const Vector3& p_extents)
-        override {}
+    void reflection_probe_set_extents(
+        RID p_probe,
+        const Vector3& p_extents
+    ) override {}
 
     void reflection_probe_set_origin_offset(
         RID p_probe,
@@ -1146,23 +1228,32 @@ public:
     void reflection_probe_set_as_interior(RID p_probe, bool p_enable) override {
     }
 
-    void reflection_probe_set_enable_box_projection(RID p_probe, bool p_enable)
-        override {}
+    void reflection_probe_set_enable_box_projection(
+        RID p_probe,
+        bool p_enable
+    ) override {}
 
-    void reflection_probe_set_enable_shadows(RID p_probe, bool p_enable)
-        override {}
+    void reflection_probe_set_enable_shadows(
+        RID p_probe,
+        bool p_enable
+    ) override {}
 
-    void reflection_probe_set_cull_mask(RID p_probe, uint32_t p_layers)
-        override {}
+    void reflection_probe_set_cull_mask(
+        RID p_probe,
+        uint32_t p_layers
+    ) override {}
 
-    void reflection_probe_set_resolution(RID p_probe, int p_resolution)
-        override {}
+    void reflection_probe_set_resolution(
+        RID p_probe,
+        int p_resolution
+    ) override {}
 
     AABB reflection_probe_get_aabb(RID p_probe) const override {
         return AABB();
     }
 
-    VS::ReflectionProbeUpdateMode reflection_probe_get_update_mode(RID p_probe
+    VS::ReflectionProbeUpdateMode reflection_probe_get_update_mode(
+        RID p_probe
     ) const override {
         return VisualServer::REFLECTION_PROBE_UPDATE_ONCE;
     }
@@ -1225,15 +1316,19 @@ public:
         return 0.0;
     }
 
-    void gi_probe_set_to_cell_xform(RID p_probe, const Transform& p_xform)
-        override {}
+    void gi_probe_set_to_cell_xform(
+        RID p_probe,
+        const Transform& p_xform
+    ) override {}
 
     Transform gi_probe_get_to_cell_xform(RID p_probe) const override {
         return Transform();
     }
 
-    void gi_probe_set_dynamic_data(RID p_probe, const PoolVector<int>& p_data)
-        override {}
+    void gi_probe_set_dynamic_data(
+        RID p_probe,
+        const PoolVector<int>& p_data
+    ) override {}
 
     PoolVector<int> gi_probe_get_dynamic_data(RID p_probe) const override {
         PoolVector<int> p;
@@ -1350,8 +1445,10 @@ public:
 
     mutable RID_Owner<LightmapCapture> lightmap_capture_data_owner;
 
-    void lightmap_capture_set_bounds(RID p_capture, const AABB& p_bounds)
-        override {}
+    void lightmap_capture_set_bounds(
+        RID p_capture,
+        const AABB& p_bounds
+    ) override {}
 
     AABB lightmap_capture_get_bounds(RID p_capture) const override {
         return AABB();
@@ -1367,7 +1464,8 @@ public:
         return lightmap_capture_data_owner.make_rid(capture);
     }
 
-    PoolVector<uint8_t> lightmap_capture_get_octree(RID p_capture
+    PoolVector<uint8_t> lightmap_capture_get_octree(
+        RID p_capture
     ) const override {
         const LightmapCapture* capture =
             lightmap_capture_data_owner.getornull(p_capture);
@@ -1380,13 +1478,16 @@ public:
         const Transform& p_xform
     ) override {}
 
-    Transform lightmap_capture_get_octree_cell_transform(RID p_capture
+    Transform lightmap_capture_get_octree_cell_transform(
+        RID p_capture
     ) const override {
         return Transform();
     }
 
-    void lightmap_capture_set_octree_cell_subdiv(RID p_capture, int p_subdiv)
-        override {}
+    void lightmap_capture_set_octree_cell_subdiv(
+        RID p_capture,
+        int p_subdiv
+    ) override {}
 
     int lightmap_capture_get_octree_cell_subdiv(RID p_capture) const override {
         return 0;
@@ -1398,8 +1499,10 @@ public:
         return 0.0;
     }
 
-    void lightmap_capture_set_interior(RID p_capture, bool p_interior)
-        override {}
+    void lightmap_capture_set_interior(
+        RID p_capture,
+        bool p_interior
+    ) override {}
 
     bool lightmap_capture_is_interior(RID p_capture) const override {
         return false;
@@ -1428,30 +1531,44 @@ public:
 
     void particles_set_one_shot(RID p_particles, bool p_one_shot) override {}
 
-    void particles_set_pre_process_time(RID p_particles, float p_time)
-        override {}
+    void particles_set_pre_process_time(
+        RID p_particles,
+        float p_time
+    ) override {}
 
-    void particles_set_explosiveness_ratio(RID p_particles, float p_ratio)
-        override {}
+    void particles_set_explosiveness_ratio(
+        RID p_particles,
+        float p_ratio
+    ) override {}
 
-    void particles_set_randomness_ratio(RID p_particles, float p_ratio)
-        override {}
+    void particles_set_randomness_ratio(
+        RID p_particles,
+        float p_ratio
+    ) override {}
 
-    void particles_set_custom_aabb(RID p_particles, const AABB& p_aabb)
-        override {}
+    void particles_set_custom_aabb(
+        RID p_particles,
+        const AABB& p_aabb
+    ) override {}
 
     void particles_set_speed_scale(RID p_particles, float p_scale) override {}
 
-    void particles_set_use_local_coordinates(RID p_particles, bool p_enable)
-        override {}
+    void particles_set_use_local_coordinates(
+        RID p_particles,
+        bool p_enable
+    ) override {}
 
-    void particles_set_process_material(RID p_particles, RID p_material)
-        override {}
+    void particles_set_process_material(
+        RID p_particles,
+        RID p_material
+    ) override {}
 
     void particles_set_fixed_fps(RID p_particles, int p_fps) override {}
 
-    void particles_set_fractional_delta(RID p_particles, bool p_enable)
-        override {}
+    void particles_set_fractional_delta(
+        RID p_particles,
+        bool p_enable
+    ) override {}
 
     void particles_restart(RID p_particles) override {}
 
@@ -1462,8 +1579,11 @@ public:
 
     void particles_set_draw_passes(RID p_particles, int p_count) override {}
 
-    void particles_set_draw_pass_mesh(RID p_particles, int p_pass, RID p_mesh)
-        override {}
+    void particles_set_draw_pass_mesh(
+        RID p_particles,
+        int p_pass,
+        RID p_mesh
+    ) override {}
 
     void particles_request_process(RID p_particles) override {}
 
@@ -1488,8 +1608,10 @@ public:
         return 0;
     }
 
-    RID particles_get_draw_pass_mesh(RID p_particles, int p_pass)
-        const override {
+    RID particles_get_draw_pass_mesh(
+        RID p_particles,
+        int p_pass
+    ) const override {
         return RID();
     }
 
@@ -1503,17 +1625,24 @@ public:
         return RID();
     }
 
-    void render_target_set_position(RID p_render_target, int p_x, int p_y)
-        override {}
+    void render_target_set_position(
+        RID p_render_target,
+        int p_x,
+        int p_y
+    ) override {}
 
-    void render_target_set_size(RID p_render_target, int p_width, int p_height)
-        override {}
+    void render_target_set_size(
+        RID p_render_target,
+        int p_width,
+        int p_height
+    ) override {}
 
     RID render_target_get_texture(RID p_render_target) const override {
         return RID();
     }
 
-    uint32_t render_target_get_depth_texture_id(RID p_render_target
+    uint32_t render_target_get_depth_texture_id(
+        RID p_render_target
     ) const override {
         return 0;
     }
@@ -1536,14 +1665,18 @@ public:
 
     void render_target_clear_used(RID p_render_target) override {}
 
-    void render_target_set_msaa(RID p_render_target, VS::ViewportMSAA p_msaa)
-        override {}
+    void render_target_set_msaa(
+        RID p_render_target,
+        VS::ViewportMSAA p_msaa
+    ) override {}
 
     void render_target_set_use_fxaa(RID p_render_target, bool p_fxaa) override {
     }
 
-    void render_target_set_use_debanding(RID p_render_target, bool p_debanding)
-        override {}
+    void render_target_set_use_debanding(
+        RID p_render_target,
+        bool p_debanding
+    ) override {}
 
     void render_target_set_sharpen_intensity(
         RID p_render_target,

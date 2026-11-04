@@ -207,9 +207,9 @@ String Room::get_configuration_warning() const {
             if (!warning.empty()) {
                 warning += "\n\n";
             }
-            warning +=
-                TTR("A Room cannot have another Room as a child or grandchild."
-                );
+            warning += TTR(
+                "A Room cannot have another Room as a child or grandchild."
+            );
         }
 
         if (detect_nodes_of_type<RoomManager>(this)) {

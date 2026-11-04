@@ -563,8 +563,10 @@ Size2 Font::get_string_size(const String& p_string) const {
     return Size2(w, get_height());
 }
 
-Size2 Font::get_wordwrap_string_size(const String& p_string, float p_width)
-    const {
+Size2 Font::get_wordwrap_string_size(
+    const String& p_string,
+    float p_width
+) const {
     ERR_FAIL_COND_V(p_width <= 0, Vector2(0, get_height()));
 
     int l = p_string.length();
@@ -858,7 +860,8 @@ bool ResourceFormatLoaderBMFont::handles_type(const String& p_type) const {
     return (p_type == "BitmapFont");
 }
 
-String ResourceFormatLoaderBMFont::get_resource_type(const String& p_path
+String ResourceFormatLoaderBMFont::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "fnt") {

@@ -224,9 +224,11 @@ private:
         const FileOrFolder& p_item,
         const String& p_new_path
     ) const;
-    void _update_dependencies_after_move(const Map<String, String>& p_renames
+    void _update_dependencies_after_move(
+        const Map<String, String>& p_renames
     ) const;
-    void _update_resource_paths_after_move(const Map<String, String>& p_renames
+    void _update_resource_paths_after_move(
+        const Map<String, String>& p_renames
     ) const;
     void _save_scenes_after_move(const Map<String, String>& p_renames) const;
     void _update_favorites_list_after_move(

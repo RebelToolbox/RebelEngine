@@ -112,8 +112,10 @@ public:
 
     virtual bool inherits_script(const Ref<Script>& p_script) const = 0;
 
-    virtual StringName get_instance_base_type(
-    ) const = 0; // this may not work in all scripts, will return empty if so
+    virtual StringName get_instance_base_type() const = 0; // this may not work
+                                                           // in all scripts,
+                                                           // will return empty
+                                                           // if so
     virtual ScriptInstance* instance_create(Object* p_this) = 0;
 
     virtual PlaceHolderScriptInstance* placeholder_instance_create(
@@ -234,9 +236,11 @@ public:
         bool* r_valid
     );
 
-    virtual MultiplayerAPI::RPCMode get_rpc_mode(const StringName& p_method
+    virtual MultiplayerAPI::RPCMode get_rpc_mode(
+        const StringName& p_method
     ) const = 0;
-    virtual MultiplayerAPI::RPCMode get_rset_mode(const StringName& p_variable
+    virtual MultiplayerAPI::RPCMode get_rset_mode(
+        const StringName& p_variable
     ) const = 0;
 
     virtual ScriptLanguage* get_language() = 0;
@@ -349,8 +353,10 @@ public:
         return false;
     }
 
-    virtual int find_function(const String& p_function, const String& p_code)
-        const = 0;
+    virtual int find_function(
+        const String& p_function,
+        const String& p_code
+    ) const = 0;
     virtual String make_function(
         const String& p_class,
         const String& p_name,
@@ -489,11 +495,13 @@ public:
     ) = 0;
     /* LOADER FUNCTIONS */
 
-    virtual void get_recognized_extensions(List<String>* p_extensions
+    virtual void get_recognized_extensions(
+        List<String>* p_extensions
     ) const                                                                = 0;
     virtual void get_public_functions(List<MethodInfo>* p_functions) const = 0;
-    virtual void get_public_constants(List<Pair<String, Variant>>* p_constants
-    ) const                                                                = 0;
+    virtual void get_public_constants(
+        List<Pair<String, Variant>>* p_constants
+    ) const = 0;
 
     struct ProfilingInfo {
         StringName signature;
@@ -614,12 +622,14 @@ public:
         bool* r_valid = nullptr
     ) override;
 
-    MultiplayerAPI::RPCMode get_rpc_mode(const StringName& p_method
+    MultiplayerAPI::RPCMode get_rpc_mode(
+        const StringName& p_method
     ) const override {
         return MultiplayerAPI::RPC_MODE_DISABLED;
     }
 
-    MultiplayerAPI::RPCMode get_rset_mode(const StringName& p_variable
+    MultiplayerAPI::RPCMode get_rset_mode(
+        const StringName& p_variable
     ) const override {
         return MultiplayerAPI::RPC_MODE_DISABLED;
     }

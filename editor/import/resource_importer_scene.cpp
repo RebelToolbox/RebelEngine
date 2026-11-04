@@ -210,7 +210,8 @@ String ResourceImporterScene::get_visible_name() const {
     return "Scene";
 }
 
-void ResourceImporterScene::get_recognized_extensions(List<String>* p_extensions
+void ResourceImporterScene::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     for (Set<Ref<EditorSceneImporter>>::Element* E = importers.front(); E;
          E                                         = E->next()) {
@@ -1810,9 +1811,9 @@ Error ResourceImporterScene::import(
 
     Ref<Script> root_script = nullptr;
     if (ScriptServer::is_global_class(root_type)) {
-        root_script =
-            ResourceLoader::load(ScriptServer::get_global_class_path(root_type)
-            );
+        root_script = ResourceLoader::load(
+            ScriptServer::get_global_class_path(root_type)
+        );
         root_type = ScriptServer::get_global_class_base(root_type);
     }
 
@@ -2115,7 +2116,8 @@ Error ResourceImporterScene::import(
             post_import_script->set_script(scr.get_ref_ptr());
             if (!post_import_script->get_script_instance()) {
                 EditorNode::add_io_error(
-                    TTR("Invalid/broken script for post-import (check console):"
+                    TTR(
+                        "Invalid/broken script for post-import (check console):"
                     )
                     + " " + post_import_script_path
                 );
@@ -2132,8 +2134,10 @@ Error ResourceImporterScene::import(
             EditorNode::add_io_error(
                 TTR("Error running post-import script:") + " "
                 + post_import_script_path + "\n"
-                + TTR("Did you return a Node-derived object in the "
-                      "`post_import()` method?")
+                + TTR(
+                    "Did you return a Node-derived object in the "
+                    "`post_import()` method?"
+                )
             );
             return err;
         }

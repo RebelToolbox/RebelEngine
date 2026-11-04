@@ -27,11 +27,15 @@ const char* EditorFeatureProfile::feature_descriptions[FEATURE_MAX] = {
     TTRC("Allows to edit scripts using the integrated script editor."),
     TTRC("Provides built-in access to the Asset Library."),
     TTRC("Allows editing the node hierarchy in the Scene dock."),
-    TTRC("Allows to work with signals and groups of the node selected in the "
-         "Scene dock."),
+    TTRC(
+        "Allows to work with signals and groups of the node selected in the "
+        "Scene dock."
+    ),
     TTRC("Allows to browse the local file system via a dedicated dock."),
-    TTRC("Allows to configure import settings for individual assets. Requires "
-         "the FileSystem dock to function."),
+    TTRC(
+        "Allows to configure import settings for individual assets. Requires "
+        "the FileSystem dock to function."
+    ),
 };
 
 const char* EditorFeatureProfile::feature_identifiers[FEATURE_MAX] = {
@@ -74,7 +78,8 @@ void EditorFeatureProfile::set_disable_class_editor(
     }
 }
 
-bool EditorFeatureProfile::is_class_editor_disabled(const StringName& p_class
+bool EditorFeatureProfile::is_class_editor_disabled(
+    const StringName& p_class
 ) const {
     if (p_class == StringName()) {
         return false;
@@ -533,7 +538,8 @@ void EditorFeatureProfileManager::_profile_action(int p_action) {
             ERR_FAIL_COND(selected == String());
 
             erase_profile_dialog->set_text(vformat(
-                TTR("Remove currently selected profile, '%s'? Cannot be undone."
+                TTR(
+                    "Remove currently selected profile, '%s'? Cannot be undone."
                 ),
                 selected
             ));
@@ -866,15 +872,17 @@ void EditorFeatureProfileManager::_update_selected_profile() {
 
     if (profile == current_profile) {
         edited = current; // reuse current profile (which is what editor uses)
-        ERR_FAIL_COND(current.is_null()
+        ERR_FAIL_COND(
+            current.is_null()
         ); // nothing selected, current should never be null
     } else {
         // reload edited, if different from current
         edited.instance();
-        Error err =
-            edited->load_from_file(EditorSettings::get_singleton()
-                                       ->get_feature_profiles_dir()
-                                       .plus_file(profile + ".profile"));
+        Error err = edited->load_from_file(
+            EditorSettings::get_singleton()
+                ->get_feature_profiles_dir()
+                .plus_file(profile + ".profile")
+        );
         ERR_FAIL_COND_MSG(
             err != OK,
             "Error when loading EditorSettings from file '"
@@ -903,9 +911,11 @@ void EditorFeatureProfileManager::_update_selected_profile() {
         feature->set_cell_mode(0, TreeItem::CELL_MODE_CHECK);
         feature->set_text(
             0,
-            TTRGET(EditorFeatureProfile::get_feature_name(
-                EditorFeatureProfile::Feature(i)
-            ))
+            TTRGET(
+                EditorFeatureProfile::get_feature_name(
+                    EditorFeatureProfile::Feature(i)
+                )
+            )
         );
         feature->set_selectable(0, true);
         feature->set_editable(0, true);
@@ -930,7 +940,8 @@ void EditorFeatureProfileManager::_update_selected_profile() {
     _class_list_item_selected();
 }
 
-void EditorFeatureProfileManager::_import_profiles(const Vector<String>& p_paths
+void EditorFeatureProfileManager::_import_profiles(
+    const Vector<String>& p_paths
 ) {
     // test it first
     for (int i = 0; i < p_paths.size(); i++) {

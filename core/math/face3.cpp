@@ -126,8 +126,10 @@ bool Face3::is_degenerate() const {
     return (normal.length_squared() < CMP_EPSILON2);
 }
 
-Face3::Side Face3::get_side_of(const Face3& p_face, ClockDirection p_clock_dir)
-    const {
+Face3::Side Face3::get_side_of(
+    const Face3& p_face,
+    ClockDirection p_clock_dir
+) const {
     int over = 0, under = 0;
 
     Plane plane = get_plane(p_clock_dir);
@@ -202,11 +204,14 @@ bool Face3::intersects_aabb(const AABB& p_aabb) const {
         real_t tri_min  = vertex[0].m_ax;                                      \
         real_t tri_max  = vertex[0].m_ax;                                      \
         for (int i = 1; i < 3; i++) {                                          \
-            if (vertex[i].m_ax > tri_max) tri_max = vertex[i].m_ax;            \
-            if (vertex[i].m_ax < tri_min) tri_min = vertex[i].m_ax;            \
+            if (vertex[i].m_ax > tri_max)                                      \
+                tri_max = vertex[i].m_ax;                                      \
+            if (vertex[i].m_ax < tri_min)                                      \
+                tri_min = vertex[i].m_ax;                                      \
         }                                                                      \
                                                                                \
-        if (tri_max < aabb_min || aabb_max < tri_min) return false;            \
+        if (tri_max < aabb_min || aabb_max < tri_min)                          \
+            return false;                                                      \
     }
 
     TEST_AXIS(x);

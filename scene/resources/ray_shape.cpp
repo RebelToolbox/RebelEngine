@@ -80,7 +80,8 @@ void RayShape::_bind_methods() {
 }
 
 RayShape::RayShape() :
-    Shape(PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_RAY)
+    Shape(
+        PhysicsServer::get_singleton()->shape_create(PhysicsServer::SHAPE_RAY)
     ) {
     length         = 1.0;
     slips_on_slope = false;

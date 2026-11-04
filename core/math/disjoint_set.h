@@ -104,7 +104,8 @@ void DisjointSet<T, C, AL>::create_union(T a, T b) {
 }
 
 template <typename T, class C, class AL>
-void DisjointSet<T, C, AL>::get_representatives(Vector<T>& out_representatives
+void DisjointSet<T, C, AL>::get_representatives(
+    Vector<T>& out_representatives
 ) {
     for (typename MapT::Element* itr = elements.front(); itr != nullptr;
          itr                         = itr->next()) {

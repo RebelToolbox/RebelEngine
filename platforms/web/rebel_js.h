@@ -27,20 +27,24 @@ extern void rebel_js_os_shell_open(const char* p_uri);
 extern int rebel_js_os_hw_concurrency_get();
 
 // Input
-extern void rebel_js_input_mouse_button_cb(int (*p_callback)(
-    int p_pressed,
-    int p_button,
-    double p_x,
-    double p_y,
-    int p_modifiers
-));
-extern void rebel_js_input_mouse_move_cb(void (*p_callback)(
-    double p_x,
-    double p_y,
-    double p_rel_x,
-    double p_rel_y,
-    int p_modifiers
-));
+extern void rebel_js_input_mouse_button_cb(
+    int (*p_callback)(
+        int p_pressed,
+        int p_button,
+        double p_x,
+        double p_y,
+        int p_modifiers
+    )
+);
+extern void rebel_js_input_mouse_move_cb(
+    void (*p_callback)(
+        double p_x,
+        double p_y,
+        double p_rel_x,
+        double p_rel_y,
+        int p_modifiers
+    )
+);
 extern void rebel_js_input_mouse_wheel_cb(
     int (*p_callback)(double p_delta_x, double p_delta_y)
 );
@@ -56,12 +60,14 @@ extern void rebel_js_input_key_cb(
 );
 
 // Input gamepad
-extern void rebel_js_input_gamepad_cb(void (*p_on_change)(
-    int p_index,
-    int p_connected,
-    const char* p_id,
-    const char* p_guid
-));
+extern void rebel_js_input_gamepad_cb(
+    void (*p_on_change)(
+        int p_index,
+        int p_connected,
+        const char* p_id,
+        const char* p_guid
+    )
+);
 extern int rebel_js_input_gamepad_sample();
 extern int rebel_js_input_gamepad_sample_count();
 extern int rebel_js_input_gamepad_sample_get(
@@ -107,7 +113,8 @@ extern int rebel_js_display_has_webgl(int p_version);
 
 // Display clipboard
 extern int rebel_js_display_clipboard_set(const char* p_text);
-extern int rebel_js_display_clipboard_get(void (*p_callback)(const char* p_text)
+extern int rebel_js_display_clipboard_get(
+    void (*p_callback)(const char* p_text)
 );
 
 // Display cursor
@@ -125,7 +132,8 @@ extern void rebel_js_display_cursor_lock_set(int p_lock);
 extern int rebel_js_display_cursor_is_locked();
 
 // Display listeners
-extern void rebel_js_display_fullscreen_cb(void (*p_callback)(int p_fullscreen)
+extern void rebel_js_display_fullscreen_cb(
+    void (*p_callback)(int p_fullscreen)
 );
 extern void rebel_js_display_window_blur_cb(void (*p_callback)());
 extern void rebel_js_display_notification_cb(

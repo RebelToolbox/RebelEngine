@@ -20,7 +20,8 @@ StringName AnimationNodeAnimation::get_animation() const {
 Vector<String> (*AnimationNodeAnimation::get_editable_animation_list)() =
     nullptr;
 
-void AnimationNodeAnimation::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeAnimation::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     r_list->push_back(
         PropertyInfo(Variant::REAL, time, PROPERTY_HINT_NONE, "", 0)
@@ -128,7 +129,8 @@ AnimationNodeAnimation::AnimationNodeAnimation() {
 
 ////////////////////////////////////////////////////////
 
-void AnimationNodeOneShot::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeOneShot::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     r_list->push_back(PropertyInfo(Variant::BOOL, active));
     r_list->push_back(
@@ -737,7 +739,8 @@ AnimationNodeBlend3::AnimationNodeBlend3() {
 
 /////////////////////////////////
 
-void AnimationNodeTimeScale::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeTimeScale::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     r_list->push_back(PropertyInfo(
         Variant::REAL,
@@ -775,7 +778,8 @@ AnimationNodeTimeScale::AnimationNodeTimeScale() {
 
 ////////////////////////////////////
 
-void AnimationNodeTimeSeek::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeTimeSeek::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     r_list->push_back(PropertyInfo(
         Variant::REAL,
@@ -818,7 +822,8 @@ AnimationNodeTimeSeek::AnimationNodeTimeSeek() {
 
 /////////////////////////////////////////////////
 
-void AnimationNodeTransition::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeTransition::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     String anims;
     for (int i = 0; i < enabled_inputs; i++) {
@@ -1166,7 +1171,8 @@ void AnimationNodeBlendTree::add_node(
     );
 }
 
-Ref<AnimationNode> AnimationNodeBlendTree::get_node(const StringName& p_name
+Ref<AnimationNode> AnimationNodeBlendTree::get_node(
+    const StringName& p_name
 ) const {
     ERR_FAIL_COND_V(!nodes.has(p_name), Ref<AnimationNode>());
 
@@ -1193,7 +1199,8 @@ void AnimationNodeBlendTree::set_node_position(
     nodes[p_node].position = p_position;
 }
 
-Vector2 AnimationNodeBlendTree::get_node_position(const StringName& p_node
+Vector2 AnimationNodeBlendTree::get_node_position(
+    const StringName& p_node
 ) const {
     ERR_FAIL_COND_V(!nodes.has(p_node), Vector2());
     return nodes[p_node].position;
@@ -1457,8 +1464,10 @@ bool AnimationNodeBlendTree::_set(
     return false;
 }
 
-bool AnimationNodeBlendTree::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool AnimationNodeBlendTree::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     String name = p_name;
     if (name.begins_with("nodes/")) {
         String node_name = name.get_slicec('/', 1);
@@ -1498,7 +1507,8 @@ bool AnimationNodeBlendTree::_get(const StringName& p_name, Variant& r_ret)
     return false;
 }
 
-void AnimationNodeBlendTree::_get_property_list(List<PropertyInfo>* p_list
+void AnimationNodeBlendTree::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     List<StringName> names;
     for (Map<StringName, Node>::Element* E = nodes.front(); E; E = E->next()) {

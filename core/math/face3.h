@@ -67,8 +67,8 @@ public:
         Vector3* p_intersection = nullptr
     ) const;
 
-    ClockDirection get_clock_dir(
-    ) const; ///< todo, test if this is returning the proper clockwisity
+    ClockDirection get_clock_dir() const; ///< todo, test if this is returning
+                                          ///< the proper clockwisity
 
     void get_support(
         const Vector3& p_normal,
@@ -140,11 +140,14 @@ bool Face3::intersects_aabb2(const AABB& p_aabb) const {
         real_t aabb_max = p_aabb.position.m_ax + p_aabb.size.m_ax;             \
         real_t tri_min, tri_max;                                               \
         for (int i = 0; i < 3; i++) {                                          \
-            if (i == 0 || vertex[i].m_ax > tri_max) tri_max = vertex[i].m_ax;  \
-            if (i == 0 || vertex[i].m_ax < tri_min) tri_min = vertex[i].m_ax;  \
+            if (i == 0 || vertex[i].m_ax > tri_max)                            \
+                tri_max = vertex[i].m_ax;                                      \
+            if (i == 0 || vertex[i].m_ax < tri_min)                            \
+                tri_min = vertex[i].m_ax;                                      \
         }                                                                      \
                                                                                \
-        if (tri_max < aabb_min || aabb_max < tri_min) return false;            \
+        if (tri_max < aabb_min || aabb_max < tri_min)                          \
+            return false;                                                      \
     }
 
     TEST_AXIS(x);

@@ -87,7 +87,8 @@ Basis MobileVRInterface::combine_acc_mag(
     // yup, stock standard cross product solution...
     Vector3 up = -p_grav.normalized();
 
-    Vector3 magneto_east = up.cross(p_magneto.normalized()
+    Vector3 magneto_east = up.cross(
+        p_magneto.normalized()
     ); // or is this west?, but should be horizon aligned now
     magneto_east.normalize();
 
@@ -126,7 +127,8 @@ void MobileVRInterface::set_position_from_sensors() {
     Vector3 acc     = input->get_accelerometer();
     Vector3 gyro    = input->get_gyroscope();
     Vector3 grav    = input->get_gravity();
-    Vector3 magneto = scale_magneto(input->get_magnetometer()
+    Vector3 magneto = scale_magneto(
+        input->get_magnetometer()
     ); // this may be overkill on iOS because we're already getting a calibrated
        // magnetometer reading
 

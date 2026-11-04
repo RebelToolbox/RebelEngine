@@ -102,8 +102,11 @@ public:
     void space_set_active(RID p_space, bool p_active) override;
     bool space_is_active(RID p_space) const override;
 
-    void space_set_param(RID p_space, SpaceParameter p_param, real_t p_value)
-        override;
+    void space_set_param(
+        RID p_space,
+        SpaceParameter p_param,
+        real_t p_value
+    ) override;
     real_t space_get_param(RID p_space, SpaceParameter p_param) const override;
 
     void space_set_debug_contacts(RID p_space, int p_max_contacts) override;
@@ -118,9 +121,12 @@ public:
 
     RID area_create() override;
 
-    void area_set_space_override_mode(RID p_area, AreaSpaceOverrideMode p_mode)
-        override;
-    AreaSpaceOverrideMode area_get_space_override_mode(RID p_area
+    void area_set_space_override_mode(
+        RID p_area,
+        AreaSpaceOverrideMode p_mode
+    ) override;
+    AreaSpaceOverrideMode area_get_space_override_mode(
+        RID p_area
     ) const override;
 
     void area_set_space(RID p_area, RID p_space) override;
@@ -141,11 +147,16 @@ public:
 
     int area_get_shape_count(RID p_area) const override;
     RID area_get_shape(RID p_area, int p_shape_idx) const override;
-    Transform2D area_get_shape_transform(RID p_area, int p_shape_idx)
-        const override;
+    Transform2D area_get_shape_transform(
+        RID p_area,
+        int p_shape_idx
+    ) const override;
 
-    void area_set_shape_disabled(RID p_area, int p_shape, bool p_disabled)
-        override;
+    void area_set_shape_disabled(
+        RID p_area,
+        int p_shape,
+        bool p_disabled
+    ) override;
 
     void area_remove_shape(RID p_area, int p_shape_idx) override;
     void area_clear_shapes(RID p_area) override;
@@ -161,8 +172,10 @@ public:
         AreaParameter p_param,
         const Variant& p_value
     ) override;
-    void area_set_transform(RID p_area, const Transform2D& p_transform)
-        override;
+    void area_set_transform(
+        RID p_area,
+        const Transform2D& p_transform
+    ) override;
 
     Variant area_get_param(RID p_area, AreaParameter p_param) const override;
     Transform2D area_get_transform(RID p_area) const override;
@@ -214,15 +227,20 @@ public:
 
     int body_get_shape_count(RID p_body) const override;
     RID body_get_shape(RID p_body, int p_shape_idx) const override;
-    Transform2D body_get_shape_transform(RID p_body, int p_shape_idx)
-        const override;
+    Transform2D body_get_shape_transform(
+        RID p_body,
+        int p_shape_idx
+    ) const override;
     Variant body_get_shape_metadata(RID p_body, int p_shape_idx) const override;
 
     void body_remove_shape(RID p_body, int p_shape_idx) override;
     void body_clear_shapes(RID p_body) override;
 
-    void body_set_shape_disabled(RID p_body, int p_shape_idx, bool p_disabled)
-        override;
+    void body_set_shape_disabled(
+        RID p_body,
+        int p_shape_idx,
+        bool p_disabled
+    ) override;
     void body_set_shape_as_one_way_collision(
         RID p_body,
         int p_shape_idx,
@@ -240,7 +258,8 @@ public:
         RID p_body,
         CCDMode p_mode
     ) override;
-    CCDMode body_get_continuous_collision_detection_mode(RID p_body
+    CCDMode body_get_continuous_collision_detection_mode(
+        RID p_body
     ) const override;
 
     void body_set_collision_layer(RID p_body, uint32_t p_layer) override;
@@ -249,12 +268,18 @@ public:
     void body_set_collision_mask(RID p_body, uint32_t p_mask) override;
     uint32_t body_get_collision_mask(RID p_body) const override;
 
-    void body_set_param(RID p_body, BodyParameter p_param, real_t p_value)
-        override;
+    void body_set_param(
+        RID p_body,
+        BodyParameter p_param,
+        real_t p_value
+    ) override;
     real_t body_get_param(RID p_body, BodyParameter p_param) const override;
 
-    void body_set_state(RID p_body, BodyState p_state, const Variant& p_variant)
-        override;
+    void body_set_state(
+        RID p_body,
+        BodyState p_state,
+        const Variant& p_variant
+    ) override;
     Variant body_get_state(RID p_body, BodyState p_state) const override;
 
     void body_set_applied_force(RID p_body, const Vector2& p_force) override;
@@ -271,27 +296,34 @@ public:
     ) override;
     void body_add_torque(RID p_body, real_t p_torque) override;
 
-    void body_apply_central_impulse(RID p_body, const Vector2& p_impulse)
-        override;
+    void body_apply_central_impulse(
+        RID p_body,
+        const Vector2& p_impulse
+    ) override;
     void body_apply_torque_impulse(RID p_body, real_t p_torque) override;
     void body_apply_impulse(
         RID p_body,
         const Vector2& p_pos,
         const Vector2& p_impulse
     ) override;
-    void body_set_axis_velocity(RID p_body, const Vector2& p_axis_velocity)
-        override;
+    void body_set_axis_velocity(
+        RID p_body,
+        const Vector2& p_axis_velocity
+    ) override;
 
     void body_add_collision_exception(RID p_body, RID p_body_b) override;
     void body_remove_collision_exception(RID p_body, RID p_body_b) override;
-    void body_get_collision_exceptions(RID p_body, List<RID>* p_exceptions)
-        override;
+    void body_get_collision_exceptions(
+        RID p_body,
+        List<RID>* p_exceptions
+    ) override;
 
     void body_set_contacts_reported_depth_threshold(
         RID p_body,
         real_t p_threshold
     ) override;
-    real_t body_get_contacts_reported_depth_threshold(RID p_body
+    real_t body_get_contacts_reported_depth_threshold(
+        RID p_body
     ) const override;
 
     void body_set_omit_force_integration(RID p_body, bool p_omit) override;
@@ -345,15 +377,19 @@ public:
 
     /* JOINT API */
 
-    void joint_set_param(RID p_joint, JointParam p_param, real_t p_value)
-        override;
+    void joint_set_param(
+        RID p_joint,
+        JointParam p_param,
+        real_t p_value
+    ) override;
     real_t joint_get_param(RID p_joint, JointParam p_param) const override;
 
     void joint_disable_collisions_between_bodies(
         RID p_joint,
         const bool p_disabled
     ) override;
-    bool joint_is_disabled_collisions_between_bodies(RID p_joint
+    bool joint_is_disabled_collisions_between_bodies(
+        RID p_joint
     ) const override;
 
     RID pin_joint_create(
@@ -374,17 +410,24 @@ public:
         RID p_body_a,
         RID p_body_b = RID()
     ) override;
-    void pin_joint_set_param(RID p_joint, PinJointParam p_param, real_t p_value)
-        override;
-    real_t pin_joint_get_param(RID p_joint, PinJointParam p_param)
-        const override;
+    void pin_joint_set_param(
+        RID p_joint,
+        PinJointParam p_param,
+        real_t p_value
+    ) override;
+    real_t pin_joint_get_param(
+        RID p_joint,
+        PinJointParam p_param
+    ) const override;
     void damped_string_joint_set_param(
         RID p_joint,
         DampedStringParam p_param,
         real_t p_value
     ) override;
-    real_t damped_string_joint_get_param(RID p_joint, DampedStringParam p_param)
-        const override;
+    real_t damped_string_joint_get_param(
+        RID p_joint,
+        DampedStringParam p_param
+    ) const override;
 
     JointType joint_get_type(RID p_joint) const override;
 

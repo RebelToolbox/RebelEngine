@@ -67,7 +67,8 @@ public:
 
     _FORCE_INLINE_ Vector3 xform(const Vector3& p_vector) const;
     _FORCE_INLINE_ AABB xform(const AABB& p_aabb) const;
-    _FORCE_INLINE_ PoolVector<Vector3> xform(const PoolVector<Vector3>& p_array
+    _FORCE_INLINE_ PoolVector<Vector3> xform(
+        const PoolVector<Vector3>& p_array
     ) const;
 
     // NOTE: These are UNSAFE with non-uniform scaling, and will produce
@@ -273,7 +274,8 @@ PoolVector<Vector3> Transform::xform(const PoolVector<Vector3>& p_array) const {
     return array;
 }
 
-PoolVector<Vector3> Transform::xform_inv(const PoolVector<Vector3>& p_array
+PoolVector<Vector3> Transform::xform_inv(
+    const PoolVector<Vector3>& p_array
 ) const {
     PoolVector<Vector3> array;
     array.resize(p_array.size());

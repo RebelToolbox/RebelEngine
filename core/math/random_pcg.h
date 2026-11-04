@@ -132,15 +132,15 @@ public:
     _FORCE_INLINE_ double randfn(double p_mean, double p_deviation) {
         return p_mean
              + p_deviation
-                   * (cos(Math_TAU * randd()) * sqrt(-2.0 * log(randd()))
-                   ); // Box-Muller transform
+                   * (cos(Math_TAU * randd())
+                      * sqrt(-2.0 * log(randd()))); // Box-Muller transform
     }
 
     _FORCE_INLINE_ float randfn(float p_mean, float p_deviation) {
         return p_mean
              + p_deviation
-                   * (cos(Math_TAU * randf()) * sqrt(-2.0 * log(randf()))
-                   ); // Box-Muller transform
+                   * (cos(Math_TAU * randf())
+                      * sqrt(-2.0 * log(randf()))); // Box-Muller transform
     }
 
     double random(double p_from, double p_to);

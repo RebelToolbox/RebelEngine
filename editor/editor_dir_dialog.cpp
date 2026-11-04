@@ -32,8 +32,8 @@ void EditorDirDialog::_update_dir(
         p_item->set_text(0, "res://");
     } else {
         if (!opened_paths.has(path)
-            && (p_select_path == String() || !p_select_path.begins_with(path)
-            )) {
+            && (p_select_path == String()
+                || !p_select_path.begins_with(path))) {
             p_item->set_collapsed(true);
         }
 
@@ -159,8 +159,8 @@ void EditorDirDialog::_make_dir_confirm() {
     } else {
         opened_paths.insert(dir);
         // reload(dir.plus_file(makedirname->get_text()));
-        EditorFileSystem::get_singleton()->scan_changes(
-        ); // we created a dir, so rescan changes
+        EditorFileSystem::get_singleton()
+            ->scan_changes(); // we created a dir, so rescan changes
     }
     makedirname->set_text(""); // reset label
 }
@@ -181,7 +181,8 @@ void EditorDirDialog::_bind_methods() {
         DEFVAL("")
     );
 
-    ADD_SIGNAL(MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir"))
+    ADD_SIGNAL(
+        MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir"))
     );
 }
 

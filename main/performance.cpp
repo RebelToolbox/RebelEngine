@@ -167,14 +167,16 @@ float Performance::get_monitor(Monitor p_monitor) const {
                 VS::INFO_2D_DRAW_CALLS_IN_FRAME
             );
         case RENDER_VIDEO_MEM_USED:
-            return VS::get_singleton()->get_render_info(VS::INFO_VIDEO_MEM_USED
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_VIDEO_MEM_USED
             );
         case RENDER_TEXTURE_MEM_USED:
             return VS::get_singleton()->get_render_info(
                 VS::INFO_TEXTURE_MEM_USED
             );
         case RENDER_VERTEX_MEM_USED:
-            return VS::get_singleton()->get_render_info(VS::INFO_VERTEX_MEM_USED
+            return VS::get_singleton()->get_render_info(
+                VS::INFO_VERTEX_MEM_USED
             );
         case RENDER_USAGE_VIDEO_MEM_TOTAL:
             return VS::get_singleton()->get_render_info(
@@ -214,7 +216,8 @@ float Performance::get_monitor(Monitor p_monitor) const {
     return 0;
 }
 
-Performance::MonitorType Performance::get_monitor_type(Monitor p_monitor
+Performance::MonitorType Performance::get_monitor_type(
+    Monitor p_monitor
 ) const {
     ERR_FAIL_INDEX_V(p_monitor, MONITOR_MAX, MONITOR_TYPE_QUANTITY);
     // ugly

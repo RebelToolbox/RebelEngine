@@ -218,8 +218,10 @@ uint8_t FileAccessEncrypted::get_8() const {
     return b;
 }
 
-uint64_t FileAccessEncrypted::get_buffer(uint8_t* p_dst, uint64_t p_length)
-    const {
+uint64_t FileAccessEncrypted::get_buffer(
+    uint8_t* p_dst,
+    uint64_t p_length
+) const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
     ERR_FAIL_COND_V_MSG(writing, -1, "File has not been opened in read mode.");
 

@@ -48,8 +48,8 @@ void GDAPI rebel_transform2d_new_axis_origin(
     );
 }
 
-rebel_string GDAPI rebel_transform2d_as_string(const rebel_transform2d* p_self
-) {
+rebel_string GDAPI
+rebel_transform2d_as_string(const rebel_transform2d* p_self) {
     rebel_string ret;
     const Transform2D* self = (const Transform2D*)p_self;
     memnew_placement(&ret, String(*self));
@@ -72,22 +72,22 @@ rebel_transform2d_affine_inverse(const rebel_transform2d* p_self) {
     return dest;
 }
 
-rebel_real GDAPI rebel_transform2d_get_rotation(const rebel_transform2d* p_self
-) {
+rebel_real GDAPI
+rebel_transform2d_get_rotation(const rebel_transform2d* p_self) {
     const Transform2D* self = (const Transform2D*)p_self;
     return self->get_rotation();
 }
 
-rebel_vector2 GDAPI rebel_transform2d_get_origin(const rebel_transform2d* p_self
-) {
+rebel_vector2 GDAPI
+rebel_transform2d_get_origin(const rebel_transform2d* p_self) {
     rebel_vector2 dest;
     const Transform2D* self = (const Transform2D*)p_self;
     *((Vector2*)&dest)      = self->get_origin();
     return dest;
 }
 
-rebel_vector2 GDAPI rebel_transform2d_get_scale(const rebel_transform2d* p_self
-) {
+rebel_vector2 GDAPI
+rebel_transform2d_get_scale(const rebel_transform2d* p_self) {
     rebel_vector2 dest;
     const Transform2D* self = (const Transform2D*)p_self;
     *((Vector2*)&dest)      = self->get_scale();

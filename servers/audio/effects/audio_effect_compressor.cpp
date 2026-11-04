@@ -31,9 +31,9 @@ void AudioEffectCompressorInstance::process(
     const AudioFrame* src = p_src_frames;
 
     if (base->sidechain != StringName() && current_channel != -1) {
-        int bus =
-            AudioServer::get_singleton()->thread_find_bus_index(base->sidechain
-            );
+        int bus = AudioServer::get_singleton()->thread_find_bus_index(
+            base->sidechain
+        );
         if (bus >= 0) {
             src = AudioServer::get_singleton()->thread_get_channel_mix_buffer(
                 bus,
@@ -82,10 +82,9 @@ void AudioEffectCompressorInstance::process(
         float gr  = -overdb * (cratio - 1) / cratio;
         float grv = Math::db2linear(gr);
 
-        runmax = maxover
-               + relcoef
-                     * (runmax - maxover
-                     ); // highest peak for setting att/rel decays in reltime
+        runmax =
+            maxover + relcoef * (runmax - maxover); // highest peak for setting
+                                                    // att/rel decays in reltime
         maxover = runmax;
 
         if (grv < gr_meter) {

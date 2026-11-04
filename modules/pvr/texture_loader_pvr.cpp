@@ -158,7 +158,8 @@ RES ResourceFormatPVR::load(
     return texture;
 }
 
-void ResourceFormatPVR::get_recognized_extensions(List<String>* p_extensions
+void ResourceFormatPVR::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("pvr");
 }
@@ -617,8 +618,8 @@ static void decompress_pvrtc(
                 x,
                 y,
                 p_2bit,
-                (const int(*)[16])p_modulation,
-                (const int(*)[16])p_modulation_modes,
+                (const int (*)[16])p_modulation,
+                (const int (*)[16])p_modulation_modes,
                 &Mod,
                 &DoPT
             );

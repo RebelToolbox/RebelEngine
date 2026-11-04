@@ -78,7 +78,8 @@ public:
         return priority;
     }
 
-    _FORCE_INLINE_ void disable_collisions_between_bodies(const bool p_disabled
+    _FORCE_INLINE_ void disable_collisions_between_bodies(
+        const bool p_disabled
     ) {
         disabled_collisions_between_bodies = p_disabled;
     }

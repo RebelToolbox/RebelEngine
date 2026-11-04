@@ -485,8 +485,8 @@ void DirectionalLight::set_shadow_depth_range(ShadowDepthRange p_range) {
     );
 }
 
-DirectionalLight::ShadowDepthRange DirectionalLight::get_shadow_depth_range(
-) const {
+DirectionalLight::ShadowDepthRange DirectionalLight::
+    get_shadow_depth_range() const {
     return shadow_depth_range;
 }
 

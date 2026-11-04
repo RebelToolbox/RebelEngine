@@ -1698,8 +1698,8 @@ void RoomManager::_process_static(
         VisibilityNotifier* vn = Object::cast_to<VisibilityNotifier>(p_node);
         if (!done && vn
             && ((vn->get_portal_mode() == CullInstance::PORTAL_MODE_DYNAMIC)
-                || (vn->get_portal_mode() == CullInstance::PORTAL_MODE_STATIC)
-            )) {
+                || (vn->get_portal_mode()
+                    == CullInstance::PORTAL_MODE_STATIC))) {
             done = true;
 
             if (p_add_to_portal_renderer) {
@@ -2063,7 +2063,8 @@ void RoomManager::_convert_portal(
     if (!portal) {
         importing = true;
         portal    = _change_node_type<Portal>(p_node, "G", false);
-        portal->create_from_mesh_instance(Object::cast_to<MeshInstance>(p_node)
+        portal->create_from_mesh_instance(
+            Object::cast_to<MeshInstance>(p_node)
         );
 
         p_node->queue_delete();
@@ -2180,7 +2181,8 @@ bool RoomManager::_bound_findpoints_geom_instance(
             Array arrays = rmesh->surface_get_arrays(surf);
 
             if (!arrays.size()) {
-                WARN_PRINT_ONCE("MultiMesh mesh surface with no mesh, ignoring"
+                WARN_PRINT_ONCE(
+                    "MultiMesh mesh surface with no mesh, ignoring"
                 );
                 continue;
             }
@@ -2615,7 +2617,8 @@ void RoomManager::_merge_meshes_in_room(Room* p_room) {
                             // it, but we do want to remove the mesh drawing,
                             // e.g. by replacing it with a spatial
                             String name = mi->get_name();
-                            mi->set_name("DeleteMe"
+                            mi->set_name(
+                                "DeleteMe"
                             ); // can be anything, just to avoid name conflict
                                // with replacement node
                             Spatial* replacement = memnew(Spatial);

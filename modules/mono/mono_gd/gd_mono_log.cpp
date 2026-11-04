@@ -56,8 +56,13 @@ static String make_text(
     return text;
 }
 
-void GDMonoLog::
-    mono_log_callback(const char* log_domain, const char* log_level, const char* message, mono_bool fatal, void*) {
+void GDMonoLog::mono_log_callback(
+    const char* log_domain,
+    const char* log_level,
+    const char* message,
+    mono_bool fatal,
+    void*
+) {
     FileAccess* f = GDMonoLog::get_singleton()->log_file;
 
     if (GDMonoLog::get_singleton()->log_level_id

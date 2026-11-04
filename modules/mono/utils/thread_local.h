@@ -137,12 +137,14 @@ private:
 
 #define _TLS_RECURSION_GUARD_V_(m_ret)                                         \
     static _THREAD_LOCAL_(bool) _recursion_flag_ = false;                      \
-    if (_recursion_flag_) return m_ret;                                        \
+    if (_recursion_flag_)                                                      \
+        return m_ret;                                                          \
     FlagScopeGuard _recursion_guard_(_recursion_flag_);
 
 #define _TLS_RECURSION_GUARD_                                                  \
     static _THREAD_LOCAL_(bool) _recursion_flag_ = false;                      \
-    if (_recursion_flag_) return;                                              \
+    if (_recursion_flag_)                                                      \
+        return;                                                                \
     FlagScopeGuard _recursion_guard_(_recursion_flag_);
 
 #endif // THREAD_LOCAL_H

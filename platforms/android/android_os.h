@@ -70,8 +70,10 @@ public:
     AndroidJNIOS* get_android_jni_os();
     AndroidJNIIO* get_android_jni_io();
 
-    void alert(const String& p_alert, const String& p_title = "ALERT!")
-        override;
+    void alert(
+        const String& p_alert,
+        const String& p_title = "ALERT!"
+    ) override;
     bool request_permission(const String& p_name) override;
     bool request_permissions() override;
     Vector<String> get_granted_permissions() const override;
@@ -89,11 +91,15 @@ public:
     int get_mouse_button_state() const override;
     void set_window_title(const String& p_title) override;
 
-    void set_video_mode(const VideoMode& p_video_mode, int p_screen = 0)
-        override;
+    void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    ) override;
     VideoMode get_video_mode(int p_screen = 0) const override;
-    void get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen = 0)
-        const override;
+    void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const override;
 
     void set_keep_screen_on(bool p_enabled) override;
 
@@ -157,8 +163,10 @@ public:
 
     String get_unique_id() const override;
 
-    String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
-        const override;
+    String get_system_dir(
+        SystemDir p_dir,
+        bool p_shared_storage = true
+    ) const override;
 
     void process_accelerometer(const Vector3& p_accelerometer);
     void process_gravity(const Vector3& p_gravity);

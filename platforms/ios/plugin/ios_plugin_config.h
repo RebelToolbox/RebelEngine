@@ -166,7 +166,8 @@ static inline Vector<String> resolve_local_dependencies(
     return paths;
 }
 
-static inline Vector<String> resolve_system_dependencies(Vector<String> p_paths
+static inline Vector<String> resolve_system_dependencies(
+    Vector<String> p_paths
 ) {
     Vector<String> paths;
 

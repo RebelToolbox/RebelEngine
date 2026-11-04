@@ -94,7 +94,8 @@ public:                                                                        \
         return String(#m_class);                                               \
     }                                                                          \
     const StringName* _get_class_namev() const override {                      \
-        if (!_class_name) _class_name = get_class_static();                    \
+        if (!_class_name)                                                      \
+            _class_name = get_class_static();                                  \
         return &_class_name;                                                   \
     }                                                                          \
     static _FORCE_INLINE_ void* get_class_ptr_static() {                       \
@@ -107,7 +108,8 @@ public:                                                                        \
     static _FORCE_INLINE_ String get_parent_class_static() {                   \
         return m_inherits::get_class_static();                                 \
     }                                                                          \
-    static void get_inheritance_list_static(List<String>* p_inheritance_list   \
+    static void get_inheritance_list_static(                                   \
+        List<String>* p_inheritance_list                                       \
     ) {                                                                        \
         m_inherits::get_inheritance_list_static(p_inheritance_list);           \
         p_inheritance_list->push_back(String(#m_class));                       \
@@ -115,7 +117,8 @@ public:                                                                        \
     static String get_category_static() {                                      \
         String category = m_inherits::get_category_static();                   \
         if (_get_category != m_inherits::_get_category) {                      \
-            if (!category.empty()) category += "/";                            \
+            if (!category.empty())                                             \
+                category += "/";                                               \
             category += _get_category();                                       \
         }                                                                      \
         return category;                                                       \
@@ -149,7 +152,8 @@ protected:                                                                     \
 public:                                                                        \
     static void initialize_class() {                                           \
         static bool initialized = false;                                       \
-        if (initialized) return;                                               \
+        if (initialized)                                                       \
+            return;                                                            \
         m_inherits::initialize_class();                                        \
         ClassDB::_add_class<m_class>();                                        \
         if (m_class::_get_bind_methods() != m_inherits::_get_bind_methods())   \
@@ -161,32 +165,37 @@ protected:                                                                     \
     void _initialize_classv() override {                                       \
         initialize_class();                                                    \
     }                                                                          \
-    _FORCE_INLINE_ bool (Object::*_get_get(                                    \
-    ) const)(const StringName& p_name, Variant&) const {                       \
-        return (bool(Object::*)(const StringName&, Variant&) const)            \
+    _FORCE_INLINE_ bool (Object::* _get_get()                                  \
+                             const)(const StringName& p_name, Variant&)        \
+        const {                                                                \
+        return (bool (Object::*)(const StringName&, Variant&) const)           \
              & m_class::_get;                                                  \
     }                                                                          \
     bool _getv(const StringName& p_name, Variant& r_ret) const override {      \
         if (m_class::_get_get() != m_inherits::_get_get()) {                   \
-            if (_get(p_name, r_ret)) return true;                              \
+            if (_get(p_name, r_ret))                                           \
+                return true;                                                   \
         }                                                                      \
         return m_inherits::_getv(p_name, r_ret);                               \
     }                                                                          \
-    _FORCE_INLINE_ bool (Object::*_get_set(                                    \
-    ) const)(const StringName& p_name, const Variant& p_property) {            \
-        return (bool(Object::*)(const StringName&, const Variant&))            \
+    _FORCE_INLINE_ bool (Object::* _get_set() const)(                          \
+        const StringName& p_name,                                              \
+        const Variant& p_property                                              \
+    ) {                                                                        \
+        return (bool (Object::*)(const StringName&, const Variant&))           \
              & m_class::_set;                                                  \
     }                                                                          \
     bool _setv(const StringName& p_name, const Variant& p_property) override { \
-        if (m_inherits::_setv(p_name, p_property)) return true;                \
+        if (m_inherits::_setv(p_name, p_property))                             \
+            return true;                                                       \
         if (m_class::_get_set() != m_inherits::_get_set()) {                   \
             return _set(p_name, p_property);                                   \
         }                                                                      \
         return false;                                                          \
     }                                                                          \
-    _FORCE_INLINE_ void (Object::*_get_get_property_list()                     \
+    _FORCE_INLINE_ void (Object::* _get_get_property_list()                    \
                              const)(List<PropertyInfo> * p_list) const {       \
-        return (void(Object::*)(List<PropertyInfo>*) const)                    \
+        return (void (Object::*)(List<PropertyInfo>*) const)                   \
              & m_class::_get_property_list;                                    \
     }                                                                          \
     void _get_property_listv(List<PropertyInfo>* p_list, bool p_reversed)      \
@@ -213,8 +222,8 @@ protected:                                                                     \
             m_inherits::_get_property_listv(p_list, p_reversed);               \
         }                                                                      \
     }                                                                          \
-    _FORCE_INLINE_ void (Object::*_get_notification() const)(int) {            \
-        return (void(Object::*)(int)) & m_class::_notification;                \
+    _FORCE_INLINE_ void (Object::* _get_notification() const)(int) {           \
+        return (void (Object::*)(int)) & m_class::_notification;               \
     }                                                                          \
     void _notificationv(int p_notification, bool p_reversed) override {        \
         if (!p_reversed)                                                       \
@@ -408,22 +417,26 @@ protected:
         return &Object::_bind_methods;
     }
 
-    _FORCE_INLINE_ bool (Object::*_get_get(
-    ) const)(const StringName& p_name, Variant& r_ret) const {
+    _FORCE_INLINE_ bool (Object::* _get_get() const)(
+        const StringName& p_name,
+        Variant& r_ret
+    ) const {
         return &Object::_get;
     }
 
-    _FORCE_INLINE_ bool (Object::*_get_set(
-    ) const)(const StringName& p_name, const Variant& p_property) {
+    _FORCE_INLINE_ bool (Object::* _get_set() const)(
+        const StringName& p_name,
+        const Variant& p_property
+    ) {
         return &Object::_set;
     }
 
-    _FORCE_INLINE_ void (Object::*_get_get_property_list()
+    _FORCE_INLINE_ void (Object::* _get_get_property_list()
                              const)(List<PropertyInfo>* p_list) const {
         return &Object::_get_property_list;
     }
 
-    _FORCE_INLINE_ void (Object::*_get_notification() const)(int) {
+    _FORCE_INLINE_ void (Object::* _get_notification() const)(int) {
         return &Object::_notification;
     }
 
@@ -610,8 +623,10 @@ public:
         bool* r_valid = nullptr
     ) const;
 
-    void get_property_list(List<PropertyInfo>* p_list, bool p_reversed = false)
-        const;
+    void get_property_list(
+        List<PropertyInfo>* p_list,
+        bool p_reversed = false
+    ) const;
 
     bool has_method(const StringName& p_method) const;
     void get_method_list(List<MethodInfo>* p_list) const;
@@ -668,9 +683,10 @@ public:
 #ifdef TOOLS_ENABLED
     void set_edited(bool p_edited);
     bool is_edited() const;
-    uint32_t get_edited_version(
-    ) const; // this function is used to check when something changed beyond a
-             // point, it's used mainly for generating previews
+    uint32_t get_edited_version() const; // this function is used to check when
+                                         // something changed beyond a point,
+                                         // it's used mainly for generating
+                                         // previews
 #endif
 
     void set_script_instance(ScriptInstance* p_instance);
@@ -743,7 +759,8 @@ public:
         List<String>* r_options
     ) const;
 
-    StringName tr(const StringName& p_message
+    StringName tr(
+        const StringName& p_message
     ) const; // translate message (internationalization)
 
     bool _is_queued_for_deletion; // set to true by SceneTree::queue_delete()

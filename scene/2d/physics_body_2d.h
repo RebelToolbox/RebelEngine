@@ -373,8 +373,9 @@ public:
     bool is_on_wall() const;
     bool is_on_ceiling() const;
     Vector2 get_floor_normal() const;
-    real_t get_floor_angle(const Vector2& p_up_direction = Vector2(0.0, -1.0))
-        const;
+    real_t get_floor_angle(
+        const Vector2& p_up_direction = Vector2(0.0, -1.0)
+    ) const;
     Vector2 get_floor_velocity() const;
 
     int get_slide_count() const;

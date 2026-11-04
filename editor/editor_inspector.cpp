@@ -1228,7 +1228,8 @@ void EditorInspectorCategory::_notification(int p_what) {
     }
 }
 
-Control* EditorInspectorCategory::make_custom_tooltip(const String& p_text
+Control* EditorInspectorCategory::make_custom_tooltip(
+    const String& p_text
 ) const {
     tooltip_text            = p_text;
     EditorHelpBit* help_bit = memnew(EditorHelpBit);
@@ -1551,7 +1552,8 @@ EditorProperty* EditorInspector::instantiate_property_editor(
         if (inspector_plugins[i]->added_editors.size()) {
             for (int j = 1; j < inspector_plugins[i]->added_editors.size();
                  j++) { // only keep first one
-                memdelete(inspector_plugins[i]->added_editors[j].property_editor
+                memdelete(
+                    inspector_plugins[i]->added_editors[j].property_editor
                 );
             }
 
@@ -1562,7 +1564,8 @@ EditorProperty* EditorInspector::instantiate_property_editor(
                 inspector_plugins[i]->added_editors.clear();
                 return prop;
             } else {
-                memdelete(inspector_plugins[i]->added_editors[0].property_editor
+                memdelete(
+                    inspector_plugins[i]->added_editors[0].property_editor
                 );
                 inspector_plugins[i]->added_editors.clear();
             }
@@ -1891,8 +1894,8 @@ void EditorInspector::update_tree() {
         }
 
         if (p.name == "script"
-            && (hide_script || bool(object->call("_hide_script_from_inspector"))
-            )) {
+            && (hide_script
+                || bool(object->call("_hide_script_from_inspector")))) {
             continue;
         }
 
@@ -2047,9 +2050,9 @@ void EditorInspector::update_tree() {
                              i++) {
                             if (F->get().theme_properties[i].name
                                 == slices[1]) {
-                                descr =
-                                    DTR(F->get().theme_properties[i].description
-                                    );
+                                descr = DTR(
+                                    F->get().theme_properties[i].description
+                                );
                                 break;
                             }
                         }
@@ -2256,10 +2259,12 @@ void EditorInspector::edit(Object* p_object) {
 
     if (object) {
         update_scroll_request = 0; // reset
-        if (scroll_cache.has(object->get_instance_id()
+        if (scroll_cache.has(
+                object->get_instance_id()
             )) { // if exists, set something else
-            update_scroll_request = scroll_cache[object->get_instance_id(
-            )]; // done this way because wait until full size is accommodated
+            update_scroll_request = scroll_cache
+                [object->get_instance_id()]; // done this way because wait until
+                                             // full size is accommodated
         }
         object->add_change_receptor(this);
         update_tree();

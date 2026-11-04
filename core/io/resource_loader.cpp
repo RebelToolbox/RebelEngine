@@ -119,7 +119,8 @@ class ResourceInteractiveLoaderDefault : public ResourceInteractiveLoader {
 public:
     Ref<Resource> resource;
 
-    void set_local_path(const String& p_local_path
+    void set_local_path(
+        const String& p_local_path
     ) override { /*scene->set_filename(p_local_path);*/ }
 
     Ref<Resource> get_resource() override {
@@ -149,7 +150,8 @@ bool ResourceFormatLoader::exists(const String& p_path) const {
     return FileAccess::exists(p_path); // by default just check file
 }
 
-void ResourceFormatLoader::get_recognized_extensions(List<String>* p_extensions
+void ResourceFormatLoader::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     if (get_script_instance()
         && get_script_instance()->has_method("get_recognized_extensions")) {

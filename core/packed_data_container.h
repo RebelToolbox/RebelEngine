@@ -55,8 +55,10 @@ protected:
     static void _bind_methods();
 
 public:
-    Variant getvar(const Variant& p_key, bool* r_valid = nullptr)
-        const override;
+    Variant getvar(
+        const Variant& p_key,
+        bool* r_valid = nullptr
+    ) const override;
     Error pack(const Variant& p_data);
 
     int size() const;
@@ -81,8 +83,10 @@ public:
     bool _is_dictionary() const;
 
     int size() const;
-    Variant getvar(const Variant& p_key, bool* r_valid = nullptr)
-        const override;
+    Variant getvar(
+        const Variant& p_key,
+        bool* r_valid = nullptr
+    ) const override;
 
     PackedDataContainerRef();
 };

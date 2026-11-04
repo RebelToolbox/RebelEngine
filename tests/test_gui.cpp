@@ -214,7 +214,8 @@ public:
             " so the label control overflows and the scrollbar appears.\n"
         );
         richtext->push_meta("http://www.scrollingcapabilities.xz");
-        richtext->add_text("This allows to test for the scrolling capabilities "
+        richtext->add_text(
+            "This allows to test for the scrolling capabilities "
         );
         richtext->pop();
         richtext->add_text(

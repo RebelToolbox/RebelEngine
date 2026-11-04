@@ -43,8 +43,8 @@ StringName AnimationNodeStateMachineTransition::get_advance_condition() const {
     return advance_condition;
 }
 
-StringName AnimationNodeStateMachineTransition::get_advance_condition_name(
-) const {
+StringName AnimationNodeStateMachineTransition::
+    get_advance_condition_name() const {
     return advance_condition_name;
 }
 
@@ -507,12 +507,10 @@ float AnimationNodeStateMachinePlayback::process(
         for (int i = 0; i < p_state_machine->transitions.size(); i++) {
             if (p_state_machine->transitions[i].from == current
                 && p_state_machine->transitions[i].to == path[0]) {
-                next_xfade =
-                    p_state_machine->transitions[i].transition->get_xfade_time(
-                    );
-                switch_mode =
-                    p_state_machine->transitions[i].transition->get_switch_mode(
-                    );
+                next_xfade = p_state_machine->transitions[i]
+                                 .transition->get_xfade_time();
+                switch_mode = p_state_machine->transitions[i]
+                                  .transition->get_switch_mode();
                 next = path[0];
             }
         }
@@ -521,15 +519,16 @@ float AnimationNodeStateMachinePlayback::process(
         int auto_advance_to = -1;
         for (int i = 0; i < p_state_machine->transitions.size(); i++) {
             bool auto_advance = false;
-            if (p_state_machine->transitions[i].transition->has_auto_advance(
-                )) {
+            if (p_state_machine->transitions[i]
+                    .transition->has_auto_advance()) {
                 auto_advance = true;
             }
             StringName advance_condition_name =
                 p_state_machine->transitions[i]
                     .transition->get_advance_condition_name();
             if (advance_condition_name != StringName()
-                && bool(p_state_machine->get_parameter(advance_condition_name)
+                && bool(
+                    p_state_machine->get_parameter(advance_condition_name)
                 )) {
                 auto_advance = true;
             }
@@ -687,7 +686,8 @@ AnimationNodeStateMachinePlayback::AnimationNodeStateMachinePlayback() {
 
 ///////////////////////////////////////////////////////
 
-void AnimationNodeStateMachine::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeStateMachine::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     r_list->push_back(PropertyInfo(
         Variant::OBJECT,
@@ -779,7 +779,8 @@ void AnimationNodeStateMachine::replace_node(
     );
 }
 
-Ref<AnimationNode> AnimationNodeStateMachine::get_node(const StringName& p_name
+Ref<AnimationNode> AnimationNodeStateMachine::get_node(
+    const StringName& p_name
 ) const {
     ERR_FAIL_COND_V(!states.has(p_name), Ref<AnimationNode>());
 
@@ -799,7 +800,8 @@ StringName AnimationNodeStateMachine::get_node_name(
     ERR_FAIL_V(StringName());
 }
 
-void AnimationNodeStateMachine::get_child_nodes(List<ChildNode>* r_child_nodes
+void AnimationNodeStateMachine::get_child_nodes(
+    List<ChildNode>* r_child_nodes
 ) {
     Vector<StringName> nodes;
 
@@ -979,13 +981,15 @@ Ref<AnimationNodeStateMachineTransition> AnimationNodeStateMachine::
     return transitions[p_transition].transition;
 }
 
-StringName AnimationNodeStateMachine::get_transition_from(int p_transition
+StringName AnimationNodeStateMachine::get_transition_from(
+    int p_transition
 ) const {
     ERR_FAIL_INDEX_V(p_transition, transitions.size(), StringName());
     return transitions[p_transition].from;
 }
 
-StringName AnimationNodeStateMachine::get_transition_to(int p_transition
+StringName AnimationNodeStateMachine::get_transition_to(
+    int p_transition
 ) const {
     ERR_FAIL_INDEX_V(p_transition, transitions.size(), StringName());
     return transitions[p_transition].to;
@@ -1120,8 +1124,10 @@ bool AnimationNodeStateMachine::_set(
     return false;
 }
 
-bool AnimationNodeStateMachine::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool AnimationNodeStateMachine::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     String name = p_name;
     if (name.begins_with("states/")) {
         String node_name = name.get_slicec('/', 1);
@@ -1166,7 +1172,8 @@ bool AnimationNodeStateMachine::_get(const StringName& p_name, Variant& r_ret)
     return false;
 }
 
-void AnimationNodeStateMachine::_get_property_list(List<PropertyInfo>* p_list
+void AnimationNodeStateMachine::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     List<StringName> names;
     for (Map<StringName, State>::Element* E = states.front(); E;
@@ -1231,7 +1238,8 @@ void AnimationNodeStateMachine::set_node_position(
     states[p_name].position = p_position;
 }
 
-Vector2 AnimationNodeStateMachine::get_node_position(const StringName& p_name
+Vector2 AnimationNodeStateMachine::get_node_position(
+    const StringName& p_name
 ) const {
     ERR_FAIL_COND_V(!states.has(p_name), Vector2());
     return states[p_name].position;

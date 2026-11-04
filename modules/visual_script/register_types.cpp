@@ -93,10 +93,12 @@ void register_visual_script_types() {
     ClassDB::register_class<_VisualScriptEditor>();
     ClassDB::set_current_api(ClassDB::API_CORE);
     vs_editor_singleton = memnew(_VisualScriptEditor);
-    Engine::get_singleton()->add_singleton(Engine::Singleton(
-        "VisualScriptEditor",
-        _VisualScriptEditor::get_singleton()
-    ));
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton(
+            "VisualScriptEditor",
+            _VisualScriptEditor::get_singleton()
+        )
+    );
 
     VisualScriptEditor::register_editor();
 #endif

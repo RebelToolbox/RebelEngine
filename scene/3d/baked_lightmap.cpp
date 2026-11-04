@@ -494,13 +494,13 @@ void BakedLightmap::_find_meshes_and_lights(
                     != Mesh::PRIMITIVE_TRIANGLES) {
                     continue;
                 }
-                if (!(mesh->surface_get_format(i) & Mesh::ARRAY_FORMAT_TEX_UV2
-                    )) {
+                if (!(mesh->surface_get_format(i)
+                      & Mesh::ARRAY_FORMAT_TEX_UV2)) {
                     all_have_uv2_and_normal = false;
                     break;
                 }
-                if (!(mesh->surface_get_format(i) & Mesh::ARRAY_FORMAT_NORMAL
-                    )) {
+                if (!(mesh->surface_get_format(i)
+                      & Mesh::ARRAY_FORMAT_NORMAL)) {
                     all_have_uv2_and_normal = false;
                     break;
                 }
@@ -1324,7 +1324,8 @@ BakedLightmap::BakeError BakedLightmap::bake(
             config->save(base_path + ".import");
 
             ResourceLoader::import(base_path);
-            texture = ResourceLoader::load(base_path
+            texture = ResourceLoader::load(
+                base_path
             ); // if already loaded, it will be updated on refocus?
         } else {
             base_path += ".texarr";
@@ -1382,9 +1383,9 @@ BakedLightmap::BakeError BakedLightmap::bake(
             }
 
             Ref<Texture> texture;
-            String base_path =
-                p_data_save_path.get_base_dir().plus_file(images[i]->get_name()
-                );
+            String base_path = p_data_save_path.get_base_dir().plus_file(
+                images[i]->get_name()
+            );
 
             if (ResourceLoader::import) {
                 _save_image(base_path, images[i], use_srgb);
@@ -1408,7 +1409,8 @@ BakedLightmap::BakeError BakedLightmap::bake(
                 config->save(base_path + ".import");
 
                 ResourceLoader::import(base_path);
-                texture = ResourceLoader::load(base_path
+                texture = ResourceLoader::load(
+                    base_path
                 ); // if already loaded, it will be updated on refocus?
             } else {
                 base_path += ".tex";

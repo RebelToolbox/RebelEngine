@@ -18,7 +18,8 @@ String ResourceImporterMP3::get_visible_name() const {
     return "MP3";
 }
 
-void ResourceImporterMP3::get_recognized_extensions(List<String>* p_extensions
+void ResourceImporterMP3::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("mp3");
 }
@@ -50,7 +51,8 @@ void ResourceImporterMP3::get_import_options(
     List<ImportOption>* r_options,
     int p_preset
 ) const {
-    r_options->push_back(ImportOption(PropertyInfo(Variant::BOOL, "loop"), true)
+    r_options->push_back(
+        ImportOption(PropertyInfo(Variant::BOOL, "loop"), true)
     );
     r_options->push_back(
         ImportOption(PropertyInfo(Variant::REAL, "loop_offset"), 0)

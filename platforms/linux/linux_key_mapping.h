@@ -17,7 +17,7 @@
 #include <X11/keysymdef.h>
 
 class LinuxKeyMapping {
-    LinuxKeyMapping(){};
+    LinuxKeyMapping() {};
 
 public:
     static unsigned int get_keycode(KeySym p_keysym);

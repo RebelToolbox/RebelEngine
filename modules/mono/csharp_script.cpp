@@ -521,8 +521,11 @@ String CSharpLanguage::make_function(
     return s;
 }
 #else
-String CSharpLanguage::
-    make_function(const String&, const String&, const PoolStringArray&) const {
+String CSharpLanguage::make_function(
+    const String&,
+    const String&,
+    const PoolStringArray&
+) const {
     return String();
 }
 #endif
@@ -586,8 +589,8 @@ String CSharpLanguage::debug_get_stack_level_source(int p_level) const {
     return String();
 }
 
-Vector<ScriptLanguage::StackInfo> CSharpLanguage::debug_get_current_stack_info(
-) {
+Vector<ScriptLanguage::StackInfo> CSharpLanguage::
+    debug_get_current_stack_info() {
 #ifdef DEBUG_ENABLED
     _TLS_RECURSION_GUARD_V_(Vector<StackInfo>());
     GD_MONO_SCOPE_THREAD_ATTACH;
@@ -719,8 +722,10 @@ void CSharpLanguage::frame() {
 struct CSharpScriptDepSort {
     // must support sorting so inheritance works properly (parent must be
     // reloaded first)
-    bool operator()(const Ref<CSharpScript>& A, const Ref<CSharpScript>& B)
-        const {
+    bool operator()(
+        const Ref<CSharpScript>& A,
+        const Ref<CSharpScript>& B
+    ) const {
         if (A == B) {
             return false; // shouldn't happen but..
         }
@@ -806,8 +811,11 @@ bool CSharpLanguage::is_assembly_reloading_needed() {
             return false; // Already up to date
         }
     } else {
-        if (!FileAccess::exists(RebelSharpDirs::get_res_temp_assemblies_dir()
-                                    .plus_file(appname_safe))) {
+        if (!FileAccess::exists(
+                RebelSharpDirs::get_res_temp_assemblies_dir().plus_file(
+                    appname_safe
+                )
+            )) {
             return false; // No assembly to load
         }
     }
@@ -852,8 +860,8 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
 
     // As scripts are going to be reloaded, must proceed without locking here
 
-    scripts.sort_custom<CSharpScriptDepSort>(
-    ); // Update in inheritance dependency order
+    scripts.sort_custom<CSharpScriptDepSort>(); // Update in inheritance
+                                                // dependency order
 
     for (List<Ref<CSharpScript>>::Element* E = scripts.front(); E;
          E                                   = E->next()) {
@@ -946,7 +954,8 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
 
         while (script->instances.front()) {
             Object* obj = script->instances.front()->get();
-            obj->set_script(RefPtr()
+            obj->set_script(
+                RefPtr()
             ); // Remove script and existing script instances (placeholder are
                // not removed before domain reload)
         }
@@ -1143,7 +1152,8 @@ void CSharpLanguage::reload_assemblies(bool p_soft_reload) {
                 CRASH_COND(si != NULL);
 #endif
                 // Re-create script instance
-                obj->set_script(script.get_ref_ptr()
+                obj->set_script(
+                    script.get_ref_ptr()
                 ); // will create the script instance as well
             }
         }
@@ -1262,7 +1272,8 @@ void CSharpLanguage::_load_scripts_metadata() {
     }
 }
 
-void CSharpLanguage::get_recognized_extensions(List<String>* p_extensions
+void CSharpLanguage::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("cs");
 }
@@ -1397,9 +1408,9 @@ void CSharpLanguage::release_script_gchandle(
     MonoObject* p_expected_obj,
     Ref<MonoGCHandle>& p_gchandle
 ) {
-    uint32_t pinned_gchandle =
-        MonoGCHandle::new_strong_handle_pinned(p_expected_obj
-        ); // We might lock after this, so pin it
+    uint32_t pinned_gchandle = MonoGCHandle::new_strong_handle_pinned(
+        p_expected_obj
+    ); // We might lock after this, so pin it
 
     if (!p_gchandle->is_released()) { // Do not lock unnecessarily
         MutexLock lock(get_singleton()->script_gchandle_release_mutex);
@@ -1588,8 +1599,8 @@ void CSharpLanguage::refcount_incremented_instance_binding(Object* p_object) {
     }
 
     if (ref_owner->reference_get_count() > 1
-        && gchandle->is_weak(
-        )) { // The managed side also holds a reference, hence 1 instead of 0
+        && gchandle->is_weak()) { // The managed side also holds a reference,
+                                  // hence 1 instead of 0
         GD_MONO_SCOPE_THREAD_ATTACH;
 
         // The reference count was increased after the managed side was the only
@@ -1632,8 +1643,8 @@ bool CSharpLanguage::refcount_decremented_instance_binding(Object* p_object) {
     }
 
     if (refcount == 1 && gchandle.is_valid()
-        && !gchandle->is_weak(
-        )) { // The managed side also holds a reference, hence 1 instead of 0
+        && !gchandle->is_weak()) { // The managed side also holds a reference,
+                                   // hence 1 instead of 0
         GD_MONO_SCOPE_THREAD_ATTACH;
 
         // If owner owner is no longer referenced by the unmanaged side,
@@ -2209,8 +2220,8 @@ void CSharpInstance::refcount_incremented() {
     Reference* ref_owner = Object::cast_to<Reference>(owner);
 
     if (ref_owner->reference_get_count() > 1
-        && gchandle->is_weak(
-        )) { // The managed side also holds a reference, hence 1 instead of 0
+        && gchandle->is_weak()) { // The managed side also holds a reference,
+                                  // hence 1 instead of 0
         GD_MONO_SCOPE_THREAD_ATTACH;
 
         // The reference count was increased after the managed side was the only
@@ -2237,8 +2248,8 @@ bool CSharpInstance::refcount_decremented() {
     int refcount = ref_owner->reference_get_count();
 
     if (refcount == 1
-        && !gchandle->is_weak(
-        )) { // The managed side also holds a reference, hence 1 instead of 0
+        && !gchandle->is_weak()) { // The managed side also holds a reference,
+                                   // hence 1 instead of 0
         GD_MONO_SCOPE_THREAD_ATTACH;
 
         // If owner owner is no longer referenced by the unmanaged side,
@@ -2290,7 +2301,8 @@ MultiplayerAPI::RPCMode CSharpInstance::_member_get_rpc_mode(
     return MultiplayerAPI::RPC_MODE_DISABLED;
 }
 
-MultiplayerAPI::RPCMode CSharpInstance::get_rpc_mode(const StringName& p_method
+MultiplayerAPI::RPCMode CSharpInstance::get_rpc_mode(
+    const StringName& p_method
 ) const {
     GD_MONO_SCOPE_THREAD_ATTACH;
 
@@ -2498,7 +2510,8 @@ CSharpInstance::~CSharpInstance() {
         // references it. Otherwise, the unsafe reference debug checks will
         // incorrectly detect a bug.
         bool die = _unreference_owner_unsafe();
-        CRASH_COND(die
+        CRASH_COND(
+            die
         ); // `owner_keep_alive` holds a reference, so it can't die
 
         void* data = owner->get_script_instance_binding(
@@ -2547,7 +2560,8 @@ CSharpInstance::~CSharpInstance() {
 }
 
 #ifdef TOOLS_ENABLED
-void CSharpScript::_placeholder_erased(PlaceHolderScriptInstance* p_placeholder
+void CSharpScript::_placeholder_erased(
+    PlaceHolderScriptInstance* p_placeholder
 ) {
     placeholders.erase(p_placeholder);
 }
@@ -2683,9 +2697,9 @@ bool CSharpScript::_update_exports(
                 return false;
             }
 
-            tmp_pinned_gchandle =
-                MonoGCHandle::new_strong_handle_pinned(tmp_object
-                ); // pin it (not sure if needed)
+            tmp_pinned_gchandle = MonoGCHandle::new_strong_handle_pinned(
+                tmp_object
+            ); // pin it (not sure if needed)
 
             GDMonoMethod* ctor =
                 script_class->get_method(CACHED_STRING_NAME(dotctor), 0);
@@ -2836,7 +2850,8 @@ bool CSharpScript::_update_exports(
             if (tmp_native && !base_ref) {
                 Node* node = Object::cast_to<Node>(tmp_native);
                 if (node && node->is_inside_tree()) {
-                    ERR_PRINT("Temporary instance was added to the scene tree."
+                    ERR_PRINT(
+                        "Temporary instance was added to the scene tree."
                     );
                 } else {
                     memdelete(tmp_native);
@@ -3422,7 +3437,8 @@ void CSharpScript::initialize_for_managed_type(
     }
 #endif
 
-    p_script->script_class->fetch_methods_with_rebel_api_checks(p_script->native
+    p_script->script_class->fetch_methods_with_rebel_api_checks(
+        p_script->native
     );
 
     // Need to fetch method from base classes as well
@@ -3572,9 +3588,9 @@ CSharpInstance* CSharpScript::_create_instance(
     instance->gchandle = MonoGCHandle::create_strong(mono_object);
 
     if (instance->base_ref) {
-        instance->_reference_owner_unsafe(
-        ); // Here, after assigning the gchandle (for the refcount_incremented
-           // callback)
+        instance->_reference_owner_unsafe(); // Here, after assigning the
+                                             // gchandle (for the
+                                             // refcount_incremented callback)
     }
 
     {
@@ -3818,7 +3834,8 @@ Error CSharpScript::reload(bool p_keep_state) {
             if (!tool) {
                 GDMonoClass* nesting_class = script_class->get_nesting_class();
                 tool                       = nesting_class
-                    && nesting_class->has_attribute(CACHED_CLASS(ToolAttribute)
+                    && nesting_class->has_attribute(
+                        CACHED_CLASS(ToolAttribute)
                     );
             }
 
@@ -4072,13 +4089,15 @@ void ResourceFormatLoaderCSharpScript::get_recognized_extensions(
     p_extensions->push_back("cs");
 }
 
-bool ResourceFormatLoaderCSharpScript::handles_type(const String& p_type
+bool ResourceFormatLoaderCSharpScript::handles_type(
+    const String& p_type
 ) const {
     return p_type == "Script"
         || p_type == CSharpLanguage::get_singleton()->get_type();
 }
 
-String ResourceFormatLoaderCSharpScript::get_resource_type(const String& p_path
+String ResourceFormatLoaderCSharpScript::get_resource_type(
+    const String& p_path
 ) const {
     return p_path.get_extension().to_lower() == "cs"
              ? CSharpLanguage::get_singleton()->get_type()

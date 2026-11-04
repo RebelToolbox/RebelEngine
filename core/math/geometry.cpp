@@ -533,10 +533,12 @@ static inline void _build_faces(
             face_points[j] = vert(indices[i][j]) + Vector3(x, y, z);
         }
 
-        p_faces.push_back(Face3(face_points[0], face_points[1], face_points[2])
+        p_faces.push_back(
+            Face3(face_points[0], face_points[1], face_points[2])
         );
 
-        p_faces.push_back(Face3(face_points[2], face_points[3], face_points[0])
+        p_faces.push_back(
+            Face3(face_points[2], face_points[3], face_points[0])
         );
     }
 }
@@ -729,7 +731,8 @@ Vector<Vector<Vector2>> Geometry::decompose_polygon_in_convex(
     return decomp;
 }
 
-Geometry::MeshData Geometry::build_convex_mesh(const PoolVector<Plane>& p_planes
+Geometry::MeshData Geometry::build_convex_mesh(
+    const PoolVector<Plane>& p_planes
 ) {
     MeshData mesh;
 

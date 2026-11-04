@@ -78,7 +78,8 @@ struct VSPortal {
         LocalVector<Plane, int32_t>& r_planes,
         bool p_outgoing
     ) const;
-    bool _pvs_is_outside_planes(const LocalVector<Plane, int32_t>& p_planes
+    bool _pvs_is_outside_planes(
+        const LocalVector<Plane, int32_t>& p_planes
     ) const;
 
 private:

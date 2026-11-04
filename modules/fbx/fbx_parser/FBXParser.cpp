@@ -340,9 +340,9 @@ size_t ParseTokenAsDim(const TokenPtr t, const char*& err_out) {
 
     const char* out = nullptr;
     bool errored    = false;
-    const size_t id =
-        static_cast<size_t>(strtoul10_64(t->begin() + 1, errored, &out, &length)
-        );
+    const size_t id = static_cast<size_t>(
+        strtoul10_64(t->begin() + 1, errored, &out, &length)
+    );
     if (errored || out > t->end()) {
         print_error("failed to parse id");
         err_out = "failed to parse ID";

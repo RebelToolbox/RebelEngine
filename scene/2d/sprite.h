@@ -30,8 +30,11 @@ class Sprite : public Node2D {
     int vframes;
     int hframes;
 
-    void _get_rects(Rect2& r_src_rect, Rect2& r_dst_rect, bool& r_filter_clip)
-        const;
+    void _get_rects(
+        Rect2& r_src_rect,
+        Rect2& r_dst_rect,
+        bool& r_filter_clip
+    ) const;
 
     void _texture_changed();
 
@@ -50,8 +53,10 @@ public:
     void _edit_set_pivot(const Point2& p_pivot) override;
     Point2 _edit_get_pivot() const override;
     bool _edit_use_pivot() const override;
-    bool _edit_is_selected_on_click(const Point2& p_point, double p_tolerance)
-        const override;
+    bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const override;
 
     Rect2 _edit_get_rect() const override;
     bool _edit_use_rect() const override;

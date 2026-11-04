@@ -354,7 +354,8 @@ ScriptInstance* GDScript::instance_create(Object* p_this) {
     );
 }
 
-PlaceHolderScriptInstance* GDScript::placeholder_instance_create(Object* p_this
+PlaceHolderScriptInstance* GDScript::placeholder_instance_create(
+    Object* p_this
 ) {
 #ifdef TOOLS_ENABLED
     PlaceHolderScriptInstance* si = memnew(PlaceHolderScriptInstance(
@@ -543,8 +544,8 @@ bool GDScript::_update_exports(
                 }
                 valid             = false; // to show error in the editor
                 base_cache->valid = false;
-                base_cache->inheriters_cache.clear(
-                ); // to prevent future stackoverflows
+                base_cache->inheriters_cache
+                    .clear(); // to prevent future stackoverflows
                 base_cache.unref();
                 base.unref();
                 _base = nullptr;
@@ -959,8 +960,8 @@ Error GDScript::load_source_code(const String& p_path) {
     return OK;
 }
 
-const Map<StringName, GDScriptFunction*>& GDScript::debug_get_member_functions(
-) const {
+const Map<StringName, GDScriptFunction*>& GDScript::
+    debug_get_member_functions() const {
     return member_functions;
 }
 
@@ -1265,7 +1266,8 @@ Variant::Type GDScriptInstance::get_property_type(
     return Variant::NIL;
 }
 
-void GDScriptInstance::get_property_list(List<PropertyInfo>* p_properties
+void GDScriptInstance::get_property_list(
+    List<PropertyInfo>* p_properties
 ) const {
     // exported members, not done yet!
 
@@ -1827,7 +1829,8 @@ void GDScriptLanguage::reload_all_scripts() {
     while (elem) {
         if (elem->get_self()->get_path().is_resource_file()) {
             print_verbose("GDScript: Found: " + elem->get_self()->get_path());
-            scripts.push_back(Ref<GDScript>(elem->get_self())
+            scripts.push_back(
+                Ref<GDScript>(elem->get_self())
             ); // cast to gdscript to avoid being erased by accident
         }
         elem = elem->get_next();
@@ -1837,8 +1840,8 @@ void GDScriptLanguage::reload_all_scripts() {
 
     // as scripts are going to be reloaded, must proceed without locking here
 
-    scripts.sort_custom<GDScriptDepSort>(
-    ); // update in inheritance dependency order
+    scripts.sort_custom<GDScriptDepSort>(); // update in inheritance dependency
+                                            // order
 
     for (List<Ref<GDScript>>::Element* E = scripts.front(); E; E = E->next()) {
         print_verbose("GDScript: Reloading: " + E->get()->get_path());
@@ -1861,7 +1864,8 @@ void GDScriptLanguage::reload_tool_script(
     SelfList<GDScript>* elem = script_list.get_first();
     while (elem) {
         if (elem->get_self()->get_path().is_resource_file()) {
-            scripts.push_back(Ref<GDScript>(elem->get_self())
+            scripts.push_back(
+                Ref<GDScript>(elem->get_self())
             ); // cast to gdscript to avoid being erased by accident
         }
         elem = elem->get_next();
@@ -1877,8 +1881,8 @@ void GDScriptLanguage::reload_tool_script(
 
     // as scripts are going to be reloaded, must proceed without locking here
 
-    scripts.sort_custom<GDScriptDepSort>(
-    ); // update in inheritance dependency order
+    scripts.sort_custom<GDScriptDepSort>(); // update in inheritance dependency
+                                            // order
 
     for (List<Ref<GDScript>>::Element* E = scripts.front(); E; E = E->next()) {
         bool reload =
@@ -2006,7 +2010,8 @@ void GDScriptLanguage::reload_tool_script(
                 }
             }
 
-            scr->pending_reload_state.erase(obj->get_instance_id()
+            scr->pending_reload_state.erase(
+                obj->get_instance_id()
             ); // as it reloaded, remove pending state
         }
 
@@ -2045,65 +2050,66 @@ void GDScriptLanguage::frame() {
 
 /* EDITOR FUNCTIONS */
 void GDScriptLanguage::get_reserved_words(List<String>* p_words) const {
-    static const char* _reserved_words[] = {// operators
-                                            "and",
-                                            "in",
-                                            "not",
-                                            "or",
-                                            // types and values
-                                            "false",
-                                            "float",
-                                            "int",
-                                            "bool",
-                                            "null",
-                                            "PI",
-                                            "TAU",
-                                            "INF",
-                                            "NAN",
-                                            "self",
-                                            "true",
-                                            "void",
-                                            // functions
-                                            "as",
-                                            "assert",
-                                            "breakpoint",
-                                            "class",
-                                            "class_name",
-                                            "extends",
-                                            "is",
-                                            "func",
-                                            "preload",
-                                            "setget",
-                                            "signal",
-                                            "tool",
-                                            "yield",
-                                            // var
-                                            "const",
-                                            "enum",
-                                            "export",
-                                            "onready",
-                                            "static",
-                                            "var",
-                                            // control flow
-                                            "break",
-                                            "continue",
-                                            "if",
-                                            "elif",
-                                            "else",
-                                            "for",
-                                            "pass",
-                                            "return",
-                                            "match",
-                                            "while",
-                                            "remote",
-                                            "sync",
-                                            "master",
-                                            "puppet",
-                                            "slave",
-                                            "remotesync",
-                                            "mastersync",
-                                            "puppetsync",
-                                            nullptr
+    static const char* _reserved_words[] = {
+        // operators
+        "and",
+        "in",
+        "not",
+        "or",
+        // types and values
+        "false",
+        "float",
+        "int",
+        "bool",
+        "null",
+        "PI",
+        "TAU",
+        "INF",
+        "NAN",
+        "self",
+        "true",
+        "void",
+        // functions
+        "as",
+        "assert",
+        "breakpoint",
+        "class",
+        "class_name",
+        "extends",
+        "is",
+        "func",
+        "preload",
+        "setget",
+        "signal",
+        "tool",
+        "yield",
+        // var
+        "const",
+        "enum",
+        "export",
+        "onready",
+        "static",
+        "var",
+        // control flow
+        "break",
+        "continue",
+        "if",
+        "elif",
+        "else",
+        "for",
+        "pass",
+        "return",
+        "match",
+        "while",
+        "remote",
+        "sync",
+        "master",
+        "puppet",
+        "slave",
+        "remotesync",
+        "mastersync",
+        "puppetsync",
+        nullptr
     };
 
     const char** w = _reserved_words;
@@ -2159,8 +2165,9 @@ String GDScriptLanguage::get_global_class_name(
     if (parser.get_parse_tree()
         && parser.get_parse_tree()->type == GDScriptParser::Node::TYPE_CLASS) {
         const GDScriptParser::ClassNode* c =
-            static_cast<const GDScriptParser::ClassNode*>(parser.get_parse_tree(
-            ));
+            static_cast<const GDScriptParser::ClassNode*>(
+                parser.get_parse_tree()
+            );
         if (r_icon_path) {
             if (c->icon_path.empty() || c->icon_path.is_abs_path()) {
                 *r_icon_path = c->icon_path;
@@ -2470,7 +2477,8 @@ String GDScriptWarning::get_name_from_code(Code p_code) {
     return names[(int)p_code];
 }
 
-GDScriptWarning::Code GDScriptWarning::get_code_from_name(const String& p_name
+GDScriptWarning::Code GDScriptWarning::get_code_from_name(
+    const String& p_name
 ) {
     for (int i = 0; i < WARNING_MAX; i++) {
         if (get_name_from_code((Code)i) == p_name) {
@@ -2663,7 +2671,8 @@ bool ResourceFormatLoaderGDScript::handles_type(const String& p_type) const {
     return (p_type == "Script" || p_type == "GDScript");
 }
 
-String ResourceFormatLoaderGDScript::get_resource_type(const String& p_path
+String ResourceFormatLoaderGDScript::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "gd" || el == "gdc" || el == "gde") {

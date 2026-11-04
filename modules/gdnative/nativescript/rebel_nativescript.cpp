@@ -380,7 +380,8 @@ void GDAPI rebel_nativescript_set_type_tag(
     E->get().type_tag = p_type_tag;
 }
 
-const void GDAPI* rebel_nativescript_get_type_tag(const rebel_object* p_object
+const void GDAPI* rebel_nativescript_get_type_tag(
+    const rebel_object* p_object
 ) {
     const Object* o = (Object*)p_object;
 

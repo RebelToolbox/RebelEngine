@@ -1,4 +1,3 @@
-
 vec2 select2(vec2 a, vec2 b, bvec2 c) {
     vec2 ret;
 

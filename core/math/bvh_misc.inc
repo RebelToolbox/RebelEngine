@@ -1,4 +1,3 @@
-
 int _handle_get_tree_id(BVHHandle p_handle) const {
     if (USE_PAIRS) {
         int tree = 0;

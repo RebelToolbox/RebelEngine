@@ -1102,7 +1102,8 @@ void TranslationServer::add_translation(const Ref<Translation>& p_translation) {
     translations.insert(p_translation);
 }
 
-void TranslationServer::remove_translation(const Ref<Translation>& p_translation
+void TranslationServer::remove_translation(
+    const Ref<Translation>& p_translation
 ) {
     translations.erase(p_translation);
 }
@@ -1277,7 +1278,8 @@ void TranslationServer::set_tool_translation(
     tool_translation = p_translation;
 }
 
-StringName TranslationServer::tool_translate(const StringName& p_message
+StringName TranslationServer::tool_translate(
+    const StringName& p_message
 ) const {
     if (tool_translation.is_valid()) {
         StringName r = tool_translation->get_message(p_message);
@@ -1294,7 +1296,8 @@ void TranslationServer::set_docs_translation(
     docs_translation = p_translation;
 }
 
-StringName TranslationServer::docs_translate(const StringName& p_message
+StringName TranslationServer::docs_translate(
+    const StringName& p_message
 ) const {
     if (docs_translation.is_valid()) {
         StringName r = docs_translation->get_message(p_message);

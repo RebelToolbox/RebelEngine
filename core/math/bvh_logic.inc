@@ -1,4 +1,3 @@
-
 // for slow incremental optimization, we will periodically remove each
 // item from the tree and reinsert, to give it a chance to find a better
 // position

@@ -193,7 +193,8 @@ void GDAPI rebel_object_destroy(rebel_object* p_o);
 
 ////// Singleton API
 
-rebel_object GDAPI* rebel_global_get_singleton(char* p_name
+rebel_object GDAPI* rebel_global_get_singleton(
+    char* p_name
 ); // result shouldn't be freed
 
 ////// MethodBind API

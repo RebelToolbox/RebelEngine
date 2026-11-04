@@ -96,8 +96,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const = 0;
-    virtual real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const                                    = 0;
+    virtual real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const                                      = 0;
     virtual void set_data(const Variant& p_data) = 0;
     virtual Variant get_data() const             = 0;
 
@@ -231,8 +233,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const override;
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override;
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override;
 
     void set_data(const Variant& p_data) override;
     Variant get_data() const override;
@@ -310,8 +314,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const override;
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override;
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override;
 
     void set_data(const Variant& p_data) override;
     Variant get_data() const override;
@@ -361,8 +367,8 @@ public:
         return Physics2DServer::SHAPE_SEGMENT;
     }
 
-    _FORCE_INLINE_ Vector2 get_xformed_normal(const Transform2D& p_xform
-    ) const {
+    _FORCE_INLINE_ Vector2
+    get_xformed_normal(const Transform2D& p_xform) const {
         return (p_xform.xform(b) - p_xform.xform(a)).normalized().tangent();
     }
 
@@ -388,8 +394,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const override;
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override;
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override;
 
     void set_data(const Variant& p_data) override;
     Variant get_data() const override;
@@ -457,8 +465,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const override;
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override;
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override;
 
     void set_data(const Variant& p_data) override;
     Variant get_data() const override;
@@ -517,8 +527,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const override;
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override;
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override;
 
     void set_data(const Variant& p_data) override;
     Variant get_data() const override;
@@ -637,8 +649,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const override;
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override;
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override;
 
     void set_data(const Variant& p_data) override;
     Variant get_data() const override;
@@ -725,8 +739,10 @@ public:
         Vector2& r_point,
         Vector2& r_normal
     ) const override;
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override;
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override;
 
     void set_data(const Variant& p_data) override;
     Variant get_data() const override;
@@ -841,8 +857,10 @@ public:
         Vector2& r_normal
     ) const override;
 
-    real_t get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-        const override {
+    real_t get_moment_of_inertia(
+        real_t p_mass,
+        const Size2& p_scale
+    ) const override {
         return 0;
     }
 

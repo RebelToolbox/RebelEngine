@@ -66,8 +66,10 @@ bool GDNativeLibrary::_set(
     return false;
 }
 
-bool GDNativeLibrary::_get(const StringName& p_name, Variant& r_property)
-    const {
+bool GDNativeLibrary::_get(
+    const StringName& p_name,
+    Variant& r_property
+) const {
     String name = p_name;
 
     if (name.begins_with("entry/")) {
@@ -681,7 +683,8 @@ bool GDNativeLibraryResourceLoader::handles_type(const String& p_type) const {
     return p_type == "GDNativeLibrary";
 }
 
-String GDNativeLibraryResourceLoader::get_resource_type(const String& p_path
+String GDNativeLibraryResourceLoader::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "gdnlib") {

@@ -46,8 +46,8 @@ bool WebRTCDataChannelGDNative::was_string_packet() const {
     return interface->was_string_packet(interface->data);
 }
 
-WebRTCDataChannel::ChannelState WebRTCDataChannelGDNative::get_ready_state(
-) const {
+WebRTCDataChannel::ChannelState WebRTCDataChannelGDNative::
+    get_ready_state() const {
     ERR_FAIL_COND_V(interface == nullptr, STATE_CLOSED);
     return (ChannelState)interface->get_ready_state(interface->data);
 }
@@ -100,7 +100,8 @@ Error WebRTCDataChannelGDNative::get_packet(
     int& r_buffer_size
 ) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
-    return (Error
+    return (
+               Error
     )interface->get_packet(interface->data, r_buffer, &r_buffer_size);
 }
 
@@ -109,7 +110,8 @@ Error WebRTCDataChannelGDNative::put_packet(
     int p_buffer_size
 ) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
-    return (Error
+    return (
+               Error
     )interface->put_packet(interface->data, p_buffer, p_buffer_size);
 }
 

@@ -110,7 +110,8 @@ public:
 
     void update_exports() override;
     void get_script_method_list(List<MethodInfo>* r_methods) const override;
-    void get_script_property_list(List<PropertyInfo>* r_properties
+    void get_script_property_list(
+        List<PropertyInfo>* r_properties
     ) const override;
 
     int get_member_line(const StringName& p_member) const override;

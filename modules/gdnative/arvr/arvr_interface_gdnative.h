@@ -55,7 +55,8 @@ public:
         real_t p_z_far
     ) override;
 
-    unsigned int get_external_texture_for_eye(ARVRInterface::Eyes p_eye
+    unsigned int get_external_texture_for_eye(
+        ARVRInterface::Eyes p_eye
     ) override;
     unsigned int get_external_depth_for_eye(ARVRInterface::Eyes p_eye) override;
     void commit_for_eye(

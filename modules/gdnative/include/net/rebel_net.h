@@ -98,8 +98,10 @@ typedef struct {
 } rebel_net_multiplayer_peer;
 
 /* Binds a MultiplayerPeerGDNative to the provided interface */
-void GDAPI
-rebel_net_bind_multiplayer_peer(rebel_object* p_obj, const rebel_net_multiplayer_peer*);
+void GDAPI rebel_net_bind_multiplayer_peer(
+    rebel_object* p_obj,
+    const rebel_net_multiplayer_peer*
+);
 
 #ifdef __cplusplus
 }

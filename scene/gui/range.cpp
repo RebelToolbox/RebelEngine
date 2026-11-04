@@ -267,7 +267,8 @@ void Range::_bind_methods() {
     ClassDB::bind_method(D_METHOD("share", "with"), &Range::_share);
     ClassDB::bind_method(D_METHOD("unshare"), &Range::unshare);
 
-    ADD_SIGNAL(MethodInfo("value_changed", PropertyInfo(Variant::REAL, "value"))
+    ADD_SIGNAL(
+        MethodInfo("value_changed", PropertyInfo(Variant::REAL, "value"))
     );
     ADD_SIGNAL(MethodInfo("changed"));
 

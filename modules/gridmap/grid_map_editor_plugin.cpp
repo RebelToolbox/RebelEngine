@@ -70,12 +70,12 @@ void GridMapEditor::_menu_option(int p_option) {
             }
 
             if (edit_axis != new_axis) {
-                int item1 =
-                    options->get_popup()->get_item_index(MENU_OPTION_NEXT_LEVEL
-                    );
-                int item2 =
-                    options->get_popup()->get_item_index(MENU_OPTION_PREV_LEVEL
-                    );
+                int item1 = options->get_popup()->get_item_index(
+                    MENU_OPTION_NEXT_LEVEL
+                );
+                int item2 = options->get_popup()->get_item_index(
+                    MENU_OPTION_PREV_LEVEL
+                );
                 if (edit_axis == Vector3::AXIS_Y) {
                     options->get_popup()->set_item_text(
                         item1,
@@ -831,10 +831,10 @@ bool GridMapEditor::forward_spatial_input_event(
 
         if (mb->is_pressed()) {
             SpatialEditorViewport::NavigationScheme nav_scheme =
-                (SpatialEditorViewport::NavigationScheme
-                )EditorSettings::get_singleton()
-                    ->get("editors/3d/navigation/navigation_scheme")
-                    .operator int();
+                (SpatialEditorViewport::NavigationScheme)
+                    EditorSettings::get_singleton()
+                        ->get("editors/3d/navigation/navigation_scheme")
+                        .operator int();
             if ((nav_scheme == SpatialEditorViewport::NAVIGATION_MAYA
                  || nav_scheme == SpatialEditorViewport::NAVIGATION_MODO)
                 && mb->get_alt()) {
@@ -944,8 +944,8 @@ bool GridMapEditor::forward_spatial_input_event(
                 return true;
             }
             if (mb->get_button_index() == BUTTON_RIGHT
-                && (input_action == INPUT_ERASE || input_action == INPUT_PASTE
-                )) {
+                && (input_action == INPUT_ERASE
+                    || input_action == INPUT_PASTE)) {
                 input_action = INPUT_NONE;
                 return true;
             }
@@ -1186,9 +1186,9 @@ void GridMapEditor::edit(GridMap* p_gridmap) {
     _update_selection_transform();
     _update_paste_indicator();
 
-    spatial_editor =
-        Object::cast_to<SpatialEditorPlugin>(editor->get_editor_plugin_screen()
-        );
+    spatial_editor = Object::cast_to<SpatialEditorPlugin>(
+        editor->get_editor_plugin_screen()
+    );
 
     if (!node) {
         set_process(false);
@@ -1571,7 +1571,8 @@ GridMapEditor::GridMapEditor(EditorNode* p_editor) {
     spatial_editor_hb = memnew(HBoxContainer);
     spatial_editor_hb->set_h_size_flags(SIZE_EXPAND_FILL);
     spatial_editor_hb->set_alignment(BoxContainer::ALIGN_END);
-    SpatialEditor::get_singleton()->add_control_to_menu_panel(spatial_editor_hb
+    SpatialEditor::get_singleton()->add_control_to_menu_panel(
+        spatial_editor_hb
     );
 
     spin_box_label = memnew(Label);

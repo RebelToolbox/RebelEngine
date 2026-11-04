@@ -332,8 +332,8 @@ rebel_vector3 GDAPI rebel_variant_as_vector3(const rebel_variant* p_self) {
     return raw_dest;
 }
 
-rebel_transform2d GDAPI rebel_variant_as_transform2d(const rebel_variant* p_self
-) {
+rebel_transform2d GDAPI
+rebel_variant_as_transform2d(const rebel_variant* p_self) {
     rebel_transform2d raw_dest;
     const Variant* self = (const Variant*)p_self;
     Transform2D* dest   = (Transform2D*)&raw_dest;
@@ -415,8 +415,8 @@ rebel_object GDAPI* rebel_variant_as_object(const rebel_variant* p_self) {
     return (rebel_object*)dest;
 }
 
-rebel_dictionary GDAPI rebel_variant_as_dictionary(const rebel_variant* p_self
-) {
+rebel_dictionary GDAPI
+rebel_variant_as_dictionary(const rebel_variant* p_self) {
     rebel_dictionary raw_dest;
     const Variant* self = (const Variant*)p_self;
     Dictionary* dest    = (Dictionary*)&raw_dest;
@@ -603,8 +603,8 @@ void GDAPI rebel_variant_destroy(rebel_variant* p_self) {
 
 // GDNative core 1.1
 
-rebel_string GDAPI rebel_variant_get_operator_name(rebel_variant_operator p_op
-) {
+rebel_string GDAPI
+rebel_variant_get_operator_name(rebel_variant_operator p_op) {
     Variant::Operator op = (Variant::Operator)p_op;
     rebel_string raw_dest;
     String* dest = (String*)&raw_dest;

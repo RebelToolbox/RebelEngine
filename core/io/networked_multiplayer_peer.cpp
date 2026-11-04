@@ -73,7 +73,8 @@ void NetworkedMultiplayerPeer::_bind_methods() {
     BIND_CONSTANT(TARGET_PEER_SERVER);
 
     ADD_SIGNAL(MethodInfo("peer_connected", PropertyInfo(Variant::INT, "id")));
-    ADD_SIGNAL(MethodInfo("peer_disconnected", PropertyInfo(Variant::INT, "id"))
+    ADD_SIGNAL(
+        MethodInfo("peer_disconnected", PropertyInfo(Variant::INT, "id"))
     );
     ADD_SIGNAL(MethodInfo("server_disconnected"));
     ADD_SIGNAL(MethodInfo("connection_succeeded"));

@@ -495,7 +495,8 @@ GDMonoClass* GDMonoAssembly::get_class(MonoClass* p_mono_class) {
     return wrapped_class;
 }
 
-GDMonoClass* GDMonoAssembly::get_object_derived_class(const StringName& p_class
+GDMonoClass* GDMonoAssembly::get_object_derived_class(
+    const StringName& p_class
 ) {
     GDMonoClass* match = NULL;
 

@@ -532,7 +532,8 @@ void RasterizerSceneGLES2::set_directional_shadow_count(int p_count) {
     directional_shadow.current_light = 0;
 }
 
-int RasterizerSceneGLES2::get_directional_light_shadow_size(RID p_light_intance
+int RasterizerSceneGLES2::get_directional_light_shadow_size(
+    RID p_light_intance
 ) {
     ERR_FAIL_COND_V(directional_shadow.light_count == 0, 0);
 
@@ -620,10 +621,12 @@ void RasterizerSceneGLES2::reflection_probe_instance_set_transform(
     rpi->transform = p_transform;
 }
 
-void RasterizerSceneGLES2::reflection_probe_release_atlas_index(RID p_instance
+void RasterizerSceneGLES2::reflection_probe_release_atlas_index(
+    RID p_instance
 ) {}
 
-bool RasterizerSceneGLES2::reflection_probe_instance_needs_redraw(RID p_instance
+bool RasterizerSceneGLES2::reflection_probe_instance_needs_redraw(
+    RID p_instance
 ) {
     const ReflectionProbeInstance* rpi =
         reflection_probe_instance_owner.getornull(p_instance);
@@ -2070,8 +2073,8 @@ void RasterizerSceneGLES2::_setup_geometry(
                                 const uint16_t* weight_ptr =
                                     (const uint16_t*)(vertex_data
                                                       + bone_weight_offset
-                                                      + (i * bone_weight_stride)
-                                    );
+                                                      + (i
+                                                         * bone_weight_stride));
                                 bone_weight[0] =
                                     (weight_ptr[0] / (float)0xFFFF);
                                 bone_weight[1] =
@@ -2295,7 +2298,8 @@ void RasterizerSceneGLES2::_render_geometry(RenderList::Element* p_element) {
 
         case VS::INSTANCE_MULTIMESH: {
             RasterizerStorageGLES2::MultiMesh* multi_mesh =
-                static_cast<RasterizerStorageGLES2::MultiMesh*>(p_element->owner
+                static_cast<RasterizerStorageGLES2::MultiMesh*>(
+                    p_element->owner
                 );
             RasterizerStorageGLES2::Surface* s =
                 static_cast<RasterizerStorageGLES2::Surface*>(
@@ -2927,9 +2931,8 @@ void RasterizerSceneGLES2::_setup_light(
                 uint32_t shadow   = key & ShadowAtlas::SHADOW_INDEX_MASK;
 
                 ERR_BREAK(
-                    shadow
-                    >= (uint32_t)shadow_atlas->quadrants[quadrant].shadows.size(
-                    )
+                    shadow >= (uint32_t)shadow_atlas->quadrants[quadrant]
+                                  .shadows.size()
                 );
 
                 uint32_t atlas_size    = shadow_atlas->size;
@@ -3034,9 +3037,8 @@ void RasterizerSceneGLES2::_setup_light(
                 uint32_t shadow   = key & ShadowAtlas::SHADOW_INDEX_MASK;
 
                 ERR_BREAK(
-                    shadow
-                    >= (uint32_t)shadow_atlas->quadrants[quadrant].shadows.size(
-                    )
+                    shadow >= (uint32_t)shadow_atlas->quadrants[quadrant]
+                                  .shadows.size()
                 );
 
                 uint32_t atlas_size    = shadow_atlas->size;
@@ -3456,11 +3458,12 @@ void RasterizerSceneGLES2::_render_render_list(
             }
 
             // condition to enable vertex lighting on this object
-            bool vertex_lit = (material->shader->spatial.uses_vertex_lighting
-                               || storage->config.force_vertex_shading)
-                           && ((!unshaded && light) || using_fog
-                           ); // fog forces vertex lighting because it still
-                              // applies even if unshaded or no fog
+            bool vertex_lit =
+                (material->shader->spatial.uses_vertex_lighting
+                 || storage->config.force_vertex_shading)
+                && ((!unshaded && light)
+                    || using_fog); // fog forces vertex lighting because it
+                                   // still applies even if unshaded or no fog
 
             if (vertex_lit != prev_vertex_lit) {
                 state.scene_shader.set_conditional(
@@ -6395,9 +6398,9 @@ void RasterizerSceneGLES2::initialize() {
 }
 
 void RasterizerSceneGLES2::iteration() {
-    shadow_filter_mode =
-        ShadowFilterMode(int(GLOBAL_GET("rendering/quality/shadows/filter_mode")
-        ));
+    shadow_filter_mode = ShadowFilterMode(
+        int(GLOBAL_GET("rendering/quality/shadows/filter_mode"))
+    );
 }
 
 void RasterizerSceneGLES2::finalize() {}

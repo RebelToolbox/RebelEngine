@@ -83,8 +83,10 @@ bool VisualScriptFunction::_set(
     return false;
 }
 
-bool VisualScriptFunction::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool VisualScriptFunction::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     if (p_name == "argument_count") {
         r_ret = arguments.size();
         return true;
@@ -127,7 +129,8 @@ bool VisualScriptFunction::_get(const StringName& p_name, Variant& r_ret)
     return false;
 }
 
-void VisualScriptFunction::_get_property_list(List<PropertyInfo>* p_list
+void VisualScriptFunction::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     p_list->push_back(PropertyInfo(
         Variant::INT,
@@ -827,7 +830,8 @@ bool VisualScriptComposeArray::has_input_sequence_port() const {
     return sequenced;
 }
 
-String VisualScriptComposeArray::get_output_sequence_port_text(int p_port
+String VisualScriptComposeArray::get_output_sequence_port_text(
+    int p_port
 ) const {
     return "";
 }
@@ -840,7 +844,8 @@ int VisualScriptComposeArray::get_output_value_port_count() const {
     return 1;
 }
 
-PropertyInfo VisualScriptComposeArray::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptComposeArray::get_input_value_port_info(
+    int p_idx
 ) const {
     ERR_FAIL_INDEX_V(p_idx, inputports.size(), PropertyInfo());
 
@@ -850,7 +855,8 @@ PropertyInfo VisualScriptComposeArray::get_input_value_port_info(int p_idx
     return pi;
 }
 
-PropertyInfo VisualScriptComposeArray::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptComposeArray::get_output_value_port_info(
+    int p_idx
 ) const {
     PropertyInfo pi;
     pi.name = "out";
@@ -1378,17 +1384,20 @@ int VisualScriptVariableGet::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptVariableGet::get_output_sequence_port_text(int p_port
+String VisualScriptVariableGet::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptVariableGet::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptVariableGet::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptVariableGet::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptVariableGet::get_output_value_port_info(
+    int p_idx
 ) const {
     PropertyInfo pinfo;
     pinfo.name = "value";
@@ -1512,12 +1521,14 @@ int VisualScriptVariableSet::get_output_value_port_count() const {
     return 0;
 }
 
-String VisualScriptVariableSet::get_output_sequence_port_text(int p_port
+String VisualScriptVariableSet::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptVariableSet::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptVariableSet::get_input_value_port_info(
+    int p_idx
 ) const {
     PropertyInfo pinfo;
     pinfo.name = "set";
@@ -1531,7 +1542,8 @@ PropertyInfo VisualScriptVariableSet::get_input_value_port_info(int p_idx
     return pinfo;
 }
 
-PropertyInfo VisualScriptVariableSet::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptVariableSet::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
@@ -2065,17 +2077,20 @@ int VisualScriptGlobalConstant::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptGlobalConstant::get_output_sequence_port_text(int p_port
+String VisualScriptGlobalConstant::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptGlobalConstant::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptGlobalConstant::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptGlobalConstant::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptGlobalConstant::get_output_value_port_info(
+    int p_idx
 ) const {
     String name = GlobalConstants::get_global_constant_name(index);
     return PropertyInfo(Variant::INT, name);
@@ -2172,17 +2187,20 @@ int VisualScriptClassConstant::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptClassConstant::get_output_sequence_port_text(int p_port
+String VisualScriptClassConstant::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptClassConstant::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptClassConstant::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptClassConstant::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptClassConstant::get_output_value_port_info(
+    int p_idx
 ) const {
     if (name == "") {
         return PropertyInfo(Variant::INT, String(base_type));
@@ -2269,7 +2287,8 @@ VisualScriptNodeInstance* VisualScriptClassConstant::instance(
     return instance;
 }
 
-void VisualScriptClassConstant::_validate_property(PropertyInfo& property
+void VisualScriptClassConstant::_validate_property(
+    PropertyInfo& property
 ) const {
     if (property.name == "constant") {
         List<String> constants;
@@ -2345,17 +2364,20 @@ int VisualScriptBasicTypeConstant::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptBasicTypeConstant::get_output_sequence_port_text(int p_port
+String VisualScriptBasicTypeConstant::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptBasicTypeConstant::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptBasicTypeConstant::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptBasicTypeConstant::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptBasicTypeConstant::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(type, "value");
 }
@@ -2448,7 +2470,8 @@ VisualScriptNodeInstance* VisualScriptBasicTypeConstant::instance(
     return instance;
 }
 
-void VisualScriptBasicTypeConstant::_validate_property(PropertyInfo& property
+void VisualScriptBasicTypeConstant::_validate_property(
+    PropertyInfo& property
 ) const {
     if (property.name == "constant") {
         List<StringName> constants;
@@ -2543,17 +2566,20 @@ int VisualScriptMathConstant::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptMathConstant::get_output_sequence_port_text(int p_port
+String VisualScriptMathConstant::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptMathConstant::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptMathConstant::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptMathConstant::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptMathConstant::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(Variant::REAL, const_name[constant]);
 }
@@ -2660,17 +2686,20 @@ int VisualScriptEngineSingleton::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptEngineSingleton::get_output_sequence_port_text(int p_port
+String VisualScriptEngineSingleton::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptEngineSingleton::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptEngineSingleton::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptEngineSingleton::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptEngineSingleton::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(Variant::OBJECT, singleton);
 }
@@ -2733,7 +2762,8 @@ VisualScriptEngineSingleton::TypeGuess VisualScriptEngineSingleton::
     return tg;
 }
 
-void VisualScriptEngineSingleton::_validate_property(PropertyInfo& property
+void VisualScriptEngineSingleton::_validate_property(
+    PropertyInfo& property
 ) const {
     String cc;
 
@@ -2809,7 +2839,8 @@ PropertyInfo VisualScriptSceneNode::get_input_value_port_info(int p_idx) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptSceneNode::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptSceneNode::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(Variant::OBJECT, path.simplified());
 }
@@ -3038,7 +3069,8 @@ PropertyInfo VisualScriptSceneTree::get_input_value_port_info(int p_idx) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptSceneTree::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptSceneTree::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(
         Variant::OBJECT,
@@ -3135,17 +3167,20 @@ int VisualScriptResourcePath::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptResourcePath::get_output_sequence_port_text(int p_port
+String VisualScriptResourcePath::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptResourcePath::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptResourcePath::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptResourcePath::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptResourcePath::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(Variant::STRING, path);
 }
@@ -3313,7 +3348,8 @@ VisualScriptSelf::VisualScriptSelf() {}
 
 int VisualScriptCustomNode::get_output_sequence_port_count() const {
     if (get_script_instance()
-        && get_script_instance()->has_method("_get_output_sequence_port_count"
+        && get_script_instance()->has_method(
+            "_get_output_sequence_port_count"
         )) {
         return get_script_instance()->call("_get_output_sequence_port_count");
     }
@@ -3346,7 +3382,8 @@ int VisualScriptCustomNode::get_output_value_port_count() const {
 
 String VisualScriptCustomNode::get_output_sequence_port_text(int p_port) const {
     if (get_script_instance()
-        && get_script_instance()->has_method("_get_output_sequence_port_text"
+        && get_script_instance()->has_method(
+            "_get_output_sequence_port_text"
         )) {
         return get_script_instance()->call(
             "_get_output_sequence_port_text",
@@ -3357,14 +3394,17 @@ String VisualScriptCustomNode::get_output_sequence_port_text(int p_port) const {
     return String();
 }
 
-PropertyInfo VisualScriptCustomNode::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptCustomNode::get_input_value_port_info(
+    int p_idx
 ) const {
     PropertyInfo info;
     if (get_script_instance()
         && get_script_instance()->has_method("_get_input_value_port_type")) {
-        info.type = Variant::Type(int(
-            get_script_instance()->call("_get_input_value_port_type", p_idx)
-        ));
+        info.type = Variant::Type(
+            int(
+                get_script_instance()->call("_get_input_value_port_type", p_idx)
+            )
+        );
     }
     if (get_script_instance()
         && get_script_instance()->has_method("_get_input_value_port_name")) {
@@ -3373,12 +3413,15 @@ PropertyInfo VisualScriptCustomNode::get_input_value_port_info(int p_idx
     }
     if (get_script_instance()
         && get_script_instance()->has_method("_get_input_value_port_hint")) {
-        info.hint = PropertyHint(int(
-            get_script_instance()->call("_get_input_value_port_hint", p_idx)
-        ));
+        info.hint = PropertyHint(
+            int(
+                get_script_instance()->call("_get_input_value_port_hint", p_idx)
+            )
+        );
     }
     if (get_script_instance()
-        && get_script_instance()->has_method("_get_input_value_port_hint_string"
+        && get_script_instance()->has_method(
+            "_get_input_value_port_hint_string"
         )) {
         info.hint_string = get_script_instance()->call(
             "_get_input_value_port_hint_string",
@@ -3388,14 +3431,16 @@ PropertyInfo VisualScriptCustomNode::get_input_value_port_info(int p_idx
     return info;
 }
 
-PropertyInfo VisualScriptCustomNode::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptCustomNode::get_output_value_port_info(
+    int p_idx
 ) const {
     PropertyInfo info;
     if (get_script_instance()
         && get_script_instance()->has_method("_get_output_value_port_type")) {
-        info.type = Variant::Type(int(
-            get_script_instance()->call("_get_output_value_port_type", p_idx)
-        ));
+        info.type = Variant::Type(
+            int(get_script_instance()
+                    ->call("_get_output_value_port_type", p_idx))
+        );
     }
     if (get_script_instance()
         && get_script_instance()->has_method("_get_output_value_port_name")) {
@@ -3404,9 +3449,10 @@ PropertyInfo VisualScriptCustomNode::get_output_value_port_info(int p_idx
     }
     if (get_script_instance()
         && get_script_instance()->has_method("_get_output_value_port_hint")) {
-        info.hint = PropertyHint(int(
-            get_script_instance()->call("_get_output_value_port_hint", p_idx)
-        ));
+        info.hint = PropertyHint(
+            int(get_script_instance()
+                    ->call("_get_output_value_port_hint", p_idx))
+        );
     }
     if (get_script_instance()
         && get_script_instance()->has_method(
@@ -3991,17 +4037,20 @@ int VisualScriptConstructor::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptConstructor::get_output_sequence_port_text(int p_port
+String VisualScriptConstructor::get_output_sequence_port_text(
+    int p_port
 ) const {
     return "";
 }
 
-PropertyInfo VisualScriptConstructor::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptConstructor::get_input_value_port_info(
+    int p_idx
 ) const {
     return constructor.arguments[p_idx];
 }
 
-PropertyInfo VisualScriptConstructor::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptConstructor::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(type, "value");
 }
@@ -4289,17 +4338,20 @@ int VisualScriptLocalVarSet::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptLocalVarSet::get_output_sequence_port_text(int p_port
+String VisualScriptLocalVarSet::get_output_sequence_port_text(
+    int p_port
 ) const {
     return "";
 }
 
-PropertyInfo VisualScriptLocalVarSet::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptLocalVarSet::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(type, "set");
 }
 
-PropertyInfo VisualScriptLocalVarSet::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptLocalVarSet::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(type, "get");
 }
@@ -4433,17 +4485,20 @@ int VisualScriptInputAction::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptInputAction::get_output_sequence_port_text(int p_port
+String VisualScriptInputAction::get_output_sequence_port_text(
+    int p_port
 ) const {
     return "";
 }
 
-PropertyInfo VisualScriptInputAction::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptInputAction::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptInputAction::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptInputAction::get_output_value_port_info(
+    int p_idx
 ) const {
     String mstr;
     switch (mode) {
@@ -4648,17 +4703,20 @@ int VisualScriptDeconstruct::get_output_value_port_count() const {
     return elements.size();
 }
 
-String VisualScriptDeconstruct::get_output_sequence_port_text(int p_port
+String VisualScriptDeconstruct::get_output_sequence_port_text(
+    int p_port
 ) const {
     return "";
 }
 
-PropertyInfo VisualScriptDeconstruct::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptDeconstruct::get_input_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(type, "value");
 }
 
-PropertyInfo VisualScriptDeconstruct::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptDeconstruct::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo(elements[p_idx].type, elements[p_idx].name);
 }
@@ -4825,130 +4883,250 @@ static Ref<VisualScriptNode> create_node_deconst_typed(const String& p_name) {
 }
 
 void register_visual_script_nodes() {
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/set_variable", create_node_generic<VisualScriptVariableSet>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/get_variable", create_node_generic<VisualScriptVariableGet>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/engine_singleton", create_node_generic<VisualScriptEngineSingleton>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/scene_node", create_node_generic<VisualScriptSceneNode>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/scene_tree", create_node_generic<VisualScriptSceneTree>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/resource_path", create_node_generic<VisualScriptResourcePath>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/self", create_node_generic<VisualScriptSelf>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/comment", create_node_generic<VisualScriptComment>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/get_local_variable", create_node_generic<VisualScriptLocalVar>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/set_local_variable", create_node_generic<VisualScriptLocalVarSet>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/preload", create_node_generic<VisualScriptPreload>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("data/action", create_node_generic<VisualScriptInputAction>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/set_variable",
+        create_node_generic<VisualScriptVariableSet>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/get_variable",
+        create_node_generic<VisualScriptVariableGet>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/engine_singleton",
+        create_node_generic<VisualScriptEngineSingleton>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/scene_node",
+        create_node_generic<VisualScriptSceneNode>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/scene_tree",
+        create_node_generic<VisualScriptSceneTree>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/resource_path",
+        create_node_generic<VisualScriptResourcePath>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/self",
+        create_node_generic<VisualScriptSelf>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/comment",
+        create_node_generic<VisualScriptComment>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/get_local_variable",
+        create_node_generic<VisualScriptLocalVar>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/set_local_variable",
+        create_node_generic<VisualScriptLocalVarSet>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/preload",
+        create_node_generic<VisualScriptPreload>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "data/action",
+        create_node_generic<VisualScriptInputAction>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("constants/constant", create_node_generic<VisualScriptConstant>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("constants/math_constant", create_node_generic<VisualScriptMathConstant>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("constants/class_constant", create_node_generic<VisualScriptClassConstant>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("constants/global_constant", create_node_generic<VisualScriptGlobalConstant>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("constants/basic_type_constant", create_node_generic<VisualScriptBasicTypeConstant>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "constants/constant",
+        create_node_generic<VisualScriptConstant>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "constants/math_constant",
+        create_node_generic<VisualScriptMathConstant>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "constants/class_constant",
+        create_node_generic<VisualScriptClassConstant>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "constants/global_constant",
+        create_node_generic<VisualScriptGlobalConstant>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "constants/basic_type_constant",
+        create_node_generic<VisualScriptBasicTypeConstant>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("custom/custom_node", create_node_generic<VisualScriptCustomNode>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("custom/sub_call", create_node_generic<VisualScriptSubCall>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "custom/custom_node",
+        create_node_generic<VisualScriptCustomNode>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "custom/sub_call",
+        create_node_generic<VisualScriptSubCall>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("index/get_index", create_node_generic<VisualScriptIndexGet>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("index/set_index", create_node_generic<VisualScriptIndexSet>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "index/get_index",
+        create_node_generic<VisualScriptIndexGet>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "index/set_index",
+        create_node_generic<VisualScriptIndexSet>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/compare/equal", create_op_node<Variant::OP_EQUAL>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/compare/not_equal", create_op_node<Variant::OP_NOT_EQUAL>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/compare/less", create_op_node<Variant::OP_LESS>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/compare/less_equal", create_op_node<Variant::OP_LESS_EQUAL>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/compare/greater", create_op_node<Variant::OP_GREATER>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/compare/greater_equal", create_op_node<Variant::OP_GREATER_EQUAL>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/compare/equal",
+        create_op_node<Variant::OP_EQUAL>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/compare/not_equal",
+        create_op_node<Variant::OP_NOT_EQUAL>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/compare/less",
+        create_op_node<Variant::OP_LESS>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/compare/less_equal",
+        create_op_node<Variant::OP_LESS_EQUAL>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/compare/greater",
+        create_op_node<Variant::OP_GREATER>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/compare/greater_equal",
+        create_op_node<Variant::OP_GREATER_EQUAL>
+    );
     // mathematic
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/add", create_op_node<Variant::OP_ADD>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/subtract", create_op_node<Variant::OP_SUBTRACT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/multiply", create_op_node<Variant::OP_MULTIPLY>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/divide", create_op_node<Variant::OP_DIVIDE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/negate", create_op_node<Variant::OP_NEGATE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/positive", create_op_node<Variant::OP_POSITIVE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/remainder", create_op_node<Variant::OP_MODULE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/math/string_concat", create_op_node<Variant::OP_STRING_CONCAT>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/add",
+        create_op_node<Variant::OP_ADD>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/subtract",
+        create_op_node<Variant::OP_SUBTRACT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/multiply",
+        create_op_node<Variant::OP_MULTIPLY>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/divide",
+        create_op_node<Variant::OP_DIVIDE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/negate",
+        create_op_node<Variant::OP_NEGATE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/positive",
+        create_op_node<Variant::OP_POSITIVE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/remainder",
+        create_op_node<Variant::OP_MODULE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/math/string_concat",
+        create_op_node<Variant::OP_STRING_CONCAT>
+    );
     // bitwise
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/bitwise/shift_left", create_op_node<Variant::OP_SHIFT_LEFT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/bitwise/shift_right", create_op_node<Variant::OP_SHIFT_RIGHT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/bitwise/bit_and", create_op_node<Variant::OP_BIT_AND>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/bitwise/bit_or", create_op_node<Variant::OP_BIT_OR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/bitwise/bit_xor", create_op_node<Variant::OP_BIT_XOR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/bitwise/bit_negate", create_op_node<Variant::OP_BIT_NEGATE>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/bitwise/shift_left",
+        create_op_node<Variant::OP_SHIFT_LEFT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/bitwise/shift_right",
+        create_op_node<Variant::OP_SHIFT_RIGHT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/bitwise/bit_and",
+        create_op_node<Variant::OP_BIT_AND>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/bitwise/bit_or",
+        create_op_node<Variant::OP_BIT_OR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/bitwise/bit_xor",
+        create_op_node<Variant::OP_BIT_XOR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/bitwise/bit_negate",
+        create_op_node<Variant::OP_BIT_NEGATE>
+    );
     // logic
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/logic/and", create_op_node<Variant::OP_AND>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/logic/or", create_op_node<Variant::OP_OR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/logic/xor", create_op_node<Variant::OP_XOR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/logic/not", create_op_node<Variant::OP_NOT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/logic/in", create_op_node<Variant::OP_IN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("operators/logic/select", create_node_generic<VisualScriptSelect>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/logic/and",
+        create_op_node<Variant::OP_AND>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/logic/or",
+        create_op_node<Variant::OP_OR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/logic/xor",
+        create_op_node<Variant::OP_XOR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/logic/not",
+        create_op_node<Variant::OP_NOT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/logic/in",
+        create_op_node<Variant::OP_IN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "operators/logic/select",
+        create_node_generic<VisualScriptSelect>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::VECTOR2), create_node_deconst_typed<Variant::Type::VECTOR2>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::VECTOR3), create_node_deconst_typed<Variant::Type::VECTOR3>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::COLOR), create_node_deconst_typed<Variant::Type::COLOR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::RECT2), create_node_deconst_typed<Variant::Type::RECT2>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::TRANSFORM2D), create_node_deconst_typed<Variant::Type::TRANSFORM2D>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::PLANE), create_node_deconst_typed<Variant::Type::PLANE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::QUAT), create_node_deconst_typed<Variant::Type::QUAT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::AABB), create_node_deconst_typed<Variant::Type::AABB>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::BASIS), create_node_deconst_typed<Variant::Type::BASIS>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/deconstruct/" + Variant::get_type_name(Variant::Type::TRANSFORM), create_node_deconst_typed<Variant::Type::TRANSFORM>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/compose_array", create_node_generic<VisualScriptComposeArray>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/"
+            + Variant::get_type_name(Variant::Type::VECTOR2),
+        create_node_deconst_typed<Variant::Type::VECTOR2>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/"
+            + Variant::get_type_name(Variant::Type::VECTOR3),
+        create_node_deconst_typed<Variant::Type::VECTOR3>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/" + Variant::get_type_name(Variant::Type::COLOR),
+        create_node_deconst_typed<Variant::Type::COLOR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/" + Variant::get_type_name(Variant::Type::RECT2),
+        create_node_deconst_typed<Variant::Type::RECT2>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/"
+            + Variant::get_type_name(Variant::Type::TRANSFORM2D),
+        create_node_deconst_typed<Variant::Type::TRANSFORM2D>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/" + Variant::get_type_name(Variant::Type::PLANE),
+        create_node_deconst_typed<Variant::Type::PLANE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/" + Variant::get_type_name(Variant::Type::QUAT),
+        create_node_deconst_typed<Variant::Type::QUAT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/" + Variant::get_type_name(Variant::Type::AABB),
+        create_node_deconst_typed<Variant::Type::AABB>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/" + Variant::get_type_name(Variant::Type::BASIS),
+        create_node_deconst_typed<Variant::Type::BASIS>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/deconstruct/"
+            + Variant::get_type_name(Variant::Type::TRANSFORM),
+        create_node_deconst_typed<Variant::Type::TRANSFORM>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/compose_array",
+        create_node_generic<VisualScriptComposeArray>
+    );
 
     for (int i = 1; i < Variant::VARIANT_MAX; i++) {
         List<MethodInfo> constructors;

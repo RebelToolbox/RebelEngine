@@ -28,7 +28,8 @@ String EditorImportPlugin::get_visible_name() const {
     return get_script_instance()->call("get_visible_name");
 }
 
-void EditorImportPlugin::get_recognized_extensions(List<String>* p_extensions
+void EditorImportPlugin::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     ERR_FAIL_COND(
         !(get_script_instance()

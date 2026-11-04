@@ -198,11 +198,12 @@ public:
     Error get_response_headers(List<String>* r_response);
     int get_response_body_length() const;
 
-    PoolByteArray read_response_body_chunk(
-    ); // Can't get body as partial text because of most encodings UTF8, gzip,
-       // etc.
+    PoolByteArray read_response_body_chunk(); // Can't get body as partial text
+                                              // because of most encodings UTF8,
+                                              // gzip, etc.
 
-    void set_blocking_mode(bool p_enable
+    void set_blocking_mode(
+        bool p_enable
     ); // Useful mostly if running in a thread
     bool is_blocking_mode_enabled() const;
 

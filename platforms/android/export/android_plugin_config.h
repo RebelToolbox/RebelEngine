@@ -103,7 +103,8 @@ struct AndroidPluginConfig {
         Vector<AndroidPluginConfig> plugins_configs
     );
 
-    static String get_plugins_names(Vector<AndroidPluginConfig> plugins_configs
+    static String get_plugins_names(
+        Vector<AndroidPluginConfig> plugins_configs
     );
 };
 

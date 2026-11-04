@@ -81,7 +81,8 @@ Error png_to_image(
             dest_format = Image::FORMAT_RGBA8;
             break;
         default:
-            png_image_free(&png_img
+            png_image_free(
+                &png_img
             ); // only required when we return before finish_read
             ERR_PRINT("Unsupported png format.");
             return ERR_UNAVAILABLE;
@@ -96,7 +97,8 @@ Error png_to_image(
     PoolVector<uint8_t> buffer;
     Error err = buffer.resize(PNG_IMAGE_BUFFER_SIZE(png_img, stride));
     if (err) {
-        png_image_free(&png_img
+        png_image_free(
+            &png_img
         ); // only required when we return before finish_read
         return err;
     }

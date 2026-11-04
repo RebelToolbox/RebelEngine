@@ -89,7 +89,8 @@ RES ResourceFormatPKM::load(
     return texture;
 }
 
-void ResourceFormatPKM::get_recognized_extensions(List<String>* p_extensions
+void ResourceFormatPKM::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("pkm");
 }

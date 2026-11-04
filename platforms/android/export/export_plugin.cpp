@@ -345,7 +345,8 @@ void EditorExportPlatformAndroid::_check_for_changes_poll_thread(void* ud) {
                                 d.description +=
                                     "Build: "
                                     + p.get_slice("=", 1).strip_edges() + "\n";
-                            } else if (p.begins_with("ro.build.version.release="
+                            } else if (p.begins_with(
+                                           "ro.build.version.release="
                                        )) {
                                 d.description +=
                                     "Release: "
@@ -356,7 +357,8 @@ void EditorExportPlatformAndroid::_check_for_changes_poll_thread(void* ud) {
                                 d.description +=
                                     "CPU: " + p.get_slice("=", 1).strip_edges()
                                     + "\n";
-                            } else if (p.begins_with("ro.product.manufacturer="
+                            } else if (p.begins_with(
+                                           "ro.product.manufacturer="
                                        )) {
                                 d.description +=
                                     "Manufacturer: "
@@ -418,7 +420,8 @@ void EditorExportPlatformAndroid::_check_for_changes_poll_thread(void* ud) {
     }
 }
 
-String EditorExportPlatformAndroid::get_project_name(const String& p_name
+String EditorExportPlatformAndroid::get_project_name(
+    const String& p_name
 ) const {
     String aname;
     if (p_name != "") {
@@ -435,7 +438,8 @@ String EditorExportPlatformAndroid::get_project_name(const String& p_name
     return aname;
 }
 
-String EditorExportPlatformAndroid::get_package_name(const String& p_package
+String EditorExportPlatformAndroid::get_package_name(
+    const String& p_package
 ) const {
     String pname = p_package;
     String basename =
@@ -652,7 +656,8 @@ Vector<String> EditorExportPlatformAndroid::get_abis() {
 }
 
 /// List the gdap files in the directory specified by the p_path parameter.
-Vector<String> EditorExportPlatformAndroid::list_gdap_files(const String& p_path
+Vector<String> EditorExportPlatformAndroid::list_gdap_files(
+    const String& p_path
 ) {
     Vector<String> dir_files;
     DirAccessRef da = DirAccess::open(p_path);
@@ -914,7 +919,8 @@ void EditorExportPlatformAndroid::_get_permissions(
 
     int xr_mode_index = p_preset->get("xr_features/xr_mode");
     if (xr_mode_index == XR_MODE_OVR || xr_mode_index == XR_MODE_OPENXR) {
-        int hand_tracking_index = p_preset->get("xr_features/hand_tracking"
+        int hand_tracking_index = p_preset->get(
+            "xr_features/hand_tracking"
         ); // 0: none, 1: optional, 2: required
         if (hand_tracking_index > XR_HAND_TRACKING_NONE) {
             if (r_permissions.find("com.oculus.permission.HAND_TRACKING")
@@ -1029,9 +1035,9 @@ void EditorExportPlatformAndroid::_fix_manifest(
                         Vector<CharType> ucstring;
                         ucstring.resize(len + 1);
                         for (uint32_t j = 0; j < len; j++) {
-                            uint16_t c =
-                                decode_uint16(&p_manifest[string_at + 2 + 2 * j]
-                                );
+                            uint16_t c = decode_uint16(
+                                &p_manifest[string_at + 2 + 2 * j]
+                            );
                             ucstring.write[j] = c;
                         }
                         string_end = MAX(string_at + 2 + 2 * len, string_end);
@@ -1258,7 +1264,8 @@ void EditorExportPlatformAndroid::_fix_manifest(
                             feature_required_list.push_back(
                                 hand_tracking_index == XR_HAND_TRACKING_REQUIRED
                             );
-                            feature_versions.push_back(-1
+                            feature_versions.push_back(
+                                -1
                             ); // no version attribute should be added.
                         }
 
@@ -1362,7 +1369,8 @@ void EditorExportPlatformAndroid::_fix_manifest(
                                 version_value =
                                     string_table.find(itos(feature_version));
                                 if (version_value == -1) {
-                                    string_table.push_back(itos(feature_version)
+                                    string_table.push_back(
+                                        itos(feature_version)
                                     );
                                     version_value = string_table.size() - 1;
                                 }
@@ -1969,9 +1977,9 @@ String EditorExportPlatformAndroid::load_splash_refs(
     Ref<Image>& splash_image,
     Ref<Image>& splash_bg_color_image
 ) {
-    bool scale_splash =
-        ProjectSettings::get_singleton()->get("application/boot_splash/fullsize"
-        );
+    bool scale_splash = ProjectSettings::get_singleton()->get(
+        "application/boot_splash/fullsize"
+    );
     bool apply_filter = ProjectSettings::get_singleton()->get(
         "application/boot_splash/use_filter"
     );
@@ -2949,9 +2957,9 @@ bool EditorExportPlatformAndroid::can_export(
     }
 
     if (!FileAccess::exists(dk)) {
-        dk =
-            EditorSettings::get_singleton()->get("export/android/debug_keystore"
-            );
+        dk = EditorSettings::get_singleton()->get(
+            "export/android/debug_keystore"
+        );
         if (!FileAccess::exists(dk)) {
             valid  = false;
             err   += TTR("Debug keystore not configured in the Editor Settings "
@@ -3022,9 +3030,9 @@ bool EditorExportPlatformAndroid::can_export(
         // Validate that apksigner is available
         String apksigner_path = get_apksigner_path();
         if (!FileAccess::exists(apksigner_path)) {
-            err +=
-                TTR("Unable to find Android SDK build-tools' apksigner command."
-                );
+            err += TTR(
+                "Unable to find Android SDK build-tools' apksigner command."
+            );
             err +=
                 TTR("Please check in the Android SDK directory specified in "
                     "Editor Settings.");
@@ -4233,7 +4241,8 @@ Error EditorExportPlatformAndroid::export_project_helper(
 
     unzFile tmp_unaligned = unzOpen2(tmp_unaligned_path.utf8().get_data(), &io);
     if (!tmp_unaligned) {
-        EditorNode::add_io_error(TTR("Could not unzip temporary unaligned APK.")
+        EditorNode::add_io_error(
+            TTR("Could not unzip temporary unaligned APK.")
         );
         CLEANUP_AND_RETURN(ERR_FILE_NOT_FOUND);
     }
@@ -4328,7 +4337,8 @@ Error EditorExportPlatformAndroid::export_project_helper(
     CLEANUP_AND_RETURN(OK);
 }
 
-void EditorExportPlatformAndroid::get_platform_features(List<String>* r_features
+void EditorExportPlatformAndroid::get_platform_features(
+    List<String>* r_features
 ) {
     r_features->push_back("mobile");
     r_features->push_back("Android");

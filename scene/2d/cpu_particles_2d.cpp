@@ -461,7 +461,8 @@ void CPUParticles2D::set_emission_points(const PoolVector<Vector2>& p_points) {
     emission_points = p_points;
 }
 
-void CPUParticles2D::set_emission_normals(const PoolVector<Vector2>& p_normals
+void CPUParticles2D::set_emission_normals(
+    const PoolVector<Vector2>& p_normals
 ) {
     emission_normals = p_normals;
 }
@@ -1366,7 +1367,8 @@ void CPUParticles2D::convert_from_particles(Node* p_particles) {
     {                                                                          \
         Ref<CurveTexture> ctex =                                               \
             material->get_param_texture(ParticlesMaterial::m_param);           \
-        if (ctex.is_valid()) set_param_curve(m_param, ctex->get_curve());      \
+        if (ctex.is_valid())                                                   \
+            set_param_curve(m_param, ctex->get_curve());                       \
     }                                                                          \
     set_param_randomness(                                                      \
         m_param,                                                               \
@@ -2289,9 +2291,11 @@ void CPUParticles2D::_bind_methods() {
     BIND_ENUM_CONSTANT(PARAM_MAX);
 
     BIND_ENUM_CONSTANT(FLAG_ALIGN_Y_TO_VELOCITY);
-    BIND_ENUM_CONSTANT(FLAG_ROTATE_Y
+    BIND_ENUM_CONSTANT(
+        FLAG_ROTATE_Y
     ); // Unused, but exposed for consistency with 3D.
-    BIND_ENUM_CONSTANT(FLAG_DISABLE_Z
+    BIND_ENUM_CONSTANT(
+        FLAG_DISABLE_Z
     ); // Unused, but exposed for consistency with 3D.
     BIND_ENUM_CONSTANT(FLAG_MAX);
 

@@ -9,7 +9,8 @@
 #include "animation_player.h"
 #include "scene/scene_string_names.h"
 
-void AnimationTreePlayer::set_animation_process_mode(AnimationProcessMode p_mode
+void AnimationTreePlayer::set_animation_process_mode(
+    AnimationProcessMode p_mode
 ) {
     if (animation_process_mode == p_mode) {
         return;
@@ -1561,7 +1562,8 @@ String AnimationTreePlayer::animation_node_get_master_animation(
     return n->from;
 }
 
-float AnimationTreePlayer::animation_node_get_position(const StringName& p_node
+float AnimationTreePlayer::animation_node_get_position(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_ANIMATION, AnimationNode, 0);
     return n->time;
@@ -1575,7 +1577,8 @@ bool AnimationTreePlayer::animation_node_is_path_filtered(
     return n->filter.has(p_path);
 }
 
-float AnimationTreePlayer::oneshot_node_get_fadein_time(const StringName& p_node
+float AnimationTreePlayer::oneshot_node_get_fadein_time(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_ONESHOT, OneShotNode, 0);
     return n->fade_in;
@@ -1588,13 +1591,15 @@ float AnimationTreePlayer::oneshot_node_get_fadeout_time(
     return n->fade_out;
 }
 
-bool AnimationTreePlayer::oneshot_node_get_mix_mode(const StringName& p_node
+bool AnimationTreePlayer::oneshot_node_get_mix_mode(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_ONESHOT, OneShotNode, 0);
     return n->mix;
 }
 
-bool AnimationTreePlayer::oneshot_node_has_autorestart(const StringName& p_node
+bool AnimationTreePlayer::oneshot_node_has_autorestart(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_ONESHOT, OneShotNode, 0);
     return n->autorestart;
@@ -1614,7 +1619,8 @@ float AnimationTreePlayer::oneshot_node_get_autorestart_random_delay(
     return n->autorestart_random_delay;
 }
 
-bool AnimationTreePlayer::oneshot_node_is_active(const StringName& p_node
+bool AnimationTreePlayer::oneshot_node_is_active(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_ONESHOT, OneShotNode, 0);
     return n->active;
@@ -1633,7 +1639,8 @@ float AnimationTreePlayer::mix_node_get_amount(const StringName& p_node) const {
     return n->amount;
 }
 
-float AnimationTreePlayer::blend2_node_get_amount(const StringName& p_node
+float AnimationTreePlayer::blend2_node_get_amount(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_BLEND2, Blend2Node, 0);
     return n->value;
@@ -1647,19 +1654,22 @@ bool AnimationTreePlayer::blend2_node_is_path_filtered(
     return n->filter.has(p_path);
 }
 
-float AnimationTreePlayer::blend3_node_get_amount(const StringName& p_node
+float AnimationTreePlayer::blend3_node_get_amount(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_BLEND3, Blend3Node, 0);
     return n->value;
 }
 
-Vector2 AnimationTreePlayer::blend4_node_get_amount(const StringName& p_node
+Vector2 AnimationTreePlayer::blend4_node_get_amount(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_BLEND4, Blend4Node, Vector2());
     return n->value;
 }
 
-float AnimationTreePlayer::timescale_node_get_scale(const StringName& p_node
+float AnimationTreePlayer::timescale_node_get_scale(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_TIMESCALE, TimeScaleNode, 0);
     return n->scale;
@@ -1704,7 +1714,8 @@ float AnimationTreePlayer::transition_node_get_xfade_time(
     return n->xfade;
 }
 
-int AnimationTreePlayer::transition_node_get_current(const StringName& p_node
+int AnimationTreePlayer::transition_node_get_current(
+    const StringName& p_node
 ) const {
     GET_NODE_V(NODE_TRANSITION, TransitionNode, -1);
     return n->current;
@@ -1846,7 +1857,8 @@ void AnimationTreePlayer::disconnect_nodes(
     dirty_caches                    = true;
 }
 
-void AnimationTreePlayer::get_connection_list(List<Connection>* p_connections
+void AnimationTreePlayer::get_connection_list(
+    List<Connection>* p_connections
 ) const {
     for (Map<StringName, NodeBase*>::Element* E = node_map.front(); E;
          E                                      = E->next()) {
@@ -1885,9 +1897,9 @@ AnimationTreePlayer::Track* AnimationTreePlayer::_find_track(
 
     if (p_path.get_subname_count()) {
         if (Object::cast_to<Skeleton>(child)) {
-            bone_idx =
-                Object::cast_to<Skeleton>(child)->find_bone(p_path.get_subname(0
-                ));
+            bone_idx = Object::cast_to<Skeleton>(child)->find_bone(
+                p_path.get_subname(0)
+            );
         }
     }
 

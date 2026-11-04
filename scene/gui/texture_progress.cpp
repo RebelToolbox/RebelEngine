@@ -282,10 +282,10 @@ void TextureProgress::draw_nine_patch_stretched(
                 last_section_size =
                     MAX(0.0,
                         last_section_size - (width_total - width_filled) * 0.5);
-                first_section_size =
-                    MAX(0.0,
-                        first_section_size - (width_total - width_filled) * 0.5
-                    );
+                first_section_size = MAX(
+                    0.0,
+                    first_section_size - (width_total - width_filled) * 0.5
+                );
 
                 // When `width_filled` increases, `middle_section_size` only
                 // increases when either of `first_section_size` and

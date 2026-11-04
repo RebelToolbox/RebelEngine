@@ -160,8 +160,8 @@ Error LinuxOS::initialize(
                     err
                 );
             } else {
-                xrr_free_monitors = (xrr_free_monitors_t
-                )dlsym(xrandr_handle, "XRRFreeMonitors");
+                xrr_free_monitors = (xrr_free_monitors_t)
+                    dlsym(xrandr_handle, "XRRFreeMonitors");
                 if (!xrr_free_monitors) {
                     err = dlerror();
                     fprintf(
@@ -1134,8 +1134,10 @@ OS::VideoMode LinuxOS::get_video_mode(int p_screen) const {
     return current_videomode;
 }
 
-void LinuxOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
-    const {}
+void LinuxOS::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {}
 
 void LinuxOS::set_wm_fullscreen(bool p_enabled) {
     if (p_enabled && !get_borderless_window()) {
@@ -2144,7 +2146,8 @@ void LinuxOS::get_key_modifier_state(
 ) {
     state->set_shift((p_x11_state & ShiftMask));
     state->set_control((p_x11_state & ControlMask));
-    state->set_alt((p_x11_state & Mod1Mask /*|| p_x11_state&Mod5Mask*/)
+    state->set_alt(
+        (p_x11_state & Mod1Mask /*|| p_x11_state&Mod5Mask*/)
     ); // altgr should not count as alt
     state->set_metakey((p_x11_state & Mod4Mask));
 }
@@ -2520,7 +2523,8 @@ Atom LinuxOS::_process_selection_request_target(
     }
 }
 
-void LinuxOS::_handle_selection_request_event(XSelectionRequestEvent* p_event
+void LinuxOS::_handle_selection_request_event(
+    XSelectionRequestEvent* p_event
 ) const {
     XEvent respond;
     if (p_event->target == XInternAtom(x11_display, "MULTIPLE", 0)) {
@@ -3020,7 +3024,8 @@ void LinuxOS::process_xevents() {
             } break;
             case LeaveNotify: {
                 if (main_loop && !mouse_mode_grab) {
-                    main_loop->notification(MainLoop::NOTIFICATION_WM_MOUSE_EXIT
+                    main_loop->notification(
+                        MainLoop::NOTIFICATION_WM_MOUSE_EXIT
                     );
                 }
 
@@ -3695,7 +3700,8 @@ String LinuxOS::_get_clipboard_impl(
                                 incr_data.resize(initial_size);
                             } else {
                                 // New chunk, resize to be safe and append data.
-                                incr_data.resize(MAX(data_size + len, prev_size)
+                                incr_data.resize(
+                                    MAX(data_size + len, prev_size)
                                 );
                                 memcpy(incr_data.ptr() + data_size, data, len);
                                 data_size += len;
@@ -3791,8 +3797,10 @@ Bool LinuxOS::_predicate_clipboard_save_targets(
     }
 }
 
-void LinuxOS::_clipboard_transfer_ownership(Atom p_source, Window x11_window)
-    const {
+void LinuxOS::_clipboard_transfer_ownership(
+    Atom p_source,
+    Window x11_window
+) const {
     Window selection_owner = XGetSelectionOwner(x11_display, p_source);
 
     if (selection_owner != x11_window) {
@@ -3866,7 +3874,8 @@ Error LinuxOS::shell_open(String p_uri) {
         return ERR_FILE_NOT_FOUND;
     }
     // GNOME
-    args.push_front("open"
+    args.push_front(
+        "open"
     ); // The command is `gio open`, so we need to add it to args
     ok = execute("gio", args, true, nullptr, nullptr, &err_code);
     if (ok == OK && !err_code) {
@@ -4491,13 +4500,15 @@ static String get_mountpoint(const String& p_path) {
 }
 
 Error LinuxOS::move_to_trash(const String& p_path) {
-    String path = p_path.rstrip("/"
+    String path = p_path.rstrip(
+        "/"
     ); // Strip trailing slash when path points to a directory
 
     int err_code;
     List<String> args;
     args.push_back(path);
-    args.push_front("trash"
+    args.push_front(
+        "trash"
     ); // The command is `gio trash <file_name>` so we need to add it to args.
     Error result = execute(
         "gio",
@@ -4515,7 +4526,8 @@ Error LinuxOS::move_to_trash(const String& p_path) {
 
     args.pop_front();
     args.push_front("move");
-    args.push_back("trash:/"
+    args.push_back(
+        "trash:/"
     ); // The command is `kioclient5 move <file_name> trash:/`.
     result = execute(
         "kioclient5",

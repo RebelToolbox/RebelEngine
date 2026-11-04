@@ -422,7 +422,8 @@ void AnimationPlayerEditor::_animation_save(const Ref<Resource>& p_resource) {
     }
 }
 
-void AnimationPlayerEditor::_animation_save_as(const Ref<Resource>& p_resource
+void AnimationPlayerEditor::_animation_save_as(
+    const Ref<Resource>& p_resource
 ) {
     file->set_mode(EditorFileDialog::MODE_SAVE_FILE);
 
@@ -440,8 +441,9 @@ void AnimationPlayerEditor::_animation_save_as(const Ref<Resource>& p_resource
     if (p_resource->get_path() != "") {
         path = p_resource->get_path();
         if (extensions.size()) {
-            if (extensions.find(p_resource->get_path().get_extension().to_lower(
-                ))
+            if (extensions.find(
+                    p_resource->get_path().get_extension().to_lower()
+                )
                 == nullptr) {
                 path = p_resource->get_path().get_base_dir()
                      + p_resource->get_name() + "." + extensions.front()->get();
@@ -725,7 +727,8 @@ Dictionary AnimationPlayerEditor::get_state() const {
     if (EditorNode::get_singleton()->get_edited_scene() && is_visible_in_tree()
         && player) {
         d["player"] =
-            EditorNode::get_singleton()->get_edited_scene()->get_path_to(player
+            EditorNode::get_singleton()->get_edited_scene()->get_path_to(
+                player
             );
         d["animation"]          = player->get_assigned_animation();
         d["track_editor_state"] = track_editor->get_state();
@@ -1006,7 +1009,8 @@ void AnimationPlayerEditor::edit(AnimationPlayer* p_player) {
     }
 }
 
-void AnimationPlayerEditor::forward_force_draw_over_viewport(Control* p_overlay
+void AnimationPlayerEditor::forward_force_draw_over_viewport(
+    Control* p_overlay
 ) {
     if (!onion.can_overlay) {
         return;
@@ -1068,7 +1072,8 @@ void AnimationPlayerEditor::forward_force_draw_over_viewport(Control* p_overlay
             }
 
             cidx++;
-        } while (cidx < base_cidx + onion.steps
+        } while (
+            cidx < base_cidx + onion.steps
         ); // In case there's the present capture at the end, skip it.
     }
 }
@@ -1176,7 +1181,8 @@ void AnimationPlayerEditor::_list_changed() {
     }
 }
 
-void AnimationPlayerEditor::_animation_key_editor_anim_len_changed(float p_len
+void AnimationPlayerEditor::_animation_key_editor_anim_len_changed(
+    float p_len
 ) {
     frame->set_max(p_len);
 }
@@ -1268,8 +1274,9 @@ void AnimationPlayerEditor::_animation_tool_menu(int p_option) {
             Ref<Animation> anim2 =
                 EditorSettings::get_singleton()->get_resource_clipboard();
             if (!anim2.is_valid()) {
-                error_dialog->set_text(TTR("No animation resource on clipboard!"
-                ));
+                error_dialog->set_text(
+                    TTR("No animation resource on clipboard!")
+                );
                 error_dialog->popup_centered_minsize();
                 return;
             }
@@ -1616,10 +1623,11 @@ void AnimationPlayerEditor::_prepare_onion_layers_2() {
         onion.captures_valid.write[cidx] = valid;
         if (valid) {
             player->seek(pos, true);
-            get_tree()->flush_transform_notifications(
-            ); // Needed for transforms of Node3Ds.
-            values_backup->update_skeletons(
-            ); // Needed for Skeletons (2D & 3D).
+            get_tree()
+                ->flush_transform_notifications(); // Needed for transforms of
+                                                   // Node3Ds.
+            values_backup
+                ->update_skeletons(); // Needed for Skeletons (2D & 3D).
 
             VS::get_singleton()->viewport_set_active(
                 onion.captures[cidx],
@@ -1899,7 +1907,8 @@ AnimationPlayerEditor::AnimationPlayerEditor(
     hb->add_child(play);
 
     play_from = memnew(ToolButton);
-    play_from->set_tooltip(TTR("Play selected animation from current pos. (D)")
+    play_from->set_tooltip(
+        TTR("Play selected animation from current pos. (D)")
     );
     hb->add_child(play_from);
 

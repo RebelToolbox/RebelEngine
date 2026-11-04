@@ -41,8 +41,26 @@ public:
     // note we are using uint32_t instead of BVHHandle, losing type safety, but
     // this is for compatibility with octree
     typedef void* (*PairCallback)(void*, uint32_t, T*, int, uint32_t, T*, int);
-    typedef void (*UnpairCallback)(void*, uint32_t, T*, int, uint32_t, T*, int, void*);
-    typedef void* (*CheckPairCallback)(void*, uint32_t, T*, int, uint32_t, T*, int, void*);
+    typedef void (*UnpairCallback)(
+        void*,
+        uint32_t,
+        T*,
+        int,
+        uint32_t,
+        T*,
+        int,
+        void*
+    );
+    typedef void* (*CheckPairCallback)(
+        void*,
+        uint32_t,
+        T*,
+        int,
+        uint32_t,
+        T*,
+        int,
+        void*
+    );
 
     // allow locally toggling thread safety if the template has been compiled
     // with BVH_THREAD_SAFE
@@ -820,7 +838,8 @@ private:
     }
 
 private:
-    const typename BVHTREE_CLASS::ItemExtra& _get_extra(BVHHandle p_handle
+    const typename BVHTREE_CLASS::ItemExtra& _get_extra(
+        BVHHandle p_handle
     ) const {
         return tree._extra[p_handle.id()];
     }
@@ -931,7 +950,8 @@ private:
                 _mutex = p_mutex;
 
                 if (_mutex->try_lock() != OK) {
-                    WARN_PRINT("Info : multithread BVH access detected (benign)"
+                    WARN_PRINT(
+                        "Info : multithread BVH access detected (benign)"
                     );
                     _mutex->lock();
                 }

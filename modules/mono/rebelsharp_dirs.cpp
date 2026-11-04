@@ -40,7 +40,8 @@ String _get_expected_build_config() {
 String _get_mono_user_dir() {
 #ifdef TOOLS_ENABLED
     if (EditorSettings::get_singleton()) {
-        return EditorSettings::get_singleton()->get_data_dir().plus_file("mono"
+        return EditorSettings::get_singleton()->get_data_dir().plus_file(
+            "mono"
         );
     } else {
         String settings_path;
@@ -114,9 +115,9 @@ private:
         // TODO use paths from csproj
         res_temp_dir                 = res_data_dir.plus_file("temp");
         res_temp_assemblies_base_dir = res_temp_dir.plus_file("bin");
-        res_temp_assemblies_dir =
-            res_temp_assemblies_base_dir.plus_file(_get_expected_build_config()
-            );
+        res_temp_assemblies_dir      = res_temp_assemblies_base_dir.plus_file(
+            _get_expected_build_config()
+        );
 
 #ifdef WEB_ENABLED
         mono_user_dir = "user://";

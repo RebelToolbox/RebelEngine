@@ -209,7 +209,8 @@ void EditorNavigationMeshGenerator::_parse_geometry(
                         Ref<CylinderMesh> cylinder_mesh;
                         cylinder_mesh.instance();
                         cylinder_mesh->set_height(cylinder->get_height());
-                        cylinder_mesh->set_bottom_radius(cylinder->get_radius()
+                        cylinder_mesh->set_bottom_radius(
+                            cylinder->get_radius()
                         );
                         cylinder_mesh->set_top_radius(cylinder->get_radius());
                         mesh = cylinder_mesh;
@@ -251,12 +252,14 @@ void EditorNavigationMeshGenerator::_parse_geometry(
                                 Geometry::MeshData::Face face = md.faces[j];
 
                                 for (int k = 2; k < face.indices.size(); ++k) {
-                                    faces.push_back(md.vertices[face.indices[0]]
+                                    faces.push_back(
+                                        md.vertices[face.indices[0]]
                                     );
                                     faces.push_back(
                                         md.vertices[face.indices[k - 1]]
                                     );
-                                    faces.push_back(md.vertices[face.indices[k]]
+                                    faces.push_back(
+                                        md.vertices[face.indices[k]]
                                     );
                                 }
                             }
@@ -525,7 +528,8 @@ void EditorNavigationMeshGenerator::_build_recast_navigation_mesh(
 
     poly_mesh = rcAllocPolyMesh();
     ERR_FAIL_COND(!poly_mesh);
-    ERR_FAIL_COND(!rcBuildPolyMesh(&ctx, *cset, cfg.maxVertsPerPoly, *poly_mesh)
+    ERR_FAIL_COND(
+        !rcBuildPolyMesh(&ctx, *cset, cfg.maxVertsPerPoly, *poly_mesh)
     );
 
     detail_mesh = rcAllocPolyMeshDetail();

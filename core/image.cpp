@@ -300,8 +300,11 @@ int Image::get_mipmap_offset(int p_mipmap) const {
     return ofs;
 }
 
-void Image::get_mipmap_offset_and_size(int p_mipmap, int& r_ofs, int& r_size)
-    const {
+void Image::get_mipmap_offset_and_size(
+    int p_mipmap,
+    int& r_ofs,
+    int& r_size
+) const {
     int ofs, w, h;
     _get_mipmap_offset_and_size(p_mipmap, ofs, w, h);
     int ofs2;
@@ -862,12 +865,12 @@ static void _scale_bilinear(
                         Math::half_to_float(src[y_ofs_up + src_xofs_left + l]);
                     float p10 =
                         Math::half_to_float(src[y_ofs_up + src_xofs_right + l]);
-                    float p01 =
-                        Math::half_to_float(src[y_ofs_down + src_xofs_left + l]
-                        );
-                    float p11 =
-                        Math::half_to_float(src[y_ofs_down + src_xofs_right + l]
-                        );
+                    float p01 = Math::half_to_float(
+                        src[y_ofs_down + src_xofs_left + l]
+                    );
+                    float p11 = Math::half_to_float(
+                        src[y_ofs_down + src_xofs_right + l]
+                    );
 
                     float interp_up   = p00 + (p10 - p00) * xofs_frac;
                     float interp_down = p01 + (p11 - p01) * xofs_frac;
@@ -1992,7 +1995,13 @@ template <
     class Component,
     int CC,
     bool renormalize,
-    void (*average_func)(Component&, const Component&, const Component&, const Component&, const Component&),
+    void (*average_func)(
+        Component&,
+        const Component&,
+        const Component&,
+        const Component&,
+        const Component&
+    ),
     void (*renormalize_func)(Component*)>
 static void _generate_po2_mipmap(
     const Component* p_src,
@@ -2846,8 +2855,8 @@ void Image::create(const char** p_xpm) {
                     line_ptr++;
                 }
                 // skip spaces
-                while (*line_ptr == ' ' || *line_ptr == '\t' || *line_ptr == 0
-                ) {
+                while (*line_ptr == ' ' || *line_ptr == '\t'
+                       || *line_ptr == 0) {
                     if (*line_ptr == 0) {
                         break;
                     }

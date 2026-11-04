@@ -285,7 +285,8 @@ bool SliderJointBullet::getPoweredLinMotor() {
     return sliderConstraint->getPoweredLinMotor();
 }
 
-void SliderJointBullet::setTargetLinMotorVelocity(real_t targetLinMotorVelocity
+void SliderJointBullet::setTargetLinMotorVelocity(
+    real_t targetLinMotorVelocity
 ) {
     sliderConstraint->setTargetLinMotorVelocity(targetLinMotorVelocity);
 }
@@ -310,7 +311,8 @@ bool SliderJointBullet::getPoweredAngMotor() {
     return sliderConstraint->getPoweredAngMotor();
 }
 
-void SliderJointBullet::setTargetAngMotorVelocity(real_t targetAngMotorVelocity
+void SliderJointBullet::setTargetAngMotorVelocity(
+    real_t targetAngMotorVelocity
 ) {
     sliderConstraint->setTargetAngMotorVelocity(targetAngMotorVelocity);
 }
@@ -408,7 +410,8 @@ void SliderJointBullet::set_param(
     }
 }
 
-real_t SliderJointBullet::get_param(PhysicsServer::SliderJointParam p_param
+real_t SliderJointBullet::get_param(
+    PhysicsServer::SliderJointParam p_param
 ) const {
     switch (p_param) {
         case PhysicsServer::SLIDER_JOINT_LINEAR_LIMIT_UPPER:

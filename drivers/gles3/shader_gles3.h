@@ -213,23 +213,24 @@ private:
 
             case Variant::TRANSFORM2D: {
                 Transform2D tr     = p_value;
-                GLfloat matrix[16] = {/* build a 16x16 matrix */
-                                      tr.elements[0][0],
-                                      tr.elements[0][1],
-                                      0,
-                                      0,
-                                      tr.elements[1][0],
-                                      tr.elements[1][1],
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      1,
-                                      0,
-                                      tr.elements[2][0],
-                                      tr.elements[2][1],
-                                      0,
-                                      1
+                GLfloat matrix[16] = {
+                    /* build a 16x16 matrix */
+                    tr.elements[0][0],
+                    tr.elements[0][1],
+                    0,
+                    0,
+                    tr.elements[1][0],
+                    tr.elements[1][1],
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    tr.elements[2][0],
+                    tr.elements[2][1],
+                    0,
+                    1
                 };
 
                 glUniformMatrix4fv(p_uniform, 1, false, matrix);
@@ -238,23 +239,24 @@ private:
             case Variant::BASIS:
             case Variant::TRANSFORM: {
                 Transform tr       = p_value;
-                GLfloat matrix[16] = {/* build a 16x16 matrix */
-                                      tr.basis.elements[0][0],
-                                      tr.basis.elements[1][0],
-                                      tr.basis.elements[2][0],
-                                      0,
-                                      tr.basis.elements[0][1],
-                                      tr.basis.elements[1][1],
-                                      tr.basis.elements[2][1],
-                                      0,
-                                      tr.basis.elements[0][2],
-                                      tr.basis.elements[1][2],
-                                      tr.basis.elements[2][2],
-                                      0,
-                                      tr.origin.x,
-                                      tr.origin.y,
-                                      tr.origin.z,
-                                      1
+                GLfloat matrix[16] = {
+                    /* build a 16x16 matrix */
+                    tr.basis.elements[0][0],
+                    tr.basis.elements[1][0],
+                    tr.basis.elements[2][0],
+                    0,
+                    tr.basis.elements[0][1],
+                    tr.basis.elements[1][1],
+                    tr.basis.elements[2][1],
+                    0,
+                    tr.basis.elements[0][2],
+                    tr.basis.elements[1][2],
+                    tr.basis.elements[2][2],
+                    0,
+                    tr.origin.x,
+                    tr.origin.y,
+                    tr.origin.z,
+                    1
                 };
 
                 glUniformMatrix4fv(p_uniform, 1, false, matrix);

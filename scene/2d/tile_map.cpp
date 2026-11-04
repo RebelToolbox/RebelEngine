@@ -650,8 +650,8 @@ void TileMap::update_dirty_quadrants() {
                     if (tile_set->tile_get_tile_mode(c.id)
                             == TileSet::SINGLE_TILE
                         || (shapes[j].autotile_coord.x == c.autotile_coord_x
-                            && shapes[j].autotile_coord.y == c.autotile_coord_y
-                        )) {
+                            && shapes[j].autotile_coord.y
+                                   == c.autotile_coord_y)) {
                         Transform2D xform;
                         xform.set_origin(offset.floor());
 
@@ -1884,8 +1884,9 @@ Vector2 TileMap::_map_to_world(int p_x, int p_y, bool p_ignore_ofs) const {
 bool TileMap::_set(const StringName& p_name, const Variant& p_value) {
     if (p_name == "format") {
         if (p_value.get_type() == Variant::INT) {
-            format = (DataFormat)(p_value.operator int64_t()
-            ); // Set format used for loading
+            format =
+                (DataFormat)(p_value.
+                             operator int64_t()); // Set format used for loading
             return true;
         }
     } else if (p_name == "tile_data") {

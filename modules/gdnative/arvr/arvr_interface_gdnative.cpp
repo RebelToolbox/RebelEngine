@@ -96,8 +96,8 @@ int ARVRInterfaceGDNative::get_camera_feed_id() {
     ERR_FAIL_COND_V(interface == nullptr, 0);
 
     if ((interface->version.major > 1)
-        || ((interface->version.major) == 1 && (interface->version.minor >= 1)
-        )) {
+        || ((interface->version.major) == 1
+            && (interface->version.minor >= 1))) {
         return (unsigned int)interface->get_camera_feed_id(data);
     } else {
         return 0;
@@ -207,9 +207,10 @@ unsigned int ARVRInterfaceGDNative::get_external_texture_for_eye(
     ERR_FAIL_COND_V(interface == nullptr, 0);
 
     if ((interface->version.major > 1)
-        || ((interface->version.major) == 1 && (interface->version.minor >= 1)
-        )) {
-        return (unsigned int
+        || ((interface->version.major) == 1
+            && (interface->version.minor >= 1))) {
+        return (
+                   unsigned int
         )interface->get_external_texture_for_eye(data, (rebel_int)p_eye);
     } else {
         return 0;
@@ -222,9 +223,10 @@ unsigned int ARVRInterfaceGDNative::get_external_depth_for_eye(
     ERR_FAIL_COND_V(interface == nullptr, 0);
 
     if ((interface->version.major > 1)
-        || ((interface->version.major) == 1 && (interface->version.minor >= 2)
-        )) {
-        return (unsigned int
+        || ((interface->version.major) == 1
+            && (interface->version.minor >= 2))) {
+        return (
+                   unsigned int
         )interface->get_external_depth_for_eye(data, (rebel_int)p_eye);
     } else {
         return 0;
@@ -257,8 +259,8 @@ void ARVRInterfaceGDNative::notification(int p_what) {
 
     // this is only available in interfaces that implement 1.1 or later
     if ((interface->version.major > 1)
-        || ((interface->version.major == 1) && (interface->version.minor > 0)
-        )) {
+        || ((interface->version.major == 1)
+            && (interface->version.minor > 0))) {
         interface->notification(data, p_what);
     }
 }

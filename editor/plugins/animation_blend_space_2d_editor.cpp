@@ -18,7 +18,8 @@
 #include "scene/gui/panel.h"
 #include "scene/main/viewport.h"
 
-bool AnimationNodeBlendSpace2DEditor::can_edit(const Ref<AnimationNode>& p_node
+bool AnimationNodeBlendSpace2DEditor::can_edit(
+    const Ref<AnimationNode>& p_node
 ) {
     Ref<AnimationNodeBlendSpace2D> bs2d = p_node;
     return bs2d.is_valid();
@@ -62,8 +63,8 @@ void AnimationNodeBlendSpace2DEditor::_blend_space_gui_input(
     Ref<InputEventMouseButton> mb = p_event;
 
     if (mb.is_valid() && mb->is_pressed()
-        && ((tool_select->is_pressed() && mb->get_button_index() == BUTTON_RIGHT
-            )
+        && ((tool_select->is_pressed()
+             && mb->get_button_index() == BUTTON_RIGHT)
             || (mb->get_button_index() == BUTTON_LEFT
                 && tool_create->is_pressed()))) {
         menu->clear();
@@ -154,8 +155,8 @@ void AnimationNodeBlendSpace2DEditor::_blend_space_gui_input(
         }
 
         // then try to see if a triangle can be selected
-        if (!blend_space->get_auto_triangles(
-            )) { // if autotriangles use, disable this
+        if (!blend_space
+                 ->get_auto_triangles()) { // if autotriangles use, disable this
             for (int i = 0; i < blend_space->get_triangle_count(); i++) {
                 Vector<Vector2> triangle;
 
@@ -1025,8 +1026,9 @@ void AnimationNodeBlendSpace2DEditor::_notification(int p_what) {
         if (!AnimationTreeEditor::get_singleton()->get_tree()) {
             error =
                 TTR("BlendSpace2D does not belong to an AnimationTree node.");
-        } else if (!AnimationTreeEditor::get_singleton()->get_tree()->is_active(
-                   )) {
+        } else if (!AnimationTreeEditor::get_singleton()
+                        ->get_tree()
+                        ->is_active()) {
             error =
                 TTR("AnimationTree is inactive.\nActivate to enable playback, "
                     "check node warnings if activation fails.");
@@ -1061,7 +1063,8 @@ void AnimationNodeBlendSpace2DEditor::_open_editor() {
         Ref<AnimationNode> an =
             blend_space->get_blend_point_node(selected_point);
         ERR_FAIL_COND(an.is_null());
-        AnimationTreeEditor::get_singleton()->enter_editor(itos(selected_point)
+        AnimationTreeEditor::get_singleton()->enter_editor(
+            itos(selected_point)
         );
     }
 }

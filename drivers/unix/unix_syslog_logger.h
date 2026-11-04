@@ -13,8 +13,11 @@
 
 class UnixSyslogLogger : public Logger {
 public:
-    void logv(const char* p_format, va_list p_list, bool p_err) override
-        _PRINTF_FORMAT_ATTRIBUTE_2_0;
+    void logv(
+        const char* p_format,
+        va_list p_list,
+        bool p_err
+    ) override _PRINTF_FORMAT_ATTRIBUTE_2_0;
     void print_error(
         const char* p_function,
         const char* p_file,

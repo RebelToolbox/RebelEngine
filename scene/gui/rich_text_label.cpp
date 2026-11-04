@@ -215,7 +215,8 @@ int RichTextLabel::_process_line(
             if (line < l.offset_caches.size())                                 \
                 line_ofs = l.offset_caches[line];                              \
             wofs = margin;                                                     \
-            if (align != ALIGN_FILL) wofs += line_ofs;                         \
+            if (align != ALIGN_FILL)                                           \
+                wofs += line_ofs;                                              \
         } else {                                                               \
             float used = wofs - margin;                                        \
             switch (align) {                                                   \
@@ -266,7 +267,8 @@ int RichTextLabel::_process_line(
             && p_click_pos.y >= p_ofs.y + y                                    \
             && p_click_pos.y <= p_ofs.y + y + lh                               \
             && p_click_pos.x < p_ofs.x + align_ofs + wofs) {                   \
-            if (r_outside) *r_outside = true;                                  \
+            if (r_outside)                                                     \
+                *r_outside = true;                                             \
             *r_click_item = it;                                                \
             *r_click_char = rchar;                                             \
             RETURN;                                                            \
@@ -282,7 +284,8 @@ int RichTextLabel::_process_line(
     if (wofs - backtrack + m_width > p_width) {                                \
         line_wrapped = true;                                                   \
         if (p_mode == PROCESS_CACHE) {                                         \
-            if (spaces > 0) spaces -= 1;                                       \
+            if (spaces > 0)                                                    \
+                spaces -= 1;                                                   \
         }                                                                      \
         const bool x_in_range =                                                \
             (p_click_pos.x > p_ofs.x + align_ofs + wofs)                       \
@@ -291,7 +294,8 @@ int RichTextLabel::_process_line(
         if (p_mode == PROCESS_POINTER && r_click_item                          \
             && p_click_pos.y >= p_ofs.y + y                                    \
             && p_click_pos.y <= p_ofs.y + y + lh && x_in_range) {              \
-            if (r_outside) *r_outside = true;                                  \
+            if (r_outside)                                                     \
+                *r_outside = true;                                             \
             *r_click_item = it;                                                \
             *r_click_char = rchar;                                             \
             RETURN;                                                            \
@@ -307,7 +311,8 @@ int RichTextLabel::_process_line(
         if (p_mode == PROCESS_POINTER && r_click_item                          \
             && p_click_pos.y >= p_ofs.y + y                                    \
             && p_click_pos.y <= p_ofs.y + y + lh && x_in_range) {              \
-            if (r_outside) *r_outside = false;                                 \
+            if (r_outside)                                                     \
+                *r_outside = false;                                            \
             *r_click_item = it;                                                \
             *r_click_char = rchar;                                             \
             RETURN;                                                            \
@@ -527,8 +532,8 @@ int RichTextLabel::_process_line(
                                         && (text->index < selection.to->index
                                             || (text->index
                                                     == selection.to->index
-                                                && cofs <= selection.to_char)
-                                        )) {
+                                                && cofs
+                                                       <= selection.to_char))) {
                                         selected = true;
                                     }
                                 }
@@ -632,8 +637,8 @@ int RichTextLabel::_process_line(
                                             );
                                         double n_time =
                                             (double)(item_shake->elapsed_time
-                                                     / (0.5f / item_shake->rate)
-                                            );
+                                                     / (0.5f
+                                                        / item_shake->rate));
                                         n_time = (n_time > 1.0) ? 1.0 : n_time;
                                         fx_offset +=
                                             Point2(
@@ -1486,8 +1491,8 @@ void RichTextLabel::_find_click(
     Ref<Font> base_font = get_font("normal_font");
     Color base_color    = get_color("default_color");
 
-    while (y < text_rect.get_size().height && from_line < p_frame->lines.size()
-    ) {
+    while (y < text_rect.get_size().height
+           && from_line < p_frame->lines.size()) {
         _process_line(
             p_frame,
             text_rect.get_position(),
@@ -1512,7 +1517,8 @@ void RichTextLabel::_find_click(
     }
 }
 
-Control::CursorShape RichTextLabel::get_cursor_shape(const Point2& p_pos
+Control::CursorShape RichTextLabel::get_cursor_shape(
+    const Point2& p_pos
 ) const {
     if (!underline_meta) {
         return get_default_cursor_shape();

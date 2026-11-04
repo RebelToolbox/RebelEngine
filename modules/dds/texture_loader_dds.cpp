@@ -465,7 +465,8 @@ RES ResourceFormatDDS::load(
     return texture;
 }
 
-void ResourceFormatDDS::get_recognized_extensions(List<String>* p_extensions
+void ResourceFormatDDS::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("dds");
 }

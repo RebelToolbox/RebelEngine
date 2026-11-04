@@ -21,10 +21,14 @@ public:
     bool is_selectable_when_hidden() const override;
     void redraw(EditorSpatialGizmo* p_gizmo) override;
 
-    String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
-    Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const override;
+    String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
+    Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const override;
     void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,

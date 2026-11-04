@@ -1410,10 +1410,12 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"bvec3",
      TYPE_BVEC3,                     {TYPE_BOOL, TYPE_BOOL, TYPE_BOOL, TYPE_VOID},
      TAG_GLOBAL,                                                                                                     false},
-    {"bvec3",            TYPE_BVEC3, {TYPE_BVEC2, TYPE_BOOL, TYPE_VOID},                                 TAG_GLOBAL, false
-    },
-    {"bvec3",            TYPE_BVEC3, {TYPE_BOOL, TYPE_BVEC2, TYPE_VOID},                                 TAG_GLOBAL, false
-    },
+    {"bvec3",
+     TYPE_BVEC3,                     {TYPE_BVEC2, TYPE_BOOL, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
+    {"bvec3",
+     TYPE_BVEC3,                     {TYPE_BOOL, TYPE_BVEC2, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
     {"bvec4",            TYPE_BVEC4, {TYPE_BOOL, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"bvec4",
      TYPE_BVEC4,                     {TYPE_BOOL, TYPE_BOOL, TYPE_BOOL, TYPE_BOOL, TYPE_VOID},
@@ -1427,12 +1429,15 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"bvec4",
      TYPE_BVEC4,                     {TYPE_BOOL, TYPE_BOOL, TYPE_BVEC2, TYPE_VOID},
      TAG_GLOBAL,                                                                                                     false},
-    {"bvec4",            TYPE_BVEC4, {TYPE_BOOL, TYPE_BVEC3, TYPE_VOID},                                 TAG_GLOBAL, false
-    },
-    {"bvec4",            TYPE_BVEC4, {TYPE_BVEC3, TYPE_BOOL, TYPE_VOID},                                 TAG_GLOBAL, false
-    },
-    {"bvec4",            TYPE_BVEC4, {TYPE_BVEC2, TYPE_BVEC2, TYPE_VOID},                                TAG_GLOBAL, false
-    },
+    {"bvec4",
+     TYPE_BVEC4,                     {TYPE_BOOL, TYPE_BVEC3, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
+    {"bvec4",
+     TYPE_BVEC4,                     {TYPE_BVEC3, TYPE_BOOL, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
+    {"bvec4",
+     TYPE_BVEC4,                     {TYPE_BVEC2, TYPE_BVEC2, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
 
     {"float",            TYPE_FLOAT, {TYPE_FLOAT, TYPE_VOID},                                            TAG_GLOBAL, false},
     {"vec2",             TYPE_VEC2,  {TYPE_FLOAT, TYPE_VOID},                                            TAG_GLOBAL, false},
@@ -1484,8 +1489,9 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
      TAG_GLOBAL,                                                                                                     false},
     {"ivec4",            TYPE_IVEC4, {TYPE_INT, TYPE_IVEC3, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"ivec4",            TYPE_IVEC4, {TYPE_IVEC3, TYPE_INT, TYPE_VOID},                                  TAG_GLOBAL, false},
-    {"ivec4",            TYPE_IVEC4, {TYPE_IVEC2, TYPE_IVEC2, TYPE_VOID},                                TAG_GLOBAL, false
-    },
+    {"ivec4",
+     TYPE_IVEC4,                     {TYPE_IVEC2, TYPE_IVEC2, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
 
     {"uint",             TYPE_UINT,  {TYPE_UINT, TYPE_VOID},                                             TAG_GLOBAL, true },
     {"uvec2",            TYPE_UVEC2, {TYPE_UINT, TYPE_VOID},                                             TAG_GLOBAL, true },
@@ -1511,8 +1517,9 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
      TAG_GLOBAL,                                                                                                     true },
     {"uvec4",            TYPE_UVEC4, {TYPE_UINT, TYPE_UVEC3, TYPE_VOID},                                 TAG_GLOBAL, true },
     {"uvec4",            TYPE_UVEC4, {TYPE_UVEC3, TYPE_UINT, TYPE_VOID},                                 TAG_GLOBAL, true },
-    {"uvec4",            TYPE_UVEC4, {TYPE_UVEC2, TYPE_UVEC2, TYPE_VOID},                                TAG_GLOBAL, true
-    },
+    {"uvec4",
+     TYPE_UVEC4,                     {TYPE_UVEC2, TYPE_UVEC2, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     true },
 
     {"mat2",             TYPE_MAT2,  {TYPE_VEC2, TYPE_VEC2, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"mat3",
@@ -1660,8 +1667,9 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"atan",             TYPE_VEC2,  {TYPE_VEC2, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"atan",             TYPE_VEC3,  {TYPE_VEC3, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"atan",             TYPE_VEC4,  {TYPE_VEC4, TYPE_VOID},                                             TAG_GLOBAL, false},
-    {"atan",             TYPE_FLOAT, {TYPE_FLOAT, TYPE_FLOAT, TYPE_VOID},                                TAG_GLOBAL, false
-    },
+    {"atan",
+     TYPE_FLOAT,                     {TYPE_FLOAT, TYPE_FLOAT, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
     {"atan",             TYPE_VEC2,  {TYPE_VEC2, TYPE_VEC2, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"atan",             TYPE_VEC3,  {TYPE_VEC3, TYPE_VEC3, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"atan",             TYPE_VEC4,  {TYPE_VEC4, TYPE_VEC4, TYPE_VOID},                                  TAG_GLOBAL, false},
@@ -1929,8 +1937,9 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
      TYPE_VEC4,                      {TYPE_VEC4, TYPE_VEC4, TYPE_VEC4, TYPE_VOID},
      TAG_GLOBAL,                                                                                                     false},
 
-    {"step",             TYPE_FLOAT, {TYPE_FLOAT, TYPE_FLOAT, TYPE_VOID},                                TAG_GLOBAL, false
-    },
+    {"step",
+     TYPE_FLOAT,                     {TYPE_FLOAT, TYPE_FLOAT, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
     {"step",             TYPE_VEC2,  {TYPE_VEC2, TYPE_VEC2, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"step",             TYPE_VEC3,  {TYPE_VEC3, TYPE_VEC3, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"step",             TYPE_VEC4,  {TYPE_VEC4, TYPE_VEC4, TYPE_VOID},                                  TAG_GLOBAL, false},
@@ -2009,8 +2018,9 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"normalize",        TYPE_VEC2,  {TYPE_VEC2, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"normalize",        TYPE_VEC3,  {TYPE_VEC3, TYPE_VOID},                                             TAG_GLOBAL, false},
     {"normalize",        TYPE_VEC4,  {TYPE_VEC4, TYPE_VOID},                                             TAG_GLOBAL, false},
-    {"reflect",          TYPE_VEC3,  {TYPE_VEC3, TYPE_VEC3, TYPE_VOID},                                  TAG_GLOBAL, false
-    },
+    {"reflect",
+     TYPE_VEC3,                      {TYPE_VEC3, TYPE_VEC3, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
     {"refract",
      TYPE_VEC3,                      {TYPE_VEC3, TYPE_VEC3, TYPE_FLOAT, TYPE_VOID},
      TAG_GLOBAL,                                                                                                     false},
@@ -2181,26 +2191,35 @@ const ShaderLanguage::BuiltinFuncDef ShaderLanguage::builtin_func_defs[] = {
     {"equal",            TYPE_BVEC3, {TYPE_VEC3, TYPE_VEC3, TYPE_VOID},                                  TAG_GLOBAL, false},
     {"equal",            TYPE_BVEC4, {TYPE_VEC4, TYPE_VEC4, TYPE_VOID},                                  TAG_GLOBAL, false},
 
-    {"equal",            TYPE_BVEC2, {TYPE_IVEC2, TYPE_IVEC2, TYPE_VOID},                                TAG_GLOBAL, false
-    },
-    {"equal",            TYPE_BVEC3, {TYPE_IVEC3, TYPE_IVEC3, TYPE_VOID},                                TAG_GLOBAL, false
-    },
-    {"equal",            TYPE_BVEC4, {TYPE_IVEC4, TYPE_IVEC4, TYPE_VOID},                                TAG_GLOBAL, false
-    },
+    {"equal",
+     TYPE_BVEC2,                     {TYPE_IVEC2, TYPE_IVEC2, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
+    {"equal",
+     TYPE_BVEC3,                     {TYPE_IVEC3, TYPE_IVEC3, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
+    {"equal",
+     TYPE_BVEC4,                     {TYPE_IVEC4, TYPE_IVEC4, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
 
-    {"equal",            TYPE_BVEC2, {TYPE_UVEC2, TYPE_UVEC2, TYPE_VOID},                                TAG_GLOBAL, true
-    },
-    {"equal",            TYPE_BVEC3, {TYPE_UVEC3, TYPE_UVEC3, TYPE_VOID},                                TAG_GLOBAL, true
-    },
-    {"equal",            TYPE_BVEC4, {TYPE_UVEC4, TYPE_UVEC4, TYPE_VOID},                                TAG_GLOBAL, true
-    },
+    {"equal",
+     TYPE_BVEC2,                     {TYPE_UVEC2, TYPE_UVEC2, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     true },
+    {"equal",
+     TYPE_BVEC3,                     {TYPE_UVEC3, TYPE_UVEC3, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     true },
+    {"equal",
+     TYPE_BVEC4,                     {TYPE_UVEC4, TYPE_UVEC4, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     true },
 
-    {"equal",            TYPE_BVEC2, {TYPE_BVEC2, TYPE_BVEC2, TYPE_VOID},                                TAG_GLOBAL, false
-    },
-    {"equal",            TYPE_BVEC3, {TYPE_BVEC3, TYPE_BVEC3, TYPE_VOID},                                TAG_GLOBAL, false
-    },
-    {"equal",            TYPE_BVEC4, {TYPE_BVEC4, TYPE_BVEC4, TYPE_VOID},                                TAG_GLOBAL, false
-    },
+    {"equal",
+     TYPE_BVEC2,                     {TYPE_BVEC2, TYPE_BVEC2, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
+    {"equal",
+     TYPE_BVEC3,                     {TYPE_BVEC3, TYPE_BVEC3, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
+    {"equal",
+     TYPE_BVEC4,                     {TYPE_BVEC4, TYPE_BVEC4, TYPE_VOID},
+     TAG_GLOBAL,                                                                                                     false},
 
     {"notEqual",
      TYPE_BVEC2,                     {TYPE_VEC2, TYPE_VEC2, TYPE_VOID},
@@ -2612,7 +2631,8 @@ bool ShaderLanguage::_validate_function_call(
                     if (get_scalar_type(args[i]) == args[i]
                         && p_func->arguments[i + 1]->type == Node::TYPE_CONSTANT
                         && convert_constant(
-                            static_cast<ConstantNode*>(p_func->arguments[i + 1]
+                            static_cast<ConstantNode*>(
+                                p_func->arguments[i + 1]
                             ),
                             builtin_func_defs[idx].args[i]
                         )) {
@@ -2719,9 +2739,9 @@ bool ShaderLanguage::_validate_function_call(
                         }
 
                         // this is an implicit conversion
-                        ConstantNode* constant =
-                            static_cast<ConstantNode*>(p_func->arguments[i + 1]
-                            );
+                        ConstantNode* constant = static_cast<ConstantNode*>(
+                            p_func->arguments[i + 1]
+                        );
                         ConstantNode* conversion = alloc_node<ConstantNode>();
 
                         conversion->datatype = builtin_func_defs[idx].args[i];
@@ -3819,7 +3839,8 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                     struct_name2 = tk.text;
                                 } else {
                                     if (!is_token_variable_datatype(tk.type)) {
-                                        _set_error("Invalid data type for array"
+                                        _set_error(
+                                            "Invalid data type for array"
                                         );
                                         return nullptr;
                                     }
@@ -3987,12 +4008,14 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                                 String type_name =
                                     nexpr->get_datatype() == TYPE_STRUCT
                                         ? nexpr->get_datatype_name()
-                                        : get_datatype_name(nexpr->get_datatype(
-                                          ));
+                                        : get_datatype_name(
+                                              nexpr->get_datatype()
+                                          );
                                 String type_name2 =
                                     node->get_datatype() == TYPE_STRUCT
                                         ? node->get_datatype_name()
-                                        : get_datatype_name(node->get_datatype()
+                                        : get_datatype_name(
+                                              node->get_datatype()
                                           );
                                 _set_error(
                                     "Invalid assignment of '" + type_name
@@ -4717,7 +4740,8 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
 
                 if (index->get_datatype() != TYPE_INT
                     && index->get_datatype() != TYPE_UINT) {
-                    _set_error("Only integer datatypes are allowed for indexing"
+                    _set_error(
+                        "Only integer datatypes are allowed for indexing"
                     );
                     return nullptr;
                 }
@@ -5302,9 +5326,11 @@ ShaderLanguage::Node* ShaderLanguage::_parse_expression(
                 _set_error("Parser bug...");
             }
 
-            op->arguments.push_back(expression[next_op - 1].node
+            op->arguments.push_back(
+                expression[next_op - 1].node
             ); // expression goes as left
-            op->arguments.push_back(expression[next_op + 1].node
+            op->arguments.push_back(
+                expression[next_op + 1].node
             ); // next expression goes as right
             expression.write[next_op - 1].node = op;
 
@@ -6099,7 +6125,8 @@ Error ShaderLanguage::_parse_block(
                             );
                             return ERR_PARSE_ERROR;
                         } else if (prev_type == TK_CF_DEFAULT) {
-                            _set_error("Default case must be defined only once."
+                            _set_error(
+                                "Default case must be defined only once."
                             );
                             return ERR_PARSE_ERROR;
                         }
@@ -6564,7 +6591,8 @@ Error ShaderLanguage::_parse_block(
     return OK;
 }
 
-String ShaderLanguage::_get_shader_type_list(const Set<String>& p_shader_types
+String ShaderLanguage::_get_shader_type_list(
+    const Set<String>& p_shader_types
 ) const {
     // Return a list of shader types as an human-readable string
     String valid_types;
@@ -7029,7 +7057,8 @@ Error ShaderLanguage::_parse_shader(
                             tk = _get_token();
 
                             if (tk.type != TK_COMMA) {
-                                _set_error("Expected ',' after integer constant"
+                                _set_error(
+                                    "Expected ',' after integer constant"
                                 );
                                 return ERR_PARSE_ERROR;
                             }
@@ -7045,7 +7074,8 @@ Error ShaderLanguage::_parse_shader(
 
                             if (tk.type != TK_REAL_CONSTANT
                                 && tk.type != TK_INT_CONSTANT) {
-                                _set_error("Expected integer constant after ','"
+                                _set_error(
+                                    "Expected integer constant after ','"
                                 );
                                 return ERR_PARSE_ERROR;
                             }
@@ -7106,7 +7136,8 @@ Error ShaderLanguage::_parse_shader(
                             return ERR_PARSE_ERROR;
                         }
                         if (expr->type != Node::TYPE_CONSTANT) {
-                            _set_error("Expected constant expression after '='"
+                            _set_error(
+                                "Expected constant expression after '='"
                             );
                             return ERR_PARSE_ERROR;
                         }
@@ -7344,7 +7375,8 @@ Error ShaderLanguage::_parse_shader(
                                         precision2 =
                                             get_token_precision(tk.type);
                                         tk = _get_token();
-                                        if (!is_token_nonvoid_datatype(tk.type
+                                        if (!is_token_nonvoid_datatype(
+                                                tk.type
                                             )) {
                                             _set_error(
                                                 "Expected datatype after "
@@ -7361,7 +7393,8 @@ Error ShaderLanguage::_parse_shader(
                                         type2        = TYPE_STRUCT;
                                         struct_name2 = tk.text;
                                     } else {
-                                        if (!is_token_variable_datatype(tk.type
+                                        if (!is_token_variable_datatype(
+                                                tk.type
                                             )) {
                                             _set_error(
                                                 "Invalid data type for array"
@@ -7461,9 +7494,9 @@ Error ShaderLanguage::_parse_shader(
                                         } else {
                                             if (precision
                                                 != PRECISION_DEFAULT) {
-                                                error_str +=
-                                                    get_precision_name(precision
-                                                    );
+                                                error_str += get_precision_name(
+                                                    precision
+                                                );
                                                 error_str += " ";
                                             }
                                             error_str +=
@@ -7550,10 +7583,12 @@ Error ShaderLanguage::_parse_shader(
                                             break;
                                         } else {
                                             if (curly) {
-                                                _set_error("Expected '}' or ','"
+                                                _set_error(
+                                                    "Expected '}' or ','"
                                                 );
                                             } else {
-                                                _set_error("Expected ')' or ','"
+                                                _set_error(
+                                                    "Expected ')' or ','"
                                                 );
                                             }
                                             return ERR_PARSE_ERROR;
@@ -7626,7 +7661,8 @@ Error ShaderLanguage::_parse_shader(
                                 _set_error("Expected array initialization");
                                 return ERR_PARSE_ERROR;
                             } else {
-                                _set_error("Expected initialization of constant"
+                                _set_error(
+                                    "Expected initialization of constant"
                                 );
                                 return ERR_PARSE_ERROR;
                             }
@@ -7679,7 +7715,8 @@ Error ShaderLanguage::_parse_shader(
                     builtin_types = p_functions[name].built_ins;
                 }
 
-                if (p_functions.has("global"
+                if (p_functions.has(
+                        "global"
                     )) { // Adds global variables: 'TIME'
                     for (Map<StringName, BuiltInInfo>::Element* E =
                              p_functions["global"].built_ins.front();

@@ -68,10 +68,12 @@ Vector<Vector2> expand(
     ClipperLib::Path clamp;
     clamp.push_back(ClipperLib::IntPoint(0, 0));
     clamp.push_back(ClipperLib::IntPoint(rect.size.width * PRECISION, 0));
-    clamp.push_back(ClipperLib::IntPoint(
-        rect.size.width * PRECISION,
-        rect.size.height * PRECISION
-    ));
+    clamp.push_back(
+        ClipperLib::IntPoint(
+            rect.size.width * PRECISION,
+            rect.size.height * PRECISION
+        )
+    );
     clamp.push_back(ClipperLib::IntPoint(0, rect.size.height * PRECISION));
     cl.AddPath(clamp, ClipperLib::ptClip, true);
     cl.Execute(ClipperLib::ctIntersection, out);
@@ -126,7 +128,8 @@ void SpriteEditor::_menu_option(int p_option) {
             debug_uv->update();
         } break;
         case MENU_OPTION_CREATE_COLLISION_POLY_2D: {
-            debug_uv_dialog->get_ok()->set_text(TTR("Create CollisionPolygon2D")
+            debug_uv_dialog->get_ok()->set_text(
+                TTR("Create CollisionPolygon2D")
             );
             debug_uv_dialog->set_title(TTR("CollisionPolygon2D Preview"));
 
@@ -519,7 +522,8 @@ void SpriteEditor::_add_as_sibling_or_child(
     if (p_own_node != this->get_tree()->get_edited_scene_root()) {
         p_own_node->get_parent()->add_child(p_new_node, true);
         Object::cast_to<Node2D>(p_new_node)
-            ->set_transform(Object::cast_to<Node2D>(p_own_node)->get_transform()
+            ->set_transform(
+                Object::cast_to<Node2D>(p_own_node)->get_transform()
             );
     } else {
         p_own_node->add_child(p_new_node, true);
@@ -576,10 +580,12 @@ SpriteEditor::SpriteEditor() {
     CanvasItemEditor::get_singleton()->add_control_to_menu_panel(options);
 
     options->set_text(TTR("Sprite"));
-    options->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "Sprite",
-        "EditorIcons"
-    ));
+    options->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "Sprite",
+            "EditorIcons"
+        )
+    );
 
     options->get_popup()->add_item(
         TTR("Convert to Mesh2D"),

@@ -144,7 +144,19 @@ public:
 
     FUNCRID(mesh)
 
-    FUNC10(mesh_add_surface, RID, uint32_t, PrimitiveType, const PoolVector<uint8_t>&, int, const PoolVector<uint8_t>&, int, const AABB&, const Vector<PoolVector<uint8_t>>&, const Vector<AABB>&)
+    FUNC10(
+        mesh_add_surface,
+        RID,
+        uint32_t,
+        PrimitiveType,
+        const PoolVector<uint8_t>&,
+        int,
+        const PoolVector<uint8_t>&,
+        int,
+        const AABB&,
+        const Vector<PoolVector<uint8_t>>&,
+        const Vector<AABB>&
+    )
 
     FUNC2(mesh_set_blend_shape_count, RID, int)
     FUNC1RC(int, mesh_get_blend_shape_count, RID)
@@ -433,8 +445,10 @@ public:
 
     // this passes directly to avoid stalling, but it's pretty dangerous, so
     // don't call after freeing a viewport
-    int viewport_get_render_info(RID p_viewport, ViewportRenderInfo p_info)
-        override {
+    int viewport_get_render_info(
+        RID p_viewport,
+        ViewportRenderInfo p_info
+    ) override {
         return visual_server->viewport_get_render_info(p_viewport, p_info);
     }
 
@@ -592,12 +606,25 @@ public:
     FUNC2(room_set_scenario, RID, RID)
     FUNC4(room_add_instance, RID, RID, const AABB&, const Vector<Vector3>&)
     FUNC3(room_add_ghost, RID, ObjectID, const AABB&)
-    FUNC5(room_set_bound, RID, ObjectID, const Vector<Plane>&, const AABB&, const Vector<Vector3>&)
+    FUNC5(
+        room_set_bound,
+        RID,
+        ObjectID,
+        const Vector<Plane>&,
+        const AABB&,
+        const Vector<Vector3>&
+    )
     FUNC2(room_prepare, RID, int32_t)
     FUNC1(rooms_and_portals_clear, RID)
     FUNC2(rooms_unload, RID, String)
     FUNC8(rooms_finalize, RID, bool, bool, bool, bool, String, bool, bool)
-    FUNC4(rooms_override_camera, RID, bool, const Vector3&, const Vector<Plane>*)
+    FUNC4(
+        rooms_override_camera,
+        RID,
+        bool,
+        const Vector3&,
+        const Vector<Plane>*
+    )
     FUNC2(rooms_set_active, RID, bool)
     FUNC3(rooms_set_params, RID, int, real_t)
     FUNC3(rooms_set_debug_feature, RID, RoomsDebugFeature, bool)
@@ -813,7 +840,11 @@ public:
         const PoolVector<Vector2>&,
         bool
     )
-    FUNC2(canvas_occluder_polygon_set_shape_as_lines, RID, const PoolVector<Vector2>&)
+    FUNC2(
+        canvas_occluder_polygon_set_shape_as_lines,
+        RID,
+        const PoolVector<Vector2>&
+    )
 
     FUNC2(
         canvas_occluder_polygon_set_cull_mode,
@@ -832,7 +863,12 @@ public:
 
     /* EVENT QUEUING */
 
-    FUNC3(request_frame_drawn_callback, Object*, const StringName&, const Variant&)
+    FUNC3(
+        request_frame_drawn_callback,
+        Object*,
+        const StringName&,
+        const Variant&
+    )
 
     void init() override;
     void finish() override;

@@ -319,7 +319,8 @@ void ExtractZipFileDialog::_on_project_folder_selected(const String& p_folder) {
     get_ok()->call_deferred("grab_focus");
 }
 
-void ExtractZipFileDialog::_on_project_folder_text_changed(const String& p_text
+void ExtractZipFileDialog::_on_project_folder_text_changed(
+    const String& p_text
 ) {
     if (created_folder != p_text) {
         _remove_created_folder();

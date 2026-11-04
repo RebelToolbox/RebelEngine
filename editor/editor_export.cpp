@@ -1242,7 +1242,8 @@ Error EditorExportPlatform::save_pack(
         }
 
         f->store_64(pd.file_ofs[i].ofs + header_padding + header_size);
-        f->store_64(pd.file_ofs[i].size
+        f->store_64(
+            pd.file_ofs[i].size
         ); // pay attention here, this is where file is
         f->store_buffer(pd.file_ofs[i].md5.ptr(), 16); // also save md5 for file
     }
@@ -1632,7 +1633,8 @@ void EditorExport::add_export_plugin(const Ref<EditorExportPlugin>& p_plugin) {
     }
 }
 
-void EditorExport::remove_export_plugin(const Ref<EditorExportPlugin>& p_plugin
+void EditorExport::remove_export_plugin(
+    const Ref<EditorExportPlugin>& p_plugin
 ) {
     export_plugins.erase(p_plugin);
 }
@@ -1707,7 +1709,8 @@ void EditorExport::load_config() {
         if (export_filter == "all_resources") {
             preset->set_export_filter(EditorExportPreset::EXPORT_ALL_RESOURCES);
         } else if (export_filter == "scenes") {
-            preset->set_export_filter(EditorExportPreset::EXPORT_SELECTED_SCENES
+            preset->set_export_filter(
+                EditorExportPreset::EXPORT_SELECTED_SCENES
             );
             get_files = true;
         } else if (export_filter == "resources") {
@@ -1729,9 +1732,11 @@ void EditorExport::load_config() {
             }
         }
 
-        preset->set_include_filter(config->get_value(section, "include_filter")
+        preset->set_include_filter(
+            config->get_value(section, "include_filter")
         );
-        preset->set_exclude_filter(config->get_value(section, "exclude_filter")
+        preset->set_exclude_filter(
+            config->get_value(section, "exclude_filter")
         );
         preset->set_export_path(config->get_value(section, "export_path", ""));
 
@@ -2195,7 +2200,8 @@ void EditorExportTextSceneToBinaryPlugin::_export_file(
         return;
     }
     String tmp_path =
-        EditorSettings::get_singleton()->get_cache_dir().plus_file("tmpfile.res"
+        EditorSettings::get_singleton()->get_cache_dir().plus_file(
+            "tmpfile.res"
         );
     Error err =
         ResourceFormatLoaderText::convert_file_to_binary(p_path, tmp_path);

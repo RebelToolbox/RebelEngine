@@ -359,8 +359,10 @@ void FileAccessNetwork::_queue_page(int32_t p_page) const {
     }
 }
 
-uint64_t FileAccessNetwork::get_buffer(uint8_t* p_dst, uint64_t p_length)
-    const {
+uint64_t FileAccessNetwork::get_buffer(
+    uint8_t* p_dst,
+    uint64_t p_length
+) const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
 
     if (pos + p_length > total_size) {

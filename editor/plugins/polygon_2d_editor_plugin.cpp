@@ -48,7 +48,8 @@ void Polygon2DEditor::_notification(int p_what) {
         case NOTIFICATION_READY: {
             button_uv->set_icon(get_icon("Uv", "EditorIcons"));
 
-            uv_button[UV_MODE_CREATE]->set_icon(get_icon("Edit", "EditorIcons")
+            uv_button[UV_MODE_CREATE]->set_icon(
+                get_icon("Edit", "EditorIcons")
             );
             uv_button[UV_MODE_CREATE_INTERNAL]->set_icon(
                 get_icon("EditInternal", "EditorIcons")
@@ -265,7 +266,8 @@ void Polygon2DEditor::_uv_edit_mode_select(int p_mode) {
             Vector2(-100000, -100000); // send brush away when switching
     }
 
-    uv_edit->set_size(uv_edit->get_size()
+    uv_edit->set_size(
+        uv_edit->get_size()
     ); // Necessary readjustment of the popup window.
     uv_edit_draw->update();
 }
@@ -305,9 +307,11 @@ void Polygon2DEditor::_menu_option(int p_option) {
             if (EditorSettings::get_singleton()->has_setting(
                     "interface/dialogs/uv_editor_bounds"
                 )) {
-                uv_edit->popup(EditorSettings::get_singleton()->get(
-                    "interface/dialogs/uv_editor_bounds"
-                ));
+                uv_edit->popup(
+                    EditorSettings::get_singleton()->get(
+                        "interface/dialogs/uv_editor_bounds"
+                    )
+                );
             } else {
                 uv_edit->popup_centered_ratio(0.85f);
             }
@@ -537,7 +541,8 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
                         if (points_prev.size() > 2
                             && tuv.distance_to(points_prev[0])
                                    < (8 / uv_draw_zoom)) {
-                            undo_redo->create_action(TTR("Create Polygon & UV")
+                            undo_redo->create_action(
+                                TTR("Create Polygon & UV")
                             );
                             undo_redo
                                 ->add_do_method(node, "set_uv", node->get_uv());
@@ -836,8 +841,9 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
                                 error->popup_centered_minsize();
                             } else {
                                 Array polygons = node->get_polygons();
-                                polygons       = polygons.duplicate(
-                                ); // copy because its a reference
+                                polygons =
+                                    polygons.duplicate(); // copy because its a
+                                                          // reference
 
                                 // todo, could check whether it already exists?
                                 polygons.push_back(polygon_create);
@@ -1023,10 +1029,11 @@ void Polygon2DEditor::_uv_input(const Ref<InputEvent>& p_input) {
 
         } else if (uv_drag) {
             Vector2 uv_drag_to = mm->get_position();
-            uv_drag_to         = snap_point(uv_drag_to
+            uv_drag_to         = snap_point(
+                uv_drag_to
             ); // FIXME: Only works correctly with 'UV_MODE_EDIT_POINT', it's
                        // imprecise with the rest.
-            Vector2 drag       = mtx.affine_inverse().xform(uv_drag_to)
+            Vector2 drag = mtx.affine_inverse().xform(uv_drag_to)
                          - mtx.affine_inverse().xform(uv_drag_from);
 
             switch (uv_move_current) {
@@ -1236,11 +1243,13 @@ void Polygon2DEditor::_uv_draw() {
 
         if (snap_step.x != 0) {
             for (int i = 0; i < s.width; i++) {
-                int cell = Math::fast_ftoi(Math::floor(
-                    (mtx.affine_inverse().xform(Vector2(i, 0)).x - snap_offset.x
+                int cell = Math::fast_ftoi(
+                    Math::floor(
+                        (mtx.affine_inverse().xform(Vector2(i, 0)).x
+                         - snap_offset.x)
+                        / snap_step.x
                     )
-                    / snap_step.x
-                ));
+                );
                 if (i == 0) {
                     last_cell = cell;
                 }
@@ -1258,11 +1267,13 @@ void Polygon2DEditor::_uv_draw() {
 
         if (snap_step.y != 0) {
             for (int i = 0; i < s.height; i++) {
-                int cell = Math::fast_ftoi(Math::floor(
-                    (mtx.affine_inverse().xform(Vector2(0, i)).y - snap_offset.y
+                int cell = Math::fast_ftoi(
+                    Math::floor(
+                        (mtx.affine_inverse().xform(Vector2(0, i)).y
+                         - snap_offset.y)
+                        / snap_step.y
                     )
-                    / snap_step.y
-                ));
+                );
                 if (i == 0) {
                     last_cell = cell;
                 }
@@ -1741,10 +1752,12 @@ Polygon2DEditor::Polygon2DEditor(EditorNode* p_editor) :
     }
 
     uv_button[UV_MODE_CREATE]->set_tooltip(TTR("Create Polygon"));
-    uv_button[UV_MODE_CREATE_INTERNAL]->set_tooltip(TTR("Create Internal Vertex"
-    ));
-    uv_button[UV_MODE_REMOVE_INTERNAL]->set_tooltip(TTR("Remove Internal Vertex"
-    ));
+    uv_button[UV_MODE_CREATE_INTERNAL]->set_tooltip(
+        TTR("Create Internal Vertex")
+    );
+    uv_button[UV_MODE_REMOVE_INTERNAL]->set_tooltip(
+        TTR("Remove Internal Vertex")
+    );
 #ifdef MACOS_ENABLED
     uv_button[UV_MODE_EDIT_POINT]->set_tooltip(
         TTR("Move Points") + "\n" + TTR("Command: Rotate") + "\n"

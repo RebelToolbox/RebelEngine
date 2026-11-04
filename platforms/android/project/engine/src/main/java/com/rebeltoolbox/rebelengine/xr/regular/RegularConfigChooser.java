@@ -125,7 +125,8 @@ public class RegularConfigChooser implements GLSurfaceView.EGLConfigChooser {
             );
 
             // We need at least mDepthSize and mStencilSize bits
-            if (d < mDepthSize || s < mStencilSize) continue;
+            if (d < mDepthSize || s < mStencilSize)
+                continue;
 
             // We want an *exact* match for red/green/blue/alpha
             int r =

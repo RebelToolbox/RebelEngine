@@ -900,7 +900,8 @@ void ProjectSettingsEditor::_update_actions() {
             false,
             TTR("Add Event")
         );
-        if (!ProjectSettings::get_singleton()->get_input_presets().find(pi.name
+        if (!ProjectSettings::get_singleton()->get_input_presets().find(
+                pi.name
             )) {
             item->add_button(
                 2,
@@ -1531,7 +1532,8 @@ void ProjectSettingsEditor::_translation_add(const PoolStringArray& p_paths) {
         }
     }
 
-    undo_redo->create_action(vformat(TTR("Add %d Translations"), p_paths.size())
+    undo_redo->create_action(
+        vformat(TTR("Add %d Translations"), p_paths.size())
     );
     undo_redo->add_do_property(
         ProjectSettings::get_singleton(),
@@ -1593,7 +1595,8 @@ void ProjectSettingsEditor::_translation_res_file_open() {
     translation_res_file_open->popup_centered_ratio();
 }
 
-void ProjectSettingsEditor::_translation_res_add(const PoolStringArray& p_paths
+void ProjectSettingsEditor::_translation_res_add(
+    const PoolStringArray& p_paths
 ) {
     Variant prev;
     Dictionary remaps;

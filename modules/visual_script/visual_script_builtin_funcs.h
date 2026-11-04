@@ -124,7 +124,8 @@ public:
     void set_func(BuiltinFunc p_which);
     BuiltinFunc get_func();
 
-    VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    VisualScriptNodeInstance* instance(
+        VisualScriptInstance* p_instance
     ) override;
 
     VisualScriptBuiltinFunc(VisualScriptBuiltinFunc::BuiltinFunc func);

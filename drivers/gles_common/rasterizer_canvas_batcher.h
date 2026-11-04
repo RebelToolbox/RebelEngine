@@ -767,10 +767,14 @@ private:
 
 protected:
     // accessory funcs
-    void _software_transform_vertex(BatchVector2& r_v, const Transform2D& p_tr)
-        const;
-    void _software_transform_vertex(Vector2& r_v, const Transform2D& p_tr)
-        const;
+    void _software_transform_vertex(
+        BatchVector2& r_v,
+        const Transform2D& p_tr
+    ) const;
+    void _software_transform_vertex(
+        Vector2& r_v,
+        const Transform2D& p_tr
+    ) const;
 
     TransformMode _find_transform_mode(const Transform2D& p_tr) const {
         // decided whether to do translate only for software transform
@@ -791,7 +795,8 @@ protected:
         const BatchColor* p_precalced_colors
     );
 
-    typename T_STORAGE::Texture* _get_canvas_texture(const RID& p_texture
+    typename T_STORAGE::Texture* _get_canvas_texture(
+        const RID& p_texture
     ) const {
         if (p_texture.is_valid()) {
             typename T_STORAGE::Texture* texture =
@@ -1392,7 +1397,8 @@ PREAMBLE(void)::batch_initialize() {
                 + itos(bdata.settings_max_join_item_commands) + "\n";
             batching_options_string +=
                 "\tcolored_vertex_format_threshold "
-                + String(Variant(bdata.settings_colored_vertex_format_threshold)
+                + String(
+                    Variant(bdata.settings_colored_vertex_format_threshold)
                 )
                 + "\n";
             batching_options_string +=
@@ -2934,7 +2940,8 @@ PREAMBLE(bool)::prefill_joined_item(
 
             case RasterizerCanvas::Item::Command::TYPE_POLYGON: {
                 RasterizerCanvas::Item::CommandPolygon* polygon =
-                    static_cast<RasterizerCanvas::Item::CommandPolygon*>(command
+                    static_cast<RasterizerCanvas::Item::CommandPolygon*>(
+                        command
                     );
 #ifdef GLES_OVER_GL
                 // anti aliasing not accelerated .. it is problematic because it
@@ -3427,7 +3434,8 @@ PREAMBLE(void)::sort_items() {
     }
 }
 
-PREAMBLE(bool
+PREAMBLE(
+    bool
 )::_sort_items_match(const BSortItem& p_a, const BSortItem& p_b) const {
     const RasterizerCanvas::Item* a = p_a.item;
     const RasterizerCanvas::Item* b = p_b.item;
@@ -3603,15 +3611,17 @@ PREAMBLE(bool)::sort_items_from(int p_start) {
     return false;
 }
 
-PREAMBLE(void
-)::_software_transform_vertex(BatchVector2& r_v, const Transform2D& p_tr)
-    const {
+PREAMBLE(void)::_software_transform_vertex(
+    BatchVector2& r_v,
+    const Transform2D& p_tr
+) const {
     Vector2 vc(r_v.x, r_v.y);
     vc = p_tr.xform(vc);
     r_v.set(vc);
 }
 
-PREAMBLE(void
+PREAMBLE(
+    void
 )::_software_transform_vertex(Vector2& r_v, const Transform2D& p_tr) const {
     r_v = p_tr.xform(r_v);
 }
@@ -3711,15 +3721,16 @@ void C_PREAMBLE::_translate_batches_to_larger_FVF(
                             RAST_DEV_DEBUG_ASSERT(bdata.vertices.size());
                             const BatchVertex& bv = bdata.vertices[v];
                             BATCH_VERTEX_TYPE* cv =
-                                (BATCH_VERTEX_TYPE*)bdata.unit_vertices.request(
-                                );
+                                (BATCH_VERTEX_TYPE*)
+                                    bdata.unit_vertices.request();
                             RAST_DEBUG_ASSERT(cv);
                             cv->pos = bv.pos;
                             cv->uv  = bv.uv;
                             cv->col = source_batch.color;
 
                             if (INCLUDE_LIGHT_ANGLES) {
-                                RAST_DEV_DEBUG_ASSERT(bdata.light_angles.size()
+                                RAST_DEV_DEBUG_ASSERT(
+                                    bdata.light_angles.size()
                                 );
                                 // this is required to allow compilation with
                                 // non light angle vertex. it should be compiled

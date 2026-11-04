@@ -1084,8 +1084,10 @@ void Curve2D::_set_data(const Dictionary& p_data) {
     baked_cache_dirty = true;
 }
 
-PoolVector2Array Curve2D::tessellate(int p_max_stages, float p_tolerance)
-    const {
+PoolVector2Array Curve2D::tessellate(
+    int p_max_stages,
+    float p_tolerance
+) const {
     PoolVector2Array tess;
 
     if (points.size() == 0) {
@@ -1683,8 +1685,10 @@ float Curve3D::interpolate_baked_tilt(float p_offset) const {
     return Math::lerp(r[idx], r[idx + 1], frac);
 }
 
-Vector3 Curve3D::interpolate_baked_up_vector(float p_offset, bool p_apply_tilt)
-    const {
+Vector3 Curve3D::interpolate_baked_up_vector(
+    float p_offset,
+    bool p_apply_tilt
+) const {
     if (baked_cache_dirty) {
         _bake();
     }
@@ -1914,8 +1918,10 @@ void Curve3D::_set_data(const Dictionary& p_data) {
     baked_cache_dirty = true;
 }
 
-PoolVector3Array Curve3D::tessellate(int p_max_stages, float p_tolerance)
-    const {
+PoolVector3Array Curve3D::tessellate(
+    int p_max_stages,
+    float p_tolerance
+) const {
     PoolVector3Array tess;
 
     if (points.size() == 0) {

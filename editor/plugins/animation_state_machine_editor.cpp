@@ -18,7 +18,8 @@
 #include "scene/gui/panel.h"
 #include "scene/main/viewport.h"
 
-bool AnimationNodeStateMachineEditor::can_edit(const Ref<AnimationNode>& p_node
+bool AnimationNodeStateMachineEditor::can_edit(
+    const Ref<AnimationNode>& p_node
 ) {
     Ref<AnimationNodeStateMachine> ansm = p_node;
     return ansm.is_valid();
@@ -62,8 +63,8 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(
 
     // Add new node
     if (mb.is_valid() && mb->is_pressed()
-        && ((tool_select->is_pressed() && mb->get_button_index() == BUTTON_RIGHT
-            )
+        && ((tool_select->is_pressed()
+             && mb->get_button_index() == BUTTON_RIGHT)
             || (tool_create->is_pressed()
                 && mb->get_button_index() == BUTTON_LEFT))) {
         menu->clear();
@@ -172,7 +173,8 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(
                 return;
             }
 
-            if (node_rects[i].node.has_point(mb->get_position()
+            if (node_rects[i].node.has_point(
+                    mb->get_position()
                 )) { // select node since nothing else was selected
                 selected_node = node_rects[i].node_name;
 
@@ -263,7 +265,8 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(
         && mb->get_button_index() == BUTTON_LEFT && mb->is_pressed()) {
         for (int i = node_rects.size() - 1; i >= 0;
              i--) { // inverse to draw order
-            if (node_rects[i].node.has_point(mb->get_position()
+            if (node_rects[i].node.has_point(
+                    mb->get_position()
                 )) { // select node since nothing else was selected
                 connecting         = true;
                 connecting_from    = node_rects[i].node_name;
@@ -342,7 +345,8 @@ void AnimationNodeStateMachineEditor::_state_machine_gui_input(
         for (int i = node_rects.size() - 1; i >= 0;
              i--) { // inverse to draw order
             if (node_rects[i].node_name != connecting_from
-                && node_rects[i].node.has_point(connecting_to
+                && node_rects[i].node.has_point(
+                    connecting_to
                 )) { // select node since nothing else was selected
                 connecting_to_node = node_rects[i].node_name;
                 return;
@@ -1131,8 +1135,9 @@ void AnimationNodeStateMachineEditor::_notification(int p_what) {
         if (error_time > 0) {
             error       = error_text;
             error_time -= get_process_delta_time();
-        } else if (!AnimationTreeEditor::get_singleton()->get_tree()->is_active(
-                   )) {
+        } else if (!AnimationTreeEditor::get_singleton()
+                        ->get_tree()
+                        ->is_active()) {
             error =
                 TTR("AnimationTree is inactive.\nActivate to enable playback, "
                     "check node warnings if activation fails.");
@@ -1267,8 +1272,8 @@ void AnimationNodeStateMachineEditor::_notification(int p_what) {
                 while (anodesm.is_valid()) {
                     current_node_playback =
                         AnimationTreeEditor::get_singleton()->get_tree()->get(
-                            AnimationTreeEditor::get_singleton()->get_base_path(
-                            )
+                            AnimationTreeEditor::get_singleton()
+                                ->get_base_path()
                             + next + "/playback"
                         );
                     next    += "/" + current_node_playback->get_current_node();
@@ -1674,7 +1679,8 @@ AnimationNodeStateMachineEditor::AnimationNodeStateMachineEditor() {
 
     state_machine_play_pos = memnew(Control);
     state_machine_draw->add_child(state_machine_play_pos);
-    state_machine_play_pos->set_mouse_filter(MOUSE_FILTER_PASS
+    state_machine_play_pos->set_mouse_filter(
+        MOUSE_FILTER_PASS
     ); // pass all to parent
     state_machine_play_pos->set_anchors_and_margins_preset(PRESET_WIDE);
     state_machine_play_pos->connect("draw", this, "_state_machine_pos_draw");

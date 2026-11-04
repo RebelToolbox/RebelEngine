@@ -778,8 +778,10 @@ Ref<Script> EditorData::get_scene_root_script(int p_idx) const {
     return s;
 }
 
-String EditorData::get_scene_title(int p_idx, bool p_always_strip_extension)
-    const {
+String EditorData::get_scene_title(
+    int p_idx,
+    bool p_always_strip_extension
+) const {
     ERR_FAIL_INDEX_V(p_idx, edited_scene.size(), String());
     if (!edited_scene[p_idx].root) {
         return TTR("[empty]");
@@ -941,15 +943,16 @@ StringName EditorData::script_class_get_base(const String& p_class) const {
         return ScriptServer::get_global_class_base(p_class);
     }
 
-    return script->get_language()->get_global_class_name(base_script->get_path()
+    return script->get_language()->get_global_class_name(
+        base_script->get_path()
     );
 }
 
 Variant EditorData::script_class_instance(const String& p_class) {
     if (ScriptServer::is_global_class(p_class)) {
-        Variant obj =
-            ClassDB::instance(ScriptServer::get_global_class_native_base(p_class
-            ));
+        Variant obj = ClassDB::instance(
+            ScriptServer::get_global_class_native_base(p_class)
+        );
         if (obj) {
             Ref<Script> script = script_class_load_script(p_class);
             if (script.is_valid()) {

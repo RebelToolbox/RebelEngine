@@ -728,8 +728,8 @@ void register_scene_types() {
     ClassDB::register_class<PackedScene>();
 
     ClassDB::register_class<SceneTree>();
-    ClassDB::register_virtual_class<SceneTreeTimer>(
-    ); // sorry, you can't create it
+    ClassDB::register_virtual_class<SceneTreeTimer>(); // sorry, you can't
+                                                       // create it
 
 #ifndef DISABLE_DEPRECATED
     ClassDB::add_compatibility_class("ImageSkyBox", "PanoramaSky");
@@ -826,7 +826,8 @@ void unregister_scene_types() {
     );
     resource_loader_texture_layered.unref();
 
-    ResourceLoader::remove_resource_format_loader(resource_loader_stream_texture
+    ResourceLoader::remove_resource_format_loader(
+        resource_loader_stream_texture
     );
     resource_loader_stream_texture.unref();
 

@@ -59,8 +59,9 @@ struct ImportState {
     // Generation 4 - Raw document accessing for bone/skin/joint/kLocators
     // joints are not necessarily bones but must be merged into the skeleton
     // (bone id), bone
-    Map<uint64_t, Ref<FBXBone>> fbx_bone_map = Map<uint64_t, Ref<FBXBone>>(
-    ); // this is the bone name and setup information required for joints
+    Map<uint64_t, Ref<FBXBone>> fbx_bone_map =
+        Map<uint64_t, Ref<FBXBone>>(); // this is the bone name and setup
+                                       // information required for joints
     // this will never contain joints only bones attached to a mesh.
 
     // Generation 4 - Raw document for creating the nodes transforms in the

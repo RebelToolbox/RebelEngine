@@ -345,7 +345,7 @@ void XMLParser::_bind_methods() {
     );
     ClassDB::bind_method(
         D_METHOD("get_attribute_value", "idx"),
-        (String(XMLParser::*)(int) const) & XMLParser::get_attribute_value
+        (String (XMLParser::*)(int) const) & XMLParser::get_attribute_value
     );
     ClassDB::bind_method(
         D_METHOD("has_attribute", "name"),
@@ -353,7 +353,7 @@ void XMLParser::_bind_methods() {
     );
     ClassDB::bind_method(
         D_METHOD("get_named_attribute_value", "name"),
-        (String(XMLParser::*)(const String&) const)
+        (String (XMLParser::*)(const String&) const)
             & XMLParser::get_attribute_value
     );
     ClassDB::bind_method(

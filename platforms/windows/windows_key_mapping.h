@@ -15,7 +15,7 @@
 #include <winuser.h>
 
 class WindowsKeyMapping {
-    WindowsKeyMapping(){};
+    WindowsKeyMapping() {};
 
 public:
     static unsigned int get_keysym(unsigned int p_code);

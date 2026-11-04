@@ -856,7 +856,8 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
         popup_margin_size - MAX(EDSCALE, border_width)
     );
     style_popup_labeled_separator_left->set_color(separator_color);
-    style_popup_labeled_separator_left->set_thickness(MAX(EDSCALE, border_width)
+    style_popup_labeled_separator_left->set_thickness(
+        MAX(EDSCALE, border_width)
     );
 
     Ref<StyleBoxLine> style_popup_labeled_separator_right(memnew(StyleBoxLine));
@@ -2197,13 +2198,15 @@ Ref<Theme> create_editor_theme(const Ref<Theme> p_theme) {
     if (dark_theme) {
         style_minimap_camera =
             make_flat_stylebox(Color(0.65f, 0.65f, 0.65f, 0.2f), 0, 0, 0, 0);
-        style_minimap_camera->set_border_color(Color(0.65f, 0.65f, 0.65f, 0.45f)
+        style_minimap_camera->set_border_color(
+            Color(0.65f, 0.65f, 0.65f, 0.45f)
         );
         style_minimap_node = make_flat_stylebox(Color(1, 1, 1), 0, 0, 0, 0);
     } else {
         style_minimap_camera =
             make_flat_stylebox(Color(0.38f, 0.38f, 0.38f, 0.2f), 0, 0, 0, 0);
-        style_minimap_camera->set_border_color(Color(0.38f, 0.38f, 0.38f, 0.45f)
+        style_minimap_camera->set_border_color(
+            Color(0.38f, 0.38f, 0.38f, 0.45f)
         );
         style_minimap_node = make_flat_stylebox(Color(0, 0, 0), 0, 0, 0, 0);
     }

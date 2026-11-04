@@ -104,7 +104,8 @@ public:
     void set_flag(Flags p_flag, bool p_value);
     bool get_flag(Flags p_flag) const;
 
-    void set_cast_shadows_setting(ShadowCastingSetting p_shadow_casting_setting
+    void set_cast_shadows_setting(
+        ShadowCastingSetting p_shadow_casting_setting
     );
     ShadowCastingSetting get_cast_shadows_setting() const;
 

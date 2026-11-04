@@ -485,7 +485,8 @@ ConnectDialog::ConnectDialog() {
     oneshot = memnew(CheckBox);
     oneshot->set_h_size_flags(0);
     oneshot->set_text(TTR("Oneshot"));
-    oneshot->set_tooltip(TTR("Disconnects the signal after its first emission.")
+    oneshot->set_tooltip(
+        TTR("Disconnects the signal after its first emission.")
     );
     vbc_right->add_child(oneshot);
 
@@ -527,8 +528,10 @@ Control* ConnectionsDockTree::make_custom_tooltip(const String& p_text) const {
 }
 
 struct _ConnectionsDockMethodInfoSort {
-    _FORCE_INLINE_ bool operator()(const MethodInfo& a, const MethodInfo& b)
-        const {
+    _FORCE_INLINE_ bool operator()(
+        const MethodInfo& a,
+        const MethodInfo& b
+    ) const {
         return a.name < b.name;
     }
 };

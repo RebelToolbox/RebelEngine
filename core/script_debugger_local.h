@@ -47,8 +47,10 @@ public:
         return profiling;
     }
 
-    void add_profiling_frame_data(const StringName& p_name, const Array& p_data)
-        override {}
+    void add_profiling_frame_data(
+        const StringName& p_name,
+        const Array& p_data
+    ) override {}
 
     void idle_poll() override;
 

@@ -183,8 +183,10 @@ protected:
 
 public:
     Variant get_drag_data(const Point2& p_point) override;
-    bool can_drop_data(const Point2& p_point, const Variant& p_data)
-        const override;
+    bool can_drop_data(
+        const Point2& p_point,
+        const Variant& p_data
+    ) const override;
     void drop_data(const Point2& p_point, const Variant& p_data) override;
 
     String get_tooltip(const Point2& p_pos) const override;
@@ -575,7 +577,8 @@ public:
     };
 
     void add_track_edit_plugin(const Ref<AnimationTrackEditPlugin>& p_plugin);
-    void remove_track_edit_plugin(const Ref<AnimationTrackEditPlugin>& p_plugin
+    void remove_track_edit_plugin(
+        const Ref<AnimationTrackEditPlugin>& p_plugin
     );
 
     void set_animation(const Ref<Animation>& p_anim);

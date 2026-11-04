@@ -76,7 +76,8 @@ Error EMWSClient::connect_to_host(
     String str = "ws://";
 
     if (p_custom_headers.size()) {
-        WARN_PRINT_ONCE("Custom headers are not supported on the Web platform."
+        WARN_PRINT_ONCE(
+            "Custom headers are not supported on the Web platform."
         );
     }
     if (p_ssl) {
@@ -115,8 +116,8 @@ Ref<WebSocketPeer> EMWSClient::get_peer(int p_peer_id) const {
     return _peer;
 }
 
-NetworkedMultiplayerPeer::ConnectionStatus EMWSClient::get_connection_status(
-) const {
+NetworkedMultiplayerPeer::ConnectionStatus EMWSClient::
+    get_connection_status() const {
     if (_peer->is_connected_to_host()) {
         if (_is_connecting) {
             return CONNECTION_CONNECTING;

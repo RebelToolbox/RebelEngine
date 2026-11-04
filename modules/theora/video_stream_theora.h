@@ -126,8 +126,10 @@ public:
     Ref<Texture> get_texture() const override;
     void update(float p_delta) override;
 
-    void set_mix_callback(AudioMixCallback p_callback, void* p_userdata)
-        override;
+    void set_mix_callback(
+        AudioMixCallback p_callback,
+        void* p_userdata
+    ) override;
     int get_channels() const override;
     int get_mix_rate() const override;
 

@@ -80,7 +80,8 @@ void SkeletonEditor::create_physical_skeleton() {
                     skeleton->get_bone_name(parent)
                 );
                 bones_infos[parent].physical_bone->set_owner(owner);
-                bones_infos[parent].physical_bone->get_child(0)->set_owner(owner
+                bones_infos[parent].physical_bone->get_child(0)->set_owner(
+                    owner
                 ); // set shape owner
 
                 /// Create joint between parent of parent
@@ -160,10 +161,12 @@ SkeletonEditor::SkeletonEditor() {
     SpatialEditor::get_singleton()->add_control_to_menu_panel(options);
 
     options->set_text(TTR("Skeleton"));
-    options->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "Skeleton",
-        "EditorIcons"
-    ));
+    options->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "Skeleton",
+            "EditorIcons"
+        )
+    );
 
     options->get_popup()->add_item(
         TTR("Create physical skeleton"),

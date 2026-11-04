@@ -190,8 +190,8 @@ public:
         return member_indices;
     }
 
-    const Map<StringName, GDScriptFunction*>& debug_get_member_functions(
-    ) const; // this is debug only
+    const Map<StringName, GDScriptFunction*>&
+    debug_get_member_functions() const; // this is debug only
     StringName debug_get_member_by_index(int p_idx) const;
 
     Variant _new(
@@ -203,10 +203,12 @@ public:
 
     Ref<Script> get_base_script() const override;
 
-    StringName get_instance_base_type() const
-        override; // this may not work in all scripts, will return empty if so
+    StringName get_instance_base_type() const override; // this may not work in
+                                                        // all scripts, will
+                                                        // return empty if so
     ScriptInstance* instance_create(Object* p_this) override;
-    PlaceHolderScriptInstance* placeholder_instance_create(Object* p_this
+    PlaceHolderScriptInstance* placeholder_instance_create(
+        Object* p_this
     ) override;
     bool instance_has(const Object* p_this) const override;
 
@@ -330,9 +332,11 @@ public:
 
     void reload_members();
 
-    MultiplayerAPI::RPCMode get_rpc_mode(const StringName& p_method
+    MultiplayerAPI::RPCMode get_rpc_mode(
+        const StringName& p_method
     ) const override;
-    MultiplayerAPI::RPCMode get_rset_mode(const StringName& p_variable
+    MultiplayerAPI::RPCMode get_rset_mode(
+        const StringName& p_variable
     ) const override;
 
     GDScriptInstance();
@@ -547,8 +551,8 @@ public:
         return globals;
     }
 
-    _FORCE_INLINE_ const Map<StringName, Variant>& get_named_globals_map(
-    ) const {
+    _FORCE_INLINE_ const Map<StringName, Variant>&
+    get_named_globals_map() const {
         return named_globals;
     }
 
@@ -602,8 +606,10 @@ public:
         return true;
     }
 
-    int find_function(const String& p_function, const String& p_code)
-        const override;
+    int find_function(
+        const String& p_function,
+        const String& p_code
+    ) const override;
     String make_function(
         const String& p_class,
         const String& p_name,
@@ -627,8 +633,11 @@ public:
     ) override;
 #endif
     virtual String _get_indentation() const;
-    void auto_indent_code(String& p_code, int p_from_line, int p_to_line)
-        const override;
+    void auto_indent_code(
+        String& p_code,
+        int p_from_line,
+        int p_to_line
+    ) const override;
     void add_global_constant(
         const StringName& p_variable,
         const Variant& p_value
@@ -675,13 +684,16 @@ public:
     ) override;
 
     void reload_all_scripts() override;
-    void reload_tool_script(const Ref<Script>& p_script, bool p_soft_reload)
-        override;
+    void reload_tool_script(
+        const Ref<Script>& p_script,
+        bool p_soft_reload
+    ) override;
 
     void frame() override;
 
     void get_public_functions(List<MethodInfo>* p_functions) const override;
-    void get_public_constants(List<Pair<String, Variant>>* p_constants
+    void get_public_constants(
+        List<Pair<String, Variant>>* p_constants
     ) const override;
 
     void profiling_start() override;
@@ -691,8 +703,10 @@ public:
         ProfilingInfo* p_info_arr,
         int p_info_max
     ) override;
-    int profiling_get_frame_data(ProfilingInfo* p_info_arr, int p_info_max)
-        override;
+    int profiling_get_frame_data(
+        ProfilingInfo* p_info_arr,
+        int p_info_max
+    ) override;
 
     /* LOADER FUNCTIONS */
 

@@ -34,8 +34,10 @@ class AStar : public Reference {
     };
 
     struct SortPoints {
-        _FORCE_INLINE_ bool operator()(const Point* A, const Point* B)
-            const { // Returns true when the Point A is worse than Point B.
+        _FORCE_INLINE_ bool operator()(
+            const Point* A,
+            const Point* B
+        ) const { // Returns true when the Point A is worse than Point B.
             if (A->f_score > B->f_score) {
                 return true;
             } else if (A->f_score < B->f_score) {

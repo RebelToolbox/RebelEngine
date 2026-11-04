@@ -1029,7 +1029,8 @@ Error GLTFDocument::_encode_accessors(Ref<GLTFState> state) {
     return OK;
 }
 
-String GLTFDocument::_get_accessor_type_name(const GLTFDocument::GLTFType p_type
+String GLTFDocument::_get_accessor_type_name(
+    const GLTFDocument::GLTFType p_type
 ) {
     if (p_type == GLTFDocument::TYPE_SCALAR) {
         return "SCALAR";
@@ -1056,7 +1057,8 @@ String GLTFDocument::_get_accessor_type_name(const GLTFDocument::GLTFType p_type
     ERR_FAIL_V("SCALAR");
 }
 
-GLTFDocument::GLTFType GLTFDocument::_get_type_from_str(const String& p_string
+GLTFDocument::GLTFType GLTFDocument::_get_type_from_str(
+    const String& p_string
 ) {
     if (p_string == "SCALAR") {
         return GLTFDocument::TYPE_SCALAR;
@@ -3082,11 +3084,11 @@ Error GLTFDocument::_serialize_meshes(Ref<GLTFState> state) {
         weights.resize(target_names.size());
         for (int name_i = 0; name_i < target_names.size(); name_i++) {
             real_t weight = 0.0;
-            if (name_i
-                < state->meshes.write[gltf_mesh_i]->get_blend_weights().size(
-                )) {
-                weight = state->meshes.write[gltf_mesh_i]->get_blend_weights(
-                )[name_i];
+            if (name_i < state->meshes.write[gltf_mesh_i]
+                             ->get_blend_weights()
+                             .size()) {
+                weight = state->meshes.write[gltf_mesh_i]
+                             ->get_blend_weights()[name_i];
             }
             weights[name_i] = weight;
         }
@@ -3636,7 +3638,8 @@ Error GLTFDocument::_parse_images(
                         i,
                         uri
                     ));
-                    state->images.push_back(Ref<Texture>()
+                    state->images.push_back(
+                        Ref<Texture>()
                     ); // Placeholder to keep count.
                     continue;
                 }
@@ -3682,7 +3685,8 @@ Error GLTFDocument::_parse_images(
                             mimetype,
                             uri
                         ));
-                        state->images.push_back(Ref<Texture>()
+                        state->images.push_back(
+                            Ref<Texture>()
                         ); // Placeholder to keep count.
                         continue;
                     }
@@ -3695,7 +3699,8 @@ Error GLTFDocument::_parse_images(
                         i,
                         uri
                     ));
-                    state->images.push_back(Ref<Texture>()
+                    state->images.push_back(
+                        Ref<Texture>()
                     ); // Placeholder to keep count.
                     continue;
                 }
@@ -3918,7 +3923,8 @@ Error GLTFDocument::_serialize_materials(Ref<GLTFState> state) {
                        ->get_data()
                        .is_valid();
             bool has_ao =
-                material->get_feature(SpatialMaterial::FEATURE_AMBIENT_OCCLUSION
+                material->get_feature(
+                    SpatialMaterial::FEATURE_AMBIENT_OCCLUSION
                 )
                 && material
                        ->get_texture(SpatialMaterial::TEXTURE_AMBIENT_OCCLUSION)
@@ -4224,7 +4230,8 @@ Error GLTFDocument::_parse_materials(Ref<GLTFState> state) {
         if (d.has("extensions")) {
             pbr_spec_gloss_extensions = d["extensions"];
         }
-        if (pbr_spec_gloss_extensions.has("KHR_materials_pbrSpecularGlossiness"
+        if (pbr_spec_gloss_extensions.has(
+                "KHR_materials_pbrSpecularGlossiness"
             )) {
             WARN_PRINT(
                 "Material uses a specular and glossiness workflow. Textures "
@@ -6292,8 +6299,8 @@ GLTFLightIndex GLTFDocument::_convert_light(
         // desmos link).
         float angle_ratio =
             1
-            - (0.2 / (0.1 + light->get_param(SpotLight::PARAM_SPOT_ATTENUATION))
-            );
+            - (0.2
+               / (0.1 + light->get_param(SpotLight::PARAM_SPOT_ATTENUATION)));
         angle_ratio         = MAX(0, angle_ratio);
         l->inner_cone_angle = l->outer_cone_angle * angle_ratio;
     }
@@ -6728,7 +6735,8 @@ void GLTFDocument::_convert_skeleton_to_gltf(
             GLTFNodeIndex parent_node_i =
                 gltf_skeleton->bone_node[parent_bone_id];
             state->nodes.write[current_node_i]->parent = parent_node_i;
-            state->nodes.write[parent_node_i]->children.push_back(current_node_i
+            state->nodes.write[parent_node_i]->children.push_back(
+                current_node_i
             );
         }
     }
@@ -6757,7 +6765,8 @@ void GLTFDocument::_convert_bone_attachment_to_gltf(
     skeleton = cast_to<Skeleton>(p_bone_attachment->get_parent());
     GLTFSkeletonIndex skel_gltf_i = -1;
     if (skeleton != nullptr
-        && state->skeleton3d_to_gltf_skeleton.has(skeleton->get_instance_id()
+        && state->skeleton3d_to_gltf_skeleton.has(
+            skeleton->get_instance_id()
         )) {
         skel_gltf_i =
             state->skeleton3d_to_gltf_skeleton[skeleton->get_instance_id()];
@@ -6890,8 +6899,8 @@ void GLTFDocument::_generate_skeleton_bone_node(
     // In this case, this node is already a bone in skeleton.
     const bool is_skinned_mesh = (gltf_node->skin >= 0 && gltf_node->mesh >= 0);
     const bool requires_extra_node =
-        (gltf_node->mesh >= 0 || gltf_node->camera >= 0 || gltf_node->light >= 0
-        );
+        (gltf_node->mesh >= 0 || gltf_node->camera >= 0
+         || gltf_node->light >= 0);
 
     Skeleton* active_skeleton = Object::cast_to<Skeleton>(scene_parent);
     if (active_skeleton != skeleton) {
@@ -6909,7 +6918,8 @@ void GLTFDocument::_generate_skeleton_bone_node(
 
             // There is no gltf_node that represent this, so just directly
             // create a unique name
-            bone_attachment->set_name(_gen_unique_name(state, "BoneAttachment")
+            bone_attachment->set_name(
+                _gen_unique_name(state, "BoneAttachment")
             );
 
             // We change the scene_parent to our bone attachment now. We do not
@@ -6949,7 +6959,8 @@ void GLTFDocument::_generate_skeleton_bone_node(
 
             // There is no gltf_node that represent this, so just directly
             // create a unique name
-            bone_attachment->set_name(_gen_unique_name(state, "BoneAttachment")
+            bone_attachment->set_name(
+                _gen_unique_name(state, "BoneAttachment")
             );
 
             // We change the scene_parent to our bone attachment now. We do not
@@ -7449,7 +7460,8 @@ void GLTFDocument::_convert_mesh_instances(Ref<GLTFState> state) {
         gltf_skin.instance();
         Array json_joints;
 
-        if (state->skeleton3d_to_gltf_skeleton.has(skeleton->get_instance_id()
+        if (state->skeleton3d_to_gltf_skeleton.has(
+                skeleton->get_instance_id()
             )) {
             // This is a skinned mesh. If the mesh has no ARRAY_WEIGHTS or
             // ARRAY_BONES, it will be invisible.

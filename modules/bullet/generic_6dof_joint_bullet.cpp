@@ -77,28 +77,32 @@ Transform Generic6DOFJointBullet::getFrameOffsetB() {
     return gTrs;
 }
 
-void Generic6DOFJointBullet::set_linear_lower_limit(const Vector3& linearLower
+void Generic6DOFJointBullet::set_linear_lower_limit(
+    const Vector3& linearLower
 ) {
     btVector3 btVec;
     R_TO_B(linearLower, btVec);
     sixDOFConstraint->setLinearLowerLimit(btVec);
 }
 
-void Generic6DOFJointBullet::set_linear_upper_limit(const Vector3& linearUpper
+void Generic6DOFJointBullet::set_linear_upper_limit(
+    const Vector3& linearUpper
 ) {
     btVector3 btVec;
     R_TO_B(linearUpper, btVec);
     sixDOFConstraint->setLinearUpperLimit(btVec);
 }
 
-void Generic6DOFJointBullet::set_angular_lower_limit(const Vector3& angularLower
+void Generic6DOFJointBullet::set_angular_lower_limit(
+    const Vector3& angularLower
 ) {
     btVector3 btVec;
     R_TO_B(angularLower, btVec);
     sixDOFConstraint->setAngularLowerLimit(btVec);
 }
 
-void Generic6DOFJointBullet::set_angular_upper_limit(const Vector3& angularUpper
+void Generic6DOFJointBullet::set_angular_upper_limit(
+    const Vector3& angularUpper
 ) {
     btVector3 btVec;
     R_TO_B(angularUpper, btVec);

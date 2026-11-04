@@ -36,7 +36,8 @@ public:
         const StringName& p_src_text,
         const StringName& p_xlated_text
     );
-    virtual StringName get_message(const StringName& p_src_text
+    virtual StringName get_message(
+        const StringName& p_src_text
     ) const; // overridable for other implementations
     void erase_message(const StringName& p_src_text);
 

@@ -455,8 +455,8 @@ bool JavaClass::_call_method(
         } break;
         case ARG_TYPE_LONG: {
             if (method->_static) {
-                ret = (int64_t
-                )env->CallStaticLongMethodA(_class, method->method, argv);
+                ret = (int64_t)env
+                          ->CallStaticLongMethodA(_class, method->method, argv);
             } else {
                 ret = (int64_t)env->CallLongMethodA(
                     p_instance->instance,

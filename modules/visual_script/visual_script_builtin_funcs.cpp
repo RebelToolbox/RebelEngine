@@ -222,12 +222,14 @@ int VisualScriptBuiltinFunc::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptBuiltinFunc::get_output_sequence_port_text(int p_port
+String VisualScriptBuiltinFunc::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptBuiltinFunc::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptBuiltinFunc::get_input_value_port_info(
+    int p_idx
 ) const {
     switch (func) {
         case MATH_SIN:
@@ -473,7 +475,8 @@ PropertyInfo VisualScriptBuiltinFunc::get_input_value_port_info(int p_idx
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptBuiltinFunc::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptBuiltinFunc::get_output_value_port_info(
+    int p_idx
 ) const {
     Variant::Type t = Variant::NIL;
     switch (func) {
@@ -1420,146 +1423,282 @@ static Ref<VisualScriptNode> create_builtin_func_node(const String& p_name) {
 }
 
 void register_visual_script_builtin_func_node() {
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/sin", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SIN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/cos", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_COS>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/tan", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_TAN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/sinh", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SINH>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/cosh", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_COSH>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/tanh", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_TANH>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/sin",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SIN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/cos",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_COS>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/tan",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_TAN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/sinh",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SINH>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/cosh",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_COSH>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/tanh",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_TANH>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/asin", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ASIN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/acos", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ACOS>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/atan", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ATAN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/atan2", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ATAN2>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/asin",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ASIN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/acos",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ACOS>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/atan",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ATAN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/atan2",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ATAN2>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/sqrt", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SQRT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/fmod", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_FMOD>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/fposmod", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_FPOSMOD>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/posmod", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_POSMOD>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/floor", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_FLOOR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/ceil", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_CEIL>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/round", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ROUND>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/abs", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ABS>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/sign", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SIGN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/pow", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_POW>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/log", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LOG>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/exp", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_EXP>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/isnan", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ISNAN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/isinf", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ISINF>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/sqrt",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SQRT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/fmod",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_FMOD>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/fposmod",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_FPOSMOD>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/posmod",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_POSMOD>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/floor",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_FLOOR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/ceil",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_CEIL>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/round",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ROUND>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/abs",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ABS>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/sign",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SIGN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/pow",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_POW>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/log",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LOG>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/exp",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_EXP>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/isnan",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ISNAN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/isinf",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_ISINF>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/ease", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_EASE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/decimals", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DECIMALS>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/stepify", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_STEPIFY>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/lerp", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LERP>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/lerp_angle", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LERP_ANGLE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/inverse_lerp", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_INVERSE_LERP>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/range_lerp", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANGE_LERP>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/smoothstep", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SMOOTHSTEP>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/move_toward", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_MOVE_TOWARD>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/dectime", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DECTIME>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/randomize", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDOMIZE>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/rand", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RAND>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/randf", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDF>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/random", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDOM>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/ease",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_EASE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/decimals",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DECIMALS>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/stepify",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_STEPIFY>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/lerp",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LERP>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/lerp_angle",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LERP_ANGLE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/inverse_lerp",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_INVERSE_LERP>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/range_lerp",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANGE_LERP>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/smoothstep",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SMOOTHSTEP>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/move_toward",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_MOVE_TOWARD>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/dectime",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DECTIME>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/randomize",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDOMIZE>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/rand",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RAND>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/randf",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDF>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/random",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDOM>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/seed", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SEED>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/randseed", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDSEED>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/deg2rad", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DEG2RAD>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/rad2deg", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RAD2DEG>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/linear2db", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LINEAR2DB>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/db2linear", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DB2LINEAR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/polar2cartesian", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_POLAR2CARTESIAN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/cartesian2polar", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_CARTESIAN2POLAR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/wrapi", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_WRAP>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/wrapf", create_builtin_func_node<VisualScriptBuiltinFunc::MATH_WRAPF>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/seed",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_SEED>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/randseed",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RANDSEED>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/deg2rad",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DEG2RAD>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/rad2deg",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_RAD2DEG>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/linear2db",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_LINEAR2DB>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/db2linear",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_DB2LINEAR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/polar2cartesian",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_POLAR2CARTESIAN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/cartesian2polar",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_CARTESIAN2POLAR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/wrapi",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_WRAP>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/wrapf",
+        create_builtin_func_node<VisualScriptBuiltinFunc::MATH_WRAPF>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/max", create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_MAX>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/min", create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_MIN>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/clamp", create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_CLAMP>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/nearest_po2", create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_NEAREST_PO2>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/max",
+        create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_MAX>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/min",
+        create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_MIN>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/clamp",
+        create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_CLAMP>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/nearest_po2",
+        create_builtin_func_node<VisualScriptBuiltinFunc::LOGIC_NEAREST_PO2>
+    );
 
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/weakref", create_builtin_func_node<VisualScriptBuiltinFunc::OBJ_WEAKREF>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/funcref", create_builtin_func_node<VisualScriptBuiltinFunc::FUNC_FUNCREF>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/convert", create_builtin_func_node<VisualScriptBuiltinFunc::TYPE_CONVERT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/typeof", create_builtin_func_node<VisualScriptBuiltinFunc::TYPE_OF>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/type_exists", create_builtin_func_node<VisualScriptBuiltinFunc::TYPE_EXISTS>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/char", create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_CHAR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/ord", create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_ORD>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/str", create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_STR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/print", create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_PRINT>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/printerr", create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_PRINTERR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/printraw", create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_PRINTRAW>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/var2str", create_builtin_func_node<VisualScriptBuiltinFunc::VAR_TO_STR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/str2var", create_builtin_func_node<VisualScriptBuiltinFunc::STR_TO_VAR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/var2bytes", create_builtin_func_node<VisualScriptBuiltinFunc::VAR_TO_BYTES>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/bytes2var", create_builtin_func_node<VisualScriptBuiltinFunc::BYTES_TO_VAR>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/built_in/color_named", create_builtin_func_node<VisualScriptBuiltinFunc::COLORN>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/weakref",
+        create_builtin_func_node<VisualScriptBuiltinFunc::OBJ_WEAKREF>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/funcref",
+        create_builtin_func_node<VisualScriptBuiltinFunc::FUNC_FUNCREF>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/convert",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TYPE_CONVERT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/typeof",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TYPE_OF>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/type_exists",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TYPE_EXISTS>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/char",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_CHAR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/ord",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_ORD>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/str",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_STR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/print",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_PRINT>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/printerr",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_PRINTERR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/printraw",
+        create_builtin_func_node<VisualScriptBuiltinFunc::TEXT_PRINTRAW>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/var2str",
+        create_builtin_func_node<VisualScriptBuiltinFunc::VAR_TO_STR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/str2var",
+        create_builtin_func_node<VisualScriptBuiltinFunc::STR_TO_VAR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/var2bytes",
+        create_builtin_func_node<VisualScriptBuiltinFunc::VAR_TO_BYTES>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/bytes2var",
+        create_builtin_func_node<VisualScriptBuiltinFunc::BYTES_TO_VAR>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/built_in/color_named",
+        create_builtin_func_node<VisualScriptBuiltinFunc::COLORN>
+    );
 }

@@ -247,7 +247,8 @@ public:
         constraint_map.clear();
     }
 
-    _FORCE_INLINE_ void set_omit_force_integration(bool p_omit_force_integration
+    _FORCE_INLINE_ void set_omit_force_integration(
+        bool p_omit_force_integration
     ) {
         omit_force_integration = p_omit_force_integration;
     }
@@ -264,8 +265,8 @@ public:
         return center_of_mass;
     }
 
-    _FORCE_INLINE_ Vector3 xform_local_to_principal(const Vector3& p_pos
-    ) const {
+    _FORCE_INLINE_ Vector3
+    xform_local_to_principal(const Vector3& p_pos) const {
         return principal_inertia_axes_local.xform(p_pos - center_of_mass_local);
     }
 
@@ -427,8 +428,8 @@ public:
     void integrate_forces(real_t p_step);
     void integrate_velocities(real_t p_step);
 
-    _FORCE_INLINE_ Vector3 get_velocity_in_local_point(const Vector3& rel_pos
-    ) const {
+    _FORCE_INLINE_ Vector3
+    get_velocity_in_local_point(const Vector3& rel_pos) const {
         return linear_velocity
              + angular_velocity.cross(rel_pos - center_of_mass);
     }
@@ -581,7 +582,8 @@ public:
         return body->get_transform();
     }
 
-    Vector3 get_velocity_at_local_position(const Vector3& p_position
+    Vector3 get_velocity_at_local_position(
+        const Vector3& p_position
     ) const override {
         return body->get_velocity_in_local_point(p_position);
     }
@@ -667,7 +669,8 @@ public:
         return body->contacts[p_contact_idx].collider_shape;
     }
 
-    Vector3 get_contact_collider_velocity_at_position(int p_contact_idx
+    Vector3 get_contact_collider_velocity_at_position(
+        int p_contact_idx
     ) const override {
         ERR_FAIL_INDEX_V(p_contact_idx, body->contact_count, Vector3());
         return body->contacts[p_contact_idx].collider_velocity_at_pos;

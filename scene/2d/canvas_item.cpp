@@ -1488,7 +1488,8 @@ Ref<Material> CanvasItem::get_material() const {
     return material;
 }
 
-Vector2 CanvasItem::make_canvas_position_local(const Vector2& screen_point
+Vector2 CanvasItem::make_canvas_position_local(
+    const Vector2& screen_point
 ) const {
     ERR_FAIL_COND_V(!is_inside_tree(), screen_point);
 
@@ -1498,7 +1499,8 @@ Vector2 CanvasItem::make_canvas_position_local(const Vector2& screen_point
     return local_matrix.xform(screen_point);
 }
 
-Ref<InputEvent> CanvasItem::make_input_local(const Ref<InputEvent>& p_event
+Ref<InputEvent> CanvasItem::make_input_local(
+    const Ref<InputEvent>& p_event
 ) const {
     ERR_FAIL_COND_V(p_event.is_null(), p_event);
     ERR_FAIL_COND_V(!is_inside_tree(), p_event);

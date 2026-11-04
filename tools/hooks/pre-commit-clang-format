@@ -19,8 +19,8 @@ exclude_directories="third-party platforms/android/project/engine/src/main/java/
 exclude_file_patterns="\-so_wrap\."
 
 # To get consistent formatting, use the same clang-format version as CI.
-required_clang_format_major_version="16"
-recommended_clang_format_major_version="18"
+required_clang_format_major_version="19"
+recommended_clang_format_major_version="21"
 
 # Determine the major version of clang-format being used.
 # The returned string can be inconsistent depending on where clang-format comes from.

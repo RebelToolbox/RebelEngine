@@ -2386,10 +2386,11 @@ void EditorPropertyNodePath::_node_selected(const NodePath& p_path) {
                     ->get_editor_history()
                     ->get_path_size()
                 > 0) {
-                Object* base =
-                    ObjectDB::get_instance(EditorNode::get_singleton()
-                                               ->get_editor_history()
-                                               ->get_path_object(0));
+                Object* base = ObjectDB::get_instance(
+                    EditorNode::get_singleton()
+                        ->get_editor_history()
+                        ->get_path_object(0)
+                );
                 if (base) {
                     base_node = Object::cast_to<Node>(base);
                 }
@@ -2851,9 +2852,11 @@ void EditorPropertyResource::update_property() {
                 sub_inspector->set_use_doc_hints(true);
 
                 sub_inspector->set_sub_inspector(true);
-                sub_inspector->set_enable_capitalize_paths(bool(
-                    EDITOR_GET("interface/inspector/capitalize_properties")
-                ));
+                sub_inspector->set_enable_capitalize_paths(
+                    bool(
+                        EDITOR_GET("interface/inspector/capitalize_properties")
+                    )
+                );
 
                 sub_inspector->connect(
                     "property_keyed",

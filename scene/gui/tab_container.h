@@ -60,8 +60,10 @@ protected:
     void remove_child_notify(Node* p_child) override;
 
     Variant get_drag_data(const Point2& p_point) override;
-    bool can_drop_data(const Point2& p_point, const Variant& p_data)
-        const override;
+    bool can_drop_data(
+        const Point2& p_point,
+        const Variant& p_data
+    ) const override;
     void drop_data(const Point2& p_point, const Variant& p_data) override;
     int get_tab_idx_at_point(const Point2& p_point) const;
 

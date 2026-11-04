@@ -662,26 +662,32 @@ public:
         CompressionMode p_compress_mode = COMPRESSION_FASTLZ
     );
 
-    Error open(const String& p_path, ModeFlags p_mode_flags); // open a file.
-    void flush();         // Flush a file (write its buffer to disk).
-    void close();         // Close a file.
-    bool is_open() const; // True when file is open.
+    Error open(const String& p_path, ModeFlags p_mode_flags);
+    // Write the buffer to disk.
+    void flush();
+    void close();
+    bool is_open() const;
 
-    String get_path() const; // Returns the path for the current open file.
-    String get_path_absolute(
-    ) const; // Returns the absolute path for the current open file.
+    // Return the path for the current open file.
+    String get_path() const;
+    // Return the absolute path for the current open file.
+    String get_path_absolute() const;
 
-    void seek(int64_t p_position);         // Seek to a given position.
-    void seek_end(int64_t p_position = 0); // Seek from the end of file.
-    uint64_t get_position() const;         // Get position in the file.
-    uint64_t get_len() const;              // Get size of the file.
+    void seek(int64_t p_position);
+    // Seek from the end of file.
+    void seek_end(int64_t p_position = 0);
+    uint64_t get_position() const;
+    uint64_t get_len() const;
 
-    bool eof_reached() const; // Reading passed EOF.
+    bool eof_reached() const;
 
-    uint8_t get_8() const;   // Get a byte.
-    uint16_t get_16() const; // Get 16 bits uint.
-    uint32_t get_32() const; // Get 32 bits uint.
-    uint64_t get_64() const; // Get 64 bits uint.
+    // Get a byte.
+    uint8_t get_8() const;
+    // Get a 16 bit unsigned int.
+    uint16_t get_16() const;
+    uint32_t get_32() const;
+    // Get a 64 bit unsigned int.
+    uint64_t get_64() const;
 
     float get_float() const;
     double get_double() const;
@@ -689,28 +695,26 @@ public:
 
     Variant get_var(bool p_allow_objects = false) const;
 
-    PoolVector<uint8_t> get_buffer(int64_t p_length
-    ) const; // Get an array of bytes.
+    // Get an array of bytes.
+    PoolVector<uint8_t> get_buffer(int64_t p_length) const;
     String get_line() const;
     Vector<String> get_csv_line(const String& p_delim = ",") const;
     String get_as_text() const;
     String get_md5(const String& p_path) const;
     String get_sha256(const String& p_path) const;
 
-    /* Use this for files WRITTEN in _big_ endian machines (ie, amiga/mac).
-     * It's not about the current CPU type but file formats.
-     * This flags get reset to false (little endian) on each open.
-     */
-
+    // Use these methods for files WRITTEN by big endian machines.
+    // It's not about the current CPU type but file formats.
+    // These flags get reset to false (little endian) on each open.
     void set_endian_swap(bool p_swap);
     bool get_endian_swap();
 
-    Error get_error() const; // Get last error.
+    Error get_error() const;
 
-    void store_8(uint8_t p_dest);   // Store a byte.
-    void store_16(uint16_t p_dest); // Store 16 bits uint.
-    void store_32(uint32_t p_dest); // Store 32 bits uint.
-    void store_64(uint64_t p_dest); // Store 64 bits uint.
+    void store_8(uint8_t p_dest);
+    void store_16(uint16_t p_dest);
+    void store_32(uint32_t p_dest);
+    void store_64(uint64_t p_dest);
 
     void store_float(float p_dest);
     void store_double(double p_dest);
@@ -726,13 +730,11 @@ public:
     virtual void store_pascal_string(const String& p_string);
     virtual String get_pascal_string();
 
-    void store_buffer(const PoolVector<uint8_t>& p_buffer
-    ); // Store an array of bytes.
+    void store_buffer(const PoolVector<uint8_t>& p_buffer);
 
     void store_var(const Variant& p_var, bool p_full_objects = false);
 
-    bool file_exists(const String& p_name
-    ) const; // Return true if a file exists.
+    bool file_exists(const String& p_name) const;
 
     uint64_t get_modified_time(const String& p_file) const;
 
@@ -766,9 +768,9 @@ public:
     String get_drive(int p_drive);
     int get_current_drive();
 
-    Error change_dir(String p_dir
-    ); // Can be relative or absolute, return false on success.
-    String get_current_dir(); // Return current dir location.
+    // Can be relative or absolute, return false on success.
+    Error change_dir(String p_dir);
+    String get_current_dir();
 
     Error make_dir(String p_dir);
     Error make_dir_recursive(String p_dir);
@@ -903,11 +905,15 @@ public:
 
     bool has_signal(StringName p_class, StringName p_signal) const;
     Dictionary get_signal(StringName p_class, StringName p_signal) const;
-    Array get_signal_list(StringName p_class, bool p_no_inheritance = false)
-        const;
+    Array get_signal_list(
+        StringName p_class,
+        bool p_no_inheritance = false
+    ) const;
 
-    Array get_property_list(StringName p_class, bool p_no_inheritance = false)
-        const;
+    Array get_property_list(
+        StringName p_class,
+        bool p_no_inheritance = false
+    ) const;
     Variant get_property(Object* p_object, const StringName& p_property) const;
     Error set_property(
         Object* p_object,
@@ -921,8 +927,10 @@ public:
         bool p_no_inheritance = false
     ) const;
 
-    Array get_method_list(StringName p_class, bool p_no_inheritance = false)
-        const;
+    Array get_method_list(
+        StringName p_class,
+        bool p_no_inheritance = false
+    ) const;
 
     PoolStringArray get_integer_constant_list(
         const StringName& p_class,

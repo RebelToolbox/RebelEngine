@@ -1280,10 +1280,11 @@ void TextEdit::_notification(int p_what) {
                     }
 
                     const String& str = wrap_rows[line_wrap_index];
-                    int indent_px     = line_wrap_index != 0
-                                          ? get_indent_level(line
-                                        ) * cache.font->get_char_size(' ').width
-                                          : 0;
+                    int indent_px =
+                        line_wrap_index != 0
+                            ? get_indent_level(line)
+                                  * cache.font->get_char_size(' ').width
+                            : 0;
                     if (indent_px >= wrap_at) {
                         indent_px = 0;
                     }
@@ -1806,8 +1807,8 @@ void TextEdit::_notification(int p_what) {
                                  || last_wrap_column + j
                                         >= selection.from_column)
                              && (line < selection.to_line
-                                 || last_wrap_column + j < selection.to_column)
-                            );
+                                 || last_wrap_column + j
+                                        < selection.to_column));
 
                         if (!clipped && line == cursor.line
                             && cursor_wrap_index == line_wrap_index
@@ -1879,8 +1880,8 @@ void TextEdit::_notification(int p_what) {
                             Color border_color =
                                 (line == search_result_line
                                  && j >= search_result_col
-                                 && j < search_result_col + search_text.length()
-                                )
+                                 && j < search_result_col
+                                            + search_text.length())
                                     ? cache.font_color
                                     : cache.search_result_border_color;
 
@@ -1968,8 +1969,8 @@ void TextEdit::_notification(int p_what) {
                                     && (cursor.column >= highlighted_text_col
                                         && cursor.column
                                                <= highlighted_text_col
-                                                      + highlighted_text.length(
-                                                      ))) {
+                                                      + highlighted_text
+                                                            .length())) {
                                     in_highlighted_word = false;
                                 }
 
@@ -3232,8 +3233,11 @@ int TextEdit::_calculate_spaces_till_next_right_indent(int column) {
     return indent_size - column % indent_size;
 }
 
-void TextEdit::_get_mouse_pos(const Point2i& p_mouse, int& r_row, int& r_col)
-    const {
+void TextEdit::_get_mouse_pos(
+    const Point2i& p_mouse,
+    int& r_row,
+    int& r_col
+) const {
     float rows          = p_mouse.y;
     rows               -= cache.style_normal->get_margin(MARGIN_TOP);
     rows               /= get_row_height();
@@ -3331,8 +3335,10 @@ Vector2i TextEdit::_get_cursor_pixel_pos() {
     return Vector2i(x, y);
 }
 
-void TextEdit::_get_minimap_mouse_row(const Point2i& p_mouse, int& r_row)
-    const {
+void TextEdit::_get_minimap_mouse_row(
+    const Point2i& p_mouse,
+    int& r_row
+) const {
     float rows  = p_mouse.y;
     rows       -= cache.style_normal->get_margin(MARGIN_TOP);
     rows       /= (minimap_char_size.y + minimap_line_spacing);
@@ -3579,8 +3585,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                 cursor_set_column(col);
 
                 if (mb->get_shift()
-                    && (cursor.column != prev_col || cursor.line != prev_line
-                    )) {
+                    && (cursor.column != prev_col
+                        || cursor.line != prev_line)) {
                     if (!selection.active) {
                         selection.active         = true;
                         selection.selecting_mode = Selection::MODE_POINTER;
@@ -3591,8 +3597,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
 
                         if (selection.from_line > selection.to_line
                             || (selection.from_line == selection.to_line
-                                && selection.from_column > selection.to_column
-                            )) {
+                                && selection.from_column
+                                       > selection.to_column)) {
                             SWAP(selection.from_column, selection.to_column);
                             SWAP(selection.from_line, selection.to_line);
                             selection.shiftclick_left = false;
@@ -3605,8 +3611,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                     } else {
                         if (cursor.line < selection.selecting_line
                             || (cursor.line == selection.selecting_line
-                                && cursor.column < selection.selecting_column
-                            )) {
+                                && cursor.column
+                                       < selection.selecting_column)) {
                             if (selection.shiftclick_left) {
                                 SWAP(
                                     selection.from_column,
@@ -4305,8 +4311,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                             _find_first_non_whitespace_column_of_line(line);
                         cc = MIN(cc, left);
 
-                        while (cc < indent_size && cc < left && line[cc] == ' '
-                        ) {
+                        while (cc < indent_size && cc < left
+                               && line[cc] == ' ') {
                             cc++;
                         }
 
@@ -4320,7 +4326,8 @@ void TextEdit::_gui_input(const Ref<InputEvent>& p_gui_input) {
                                     cc
                                 );
                                 if (cursor.column >= left) {
-                                    cursor_set_column(MAX(0, cursor.column - 1)
+                                    cursor_set_column(
+                                        MAX(0, cursor.column - 1)
                                     );
                                 }
                                 update();
@@ -6301,8 +6308,11 @@ Point2 TextEdit::get_line_column_at_pos(const Point2& p_pos) const {
     return Point2i(col, row);
 }
 
-int TextEdit::get_char_pos_for_line(int p_px, int p_line, int p_wrap_index)
-    const {
+int TextEdit::get_char_pos_for_line(
+    int p_px,
+    int p_line,
+    int p_wrap_index
+) const {
     ERR_FAIL_INDEX_V(p_line, text.size(), 0);
 
     if (line_wraps(p_line)) {
@@ -6738,7 +6748,8 @@ SyntaxHighlighter* TextEdit::_get_syntax_highlighting() {
     return syntax_highlighter;
 }
 
-void TextEdit::_set_syntax_highlighting(SyntaxHighlighter* p_syntax_highlighter
+void TextEdit::_set_syntax_highlighting(
+    SyntaxHighlighter* p_syntax_highlighter
 ) {
     syntax_highlighter = p_syntax_highlighter;
     if (syntax_highlighter) {
@@ -8486,7 +8497,8 @@ void TextEdit::query_code_comple() {
                 || completion_prefixes.has(String::chr(l[ofs - 1])))) {
             emit_signal("request_completion");
         } else if (ofs > 1 && l[ofs - 1] == ' '
-                   && completion_prefixes.has(String::chr(l[ofs - 2])
+                   && completion_prefixes.has(
+                       String::chr(l[ofs - 2])
                    )) { // Make it work with a space too, it's good enough.
             emit_signal("request_completion");
         }
@@ -9617,8 +9629,9 @@ TextEdit::TextEdit() {
     idle_detect = memnew(Timer);
     add_child(idle_detect);
     idle_detect->set_one_shot(true);
-    idle_detect->set_wait_time(GLOBAL_GET("gui/timers/text_edit_idle_detect_sec"
-    ));
+    idle_detect->set_wait_time(
+        GLOBAL_GET("gui/timers/text_edit_idle_detect_sec")
+    );
     idle_detect->connect("timeout", this, "_push_current_op");
 
     click_select_held = memnew(Timer);

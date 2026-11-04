@@ -40,7 +40,8 @@ void EditorAbout::_license_tree_selected() {
 }
 
 void EditorAbout::_version_button_pressed() {
-    OS::get_singleton()->set_clipboard(version_btn->get_meta(META_TEXT_TO_COPY)
+    OS::get_singleton()->set_clipboard(
+        version_btn->get_meta(META_TEXT_TO_COPY)
     );
 }
 
@@ -146,8 +147,10 @@ EditorAbout::EditorAbout() {
     about_text->set_text(
         TTR("Rebel Engine is Free and Open Source Software; released under the "
             "MIT license.\n")
-        + TTR("Games developed with Rebel Engine remain the property of the "
-              "game developer.")
+        + TTR(
+            "Games developed with Rebel Engine remain the property of the "
+            "game developer."
+        )
     );
     version_info_vbc->add_child(about_text);
 
@@ -163,7 +166,8 @@ EditorAbout::EditorAbout() {
     List<String> dev_sections;
     dev_sections.push_back(TTR("Rebel Contributors"));
     const char* const* dev_src[] = {CONTRIBUTORS};
-    tc->add_child(_populate_list(TTR("Contributors"), dev_sections, dev_src, 1)
+    tc->add_child(
+        _populate_list(TTR("Contributors"), dev_sections, dev_src, 1)
     );
 
     // Donors

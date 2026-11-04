@@ -23,12 +23,14 @@ public:                                                                        \
     static CNAME* (*_create)();                                                \
                                                                                \
     static Ref<CNAME> create_ref() {                                           \
-        if (!_create) return Ref<CNAME>();                                     \
+        if (!_create)                                                          \
+            return Ref<CNAME>();                                               \
         return Ref<CNAME>(_create());                                          \
     }                                                                          \
                                                                                \
     static CNAME* create() {                                                   \
-        if (!_create) return NULL;                                             \
+        if (!_create)                                                          \
+            return NULL;                                                       \
         return _create();                                                      \
     }                                                                          \
                                                                                \

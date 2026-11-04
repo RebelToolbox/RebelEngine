@@ -50,7 +50,8 @@ public:
 
 class VideoStream : public Resource {
     GDCLASS(VideoStream, Resource);
-    OBJ_SAVE_TYPE(VideoStream
+    OBJ_SAVE_TYPE(
+        VideoStream
     ); // Saves derived classes with common type so they can be interchanged.
 
 public:

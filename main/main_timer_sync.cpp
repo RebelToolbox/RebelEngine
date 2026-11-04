@@ -19,7 +19,8 @@ void MainFrameTime::clamp_idle(float min_idle_step, float max_idle_step) {
 
 /////////////////////////////////
 
-void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
+void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(
+    int64_t p_delta
 ) {
     // the calling code should prevent 0 or negative values of delta
     // (preventing divide by zero)

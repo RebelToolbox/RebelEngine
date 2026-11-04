@@ -155,12 +155,15 @@ void RayCast::_notification(int p_what) {
 
             if (Object::cast_to<CollisionObject>(get_parent())) {
                 if (exclude_parent_body) {
-                    exclude.insert(Object::cast_to<CollisionObject>(get_parent()
-                    )
-                                       ->get_rid());
+                    exclude.insert(
+                        Object::cast_to<CollisionObject>(get_parent())
+                            ->get_rid()
+                    );
                 } else {
-                    exclude.erase(Object::cast_to<CollisionObject>(get_parent())
-                                      ->get_rid());
+                    exclude.erase(
+                        Object::cast_to<CollisionObject>(get_parent())
+                            ->get_rid()
+                    );
                 }
             }
 
@@ -196,7 +199,8 @@ void RayCast::_update_raycast_state() {
     ERR_FAIL_COND(w3d.is_null());
 
     PhysicsDirectSpaceState* dss =
-        PhysicsServer::get_singleton()->space_get_direct_state(w3d->get_space()
+        PhysicsServer::get_singleton()->space_get_direct_state(
+            w3d->get_space()
         );
     ERR_FAIL_COND(!dss);
 

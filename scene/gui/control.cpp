@@ -793,8 +793,10 @@ Variant Control::get_drag_data(const Point2& p_point) {
     return Variant();
 }
 
-bool Control::can_drop_data(const Point2& p_point, const Variant& p_data)
-    const {
+bool Control::can_drop_data(
+    const Point2& p_point,
+    const Variant& p_data
+) const {
     if (data.drag_owner) {
         Object* obj = ObjectDB::get_instance(data.drag_owner);
         if (obj) {
@@ -1195,8 +1197,10 @@ bool Control::has_constant_override(const StringName& p_name) const {
     return constant != nullptr;
 }
 
-bool Control::has_icon(const StringName& p_name, const StringName& p_theme_type)
-    const {
+bool Control::has_icon(
+    const StringName& p_name,
+    const StringName& p_theme_type
+) const {
     if (p_theme_type == StringName() || p_theme_type == get_class_name()) {
         if (has_icon_override(p_name)) {
             return true;
@@ -1319,8 +1323,10 @@ bool Control::has_stylebox(
     return Theme::get_default()->has_stylebox(p_name, type);
 }
 
-bool Control::has_font(const StringName& p_name, const StringName& p_theme_type)
-    const {
+bool Control::has_font(
+    const StringName& p_name,
+    const StringName& p_theme_type
+) const {
     if (p_theme_type == StringName() || p_theme_type == get_class_name()) {
         if (has_font_override(p_name)) {
             return true;

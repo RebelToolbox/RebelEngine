@@ -21,8 +21,11 @@ class PathSpatialGizmo : public EditorSpatialGizmo {
 public:
     String get_handle_name(int p_idx) const override;
     Variant get_handle_value(int p_idx) override;
-    void set_handle(int p_idx, Camera* p_camera, const Point2& p_point)
-        override;
+    void set_handle(
+        int p_idx,
+        Camera* p_camera,
+        const Point2& p_point
+    ) override;
     void commit_handle(
         int p_idx,
         const Variant& p_restore,

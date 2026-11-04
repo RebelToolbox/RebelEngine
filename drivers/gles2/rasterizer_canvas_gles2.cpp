@@ -532,18 +532,21 @@ void RasterizerCanvasGLES2::render_batches(
                                 // work due to hardware limitation
 
                                 RasterizerStorageGLES2::Texture* texture =
-                                    storage->texture_owner.getornull(r->texture
+                                    storage->texture_owner.getornull(
+                                        r->texture
                                     );
 
                                 if (texture) {
                                     texture = texture->get_ptr();
 
-                                    if (next_power_of_2(texture->alloc_width
+                                    if (next_power_of_2(
+                                            texture->alloc_width
                                         ) != (unsigned int)texture->alloc_width
-                                        && next_power_of_2(texture->alloc_height
+                                        && next_power_of_2(
+                                               texture->alloc_height
                                            )
-                                               != (unsigned int
-                                               )texture->alloc_height) {
+                                               != (unsigned int)
+                                                      texture->alloc_height) {
                                         state.canvas_shader.set_conditional(
                                             CanvasShaderGLES2::USE_FORCE_REPEAT,
                                             true
@@ -1017,8 +1020,8 @@ void RasterizerCanvasGLES2::render_batches(
                                 buffer[(0 * 4 * 4) + 5] = np->rect.position.y;
 
                                 buffer[(0 * 4 * 4) + 6] =
-                                    (source.position.x + np->margin[MARGIN_LEFT]
-                                    )
+                                    (source.position.x
+                                     + np->margin[MARGIN_LEFT])
                                     * texpixel_size.x;
                                 buffer[(0 * 4 * 4) + 7] =
                                     source.position.y * texpixel_size.y;
@@ -1066,8 +1069,8 @@ void RasterizerCanvasGLES2::render_batches(
                                     + np->margin[MARGIN_TOP] * screen_scale;
 
                                 buffer[(1 * 4 * 4) + 6] =
-                                    (source.position.x + np->margin[MARGIN_LEFT]
-                                    )
+                                    (source.position.x
+                                     + np->margin[MARGIN_LEFT])
                                     * texpixel_size.x;
                                 buffer[(1 * 4 * 4) + 7] =
                                     (source.position.y + np->margin[MARGIN_TOP])
@@ -1123,8 +1126,8 @@ void RasterizerCanvasGLES2::render_batches(
                                     - np->margin[MARGIN_BOTTOM] * screen_scale;
 
                                 buffer[(2 * 4 * 4) + 6] =
-                                    (source.position.x + np->margin[MARGIN_LEFT]
-                                    )
+                                    (source.position.x
+                                     + np->margin[MARGIN_LEFT])
                                     * texpixel_size.x;
                                 buffer[(2 * 4 * 4) + 7] =
                                     (source.position.y + source.size.y
@@ -1180,8 +1183,8 @@ void RasterizerCanvasGLES2::render_batches(
                                     np->rect.position.y + np->rect.size.y;
 
                                 buffer[(3 * 4 * 4) + 6] =
-                                    (source.position.x + np->margin[MARGIN_LEFT]
-                                    )
+                                    (source.position.x
+                                     + np->margin[MARGIN_LEFT])
                                     * texpixel_size.x;
                                 buffer[(3 * 4 * 4) + 7] =
                                     (source.position.y + source.size.y)
@@ -1813,8 +1816,8 @@ void RasterizerCanvasGLES2::render_batches(
                                             nullptr,
                                             pline->line_colors.size() == 1
                                                 ? pline->line_colors.ptr()
-                                                : &pline->line_colors.ptr(
-                                                  )[offset],
+                                                : &pline->line_colors
+                                                       .ptr()[offset],
                                             pline->line_colors.size() == 1
                                         );
                                         todo   -= to_draw;
@@ -2571,7 +2574,8 @@ void RasterizerCanvasGLES2::_legacy_canvas_render_item(
                     VisualServerRaster::redraw_request();
                 }
 
-                state.canvas_shader.set_custom_shader(shader_ptr->custom_code_id
+                state.canvas_shader.set_custom_shader(
+                    shader_ptr->custom_code_id
                 );
                 state.canvas_shader.bind();
             }
@@ -3138,7 +3142,8 @@ void RasterizerCanvasGLES2::render_joined_item(
                     VisualServerRaster::redraw_request();
                 }
 
-                state.canvas_shader.set_custom_shader(shader_ptr->custom_code_id
+                state.canvas_shader.set_custom_shader(
+                    shader_ptr->custom_code_id
                 );
                 state.canvas_shader.bind();
             }

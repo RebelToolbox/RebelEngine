@@ -38,7 +38,8 @@ btVector3 btRayShape::localGetSupportingVertex(const btVector3& vec) const {
          + (m_shapeAxis * m_collisionMargin);
 }
 
-btVector3 btRayShape::localGetSupportingVertexWithoutMargin(const btVector3& vec
+btVector3 btRayShape::localGetSupportingVertexWithoutMargin(
+    const btVector3& vec
 ) const {
     if (vec.z() > 0) {
         return m_shapeAxis * m_cacheScaledLength;
@@ -75,8 +76,10 @@ void btRayShape::getAabb(
     );
 }
 
-void btRayShape::calculateLocalInertia(btScalar mass, btVector3& inertia)
-    const {
+void btRayShape::calculateLocalInertia(
+    btScalar mass,
+    btVector3& inertia
+) const {
     inertia.setZero();
 }
 

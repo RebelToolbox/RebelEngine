@@ -101,8 +101,10 @@ float blerp(float c00, float c10, float c01, float c11, float tx, float ty) {
     return Math::lerp(Math::lerp(c00, c10, tx), Math::lerp(c01, c11, tx), ty);
 }
 
-uint8_t LightmapRaycasterEmbree::AlphaTextureData::sample(float u, float v)
-    const {
+uint8_t LightmapRaycasterEmbree::AlphaTextureData::sample(
+    float u,
+    float v
+) const {
     float x = u * size.x;
     float y = v * size.y;
     int xi  = (int)x;

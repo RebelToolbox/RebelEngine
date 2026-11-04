@@ -122,7 +122,8 @@ void EditorAudioBus::_notification(int p_what) {
         } break;
         case NOTIFICATION_PROCESS: {
             if (cc
-                != AudioServer::get_singleton()->get_bus_channels(get_index()
+                != AudioServer::get_singleton()->get_bus_channels(
+                    get_index()
                 )) {
                 cc =
                     AudioServer::get_singleton()->get_bus_channels(get_index());
@@ -734,8 +735,10 @@ Variant EditorAudioBus::get_drag_data(const Point2& p_point) {
     return d;
 }
 
-bool EditorAudioBus::can_drop_data(const Point2& p_point, const Variant& p_data)
-    const {
+bool EditorAudioBus::can_drop_data(
+    const Point2& p_point,
+    const Variant& p_data
+) const {
     if (get_index() == 0) {
         return false;
     }
@@ -1570,7 +1573,8 @@ void EditorAudioBuses::_server_save() {
 }
 
 void EditorAudioBuses::_select_layout() {
-    EditorNode::get_singleton()->get_filesystem_dock()->select_file(edited_path
+    EditorNode::get_singleton()->get_filesystem_dock()->select_file(
+        edited_path
     );
 }
 

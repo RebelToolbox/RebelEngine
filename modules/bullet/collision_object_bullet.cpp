@@ -36,8 +36,8 @@ void CollisionObjectBullet::ShapeWrapper::set_transform(
     transform = p_transform;
 }
 
-btTransform CollisionObjectBullet::ShapeWrapper::get_adjusted_transform(
-) const {
+btTransform CollisionObjectBullet::ShapeWrapper::
+    get_adjusted_transform() const {
     if (shape->get_type() == PhysicsServer::SHAPE_HEIGHTMAP) {
         const HeightMapShapeBullet* hm_shape =
             (const HeightMapShapeBullet*)shape; // should be safe to cast now
@@ -425,7 +425,8 @@ void RigidCollisionObjectBullet::reload_shapes() {
     for (int i(0); i < shape_count; ++i) {
         shpWrapper = &shapes.write[i];
         shpWrapper->claim_bt_shape(body_scale);
-        btTransform scaled_shape_transform(shpWrapper->get_adjusted_transform()
+        btTransform scaled_shape_transform(
+            shpWrapper->get_adjusted_transform()
         );
         scaled_shape_transform.getOrigin() *= body_scale;
         compoundShape->addChildShape(

@@ -458,10 +458,12 @@ void EditorHelp::_update_docs() {
 
     // Class description
     if (cd.description != "") {
-        section_line.push_back(Pair<String, int>(
-            TTR("Description"),
-            class_desc->get_line_count() - 2
-        ));
+        section_line.push_back(
+            Pair<String, int>(
+                TTR("Description"),
+                class_desc->get_line_count() - 2
+            )
+        );
         description_line = class_desc->get_line_count() - 2;
         class_desc->push_color(title_color);
         class_desc->push_font(doc_title_font);
@@ -524,10 +526,12 @@ void EditorHelp::_update_docs() {
     bool property_descr = false;
 
     if (cd.properties.size()) {
-        section_line.push_back(Pair<String, int>(
-            TTR("Properties"),
-            class_desc->get_line_count() - 2
-        ));
+        section_line.push_back(
+            Pair<String, int>(
+                TTR("Properties"),
+                class_desc->get_line_count() - 2
+            )
+        );
         class_desc->push_color(title_color);
         class_desc->push_font(doc_title_font);
         class_desc->add_text(TTR("Properties"));
@@ -713,10 +717,12 @@ void EditorHelp::_update_docs() {
 
     // Theme properties
     if (cd.theme_properties.size()) {
-        section_line.push_back(Pair<String, int>(
-            TTR("Theme Properties"),
-            class_desc->get_line_count() - 2
-        ));
+        section_line.push_back(
+            Pair<String, int>(
+                TTR("Theme Properties"),
+                class_desc->get_line_count() - 2
+            )
+        );
         class_desc->push_color(title_color);
         class_desc->push_font(doc_title_font);
         class_desc->add_text(TTR("Theme Properties"));
@@ -898,10 +904,12 @@ void EditorHelp::_update_docs() {
 
         // Enums
         if (enums.size()) {
-            section_line.push_back(Pair<String, int>(
-                TTR("Enumerations"),
-                class_desc->get_line_count() - 2
-            ));
+            section_line.push_back(
+                Pair<String, int>(
+                    TTR("Enumerations"),
+                    class_desc->get_line_count() - 2
+                )
+            );
             class_desc->push_color(title_color);
             class_desc->push_font(doc_title_font);
             class_desc->add_text(TTR("Enumerations"));
@@ -999,10 +1007,12 @@ void EditorHelp::_update_docs() {
 
         // Constants
         if (constants.size()) {
-            section_line.push_back(Pair<String, int>(
-                TTR("Constants"),
-                class_desc->get_line_count() - 2
-            ));
+            section_line.push_back(
+                Pair<String, int>(
+                    TTR("Constants"),
+                    class_desc->get_line_count() - 2
+                )
+            );
             class_desc->push_color(title_color);
             class_desc->push_font(doc_title_font);
             class_desc->add_text(TTR("Constants"));
@@ -1070,10 +1080,12 @@ void EditorHelp::_update_docs() {
 
     // Property descriptions
     if (property_descr) {
-        section_line.push_back(Pair<String, int>(
-            TTR("Property Descriptions"),
-            class_desc->get_line_count() - 2
-        ));
+        section_line.push_back(
+            Pair<String, int>(
+                TTR("Property Descriptions"),
+                class_desc->get_line_count() - 2
+            )
+        );
         class_desc->push_color(title_color);
         class_desc->push_font(doc_title_font);
         class_desc->add_text(TTR("Property Descriptions"));
@@ -1222,10 +1234,12 @@ void EditorHelp::_update_docs() {
 
     // Method descriptions
     if (method_descr) {
-        section_line.push_back(Pair<String, int>(
-            TTR("Method Descriptions"),
-            class_desc->get_line_count() - 2
-        ));
+        section_line.push_back(
+            Pair<String, int>(
+                TTR("Method Descriptions"),
+                class_desc->get_line_count() - 2
+            )
+        );
         class_desc->push_color(title_color);
         class_desc->push_font(doc_title_font);
         class_desc->add_text(TTR("Method Descriptions"));

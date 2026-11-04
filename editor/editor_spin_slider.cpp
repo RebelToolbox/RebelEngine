@@ -121,10 +121,12 @@ void EditorSpinSlider::_gui_input(const Ref<InputEvent>& p_event) {
                         grabbing_spinner_dist_cache = 0;
                     }
 
-                    set_value(Math::round(
-                        pre_grab_value
-                        + get_step() * grabbing_spinner_dist_cache * 10
-                    ));
+                    set_value(
+                        Math::round(
+                            pre_grab_value
+                            + get_step() * grabbing_spinner_dist_cache * 10
+                        )
+                    );
                 } else {
                     set_value(
                         pre_grab_value
@@ -426,7 +428,8 @@ void EditorSpinSlider::_notification(int p_what) {
         case NOTIFICATION_EXIT_TREE:
             if (grabbing_spinner) {
                 grabber->hide();
-                Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_VISIBLE
+                Input::get_singleton()->set_mouse_mode(
+                    Input::MOUSE_MODE_VISIBLE
                 );
                 grabbing_spinner         = false;
                 grabbing_spinner_attempt = false;

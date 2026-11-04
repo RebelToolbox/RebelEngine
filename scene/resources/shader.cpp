@@ -89,7 +89,8 @@ void Shader::set_default_texture_param(
     emit_changed();
 }
 
-Ref<Texture> Shader::get_default_texture_param(const StringName& p_param
+Ref<Texture> Shader::get_default_texture_param(
+    const StringName& p_param
 ) const {
     if (default_textures.has(p_param)) {
         return default_textures[p_param];
@@ -98,7 +99,8 @@ Ref<Texture> Shader::get_default_texture_param(const StringName& p_param
     }
 }
 
-void Shader::get_default_texture_param_list(List<StringName>* r_textures
+void Shader::get_default_texture_param_list(
+    List<StringName>* r_textures
 ) const {
     for (const Map<StringName, Ref<Texture>>::Element* E =
              default_textures.front();
@@ -246,7 +248,8 @@ bool ResourceFormatLoaderShader::handles_type(const String& p_type) const {
     return (p_type == "Shader");
 }
 
-String ResourceFormatLoaderShader::get_resource_type(const String& p_path
+String ResourceFormatLoaderShader::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "gdshader" || el == "shader") {

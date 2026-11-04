@@ -49,9 +49,9 @@ String AndroidPluginConfig::resolve_local_dependency_path(
     String absolute_path;
     if (!dependency_path.empty()) {
         if (dependency_path.is_abs_path()) {
-            absolute_path =
-                ProjectSettings::get_singleton()->globalize_path(dependency_path
-                );
+            absolute_path = ProjectSettings::get_singleton()->globalize_path(
+                dependency_path
+            );
         } else {
             absolute_path = plugin_config_dir.plus_file(dependency_path);
         }

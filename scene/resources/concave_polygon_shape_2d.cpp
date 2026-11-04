@@ -33,7 +33,8 @@ bool ConcavePolygonShape2D::_edit_is_selected_on_click(
 }
 #endif // TOOLS_ENABLED
 
-void ConcavePolygonShape2D::set_segments(const PoolVector<Vector2>& p_segments
+void ConcavePolygonShape2D::set_segments(
+    const PoolVector<Vector2>& p_segments
 ) {
     Physics2DServer::get_singleton()->shape_set_data(get_rid(), p_segments);
     emit_changed();

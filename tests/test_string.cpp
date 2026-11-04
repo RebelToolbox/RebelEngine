@@ -68,7 +68,8 @@ bool test_4() {
 }
 
 bool test_5() {
-    OS::get_singleton()->print("\n\nTest 5: Assign from c-widechar (copycon)\n"
+    OS::get_singleton()->print(
+        "\n\nTest 5: Assign from c-widechar (copycon)\n"
     );
 
     String s(L"Wool");

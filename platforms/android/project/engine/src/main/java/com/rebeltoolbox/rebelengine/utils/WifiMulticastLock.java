@@ -36,7 +36,8 @@ public class WifiMulticastLock {
      * broadcast or joining a multicast group on a socket.
      */
     public void multicastLockAcquire() {
-        if (multicastLock == null) return;
+        if (multicastLock == null)
+            return;
         try {
             multicastLock.acquire();
         } catch (RuntimeException e) {
@@ -49,7 +50,8 @@ public class WifiMulticastLock {
      * This is done automatically when the lock is no longer needed by a socket.
      */
     public void multicastLockRelease() {
-        if (multicastLock == null) return;
+        if (multicastLock == null)
+            return;
         try {
             multicastLock.release();
         } catch (RuntimeException e) {

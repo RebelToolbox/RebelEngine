@@ -130,10 +130,12 @@ static void _editor_init() {
     register_lsp_types();
     GDScriptLanguageServer* lsp_plugin = memnew(GDScriptLanguageServer);
     EditorNode::get_singleton()->add_editor_plugin(lsp_plugin);
-    Engine::get_singleton()->add_singleton(Engine::Singleton(
-        "GDScriptLanguageProtocol",
-        GDScriptLanguageProtocol::get_singleton()
-    ));
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton(
+            "GDScriptLanguageProtocol",
+            GDScriptLanguageProtocol::get_singleton()
+        )
+    );
 #endif // !GDSCRIPT_NO_LSP
 }
 

@@ -205,7 +205,8 @@ Variant::Type managed_to_variant_type(const ManagedType& p_type) {
             }
 
             // System.Collections.Generic.Dictionary<TKey, TValue>
-            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(reftype
+            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(
+                    reftype
                 )) {
                 return Variant::DICTIONARY;
             }
@@ -442,7 +443,8 @@ MonoObject* variant_to_mono_object(
                 return NULL; // Otherwise, Variant -> String would return the
                              // string "Null"
             }
-            return (MonoObject*)mono_string_from_rebel(p_var->operator String()
+            return (MonoObject*)mono_string_from_rebel(
+                p_var->operator String()
             );
         } break;
 
@@ -614,7 +616,8 @@ MonoObject* variant_to_mono_object(
                 mono_type_get_array_type(p_type.type_class->get_mono_type());
 
             if (array_type->eklass == CACHED_CLASS_RAW(MonoObject)) {
-                return (MonoObject*)Array_to_mono_array(p_var->operator Array()
+                return (MonoObject*)Array_to_mono_array(
+                    p_var->operator Array()
                 );
             }
 
@@ -661,12 +664,14 @@ MonoObject* variant_to_mono_object(
             }
 
             if (array_type->eklass == CACHED_CLASS_RAW(NodePath)) {
-                return (MonoObject*)Array_to_mono_array(p_var->operator Array()
+                return (MonoObject*)Array_to_mono_array(
+                    p_var->operator Array()
                 );
             }
 
             if (array_type->eklass == CACHED_CLASS_RAW(RID)) {
-                return (MonoObject*)Array_to_mono_array(p_var->operator Array()
+                return (MonoObject*)Array_to_mono_array(
+                    p_var->operator Array()
                 );
             }
 
@@ -674,10 +679,9 @@ MonoObject* variant_to_mono_object(
                 GDMono::get_singleton()->get_class(array_type->eklass);
             if (CACHED_CLASS(RebelObject)
                     ->is_assignable_from(array_type_class)) {
-                return (MonoObject*)Array_to_mono_array(
-                    p_var->operator Array(),
-                    array_type_class
-                );
+                return (
+                    MonoObject*
+                )Array_to_mono_array(p_var->operator Array(), array_type_class);
             }
 
             ERR_FAIL_V_MSG(
@@ -849,8 +853,9 @@ MonoObject* variant_to_mono_object(
                         p_var->operator NodePath()
                     );
                 case Variant::_RID:
-                    return GDMonoUtils::create_managed_from(p_var->operator RID(
-                    ));
+                    return GDMonoUtils::create_managed_from(
+                        p_var->operator RID()
+                    );
                 case Variant::OBJECT:
                     return GDMonoUtils::unmanaged_get_managed(
                         p_var->operator Object*()
@@ -939,7 +944,8 @@ MonoObject* variant_to_mono_object(
                 }
 
                 // System.Collections.Generic.List<T>
-                if (GDMonoUtils::Marshal::type_is_system_generic_list(reftype
+                if (GDMonoUtils::Marshal::type_is_system_generic_list(
+                        reftype
                     )) {
                     MonoReflectionType* elem_reftype = nullptr;
                     GDMonoUtils::Marshal::array_get_element_type(
@@ -954,7 +960,8 @@ MonoObject* variant_to_mono_object(
                 }
 
                 // IDictionary<TKey, TValue>
-                if (GDMonoUtils::Marshal::type_is_generic_idictionary(reftype
+                if (GDMonoUtils::Marshal::type_is_generic_idictionary(
+                        reftype
                     )) {
                     MonoReflectionType* key_reftype;
                     MonoReflectionType* value_reftype;
@@ -977,7 +984,8 @@ MonoObject* variant_to_mono_object(
 
                 // ICollection<T> or IEnumerable<T>
                 if (GDMonoUtils::Marshal::type_is_generic_icollection(reftype)
-                    || GDMonoUtils::Marshal::type_is_generic_ienumerable(reftype
+                    || GDMonoUtils::Marshal::type_is_generic_ienumerable(
+                        reftype
                     )) {
                     MonoReflectionType* elem_reftype;
                     GDMonoUtils::Marshal::array_get_element_type(
@@ -1271,7 +1279,8 @@ Variant mono_object_to_variant_impl(
             }
 
             // System.Collections.Generic.Dictionary<TKey, TValue>
-            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(reftype
+            if (GDMonoUtils::Marshal::type_is_system_generic_dictionary(
+                    reftype
                 )) {
                 MonoReflectionType* key_reftype   = nullptr;
                 MonoReflectionType* value_reftype = nullptr;

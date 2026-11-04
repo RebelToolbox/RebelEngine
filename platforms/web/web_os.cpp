@@ -35,7 +35,8 @@
 void WebOS::request_quit_callback() {
     WebOS* os = get_singleton();
     if (os && os->get_main_loop()) {
-        os->get_main_loop()->notification(MainLoop::NOTIFICATION_WM_QUIT_REQUEST
+        os->get_main_loop()->notification(
+            MainLoop::NOTIFICATION_WM_QUIT_REQUEST
         );
     }
 }
@@ -112,7 +113,8 @@ Size2 WebOS::get_window_size() const {
 }
 
 void WebOS::set_window_maximized(bool p_enabled) {
-    WARN_PRINT_ONCE("Maximizing windows is not supported for the Web platform."
+    WARN_PRINT_ONCE(
+        "Maximizing windows is not supported for the Web platform."
     );
 }
 
@@ -145,8 +147,10 @@ bool WebOS::is_window_fullscreen() const {
     return video_mode.fullscreen;
 }
 
-void WebOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
-    const {
+void WebOS::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {
     Size2 screen = get_screen_size();
     p_list->push_back(OS::VideoMode(screen.width, screen.height, true));
 }

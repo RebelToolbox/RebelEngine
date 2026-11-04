@@ -253,8 +253,10 @@ String AndroidJNIOS::get_input_fallback_mapping() {
         JNIEnv* env = get_jni_env();
         ERR_FAIL_COND_V(env == nullptr, String());
 
-        jstring fallback_mapping = (jstring
-        )env->CallObjectMethod(fragment, _get_input_fallback_mapping);
+        jstring fallback_mapping = (jstring)env->CallObjectMethod(
+            fragment,
+            _get_input_fallback_mapping
+        );
         return string_from_jstring(env, fallback_mapping);
     } else {
         return String();

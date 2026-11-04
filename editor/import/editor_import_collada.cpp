@@ -187,8 +187,8 @@ Error ColladaImport::_create_scene_skeletons(Collada::Node* p_node) {
         for (int i = 0; i < p_node->children.size(); i++) {
             _populate_skeleton(sk, p_node->children[i], bone, -1);
         }
-        sk->localize_rests(
-        ); // after creating skeleton, rests must be localized...!
+        sk->localize_rests(); // after creating skeleton, rests must be
+                              // localized...!
         skeleton_map[p_node] = sk;
     }
 
@@ -640,7 +640,8 @@ Error ColladaImport::_create_mesh_surfaces(
             if (p.sources.has("TEXTANGENT")) {
                 tangent_source_id = p.sources["TEXTANGENT"].source;
                 tangent_ofs       = p.sources["TEXTANGENT"].offset;
-            } else if (meshdata.vertices[vertex_src_id].sources.has("TEXTANGENT"
+            } else if (meshdata.vertices[vertex_src_id].sources.has(
+                           "TEXTANGENT"
                        )) {
                 tangent_source_id =
                     meshdata.vertices[vertex_src_id].sources["TEXTANGENT"];
@@ -665,7 +666,8 @@ Error ColladaImport::_create_mesh_surfaces(
             if (p.sources.has("TEXCOORD0")) {
                 uv_source_id = p.sources["TEXCOORD0"].source;
                 uv_ofs       = p.sources["TEXCOORD0"].offset;
-            } else if (meshdata.vertices[vertex_src_id].sources.has("TEXCOORD0"
+            } else if (meshdata.vertices[vertex_src_id].sources.has(
+                           "TEXCOORD0"
                        )) {
                 uv_source_id =
                     meshdata.vertices[vertex_src_id].sources["TEXCOORD0"];
@@ -690,7 +692,8 @@ Error ColladaImport::_create_mesh_surfaces(
             if (p.sources.has("TEXCOORD1")) {
                 uv2_source_id = p.sources["TEXCOORD1"].source;
                 uv2_ofs       = p.sources["TEXCOORD1"].offset;
-            } else if (meshdata.vertices[vertex_src_id].sources.has("TEXCOORD1"
+            } else if (meshdata.vertices[vertex_src_id].sources.has(
+                           "TEXCOORD1"
                        )) {
                 uv2_source_id =
                     meshdata.vertices[vertex_src_id].sources["TEXCOORD1"];
@@ -2128,7 +2131,8 @@ void ColladaImport::create_animation(
 
                 } else if (data.size() == 16) {
                     // matrix
-                    WARN_PRINT("Collada: Value keys for matrices not supported."
+                    WARN_PRINT(
+                        "Collada: Value keys for matrices not supported."
                     );
                 } else {
                     WARN_PRINT(
@@ -2158,7 +2162,8 @@ uint32_t EditorSceneImporterCollada::get_import_flags() const {
     return IMPORT_SCENE | IMPORT_ANIMATION;
 }
 
-void EditorSceneImporterCollada::get_extensions(List<String>* r_extensions
+void EditorSceneImporterCollada::get_extensions(
+    List<String>* r_extensions
 ) const {
     r_extensions->push_back("dae");
 }

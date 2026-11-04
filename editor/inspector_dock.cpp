@@ -264,7 +264,8 @@ void InspectorDock::_prepare_history() {
 void InspectorDock::_select_history(int p_idx) const {
     // push it to the top, it is not correct, but it's more useful
     ObjectID id =
-        EditorNode::get_singleton()->get_editor_history()->get_history_obj(p_idx
+        EditorNode::get_singleton()->get_editor_history()->get_history_obj(
+            p_idx
         );
     Object* obj = ObjectDB::get_instance(id);
     if (!obj) {
@@ -598,7 +599,8 @@ InspectorDock::InspectorDock(EditorNode* p_editor, EditorData& p_editor_data) {
     resource_load_button->set_focus_mode(Control::FOCUS_NONE);
 
     resource_save_button = memnew(MenuButton);
-    resource_save_button->set_tooltip(TTR("Save the currently edited resource.")
+    resource_save_button->set_tooltip(
+        TTR("Save the currently edited resource.")
     );
     resource_save_button->set_icon(get_icon("Save", "EditorIcons"));
     general_options_hb->add_child(resource_save_button);
@@ -660,7 +662,8 @@ InspectorDock::InspectorDock(EditorNode* p_editor, EditorData& p_editor_data) {
     general_options_hb->add_child(forward_button);
     forward_button->set_icon(get_icon("Forward", "EditorIcons"));
     forward_button->set_flat(true);
-    forward_button->set_tooltip(TTR("Go to the next edited object in history.")
+    forward_button->set_tooltip(
+        TTR("Go to the next edited object in history.")
     );
     forward_button->set_disabled(true);
     forward_button->connect("pressed", this, "_edit_forward");

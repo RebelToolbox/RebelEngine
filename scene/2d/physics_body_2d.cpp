@@ -138,8 +138,8 @@ real_t StaticBody2D::get_constant_angular_velocity() const {
 #ifndef DISABLE_DEPRECATED
 void StaticBody2D::set_friction(real_t p_friction) {
     if (p_friction == 1.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -175,8 +175,8 @@ real_t StaticBody2D::get_friction() const {
 
 void StaticBody2D::set_bounce(real_t p_bounce) {
     if (p_bounce == 0.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -772,8 +772,8 @@ real_t RigidBody2D::get_weight() const {
 #ifndef DISABLE_DEPRECATED
 void RigidBody2D::set_friction(real_t p_friction) {
     if (p_friction == 1.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -809,8 +809,8 @@ real_t RigidBody2D::get_friction() const {
 
 void RigidBody2D::set_bounce(real_t p_bounce) {
     if (p_bounce == 0.0
-        && physics_material_override.is_null(
-        )) { // default value, don't create an override for that
+        && physics_material_override
+               .is_null()) { // default value, don't create an override for that
         return;
     }
 
@@ -1089,8 +1089,8 @@ void RigidBody2D::set_continuous_collision_detection_mode(CCDMode p_mode) {
         );
 }
 
-RigidBody2D::CCDMode RigidBody2D::get_continuous_collision_detection_mode(
-) const {
+RigidBody2D::CCDMode RigidBody2D::
+    get_continuous_collision_detection_mode() const {
     return ccd_mode;
 }
 
@@ -1165,7 +1165,8 @@ void RigidBody2D::_notification(int p_what) {
 #ifdef TOOLS_ENABLED
     if (p_what == NOTIFICATION_ENTER_TREE) {
         if (Engine::get_singleton()->is_editor_hint()) {
-            set_notify_local_transform(true
+            set_notify_local_transform(
+                true
             ); // used for warnings and only in editor
         }
     }
@@ -2212,7 +2213,8 @@ int KinematicBody2D::get_slide_count() const {
     return colliders.size();
 }
 
-KinematicBody2D::Collision KinematicBody2D::get_slide_collision(int p_bounce
+KinematicBody2D::Collision KinematicBody2D::get_slide_collision(
+    int p_bounce
 ) const {
     ERR_FAIL_INDEX_V(p_bounce, colliders.size(), Collision());
     return colliders[p_bounce];

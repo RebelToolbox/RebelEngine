@@ -80,11 +80,15 @@ public:
 
     bool can_draw() const override;
 
-    void set_video_mode(const VideoMode& p_video_mode, int p_screen = 0)
-        override;
+    void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    ) override;
     VideoMode get_video_mode(int p_screen = 0) const override;
-    void get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen = 0)
-        const override;
+    void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const override;
 
     Size2 get_window_size() const override;
 
@@ -101,8 +105,10 @@ public:
     String get_data_path() const override;
     String get_cache_path() const override;
 
-    String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
-        const override;
+    String get_system_dir(
+        SystemDir p_dir,
+        bool p_shared_storage = true
+    ) const override;
 
     void disable_crash_handler() override;
     bool is_disable_crash_handler() const override;

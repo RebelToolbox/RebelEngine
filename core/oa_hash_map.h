@@ -139,9 +139,9 @@ private:
         num_elements = 0;
         keys =
             static_cast<TKey*>(Memory::alloc_static(sizeof(TKey) * capacity));
-        values =
-            static_cast<TValue*>(Memory::alloc_static(sizeof(TValue) * capacity)
-            );
+        values = static_cast<TValue*>(
+            Memory::alloc_static(sizeof(TValue) * capacity)
+        );
         hashes = static_cast<uint32_t*>(
             Memory::alloc_static(sizeof(uint32_t) * capacity)
         );
@@ -335,9 +335,9 @@ public:
 
         keys =
             static_cast<TKey*>(Memory::alloc_static(sizeof(TKey) * capacity));
-        values =
-            static_cast<TValue*>(Memory::alloc_static(sizeof(TValue) * capacity)
-            );
+        values = static_cast<TValue*>(
+            Memory::alloc_static(sizeof(TValue) * capacity)
+        );
         hashes = static_cast<uint32_t*>(
             Memory::alloc_static(sizeof(uint32_t) * capacity)
         );

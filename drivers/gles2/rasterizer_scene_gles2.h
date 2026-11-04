@@ -296,8 +296,10 @@ public:
 
     RID reflection_atlas_create() override;
     void reflection_atlas_set_size(RID p_ref_atlas, int p_size) override;
-    void reflection_atlas_set_subdivision(RID p_ref_atlas, int p_subdiv)
-        override;
+    void reflection_atlas_set_subdivision(
+        RID p_ref_atlas,
+        int p_subdiv
+    ) override;
 
     /* REFLECTION CUBEMAPS */
 
@@ -471,8 +473,10 @@ public:
     void environment_set_background(RID p_env, VS::EnvironmentBG p_bg) override;
     void environment_set_sky(RID p_env, RID p_sky) override;
     void environment_set_sky_custom_fov(RID p_env, float p_scale) override;
-    void environment_set_sky_orientation(RID p_env, const Basis& p_orientation)
-        override;
+    void environment_set_sky_orientation(
+        RID p_env,
+        const Basis& p_orientation
+    ) override;
     void environment_set_bg_color(RID p_env, const Color& p_color) override;
     void environment_set_bg_energy(RID p_env, float p_energy) override;
     void environment_set_canvas_max_layer(RID p_env, int p_max_layer) override;
@@ -482,8 +486,10 @@ public:
         float p_energy           = 1.0,
         float p_sky_contribution = 0.0
     ) override;
-    void environment_set_camera_feed_id(RID p_env, int p_camera_feed_id)
-        override;
+    void environment_set_camera_feed_id(
+        RID p_env,
+        int p_camera_feed_id
+    ) override;
 
     void environment_set_dof_blur_near(
         RID p_env,
@@ -667,14 +673,19 @@ public:
     /* REFLECTION INSTANCE */
 
     RID gi_probe_instance_create() override;
-    void gi_probe_instance_set_light_data(RID p_probe, RID p_base, RID p_data)
-        override;
+    void gi_probe_instance_set_light_data(
+        RID p_probe,
+        RID p_base,
+        RID p_data
+    ) override;
     void gi_probe_instance_set_transform_to_data(
         RID p_probe,
         const Transform& p_xform
     ) override;
-    void gi_probe_instance_set_bounds(RID p_probe, const Vector3& p_bounds)
-        override;
+    void gi_probe_instance_set_bounds(
+        RID p_probe,
+        const Vector3& p_bounds
+    ) override;
 
     /* RENDER LIST */
 
@@ -753,8 +764,10 @@ public:
         // sorts
 
         struct SortByKey {
-            _FORCE_INLINE_ bool operator()(const Element* A, const Element* B)
-                const {
+            _FORCE_INLINE_ bool operator()(
+                const Element* A,
+                const Element* B
+            ) const {
                 if (A->depth_key == B->depth_key) {
                     return A->sort_key < B->sort_key;
                 } else {
@@ -777,8 +790,10 @@ public:
         }
 
         struct SortByDepth {
-            _FORCE_INLINE_ bool operator()(const Element* A, const Element* B)
-                const {
+            _FORCE_INLINE_ bool operator()(
+                const Element* A,
+                const Element* B
+            ) const {
                 return A->instance->depth < B->instance->depth;
             }
         };
@@ -797,8 +812,10 @@ public:
         }
 
         struct SortByReverseDepthAndPriority {
-            _FORCE_INLINE_ bool operator()(const Element* A, const Element* B)
-                const {
+            _FORCE_INLINE_ bool operator()(
+                const Element* A,
+                const Element* B
+            ) const {
                 if (A->priority == B->priority) {
                     return A->instance->depth > B->instance->depth;
                 } else {

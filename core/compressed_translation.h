@@ -55,7 +55,8 @@ protected:
     static void _bind_methods();
 
 public:
-    StringName get_message(const StringName& p_src_text
+    StringName get_message(
+        const StringName& p_src_text
     ) const override; // overridable for other implementations
     void generate(const Ref<Translation>& p_from);
 

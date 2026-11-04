@@ -293,8 +293,8 @@ void ConeTwistJointSW::solve(real_t p_timestep) {
             real_t amplitude =
                 ((angVelB - angVelA).dot(m_swingAxis) * m_relaxationFactor
                      * m_relaxationFactor
-                 + m_swingCorrection * (real_t(1.) / p_timestep) * m_biasFactor
-                );
+                 + m_swingCorrection * (real_t(1.) / p_timestep)
+                       * m_biasFactor);
             real_t impulseMag = amplitude * m_kSwing;
 
             // Clamp the accumulated impulse
@@ -314,8 +314,8 @@ void ConeTwistJointSW::solve(real_t p_timestep) {
             real_t amplitude =
                 ((angVelB - angVelA).dot(m_twistAxis) * m_relaxationFactor
                      * m_relaxationFactor
-                 + m_twistCorrection * (real_t(1.) / p_timestep) * m_biasFactor
-                );
+                 + m_twistCorrection * (real_t(1.) / p_timestep)
+                       * m_biasFactor);
             real_t impulseMag = amplitude * m_kTwist;
 
             // Clamp the accumulated impulse
@@ -358,7 +358,8 @@ void ConeTwistJointSW::set_param(
     }
 }
 
-real_t ConeTwistJointSW::get_param(PhysicsServer::ConeTwistJointParam p_param
+real_t ConeTwistJointSW::get_param(
+    PhysicsServer::ConeTwistJointParam p_param
 ) const {
     switch (p_param) {
         case PhysicsServer::CONE_TWIST_JOINT_SWING_SPAN: {

@@ -470,8 +470,10 @@ void AnimatedSprite::_notification(int p_what) {
                                 frame = 0;
                             }
 
-                            emit_signal(SceneStringNames::get_singleton()
-                                            ->animation_finished);
+                            emit_signal(
+                                SceneStringNames::get_singleton()
+                                    ->animation_finished
+                            );
                         } else {
                             if (backwards) {
                                 frame = 0;
@@ -481,8 +483,10 @@ void AnimatedSprite::_notification(int p_what) {
 
                             if (!is_over) {
                                 is_over = true;
-                                emit_signal(SceneStringNames::get_singleton()
-                                                ->animation_finished);
+                                emit_signal(
+                                    SceneStringNames::get_singleton()
+                                        ->animation_finished
+                                );
                             }
                         }
                     } else {
@@ -495,7 +499,8 @@ void AnimatedSprite::_notification(int p_what) {
 
                     update();
                     _change_notify("frame");
-                    emit_signal(SceneStringNames::get_singleton()->frame_changed
+                    emit_signal(
+                        SceneStringNames::get_singleton()->frame_changed
                     );
                 }
 

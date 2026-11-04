@@ -50,8 +50,8 @@ rebel_int GDAPI rebel_node_path_get_name_count(const rebel_node_path* p_self);
 rebel_string GDAPI
 rebel_node_path_get_name(const rebel_node_path* p_self, const rebel_int p_idx);
 
-rebel_int GDAPI rebel_node_path_get_subname_count(const rebel_node_path* p_self
-);
+rebel_int GDAPI
+rebel_node_path_get_subname_count(const rebel_node_path* p_self);
 
 rebel_string GDAPI rebel_node_path_get_subname(
     const rebel_node_path* p_self,

@@ -66,8 +66,11 @@ public:
         int p_offset = 0,
         int p_end    = -1
     ) const;
-    Array search_all(const String& p_subject, int p_offset = 0, int p_end = -1)
-        const;
+    Array search_all(
+        const String& p_subject,
+        int p_offset = 0,
+        int p_end    = -1
+    ) const;
     String sub(
         const String& p_subject,
         const String& p_replacement,

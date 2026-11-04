@@ -203,9 +203,8 @@ int Array::_clamp_slice_index(int p_index) const {
     return fixed_index;
 }
 
-Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep)
-    const { // like python, but inclusive on upper bound
-
+Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep) const {
+    // Like python, but includes the upper bound.
     Array new_arr;
 
     ERR_FAIL_COND_V_MSG(
@@ -261,8 +260,10 @@ Array Array::slice(int p_begin, int p_end, int p_step, bool p_deep)
 }
 
 struct _ArrayVariantSort {
-    _FORCE_INLINE_ bool operator()(const Variant& p_l, const Variant& p_r)
-        const {
+    _FORCE_INLINE_ bool operator()(
+        const Variant& p_l,
+        const Variant& p_r
+    ) const {
         bool valid = false;
         Variant res;
         Variant::evaluate(Variant::OP_LESS, p_l, p_r, res, valid);
@@ -282,8 +283,10 @@ struct _ArrayVariantSortCustom {
     Object* obj;
     StringName func;
 
-    _FORCE_INLINE_ bool operator()(const Variant& p_l, const Variant& p_r)
-        const {
+    _FORCE_INLINE_ bool operator()(
+        const Variant& p_l,
+        const Variant& p_r
+    ) const {
         const Variant* args[2] = {&p_l, &p_r};
         Variant::CallError err;
         bool res = obj->call(func, args, 2, err);

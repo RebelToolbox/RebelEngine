@@ -61,7 +61,8 @@ Basis BulletPhysicsDirectBodyState::get_inverse_inertia_tensor() const {
     return gInertia;
 }
 
-void BulletPhysicsDirectBodyState::set_linear_velocity(const Vector3& p_velocity
+void BulletPhysicsDirectBodyState::set_linear_velocity(
+    const Vector3& p_velocity
 ) {
     body->set_linear_velocity(p_velocity);
 }
@@ -128,7 +129,8 @@ void BulletPhysicsDirectBodyState::apply_impulse(
     body->apply_impulse(p_pos, p_impulse);
 }
 
-void BulletPhysicsDirectBodyState::apply_torque_impulse(const Vector3& p_impulse
+void BulletPhysicsDirectBodyState::apply_torque_impulse(
+    const Vector3& p_impulse
 ) {
     body->apply_torque_impulse(p_impulse);
 }
@@ -151,22 +153,26 @@ Vector3 BulletPhysicsDirectBodyState::get_contact_local_position(
     return body->collisions[p_contact_idx].hitLocalLocation;
 }
 
-Vector3 BulletPhysicsDirectBodyState::get_contact_local_normal(int p_contact_idx
+Vector3 BulletPhysicsDirectBodyState::get_contact_local_normal(
+    int p_contact_idx
 ) const {
     return body->collisions[p_contact_idx].hitNormal;
 }
 
-float BulletPhysicsDirectBodyState::get_contact_impulse(int p_contact_idx
+float BulletPhysicsDirectBodyState::get_contact_impulse(
+    int p_contact_idx
 ) const {
     return body->collisions[p_contact_idx].appliedImpulse;
 }
 
-int BulletPhysicsDirectBodyState::get_contact_local_shape(int p_contact_idx
+int BulletPhysicsDirectBodyState::get_contact_local_shape(
+    int p_contact_idx
 ) const {
     return body->collisions[p_contact_idx].local_shape;
 }
 
-RID BulletPhysicsDirectBodyState::get_contact_collider(int p_contact_idx
+RID BulletPhysicsDirectBodyState::get_contact_collider(
+    int p_contact_idx
 ) const {
     return body->collisions[p_contact_idx].otherObject->get_self();
 }
@@ -177,12 +183,14 @@ Vector3 BulletPhysicsDirectBodyState::get_contact_collider_position(
     return body->collisions[p_contact_idx].hitWorldLocation;
 }
 
-ObjectID BulletPhysicsDirectBodyState::get_contact_collider_id(int p_contact_idx
+ObjectID BulletPhysicsDirectBodyState::get_contact_collider_id(
+    int p_contact_idx
 ) const {
     return body->collisions[p_contact_idx].otherObject->get_instance_id();
 }
 
-int BulletPhysicsDirectBodyState::get_contact_collider_shape(int p_contact_idx
+int BulletPhysicsDirectBodyState::get_contact_collider_shape(
+    int p_contact_idx
 ) const {
     return body->collisions[p_contact_idx].other_object_shape;
 }
@@ -211,7 +219,8 @@ PhysicsDirectSpaceState* BulletPhysicsDirectBodyState::get_space_state() {
     return body->get_space()->get_direct_state();
 }
 
-RigidBodyBullet::KinematicUtilities::KinematicUtilities(RigidBodyBullet* p_owner
+RigidBodyBullet::KinematicUtilities::KinematicUtilities(
+    RigidBodyBullet* p_owner
 ) :
     owner(p_owner),
     safe_margin(0.001f) {}
@@ -917,8 +926,8 @@ void RigidBodyBullet::reload_shapes() {
         // Arbitrary zero is preferable to undefined behaviour.
         btVector3 inertia(0, 0, 0);
         if (EMPTY_SHAPE_PROXYTYPE
-            != mainShape->getShapeType(
-            )) { // Necessary to avoid assertion of the empty shape
+            != mainShape->getShapeType()) { // Necessary to avoid assertion of
+                                            // the empty shape
             mainShape->calculateLocalInertia(mass, inertia);
         }
         btBody->setMassProps(mass, inertia);
@@ -1157,7 +1166,8 @@ void RigidBodyBullet::_internal_set_mass(real_t p_mass) {
         }
 
         if (PhysicsServer::BODY_MODE_RIGID == mode) {
-            btBody->setCollisionFlags(clearedCurrentFlags
+            btBody->setCollisionFlags(
+                clearedCurrentFlags
             ); // Just set the flags without Kin and Static
         } else {
             btBody->setCollisionFlags(
@@ -1168,7 +1178,8 @@ void RigidBodyBullet::_internal_set_mass(real_t p_mass) {
         if (can_sleep) {
             btBody->forceActivationState(ACTIVE_TAG); // ACTIVE_TAG 1
         } else {
-            btBody->forceActivationState(DISABLE_DEACTIVATION
+            btBody->forceActivationState(
+                DISABLE_DEACTIVATION
             ); // DISABLE_DEACTIVATION 4
         }
     } else {
@@ -1186,10 +1197,12 @@ void RigidBodyBullet::_internal_set_mass(real_t p_mass) {
             btBody->setCollisionFlags(
                 clearedCurrentFlags | btCollisionObject::CF_KINEMATIC_OBJECT
             );
-            set_transform__bullet(btBody->getWorldTransform()
+            set_transform__bullet(
+                btBody->getWorldTransform()
             ); // Set current Transform using kinematic method
         }
-        btBody->forceActivationState(DISABLE_SIMULATION
+        btBody->forceActivationState(
+            DISABLE_SIMULATION
         ); // DISABLE_SIMULATION 5
     }
 

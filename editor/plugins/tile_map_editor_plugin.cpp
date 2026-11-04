@@ -45,9 +45,11 @@ void TileMapEditor::_notification(int p_what) {
             select_button->set_icon(get_icon("ActionCopy", "EditorIcons"));
 
             rotate_left_button->set_icon(get_icon("RotateLeft", "EditorIcons"));
-            rotate_right_button->set_icon(get_icon("RotateRight", "EditorIcons")
+            rotate_right_button->set_icon(
+                get_icon("RotateRight", "EditorIcons")
             );
-            flip_horizontal_button->set_icon(get_icon("MirrorX", "EditorIcons")
+            flip_horizontal_button->set_icon(
+                get_icon("MirrorX", "EditorIcons")
             );
             flip_vertical_button->set_icon(get_icon("MirrorY", "EditorIcons"));
             clear_transform_button->set_icon(get_icon("Clear", "EditorIcons"));
@@ -615,8 +617,8 @@ void TileMapEditor::_update_palette() {
         && ((manual_autotile
              && tileset->tile_get_tile_mode(sel_tile) == TileSet::AUTO_TILE)
             || (!priority_atlastile
-                && tileset->tile_get_tile_mode(sel_tile) == TileSet::ATLAS_TILE)
-        )) {
+                && tileset->tile_get_tile_mode(sel_tile)
+                       == TileSet::ATLAS_TILE))) {
         const Map<Vector2, uint32_t>& tiles2 =
             tileset->autotile_get_bitmask_map(sel_tile);
 
@@ -724,8 +726,9 @@ void TileMapEditor::_pick_tile(const Point2& p_pos) {
         || (!priority_atlastile
             && node->get_tileset()->tile_get_tile_mode(id)
                    == TileSet::ATLAS_TILE)) {
-        manual_palette->select(manual_palette->find_metadata((Point2
-        )autotile_coord));
+        manual_palette->select(
+            manual_palette->find_metadata((Point2)autotile_coord)
+        );
     }
 
     CanvasItemEditor::get_singleton()->update_viewport();
@@ -1051,7 +1054,8 @@ void TileMapEditor::_draw_cell(
     modulate.a     = 0.5;
 
     Transform2D old_transform = p_viewport->get_viewport_transform();
-    p_viewport->draw_set_transform_matrix(p_xform
+    p_viewport->draw_set_transform_matrix(
+        p_xform
     ); // Take into account TileMap transformation when displaying cell
     if (r.has_no_area()) {
         p_viewport->draw_texture_rect(t, rect, false, modulate, p_transpose);
@@ -1273,8 +1277,8 @@ bool TileMapEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
 
                             paint_undo.clear();
 
-                            CanvasItemEditor::get_singleton()->update_viewport(
-                            );
+                            CanvasItemEditor::get_singleton()
+                                ->update_viewport();
                         }
                     } else if (tool == TOOL_RECTANGLE_PAINT) {
                         Vector<int> ids = get_selected_tiles();
@@ -1299,8 +1303,8 @@ bool TileMapEditor::forward_gui_input(const Ref<InputEvent>& p_event) {
                             }
                             _finish_undo();
 
-                            CanvasItemEditor::get_singleton()->update_viewport(
-                            );
+                            CanvasItemEditor::get_singleton()
+                                ->update_viewport();
                         }
                     } else if (tool == TOOL_PASTING) {
                         Point2 ofs = over_tile - rectangle.position;
@@ -2067,7 +2071,8 @@ void TileMapEditor::forward_canvas_draw_over_viewport(Control* p_overlay) {
             duplicate.position = over_tile;
 
             Vector<Vector2> points;
-            points.push_back(xform.xform(node->map_to_world(duplicate.position))
+            points.push_back(
+                xform.xform(node->map_to_world(duplicate.position))
             );
             points.push_back(xform.xform(node->map_to_world(
                 (duplicate.position + Point2(duplicate.size.x + 1, 0))
@@ -2566,10 +2571,12 @@ TileMapEditor::TileMapEditor(EditorNode* p_editor) {
     // Menu.
     options = memnew(MenuButton);
     options->set_text("TileMap");
-    options->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "TileMap",
-        "EditorIcons"
-    ));
+    options->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "TileMap",
+            "EditorIcons"
+        )
+    );
     options->set_process_unhandled_key_input(false);
     toolbar_right->add_child(options);
 

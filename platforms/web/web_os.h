@@ -132,11 +132,15 @@ public:
 
     bool get_swap_ok_cancel() override;
     void swap_buffers() override;
-    void set_video_mode(const VideoMode& p_video_mode, int p_screen = 0)
-        override;
+    void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    ) override;
     VideoMode get_video_mode(int p_screen = 0) const override;
-    void get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen = 0)
-        const override;
+    void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const override;
 
     void set_window_size(const Size2) override;
     Size2 get_window_size() const override;
@@ -194,8 +198,10 @@ public:
     int get_process_id() const override;
     int get_processor_count() const override;
 
-    void alert(const String& p_alert, const String& p_title = "ALERT!")
-        override;
+    void alert(
+        const String& p_alert,
+        const String& p_title = "ALERT!"
+    ) override;
     void set_window_title(const String& p_title) override;
     void set_icon(const Ref<Image>& p_icon) override;
     String get_executable_path() const override;

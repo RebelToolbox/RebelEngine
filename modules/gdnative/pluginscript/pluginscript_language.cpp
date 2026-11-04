@@ -58,7 +58,8 @@ bool PluginScriptLanguage::is_control_flow_keyword(String p_keyword) const {
     return false;
 }
 
-void PluginScriptLanguage::get_comment_delimiters(List<String>* p_delimiters
+void PluginScriptLanguage::get_comment_delimiters(
+    List<String>* p_delimiters
 ) const {
     if (_desc.comment_delimiters) {
         const char** w = _desc.comment_delimiters;
@@ -69,7 +70,8 @@ void PluginScriptLanguage::get_comment_delimiters(List<String>* p_delimiters
     }
 }
 
-void PluginScriptLanguage::get_string_delimiters(List<String>* p_delimiters
+void PluginScriptLanguage::get_string_delimiters(
+    List<String>* p_delimiters
 ) const {
     if (_desc.string_delimiters) {
         const char** w = _desc.string_delimiters;
@@ -236,14 +238,16 @@ void PluginScriptLanguage::add_global_constant(
 
 /* LOADER FUNCTIONS */
 
-void PluginScriptLanguage::get_recognized_extensions(List<String>* p_extensions
+void PluginScriptLanguage::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     for (int i = 0; _desc.recognized_extensions[i]; ++i) {
         p_extensions->push_back(String(_desc.recognized_extensions[i]));
     }
 }
 
-void PluginScriptLanguage::get_public_functions(List<MethodInfo>* p_functions
+void PluginScriptLanguage::get_public_functions(
+    List<MethodInfo>* p_functions
 ) const {
     // TODO: provide this statically in `rebel_pluginscript_language_desc` ?
     if (_desc.get_public_functions) {

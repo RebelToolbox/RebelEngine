@@ -535,8 +535,9 @@ void AnimationPlayer::_animation_process_animation(
                 if (update_mode == Animation::UPDATE_CONTINUOUS
                     || update_mode == Animation::UPDATE_CAPTURE
                     || (p_delta == 0
-                        && update_mode == Animation::UPDATE_DISCRETE
-                    )) { // delta == 0 means seek
+                        && update_mode
+                               == Animation::UPDATE_DISCRETE)) { // delta == 0
+                                                                 // means seek
 
                     Variant value = a->value_track_interpolate(i, p_time);
 
@@ -624,7 +625,8 @@ void AnimationPlayer::_animation_process_animation(
 #endif
 
                                 static_cast<Node2D*>(pa->object)
-                                    ->set_rotation(Math::deg2rad((double)value)
+                                    ->set_rotation(
+                                        Math::deg2rad((double)value)
                                     );
                             } break;
                             case SP_NODE2D_SCALE: {
@@ -1670,7 +1672,8 @@ bool AnimationPlayer::is_active() const {
     return active;
 }
 
-StringName AnimationPlayer::find_animation(const Ref<Animation>& p_animation
+StringName AnimationPlayer::find_animation(
+    const Ref<Animation>& p_animation
 ) const {
     for (Map<StringName, AnimationData>::Element* E = animation_set.front(); E;
          E                                          = E->next()) {
@@ -1729,8 +1732,8 @@ void AnimationPlayer::set_method_call_mode(AnimationMethodCallMode p_mode) {
     method_call_mode = p_mode;
 }
 
-AnimationPlayer::AnimationMethodCallMode AnimationPlayer::get_method_call_mode(
-) const {
+AnimationPlayer::AnimationMethodCallMode AnimationPlayer::
+    get_method_call_mode() const {
     return method_call_mode;
 }
 
@@ -1761,7 +1764,8 @@ void AnimationPlayer::animation_set_next(
     animation_set[p_animation].next = p_next;
 }
 
-StringName AnimationPlayer::animation_get_next(const StringName& p_animation
+StringName AnimationPlayer::animation_get_next(
+    const StringName& p_animation
 ) const {
     if (!animation_set.has(p_animation)) {
         return StringName();

@@ -78,8 +78,10 @@ public:
         return true;
     }
 
-    int find_function(const String& p_function, const String& p_code)
-        const override;
+    int find_function(
+        const String& p_function,
+        const String& p_code
+    ) const override;
     String make_function(
         const String& p_class,
         const String& p_name,
@@ -93,8 +95,11 @@ public:
         bool& r_force,
         String& r_call_hint
     ) override;
-    void auto_indent_code(String& p_code, int p_from_line, int p_to_line)
-        const override;
+    void auto_indent_code(
+        String& p_code,
+        int p_from_line,
+        int p_to_line
+    ) const override;
     void add_global_constant(
         const StringName& p_variable,
         const Variant& p_value
@@ -145,14 +150,17 @@ public:
     // Vector<StackInfo>(); }
 
     void reload_all_scripts() override;
-    void reload_tool_script(const Ref<Script>& p_script, bool p_soft_reload)
-        override;
+    void reload_tool_script(
+        const Ref<Script>& p_script,
+        bool p_soft_reload
+    ) override;
 
     /* LOADER FUNCTIONS */
 
     void get_recognized_extensions(List<String>* p_extensions) const override;
     void get_public_functions(List<MethodInfo>* p_functions) const override;
-    void get_public_constants(List<Pair<String, Variant>>* p_constants
+    void get_public_constants(
+        List<Pair<String, Variant>>* p_constants
     ) const override;
 
     void profiling_start() override;
@@ -162,8 +170,10 @@ public:
         ProfilingInfo* p_info_arr,
         int p_info_max
     ) override;
-    int profiling_get_frame_data(ProfilingInfo* p_info_arr, int p_info_max)
-        override;
+    int profiling_get_frame_data(
+        ProfilingInfo* p_info_arr,
+        int p_info_max
+    ) override;
 
     void frame() override;
 

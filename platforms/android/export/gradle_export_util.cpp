@@ -26,7 +26,8 @@ int _get_android_orientation_value(OS::ScreenOrientation screen_orientation) {
     }
 }
 
-String _get_android_orientation_label(OS::ScreenOrientation screen_orientation
+String _get_android_orientation_label(
+    OS::ScreenOrientation screen_orientation
 ) {
     switch (screen_orientation) {
         case OS::SCREEN_PORTRAIT:
@@ -255,7 +256,8 @@ String _get_xr_features_tag(const Ref<EditorExportPreset>& p_preset) {
             "android:name=\"android.hardware.vr.headtracking\" "
             "android:required=\"true\" android:version=\"1\" />\n";
 
-        int hand_tracking_index = p_preset->get("xr_features/hand_tracking"
+        int hand_tracking_index = p_preset->get(
+            "xr_features/hand_tracking"
         ); // 0: none, 1: optional, 2: required
         if (hand_tracking_index == XR_HAND_TRACKING_OPTIONAL) {
             manifest_xr_features +=

@@ -27,7 +27,8 @@ void ConstraintBullet::destroy_internal_constraint() {
     space->remove_constraint(this);
 }
 
-void ConstraintBullet::disable_collisions_between_bodies(const bool p_disabled
+void ConstraintBullet::disable_collisions_between_bodies(
+    const bool p_disabled
 ) {
     disabled_collisions_between_bodies = p_disabled;
 

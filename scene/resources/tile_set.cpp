@@ -933,7 +933,8 @@ Vector2 TileSet::autotile_get_subtile_for_bitmask(
     // First try to forward selection to script
     if (p_tilemap_node->get_class_name() == "TileMap") {
         if (get_script_instance() != nullptr) {
-            if (get_script_instance()->has_method("_forward_subtile_selection"
+            if (get_script_instance()->has_method(
+                    "_forward_subtile_selection"
                 )) {
                 Variant ret = get_script_instance()->call(
                     "_forward_subtile_selection",
@@ -1014,7 +1015,8 @@ Vector2 TileSet::atlastile_get_subtile_by_priority(
     );
     // First try to forward selection to script
     if (get_script_instance() != nullptr) {
-        if (get_script_instance()->has_method("_forward_atlas_subtile_selection"
+        if (get_script_instance()->has_method(
+                "_forward_atlas_subtile_selection"
             )) {
             Variant ret = get_script_instance()->call(
                 "_forward_atlas_subtile_selection",

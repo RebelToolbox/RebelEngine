@@ -482,10 +482,14 @@ public:
         return singleton;
     }
 
-    void drop_files(const Vector<String>& p_files, int p_from_screen = 0)
-        override;
-    void global_menu_action(const Variant& p_id, const Variant& p_meta)
-        override;
+    void drop_files(
+        const Vector<String>& p_files,
+        int p_from_screen = 0
+    ) override;
+    void global_menu_action(
+        const Variant& p_id,
+        const Variant& p_meta
+    ) override;
     void get_argument_options(
         const StringName& p_function,
         int p_idx,

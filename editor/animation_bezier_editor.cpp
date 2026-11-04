@@ -1028,8 +1028,8 @@ void AnimationBezierTrackEdit::_gui_input(const Ref<InputEvent>& p_event) {
                 }
             }
         } else {
-            _clear_selection(
-            ); // clicked and nothing happened, so clear the selection
+            _clear_selection(); // clicked and nothing happened, so clear the
+                                // selection
         }
         box_selecting_attempt = false;
         box_selecting         = false;
@@ -1504,7 +1504,8 @@ void AnimationBezierTrackEdit::delete_selection() {
     }
 }
 
-void AnimationBezierTrackEdit::set_block_animation_update_ptr(bool* p_block_ptr
+void AnimationBezierTrackEdit::set_block_animation_update_ptr(
+    bool* p_block_ptr
 ) {
     block_animation_update_ptr = p_block_ptr;
 }
@@ -1542,7 +1543,8 @@ void AnimationBezierTrackEdit::_bind_methods() {
         PropertyInfo(Variant::REAL, "position"),
         PropertyInfo(Variant::BOOL, "drag")
     ));
-    ADD_SIGNAL(MethodInfo("remove_request", PropertyInfo(Variant::INT, "track"))
+    ADD_SIGNAL(
+        MethodInfo("remove_request", PropertyInfo(Variant::INT, "track"))
     );
     ADD_SIGNAL(MethodInfo("insert_key", PropertyInfo(Variant::REAL, "ofs")));
     ADD_SIGNAL(MethodInfo(
@@ -1555,7 +1557,8 @@ void AnimationBezierTrackEdit::_bind_methods() {
     ADD_SIGNAL(MethodInfo("close_request"));
 
     ADD_SIGNAL(MethodInfo("move_selection_begin"));
-    ADD_SIGNAL(MethodInfo("move_selection", PropertyInfo(Variant::REAL, "ofs"))
+    ADD_SIGNAL(
+        MethodInfo("move_selection", PropertyInfo(Variant::REAL, "ofs"))
     );
     ADD_SIGNAL(MethodInfo("move_selection_commit"));
     ADD_SIGNAL(MethodInfo("move_selection_cancel"));

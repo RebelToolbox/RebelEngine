@@ -124,10 +124,12 @@ public:
 
     Ref<Script> get_base_script() const override; // for script inheritance
 
-    StringName get_instance_base_type() const
-        override; // this may not work in all scripts, will return empty if so
+    StringName get_instance_base_type() const override; // this may not work in
+                                                        // all scripts, will
+                                                        // return empty if so
     ScriptInstance* instance_create(Object* p_this) override;
-    PlaceHolderScriptInstance* placeholder_instance_create(Object* p_this
+    PlaceHolderScriptInstance* placeholder_instance_create(
+        Object* p_this
     ) override;
     bool instance_has(const Object* p_this) const override;
 
@@ -193,8 +195,10 @@ public:
     bool set(const StringName& p_name, const Variant& p_value) override;
     bool get(const StringName& p_name, Variant& r_ret) const override;
     void get_property_list(List<PropertyInfo>* p_properties) const override;
-    Variant::Type get_property_type(const StringName& p_name, bool* r_is_valid)
-        const override;
+    Variant::Type get_property_type(
+        const StringName& p_name,
+        bool* r_is_valid
+    ) const override;
     void get_method_list(List<MethodInfo>* p_list) const override;
     bool has_method(const StringName& p_method) const override;
     Variant call(
@@ -206,9 +210,11 @@ public:
     void notification(int p_notification) override;
     String to_string(bool* r_valid) override;
     Ref<Script> get_script() const override;
-    MultiplayerAPI::RPCMode get_rpc_mode(const StringName& p_method
+    MultiplayerAPI::RPCMode get_rpc_mode(
+        const StringName& p_method
     ) const override;
-    MultiplayerAPI::RPCMode get_rset_mode(const StringName& p_variable
+    MultiplayerAPI::RPCMode get_rset_mode(
+        const StringName& p_variable
     ) const override;
     ScriptLanguage* get_language() override;
 
@@ -340,15 +346,20 @@ public:
     Script* create_script() const override;
     bool has_named_classes() const override;
     bool supports_builtin_mode() const override;
-    int find_function(const String& p_function, const String& p_code)
-        const override;
+    int find_function(
+        const String& p_function,
+        const String& p_code
+    ) const override;
     String make_function(
         const String& p_class,
         const String& p_name,
         const PoolStringArray& p_args
     ) const override;
-    void auto_indent_code(String& p_code, int p_from_line, int p_to_line)
-        const override;
+    void auto_indent_code(
+        String& p_code,
+        int p_from_line,
+        int p_to_line
+    ) const override;
     void add_global_constant(
         const StringName& p_variable,
         const Variant& p_value
@@ -385,11 +396,14 @@ public:
         int p_max_depth
     ) override;
     void reload_all_scripts() override;
-    void reload_tool_script(const Ref<Script>& p_script, bool p_soft_reload)
-        override;
+    void reload_tool_script(
+        const Ref<Script>& p_script,
+        bool p_soft_reload
+    ) override;
     void get_recognized_extensions(List<String>* p_extensions) const override;
     void get_public_functions(List<MethodInfo>* p_functions) const override;
-    void get_public_constants(List<Pair<String, Variant>>* p_constants
+    void get_public_constants(
+        List<Pair<String, Variant>>* p_constants
     ) const override;
     void profiling_start() override;
     void profiling_stop() override;
@@ -397,8 +411,10 @@ public:
         ProfilingInfo* p_info_arr,
         int p_info_max
     ) override;
-    int profiling_get_frame_data(ProfilingInfo* p_info_arr, int p_info_max)
-        override;
+    int profiling_get_frame_data(
+        ProfilingInfo* p_info_arr,
+        int p_info_max
+    ) override;
 
     int register_binding_functions(
         rebel_instance_binding_functions p_binding_functions

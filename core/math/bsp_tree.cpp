@@ -157,8 +157,10 @@ int BSP_Tree::_get_points_inside(
     }
 }
 
-int BSP_Tree::get_points_inside(const Vector3* p_points, int p_point_count)
-    const {
+int BSP_Tree::get_points_inside(
+    const Vector3* p_points,
+    int p_point_count
+) const {
     if (nodes.size() == 0) {
         return 0;
     }

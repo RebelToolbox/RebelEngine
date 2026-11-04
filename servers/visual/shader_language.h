@@ -793,8 +793,10 @@ private:
 
     List<VaryingUsage> unknown_varying_usages;
 
-    bool _check_varying_usages(int* r_error_line, String* r_error_message)
-        const;
+    bool _check_varying_usages(
+        int* r_error_line,
+        String* r_error_message
+    ) const;
 
     TkPos _get_tkpos() {
         TkPos tkp;

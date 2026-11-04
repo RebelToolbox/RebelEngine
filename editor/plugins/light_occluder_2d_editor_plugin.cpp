@@ -50,8 +50,10 @@ Variant LightOccluder2DEditor::_get_polygon(int p_idx) const {
     }
 }
 
-void LightOccluder2DEditor::_set_polygon(int p_idx, const Variant& p_polygon)
-    const {
+void LightOccluder2DEditor::_set_polygon(
+    int p_idx,
+    const Variant& p_polygon
+) const {
     Ref<OccluderPolygon2D> occluder = _ensure_occluder();
     occluder->set_polygon(p_polygon);
 }

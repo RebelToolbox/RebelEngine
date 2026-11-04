@@ -839,8 +839,10 @@ protected:
     void _notification(int p_what);
 
 public:
-    bool can_drop_data(const Point2& p_point, const Variant& p_data)
-        const override;
+    bool can_drop_data(
+        const Point2& p_point,
+        const Variant& p_data
+    ) const override;
     void drop_data(const Point2& p_point, const Variant& p_data) override;
 
     CanvasItemEditorViewport(

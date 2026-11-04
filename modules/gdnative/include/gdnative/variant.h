@@ -229,8 +229,8 @@ rebel_string GDAPI rebel_variant_as_string(const rebel_variant* p_self);
 rebel_vector2 GDAPI rebel_variant_as_vector2(const rebel_variant* p_self);
 rebel_rect2 GDAPI rebel_variant_as_rect2(const rebel_variant* p_self);
 rebel_vector3 GDAPI rebel_variant_as_vector3(const rebel_variant* p_self);
-rebel_transform2d GDAPI rebel_variant_as_transform2d(const rebel_variant* p_self
-);
+rebel_transform2d GDAPI
+rebel_variant_as_transform2d(const rebel_variant* p_self);
 rebel_plane GDAPI rebel_variant_as_plane(const rebel_variant* p_self);
 rebel_quat GDAPI rebel_variant_as_quat(const rebel_variant* p_self);
 rebel_aabb GDAPI rebel_variant_as_aabb(const rebel_variant* p_self);

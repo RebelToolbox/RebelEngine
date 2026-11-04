@@ -72,8 +72,10 @@ bool InputDefault::is_joy_button_pressed(int p_device, int p_button) const {
     return joy_buttons_pressed.has(_combine_device(p_button, p_device));
 }
 
-bool InputDefault::is_action_pressed(const StringName& p_action, bool p_exact)
-    const {
+bool InputDefault::is_action_pressed(
+    const StringName& p_action,
+    bool p_exact
+) const {
     ERR_FAIL_COND_V_MSG(
         !InputMap::get_singleton()->has_action(p_action),
         false,
@@ -1143,8 +1145,8 @@ InputDefault::JoyEvent InputDefault::_get_mapped_axis_event(
             }
             if (binding.input.axis.range == FULL_AXIS
                 || (binding.input.axis.range == POSITIVE_HALF_AXIS && value > 0)
-                || (binding.input.axis.range == NEGATIVE_HALF_AXIS && value < 0
-                )) {
+                || (binding.input.axis.range == NEGATIVE_HALF_AXIS
+                    && value < 0)) {
                 event.type                   = binding.outputType;
                 float shifted_positive_value = 0;
                 switch (binding.input.axis.range) {

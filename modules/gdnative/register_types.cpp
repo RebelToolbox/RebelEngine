@@ -242,7 +242,8 @@ static void editor_init_callback() {
     GDNativeLibrarySingletonEditor* library_editor =
         memnew(GDNativeLibrarySingletonEditor);
     library_editor->set_name(TTR("GDNative"));
-    ProjectSettingsEditor::get_singleton()->get_tabs()->add_child(library_editor
+    ProjectSettingsEditor::get_singleton()->get_tabs()->add_child(
+        library_editor
     );
 
     Ref<GDNativeExportPlugin> export_plugin;
@@ -313,9 +314,9 @@ void register_gdnative_types() {
     if (ProjectSettings::get_singleton()->has_setting(
             "gdnative/singletons_disabled"
         )) {
-        excluded =
-            ProjectSettings::get_singleton()->get("gdnative/singletons_disabled"
-            );
+        excluded = ProjectSettings::get_singleton()->get(
+            "gdnative/singletons_disabled"
+        );
     }
 
     for (int i = 0; i < singletons.size(); i++) {

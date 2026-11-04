@@ -757,7 +757,8 @@ void AudioStreamPlayer3D::set_stream(Ref<AudioStream> p_stream) {
 
     AudioServer::get_singleton()->lock();
 
-    mix_buffer.resize(AudioServer::get_singleton()->thread_get_mix_buffer_size()
+    mix_buffer.resize(
+        AudioServer::get_singleton()->thread_get_mix_buffer_size()
     );
 
     if (stream_playback.is_valid()) {
@@ -997,8 +998,8 @@ void AudioStreamPlayer3D::set_out_of_range_mode(OutOfRangeMode p_mode) {
     out_of_range_mode = p_mode;
 }
 
-AudioStreamPlayer3D::OutOfRangeMode AudioStreamPlayer3D::get_out_of_range_mode(
-) const {
+AudioStreamPlayer3D::OutOfRangeMode AudioStreamPlayer3D::
+    get_out_of_range_mode() const {
     return out_of_range_mode;
 }
 
@@ -1022,8 +1023,8 @@ void AudioStreamPlayer3D::set_doppler_tracking(DopplerTracking p_tracking) {
     }
 }
 
-AudioStreamPlayer3D::DopplerTracking AudioStreamPlayer3D::get_doppler_tracking(
-) const {
+AudioStreamPlayer3D::DopplerTracking AudioStreamPlayer3D::
+    get_doppler_tracking() const {
     return doppler_tracking;
 }
 

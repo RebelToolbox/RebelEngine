@@ -433,7 +433,8 @@ void EditorSpatialGizmo::add_collision_triangles(
     collision_mesh = p_tmesh;
 }
 
-void EditorSpatialGizmo::add_collision_segments(const Vector<Vector3>& p_lines
+void EditorSpatialGizmo::add_collision_segments(
+    const Vector<Vector3>& p_lines
 ) {
     int from = collision_segments.size();
     collision_segments.resize(from + p_lines.size());
@@ -1522,7 +1523,8 @@ void AudioStreamPlayer3DSpatialGizmoPlugin::commit_handle(
     }
 }
 
-void AudioStreamPlayer3DSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo
+void AudioStreamPlayer3DSpatialGizmoPlugin::redraw(
+    EditorSpatialGizmo* p_gizmo
 ) {
     const AudioStreamPlayer3D* player =
         Object::cast_to<AudioStreamPlayer3D>(p_gizmo->get_spatial_node());
@@ -1998,24 +2000,42 @@ Position3DSpatialGizmoPlugin::Position3DSpatialGizmoPlugin() {
     cursor_points.push_back(Vector3(0, -cs, 0));
     cursor_points.push_back(Vector3(0, 0, +cs));
     cursor_points.push_back(Vector3(0, 0, -cs));
-    cursor_colors.push_back(EditorNode::get_singleton()
-                                ->get_gui_base()
-                                ->get_color("axis_x_color", "Editor"));
-    cursor_colors.push_back(EditorNode::get_singleton()
-                                ->get_gui_base()
-                                ->get_color("axis_x_color", "Editor"));
-    cursor_colors.push_back(EditorNode::get_singleton()
-                                ->get_gui_base()
-                                ->get_color("axis_y_color", "Editor"));
-    cursor_colors.push_back(EditorNode::get_singleton()
-                                ->get_gui_base()
-                                ->get_color("axis_y_color", "Editor"));
-    cursor_colors.push_back(EditorNode::get_singleton()
-                                ->get_gui_base()
-                                ->get_color("axis_z_color", "Editor"));
-    cursor_colors.push_back(EditorNode::get_singleton()
-                                ->get_gui_base()
-                                ->get_color("axis_z_color", "Editor"));
+    cursor_colors.push_back(
+        EditorNode::get_singleton()->get_gui_base()->get_color(
+            "axis_x_color",
+            "Editor"
+        )
+    );
+    cursor_colors.push_back(
+        EditorNode::get_singleton()->get_gui_base()->get_color(
+            "axis_x_color",
+            "Editor"
+        )
+    );
+    cursor_colors.push_back(
+        EditorNode::get_singleton()->get_gui_base()->get_color(
+            "axis_y_color",
+            "Editor"
+        )
+    );
+    cursor_colors.push_back(
+        EditorNode::get_singleton()->get_gui_base()->get_color(
+            "axis_y_color",
+            "Editor"
+        )
+    );
+    cursor_colors.push_back(
+        EditorNode::get_singleton()->get_gui_base()->get_color(
+            "axis_z_color",
+            "Editor"
+        )
+    );
+    cursor_colors.push_back(
+        EditorNode::get_singleton()->get_gui_base()->get_color(
+            "axis_z_color",
+            "Editor"
+        )
+    );
 
     Ref<SpatialMaterial> mat = memnew(SpatialMaterial);
     mat->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
@@ -2253,7 +2273,8 @@ void PhysicalBoneSpatialGizmoPlugin::redraw(EditorSpatialGizmo* p_gizmo) {
         return;
     }
 
-    PhysicalBone* pbp(sk->get_physical_bone_parent(physical_bone->get_bone_id())
+    PhysicalBone* pbp(
+        sk->get_physical_bone_parent(physical_bone->get_bone_id())
     );
     if (!pbp) {
         return;
@@ -4901,26 +4922,26 @@ void JointGizmosDrawer::draw_circle(
                             p_base.xform(Vector3(0, Math::sin(n), Math::cos(n)))
                             * p_radius;
                     } else {
-                        from =
-                            p_base.xform(Vector3(0, -Math::sin(s), Math::cos(s))
-                            )
-                            * p_radius;
-                        to =
-                            p_base.xform(Vector3(0, -Math::sin(n), Math::cos(n))
-                            )
-                            * p_radius;
+                        from = p_base.xform(
+                                   Vector3(0, -Math::sin(s), Math::cos(s))
+                               )
+                             * p_radius;
+                        to = p_base.xform(
+                                 Vector3(0, -Math::sin(n), Math::cos(n))
+                             )
+                           * p_radius;
                     }
                     break;
                 case Vector3::AXIS_Y:
                     if (p_inverse) {
-                        from =
-                            p_base.xform(Vector3(Math::cos(s), 0, -Math::sin(s))
-                            )
-                            * p_radius;
-                        to =
-                            p_base.xform(Vector3(Math::cos(n), 0, -Math::sin(n))
-                            )
-                            * p_radius;
+                        from = p_base.xform(
+                                   Vector3(Math::cos(s), 0, -Math::sin(s))
+                               )
+                             * p_radius;
+                        to = p_base.xform(
+                                 Vector3(Math::cos(n), 0, -Math::sin(n))
+                             )
+                           * p_radius;
                     } else {
                         from =
                             p_base.xform(Vector3(Math::cos(s), 0, Math::sin(s)))
@@ -5775,7 +5796,8 @@ void RoomSpatialGizmo::redraw() {
             const Geometry::MeshData::Face& face = md_overlap.faces[f];
 
             for (int c = 0; c < face.indices.size() - 2; c++) {
-                pts.push_back(tr_inv.xform(md_overlap.vertices[face.indices[0]])
+                pts.push_back(
+                    tr_inv.xform(md_overlap.vertices[face.indices[0]])
                 );
                 pts.push_back(
                     tr_inv.xform(md_overlap.vertices[face.indices[c + 1]])
@@ -6386,8 +6408,8 @@ OccluderShapeSphere* OccluderSpatialGizmo::get_occluder_shape_sphere() {
     return occ_sphere;
 }
 
-const OccluderShapeSphere* OccluderSpatialGizmo::get_occluder_shape_sphere(
-) const {
+const OccluderShapeSphere* OccluderSpatialGizmo::
+    get_occluder_shape_sphere() const {
     if (!_occluder) {
         return nullptr;
     }

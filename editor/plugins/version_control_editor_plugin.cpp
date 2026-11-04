@@ -315,25 +315,36 @@ void VersionControlEditorPlugin::_display_file_diff(String p_file_path) {
     diff_file_name->set_text(p_file_path);
 
     diff->clear();
-    diff->push_font(EditorNode::get_singleton()->get_gui_base()->get_font(
-        "source",
-        "EditorFonts"
-    ));
+    diff->push_font(
+        EditorNode::get_singleton()->get_gui_base()->get_font(
+            "source",
+            "EditorFonts"
+        )
+    );
     for (int i = 0; i < diff_content.size(); i++) {
         Dictionary line_result = diff_content[i];
 
         if (line_result["status"] == "+") {
-            diff->push_color(EditorNode::get_singleton()
-                                 ->get_gui_base()
-                                 ->get_color("success_color", "Editor"));
+            diff->push_color(
+                EditorNode::get_singleton()->get_gui_base()->get_color(
+                    "success_color",
+                    "Editor"
+                )
+            );
         } else if (line_result["status"] == "-") {
-            diff->push_color(EditorNode::get_singleton()
-                                 ->get_gui_base()
-                                 ->get_color("error_color", "Editor"));
+            diff->push_color(
+                EditorNode::get_singleton()->get_gui_base()->get_color(
+                    "error_color",
+                    "Editor"
+                )
+            );
         } else {
-            diff->push_color(EditorNode::get_singleton()
-                                 ->get_gui_base()
-                                 ->get_color("font_color", "Label"));
+            diff->push_color(
+                EditorNode::get_singleton()->get_gui_base()->get_color(
+                    "font_color",
+                    "Label"
+                )
+            );
         }
 
         diff->add_text((String)line_result["content"]);
@@ -539,7 +550,8 @@ VersionControlEditorPlugin::VersionControlEditorPlugin() {
     version_commit_dock->add_child(commit_box_vbc);
 
     stage_tools = memnew(HSplitContainer);
-    stage_tools->set_dragger_visibility(SplitContainer::DRAGGER_HIDDEN_COLLAPSED
+    stage_tools->set_dragger_visibility(
+        SplitContainer::DRAGGER_HIDDEN_COLLAPSED
     );
     commit_box_vbc->add_child(stage_tools);
 
@@ -551,9 +563,12 @@ VersionControlEditorPlugin::VersionControlEditorPlugin() {
     refresh_button = memnew(Button);
     refresh_button->set_tooltip(TTR("Detect new changes"));
     refresh_button->set_text(TTR("Refresh"));
-    refresh_button->set_icon(EditorNode::get_singleton()
-                                 ->get_gui_base()
-                                 ->get_icon("Reload", "EditorIcons"));
+    refresh_button->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "Reload",
+            "EditorIcons"
+        )
+    );
     refresh_button->connect("pressed", this, "_refresh_stage_area");
     stage_tools->add_child(refresh_button);
 
@@ -681,9 +696,12 @@ VersionControlEditorPlugin::VersionControlEditorPlugin() {
 
     diff_refresh_button = memnew(Button);
     diff_refresh_button->set_tooltip(TTR("Detect changes in file diff"));
-    diff_refresh_button->set_icon(EditorNode::get_singleton()
-                                      ->get_gui_base()
-                                      ->get_icon("Reload", "EditorIcons"));
+    diff_refresh_button->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "Reload",
+            "EditorIcons"
+        )
+    );
     diff_refresh_button->connect("pressed", this, "_refresh_file_diff");
     diff_hbc->add_child(diff_refresh_button);
 

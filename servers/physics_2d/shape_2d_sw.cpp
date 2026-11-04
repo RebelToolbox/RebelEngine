@@ -104,8 +104,10 @@ bool LineShape2DSW::intersect_segment(
     return true;
 }
 
-real_t LineShape2DSW::get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-    const {
+real_t LineShape2DSW::get_moment_of_inertia(
+    real_t p_mass,
+    const Size2& p_scale
+) const {
     return 0;
 }
 
@@ -157,8 +159,10 @@ bool RayShape2DSW::intersect_segment(
     return false; // rays can't be intersected
 }
 
-real_t RayShape2DSW::get_moment_of_inertia(real_t p_mass, const Size2& p_scale)
-    const {
+real_t RayShape2DSW::get_moment_of_inertia(
+    real_t p_mass,
+    const Size2& p_scale
+) const {
     return 0; // rays are mass-less
 }
 

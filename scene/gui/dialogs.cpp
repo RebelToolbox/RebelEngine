@@ -205,7 +205,8 @@ void WindowDialog::_notification(int p_what) {
         case NOTIFICATION_THEME_CHANGED:
         case NOTIFICATION_ENTER_TREE: {
             close_button->set_normal_texture(get_icon("close", "WindowDialog"));
-            close_button->set_pressed_texture(get_icon("close", "WindowDialog")
+            close_button->set_pressed_texture(
+                get_icon("close", "WindowDialog")
             );
             close_button->set_hover_texture(
                 get_icon("close_highlight", "WindowDialog")

@@ -6,7 +6,8 @@
 
 #include "animation_blend_space_1d.h"
 
-void AnimationNodeBlendSpace1D::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeBlendSpace1D::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     r_list->push_back(PropertyInfo(Variant::REAL, blend_position));
 }
@@ -23,7 +24,8 @@ Ref<AnimationNode> AnimationNodeBlendSpace1D::get_child_by_name(
     return get_blend_point_node(p_name.operator String().to_int());
 }
 
-void AnimationNodeBlendSpace1D::_validate_property(PropertyInfo& property
+void AnimationNodeBlendSpace1D::_validate_property(
+    PropertyInfo& property
 ) const {
     if (property.name.begins_with("blend_point_")) {
         String left = property.name.get_slicec('/', 0);
@@ -189,7 +191,8 @@ void AnimationNodeBlendSpace1D::_bind_methods() {
     );
 }
 
-void AnimationNodeBlendSpace1D::get_child_nodes(List<ChildNode>* r_child_nodes
+void AnimationNodeBlendSpace1D::get_child_nodes(
+    List<ChildNode>* r_child_nodes
 ) {
     for (int i = 0; i < blend_points_used; i++) {
         ChildNode cn;

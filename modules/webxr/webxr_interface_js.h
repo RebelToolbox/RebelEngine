@@ -43,7 +43,8 @@ public:
     String get_requested_reference_space_types() const override;
     void _set_reference_space_type(String p_reference_space_type);
     String get_reference_space_type() const override;
-    Ref<ARVRPositionalTracker> get_controller(int p_controller_id
+    Ref<ARVRPositionalTracker> get_controller(
+        int p_controller_id
     ) const override;
     String get_visibility_state() const override;
     PoolVector3Array get_bounds_geometry() const override;
@@ -67,7 +68,8 @@ public:
         real_t p_z_near,
         real_t p_z_far
     ) override;
-    unsigned int get_external_texture_for_eye(ARVRInterface::Eyes p_eye
+    unsigned int get_external_texture_for_eye(
+        ARVRInterface::Eyes p_eye
     ) override;
     void commit_for_eye(
         ARVRInterface::Eyes p_eye,

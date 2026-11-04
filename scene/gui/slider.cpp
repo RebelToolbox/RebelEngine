@@ -197,8 +197,8 @@ void Slider::_notification(int p_what) {
 
                 if (ticks > 1) {
                     int grabber_offset =
-                        (grabber->get_size().height / 2 - tick->get_height() / 2
-                        );
+                        (grabber->get_size().height / 2
+                         - tick->get_height() / 2);
                     for (int i = 0; i < ticks; i++) {
                         if (!ticks_on_borders && (i == 0 || i + 1 == ticks)) {
                             continue;

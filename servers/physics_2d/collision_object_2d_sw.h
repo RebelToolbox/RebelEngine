@@ -140,7 +140,8 @@ public:
         return shapes[p_index].xform;
     }
 
-    _FORCE_INLINE_ const Transform2D& get_shape_inv_transform(int p_index
+    _FORCE_INLINE_ const Transform2D& get_shape_inv_transform(
+        int p_index
     ) const {
         CRASH_BAD_INDEX(p_index, shapes.size());
         return shapes[p_index].xform_inv;
@@ -232,7 +233,8 @@ public:
         return pickable;
     }
 
-    _FORCE_INLINE_ bool test_collision_mask(CollisionObject2DSW* p_other
+    _FORCE_INLINE_ bool test_collision_mask(
+        CollisionObject2DSW* p_other
     ) const {
         return collision_layer & p_other->collision_mask
             || p_other->collision_layer & collision_mask;

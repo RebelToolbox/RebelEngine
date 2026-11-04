@@ -19,8 +19,10 @@ class BitMap : public Resource {
     int width;
     int height;
 
-    Vector<Vector2> _march_square(const Rect2i& rect, const Point2i& start)
-        const;
+    Vector<Vector2> _march_square(
+        const Rect2i& rect,
+        const Point2i& start
+    ) const;
 
     Array _opaque_to_polygons_bind(const Rect2& p_rect, float p_epsilon) const;
 

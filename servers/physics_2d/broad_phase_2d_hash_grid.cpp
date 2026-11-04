@@ -118,8 +118,8 @@ void BroadPhase2DHashGrid::_enter_grid(
     bool p_force_enter
 ) {
     Vector2 sz =
-        (p_rect.size / cell_size * LARGE_ELEMENT_FI
-        ); // use magic number to avoid floating point issues
+        (p_rect.size / cell_size
+         * LARGE_ELEMENT_FI); // use magic number to avoid floating point issues
     if (sz.width * sz.height > large_object_min_surface) {
         // large object, do not use grid, must check against all elements
         for (Map<ID, Element>::Element* E = element_map.front(); E;

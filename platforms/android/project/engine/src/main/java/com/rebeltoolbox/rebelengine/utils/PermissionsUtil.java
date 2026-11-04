@@ -101,7 +101,8 @@ public final class PermissionsUtil {
             return false;
         }
 
-        if (manifestPermissions.length == 0) return true;
+        if (manifestPermissions.length == 0)
+            return true;
 
         List<String> dangerousPermissions = new ArrayList<>();
         for (String manifestPermission : manifestPermissions) {
@@ -157,7 +158,8 @@ public final class PermissionsUtil {
             e.printStackTrace();
             return new String[0];
         }
-        if (manifestPermissions.length == 0) return manifestPermissions;
+        if (manifestPermissions.length == 0)
+            return manifestPermissions;
 
         List<String> dangerousPermissions = new ArrayList<>();
         for (String manifestPermission : manifestPermissions) {
@@ -201,7 +203,8 @@ public final class PermissionsUtil {
     ) {
         try {
             for (String p : getManifestPermissions(activity)) {
-                if (permission.equals(p)) return true;
+                if (permission.equals(p))
+                    return true;
             }
         } catch (PackageManager.NameNotFoundException e) {}
 
@@ -222,7 +225,8 @@ public final class PermissionsUtil {
             activity.getPackageName(),
             PackageManager.GET_PERMISSIONS
         );
-        if (packageInfo.requestedPermissions == null) return new String[0];
+        if (packageInfo.requestedPermissions == null)
+            return new String[0];
         return packageInfo.requestedPermissions;
     }
 

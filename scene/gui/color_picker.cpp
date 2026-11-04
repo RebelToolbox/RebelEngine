@@ -964,7 +964,8 @@ void ColorPicker::_bind_methods() {
     ADD_SIGNAL(
         MethodInfo("color_changed", PropertyInfo(Variant::COLOR, "color"))
     );
-    ADD_SIGNAL(MethodInfo("preset_added", PropertyInfo(Variant::COLOR, "color"))
+    ADD_SIGNAL(
+        MethodInfo("preset_added", PropertyInfo(Variant::COLOR, "color"))
     );
     ADD_SIGNAL(
         MethodInfo("preset_removed", PropertyInfo(Variant::COLOR, "color"))
@@ -1034,7 +1035,8 @@ ColorPicker::ColorPicker() : BoxContainer(true) {
         HBoxContainer* hbc = memnew(HBoxContainer);
 
         labels[i] = memnew(Label());
-        labels[i]->set_custom_minimum_size(Size2(get_constant("label_width"), 0)
+        labels[i]->set_custom_minimum_size(
+            Size2(get_constant("label_width"), 0)
         );
         labels[i]->set_v_size_flags(SIZE_SHRINK_CENTER);
         hbc->add_child(labels[i]);
@@ -1087,7 +1089,8 @@ ColorPicker::ColorPicker() : BoxContainer(true) {
     text_type->set_tooltip(TTR("Switch between hexadecimal and code values."));
     if (Engine::get_singleton()->is_editor_hint()) {
 #ifdef TOOLS_ENABLED
-        text_type->set_custom_minimum_size(Size2(28 * EDSCALE, 0)
+        text_type->set_custom_minimum_size(
+            Size2(28 * EDSCALE, 0)
         ); // Adjust for the width of the "Script" icon.
 #endif
         text_type->connect("pressed", this, "_text_type_toggled");

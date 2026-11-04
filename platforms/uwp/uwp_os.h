@@ -168,8 +168,10 @@ public:
     // Event to send to the app wrapper
     HANDLE mouse_mode_changed;
 
-    void alert(const String& p_alert, const String& p_title = "ALERT!")
-        override;
+    void alert(
+        const String& p_alert,
+        const String& p_title = "ALERT!"
+    ) override;
     String get_stdin_string(bool p_block);
 
     void set_mouse_mode(MouseMode p_mode);
@@ -179,11 +181,15 @@ public:
     int get_mouse_button_state() const override;
     void set_window_title(const String& p_title) override;
 
-    void set_video_mode(const VideoMode& p_video_mode, int p_screen = 0)
-        override;
+    void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    ) override;
     VideoMode get_video_mode(int p_screen = 0) const override;
-    void get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen = 0)
-        const override;
+    void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const override;
     Size2 get_window_size() const override;
     void set_window_size(const Size2 p_size) override;
     void set_window_fullscreen(bool p_enabled) override;
@@ -219,8 +225,10 @@ public:
 
     bool has_environment(const String& p_var) const override;
     String get_environment(const String& p_var) const override;
-    bool set_environment(const String& p_var, const String& p_value)
-        const override;
+    bool set_environment(
+        const String& p_var,
+        const String& p_value
+    ) const override;
 
     void set_clipboard(const String& p_text) override;
     String get_clipboard() const override;

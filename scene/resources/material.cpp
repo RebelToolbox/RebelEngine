@@ -2108,8 +2108,8 @@ void SpatialMaterial::set_metallic_texture_channel(TextureChannel p_channel) {
     );
 }
 
-SpatialMaterial::TextureChannel SpatialMaterial::get_metallic_texture_channel(
-) const {
+SpatialMaterial::TextureChannel SpatialMaterial::
+    get_metallic_texture_channel() const {
     return metallic_texture_channel;
 }
 
@@ -2123,8 +2123,8 @@ void SpatialMaterial::set_roughness_texture_channel(TextureChannel p_channel) {
     );
 }
 
-SpatialMaterial::TextureChannel SpatialMaterial::get_roughness_texture_channel(
-) const {
+SpatialMaterial::TextureChannel SpatialMaterial::
+    get_roughness_texture_channel() const {
     return roughness_texture_channel;
 }
 
@@ -2138,8 +2138,8 @@ void SpatialMaterial::set_ao_texture_channel(TextureChannel p_channel) {
     );
 }
 
-SpatialMaterial::TextureChannel SpatialMaterial::get_ao_texture_channel(
-) const {
+SpatialMaterial::TextureChannel SpatialMaterial::
+    get_ao_texture_channel() const {
     return ao_texture_channel;
 }
 
@@ -2153,8 +2153,8 @@ void SpatialMaterial::set_refraction_texture_channel(TextureChannel p_channel) {
     );
 }
 
-SpatialMaterial::TextureChannel SpatialMaterial::get_refraction_texture_channel(
-) const {
+SpatialMaterial::TextureChannel SpatialMaterial::
+    get_refraction_texture_channel() const {
     return refraction_texture_channel;
 }
 
@@ -2294,8 +2294,8 @@ void SpatialMaterial::set_emission_operator(EmissionOperator p_op) {
     _queue_shader_change();
 }
 
-SpatialMaterial::EmissionOperator SpatialMaterial::get_emission_operator(
-) const {
+SpatialMaterial::EmissionOperator SpatialMaterial::
+    get_emission_operator() const {
     return emission_op;
 }
 

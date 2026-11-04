@@ -295,8 +295,10 @@ public:
     virtual bool clips_input() const;
     virtual void set_drag_forwarding(Control* p_target);
     virtual Variant get_drag_data(const Point2& p_point);
-    virtual bool can_drop_data(const Point2& p_point, const Variant& p_data)
-        const;
+    virtual bool can_drop_data(
+        const Point2& p_point,
+        const Variant& p_data
+    ) const;
     virtual void drop_data(const Point2& p_point, const Variant& p_data);
     void set_drag_preview(Control* p_control);
     void force_drag(const Variant& p_data, Control* p_control);
@@ -360,8 +362,8 @@ public:
 
     Rect2 get_rect() const;
     Rect2 get_global_rect() const;
-    Rect2 get_window_rect(
-    ) const; ///< use with care, as it blocks waiting for the visual server
+    Rect2 get_window_rect() const; ///< use with care, as it blocks waiting for
+                                   ///< the visual server
     Rect2 get_anchorable_rect() const override;
 
     void set_rotation(float p_radians);

@@ -49,7 +49,8 @@ void Area2DSW::set_transform(const Transform2D& p_transform) {
 void Area2DSW::set_space(Space2DSW* p_space) {
     if (get_space()) {
         if (monitor_query_list.is_in_list()) {
-            get_space()->area_remove_from_monitor_query_list(&monitor_query_list
+            get_space()->area_remove_from_monitor_query_list(
+                &monitor_query_list
             );
         }
         if (moved_list.is_in_list()) {
@@ -113,8 +114,8 @@ void Area2DSW::set_space_override_mode(
 ) {
     bool do_override = p_mode != Physics2DServer::AREA_SPACE_OVERRIDE_DISABLED;
     if (do_override
-        == (space_override_mode != Physics2DServer::AREA_SPACE_OVERRIDE_DISABLED
-        )) {
+        == (space_override_mode
+            != Physics2DServer::AREA_SPACE_OVERRIDE_DISABLED)) {
         return;
     }
     _unregister_shapes();

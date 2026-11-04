@@ -36,8 +36,10 @@ protected:
 public:
 #ifdef TOOLS_ENABLED
     Rect2 _edit_get_rect() const;
-    bool _edit_is_selected_on_click(const Point2& p_point, double p_tolerance)
-        const;
+    bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const;
 #endif
 
     void set_vertices(const PoolVector<Vector2>& p_vertices);
@@ -84,8 +86,10 @@ protected:
 public:
 #ifdef TOOLS_ENABLED
     Rect2 _edit_get_rect() const override;
-    bool _edit_is_selected_on_click(const Point2& p_point, double p_tolerance)
-        const override;
+    bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const override;
 #endif
 
     void set_enabled(bool p_enabled);

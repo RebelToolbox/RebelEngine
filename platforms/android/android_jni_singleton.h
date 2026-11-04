@@ -103,16 +103,18 @@ public:
                 env->DeleteLocalRef(o);
             } break;
             case Variant::POOL_STRING_ARRAY: {
-                jobjectArray arr = (jobjectArray
-                )env->CallObjectMethodA(instance, E->get().method, v);
+                jobjectArray arr =
+                    (jobjectArray)
+                        env->CallObjectMethodA(instance, E->get().method, v);
 
                 ret = _jobject_to_variant(env, arr);
 
                 env->DeleteLocalRef(arr);
             } break;
             case Variant::POOL_INT_ARRAY: {
-                jintArray arr = (jintArray
-                )env->CallObjectMethodA(instance, E->get().method, v);
+                jintArray arr =
+                    (jintArray)
+                        env->CallObjectMethodA(instance, E->get().method, v);
 
                 int fCount = env->GetArrayLength(arr);
                 PoolVector<int> sarr;
@@ -125,8 +127,9 @@ public:
                 env->DeleteLocalRef(arr);
             } break;
             case Variant::POOL_REAL_ARRAY: {
-                jfloatArray arr = (jfloatArray
-                )env->CallObjectMethodA(instance, E->get().method, v);
+                jfloatArray arr =
+                    (jfloatArray)
+                        env->CallObjectMethodA(instance, E->get().method, v);
 
                 int fCount = env->GetArrayLength(arr);
                 PoolVector<float> sarr;

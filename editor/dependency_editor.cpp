@@ -39,7 +39,8 @@ void DependencyEditor::_load_pressed(Object* p_item, int p_cell, int p_button) {
     for (List<String>::Element* E = ext.front(); E; E = E->next()) {
         search->add_filter("*" + E->get());
     }
-    search->popup_centered_ratio(0.65f
+    search->popup_centered_ratio(
+        0.65f
     ); // So it doesn't completely cover the dialog below it.
 }
 
@@ -196,7 +197,8 @@ void DependencyEditor::edit(const String& p_path) {
     set_title(TTR("Dependencies For:") + " " + p_path.get_file());
 
     _update_list();
-    popup_centered_ratio(0.7f
+    popup_centered_ratio(
+        0.7f
     ); // So it doesn't completely cover the dialog below it.
 
     if (EditorNode::get_singleton()->is_scene_open(p_path)) {
@@ -380,7 +382,8 @@ void DependencyRemoveDialog::_find_files_in_removed_folder(
     }
     for (int i = 0; i < efsd->get_file_count(); i++) {
         String file = efsd->get_file_path(i);
-        ERR_FAIL_COND(all_remove_files.has(file)
+        ERR_FAIL_COND(
+            all_remove_files.has(file)
         ); // We are deleting a directory which is contained in a directory we
            // are deleting...
         all_remove_files[file] =
@@ -538,7 +541,8 @@ void DependencyRemoveDialog::ok_pressed() {
         // environment, or audio bus layout, we must clear its definition in
         // Project Settings.
         if (files_to_delete[i]
-            == ProjectSettings::get_singleton()->get("application/config/icon"
+            == ProjectSettings::get_singleton()->get(
+                "application/config/icon"
             )) {
             ProjectSettings::get_singleton()->set(
                 "application/config/icon",
@@ -590,7 +594,8 @@ void DependencyRemoveDialog::ok_pressed() {
             ProjectSettings::get_singleton()->set("gui/theme/custom_font", "");
         }
         if (files_to_delete[i]
-            == ProjectSettings::get_singleton()->get("audio/default_bus_layout"
+            == ProjectSettings::get_singleton()->get(
+                "audio/default_bus_layout"
             )) {
             ProjectSettings::get_singleton()->set(
                 "audio/default_bus_layout",
@@ -658,7 +663,8 @@ void DependencyRemoveDialog::ok_pressed() {
 }
 
 void DependencyRemoveDialog::_bind_methods() {
-    ADD_SIGNAL(MethodInfo("file_removed", PropertyInfo(Variant::STRING, "file"))
+    ADD_SIGNAL(
+        MethodInfo("file_removed", PropertyInfo(Variant::STRING, "file"))
     );
     ADD_SIGNAL(
         MethodInfo("folder_removed", PropertyInfo(Variant::STRING, "folder"))

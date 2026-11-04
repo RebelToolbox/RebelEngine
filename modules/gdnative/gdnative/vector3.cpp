@@ -161,8 +161,8 @@ rebel_vector3_outer(const rebel_vector3* p_self, const rebel_vector3* p_b) {
     return dest;
 }
 
-rebel_basis GDAPI rebel_vector3_to_diagonal_matrix(const rebel_vector3* p_self
-) {
+rebel_basis GDAPI
+rebel_vector3_to_diagonal_matrix(const rebel_vector3* p_self) {
     rebel_basis dest;
     const Vector3* self = (const Vector3*)p_self;
     *((Basis*)&dest)    = self->to_diagonal_matrix();

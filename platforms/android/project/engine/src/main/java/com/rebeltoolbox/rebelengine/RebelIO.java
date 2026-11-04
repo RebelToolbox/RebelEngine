@@ -92,9 +92,11 @@ public class RebelIO {
         AssetDir ad = dirs.get(id);
         // System.out.printf("go next: %d,%d\n",ad.current,ad.files.length);
         int idx     = ad.current;
-        if (idx > 0) idx--;
+        if (idx > 0)
+            idx--;
 
-        if (idx >= ad.files.length) return false;
+        if (idx >= ad.files.length)
+            return false;
         String fname = ad.files[idx];
 
         try {
@@ -249,7 +251,8 @@ public class RebelIO {
     }
 
     public void hideKeyboard() {
-        if (rebelEditText != null) rebelEditText.hideKeyboard();
+        if (rebelEditText != null)
+            rebelEditText.hideKeyboard();
     }
 
     public void setScreenOrientation(int p_orientation) {

@@ -438,8 +438,8 @@ void GDMono::initialize() {
     GDMonoUtils::set_main_thread(GDMonoUtils::get_current_thread());
 
 #if !defined(WEB_ENABLED)
-    gd_mono_setup_runtime_main_args(
-    ); // Required for System.Environment.GetCommandLineArgs
+    gd_mono_setup_runtime_main_args(); // Required for
+                                       // System.Environment.GetCommandLineArgs
 #endif
 
     runtime_initialized = true;
@@ -587,8 +587,8 @@ void GDMono::_init_exception_policy() {
             (int)POLICY_LOG_ERROR
         )
     );
-    unhandled_exception_policy = (UnhandledExceptionPolicy)(int
-    )GLOBAL_DEF(exc_policy_prop.name, (int)POLICY_TERMINATE_APP);
+    unhandled_exception_policy = (UnhandledExceptionPolicy)(int)
+        GLOBAL_DEF(exc_policy_prop.name, (int)POLICY_TERMINATE_APP);
     ProjectSettings::get_singleton()->set_custom_property_info(
         exc_policy_prop.name,
         exc_policy_prop
@@ -739,7 +739,8 @@ ApiAssemblyInfo::Version ApiAssemblyInfo::Version::get_from_loaded_assembly(
             nativecalls_klass->get_field("bindings_version");
         if (binds_ver_field) {
             api_assembly_version.bindings_version =
-                GDMonoMarshal::unbox<uint32_t>(binds_ver_field->get_value(NULL)
+                GDMonoMarshal::unbox<uint32_t>(
+                    binds_ver_field->get_value(NULL)
                 );
         }
 
@@ -747,8 +748,9 @@ ApiAssemblyInfo::Version ApiAssemblyInfo::Version::get_from_loaded_assembly(
             nativecalls_klass->get_field("cs_glue_version");
         if (cs_glue_ver_field) {
             api_assembly_version.cs_glue_version =
-                GDMonoMarshal::unbox<uint32_t>(cs_glue_ver_field->get_value(NULL
-                ));
+                GDMonoMarshal::unbox<uint32_t>(
+                    cs_glue_ver_field->get_value(NULL)
+                );
         }
     }
 
@@ -864,18 +866,19 @@ static bool try_get_cached_api_hash_for(
         return false;
     }
 
-    r_out_of_sync = RebelSharpBindings::get_bindings_version()
-                     != (uint32_t)cfg->get_value("core", "bindings_version")
-                 || RebelSharpBindings::get_cs_glue_version()
-                        != (uint32_t)cfg->get_value("core", "cs_glue_version")
-                 || RebelSharpBindings::get_bindings_version(
-                    ) != (uint32_t)cfg->get_value("editor", "bindings_version")
-                 || RebelSharpBindings::get_cs_glue_version()
-                        != (uint32_t)cfg->get_value("editor", "cs_glue_version")
-                 || RebelSharpBindings::get_core_api_hash()
-                        != (uint64_t)cfg->get_value("core", "api_hash")
-                 || RebelSharpBindings::get_editor_api_hash()
-                        != (uint64_t)cfg->get_value("editor", "api_hash");
+    r_out_of_sync =
+        RebelSharpBindings::get_bindings_version()
+            != (uint32_t)cfg->get_value("core", "bindings_version")
+        || RebelSharpBindings::get_cs_glue_version()
+               != (uint32_t)cfg->get_value("core", "cs_glue_version")
+        || RebelSharpBindings::get_bindings_version()
+               != (uint32_t)cfg->get_value("editor", "bindings_version")
+        || RebelSharpBindings::get_cs_glue_version()
+               != (uint32_t)cfg->get_value("editor", "cs_glue_version")
+        || RebelSharpBindings::get_core_api_hash()
+               != (uint64_t)cfg->get_value("core", "api_hash")
+        || RebelSharpBindings::get_editor_api_hash()
+               != (uint64_t)cfg->get_value("editor", "api_hash");
 
     return true;
 }
@@ -936,7 +939,8 @@ static void create_cached_api_hash_for(const String& p_api_assemblies_dir) {
     ERR_FAIL_COND(err != OK);
 }
 
-bool GDMono::_temp_domain_load_are_assemblies_out_of_sync(const String& p_config
+bool GDMono::_temp_domain_load_are_assemblies_out_of_sync(
+    const String& p_config
 ) {
     MonoDomain* temp_domain =
         GDMonoUtils::create_domain("RebelEngine.Domain.CheckApiAssemblies");
@@ -1273,17 +1277,22 @@ void GDMono::_load_api_assemblies() {
 
         if (_are_api_assemblies_out_of_sync()) {
             if (core_api_assembly.out_of_sync) {
-                ERR_PRINT("The assembly '" CORE_API_ASSEMBLY_NAME
-                          "' is out of sync.");
+                ERR_PRINT(
+                    "The assembly '" CORE_API_ASSEMBLY_NAME "' is out of sync."
+                );
             } else if (!GDMonoCache::cached_data.rebel_api_cache_updated) {
-                ERR_PRINT("The loaded assembly '" CORE_API_ASSEMBLY_NAME
-                          "' is in sync, but the cache update failed.");
+                ERR_PRINT(
+                    "The loaded assembly '" CORE_API_ASSEMBLY_NAME
+                    "' is in sync, but the cache update failed."
+                );
             }
 
 #ifdef TOOLS_ENABLED
             if (editor_api_assembly.out_of_sync) {
-                ERR_PRINT("The assembly '" EDITOR_API_ASSEMBLY_NAME
-                          "' is out of sync.");
+                ERR_PRINT(
+                    "The assembly '" EDITOR_API_ASSEMBLY_NAME
+                    "' is out of sync."
+                );
             }
 #endif
 
@@ -1697,14 +1706,16 @@ void _RebelSharp::detach_thread() {
 
 int32_t _RebelSharp::get_domain_id() {
     MonoDomain* domain = mono_domain_get();
-    CRASH_COND(!domain
+    CRASH_COND(
+        !domain
     ); // User must check if runtime is initialized before calling this method
     return mono_domain_get_id(domain);
 }
 
 int32_t _RebelSharp::get_scripts_domain_id() {
     MonoDomain* domain = GDMono::get_singleton()->get_scripts_domain();
-    CRASH_COND(!domain
+    CRASH_COND(
+        !domain
     ); // User must check if scripts domain is loaded before calling this method
     return mono_domain_get_id(domain);
 }

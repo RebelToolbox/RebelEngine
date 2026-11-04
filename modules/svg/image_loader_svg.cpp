@@ -205,7 +205,8 @@ Error ImageLoaderSVG::load_image(
     return _create_image(p_image, &src_image, p_scale, 1.0);
 }
 
-void ImageLoaderSVG::get_recognized_extensions(List<String>* p_extensions
+void ImageLoaderSVG::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("svg");
 }

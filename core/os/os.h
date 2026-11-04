@@ -185,7 +185,8 @@ public:
     virtual Point2 get_mouse_position() const            = 0;
     virtual int get_mouse_button_state() const           = 0;
     virtual void set_window_title(const String& p_title) = 0;
-    virtual void set_window_mouse_passthrough(const PoolVector2Array& p_region
+    virtual void set_window_mouse_passthrough(
+        const PoolVector2Array& p_region
     ) {};
 
     virtual void set_clipboard(const String& p_text);
@@ -438,8 +439,10 @@ public:
 
     virtual bool has_environment(const String& p_var) const   = 0;
     virtual String get_environment(const String& p_var) const = 0;
-    virtual bool set_environment(const String& p_var, const String& p_value)
-        const = 0;
+    virtual bool set_environment(
+        const String& p_var,
+        const String& p_value
+    ) const = 0;
 
     virtual String get_name() const = 0;
 
@@ -624,8 +627,10 @@ public:
         SYSTEM_DIR_RINGTONES,
     };
 
-    virtual String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
-        const;
+    virtual String get_system_dir(
+        SystemDir p_dir,
+        bool p_shared_storage = true
+    ) const;
 
     virtual Error move_to_trash(const String& p_path) {
         return FAILED;

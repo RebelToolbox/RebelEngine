@@ -55,16 +55,20 @@ public:
     bool operator!=(const AABB& p_rval) const;
 
     bool is_equal_approx(const AABB& p_aabb) const;
-    _FORCE_INLINE_ bool intersects(const AABB& p_aabb
+    _FORCE_INLINE_ bool intersects(
+        const AABB& p_aabb
     ) const; /// Both AABBs overlap
-    _FORCE_INLINE_ bool intersects_inclusive(const AABB& p_aabb
+    _FORCE_INLINE_ bool intersects_inclusive(
+        const AABB& p_aabb
     ) const; /// Both AABBs (or their faces) overlap
-    _FORCE_INLINE_ bool encloses(const AABB& p_aabb
+    _FORCE_INLINE_ bool encloses(
+        const AABB& p_aabb
     ) const; /// p_aabb is completely inside this
 
     AABB merge(const AABB& p_with) const;
     void merge_with(const AABB& p_aabb); /// merge with another AABB
-    AABB intersection(const AABB& p_aabb
+    AABB intersection(
+        const AABB& p_aabb
     ) const; /// get box where two intersect, empty if no intersection occurs
     bool intersects_segment(
         const Vector3& p_from,
@@ -120,7 +124,8 @@ public:
         real_t& r_min,
         real_t& r_max
     ) const;
-    _FORCE_INLINE_ void expand_to(const Vector3& p_vector
+    _FORCE_INLINE_ void expand_to(
+        const Vector3& p_vector
     ); /** expand to contain a point if necessary */
     bool create_from_points(const Vector<Vector3>& p_points);
 
