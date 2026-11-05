@@ -1,5 +1,5 @@
 diff --git a/third-party/embree/include/embree4/rtcore_config.h b/third-party/embree/include/embree4/rtcore_config.h
-index eba96698..ef879b74 100644
+index 15566186..26c643be 100644
 --- a/third-party/embree/include/embree4/rtcore_config.h
 +++ b/third-party/embree/include/embree4/rtcore_config.h
 @@ -3,41 +3,42 @@
@@ -12,9 +12,9 @@ index eba96698..ef879b74 100644
 -
  #define RTC_VERSION_MAJOR 4
  #define RTC_VERSION_MINOR 4
- #define RTC_VERSION_PATCH 0
- #define RTC_VERSION 40400
- #define RTC_VERSION_STRING "4.4.0"
+ #define RTC_VERSION_PATCH 1
+ #define RTC_VERSION 40401
+ #define RTC_VERSION_STRING "4.4.1"
  
 -#define RTC_MAX_INSTANCE_LEVEL_COUNT @EMBREE_MAX_INSTANCE_LEVEL_COUNT@
 +// Rebel changes start.
@@ -56,8 +56,8 @@ index eba96698..ef879b74 100644
  #  undef EMBREE_API_NAMESPACE
 +// Rebel changes end.
  #else
+ #  define RTC_NAMESPACE
  #  define RTC_NAMESPACE_BEGIN
- #  define RTC_NAMESPACE_END
 diff --git a/third-party/embree/kernels/config.h b/third-party/embree/kernels/config.h
 index 1669c4af..bb39b590 100644
 --- a/third-party/embree/kernels/config.h
