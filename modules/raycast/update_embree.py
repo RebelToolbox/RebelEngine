@@ -7,7 +7,7 @@ import subprocess
 import sys
 from typing import Any, Callable
 
-git_tag = "v4.4.0"
+git_tag = "v4.4.1"
 
 include_dirs = [
     "common/tasking",

@@ -5,9 +5,9 @@
 
 #define RTC_VERSION_MAJOR 4
 #define RTC_VERSION_MINOR 4
-#define RTC_VERSION_PATCH 0
-#define RTC_VERSION 40400
-#define RTC_VERSION_STRING "4.4.0"
+#define RTC_VERSION_PATCH 1
+#define RTC_VERSION 40401
+#define RTC_VERSION_STRING "4.4.1"
 
 // Rebel changes start.
 #define RTC_MAX_INSTANCE_LEVEL_COUNT 1
@@ -40,6 +40,7 @@
 #  undef EMBREE_API_NAMESPACE
 // Rebel changes end.
 #else
+#  define RTC_NAMESPACE
 #  define RTC_NAMESPACE_BEGIN
 #  define RTC_NAMESPACE_END
 #  define RTC_NAMESPACE_USE
