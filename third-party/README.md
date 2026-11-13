@@ -42,7 +42,7 @@ Files copied from the library source:
 
 - Project: https://www.embree.org/
 - Source: https://github.com/RenderKit/embree
-- Version: 4.4.0 (ff9381774dc99fea81a932ad276677aad6a3d4dd, April 2025)
+- Version: 4.4.1 (f590db83ef6559387df7f6d8725c34fb7acf851d, March 2026)
 - License: Apache 2.0
 
 Files copied from the library source:
