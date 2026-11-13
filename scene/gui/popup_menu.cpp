@@ -60,8 +60,8 @@ Size2 PopupMenu::get_minimum_size() const {
         size.height += vseparation;
 
         if (items[i].accel
-            || (items[i].shortcut.is_valid() && items[i].shortcut->is_valid()
-            )) {
+            || (items[i].shortcut.is_valid()
+                && items[i].shortcut->is_valid())) {
             int accel_w  = hseparation * 2;
             accel_w     += font->get_string_size(_get_accel_text(i)).width;
             accel_max_w  = MAX(accel_w, accel_max_w);
@@ -622,8 +622,8 @@ void PopupMenu::_notification(int p_what) {
                                     Size2(
                                         MAX(0,
                                             get_size().width
-                                                - style->get_margin(MARGIN_RIGHT
-                                                )
+                                                - style
+                                                      ->get_margin(MARGIN_RIGHT)
                                                 - r),
                                         sep_h
                                     )
@@ -1947,7 +1947,8 @@ void PopupMenu::_bind_methods() {
 
     ADD_SIGNAL(MethodInfo("id_pressed", PropertyInfo(Variant::INT, "id")));
     ADD_SIGNAL(MethodInfo("id_focused", PropertyInfo(Variant::INT, "id")));
-    ADD_SIGNAL(MethodInfo("index_pressed", PropertyInfo(Variant::INT, "index"))
+    ADD_SIGNAL(
+        MethodInfo("index_pressed", PropertyInfo(Variant::INT, "index"))
     );
 }
 

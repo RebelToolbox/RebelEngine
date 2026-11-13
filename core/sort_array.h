@@ -160,8 +160,12 @@ public:
         }
     }
 
-    inline void partial_sort(int p_first, int p_last, int p_middle, T* p_array)
-        const {
+    inline void partial_sort(
+        int p_first,
+        int p_last,
+        int p_middle,
+        T* p_array
+    ) const {
         make_heap(p_first, p_middle, p_array);
         for (int i = p_middle; i < p_last; i++) {
             if (compare(p_array[i], p_array[p_first])) {
@@ -185,8 +189,12 @@ public:
         }
     }
 
-    inline int partitioner(int p_first, int p_last, T p_pivot, T* p_array)
-        const {
+    inline int partitioner(
+        int p_first,
+        int p_last,
+        T p_pivot,
+        T* p_array
+    ) const {
         const int unmodified_first = p_first;
         const int unmodified_last  = p_last;
 
@@ -214,8 +222,12 @@ public:
         }
     }
 
-    inline void introsort(int p_first, int p_last, T* p_array, int p_max_depth)
-        const {
+    inline void introsort(
+        int p_first,
+        int p_last,
+        T* p_array,
+        int p_max_depth
+    ) const {
         while (p_last - p_first > INTROSORT_THRESHOLD) {
             if (p_max_depth == 0) {
                 partial_sort(p_first, p_last, p_last, p_array);
@@ -277,8 +289,11 @@ public:
         insertion_sort(p_first, p_last, p_array);
     }
 
-    inline void unguarded_linear_insert(int p_last, T p_value, T* p_array)
-        const {
+    inline void unguarded_linear_insert(
+        int p_last,
+        T p_value,
+        T* p_array
+    ) const {
         int next = p_last - 1;
         while (compare(p_value, p_array[next])) {
             if (Validate) {
@@ -313,15 +328,21 @@ public:
         }
     }
 
-    inline void unguarded_insertion_sort(int p_first, int p_last, T* p_array)
-        const {
+    inline void unguarded_insertion_sort(
+        int p_first,
+        int p_last,
+        T* p_array
+    ) const {
         for (int i = p_first; i != p_last; i++) {
             unguarded_linear_insert(i, p_array[i], p_array);
         }
     }
 
-    inline void final_insertion_sort(int p_first, int p_last, T* p_array)
-        const {
+    inline void final_insertion_sort(
+        int p_first,
+        int p_last,
+        T* p_array
+    ) const {
         if (p_last - p_first > INTROSORT_THRESHOLD) {
             insertion_sort(p_first, p_first + INTROSORT_THRESHOLD, p_array);
             unguarded_insertion_sort(
@@ -345,8 +366,12 @@ public:
         sort_range(0, p_len, p_array);
     }
 
-    inline void nth_element(int p_first, int p_last, int p_nth, T* p_array)
-        const {
+    inline void nth_element(
+        int p_first,
+        int p_last,
+        int p_nth,
+        T* p_array
+    ) const {
         if (p_first == p_last || p_nth == p_last) {
             return;
         }

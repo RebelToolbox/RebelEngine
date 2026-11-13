@@ -207,10 +207,14 @@ public:
         int* p_result_indices = nullptr
     ) override;
 
-    void set_pair_callback(PairCallback p_pair_callback, void* p_userdata)
-        override;
-    void set_unpair_callback(UnpairCallback p_unpair_callback, void* p_userdata)
-        override;
+    void set_pair_callback(
+        PairCallback p_pair_callback,
+        void* p_userdata
+    ) override;
+    void set_unpair_callback(
+        UnpairCallback p_unpair_callback,
+        void* p_userdata
+    ) override;
 
     void update() override;
 

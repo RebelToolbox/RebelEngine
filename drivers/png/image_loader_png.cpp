@@ -39,7 +39,8 @@ Error ImageLoaderPNG::load_image(
     );
 }
 
-void ImageLoaderPNG::get_recognized_extensions(List<String>* p_extensions
+void ImageLoaderPNG::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("png");
 }
@@ -56,7 +57,8 @@ Ref<Image> ImageLoaderPNG::load_mem_png(const uint8_t* p_png, int p_size) {
     return img;
 }
 
-Ref<Image> ImageLoaderPNG::lossless_unpack_png(const PoolVector<uint8_t>& p_data
+Ref<Image> ImageLoaderPNG::lossless_unpack_png(
+    const PoolVector<uint8_t>& p_data
 ) {
     const int len = p_data.size();
     ERR_FAIL_COND_V(len < 4, Ref<Image>());
@@ -68,7 +70,8 @@ Ref<Image> ImageLoaderPNG::lossless_unpack_png(const PoolVector<uint8_t>& p_data
     return load_mem_png(&r[4], len - 4);
 }
 
-PoolVector<uint8_t> ImageLoaderPNG::lossless_pack_png(const Ref<Image>& p_image
+PoolVector<uint8_t> ImageLoaderPNG::lossless_pack_png(
+    const Ref<Image>& p_image
 ) {
     PoolVector<uint8_t> out_buffer;
 

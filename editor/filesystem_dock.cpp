@@ -204,7 +204,8 @@ Vector<String> FileSystemDock::_compute_uncollapsed_paths() {
 
             while (needs_check.size()) {
                 if (!needs_check[0]->is_collapsed()) {
-                    uncollapsed_paths.push_back(needs_check[0]->get_metadata(0)
+                    uncollapsed_paths.push_back(
+                        needs_check[0]->get_metadata(0)
                     );
                     TreeItem* child = needs_check[0]->get_children();
                     while (child) {
@@ -673,7 +674,8 @@ void FileSystemDock::_set_file_display(bool p_active) {
         button_file_list_display_mode->set_icon(
             get_icon("FileList", "EditorIcons")
         );
-        button_file_list_display_mode->set_tooltip(TTR("View items as a list.")
+        button_file_list_display_mode->set_tooltip(
+            TTR("View items as a list.")
         );
     }
 
@@ -922,9 +924,9 @@ void FileSystemDock::_update_file_list(bool p_keep_selection) {
         if (!efd) {
             directory = path.get_base_dir();
             file      = path.get_file();
-            efd =
-                EditorFileSystem::get_singleton()->get_filesystem_path(directory
-                );
+            efd       = EditorFileSystem::get_singleton()->get_filesystem_path(
+                directory
+            );
         }
         if (!efd) {
             return;
@@ -1353,7 +1355,8 @@ void FileSystemDock::_try_move_item(
                 EditorData* ed = &editor->get_editor_data();
                 for (int j = 0; j < ed->get_edited_scene_count(); j++) {
                     if (ed->get_scene_path(j) == file_changed_paths[i]) {
-                        ed->get_edited_scene_root(j)->set_filename(new_item_path
+                        ed->get_edited_scene_root(j)->set_filename(
+                            new_item_path
                         );
                         editor->save_layout();
                         break;
@@ -1651,8 +1654,9 @@ void FileSystemDock::_make_dir_confirm() {
         print_verbose("FileSystem: calling rescan.");
         _rescan();
     } else {
-        EditorNode::get_singleton()->show_warning(TTR("Could not create folder."
-        ));
+        EditorNode::get_singleton()->show_warning(
+            TTR("Could not create folder.")
+        );
     }
 }
 
@@ -1907,7 +1911,8 @@ void FileSystemDock::_move_operation_confirm(
     // Check groups.
     for (int i = 0; i < to_move.size(); i++) {
         if (to_move[i].is_file
-            && EditorFileSystem::get_singleton()->is_group_file(to_move[i].path
+            && EditorFileSystem::get_singleton()->is_group_file(
+                to_move[i].path
             )) {
             EditorFileSystem::get_singleton()->move_group_file(
                 to_move[i].path,
@@ -2163,7 +2168,8 @@ void FileSystemDock::_file_option(
             for (int i = collapsed_paths.size() - 1; i >= 0; i--) {
                 String fpath = collapsed_paths[i];
                 if (fpath != "res://") {
-                    to_move.push_back(FileOrFolder(fpath, !fpath.ends_with("/"))
+                    to_move.push_back(
+                        FileOrFolder(fpath, !fpath.ends_with("/"))
                     );
                 }
             }
@@ -3242,7 +3248,8 @@ void FileSystemDock::_update_import_dock() {
     if (imports.size() == 0) {
         EditorNode::get_singleton()->get_import_dock()->clear();
     } else if (imports.size() == 1) {
-        EditorNode::get_singleton()->get_import_dock()->set_edit_path(imports[0]
+        EditorNode::get_singleton()->get_import_dock()->set_edit_path(
+            imports[0]
         );
     } else {
         EditorNode::get_singleton()->get_import_dock()->set_edit_multiple_paths(
@@ -3485,7 +3492,8 @@ void FileSystemDock::_bind_methods() {
         PropertyInfo(Variant::POOL_STRING_ARRAY, "files")
     ));
 
-    ADD_SIGNAL(MethodInfo("file_removed", PropertyInfo(Variant::STRING, "file"))
+    ADD_SIGNAL(
+        MethodInfo("file_removed", PropertyInfo(Variant::STRING, "file"))
     );
     ADD_SIGNAL(
         MethodInfo("folder_removed", PropertyInfo(Variant::STRING, "folder"))

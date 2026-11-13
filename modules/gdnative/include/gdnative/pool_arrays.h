@@ -209,8 +209,8 @@ uint8_t GDAPI rebel_pool_byte_array_get(
 
 rebel_int GDAPI rebel_pool_byte_array_size(const rebel_pool_byte_array* p_self);
 
-rebel_bool GDAPI rebel_pool_byte_array_empty(const rebel_pool_byte_array* p_self
-);
+rebel_bool GDAPI
+rebel_pool_byte_array_empty(const rebel_pool_byte_array* p_self);
 
 void GDAPI rebel_pool_byte_array_destroy(rebel_pool_byte_array* p_self);
 
@@ -348,8 +348,8 @@ rebel_real GDAPI rebel_pool_real_array_get(
 
 rebel_int GDAPI rebel_pool_real_array_size(const rebel_pool_real_array* p_self);
 
-rebel_bool GDAPI rebel_pool_real_array_empty(const rebel_pool_real_array* p_self
-);
+rebel_bool GDAPI
+rebel_pool_real_array_empty(const rebel_pool_real_array* p_self);
 
 void GDAPI rebel_pool_real_array_destroy(rebel_pool_real_array* p_self);
 
@@ -629,8 +629,8 @@ rebel_color GDAPI rebel_pool_color_array_get(
     const rebel_int p_idx
 );
 
-rebel_int GDAPI rebel_pool_color_array_size(const rebel_pool_color_array* p_self
-);
+rebel_int GDAPI
+rebel_pool_color_array_size(const rebel_pool_color_array* p_self);
 
 rebel_bool GDAPI
 rebel_pool_color_array_empty(const rebel_pool_color_array* p_self);

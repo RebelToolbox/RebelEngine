@@ -166,16 +166,20 @@ void SoftBodyBullet::set_node_position(
     }
 }
 
-void SoftBodyBullet::get_node_position(int p_node_index, Vector3& r_position)
-    const {
+void SoftBodyBullet::get_node_position(
+    int p_node_index,
+    Vector3& r_position
+) const {
     if (bt_soft_body) {
         ERR_FAIL_INDEX(p_node_index, bt_soft_body->m_nodes.size());
         B_TO_R(bt_soft_body->m_nodes[p_node_index].m_x, r_position);
     }
 }
 
-void SoftBodyBullet::get_node_offset(int p_node_index, Vector3& r_offset)
-    const {
+void SoftBodyBullet::get_node_offset(
+    int p_node_index,
+    Vector3& r_offset
+) const {
     if (soft_mesh.is_null()) {
         return;
     }
@@ -188,8 +192,10 @@ void SoftBodyBullet::get_node_offset(int p_node_index, Vector3& r_offset)
     }
 }
 
-void SoftBodyBullet::get_node_offset(int p_node_index, btVector3& r_offset)
-    const {
+void SoftBodyBullet::get_node_offset(
+    int p_node_index,
+    btVector3& r_offset
+) const {
     Vector3 off;
     get_node_offset(p_node_index, off);
     R_TO_B(off, r_offset);

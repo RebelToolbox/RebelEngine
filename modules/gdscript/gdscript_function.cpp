@@ -89,8 +89,8 @@ Variant* GDScriptFunction::_get_variant(
                 nullptr
             );
 #endif
-            return &GDScriptLanguage::get_singleton()->get_global_array(
-            )[address];
+            return &GDScriptLanguage::get_singleton()
+                        ->get_global_array()[address];
         } break;
 #ifdef TOOLS_ENABLED
         case ADDR_TYPE_NAMED_GLOBAL: {
@@ -245,10 +245,13 @@ String GDScriptFunction::_get_call_error(
         &&OPCODE_END                                                           \
     };
 
-#define OPCODE(m_op) m_op:
+#define OPCODE(m_op)                                                           \
+    m_op:
 #define OPCODE_WHILE(m_test)
-#define OPCODES_END           OPSEXIT:
-#define OPCODES_OUT           OPSOUT:
+#define OPCODES_END                                                            \
+    OPSEXIT:
+#define OPCODES_OUT                                                            \
+    OPSOUT:
 #define DISPATCH_OPCODE       goto* switch_table_ops[_code_ptr[ip]]
 #define OPCODE_SWITCH(m_test) DISPATCH_OPCODE;
 #define OPCODE_BREAK          goto OPSEXIT
@@ -300,9 +303,11 @@ Variant GDScriptFunction::call(
 
     if (p_state) {
         // use existing (supplied) state (yielded)
-        stack     = (Variant*)p_state->stack.ptr();
-        call_args = (Variant**)&p_state->stack.ptr(
-        )[sizeof(Variant) * p_state->stack_size]; // ptr() to avoid bounds check
+        stack = (Variant*)p_state->stack.ptr();
+        call_args =
+            (Variant**)&p_state->stack
+                .ptr()[sizeof(Variant) * p_state->stack_size]; // ptr() to avoid
+                                                               // bounds check
         line        = p_state->line;
         ip          = p_state->ip;
         alloca_size = p_state->stack.size();
@@ -436,7 +441,8 @@ Variant GDScriptFunction::call(
         stack,                                                                 \
         err_text                                                               \
     );                                                                         \
-    if (unlikely(!m_v)) OPCODE_BREAK;
+    if (unlikely(!m_v))                                                        \
+        OPCODE_BREAK;
 
 #else
 #define GD_ERR_BREAK(m_cond)
@@ -1741,8 +1747,8 @@ Variant GDScriptFunction::call(
                     if (ScriptDebugger::get_singleton()->get_lines_left() > 0) {
                         if (ScriptDebugger::get_singleton()->get_depth() <= 0) {
                             ScriptDebugger::get_singleton()->set_lines_left(
-                                ScriptDebugger::get_singleton()->get_lines_left(
-                                )
+                                ScriptDebugger::get_singleton()
+                                    ->get_lines_left()
                                 - 1
                             );
                         }

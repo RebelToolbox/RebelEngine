@@ -146,7 +146,8 @@ btScalar AllConvexResultCallback::addSingleResult(
     return 1; // not used by bullet
 }
 
-bool KinClosestConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
+bool KinClosestConvexResultCallback::needsCollision(
+    btBroadphaseProxy* proxy0
 ) const {
     const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
@@ -187,7 +188,8 @@ bool KinClosestConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
     }
 }
 
-bool ClosestConvexResultCallback::needsCollision(btBroadphaseProxy* proxy0
+bool ClosestConvexResultCallback::needsCollision(
+    btBroadphaseProxy* proxy0
 ) const {
     const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,
@@ -314,7 +316,8 @@ btScalar AllContactResultCallback::addSingleResult(
     return cp.getDistance();
 }
 
-bool ContactPairContactResultCallback::needsCollision(btBroadphaseProxy* proxy0
+bool ContactPairContactResultCallback::needsCollision(
+    btBroadphaseProxy* proxy0
 ) const {
     if (m_count >= m_resultMax) {
         return false;
@@ -377,7 +380,8 @@ btScalar ContactPairContactResultCallback::addSingleResult(
     return 1; // Not used by bullet
 }
 
-bool RestInfoContactResultCallback::needsCollision(btBroadphaseProxy* proxy0
+bool RestInfoContactResultCallback::needsCollision(
+    btBroadphaseProxy* proxy0
 ) const {
     const bool needs = FilterCallback::test_collision_filters(
         m_collisionFilterGroup,

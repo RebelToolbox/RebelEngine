@@ -269,8 +269,10 @@ public:
 
     Vector<StringName> get_editable_properties() const override;
 
-    String get_warning(Shader::Mode p_mode, VisualShader::Type p_type)
-        const override;
+    String get_warning(
+        Shader::Mode p_mode,
+        VisualShader::Type p_type
+    ) const override;
 
     VisualShaderNodeTexture();
 };
@@ -343,8 +345,10 @@ public:
     TextureType get_texture_type() const;
 
     Vector<StringName> get_editable_properties() const override;
-    String get_warning(Shader::Mode p_mode, VisualShader::Type p_type)
-        const override;
+    String get_warning(
+        Shader::Mode p_mode,
+        VisualShader::Type p_type
+    ) const override;
 
     VisualShaderNodeCubeMap();
 };
@@ -2080,8 +2084,10 @@ public:
     Condition get_condition() const;
 
     Vector<StringName> get_editable_properties() const override;
-    String get_warning(Shader::Mode p_mode, VisualShader::Type p_type)
-        const override;
+    String get_warning(
+        Shader::Mode p_mode,
+        VisualShader::Type p_type
+    ) const override;
 
     VisualShaderNodeCompare();
 };

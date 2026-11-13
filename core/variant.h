@@ -513,7 +513,8 @@ public:
         void* p_construct_ud            = nullptr
     );
 
-    void operator=(const Variant& p_variant
+    void operator=(
+        const Variant& p_variant
     ); // only this is enough for all the other types
     Variant(const Variant& p_variant);
 

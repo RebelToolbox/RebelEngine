@@ -304,7 +304,8 @@ void Portal::set_linked_room(const NodePath& link_path) {
             if (linkedroom != get_parent()) {
                 // was ok
             } else {
-                WARN_PRINT("Linked room cannot be the parent room of a portal."
+                WARN_PRINT(
+                    "Linked room cannot be the parent room of a portal."
                 );
             }
         } else {
@@ -360,7 +361,8 @@ bool Portal::create_from_mesh_instance(const MeshInstance* p_mi) {
     ERR_FAIL_COND_V(!rmesh.is_valid(), false);
 
     if (rmesh->get_surface_count() == 0) {
-        WARN_PRINT(vformat("Portal '%s' has no surfaces, ignoring", get_name())
+        WARN_PRINT(
+            vformat("Portal '%s' has no surfaces, ignoring", get_name())
         );
         return false;
     }

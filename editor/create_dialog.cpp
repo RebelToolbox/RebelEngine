@@ -252,8 +252,8 @@ void CreateDialog::add_type(
                     // make sure we don't override them
                     if (!is_substring_of_selected) {
                         if (!is_subsequence_of_selected
-                            || (current_type_prefered && !selected_type_prefered
-                            )) {
+                            || (current_type_prefered
+                                && !selected_type_prefered)) {
                             *to_select = item;
                         }
                     }
@@ -408,7 +408,8 @@ void CreateDialog::_update_search() {
                 type2     = cpp_type2 ? ClassDB::get_parent_class(type2)
                                       : ed.script_class_get_base(type2);
                 cpp_type2 = cpp_type2
-                         || ClassDB::class_exists(type2
+                         || ClassDB::class_exists(
+                                type2
                          ); // Built-in class can't inherit from custom type, so
                             // we can skip the check if it's already true.
 
@@ -948,9 +949,11 @@ CreateDialog::CreateDialog() {
     vbc->add_margin_child(TTR("Description:"), help_bit);
     help_bit->connect("request_hide", this, "_closed");
 
-    type_blacklist.insert("PluginScript"
+    type_blacklist.insert(
+        "PluginScript"
     ); // PluginScript must be initialized before use, which is not possible
        // here
-    type_blacklist.insert("ScriptCreateDialog"
+    type_blacklist.insert(
+        "ScriptCreateDialog"
     ); // This is an exposed editor Node that doesn't have an Editor prefix.
 }

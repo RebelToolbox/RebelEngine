@@ -98,10 +98,12 @@ void ImportDock::set_edit_path(const String& p_path) {
 
     for (List<Ref<ResourceImporter>>::Element* E = importers.front(); E;
          E                                       = E->next()) {
-        importer_names.push_back(Pair<String, String>(
-            E->get()->get_visible_name(),
-            E->get()->get_importer_name()
-        ));
+        importer_names.push_back(
+            Pair<String, String>(
+                E->get()->get_visible_name(),
+                E->get()->get_importer_name()
+            )
+        );
     }
 
     importer_names.sort_custom<PairSort<String, String>>();
@@ -257,10 +259,12 @@ void ImportDock::set_edit_multiple_paths(const Vector<String>& p_paths) {
 
     for (List<Ref<ResourceImporter>>::Element* E = importers.front(); E;
          E                                       = E->next()) {
-        importer_names.push_back(Pair<String, String>(
-            E->get()->get_visible_name(),
-            E->get()->get_importer_name()
-        ));
+        importer_names.push_back(
+            Pair<String, String>(
+                E->get()->get_visible_name(),
+                E->get()->get_importer_name()
+            )
+        );
     }
 
     importer_names.sort_custom<PairSort<String, String>>();
@@ -505,8 +509,8 @@ void ImportDock::_reimport_attempt() {
 
 void ImportDock::_reimport_and_restart() {
     EditorNode::get_singleton()->save_all_scenes();
-    EditorResourcePreview::get_singleton()->stop(
-    ); // don't try to re-create previews after import
+    EditorResourcePreview::get_singleton()
+        ->stop(); // don't try to re-create previews after import
     _reimport();
     EditorNode::get_singleton()->restart_editor();
 }
@@ -587,7 +591,8 @@ void ImportDock::_reimport() {
     }
 
     EditorFileSystem::get_singleton()->reimport_files(params->paths);
-    EditorFileSystem::get_singleton()->emit_signal("filesystem_changed"
+    EditorFileSystem::get_singleton()->emit_signal(
+        "filesystem_changed"
     ); // it changed, so force emitting the signal
 
     _set_dirty(false);
@@ -736,9 +741,10 @@ ImportDock::ImportDock() {
     vbc_confirm->add_child(memnew(Label(
         TTR("Changing the type of an imported file requires editor restart.")
     )));
-    label_warning =
-        memnew(Label(TTR("WARNING: Assets exist that use this resource, they "
-                         "may stop loading properly.")));
+    label_warning = memnew(Label(
+        TTR("WARNING: Assets exist that use this resource, they "
+            "may stop loading properly.")
+    ));
     vbc_confirm->add_child(label_warning);
     reimport_confirm->add_child(vbc_confirm);
 

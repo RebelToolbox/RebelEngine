@@ -229,8 +229,8 @@ Transform2D Transform2D::interpolate_with(
 
     if (dot > 0.9995) {
         v = Vector2::linear_interpolate(v1, v2, p_c)
-                .normalized(
-                ); // linearly interpolate to avoid numerical precision issues
+                .normalized(); // linearly interpolate to avoid numerical
+                               // precision issues
     } else {
         real_t angle = p_c * Math::acos(dot);
         Vector2 v3   = (v2 - v1 * dot).normalized();

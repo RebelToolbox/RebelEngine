@@ -1047,7 +1047,8 @@ uint32_t ArrayMesh::surface_get_format(int p_idx) const {
     return VisualServer::get_singleton()->mesh_surface_get_format(mesh, p_idx);
 }
 
-ArrayMesh::PrimitiveType ArrayMesh::surface_get_primitive_type(int p_idx
+ArrayMesh::PrimitiveType ArrayMesh::surface_get_primitive_type(
+    int p_idx
 ) const {
     ERR_FAIL_INDEX_V(p_idx, surfaces.size(), PRIMITIVE_LINES);
     return (PrimitiveType)VisualServer::get_singleton()
@@ -1118,7 +1119,8 @@ Ref<Material> ArrayMesh::surface_get_material(int p_idx) const {
     return surfaces[p_idx].material;
 }
 
-void ArrayMesh::add_surface_from_mesh_data(const Geometry::MeshData& p_mesh_data
+void ArrayMesh::add_surface_from_mesh_data(
+    const Geometry::MeshData& p_mesh_data
 ) {
     VisualServer::get_singleton()->mesh_add_surface_from_mesh_data(
         mesh,

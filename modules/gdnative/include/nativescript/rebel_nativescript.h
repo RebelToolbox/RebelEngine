@@ -290,10 +290,20 @@ const void GDAPI* rebel_nativescript_get_type_tag(const rebel_object* p_object);
 // instance binding API
 
 typedef struct {
-    GDCALLINGCONV void* (*alloc_instance_binding_data)(void*, const void*, rebel_object*);
+    GDCALLINGCONV void* (*alloc_instance_binding_data)(
+        void*,
+        const void*,
+        rebel_object*
+    );
     GDCALLINGCONV void (*free_instance_binding_data)(void*, void*);
-    GDCALLINGCONV void (*refcount_incremented_instance_binding)(void*, rebel_object*);
-    GDCALLINGCONV bool (*refcount_decremented_instance_binding)(void*, rebel_object*);
+    GDCALLINGCONV void (*refcount_incremented_instance_binding)(
+        void*,
+        rebel_object*
+    );
+    GDCALLINGCONV bool (*refcount_decremented_instance_binding)(
+        void*,
+        rebel_object*
+    );
     void* data;
     GDCALLINGCONV void (*free_func)(void*);
 } rebel_instance_binding_functions;

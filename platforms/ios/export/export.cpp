@@ -238,7 +238,8 @@ public:
         return export_options_changed;
     }
 
-    List<String> get_binary_extensions(const Ref<EditorExportPreset>& p_preset
+    List<String> get_binary_extensions(
+        const Ref<EditorExportPreset>& p_preset
     ) const override {
         List<String> list;
         list.push_back("ipa");
@@ -392,7 +393,8 @@ void IosEditorExportPlatform::get_preset_features(
 Vector<IosEditorExportPlatform::ExportArchitecture> IosEditorExportPlatform::
     _get_supported_architectures() {
     Vector<ExportArchitecture> archs;
-    archs.push_back(ExportArchitecture("armv7", false)
+    archs.push_back(
+        ExportArchitecture("armv7", false)
     ); // Disabled by default, not included in official templates.
     archs.push_back(ExportArchitecture("arm64", true));
     return archs;
@@ -443,7 +445,8 @@ static const LoadingScreenInfo loading_screen_infos[] = {
      2208, true }
 };
 
-void IosEditorExportPlatform::get_export_options(List<ExportOption>* r_options
+void IosEditorExportPlatform::get_export_options(
+    List<ExportOption>* r_options
 ) {
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -1007,15 +1010,15 @@ void IosEditorExportPlatform::_fix_config_file(
                 )
                 + "\n";
         } else if (lines[i].find("$docs_sharing") != -1) {
-            strnew +=
-                lines[i].replace(
-                    "$docs_sharing",
-                    ((bool
-                    )p_preset->get("user_data/accessible_from_itunes_sharing"))
-                        ? "<true/>"
-                        : "<false/>"
-                )
-                + "\n";
+            strnew += lines[i].replace(
+                          "$docs_sharing",
+                          ((bool)p_preset->get(
+                              "user_data/accessible_from_itunes_sharing"
+                          ))
+                              ? "<true/>"
+                              : "<false/>"
+                      )
+                    + "\n";
         } else if (lines[i].find("$entitlements_push_notifications") != -1) {
             bool is_on  = p_preset->get("capabilities/push_notifications");
             strnew     += lines[i].replace(
@@ -1772,7 +1775,8 @@ Error IosEditorExportPlatform::_codesign(String p_file, void* p_userdata) {
                         .operator String()
                         .empty()
                     ? "iPhone Distribution"
-                    : data->preset->get("application/code_sign_identity_release"
+                    : data->preset->get(
+                          "application/code_sign_identity_release"
                       );
         }
 
@@ -2190,8 +2194,9 @@ Error IosEditorExportPlatform::_export_additional_assets(
         Vector<String> project_static_libs =
             export_plugins[i]->get_ios_project_static_libs();
         for (int j = 0; j < project_static_libs.size(); j++) {
-            project_static_libs.write[j] = project_static_libs[j].get_file(
-            ); // Only the file name as it's copied to the project
+            project_static_libs.write[j] =
+                project_static_libs[j].get_file(); // Only the file name as it's
+                                                   // copied to the project
         }
         err = _export_additional_assets(
             p_out_dir,
@@ -2574,9 +2579,11 @@ Error IosEditorExportPlatform::export_project(
     String pkg_name;
     if (p_preset->get("application/name") != "") {
         pkg_name = p_preset->get("application/name"); // app_name
-    } else if (String(ProjectSettings::get_singleton()->get(
-                   "application/config/name"
-               ))
+    } else if (String(
+                   ProjectSettings::get_singleton()->get(
+                       "application/config/name"
+                   )
+               )
                != "") {
         pkg_name = String(
             ProjectSettings::get_singleton()->get("application/config/name")

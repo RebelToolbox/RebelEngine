@@ -320,7 +320,8 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
     }
 
     if (valid_normals.size()) {
-        pm->set_emission_shape(ParticlesMaterial::EMISSION_SHAPE_DIRECTED_POINTS
+        pm->set_emission_shape(
+            ParticlesMaterial::EMISSION_SHAPE_DIRECTED_POINTS
         );
 
         PoolVector<uint8_t> normdata;
@@ -350,7 +351,8 @@ void Particles2DEditorPlugin::_generate_emission_mask() {
 void Particles2DEditorPlugin::_notification(int p_what) {
     if (p_what == NOTIFICATION_ENTER_TREE) {
         menu->get_popup()->connect("id_pressed", this, "_menu_callback");
-        menu->set_icon(menu->get_popup()->get_icon("Particles2D", "EditorIcons")
+        menu->set_icon(
+            menu->get_popup()->get_icon("Particles2D", "EditorIcons")
         );
         file->connect("file_selected", this, "_file_selected");
     }

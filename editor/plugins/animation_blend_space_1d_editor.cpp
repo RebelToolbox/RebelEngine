@@ -32,8 +32,8 @@ void AnimationNodeBlendSpace1DEditor::_blend_space_gui_input(
     Ref<InputEventMouseButton> mb = p_event;
 
     if (mb.is_valid() && mb->is_pressed()
-        && ((tool_select->is_pressed() && mb->get_button_index() == BUTTON_RIGHT
-            )
+        && ((tool_select->is_pressed()
+             && mb->get_button_index() == BUTTON_RIGHT)
             || (mb->get_button_index() == BUTTON_LEFT
                 && tool_create->is_pressed()))) {
         menu->clear();
@@ -676,7 +676,8 @@ void AnimationNodeBlendSpace1DEditor::_open_editor() {
         Ref<AnimationNode> an =
             blend_space->get_blend_point_node(selected_point);
         ERR_FAIL_COND(an.is_null());
-        AnimationTreeEditor::get_singleton()->enter_editor(itos(selected_point)
+        AnimationTreeEditor::get_singleton()->enter_editor(
+            itos(selected_point)
         );
     }
 }
@@ -795,7 +796,8 @@ void AnimationNodeBlendSpace1DEditor::_bind_methods() {
     );
 }
 
-bool AnimationNodeBlendSpace1DEditor::can_edit(const Ref<AnimationNode>& p_node
+bool AnimationNodeBlendSpace1DEditor::can_edit(
+    const Ref<AnimationNode>& p_node
 ) {
     Ref<AnimationNodeBlendSpace1D> b1d = p_node;
     return b1d.is_valid();

@@ -137,9 +137,9 @@ void register_editor_fonts(Ref<Theme> theme) {
     const int output_font_size = static_cast<int>(
         static_cast<float>(EDITOR_GET("run/output/font_size")) * EDSCALE
     );
-    const bool antialiased =
-        EditorSettings::get_singleton()->get("interface/editor/font_antialiased"
-        );
+    const bool antialiased = EditorSettings::get_singleton()->get(
+        "interface/editor/font_antialiased"
+    );
     const DynamicFontData::Hinting hinting = get_hinting();
 
     // Fixed and relative size values.

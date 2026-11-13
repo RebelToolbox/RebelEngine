@@ -109,7 +109,8 @@ Vector2 GraphEditMinimap::_get_graph_size() {
     return graph_size;
 }
 
-Vector2 GraphEditMinimap::_convert_from_graph_position(const Vector2& p_position
+Vector2 GraphEditMinimap::_convert_from_graph_position(
+    const Vector2& p_position
 ) {
     Vector2 map_position = Vector2(0, 0);
     Vector2 render_size  = _get_render_size();
@@ -120,7 +121,8 @@ Vector2 GraphEditMinimap::_convert_from_graph_position(const Vector2& p_position
     return map_position;
 }
 
-Vector2 GraphEditMinimap::_convert_to_graph_position(const Vector2& p_position
+Vector2 GraphEditMinimap::_convert_to_graph_position(
+    const Vector2& p_position
 ) {
     Vector2 graph_position = Vector2(0, 0);
     Vector2 render_size    = _get_render_size();
@@ -642,7 +644,8 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                         E->get().to,
                                         E->get().to_port
                                     );
-                                    to = get_node(String(connecting_from)
+                                    to = get_node(
+                                        String(connecting_from)
                                     ); // maybe it was erased
                                     if (Object::cast_to<GraphNode>(to)) {
                                         connecting = true;
@@ -706,7 +709,8 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent>& p_ev) {
                                         E->get().to,
                                         E->get().to_port
                                     );
-                                    fr = get_node(String(connecting_from)
+                                    fr = get_node(
+                                        String(connecting_from)
                                     ); // maybe it was erased
                                     if (Object::cast_to<GraphNode>(fr)) {
                                         connecting = true;
@@ -1920,8 +1924,8 @@ void GraphEdit::_snap_value_changed(double) {
 
 void GraphEdit::set_minimap_size(Vector2 p_size) {
     minimap->set_size(p_size);
-    Vector2 minimap_size = minimap->get_size(
-    ); // The size might've been adjusted by the minimum size.
+    Vector2 minimap_size = minimap->get_size(); // The size might've been
+                                                // adjusted by the minimum size.
 
     minimap->set_anchors_preset(Control::PRESET_BOTTOM_RIGHT);
     minimap->set_margin(Margin::MARGIN_LEFT, -minimap_size.x - MINIMAP_OFFSET);
@@ -2306,7 +2310,8 @@ GraphEdit::GraphEdit() {
     add_child(connections_layer);
     connections_layer->connect("draw", this, "_connections_layer_draw");
     connections_layer->set_name("CLAYER");
-    connections_layer->set_disable_visibility_clip(true
+    connections_layer->set_disable_visibility_clip(
+        true
     ); // so it can draw freely and be offset
     connections_layer->set_mouse_filter(MOUSE_FILTER_IGNORE);
 

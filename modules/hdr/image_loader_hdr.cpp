@@ -29,7 +29,8 @@ Error ImageLoaderHDR::load_image(
         if (line == "") { // empty line indicates end of header
             break;
         }
-        if (line.begins_with("FORMAT="
+        if (line.begins_with(
+                "FORMAT="
             )) { // leave option to implement other commands
             ERR_FAIL_COND_V_MSG(
                 line != "FORMAT=32-bit_rle_rgbe",
@@ -143,7 +144,8 @@ Error ImageLoaderHDR::load_image(
     return OK;
 }
 
-void ImageLoaderHDR::get_recognized_extensions(List<String>* p_extensions
+void ImageLoaderHDR::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("hdr");
 }

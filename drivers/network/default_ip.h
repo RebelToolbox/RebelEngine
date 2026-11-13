@@ -21,7 +21,8 @@ class DefaultIP : public IP {
     static IP* _create_default();
 
 public:
-    void get_local_interfaces(Map<String, Interface_Info>* r_interfaces
+    void get_local_interfaces(
+        Map<String, Interface_Info>* r_interfaces
     ) const override;
 
     static void make_default();

@@ -26,7 +26,8 @@ void ResourcePreloaderEditor::_notification(int p_what) {
     if (p_what == NOTIFICATION_DRAW) {}
 }
 
-void ResourcePreloaderEditor::_files_load_request(const Vector<String>& p_paths
+void ResourcePreloaderEditor::_files_load_request(
+    const Vector<String>& p_paths
 ) {
     for (int i = 0; i < p_paths.size(); i++) {
         String path = p_paths[i];
@@ -478,7 +479,8 @@ void ResourcePreloaderEditorPlugin::make_visible(bool p_visible) {
     }
 }
 
-ResourcePreloaderEditorPlugin::ResourcePreloaderEditorPlugin(EditorNode* p_node
+ResourcePreloaderEditorPlugin::ResourcePreloaderEditorPlugin(
+    EditorNode* p_node
 ) {
     editor           = p_node;
     preloader_editor = memnew(ResourcePreloaderEditor);

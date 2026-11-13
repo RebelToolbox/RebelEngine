@@ -56,7 +56,8 @@ Variant::Type PluginScriptInstance::get_property_type(
     return _script->get_property_info(p_name).type;
 }
 
-void PluginScriptInstance::get_property_list(List<PropertyInfo>* p_properties
+void PluginScriptInstance::get_property_list(
+    List<PropertyInfo>* p_properties
 ) const {
     _script->get_script_property_list(p_properties);
 }

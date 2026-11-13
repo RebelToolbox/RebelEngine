@@ -117,9 +117,9 @@ static String _parser_expr(const GDScriptParser::Node* p_expr) {
                                 const GDScriptParser::BuiltInFunctionNode*>(
                                 nfunc
                             );
-                        func_name =
-                            GDScriptFunctions::get_func_name(bif_node->function
-                            );
+                        func_name = GDScriptFunctions::get_func_name(
+                            bif_node->function
+                        );
                         arg_ofs = 1;
                     } else if (nfunc->type == GDScriptParser::Node::TYPE_TYPE) {
                         const GDScriptParser::TypeNode* t_node =
@@ -469,8 +469,8 @@ static void _parser_show_class(
     const Vector<String>& p_code
 ) {
     if (p_indent == 0
-        && (String(p_class->extends_file) != "" || p_class->extends_class.size()
-        )) {
+        && (String(p_class->extends_file) != ""
+            || p_class->extends_class.size())) {
         _print_indent(p_indent, _parser_extends(p_class));
         print_line("\n");
     }
@@ -1040,9 +1040,11 @@ MainLoop* test(TestType p_type) {
                      + ") + indent: " + itos(tk.get_token_line_indent());
             } else if (tk.get_token() == GDScriptTokenizer::TK_BUILT_IN_FUNC) {
                 text = "'"
-                     + String(GDScriptFunctions::get_func_name(
-                         tk.get_token_built_in_func()
-                     ))
+                     + String(
+                           GDScriptFunctions::get_func_name(
+                               tk.get_token_built_in_func()
+                           )
+                     )
                      + "' (built-in function)";
             } else {
                 text = tk.get_token_name(tk.get_token());

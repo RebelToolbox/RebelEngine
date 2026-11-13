@@ -139,7 +139,8 @@ public class RebelInputHandler implements InputDeviceListener {
         }
 
         final int evcount = event.getPointerCount();
-        if (evcount == 0) return true;
+        if (evcount == 0)
+            return true;
 
         if (rebelView != null) {
             final float[] arr =

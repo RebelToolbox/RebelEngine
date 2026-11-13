@@ -783,7 +783,8 @@ void Sprite3D::set_texture(const Ref<Texture>& p_texture) {
     }
     texture = p_texture;
     if (texture.is_valid()) {
-        texture->set_flags(texture->get_flags()
+        texture->set_flags(
+            texture->get_flags()
         ); // remove repeat from texture, it looks bad in sprites
         texture->connect(
             CoreStringNames::get_singleton()->changed,
@@ -1315,15 +1316,18 @@ void AnimatedSprite3D::_notification(int p_what) {
                         } else {
                             frame = fc - 1;
                         }
-                        emit_signal(SceneStringNames::get_singleton()
-                                        ->animation_finished);
+                        emit_signal(
+                            SceneStringNames::get_singleton()
+                                ->animation_finished
+                        );
                     } else {
                         frame++;
                     }
 
                     _queue_update();
                     _change_notify("frame");
-                    emit_signal(SceneStringNames::get_singleton()->frame_changed
+                    emit_signal(
+                        SceneStringNames::get_singleton()->frame_changed
                     );
                 }
 

@@ -433,7 +433,8 @@ void ScriptEditorDebugger::_scene_tree_property_value_edited(
         0.7f; // avoid annoyance, don't request soon after editing
 }
 
-void ScriptEditorDebugger::_scene_tree_property_select_object(ObjectID p_object
+void ScriptEditorDebugger::_scene_tree_property_select_object(
+    ObjectID p_object
 ) {
     inspected_object_id = p_object;
     Array msg;
@@ -693,7 +694,8 @@ void ScriptEditorDebugger::_parse_message(
                             Ref<Script> script(var);
                             if (!script.is_null()) {
                                 ScriptInstance* script_instance =
-                                    script->placeholder_instance_create(debugObj
+                                    script->placeholder_instance_create(
+                                        debugObj
                                     );
                                 debugObj->set_script_and_instance(
                                     var,
@@ -1324,12 +1326,16 @@ void ScriptEditorDebugger::_performance_draw() {
             );
 
             String label;
-            switch (Performance::MonitorType((int)perf_items[pi]->get_metadata(1
-            ))) {
+            switch (
+                Performance::MonitorType((int)perf_items[pi]->get_metadata(1))
+            ) {
                 case Performance::MONITOR_TYPE_MEMORY: {
-                    label = String::humanize_size(Math::ceil(
-                        (1 - inv_nb_lines - inv_nb_lines * line) * perf_max[pi]
-                    ));
+                    label = String::humanize_size(
+                        Math::ceil(
+                            (1 - inv_nb_lines - inv_nb_lines * line)
+                            * perf_max[pi]
+                        )
+                    );
                 } break;
                 case Performance::MONITOR_TYPE_TIME: {
                     label = rtos(
@@ -1340,9 +1346,12 @@ void ScriptEditorDebugger::_performance_draw() {
                           + " ms";
                 } break;
                 default: {
-                    label = itos(Math::ceil(
-                        (1 - inv_nb_lines - inv_nb_lines * line) * perf_max[pi]
-                    ));
+                    label = itos(
+                        Math::ceil(
+                            (1 - inv_nb_lines - inv_nb_lines * line)
+                            * perf_max[pi]
+                        )
+                    );
                 } break;
             }
 
@@ -2319,8 +2328,8 @@ void ScriptEditorDebugger::live_debug_reparent_node(
     }
 }
 
-ScriptEditorDebugger::CameraOverride ScriptEditorDebugger::get_camera_override(
-) const {
+ScriptEditorDebugger::CameraOverride ScriptEditorDebugger::
+    get_camera_override() const {
     return camera_override;
 }
 

@@ -31,7 +31,7 @@ Node* SceneState::instance(GenEditState p_edit_state) const {
         NodePath np = node_paths[p_id & FLAG_MASK];                            \
         p_name      = ret_nodes[0]->get_node_or_null(np);                      \
     } else {                                                                   \
-        ERR_FAIL_INDEX_V(p_id& FLAG_MASK, nc, NULL);                           \
+        ERR_FAIL_INDEX_V(p_id & FLAG_MASK, nc, NULL);                          \
         p_name = ret_nodes[p_id & FLAG_MASK];                                  \
     }
 
@@ -306,7 +306,8 @@ Node* SceneState::instance(GenEditState p_edit_state) const {
                                 }
                             }
                         } else if (p_edit_state == GEN_EDIT_STATE_INSTANCE) {
-                            value = value.duplicate(true
+                            value = value.duplicate(
+                                true
                             ); // Duplicate arrays and dictionaries for the
                                // editor
                         }
@@ -336,7 +337,8 @@ Node* SceneState::instance(GenEditState p_edit_state) const {
                     } else {
                         // it may be possible that an instanced scene has
                         // changed and the node has nowhere to go anymore
-                        stray_instances.push_back(node
+                        stray_instances.push_back(
+                            node
                         ); // can't be added, go to stray list
                     }
                 } else {
@@ -608,16 +610,16 @@ Error SceneState::_parse_node(
             ClassDB::class_get_default_property_value(type, name);
 
         if (default_value.get_type() != Variant::NIL) {
-            isdefault =
-                bool(Variant::evaluate(Variant::OP_EQUAL, value, default_value)
-                );
+            isdefault = bool(
+                Variant::evaluate(Variant::OP_EQUAL, value, default_value)
+            );
         }
 
         if (!isdefault && script.is_valid()
             && script->get_property_default_value(name, default_value)) {
-            isdefault =
-                bool(Variant::evaluate(Variant::OP_EQUAL, value, default_value)
-                );
+            isdefault = bool(
+                Variant::evaluate(Variant::OP_EQUAL, value, default_value)
+            );
         }
         // the version above makes more sense, because it does not rely on
         // placeholder or usage flag in the script, just the default value
@@ -769,8 +771,8 @@ Error SceneState::_parse_node(
                   || nd.groups.size(); // some local properties or groups exist
     save_node = save_node || p_node == p_owner; // owner is always saved
     save_node = save_node
-             || (p_node->get_owner() == p_owner && instanced_by_owner
-             ); // part of scene and not instanced
+             || (p_node->get_owner() == p_owner
+                 && instanced_by_owner); // part of scene and not instanced
 
     int idx         = nodes.size();
     int parent_node = NO_PARENT_SAVED;
@@ -849,8 +851,8 @@ Error SceneState::_parse_connections(
              F                                  = F->next()) {
             const Node::Connection& c = F->get();
 
-            if (!(c.flags & CONNECT_PERSIST
-                )) { // only persistent connections get saved
+            if (!(c.flags
+                  & CONNECT_PERSIST)) { // only persistent connections get saved
                 continue;
             }
 
@@ -921,12 +923,12 @@ Error SceneState::_parse_connections(
                     if (nl == p_owner) {
                         Ref<SceneState> state = nl->get_scene_inherited_state();
                         if (state.is_valid()) {
-                            int from_node =
-                                state->find_node_by_path(nl->get_path_to(p_node)
-                                );
-                            int to_node =
-                                state->find_node_by_path(nl->get_path_to(target)
-                                );
+                            int from_node = state->find_node_by_path(
+                                nl->get_path_to(p_node)
+                            );
+                            int to_node = state->find_node_by_path(
+                                nl->get_path_to(target)
+                            );
 
                             if (from_node >= 0 && to_node >= 0) {
                                 // this one has state for this node, save

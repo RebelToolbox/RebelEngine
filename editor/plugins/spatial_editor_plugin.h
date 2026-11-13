@@ -865,8 +865,10 @@ public:
 
     void snap_cursor_to_plane(const Plane& p_plane);
 
-    Vector3 snap_point(Vector3 p_target, Vector3 p_start = Vector3(0, 0, 0))
-        const;
+    Vector3 snap_point(
+        Vector3 p_target,
+        Vector3 p_start = Vector3(0, 0, 0)
+    ) const;
 
     float get_znear() const {
         return settings_znear->get_value();
@@ -1078,10 +1080,14 @@ public:
     virtual bool is_selectable_when_hidden() const;
 
     virtual void redraw(EditorSpatialGizmo* p_gizmo);
-    virtual String get_handle_name(const EditorSpatialGizmo* p_gizmo, int p_idx)
-        const;
-    virtual Variant get_handle_value(EditorSpatialGizmo* p_gizmo, int p_idx)
-        const;
+    virtual String get_handle_name(
+        const EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const;
+    virtual Variant get_handle_value(
+        EditorSpatialGizmo* p_gizmo,
+        int p_idx
+    ) const;
     virtual void set_handle(
         EditorSpatialGizmo* p_gizmo,
         int p_idx,

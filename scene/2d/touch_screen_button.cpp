@@ -112,7 +112,8 @@ void TouchScreenButton::_notification(int p_what) {
                 Vector2 size = texture.is_null() ? shape->get_rect().size
                                                  : texture->get_size();
                 Vector2 pos  = shape_centered ? size * 0.5f : Vector2();
-                draw_set_transform_matrix(get_canvas_transform().translated(pos)
+                draw_set_transform_matrix(
+                    get_canvas_transform().translated(pos)
                 );
                 shape->draw(get_canvas_item(), draw_col);
             }
@@ -331,8 +332,8 @@ void TouchScreenButton::set_visibility_mode(VisibilityMode p_mode) {
     update();
 }
 
-TouchScreenButton::VisibilityMode TouchScreenButton::get_visibility_mode(
-) const {
+TouchScreenButton::VisibilityMode TouchScreenButton::
+    get_visibility_mode() const {
     return visibility;
 }
 

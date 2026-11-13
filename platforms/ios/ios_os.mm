@@ -452,8 +452,10 @@ OS::VideoMode IosOS::get_video_mode(int p_screen) const {
     return video_mode;
 }
 
-void IosOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
-    const {
+void IosOS::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {
     p_list->push_back(video_mode);
 }
 

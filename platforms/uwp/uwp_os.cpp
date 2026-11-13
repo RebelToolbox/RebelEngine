@@ -513,8 +513,10 @@ OS::VideoMode UwpOS::get_video_mode(int p_screen) const {
     return video_mode;
 }
 
-void UwpOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
-    const {}
+void UwpOS::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {}
 
 String UwpOS::get_name() const {
     return "UWP";

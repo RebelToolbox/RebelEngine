@@ -795,7 +795,8 @@ struct _VariantCall {
 
         if (buffer_size <= 0) {
             r_ret = decompressed;
-            ERR_FAIL_MSG("Decompression buffer size must be greater than zero."
+            ERR_FAIL_MSG(
+                "Decompression buffer size must be greater than zero."
             );
         }
         if (ba->size() == 0) {
@@ -1630,8 +1631,8 @@ Variant Variant::construct(
     } else if (p_argcount == 1 && p_args[0]->type == p_type) {
         return *p_args[0]; // copy construct
     } else if (p_argcount == 1
-               && (!p_strict || Variant::can_convert(p_args[0]->type, p_type)
-               )) {
+               && (!p_strict
+                   || Variant::can_convert(p_args[0]->type, p_type))) {
         // near match construct
 
         switch (p_type) {

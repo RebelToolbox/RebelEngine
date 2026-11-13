@@ -56,14 +56,14 @@ rebel_transform2d_inverse(const rebel_transform2d* p_self);
 rebel_transform2d GDAPI
 rebel_transform2d_affine_inverse(const rebel_transform2d* p_self);
 
-rebel_real GDAPI rebel_transform2d_get_rotation(const rebel_transform2d* p_self
-);
+rebel_real GDAPI
+rebel_transform2d_get_rotation(const rebel_transform2d* p_self);
 
-rebel_vector2 GDAPI rebel_transform2d_get_origin(const rebel_transform2d* p_self
-);
+rebel_vector2 GDAPI
+rebel_transform2d_get_origin(const rebel_transform2d* p_self);
 
-rebel_vector2 GDAPI rebel_transform2d_get_scale(const rebel_transform2d* p_self
-);
+rebel_vector2 GDAPI
+rebel_transform2d_get_scale(const rebel_transform2d* p_self);
 
 rebel_transform2d GDAPI
 rebel_transform2d_orthonormalized(const rebel_transform2d* p_self);

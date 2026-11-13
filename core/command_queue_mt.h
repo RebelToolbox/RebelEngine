@@ -212,7 +212,8 @@
         cmd->method      = p_method;                                           \
         SEMIC_SEP_LIST(CMD_ASSIGN_PARAM, N);                                   \
         unlock();                                                              \
-        if (sync) sync->post();                                                \
+        if (sync)                                                              \
+            sync->post();                                                      \
     }
 
 #define CMD_RET_TYPE(N)                                                        \
@@ -236,7 +237,8 @@
         cmd->ret      = r_ret;                                                 \
         cmd->sync_sem = ss;                                                    \
         unlock();                                                              \
-        if (sync) sync->post();                                                \
+        if (sync)                                                              \
+            sync->post();                                                      \
         ss->sem.wait();                                                        \
         ss->in_use = false;                                                    \
     }
@@ -257,7 +259,8 @@
         SEMIC_SEP_LIST(CMD_ASSIGN_PARAM, N);                                   \
         cmd->sync_sem = ss;                                                    \
         unlock();                                                              \
-        if (sync) sync->post();                                                \
+        if (sync)                                                              \
+            sync->post();                                                      \
         ss->sem.wait();                                                        \
         ss->in_use = false;                                                    \
     }

@@ -38,8 +38,8 @@ class AudioDriverXAudio2 : public AudioDriver {
 
         void STDMETHODCALLTYPE OnVoiceProcessingPassEnd() {}
 
-        void STDMETHODCALLTYPE OnVoiceProcessingPassStart(UINT32 SamplesRequired
-        ) {}
+        void STDMETHODCALLTYPE
+        OnVoiceProcessingPassStart(UINT32 SamplesRequired) {}
 
         void STDMETHODCALLTYPE OnBufferStart(void* pBufferContext) {}
 

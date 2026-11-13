@@ -686,8 +686,10 @@ void Object::set_indexed(
     ERR_FAIL_COND(!value_stack.empty());
 }
 
-Variant Object::get_indexed(const Vector<StringName>& p_names, bool* r_valid)
-    const {
+Variant Object::get_indexed(
+    const Vector<StringName>& p_names,
+    bool* r_valid
+) const {
     if (p_names.empty()) {
         if (r_valid) {
             *r_valid = false;
@@ -711,8 +713,10 @@ Variant Object::get_indexed(const Vector<StringName>& p_names, bool* r_valid)
     return current_value;
 }
 
-void Object::get_property_list(List<PropertyInfo>* p_list, bool p_reversed)
-    const {
+void Object::get_property_list(
+    List<PropertyInfo>* p_list,
+    bool p_reversed
+) const {
     if (script_instance && p_reversed) {
         p_list->push_back(PropertyInfo(
             Variant::NIL,
@@ -726,7 +730,8 @@ void Object::get_property_list(List<PropertyInfo>* p_list, bool p_reversed)
 
     _get_property_listv(p_list, p_reversed);
 
-    if (!is_class("Script"
+    if (!is_class(
+            "Script"
         )) { // can still be set, but this is for userfriendlyness
         p_list->push_back(PropertyInfo(
             Variant::OBJECT,
@@ -1647,7 +1652,8 @@ int Object::get_persistent_signal_connection_count() const {
     return count;
 }
 
-void Object::get_signals_connected_to_this(List<Connection>* p_connections
+void Object::get_signals_connected_to_this(
+    List<Connection>* p_connections
 ) const {
     for (const List<Connection>::Element* E = connections.front(); E;
          E                                  = E->next()) {
@@ -2108,7 +2114,8 @@ void Object::_bind_methods() {
 
     ADD_SIGNAL(MethodInfo("script_changed"));
 
-    BIND_VMETHOD(MethodInfo("_notification", PropertyInfo(Variant::INT, "what"))
+    BIND_VMETHOD(
+        MethodInfo("_notification", PropertyInfo(Variant::INT, "what"))
     );
     BIND_VMETHOD(MethodInfo(
         Variant::BOOL,

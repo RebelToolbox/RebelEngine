@@ -96,9 +96,10 @@ void VisualServerScene::camera_set_use_vertical_aspect(
 
 /* SPATIAL PARTITIONING */
 
-VisualServerScene::SpatialPartitioningScene_BVH::SpatialPartitioningScene_BVH(
-) {
-    _bvh.params_set_thread_safe(GLOBAL_GET("rendering/threads/thread_safe_bvh")
+VisualServerScene::SpatialPartitioningScene_BVH::
+    SpatialPartitioningScene_BVH() {
+    _bvh.params_set_thread_safe(
+        GLOBAL_GET("rendering/threads/thread_safe_bvh")
     );
     _bvh.params_set_pairing_expansion(GLOBAL_GET(
         "rendering/quality/spatial_partitioning/bvh_collision_margin"
@@ -494,7 +495,8 @@ void VisualServerScene::_instance_unpair(
             static_cast<InstanceGeometryData*>(A->base_data);
 
         List<InstanceLightData::PairInfo>::Element* E =
-            reinterpret_cast<List<InstanceLightData::PairInfo>::Element*>(udata
+            reinterpret_cast<List<InstanceLightData::PairInfo>::Element*>(
+                udata
             );
 
         geom->lighting.erase(E->get().L);
@@ -705,8 +707,8 @@ void VisualServerScene::instance_set_base(RID p_instance, RID p_base) {
             }
             // make sure this one is done baking
 
-            while (gi_probe->dynamic.updating_stage == GI_UPDATE_STAGE_LIGHTING
-            ) {
+            while (gi_probe->dynamic.updating_stage
+                   == GI_UPDATE_STAGE_LIGHTING) {
                 // wait until bake is done if it's baking
                 OS::get_singleton()->delay_usec(1);
             }
@@ -1634,7 +1636,8 @@ void VisualServerScene::occluder_set_scenario(
 
     // if the portal is in a scenario already, remove it
     if (ro->scenario) {
-        ro->scenario->_portal_renderer.occluder_destroy(ro->scenario_occluder_id
+        ro->scenario->_portal_renderer.occluder_destroy(
+            ro->scenario_occluder_id
         );
         ro->scenario             = nullptr;
         ro->scenario_occluder_id = 0;
@@ -1645,9 +1648,9 @@ void VisualServerScene::occluder_set_scenario(
         ro->scenario = scenario;
 
         // defer the actual creation to here
-        ro->scenario_occluder_id =
-            scenario->_portal_renderer.occluder_create((VSOccluder::Type)p_type
-            );
+        ro->scenario_occluder_id = scenario->_portal_renderer.occluder_create(
+            (VSOccluder::Type)p_type
+        );
     }
 }
 
@@ -1913,7 +1916,8 @@ void VisualServerScene::rooms_update_gameplay_monitor(
 ) {
     Scenario* scenario = scenario_owner.getornull(p_scenario);
     ERR_FAIL_COND(!scenario);
-    scenario->_portal_renderer.rooms_update_gameplay_monitor(p_camera_positions
+    scenario->_portal_renderer.rooms_update_gameplay_monitor(
+        p_camera_positions
     );
 }
 
@@ -1931,8 +1935,8 @@ Vector<ObjectID> VisualServerScene::instances_cull_aabb(
     Scenario* scenario = scenario_owner.get(p_scenario);
     ERR_FAIL_COND_V(!scenario, instances);
 
-    const_cast<VisualServerScene*>(this)->update_dirty_instances(
-    ); // check dirty instances before culling
+    const_cast<VisualServerScene*>(this)
+        ->update_dirty_instances(); // check dirty instances before culling
 
     int culled = 0;
     Instance* cull[1024];
@@ -1959,8 +1963,8 @@ Vector<ObjectID> VisualServerScene::instances_cull_ray(
     Vector<ObjectID> instances;
     Scenario* scenario = scenario_owner.get(p_scenario);
     ERR_FAIL_COND_V(!scenario, instances);
-    const_cast<VisualServerScene*>(this)->update_dirty_instances(
-    ); // check dirty instances before culling
+    const_cast<VisualServerScene*>(this)
+        ->update_dirty_instances(); // check dirty instances before culling
 
     int culled = 0;
     Instance* cull[1024];
@@ -1987,8 +1991,8 @@ Vector<ObjectID> VisualServerScene::instances_cull_convex(
     Vector<ObjectID> instances;
     Scenario* scenario = scenario_owner.get(p_scenario);
     ERR_FAIL_COND_V(!scenario, instances);
-    const_cast<VisualServerScene*>(this)->update_dirty_instances(
-    ); // check dirty instances before culling
+    const_cast<VisualServerScene*>(this)
+        ->update_dirty_instances(); // check dirty instances before culling
 
     int culled = 0;
     Instance* cull[1024];
@@ -2215,7 +2219,8 @@ void VisualServerScene::_update_instance(Instance* p_instance) {
             _update_instance_lightmap_captures(p_instance);
         } else {
             if (!p_instance->lightmap_capture_data.empty()) {
-                p_instance->lightmap_capture_data.resize(0
+                p_instance->lightmap_capture_data.resize(
+                    0
                 ); // not in use, clear capture data
             }
         }
@@ -2575,7 +2580,8 @@ _FORCE_INLINE_ static Color _light_capture_voxel_cone_trace(
     return Color(color.x, color.y, color.z, alpha);
 }
 
-void VisualServerScene::_update_instance_lightmap_captures(Instance* p_instance
+void VisualServerScene::_update_instance_lightmap_captures(
+    Instance* p_instance
 ) {
     InstanceGeometryData* geom =
         static_cast<InstanceGeometryData*>(p_instance->base_data);
@@ -2621,9 +2627,9 @@ void VisualServerScene::_update_instance_lightmap_captures(Instance* p_instance
             VSG::storage->lightmap_capture_get_octree_cell_transform(
                 E->get()->base
             );
-        int cell_subdiv =
-            VSG::storage->lightmap_capture_get_octree_cell_subdiv(E->get()->base
-            );
+        int cell_subdiv = VSG::storage->lightmap_capture_get_octree_cell_subdiv(
+            E->get()->base
+        );
         to_cell_xform = to_cell_xform * E->get()->transform.affine_inverse();
 
         PoolVector<RasterizerStorage::LightmapCaptureOctree>::Read octree_r =
@@ -3057,8 +3063,8 @@ bool VisualServerScene::_light_instance_update_shadow(
                 VSG::storage->light_omni_get_shadow_mode(p_instance->base);
 
             if (shadow_mode == VS::LIGHT_OMNI_SHADOW_DUAL_PARABOLOID
-                || !VSG::scene_render->light_instances_can_render_shadow_cube(
-                )) {
+                || !VSG::scene_render
+                        ->light_instances_can_render_shadow_cube()) {
                 for (int i = 0; i < 2; i++) {
                     // using this one ensures that raster deferred will have it
 
@@ -3832,7 +3838,8 @@ void VisualServerScene::_prepare_scene(
             }
         }
 
-        VSG::scene_render->set_directional_shadow_count(directional_shadow_count
+        VSG::scene_render->set_directional_shadow_count(
+            directional_shadow_count
         );
 
         for (int i = 0; i < directional_shadow_count; i++) {
@@ -4121,11 +4128,11 @@ bool VisualServerScene::_render_reflection_probe_step(
                 p_instance->base
             );
 
-        Vector3 edge = view_normals[p_step] * extents;
-        float distance =
-            ABS(view_normals[p_step].dot(edge)
-                - view_normals[p_step].dot(origin_offset)
-            ); // distance from origin offset to actual view distance limit
+        Vector3 edge   = view_normals[p_step] * extents;
+        float distance = ABS(
+            view_normals[p_step].dot(edge)
+            - view_normals[p_step].dot(origin_offset)
+        ); // distance from origin offset to actual view distance limit
 
         max_distance = MAX(max_distance, distance);
 
@@ -4718,8 +4725,8 @@ void VisualServerScene::_bake_gi_probe_light(
 
                 uint32_t result = 0xFFFFFFFF;
 
-                while (distance > -distance_adv
-                ) { // use this to avoid precision errors
+                while (distance
+                       > -distance_adv) { // use this to avoid precision errors
 
                     result = _gi_bake_find_cell(
                         cells,
@@ -4846,8 +4853,8 @@ void VisualServerScene::_bake_gi_probe_light(
 
                 uint32_t result = 0xFFFFFFFF;
 
-                while (distance > -distance_adv
-                ) { // use this to avoid precision errors
+                while (distance
+                       > -distance_adv) { // use this to avoid precision errors
 
                     result = _gi_bake_find_cell(
                         cells,
@@ -5588,9 +5595,9 @@ void VisualServerScene::_update_dirty_instance(Instance* p_instance) {
                 } else if (p_instance->base_type == VS::INSTANCE_PARTICLES) {
                     bool cast_shadows = false;
 
-                    int dp =
-                        VSG::storage->particles_get_draw_passes(p_instance->base
-                        );
+                    int dp = VSG::storage->particles_get_draw_passes(
+                        p_instance->base
+                    );
 
                     for (int i = 0; i < dp; i++) {
                         RID mesh = VSG::storage->particles_get_draw_pass_mesh(

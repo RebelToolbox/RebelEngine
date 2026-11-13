@@ -219,8 +219,10 @@ public:
     bool is_physical_key_pressed(int p_scancode) const override;
     bool is_mouse_button_pressed(int p_button) const override;
     bool is_joy_button_pressed(int p_device, int p_button) const override;
-    bool is_action_pressed(const StringName& p_action, bool p_exact = false)
-        const override;
+    bool is_action_pressed(
+        const StringName& p_action,
+        bool p_exact = false
+    ) const override;
     bool is_action_just_pressed(
         const StringName& p_action,
         bool p_exact = false
@@ -229,8 +231,10 @@ public:
         const StringName& p_action,
         bool p_exact = false
     ) const override;
-    float get_action_strength(const StringName& p_action, bool p_exact = false)
-        const override;
+    float get_action_strength(
+        const StringName& p_action,
+        bool p_exact = false
+    ) const override;
     float get_action_raw_strength(
         const StringName& p_action,
         bool p_exact = false
@@ -284,8 +288,10 @@ public:
     void set_main_loop(MainLoop* p_main_loop);
     void set_mouse_position(const Point2& p_posf);
 
-    void action_press(const StringName& p_action, float p_strength = 1.f)
-        override;
+    void action_press(
+        const StringName& p_action,
+        float p_strength = 1.f
+    ) override;
     void action_release(const StringName& p_action) override;
 
     void iteration(float p_step);
@@ -311,8 +317,10 @@ public:
     void joy_axis(int p_device, int p_axis, const JoyAxis& p_value);
     void joy_hat(int p_device, int p_val);
 
-    void add_joy_mapping(String p_mapping, bool p_update_existing = false)
-        override;
+    void add_joy_mapping(
+        String p_mapping,
+        bool p_update_existing = false
+    ) override;
     void remove_joy_mapping(String p_guid) override;
     bool is_joy_known(int p_device) override;
     String get_joy_guid(int p_device) const override;

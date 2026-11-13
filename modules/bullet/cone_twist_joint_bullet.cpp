@@ -39,9 +39,9 @@ ConeTwistJointBullet::ConeTwistJointBullet(
             btFrameB
         ));
     } else {
-        coneConstraint =
-            bulletnew(btConeTwistConstraint(*rbA->get_bt_rigid_body(), btFrameA)
-            );
+        coneConstraint = bulletnew(
+            btConeTwistConstraint(*rbA->get_bt_rigid_body(), btFrameA)
+        );
     }
     setup(coneConstraint);
 }

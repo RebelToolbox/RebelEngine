@@ -110,12 +110,14 @@ String EditorFileSystemDirectory::get_file_script_class_name(int p_idx) const {
     return files[p_idx]->script_class_name;
 }
 
-String EditorFileSystemDirectory::get_file_script_class_extends(int p_idx
+String EditorFileSystemDirectory::get_file_script_class_extends(
+    int p_idx
 ) const {
     return files[p_idx]->script_class_extends;
 }
 
-String EditorFileSystemDirectory::get_file_script_class_icon_path(int p_idx
+String EditorFileSystemDirectory::get_file_script_class_icon_path(
+    int p_idx
 ) const {
     return files[p_idx]->script_class_icon_path;
 }
@@ -1198,7 +1200,8 @@ void EditorFileSystem::scan_changes() {
 void EditorFileSystem::_notification(int p_what) {
     switch (p_what) {
         case NOTIFICATION_ENTER_TREE: {
-            call_deferred("scan"
+            call_deferred(
+                "scan"
             ); // this should happen after every editor node entered the tree
 
         } break;
@@ -1642,7 +1645,8 @@ void EditorFileSystem::update_file(const String& p_file) {
     if (cpos == -1) {
         // The file did not exist, it was added.
 
-        late_added_files.insert(p_file
+        late_added_files.insert(
+            p_file
         ); // Remember that it was added. This mean it will be scanned and
            // imported on editor restart.
         int idx          = 0;
@@ -1949,7 +1953,8 @@ void EditorFileSystem::_reimport_file(const String& p_file) {
         }
 
     } else {
-        late_added_files.insert(p_file
+        late_added_files.insert(
+            p_file
         ); // imported files do not call update_file(), but just in case..
         params["nodes/use_legacy_names"] = false;
     }
@@ -2312,12 +2317,14 @@ bool EditorFileSystem::_should_skip_directory(const String& p_path) {
         return true;
     }
 
-    if (FileAccess::exists(p_path.plus_file("project.rebel")
+    if (FileAccess::exists(
+            p_path.plus_file("project.rebel")
         )) { // skip if another project inside this
         return true;
     }
 
-    if (FileAccess::exists(p_path.plus_file(".gdignore")
+    if (FileAccess::exists(
+            p_path.plus_file(".gdignore")
         )) { // skip if a `.gdignore` file is inside this
         return true;
     }

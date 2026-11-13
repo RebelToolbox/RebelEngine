@@ -210,8 +210,9 @@ void MeshInstanceEditor::_menu_option(int p_option) {
             Vector<Ref<Shape>> shapes = mesh->convex_decompose();
 
             if (!shapes.size()) {
-                err_dialog->set_text(TTR("Couldn't create any collision shapes."
-                ));
+                err_dialog->set_text(
+                    TTR("Couldn't create any collision shapes.")
+                );
                 err_dialog->popup_centered_minsize();
                 return;
             }
@@ -428,8 +429,9 @@ void MeshInstanceEditor::_create_outline_mesh() {
     }
 
     if (mesh->get_surface_count() == 0) {
-        err_dialog->set_text(TTR("Mesh has not surface to create outlines from!"
-        ));
+        err_dialog->set_text(
+            TTR("Mesh has not surface to create outlines from!")
+        );
         err_dialog->popup_centered_minsize();
         return;
     } else if (mesh->get_surface_count() == 1
@@ -484,10 +486,12 @@ MeshInstanceEditor::MeshInstanceEditor() {
     SpatialEditor::get_singleton()->add_control_to_menu_panel(options);
 
     options->set_text(TTR("Mesh"));
-    options->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon(
-        "MeshInstance",
-        "EditorIcons"
-    ));
+    options->set_icon(
+        EditorNode::get_singleton()->get_gui_base()->get_icon(
+            "MeshInstance",
+            "EditorIcons"
+        )
+    );
 
     options->get_popup()->add_item(
         TTR("Create Trimesh Static Body"),

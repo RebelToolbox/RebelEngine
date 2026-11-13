@@ -56,8 +56,8 @@ void LineEdit::_gui_input(Ref<InputEvent> p_event) {
 
         _reset_caret_blink_timer();
         if (b->is_pressed()) {
-            accept_event(
-            ); // don't pass event further when clicked on text field
+            accept_event(); // don't pass event further when clicked on text
+                            // field
             if (!text.empty() && is_editable()
                 && _is_over_clear_button(b->get_position())) {
                 clear_button_status.press_attempt   = true;
@@ -647,8 +647,10 @@ Variant LineEdit::get_drag_data(const Point2& p_point) {
     return Variant();
 }
 
-bool LineEdit::can_drop_data(const Point2& p_point, const Variant& p_data)
-    const {
+bool LineEdit::can_drop_data(
+    const Point2& p_point,
+    const Variant& p_data
+) const {
     bool drop_override = Control::can_drop_data(
         p_point,
         p_data
@@ -1914,7 +1916,8 @@ PopupMenu* LineEdit::get_menu() const {
 
 void LineEdit::_editor_settings_changed() {
 #ifdef TOOLS_ENABLED
-    cursor_set_blink_enabled(EDITOR_DEF("text_editor/cursor/caret_blink", false)
+    cursor_set_blink_enabled(
+        EDITOR_DEF("text_editor/cursor/caret_blink", false)
     );
     cursor_set_blink_speed(
         EDITOR_DEF("text_editor/cursor/caret_blink_speed", 0.65)

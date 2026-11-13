@@ -43,7 +43,11 @@ typedef struct {
     rebel_int (*get_connection_state)(const void*);
 
     rebel_error (*initialize)(void*, const rebel_dictionary*);
-    rebel_object* (*create_data_channel)(void*, const char* p_channel_name, const rebel_dictionary*);
+    rebel_object* (*create_data_channel)(
+        void*,
+        const char* p_channel_name,
+        const rebel_dictionary*
+    );
     rebel_error (*create_offer)(void*);
     rebel_error (*create_answer)(void*); /* unused for now, should be done
                                             automatically on
@@ -99,11 +103,15 @@ typedef struct {
 /* Set the default GDNative library */
 rebel_error GDAPI rebel_net_set_webrtc_library(const rebel_net_webrtc_library*);
 /* Binds a WebRTCPeerConnectionGDNative to the provided interface */
-void GDAPI
-rebel_net_bind_webrtc_peer_connection(rebel_object* p_obj, const rebel_net_webrtc_peer_connection*);
+void GDAPI rebel_net_bind_webrtc_peer_connection(
+    rebel_object* p_obj,
+    const rebel_net_webrtc_peer_connection*
+);
 /* Binds a WebRTCDataChannelGDNative to the provided interface */
-void GDAPI
-rebel_net_bind_webrtc_data_channel(rebel_object* p_obj, const rebel_net_webrtc_data_channel*);
+void GDAPI rebel_net_bind_webrtc_data_channel(
+    rebel_object* p_obj,
+    const rebel_net_webrtc_data_channel*
+);
 
 #ifdef __cplusplus
 }

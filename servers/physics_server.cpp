@@ -38,7 +38,8 @@ void PhysicsDirectBodyState::integrate_forces() {
     set_angular_velocity(av);
 }
 
-Object* PhysicsDirectBodyState::get_contact_collider_object(int p_contact_idx
+Object* PhysicsDirectBodyState::get_contact_collider_object(
+    int p_contact_idx
 ) const {
     ObjectID objid = get_contact_collider_id(p_contact_idx);
     Object* obj    = ObjectDB::get_instance(objid);
@@ -296,7 +297,8 @@ float PhysicsShapeQueryParameters::get_margin() const {
     return margin;
 }
 
-void PhysicsShapeQueryParameters::set_collision_mask(uint32_t p_collision_mask
+void PhysicsShapeQueryParameters::set_collision_mask(
+    uint32_t p_collision_mask
 ) {
     collision_mask = p_collision_mask;
 }

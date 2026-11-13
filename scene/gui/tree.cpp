@@ -2034,8 +2034,8 @@ void Tree::select_single_item(
                     }
 
                 } else if (select_mode == SELECT_MULTI
-                           && (selected_item != p_selected || selected_col != i
-                           )) {
+                           && (selected_item != p_selected
+                               || selected_col != i)) {
                     selected_item = p_selected;
                     selected_col  = i;
                     emit_signal("cell_selected");
@@ -2975,8 +2975,8 @@ void Tree::_gui_input(Ref<InputEvent> p_event) {
     Ref<InputEventMouseMotion> mm = p_event;
 
     if (mm.is_valid()) {
-        if (cache.font.is_null(
-            )) { // avoid a strange case that may corrupt stuff
+        if (cache.font
+                .is_null()) { // avoid a strange case that may corrupt stuff
             update_cache();
         }
 
@@ -3102,8 +3102,8 @@ void Tree::_gui_input(Ref<InputEvent> p_event) {
     Ref<InputEventMouseButton> b = p_event;
 
     if (b.is_valid()) {
-        if (cache.font.is_null(
-            )) { // avoid a strange case that may corrupt stuff
+        if (cache.font
+                .is_null()) { // avoid a strange case that may corrupt stuff
             update_cache();
         }
 

@@ -1192,7 +1192,8 @@ void PortalRenderer::rooms_update_gameplay_monitor(
     // is the pvs loaded?
     if (!_loaded || !_pvs.is_loaded()) {
         if (!_pvs.is_loaded()) {
-            WARN_PRINT_ONCE("RoomManager PVS is required for this functionality"
+            WARN_PRINT_ONCE(
+                "RoomManager PVS is required for this functionality"
             );
         }
         return;

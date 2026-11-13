@@ -181,7 +181,8 @@ void rebel_icall_Array_Generic_GetElementTypeInfo(
 }
 
 MonoString* rebel_icall_Array_ToString(Array* ptr) {
-    return GDMonoMarshal::mono_string_from_rebel(Variant(*ptr).operator String()
+    return GDMonoMarshal::mono_string_from_rebel(
+        Variant(*ptr).operator String()
     );
 }
 
@@ -411,7 +412,8 @@ void rebel_icall_Dictionary_Generic_GetValueTypeInfo(
 }
 
 MonoString* rebel_icall_Dictionary_ToString(Dictionary* ptr) {
-    return GDMonoMarshal::mono_string_from_rebel(Variant(*ptr).operator String()
+    return GDMonoMarshal::mono_string_from_rebel(
+        Variant(*ptr).operator String()
     );
 }
 

@@ -164,8 +164,11 @@ class LightmapperCPU : public Lightmapper {
         LocalVector<int>& r_lightmap_indices
     );
 
-    float _get_omni_attenuation(float distance, float inv_range, float decay)
-        const;
+    float _get_omni_attenuation(
+        float distance,
+        float inv_range,
+        float decay
+    ) const;
 
     void _compute_direct_light(uint32_t p_idx, void* r_lightmap);
 

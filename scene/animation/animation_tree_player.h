@@ -338,8 +338,10 @@ public:
 
     Error node_rename(const StringName& p_node, const StringName& p_new_name);
     int node_get_input_count(const StringName& p_node) const;
-    StringName node_get_input_source(const StringName& p_node, int p_input)
-        const;
+    StringName node_get_input_source(
+        const StringName& p_node,
+        int p_input
+    ) const;
 
     String get_configuration_warning() const override;
 
@@ -390,7 +392,8 @@ public:
 
     bool oneshot_node_has_autorestart(const StringName& p_node) const;
     float oneshot_node_get_autorestart_delay(const StringName& p_node) const;
-    float oneshot_node_get_autorestart_random_delay(const StringName& p_node
+    float oneshot_node_get_autorestart_random_delay(
+        const StringName& p_node
     ) const;
 
     void oneshot_node_set_mix_mode(const StringName& p_node, bool p_mix);

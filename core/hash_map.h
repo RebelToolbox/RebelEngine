@@ -117,8 +117,8 @@ private:
             /* rehash up */
             new_hash_table_power = hash_table_power + 1;
 
-            while ((int)elements > ((1 << new_hash_table_power) * RELATIONSHIP)
-            ) {
+            while ((int)elements
+                   > ((1 << new_hash_table_power) * RELATIONSHIP)) {
                 new_hash_table_power++;
             }
 

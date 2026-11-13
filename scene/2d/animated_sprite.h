@@ -61,8 +61,10 @@ public:
     );
     int get_frame_count(const StringName& p_anim) const;
 
-    _FORCE_INLINE_ Ref<Texture> get_frame(const StringName& p_anim, int p_idx)
-        const {
+    _FORCE_INLINE_ Ref<Texture> get_frame(
+        const StringName& p_anim,
+        int p_idx
+    ) const {
         const Map<StringName, Anim>::Element* E = animations.find(p_anim);
         ERR_FAIL_COND_V_MSG(
             !E,

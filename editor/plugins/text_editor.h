@@ -131,8 +131,10 @@ public:
 
     void set_debugger_active(bool p_active) override;
     void set_tooltip_request_func(String p_method, Object* p_obj) override;
-    void add_callback(const String& p_function, PoolStringArray p_args)
-        override;
+    void add_callback(
+        const String& p_function,
+        PoolStringArray p_args
+    ) override;
 
     Control* get_edit_menu() override;
     void clear_edit_menu() override;

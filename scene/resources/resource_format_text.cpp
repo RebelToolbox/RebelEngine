@@ -194,22 +194,22 @@ Ref<PackedScene> ResourceInteractiveLoaderText::_parse_node_tag(
             // int base_scene=-1;
 
             if (next_tag.fields.has("name")) {
-                name =
-                    packed_scene->get_state()->add_name(next_tag.fields["name"]
-                    );
+                name = packed_scene->get_state()->add_name(
+                    next_tag.fields["name"]
+                );
             }
 
             if (next_tag.fields.has("parent")) {
                 NodePath np = next_tag.fields["parent"];
-                np.prepend_period(
-                ); // compatible to how it manages paths internally
+                np.prepend_period(); // compatible to how it manages paths
+                                     // internally
                 parent = packed_scene->get_state()->add_node_path(np);
             }
 
             if (next_tag.fields.has("type")) {
-                type =
-                    packed_scene->get_state()->add_name(next_tag.fields["type"]
-                    );
+                type = packed_scene->get_state()->add_name(
+                    next_tag.fields["type"]
+                );
             } else {
                 type = SceneState::TYPE_INSTANCED; // no type? assume this was
                                                    // instanced

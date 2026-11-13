@@ -724,7 +724,8 @@ private:
         const DataType& p_b,
         bool& r_valid
     ) const;
-    Variant::Operator _get_variant_operation(const OperatorNode::Operator& p_op
+    Variant::Operator _get_variant_operation(
+        const OperatorNode::Operator& p_op
     ) const;
     bool _get_function_signature(
         DataType& p_base_type,

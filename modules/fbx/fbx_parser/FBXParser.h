@@ -135,7 +135,8 @@ public:
         return it == elements.end() ? nullptr : (*it).second;
     }
 
-    ElementPtr FindElementCaseInsensitive(const std::string& elementName
+    ElementPtr FindElementCaseInsensitive(
+        const std::string& elementName
     ) const {
         for (auto element = elements.begin(); element != elements.end();
              ++element) {
@@ -230,7 +231,8 @@ ElementPtr GetRequiredElement(
     const std::string& index,
     const ElementPtr element = nullptr
 );
-ScopePtr GetRequiredScope(const ElementPtr el
+ScopePtr GetRequiredScope(
+    const ElementPtr el
 ); // New in 2020. (less likely to destroy application)
 ElementPtr GetOptionalElement(
     const ScopePtr sc,

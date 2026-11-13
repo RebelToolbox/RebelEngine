@@ -999,7 +999,8 @@ String ShaderCompilerGLES2::_dump_node_code(
                                 } break;
                             }
 
-                        } else if (p_default_actions.renames.has(var_node->name
+                        } else if (p_default_actions.renames.has(
+                                       var_node->name
                                    )) {
                             code += p_default_actions.renames[var_node->name];
                         } else if (internal_functions.has(var_node->name)) {

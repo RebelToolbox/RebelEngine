@@ -67,7 +67,8 @@ typedef struct {
     // reference depends entirely from the script.
     //  Note: You can set those function pointer to NULL if not needed.
     void (*refcount_incremented)(rebel_pluginscript_instance_data* p_data);
-    bool (*refcount_decremented)(rebel_pluginscript_instance_data* p_data
+    bool (*refcount_decremented)(
+        rebel_pluginscript_instance_data* p_data
     ); // return true if it can die
 } rebel_pluginscript_instance_desc;
 
@@ -186,7 +187,8 @@ typedef struct {
         const rebel_variant* p_value
     );
     rebel_string (*debug_get_error)(rebel_pluginscript_language_data* p_data);
-    int (*debug_get_stack_level_count)(rebel_pluginscript_language_data* p_data
+    int (*debug_get_stack_level_count)(
+        rebel_pluginscript_language_data* p_data
     );
     int (*debug_get_stack_level_line)(
         rebel_pluginscript_language_data* p_data,

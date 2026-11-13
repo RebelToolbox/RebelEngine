@@ -595,8 +595,8 @@ Error ResourceImporterTexture::import(
     }
 
     if (size_limit > 0
-        && (image->get_width() > size_limit || image->get_height() > size_limit
-        )) {
+        && (image->get_width() > size_limit
+            || image->get_height() > size_limit)) {
         // limit size
         if (image->get_width() >= image->get_height()) {
             int new_width = size_limit;
@@ -851,7 +851,8 @@ String ResourceImporterTexture::get_import_settings_string() const {
     return s;
 }
 
-bool ResourceImporterTexture::are_import_settings_valid(const String& p_path
+bool ResourceImporterTexture::are_import_settings_valid(
+    const String& p_path
 ) const {
     // will become invalid if formats are missing to import
     Dictionary metadata =

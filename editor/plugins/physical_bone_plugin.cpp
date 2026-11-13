@@ -32,7 +32,8 @@ PhysicalBoneEditor::PhysicalBoneEditor(EditorNode* p_editor) :
     spatial_editor_hb = memnew(HBoxContainer);
     spatial_editor_hb->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     spatial_editor_hb->set_alignment(BoxContainer::ALIGN_BEGIN);
-    SpatialEditor::get_singleton()->add_control_to_menu_panel(spatial_editor_hb
+    SpatialEditor::get_singleton()->add_control_to_menu_panel(
+        spatial_editor_hb
     );
 
     spatial_editor_hb->add_child(memnew(VSeparator));

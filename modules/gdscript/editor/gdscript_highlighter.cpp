@@ -391,9 +391,9 @@ void GDScriptSyntaxHighlighter::_update_cache() {
         );
     }
 
-    function_definition_color =
-        EDITOR_GET("text_editor/highlighting/gdscript/function_definition_color"
-        );
+    function_definition_color = EDITOR_GET(
+        "text_editor/highlighting/gdscript/function_definition_color"
+    );
     node_path_color =
         EDITOR_GET("text_editor/highlighting/gdscript/node_path_color");
     type_color = EDITOR_GET("text_editor/highlighting/base_type_color");

@@ -73,7 +73,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -117,7 +118,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -142,7 +144,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -167,7 +170,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -191,7 +195,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -213,7 +218,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -233,7 +239,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -285,7 +292,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     String get_caption() const override;
@@ -361,7 +369,8 @@ public:
     void rename_node(const StringName& p_name, const StringName& p_new_name);
     bool has_node(const StringName& p_name) const;
     StringName get_node_name(const Ref<AnimationNode>& p_node) const;
-    Vector<StringName> get_node_connection_array(const StringName& p_name
+    Vector<StringName> get_node_connection_array(
+        const StringName& p_name
     ) const;
 
     void set_node_position(const StringName& p_node, const Vector2& p_position);

@@ -39,8 +39,10 @@ public:
     Array surface_get_blend_shape_arrays(int p_surface) const override;
     uint32_t surface_get_format(int p_idx) const override;
     Mesh::PrimitiveType surface_get_primitive_type(int p_idx) const override;
-    void surface_set_material(int p_idx, const Ref<Material>& p_material)
-        override;
+    void surface_set_material(
+        int p_idx,
+        const Ref<Material>& p_material
+    ) override;
     Ref<Material> surface_get_material(int p_idx) const override;
     int get_blend_shape_count() const override;
     StringName get_blend_shape_name(int p_index) const override;

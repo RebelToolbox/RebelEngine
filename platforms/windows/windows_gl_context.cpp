@@ -22,8 +22,11 @@
 #define wglGetProcAddress (void*)wglGetProcAddress
 #endif
 
-typedef HGLRC(APIENTRY*
-                  PFNWGLCREATECONTEXTATTRIBSARBPROC)(HDC, HGLRC, const int*);
+typedef HGLRC(APIENTRY* PFNWGLCREATECONTEXTATTRIBSARBPROC)(
+    HDC,
+    HGLRC,
+    const int*
+);
 
 void WindowsGLContext::release_current() {
     wglMakeCurrent(hDC, NULL);
@@ -117,8 +120,8 @@ Error WindowsGLContext::initialize() {
         (BYTE)0,
         (BYTE)0,
         (BYTE)0, // Color Bits Ignored
-        (BYTE)(OS::get_singleton()->is_layered_allowed() ? 8 : 0
-        ),       // Alpha Buffer
+        (BYTE)(OS::get_singleton()->is_layered_allowed() ? 8
+                                                         : 0), // Alpha Buffer
         (BYTE)0, // Shift Bit Ignored
         (BYTE)0, // No Accumulation Buffer
         (BYTE)0,
@@ -179,8 +182,8 @@ Error WindowsGLContext::initialize() {
 
         PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB =
             NULL; // pointer to the method
-        wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC
-        )wglGetProcAddress("wglCreateContextAttribsARB");
+        wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)
+            wglGetProcAddress("wglCreateContextAttribsARB");
 
         if (wglCreateContextAttribsARB == NULL) // OpenGL 3.0 is not supported
         {
@@ -205,8 +208,9 @@ Error WindowsGLContext::initialize() {
 
     wglSwapIntervalEXT =
         (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
-    wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC
-    )wglGetProcAddress("wglGetSwapIntervalEXT");
+    wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress(
+        "wglGetSwapIntervalEXT"
+    );
     // glWrapperInit(wrapper_get_proc_address);
 
     return OK;

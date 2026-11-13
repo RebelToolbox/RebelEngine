@@ -286,7 +286,8 @@ int GLTFAccessor::get_sparse_values_buffer_view() {
     return sparse_values_buffer_view;
 }
 
-void GLTFAccessor::set_sparse_values_buffer_view(int p_sparse_values_buffer_view
+void GLTFAccessor::set_sparse_values_buffer_view(
+    int p_sparse_values_buffer_view
 ) {
     sparse_values_buffer_view = p_sparse_values_buffer_view;
 }
@@ -295,7 +296,8 @@ int GLTFAccessor::get_sparse_values_byte_offset() {
     return sparse_values_byte_offset;
 }
 
-void GLTFAccessor::set_sparse_values_byte_offset(int p_sparse_values_byte_offset
+void GLTFAccessor::set_sparse_values_byte_offset(
+    int p_sparse_values_byte_offset
 ) {
     sparse_values_byte_offset = p_sparse_values_byte_offset;
 }

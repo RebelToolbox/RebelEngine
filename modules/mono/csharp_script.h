@@ -188,7 +188,8 @@ public:
     bool can_instance() const override;
     StringName get_instance_base_type() const override;
     ScriptInstance* instance_create(Object* p_this) override;
-    PlaceHolderScriptInstance* placeholder_instance_create(Object* p_this
+    PlaceHolderScriptInstance* placeholder_instance_create(
+        Object* p_this
     ) override;
     bool instance_has(const Object* p_this) const override;
 
@@ -286,7 +287,8 @@ class CSharpInstance : public ScriptInstance {
         int p_argcount
     );
 
-    MultiplayerAPI::RPCMode _member_get_rpc_mode(IMonoClassMember* p_member
+    MultiplayerAPI::RPCMode _member_get_rpc_mode(
+        IMonoClassMember* p_member
     ) const;
 
     void get_properties_state_for_reloading(
@@ -305,8 +307,10 @@ public:
     bool set(const StringName& p_name, const Variant& p_value) override;
     bool get(const StringName& p_name, Variant& r_ret) const override;
     void get_property_list(List<PropertyInfo>* p_properties) const override;
-    Variant::Type get_property_type(const StringName& p_name, bool* r_is_valid)
-        const override;
+    Variant::Type get_property_type(
+        const StringName& p_name,
+        bool* r_is_valid
+    ) const override;
 
     void get_method_list(List<MethodInfo>* p_list) const override;
     bool has_method(const StringName& p_method) const override;
@@ -345,9 +349,11 @@ public:
     void refcount_incremented() override;
     bool refcount_decremented() override;
 
-    MultiplayerAPI::RPCMode get_rpc_mode(const StringName& p_method
+    MultiplayerAPI::RPCMode get_rpc_mode(
+        const StringName& p_method
     ) const override;
-    MultiplayerAPI::RPCMode get_rset_mode(const StringName& p_variable
+    MultiplayerAPI::RPCMode get_rset_mode(
+        const StringName& p_variable
     ) const override;
 
     void notification(int p_notification) override;
@@ -530,8 +536,10 @@ public:
     bool supports_builtin_mode() const override;
 
     /* TODO? */
-    int find_function(const String& p_function, const String& p_code)
-        const override {
+    int find_function(
+        const String& p_function,
+        const String& p_code
+    ) const override {
         return -1;
     }
 
@@ -543,8 +551,11 @@ public:
     String _get_indentation() const;
 
     /* TODO? */
-    void auto_indent_code(String& p_code, int p_from_line, int p_to_line)
-        const override {}
+    void auto_indent_code(
+        String& p_code,
+        int p_from_line,
+        int p_to_line
+    ) const override {}
 
     /* TODO */
     void add_global_constant(
@@ -613,8 +624,10 @@ public:
     }
 
     /* TODO */
-    int profiling_get_frame_data(ProfilingInfo* p_info_arr, int p_info_max)
-        override {
+    int profiling_get_frame_data(
+        ProfilingInfo* p_info_arr,
+        int p_info_max
+    ) override {
         return 0;
     }
 
@@ -624,12 +637,15 @@ public:
     void get_public_functions(List<MethodInfo>* p_functions) const override {}
 
     /* TODO? */
-    void get_public_constants(List<Pair<String, Variant>>* p_constants
+    void get_public_constants(
+        List<Pair<String, Variant>>* p_constants
     ) const override {}
 
     void reload_all_scripts() override;
-    void reload_tool_script(const Ref<Script>& p_script, bool p_soft_reload)
-        override;
+    void reload_tool_script(
+        const Ref<Script>& p_script,
+        bool p_soft_reload
+    ) override;
 
     /* LOADER FUNCTIONS */
     void get_recognized_extensions(List<String>* p_extensions) const override;

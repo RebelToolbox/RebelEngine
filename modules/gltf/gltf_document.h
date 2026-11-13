@@ -288,7 +288,8 @@ private:
         const GLTFSkeletonIndex skel_i
     );
     Error _create_skeletons(Ref<GLTFState> state);
-    Error _map_skin_joints_indices_to_skeleton_bone_indices(Ref<GLTFState> state
+    Error _map_skin_joints_indices_to_skeleton_bone_indices(
+        Ref<GLTFState> state
     );
     Error _serialize_skins(Ref<GLTFState> state);
     Error _create_skins(Ref<GLTFState> state);
@@ -439,9 +440,11 @@ private:
     );
     Error _encode_buffer_bins(Ref<GLTFState> state, const String& p_path);
     Error _encode_buffer_glb(Ref<GLTFState> state, const String& p_path);
-    Dictionary _serialize_texture_transform_uv1(Ref<SpatialMaterial> p_material
+    Dictionary _serialize_texture_transform_uv1(
+        Ref<SpatialMaterial> p_material
     );
-    Dictionary _serialize_texture_transform_uv2(Ref<SpatialMaterial> p_material
+    Dictionary _serialize_texture_transform_uv2(
+        Ref<SpatialMaterial> p_material
     );
     Error _serialize_version(Ref<GLTFState> state);
     Error _serialize_file(Ref<GLTFState> state, const String p_path);

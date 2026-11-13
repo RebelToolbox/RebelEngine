@@ -68,7 +68,8 @@ bool ResourceFormatDummyTexture::handles_type(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "Texture");
 }
 
-String ResourceFormatDummyTexture::get_resource_type(const String& p_path
+String ResourceFormatDummyTexture::get_resource_type(
+    const String& p_path
 ) const {
     String extension = p_path.get_extension().to_lower();
     if (extension == "bmp" || extension == "dds" || extension == "exr"

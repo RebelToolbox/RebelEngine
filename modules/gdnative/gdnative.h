@@ -169,8 +169,11 @@ public:
 
 class GDNativeLibraryResourceSaver : public ResourceFormatSaver {
 public:
-    Error save(const String& p_path, const RES& p_resource, uint32_t p_flags)
-        override;
+    Error save(
+        const String& p_path,
+        const RES& p_resource,
+        uint32_t p_flags
+    ) override;
     bool recognize(const RES& p_resource) const override;
     void get_recognized_extensions(
         const RES& p_resource,

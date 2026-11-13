@@ -761,8 +761,10 @@ Variant TabContainer::get_drag_data(const Point2& p_point) {
     return drag_data;
 }
 
-bool TabContainer::can_drop_data(const Point2& p_point, const Variant& p_data)
-    const {
+bool TabContainer::can_drop_data(
+    const Point2& p_point,
+    const Variant& p_data
+) const {
     if (!drag_to_rearrange_enabled) {
         return false;
     }

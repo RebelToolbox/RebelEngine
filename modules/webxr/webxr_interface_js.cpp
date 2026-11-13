@@ -147,7 +147,8 @@ String WebXRInterfaceJS::get_requested_reference_space_types() const {
     return requested_reference_space_types;
 }
 
-void WebXRInterfaceJS::_set_reference_space_type(String p_reference_space_type
+void WebXRInterfaceJS::_set_reference_space_type(
+    String p_reference_space_type
 ) {
     reference_space_type = p_reference_space_type;
 }
@@ -156,7 +157,8 @@ String WebXRInterfaceJS::get_reference_space_type() const {
     return reference_space_type;
 }
 
-Ref<ARVRPositionalTracker> WebXRInterfaceJS::get_controller(int p_controller_id
+Ref<ARVRPositionalTracker> WebXRInterfaceJS::get_controller(
+    int p_controller_id
 ) const {
     ARVRServer* arvr_server = ARVRServer::get_singleton();
     ERR_FAIL_NULL_V(arvr_server, nullptr);

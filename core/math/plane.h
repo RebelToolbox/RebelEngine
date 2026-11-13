@@ -32,7 +32,8 @@ public:
     Vector3 get_any_point() const;
     Vector3 get_any_perpendicular_normal() const;
 
-    _FORCE_INLINE_ bool is_point_over(const Vector3& p_point
+    _FORCE_INLINE_ bool is_point_over(
+        const Vector3& p_point
     ) const; ///< Point is over plane
     _FORCE_INLINE_ real_t distance_to(const Vector3& p_point) const;
     _FORCE_INLINE_ bool has_point(

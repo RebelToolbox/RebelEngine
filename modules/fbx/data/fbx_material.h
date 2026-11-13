@@ -110,8 +110,8 @@ struct FBXMaterial : public Reference {
              SpatialMaterial::TextureParam::TEXTURE_ALBEDO                                      },
             {"Maya|TEX_color_map|file",
              SpatialMaterial::TextureParam::TEXTURE_ALBEDO                                      },
-            {"Maya|TEX_color_map",               SpatialMaterial::TextureParam::TEXTURE_ALBEDO
-            },
+            {"Maya|TEX_color_map",
+             SpatialMaterial::TextureParam::TEXTURE_ALBEDO                                      },
             /* Emission */
             {"EmissiveColor",                    SpatialMaterial::TextureParam::TEXTURE_EMISSION},
             {"EmissiveFactor",                   SpatialMaterial::TextureParam::TEXTURE_EMISSION},
@@ -157,8 +157,8 @@ struct FBXMaterial : public Reference {
             //{ "Bump", SpatialMaterial::TextureParam::TEXTURE_NORMAL },
             //{ "3dsMax|Parameters|bump_map",
             // SpatialMaterial::TextureParam::TEXTURE_NORMAL },
-            {"Maya|NormalTexture",               SpatialMaterial::TextureParam::TEXTURE_NORMAL
-            },
+            {"Maya|NormalTexture",
+             SpatialMaterial::TextureParam::TEXTURE_NORMAL                                      },
             //{ "Maya|normalCamera",
             // SpatialMaterial::TextureParam::TEXTURE_NORMAL }, {
             //"Maya|normalCamera|file",
@@ -305,7 +305,8 @@ struct FBXMaterial : public Reference {
     };
 
     /// Extracts the material information.
-    MaterialInfo extract_material_info(const FBXDocParser::Material* material
+    MaterialInfo extract_material_info(
+        const FBXDocParser::Material* material
     ) const;
 
     Ref<SpatialMaterial> import_material(ImportState& state);

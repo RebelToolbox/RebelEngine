@@ -57,8 +57,8 @@ Ref<Texture> EditorResourcePreviewGenerator::generate_from_path(
     return generate(res, p_size);
 }
 
-bool EditorResourcePreviewGenerator::generate_small_preview_automatically(
-) const {
+bool EditorResourcePreviewGenerator::
+    generate_small_preview_automatically() const {
     if (get_script_instance()
         && get_script_instance()->has_method(
             "generate_small_preview_automatically"
@@ -222,8 +222,8 @@ void EditorResourcePreview::_generate_preview(
             EditorNode::get_singleton()
                 ->get_theme_base()
                 ->get_icon("Object", "EditorIcons")
-                ->get_width(
-                ); // Kind of a workaround to retrieve the default icon size
+                ->get_width(); // Kind of a workaround to retrieve the default
+                               // icon size
 
         if (preview_generators[i]->can_generate_small_preview()) {
             Ref<Texture> generated_small;
@@ -299,7 +299,8 @@ void EditorResourcePreview::_thread() {
                 String path = item.path;
                 if (item.resource.is_valid()) {
                     path += ":"
-                          + itos(cache[item.path].last_hash
+                          + itos(
+                                cache[item.path].last_hash
                           ); // keep last hash (see description of what this is
                              // in condition below)
                 }
@@ -628,8 +629,9 @@ void EditorResourcePreview::stop() {
         preview_sem.post();
         while (!exited.is_set()) {
             OS::get_singleton()->delay_usec(10000);
-            VisualServer::get_singleton()->sync(
-            ); // sync pending stuff, as thread may be blocked on visual server
+            VisualServer::get_singleton()
+                ->sync(); // sync pending stuff, as thread may be blocked on
+                          // visual server
         }
         thread.wait_to_finish();
     }

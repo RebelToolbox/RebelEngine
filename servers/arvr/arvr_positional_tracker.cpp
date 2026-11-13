@@ -240,7 +240,8 @@ void ARVRPositionalTracker::set_hand(
     };
 };
 
-Transform ARVRPositionalTracker::get_transform(bool p_adjust_by_reference_frame
+Transform ARVRPositionalTracker::get_transform(
+    bool p_adjust_by_reference_frame
 ) const {
     Transform new_transform;
 
@@ -280,6 +281,6 @@ ARVRPositionalTracker::ARVRPositionalTracker() {
     rumble             = 0.0;
 };
 
-ARVRPositionalTracker::~ARVRPositionalTracker(){
+ARVRPositionalTracker::~ARVRPositionalTracker() {
 
 };

@@ -412,7 +412,8 @@ void ResourceFormatLoaderVideoStreamGDNative::get_recognized_extensions(
     }
 }
 
-bool ResourceFormatLoaderVideoStreamGDNative::handles_type(const String& p_type
+bool ResourceFormatLoaderVideoStreamGDNative::handles_type(
+    const String& p_type
 ) const {
     return ClassDB::is_parent_class(p_type, "VideoStream");
 }

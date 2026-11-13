@@ -24,7 +24,8 @@ public:
         return self;
     }
 
-    _FORCE_INLINE_ void _set_physics_server(BulletPhysicsServer* p_physicsServer
+    _FORCE_INLINE_ void _set_physics_server(
+        BulletPhysicsServer* p_physicsServer
     ) {
         physicsServer = p_physicsServer;
     }

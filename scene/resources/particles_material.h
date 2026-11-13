@@ -280,7 +280,8 @@ public:
     void set_trail_divisor(int p_divisor);
     int get_trail_divisor() const;
 
-    void set_trail_size_modifier(const Ref<CurveTexture>& p_trail_size_modifier
+    void set_trail_size_modifier(
+        const Ref<CurveTexture>& p_trail_size_modifier
     );
     Ref<CurveTexture> get_trail_size_modifier() const;
 

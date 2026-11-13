@@ -275,8 +275,8 @@ enum KeyList {
 
 enum KeyModifierMask {
     KEY_CODE_MASK =
-        ((1 << 25) - 1
-        ), ///< Apply this mask to any keycode to remove modifiers.
+        ((1 << 25)
+         - 1), ///< Apply this mask to any keycode to remove modifiers.
     KEY_MODIFIER_MASK = (0xFF << 24), ///< Apply this mask to isolate modifiers.
     KEY_MASK_SHIFT    = (1 << 25),
     KEY_MASK_ALT      = (1 << 26),

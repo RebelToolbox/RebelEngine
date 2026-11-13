@@ -103,7 +103,8 @@ bool AudioStreamGeneratorPlayback::can_push_buffer(int p_frames) const {
     return buffer.space_left() >= p_frames;
 }
 
-bool AudioStreamGeneratorPlayback::push_buffer(const PoolVector2Array& p_frames
+bool AudioStreamGeneratorPlayback::push_buffer(
+    const PoolVector2Array& p_frames
 ) {
     int to_write = p_frames.size();
     if (buffer.space_left() < to_write) {

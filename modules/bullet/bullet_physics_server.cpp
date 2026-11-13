@@ -119,7 +119,8 @@ void BulletPhysicsServer::shape_set_custom_solver_bias(
     // WARN_PRINT("Bias not supported by Bullet physics engine");
 }
 
-PhysicsServer::ShapeType BulletPhysicsServer::shape_get_type(RID p_shape
+PhysicsServer::ShapeType BulletPhysicsServer::shape_get_type(
+    RID p_shape
 ) const {
     ShapeBullet* shape = shape_owner.get(p_shape);
     ERR_FAIL_COND_V(!shape, PhysicsServer::SHAPE_CUSTOM);
@@ -188,14 +189,17 @@ void BulletPhysicsServer::space_set_param(
     space->set_param(p_param, p_value);
 }
 
-real_t BulletPhysicsServer::space_get_param(RID p_space, SpaceParameter p_param)
-    const {
+real_t BulletPhysicsServer::space_get_param(
+    RID p_space,
+    SpaceParameter p_param
+) const {
     SpaceBullet* space = space_owner.get(p_space);
     ERR_FAIL_COND_V(!space, 0);
     return space->get_param(p_param);
 }
 
-PhysicsDirectSpaceState* BulletPhysicsServer::space_get_direct_state(RID p_space
+PhysicsDirectSpaceState* BulletPhysicsServer::space_get_direct_state(
+    RID p_space
 ) {
     SpaceBullet* space = space_owner.get(p_space);
     ERR_FAIL_COND_V(!space, nullptr);
@@ -402,8 +406,10 @@ void BulletPhysicsServer::area_set_param(
     }
 }
 
-Variant BulletPhysicsServer::area_get_param(RID p_area, AreaParameter p_param)
-    const {
+Variant BulletPhysicsServer::area_get_param(
+    RID p_area,
+    AreaParameter p_param
+) const {
     if (space_owner.owns(p_area)) {
         SpaceBullet* space = space_owner.get(p_area);
         return space->get_param(p_param);
@@ -725,8 +731,10 @@ void BulletPhysicsServer::body_set_param(
     body->set_param(p_param, p_value);
 }
 
-float BulletPhysicsServer::body_get_param(RID p_body, BodyParameter p_param)
-    const {
+float BulletPhysicsServer::body_get_param(
+    RID p_body,
+    BodyParameter p_param
+) const {
     RigidBodyBullet* body = rigid_body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, 0);
 
@@ -767,8 +775,10 @@ void BulletPhysicsServer::body_set_state(
     body->set_state(p_state, p_variant);
 }
 
-Variant BulletPhysicsServer::body_get_state(RID p_body, BodyState p_state)
-    const {
+Variant BulletPhysicsServer::body_get_state(
+    RID p_body,
+    BodyState p_state
+) const {
     RigidBodyBullet* body = rigid_body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, Variant());
 
@@ -891,8 +901,10 @@ void BulletPhysicsServer::body_set_axis_lock(
     body->set_axis_lock(p_axis, p_lock);
 }
 
-bool BulletPhysicsServer::body_is_axis_locked(RID p_body, BodyAxis p_axis)
-    const {
+bool BulletPhysicsServer::body_is_axis_locked(
+    RID p_body,
+    BodyAxis p_axis
+) const {
     const RigidBodyBullet* body = rigid_body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, 0);
     return body->is_axis_locked(p_axis);
@@ -959,7 +971,8 @@ void BulletPhysicsServer::body_set_contacts_reported_depth_threshold(
     // Not supported.
 }
 
-float BulletPhysicsServer::body_get_contacts_reported_depth_threshold(RID p_body
+float BulletPhysicsServer::body_get_contacts_reported_depth_threshold(
+    RID p_body
 ) const {
     // Not supported.
     return 0.;
@@ -1213,8 +1226,10 @@ void BulletPhysicsServer::soft_body_set_state(
     WARN_PRINT("soft_body_state is not implemented yet in Bullet backend.");
 }
 
-Variant BulletPhysicsServer::soft_body_get_state(RID p_body, BodyState p_state)
-    const {
+Variant BulletPhysicsServer::soft_body_get_state(
+    RID p_body,
+    BodyState p_state
+) const {
     // FIXME: Must be implemented.
     WARN_PRINT("soft_body_state is not implemented yet in Bullet backend.");
     return Variant();
@@ -1356,7 +1371,8 @@ void BulletPhysicsServer::soft_body_set_pose_matching_coefficient(
     return body->set_pose_matching_coefficient(p_pose_matching_coefficient);
 }
 
-real_t BulletPhysicsServer::soft_body_get_pose_matching_coefficient(RID p_body
+real_t BulletPhysicsServer::soft_body_get_pose_matching_coefficient(
+    RID p_body
 ) {
     SoftBodyBullet* body = soft_body_owner.get(p_body);
     ERR_FAIL_COND_V(!body, 0.f);
@@ -1450,7 +1466,8 @@ bool BulletPhysicsServer::soft_body_is_point_pinned(
     return body->get_node_mass(p_point_index);
 }
 
-PhysicsServer::JointType BulletPhysicsServer::joint_get_type(RID p_joint
+PhysicsServer::JointType BulletPhysicsServer::joint_get_type(
+    RID p_joint
 ) const {
     JointBullet* joint = joint_owner.get(p_joint);
     ERR_FAIL_COND_V(!joint, JOINT_PIN);
@@ -1958,7 +1975,8 @@ int BulletPhysicsServer::get_process_info(ProcessInfo p_info) {
     return 0;
 }
 
-CollisionObjectBullet* BulletPhysicsServer::get_collision_object(RID p_object
+CollisionObjectBullet* BulletPhysicsServer::get_collision_object(
+    RID p_object
 ) const {
     if (rigid_body_owner.owns(p_object)) {
         return rigid_body_owner.getornull(p_object);

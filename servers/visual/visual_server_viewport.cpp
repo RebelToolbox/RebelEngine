@@ -472,7 +472,8 @@ void VisualServerViewport::draw_viewports() {
 
             VSG::storage->render_info_end_capture();
             vp->render_info[VS::VIEWPORT_RENDER_INFO_OBJECTS_IN_FRAME] =
-                VSG::storage->get_captured_render_info(VS::INFO_OBJECTS_IN_FRAME
+                VSG::storage->get_captured_render_info(
+                    VS::INFO_OBJECTS_IN_FRAME
                 );
             vp->render_info[VS::VIEWPORT_RENDER_INFO_VERTICES_IN_FRAME] =
                 VSG::storage->get_captured_render_info(
@@ -520,7 +521,8 @@ void VisualServerViewport::draw_viewports() {
         if (vp->update_mode == VS::VIEWPORT_UPDATE_ONCE) {
             vp->update_mode = VS::VIEWPORT_UPDATE_DISABLED;
         }
-        VSG::scene_render->set_debug_draw_mode(VS::VIEWPORT_DEBUG_DRAW_DISABLED
+        VSG::scene_render->set_debug_draw_mode(
+            VS::VIEWPORT_DEBUG_DRAW_DISABLED
         );
     }
 }

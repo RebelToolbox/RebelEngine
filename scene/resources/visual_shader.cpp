@@ -552,8 +552,10 @@ int VisualShader::get_valid_node_id(Type p_type) const {
     return g->nodes.size() ? MAX(2, g->nodes.back()->key() + 1) : 2;
 }
 
-int VisualShader::find_node_id(Type p_type, const Ref<VisualShaderNode>& p_node)
-    const {
+int VisualShader::find_node_id(
+    Type p_type,
+    const Ref<VisualShaderNode>& p_node
+) const {
     for (const Map<int, Node>::Element* E = graph[p_type].nodes.front(); E;
          E                                = E->next()) {
         if (E->get().node == p_node) {
@@ -1550,8 +1552,8 @@ Error VisualShader::_write_node(
         }
     }
 
-    if (!vsnode->is_code_generated(
-        )) { // just generate globals and ignore locals
+    if (!vsnode
+             ->is_code_generated()) { // just generate globals and ignore locals
         processed.insert(node);
         return OK;
     }
@@ -1671,8 +1673,8 @@ Error VisualShader::_write_node(
     output_vars.resize(vsnode->get_output_port_count());
     String* outputs = output_vars.ptrw();
 
-    if (vsnode->is_simple_decl(
-        )) { // less code to generate for some simple_decl nodes
+    if (vsnode->is_simple_decl()) { // less code to generate for some
+                                    // simple_decl nodes
         for (int i = 0; i < output_count; i++) {
             String var_name = "n_out" + itos(node) + "p" + itos(i);
             switch (vsnode->get_output_port_type(i)) {
@@ -1773,11 +1775,11 @@ void VisualShader::_update_shader() const {
                     }
                     int count = 0;
                     for (int i = 0;
-                         i
-                         < ShaderTypes::get_singleton()
-                               ->get_modes(VisualServer::ShaderMode(shader_mode)
-                               )
-                               .size();
+                         i < ShaderTypes::get_singleton()
+                                 ->get_modes(
+                                     VisualServer::ShaderMode(shader_mode)
+                                 )
+                                 .size();
                          i++) {
                         String mode = ShaderTypes::get_singleton()->get_modes(
                             VisualServer::ShaderMode(shader_mode)
@@ -1844,7 +1846,8 @@ void VisualShader::_update_shader() const {
                 global_expressions += expr;
             }
             Ref<VisualShaderNodeUniformRef> uniform_ref =
-                Object::cast_to<VisualShaderNodeUniformRef>(E->get().node.ptr()
+                Object::cast_to<VisualShaderNodeUniformRef>(
+                    E->get().node.ptr()
                 );
             if (uniform_ref.is_valid()) {
                 used_uniform_names.insert(uniform_ref->get_uniform_name());

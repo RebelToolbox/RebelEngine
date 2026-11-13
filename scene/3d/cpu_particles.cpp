@@ -882,8 +882,9 @@ void CPUParticles::_particles_process(float p_delta) {
                 case EMISSION_SHAPE_RING: {
                     float ring_random_angle = Math::randf() * 2.0 * Math_PI;
                     float ring_random_radius =
-                        Math::randf(
-                        ) * (emission_ring_radius - emission_ring_inner_radius)
+                        Math::randf()
+                            * (emission_ring_radius
+                               - emission_ring_inner_radius)
                         + emission_ring_inner_radius;
                     Vector3 axis       = emission_ring_axis.normalized();
                     Vector3 ortho_axis = Vector3();
@@ -1326,7 +1327,8 @@ void CPUParticles::_update_particle_data_buffer() {
                 ERR_FAIL_NULL(get_viewport());
                 Camera* c = get_viewport()->get_camera();
                 if (c) {
-                    Vector3 dir = c->get_global_transform().basis.get_axis(2
+                    Vector3 dir = c->get_global_transform().basis.get_axis(
+                        2
                     ); // far away to close
 
                     if (local_coords) {
@@ -1572,7 +1574,8 @@ void CPUParticles::convert_from_particles(Node* p_particles) {
     {                                                                          \
         Ref<CurveTexture> ctex =                                               \
             material->get_param_texture(ParticlesMaterial::m_param);           \
-        if (ctex.is_valid()) set_param_curve(m_param, ctex->get_curve());      \
+        if (ctex.is_valid())                                                   \
+            set_param_curve(m_param, ctex->get_curve());                       \
     }                                                                          \
     set_param_randomness(                                                      \
         m_param,                                                               \

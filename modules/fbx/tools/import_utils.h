@@ -231,7 +231,8 @@ public:
         return 0;
     }
 
-    static float get_fbx_fps(const FBXDocParser::FileGlobalSettings* FBXSettings
+    static float get_fbx_fps(
+        const FBXDocParser::FileGlobalSettings* FBXSettings
     ) {
         int time_mode = FBXSettings->TimeMode();
 

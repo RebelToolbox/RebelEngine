@@ -102,8 +102,10 @@ public:
     virtual double get_double() const;
     virtual real_t get_real() const;
 
-    virtual uint64_t get_buffer(uint8_t* p_dst, uint64_t p_length)
-        const; ///< get an array of bytes
+    virtual uint64_t get_buffer(
+        uint8_t* p_dst,
+        uint64_t p_length
+    ) const; ///< get an array of bytes
     virtual String get_line() const;
     virtual String get_token() const;
     virtual Vector<String> get_csv_line(const String& p_delim = ",") const;
@@ -149,7 +151,8 @@ public:
         uint64_t p_length
     ); ///< store an array of bytes
 
-    virtual bool file_exists(const String& p_name
+    virtual bool file_exists(
+        const String& p_name
     ) = 0; ///< return true if a file exists
 
     virtual Error reopen(
@@ -157,7 +160,8 @@ public:
         int p_mode_flags
     ); ///< does not change the AccessType
 
-    static FileAccess* create(AccessType p_access
+    static FileAccess* create(
+        AccessType p_access
     ); /// Create a file access (for the current platform) this is the only
        /// portable way of accessing files.
     static FileAccess* create_for_path(const String& p_path);

@@ -58,7 +58,8 @@ void GDMonoMethod::_update_signature(MonoMethodSignature* p_method_sig) {
 }
 
 GDMonoClass* GDMonoMethod::get_enclosing_class() const {
-    return GDMono::get_singleton()->get_class(mono_method_get_class(mono_method)
+    return GDMono::get_singleton()->get_class(
+        mono_method_get_class(mono_method)
     );
 }
 

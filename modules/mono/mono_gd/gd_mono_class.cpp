@@ -153,7 +153,8 @@ void GDMonoClass::fetch_attributes() {
     attrs_fetched = true;
 }
 
-void GDMonoClass::fetch_methods_with_rebel_api_checks(GDMonoClass* p_native_base
+void GDMonoClass::fetch_methods_with_rebel_api_checks(
+    GDMonoClass* p_native_base
 ) {
     CRASH_COND(!CACHED_CLASS(RebelObject)->is_assignable_from(this));
 
@@ -163,8 +164,8 @@ void GDMonoClass::fetch_methods_with_rebel_api_checks(GDMonoClass* p_native_base
 
     void* iter             = NULL;
     MonoMethod* raw_method = NULL;
-    while ((raw_method = mono_class_get_methods(get_mono_ptr(), &iter)) != NULL
-    ) {
+    while ((raw_method = mono_class_get_methods(get_mono_ptr(), &iter))
+           != NULL) {
         StringName name = String::utf8(mono_method_get_name(raw_method));
 
         // get_method implicitly fetches methods and adds them to this->methods
@@ -235,15 +236,16 @@ void GDMonoClass::fetch_methods_with_rebel_api_checks(GDMonoClass* p_native_base
                 top->get_method(name, method->get_parameters_count());
 
             if (base_method
-                && base_method->has_attribute(CACHED_CLASS(RebelMethodAttribute)
+                && base_method->has_attribute(
+                    CACHED_CLASS(RebelMethodAttribute)
                 )) {
                 // Found base method with RebelMethod attribute.
                 // We get the original API method name from this attribute.
                 // This name must point to the virtual method.
 
-                MonoObject* attr =
-                    base_method->get_attribute(CACHED_CLASS(RebelMethodAttribute
-                    ));
+                MonoObject* attr = base_method->get_attribute(
+                    CACHED_CLASS(RebelMethodAttribute)
+                );
 
                 StringName rebel_method_name =
                     CACHED_FIELD(RebelMethodAttribute, methodName)
@@ -483,8 +485,8 @@ const Vector<GDMonoProperty*>& GDMonoClass::get_all_properties() {
 
     void* iter                 = NULL;
     MonoProperty* raw_property = NULL;
-    while ((raw_property = mono_class_get_properties(mono_class, &iter)) != NULL
-    ) {
+    while ((raw_property = mono_class_get_properties(mono_class, &iter))
+           != NULL) {
         StringName name = String::utf8(mono_property_get_name(raw_property));
 
         Map<StringName, GDMonoProperty*>::Element* match =
@@ -512,8 +514,8 @@ const Vector<GDMonoClass*>& GDMonoClass::get_all_delegates() {
 
     void* iter           = NULL;
     MonoClass* raw_class = NULL;
-    while ((raw_class = mono_class_get_nested_types(mono_class, &iter)) != NULL
-    ) {
+    while ((raw_class = mono_class_get_nested_types(mono_class, &iter))
+           != NULL) {
         if (mono_class_is_delegate(raw_class)) {
             StringName name = String::utf8(mono_class_get_name(raw_class));
 

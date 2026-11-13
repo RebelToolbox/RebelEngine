@@ -154,8 +154,11 @@ class LinuxOS : public UnixOS {
     ) const;
     void _handle_selection_request_event(XSelectionRequestEvent* p_event) const;
 
-    String _get_clipboard_impl(Atom p_source, Window x11_window, Atom target)
-        const;
+    String _get_clipboard_impl(
+        Atom p_source,
+        Window x11_window,
+        Atom target
+    ) const;
     String _get_clipboard(Atom p_source, Window x11_window) const;
     void _clipboard_transfer_ownership(Atom p_source, Window x11_window) const;
 
@@ -285,7 +288,8 @@ public:
     Point2 get_mouse_position() const override;
     int get_mouse_button_state() const override;
     void set_window_title(const String& p_title) override;
-    void set_window_mouse_passthrough(const PoolVector2Array& p_region
+    void set_window_mouse_passthrough(
+        const PoolVector2Array& p_region
     ) override;
 
     void set_icon(const Ref<Image>& p_icon) override;
@@ -305,16 +309,22 @@ public:
     String get_data_path() const override;
     String get_cache_path() const override;
 
-    String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
-        const override;
+    String get_system_dir(
+        SystemDir p_dir,
+        bool p_shared_storage = true
+    ) const override;
 
     Error shell_open(String p_uri) override;
 
-    void set_video_mode(const VideoMode& p_video_mode, int p_screen = 0)
-        override;
+    void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    ) override;
     VideoMode get_video_mode(int p_screen = 0) const override;
-    void get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen = 0)
-        const override;
+    void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const override;
 
     int get_screen_count() const override;
     int get_current_screen() const override;
@@ -357,8 +367,10 @@ public:
     String get_unique_id() const override;
 
     void move_window_to_foreground() override;
-    void alert(const String& p_alert, const String& p_title = "ALERT!")
-        override;
+    void alert(
+        const String& p_alert,
+        const String& p_title = "ALERT!"
+    ) override;
 
     bool is_joy_known(int p_device) override;
     String get_joy_guid(int p_device) const override;

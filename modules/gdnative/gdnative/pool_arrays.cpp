@@ -169,14 +169,14 @@ uint8_t GDAPI rebel_pool_byte_array_get(
     return self->get(p_idx);
 }
 
-rebel_int GDAPI rebel_pool_byte_array_size(const rebel_pool_byte_array* p_self
-) {
+rebel_int GDAPI
+rebel_pool_byte_array_size(const rebel_pool_byte_array* p_self) {
     const PoolVector<uint8_t>* self = (const PoolVector<uint8_t>*)p_self;
     return self->size();
 }
 
-rebel_bool GDAPI rebel_pool_byte_array_empty(const rebel_pool_byte_array* p_self
-) {
+rebel_bool GDAPI
+rebel_pool_byte_array_empty(const rebel_pool_byte_array* p_self) {
     const PoolVector<uint8_t>* self = (const PoolVector<uint8_t>*)p_self;
     return self->empty();
 }
@@ -310,8 +310,8 @@ rebel_int GDAPI rebel_pool_int_array_size(const rebel_pool_int_array* p_self) {
     return self->size();
 }
 
-rebel_bool GDAPI rebel_pool_int_array_empty(const rebel_pool_int_array* p_self
-) {
+rebel_bool GDAPI
+rebel_pool_int_array_empty(const rebel_pool_int_array* p_self) {
     const PoolVector<rebel_int>* self = (const PoolVector<rebel_int>*)p_self;
     return self->empty();
 }
@@ -440,14 +440,14 @@ rebel_real GDAPI rebel_pool_real_array_get(
     return self->get(p_idx);
 }
 
-rebel_int GDAPI rebel_pool_real_array_size(const rebel_pool_real_array* p_self
-) {
+rebel_int GDAPI
+rebel_pool_real_array_size(const rebel_pool_real_array* p_self) {
     const PoolVector<rebel_real>* self = (const PoolVector<rebel_real>*)p_self;
     return self->size();
 }
 
-rebel_bool GDAPI rebel_pool_real_array_empty(const rebel_pool_real_array* p_self
-) {
+rebel_bool GDAPI
+rebel_pool_real_array_empty(const rebel_pool_real_array* p_self) {
     const PoolVector<rebel_real>* self = (const PoolVector<rebel_real>*)p_self;
     return self->empty();
 }
@@ -1013,8 +1013,8 @@ rebel_color GDAPI rebel_pool_color_array_get(
     return v;
 }
 
-rebel_int GDAPI rebel_pool_color_array_size(const rebel_pool_color_array* p_self
-) {
+rebel_int GDAPI
+rebel_pool_color_array_size(const rebel_pool_color_array* p_self) {
     const PoolVector<Color>* self = (const PoolVector<Color>*)p_self;
     return self->size();
 }

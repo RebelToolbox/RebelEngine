@@ -84,7 +84,8 @@ void AndroidOS::initialize_core() {
     if (use_apk_expansion) {
         FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_RESOURCES);
     } else {
-        FileAccess::make_default<AndroidFileAccess>(FileAccess::ACCESS_RESOURCES
+        FileAccess::make_default<AndroidFileAccess>(
+            FileAccess::ACCESS_RESOURCES
         );
     }
     FileAccess::make_default<UnixFileAccess>(FileAccess::ACCESS_USERDATA);
@@ -92,7 +93,8 @@ void AndroidOS::initialize_core() {
     if (use_apk_expansion) {
         DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_RESOURCES);
     } else {
-        DirAccess::make_default<AndroidJNIDirAccess>(DirAccess::ACCESS_RESOURCES
+        DirAccess::make_default<AndroidJNIDirAccess>(
+            DirAccess::ACCESS_RESOURCES
         );
     }
     DirAccess::make_default<UnixDirAccess>(DirAccess::ACCESS_USERDATA);
@@ -174,7 +176,8 @@ Error AndroidOS::initialize(
     AudioDriverManager::initialize(p_audio_driver);
 
     input = memnew(InputDefault);
-    input->set_use_input_buffering(true
+    input->set_use_input_buffering(
+        true
     ); // Needed because events will come directly from the UI thread
     input->set_fallback_mapping(android_jni_os->get_input_fallback_mapping());
 
@@ -269,8 +272,10 @@ OS::VideoMode AndroidOS::get_video_mode(int p_screen) const {
     return default_videomode;
 }
 
-void AndroidOS::get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen)
-    const {
+void AndroidOS::get_fullscreen_mode_list(
+    List<VideoMode>* p_list,
+    int p_screen
+) const {
     p_list->push_back(default_videomode);
 }
 

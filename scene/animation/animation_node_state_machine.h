@@ -156,7 +156,8 @@ protected:
 
 public:
     void get_parameter_list(List<PropertyInfo>* r_list) const override;
-    Variant get_parameter_default_value(const StringName& p_parameter
+    Variant get_parameter_default_value(
+        const StringName& p_parameter
     ) const override;
 
     void add_node(
@@ -184,7 +185,8 @@ public:
         const StringName& p_to,
         const Ref<AnimationNodeStateMachineTransition>& p_transition
     );
-    Ref<AnimationNodeStateMachineTransition> get_transition(int p_transition
+    Ref<AnimationNodeStateMachineTransition> get_transition(
+        int p_transition
     ) const;
     StringName get_transition_from(int p_transition) const;
     StringName get_transition_to(int p_transition) const;

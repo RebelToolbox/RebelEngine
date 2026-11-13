@@ -1403,8 +1403,10 @@ public:
     }
 
 private:
-    std::vector<const Connection*>
-    GetConnectionsSequenced(uint64_t id, const ConnectionMap&) const;
+    std::vector<const Connection*> GetConnectionsSequenced(
+        uint64_t id,
+        const ConnectionMap&
+    ) const;
     std::vector<const Connection*> GetConnectionsSequenced(
         uint64_t id,
         bool is_src,

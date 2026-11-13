@@ -91,7 +91,8 @@ void EditorHelpSearch::_notification(int p_what) {
             _update_icons();
         } break;
         case NOTIFICATION_POPUP_HIDE: {
-            results_tree->call_deferred("clear"
+            results_tree->call_deferred(
+                "clear"
             ); // Wait for the Tree's mouse event propagation.
             get_ok()->set_disabled(true);
             EditorSettings::get_singleton()->set_project_metadata(

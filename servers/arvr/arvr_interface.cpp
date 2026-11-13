@@ -140,7 +140,7 @@ ARVRInterface::ARVRInterface() {
     tracking_state = ARVR_UNKNOWN_TRACKING;
 };
 
-ARVRInterface::~ARVRInterface(){};
+ARVRInterface::~ARVRInterface() {};
 
 // optional render to external texture which enhances performance on those
 // platforms that require us to submit our end result into special textures.
@@ -152,7 +152,8 @@ unsigned int ARVRInterface::get_external_texture_for_eye(
 
 // optional render to external depth texture which enhances performance on those
 // platforms that require us to submit our end result into special textures.
-unsigned int ARVRInterface::get_external_depth_for_eye(ARVRInterface::Eyes p_eye
+unsigned int ARVRInterface::get_external_depth_for_eye(
+    ARVRInterface::Eyes p_eye
 ) {
     return 0;
 };

@@ -198,8 +198,10 @@ public:
     void set_multiplayer(Ref<MultiplayerAPI> p_multiplayer) override;
 
     bool is_profiling() const override;
-    void add_profiling_frame_data(const StringName& p_name, const Array& p_data)
-        override;
+    void add_profiling_frame_data(
+        const StringName& p_name,
+        const Array& p_data
+    ) override;
 
     void profiling_start() override;
     void profiling_end() override;

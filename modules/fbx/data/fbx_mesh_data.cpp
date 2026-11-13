@@ -1179,7 +1179,8 @@ bool FBXMeshData::is_start_of_polygon(
     return p_polygon_indices[p_index - 1] < 0;
 }
 
-int FBXMeshData::count_polygons(const std::vector<int>& p_polygon_indices
+int FBXMeshData::count_polygons(
+    const std::vector<int>& p_polygon_indices
 ) const {
     // The negative numbers define the end of the polygon. Counting the amount
     // of negatives the numbers of polygons are obtained.
@@ -1292,8 +1293,8 @@ HashMap<int, R> FBXMeshData::extract_per_vertex_data(
                     );
                     aggregate_vertex_data[vertex_index].push_back(
                         {-1,
-                         p_mapping_data.data[p_mapping_data.index[vertex_index]]
-                        }
+                         p_mapping_data
+                             .data[p_mapping_data.index[vertex_index]]}
                     );
                 }
             }

@@ -434,8 +434,10 @@ void PackedDataContainerRef::_bind_methods() {
     );
 }
 
-Variant PackedDataContainerRef::getvar(const Variant& p_key, bool* r_valid)
-    const {
+Variant PackedDataContainerRef::getvar(
+    const Variant& p_key,
+    bool* r_valid
+) const {
     bool err    = false;
     Variant ret = from->_key_at_ofs(offset, p_key, err);
     if (r_valid) {

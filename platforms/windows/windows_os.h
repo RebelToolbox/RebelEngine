@@ -113,8 +113,11 @@ typedef struct tagPACKET {
     ORIENTATION pkOrientation;
 } PACKET;
 
-typedef HANDLE(WINAPI*
-                   WTOpenPtr)(HWND p_window, LOGCONTEXTW* p_ctx, BOOL p_enable);
+typedef HANDLE(WINAPI* WTOpenPtr)(
+    HWND p_window,
+    LOGCONTEXTW* p_ctx,
+    BOOL p_enable
+);
 typedef BOOL(WINAPI* WTClosePtr)(HANDLE p_ctx);
 typedef UINT(WINAPI* WTInfoPtr)(UINT p_category, UINT p_index, LPVOID p_output);
 typedef BOOL(WINAPI* WTPacketPtr)(HANDLE p_ctx, UINT p_param, LPVOID p_packets);
@@ -407,8 +410,10 @@ protected:
 public:
     LRESULT WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-    void alert(const String& p_alert, const String& p_title = "ALERT!")
-        override;
+    void alert(
+        const String& p_alert,
+        const String& p_title = "ALERT!"
+    ) override;
     String get_stdin_string(bool p_block) override;
 
     void set_mouse_mode(MouseMode p_mode) override;
@@ -419,14 +424,19 @@ public:
     void update_real_mouse_position();
     int get_mouse_button_state() const override;
     void set_window_title(const String& p_title) override;
-    void set_window_mouse_passthrough(const PoolVector2Array& p_region
+    void set_window_mouse_passthrough(
+        const PoolVector2Array& p_region
     ) override;
 
-    void set_video_mode(const VideoMode& p_video_mode, int p_screen = 0)
-        override;
+    void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    ) override;
     VideoMode get_video_mode(int p_screen = 0) const override;
-    void get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen = 0)
-        const override;
+    void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const override;
 
     int get_tablet_driver_count() const override;
     String get_tablet_driver_name(int p_driver) const override;
@@ -516,8 +526,10 @@ public:
 
     bool has_environment(const String& p_var) const override;
     String get_environment(const String& p_var) const override;
-    bool set_environment(const String& p_var, const String& p_value)
-        const override;
+    bool set_environment(
+        const String& p_var,
+        const String& p_value
+    ) const override;
 
     void set_clipboard(const String& p_text) override;
     String get_clipboard() const override;
@@ -560,8 +572,10 @@ public:
     String get_cache_path() const override;
     String get_rebel_dir_name() const override;
 
-    String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
-        const override;
+    String get_system_dir(
+        SystemDir p_dir,
+        bool p_shared_storage = true
+    ) const override;
     String get_user_data_dir() const override;
 
     String get_unique_id() const override;

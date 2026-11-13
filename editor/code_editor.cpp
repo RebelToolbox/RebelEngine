@@ -177,8 +177,8 @@ void FindReplaceBar::_replace() {
 
     text_edit->begin_complex_operation();
     if (selection_enabled
-        && is_selection_only(
-        )) { // To restrict search_current() to selected region
+        && is_selection_only()) { // To restrict search_current() to selected
+                                  // region
         text_edit->cursor_set_line(selection_begin.width);
         text_edit->cursor_set_column(selection_begin.height);
     }
@@ -535,7 +535,8 @@ void FindReplaceBar::_show_search(bool p_focus_replace, bool p_show_only) {
     if (!get_search_text().empty()) {
         if (p_focus_replace) {
             replace_text->select_all();
-            replace_text->set_cursor_position(replace_text->get_text().length()
+            replace_text->set_cursor_position(
+                replace_text->get_text().length()
             );
         } else {
             search_text->select_all();
@@ -993,9 +994,11 @@ bool CodeTextEditor::_add_font_size(int p_delta) {
 }
 
 void CodeTextEditor::update_editor_settings() {
-    text_editor->set_syntax_coloring(EditorSettings::get_singleton()->get(
-        "text_editor/highlighting/syntax_highlighting"
-    ));
+    text_editor->set_syntax_coloring(
+        EditorSettings::get_singleton()->get(
+            "text_editor/highlighting/syntax_highlighting"
+        )
+    );
     text_editor->set_highlight_all_occurrences(
         EditorSettings::get_singleton()->get(
             "text_editor/highlighting/highlight_all_occurrences"
@@ -1021,24 +1024,32 @@ void CodeTextEditor::update_editor_settings() {
     text_editor->set_draw_spaces(
         EditorSettings::get_singleton()->get("text_editor/indent/draw_spaces")
     );
-    text_editor->set_smooth_scroll_enabled(EditorSettings::get_singleton()->get(
-        "text_editor/navigation/smooth_scrolling"
-    ));
-    text_editor->set_v_scroll_speed(EditorSettings::get_singleton()->get(
-        "text_editor/navigation/v_scroll_speed"
-    ));
-    text_editor->set_draw_minimap(EditorSettings::get_singleton()->get(
-        "text_editor/navigation/show_minimap"
-    ));
+    text_editor->set_smooth_scroll_enabled(
+        EditorSettings::get_singleton()->get(
+            "text_editor/navigation/smooth_scrolling"
+        )
+    );
+    text_editor->set_v_scroll_speed(
+        EditorSettings::get_singleton()->get(
+            "text_editor/navigation/v_scroll_speed"
+        )
+    );
+    text_editor->set_draw_minimap(
+        EditorSettings::get_singleton()->get(
+            "text_editor/navigation/show_minimap"
+        )
+    );
     text_editor->set_minimap_width(
         (int)EditorSettings::get_singleton()->get(
             "text_editor/navigation/minimap_width"
         )
         * EDSCALE
     );
-    text_editor->set_show_line_numbers(EditorSettings::get_singleton()->get(
-        "text_editor/appearance/show_line_numbers"
-    ));
+    text_editor->set_show_line_numbers(
+        EditorSettings::get_singleton()->get(
+            "text_editor/appearance/show_line_numbers"
+        )
+    );
     text_editor->set_line_numbers_zero_padded(
         EditorSettings::get_singleton()->get(
             "text_editor/appearance/line_numbers_zero_padded"
@@ -1054,15 +1065,21 @@ void CodeTextEditor::update_editor_settings() {
             "text_editor/appearance/show_breakpoint_gutter"
         )
     );
-    text_editor->set_draw_info_gutter(EditorSettings::get_singleton()->get(
-        "text_editor/appearance/show_info_gutter"
-    ));
-    text_editor->set_hiding_enabled(EditorSettings::get_singleton()->get(
-        "text_editor/appearance/code_folding"
-    ));
-    text_editor->set_draw_fold_gutter(EditorSettings::get_singleton()->get(
-        "text_editor/appearance/code_folding"
-    ));
+    text_editor->set_draw_info_gutter(
+        EditorSettings::get_singleton()->get(
+            "text_editor/appearance/show_info_gutter"
+        )
+    );
+    text_editor->set_hiding_enabled(
+        EditorSettings::get_singleton()->get(
+            "text_editor/appearance/code_folding"
+        )
+    );
+    text_editor->set_draw_fold_gutter(
+        EditorSettings::get_singleton()->get(
+            "text_editor/appearance/code_folding"
+        )
+    );
     text_editor->set_wrap_enabled(
         EditorSettings::get_singleton()->get("text_editor/appearance/word_wrap")
     );
@@ -1092,12 +1109,16 @@ void CodeTextEditor::update_editor_settings() {
     text_editor->cursor_set_blink_enabled(
         EditorSettings::get_singleton()->get("text_editor/cursor/caret_blink")
     );
-    text_editor->cursor_set_blink_speed(EditorSettings::get_singleton()->get(
-        "text_editor/cursor/caret_blink_speed"
-    ));
-    text_editor->set_auto_brace_completion(EditorSettings::get_singleton()->get(
-        "text_editor/completion/auto_brace_complete"
-    ));
+    text_editor->cursor_set_blink_speed(
+        EditorSettings::get_singleton()->get(
+            "text_editor/cursor/caret_blink_speed"
+        )
+    );
+    text_editor->set_auto_brace_completion(
+        EditorSettings::get_singleton()->get(
+            "text_editor/completion/auto_brace_complete"
+        )
+    );
 }
 
 void CodeTextEditor::trim_trailing_whitespace() {
@@ -1987,7 +2008,8 @@ CodeTextEditor::CodeTextEditor() {
     status_bar = memnew(HBoxContainer);
     add_child(status_bar);
     status_bar->set_h_size_flags(SIZE_EXPAND_FILL);
-    status_bar->set_custom_minimum_size(Size2(0, 24 * EDSCALE)
+    status_bar->set_custom_minimum_size(
+        Size2(0, 24 * EDSCALE)
     ); // Adjust for the height of the warning icon.
 
     idle = memnew(Timer);

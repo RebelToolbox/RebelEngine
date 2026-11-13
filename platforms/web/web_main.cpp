@@ -21,7 +21,8 @@ void exit_callback() {
     int exit_code = WebOS::get_singleton()->get_exit_code();
     memdelete(os);
     os = NULL;
-    emscripten_force_exit(exit_code
+    emscripten_force_exit(
+        exit_code
     ); // No matter that we call cancel_main_loop, regular "exit" will not work,
        // forcing.
 }
@@ -51,8 +52,8 @@ void main_loop_callback() {
         target_ticks += (uint64_t)(1000000 / target_fps);
     }
     if (os->main_loop_iterate()) {
-        emscripten_cancel_main_loop(
-        ); // Cancel current loop and wait for finalize_async.
+        emscripten_cancel_main_loop(); // Cancel current loop and wait for
+                                       // finalize_async.
         os->get_main_loop()->finish();
         rebel_js_os_finish_async(cleanup_after_sync);
     }

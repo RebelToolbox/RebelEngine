@@ -52,14 +52,14 @@ public:
             return target_vertex;
         }
 
-        const Edge* get_next_edge_of_vertex(
-        ) const // clockwise list of all edges of a vertex
+        const Edge* get_next_edge_of_vertex() const // clockwise list of all
+                                                    // edges of a vertex
         {
             return this + next;
         }
 
-        const Edge* get_next_edge_of_face(
-        ) const // counter-clockwise list of all edges of a face
+        const Edge* get_next_edge_of_face() const // counter-clockwise list of
+                                                  // all edges of a face
         {
             return (this + reverse)->get_next_edge_of_vertex();
         }

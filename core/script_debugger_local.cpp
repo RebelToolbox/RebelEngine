@@ -254,7 +254,8 @@ void ScriptDebuggerLocal::debug(
             print_line("\tc,continue\t\t Continue execution.");
             print_line("\tbt,backtrace\t\t Show stack trace (frames).");
             print_line("\tfr,frame <frame>:\t Change current frame.");
-            print_line("\tlv,locals\t\t Show local variables for current frame."
+            print_line(
+                "\tlv,locals\t\t Show local variables for current frame."
             );
             print_line(
                 "\tmv,members\t\t Show member variables for \"this\" in frame."
@@ -274,7 +275,8 @@ void ScriptDebuggerLocal::debug(
             print_line("\tset [key=value]:\t List all options, or set one.");
             print_line("\tq,quit\t\t\t Quit application.");
         } else {
-            print_line("Error: Invalid command, enter \"help\" for assistance."
+            print_line(
+                "Error: Invalid command, enter \"help\" for assistance."
             );
         }
     }

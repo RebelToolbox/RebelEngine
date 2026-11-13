@@ -302,7 +302,8 @@ bool Polygon3DEditor::forward_spatial_gui_input(
                     }
 
                     if (closest_idx >= 0) {
-                        undo_redo->create_action(TTR("Edit Poly (Remove Point)")
+                        undo_redo->create_action(
+                            TTR("Edit Poly (Remove Point)")
                         );
                         undo_redo->add_undo_method(node, "set_polygon", poly);
                         poly.remove(closest_idx);

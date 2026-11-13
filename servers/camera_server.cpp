@@ -31,7 +31,8 @@ void CameraServer::_bind_methods() {
         &CameraServer::remove_feed
     );
 
-    ADD_SIGNAL(MethodInfo("camera_feed_added", PropertyInfo(Variant::INT, "id"))
+    ADD_SIGNAL(
+        MethodInfo("camera_feed_added", PropertyInfo(Variant::INT, "id"))
     );
     ADD_SIGNAL(
         MethodInfo("camera_feed_removed", PropertyInfo(Variant::INT, "id"))

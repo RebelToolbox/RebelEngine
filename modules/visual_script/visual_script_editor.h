@@ -369,8 +369,10 @@ public:
     void tag_saved_version() override;
     void reload(bool p_soft) override;
     void get_breakpoints(List<int>* p_breakpoints) override;
-    void add_callback(const String& p_function, PoolStringArray p_args)
-        override;
+    void add_callback(
+        const String& p_function,
+        PoolStringArray p_args
+    ) override;
     void update_settings() override;
     bool show_members_overview() override;
     void set_debugger_active(bool p_active) override;

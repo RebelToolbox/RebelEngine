@@ -247,8 +247,8 @@ void Node::_propagate_enter_tree() {
     // block while adding children
 
     for (int i = 0; i < data.children.size(); i++) {
-        if (!data.children[i]->is_inside_tree(
-            )) { // could have been added in enter_tree
+        if (!data.children[i]
+                 ->is_inside_tree()) { // could have been added in enter_tree
             data.children[i]->_propagate_enter_tree();
         }
     }
@@ -1129,8 +1129,10 @@ String increase_numeric_string(const String& s) {
     return res;
 }
 
-void Node::_generate_serial_child_name(const Node* p_child, StringName& name)
-    const {
+void Node::_generate_serial_child_name(
+    const Node* p_child,
+    StringName& name
+) const {
     if (name == StringName()) {
         // no name and a new nade is needed, create one.
 
@@ -1520,8 +1522,11 @@ bool Node::has_node(const NodePath& p_path) const {
     return get_node_or_null(p_path) != nullptr;
 }
 
-Node* Node::find_node(const String& p_mask, bool p_recursive, bool p_owned)
-    const {
+Node* Node::find_node(
+    const String& p_mask,
+    bool p_recursive,
+    bool p_owned
+) const {
     Node* const* cptr = data.children.ptr();
     int ccount        = data.children.size();
     for (int i = 0; i < ccount; i++) {

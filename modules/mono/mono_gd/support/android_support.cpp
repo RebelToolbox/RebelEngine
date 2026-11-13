@@ -735,8 +735,8 @@ static void interop_get_active_network_dns_servers(
     );
     ScopedLocalRef<jstring> connectivityServiceString(
         env,
-        (jstring
-        )env->GetStaticObjectField(contextClass, connectivityServiceField)
+        (jstring)
+            env->GetStaticObjectField(contextClass, connectivityServiceField)
     );
 
     jmethodID getSystemService = env->GetMethodID(
@@ -879,8 +879,8 @@ static void interop_get_active_network_dns_servers(
     // jesus...
 }
 
-GD_PINVOKE_EXPORT int32_t _monodroid_get_dns_servers(void** r_dns_servers_array
-) {
+GD_PINVOKE_EXPORT int32_t
+_monodroid_get_dns_servers(void** r_dns_servers_array) {
     if (!r_dns_servers_array) {
         return -1;
     }

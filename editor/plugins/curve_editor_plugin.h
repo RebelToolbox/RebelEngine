@@ -119,8 +119,10 @@ class CurvePreviewGenerator : public EditorResourcePreviewGenerator {
 
 public:
     bool handles(const String& p_type) const override;
-    Ref<Texture> generate(const Ref<Resource>& p_from, const Size2& p_size)
-        const override;
+    Ref<Texture> generate(
+        const Ref<Resource>& p_from,
+        const Size2& p_size
+    ) const override;
 };
 
 #endif // CURVE_EDITOR_PLUGIN_H

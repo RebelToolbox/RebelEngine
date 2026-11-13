@@ -135,7 +135,8 @@ public:
         const Ref<Image>& p_image,
         float p_quality
     );
-    static PoolVector<uint8_t> (*webp_lossless_packer)(const Ref<Image>& p_image
+    static PoolVector<uint8_t> (*webp_lossless_packer)(
+        const Ref<Image>& p_image
     );
     static Ref<Image> (*webp_unpacker)(const PoolVector<uint8_t>& p_buffer);
     static PoolVector<uint8_t> (*png_packer)(const Ref<Image>& p_image);
@@ -271,10 +272,14 @@ public:
      */
     Format get_format() const;
 
-    int get_mipmap_offset(int p_mipmap
+    int get_mipmap_offset(
+        int p_mipmap
     ) const; // get where the mipmap begins in data
-    void get_mipmap_offset_and_size(int p_mipmap, int& r_ofs, int& r_size)
-        const; // get where the mipmap begins in data
+    void get_mipmap_offset_and_size(
+        int p_mipmap,
+        int& r_ofs,
+        int& r_size
+    ) const; // get where the mipmap begins in data
     void get_mipmap_offset_size_and_dimensions(
         int p_mipmap,
         int& r_ofs,

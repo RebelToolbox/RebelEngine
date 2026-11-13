@@ -360,8 +360,10 @@ public:
         int p_level = 0
     ) = 0;
 
-    virtual Ref<Image> texture_get_data(RID p_texture, int p_level = 0)
-        const                                                       = 0;
+    virtual Ref<Image> texture_get_data(
+        RID p_texture,
+        int p_level = 0
+    ) const                                                         = 0;
     virtual void texture_set_flags(RID p_texture, uint32_t p_flags) = 0;
     virtual uint32_t texture_get_flags(RID p_texture) const         = 0;
     virtual Image::Format texture_get_format(RID p_texture) const   = 0;
@@ -549,8 +551,10 @@ public:
     virtual RID mesh_surface_get_material(RID p_mesh, int p_surface) const = 0;
 
     virtual int mesh_surface_get_array_len(RID p_mesh, int p_surface) const = 0;
-    virtual int mesh_surface_get_array_index_len(RID p_mesh, int p_surface)
-        const = 0;
+    virtual int mesh_surface_get_array_index_len(
+        RID p_mesh,
+        int p_surface
+    ) const = 0;
 
     virtual PoolVector<uint8_t> mesh_surface_get_array(
         RID p_mesh,
@@ -561,8 +565,10 @@ public:
         int p_surface
     ) const = 0;
 
-    virtual uint32_t mesh_surface_get_format(RID p_mesh, int p_surface)
-        const = 0;
+    virtual uint32_t mesh_surface_get_format(
+        RID p_mesh,
+        int p_surface
+    ) const = 0;
     virtual VS::PrimitiveType mesh_surface_get_primitive_type(
         RID p_mesh,
         int p_surface
@@ -633,8 +639,10 @@ public:
         RID p_multimesh,
         int p_index
     ) const = 0;
-    virtual Color multimesh_instance_get_color(RID p_multimesh, int p_index)
-        const = 0;
+    virtual Color multimesh_instance_get_color(
+        RID p_multimesh,
+        int p_index
+    ) const = 0;
     virtual Color multimesh_instance_get_custom_data(
         RID p_multimesh,
         int p_index
@@ -687,8 +695,10 @@ public:
         int p_bone,
         const Transform& p_transform
     ) = 0;
-    virtual Transform skeleton_bone_get_transform(RID p_skeleton, int p_bone)
-        const = 0;
+    virtual Transform skeleton_bone_get_transform(
+        RID p_skeleton,
+        int p_bone
+    ) const = 0;
     virtual void skeleton_bone_set_transform_2d(
         RID p_skeleton,
         int p_bone,
@@ -844,9 +854,10 @@ public:
     virtual uint32_t reflection_probe_get_cull_mask(RID p_probe) const    = 0;
     virtual Vector3 reflection_probe_get_extents(RID p_probe) const       = 0;
     virtual Vector3 reflection_probe_get_origin_offset(RID p_probe) const = 0;
-    virtual float reflection_probe_get_origin_max_distance(RID p_probe
-    ) const                                                               = 0;
-    virtual bool reflection_probe_renders_shadows(RID p_probe) const      = 0;
+    virtual float reflection_probe_get_origin_max_distance(
+        RID p_probe
+    ) const                                                          = 0;
+    virtual bool reflection_probe_renders_shadows(RID p_probe) const = 0;
 
     virtual void instance_add_skeleton(
         RID p_skeleton,
@@ -952,20 +963,23 @@ public:
     virtual void lightmap_capture_set_octree(
         RID p_capture,
         const PoolVector<uint8_t>& p_octree
-    )       = 0;
-    virtual PoolVector<uint8_t> lightmap_capture_get_octree(RID p_capture
+    ) = 0;
+    virtual PoolVector<uint8_t> lightmap_capture_get_octree(
+        RID p_capture
     ) const = 0;
     virtual void lightmap_capture_set_octree_cell_transform(
         RID p_capture,
         const Transform& p_xform
-    )       = 0;
-    virtual Transform lightmap_capture_get_octree_cell_transform(RID p_capture
+    ) = 0;
+    virtual Transform lightmap_capture_get_octree_cell_transform(
+        RID p_capture
     ) const = 0;
     virtual void lightmap_capture_set_octree_cell_subdiv(
         RID p_capture,
         int p_subdiv
-    )                                                                       = 0;
-    virtual int lightmap_capture_get_octree_cell_subdiv(RID p_capture
+    ) = 0;
+    virtual int lightmap_capture_get_octree_cell_subdiv(
+        RID p_capture
     ) const                                                                 = 0;
     virtual void lightmap_capture_set_energy(RID p_capture, float p_energy) = 0;
     virtual float lightmap_capture_get_energy(RID p_capture) const          = 0;
@@ -1043,8 +1057,10 @@ public:
     ) = 0;
 
     virtual int particles_get_draw_passes(RID p_particles) const = 0;
-    virtual RID particles_get_draw_pass_mesh(RID p_particles, int p_pass)
-        const = 0;
+    virtual RID particles_get_draw_pass_mesh(
+        RID p_particles,
+        int p_pass
+    ) const = 0;
 
     /* RENDER TARGET */
 
@@ -1072,8 +1088,9 @@ public:
         int p_height
     )                                                                = 0;
     virtual RID render_target_get_texture(RID p_render_target) const = 0;
-    virtual uint32_t render_target_get_depth_texture_id(RID p_render_target
-    ) const                                                          = 0;
+    virtual uint32_t render_target_get_depth_texture_id(
+        RID p_render_target
+    ) const = 0;
     virtual void render_target_set_external_texture(
         RID p_render_target,
         unsigned int p_texture_id,

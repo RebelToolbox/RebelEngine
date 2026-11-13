@@ -339,7 +339,8 @@ void VisualScript::add_node(
 
     for (Map<StringName, Function>::Element* E = functions.front(); E;
          E                                     = E->next()) {
-        ERR_FAIL_COND(E->get().nodes.has(p_id)
+        ERR_FAIL_COND(
+            E->get().nodes.has(p_id)
         ); // id can exist only one in script, even for different functions
     }
 
@@ -425,8 +426,10 @@ bool VisualScript::has_node(const StringName& p_func, int p_id) const {
     return func.nodes.has(p_id);
 }
 
-Ref<VisualScriptNode> VisualScript::get_node(const StringName& p_func, int p_id)
-    const {
+Ref<VisualScriptNode> VisualScript::get_node(
+    const StringName& p_func,
+    int p_id
+) const {
     ERR_FAIL_COND_V(!functions.has(p_func), Ref<VisualScriptNode>());
     const Function& func = functions[p_func];
 
@@ -448,8 +451,10 @@ void VisualScript::set_node_position(
     func.nodes[p_id].pos = p_pos;
 }
 
-Point2 VisualScript::get_node_position(const StringName& p_func, int p_id)
-    const {
+Point2 VisualScript::get_node_position(
+    const StringName& p_func,
+    int p_id
+) const {
     ERR_FAIL_COND_V(!functions.has(p_func), Point2());
     const Function& func = functions[p_func];
 
@@ -457,8 +462,10 @@ Point2 VisualScript::get_node_position(const StringName& p_func, int p_id)
     return func.nodes[p_id].pos;
 }
 
-void VisualScript::get_node_list(const StringName& p_func, List<int>* r_nodes)
-    const {
+void VisualScript::get_node_list(
+    const StringName& p_func,
+    List<int>* r_nodes
+) const {
     ERR_FAIL_COND(!functions.has(p_func));
     const Function& func = functions[p_func];
 
@@ -708,7 +715,8 @@ void VisualScript::set_variable_default_value(
 #endif
 }
 
-Variant VisualScript::get_variable_default_value(const StringName& p_name
+Variant VisualScript::get_variable_default_value(
+    const StringName& p_name
 ) const {
     ERR_FAIL_COND_V(!variables.has(p_name), Variant());
     return variables[p_name].default_value;
@@ -900,7 +908,8 @@ void VisualScript::custom_signal_remove_argument(
     custom_signals[p_func].remove(p_argidx);
 }
 
-int VisualScript::custom_signal_get_argument_count(const StringName& p_func
+int VisualScript::custom_signal_get_argument_count(
+    const StringName& p_func
 ) const {
     ERR_FAIL_COND_V(!custom_signals.has(p_func), 0);
     return custom_signals[p_func].size();
@@ -948,7 +957,8 @@ void VisualScript::rename_custom_signal(
     custom_signals.erase(p_name);
 }
 
-void VisualScript::get_custom_signal_list(List<StringName>* r_custom_signals
+void VisualScript::get_custom_signal_list(
+    List<StringName>* r_custom_signals
 ) const {
     for (const Map<StringName, Vector<Argument>>::Element* E =
              custom_signals.front();
@@ -990,7 +1000,8 @@ Ref<Script> VisualScript::get_base_script() const {
 }
 
 #ifdef TOOLS_ENABLED
-void VisualScript::_placeholder_erased(PlaceHolderScriptInstance* p_placeholder
+void VisualScript::_placeholder_erased(
+    PlaceHolderScriptInstance* p_placeholder
 ) {
     placeholders.erase(p_placeholder);
 }
@@ -1721,9 +1732,8 @@ VisualScript::VisualScript() {
 }
 
 bool VisualScript::inherits_script(const Ref<Script>& p_script) const {
-    return this
-        == p_script.ptr(
-        ); // there is no inheritance in visual scripts, so this is enough
+    return this == p_script.ptr(); // there is no inheritance in visual scripts,
+                                   // so this is enough
 }
 
 StringName VisualScript::get_default_func() const {
@@ -1780,7 +1790,8 @@ bool VisualScriptInstance::get(const StringName& p_name, Variant& r_ret) const {
     return true;
 }
 
-void VisualScriptInstance::get_property_list(List<PropertyInfo>* p_properties
+void VisualScriptInstance::get_property_list(
+    List<PropertyInfo>* p_properties
 ) const {
     for (const Map<StringName, VisualScript::Variable>::Element* E =
              script->variables.front();
@@ -2751,14 +2762,17 @@ void VisualScriptInstance::create(
                 StringName var_name;
 
                 if (Object::cast_to<VisualScriptLocalVar>(*node)) {
-                    var_name =
-                        String(Object::cast_to<VisualScriptLocalVar>(*node)
-                                   ->get_var_name())
-                            .strip_edges();
+                    var_name = String(
+                                   Object::cast_to<VisualScriptLocalVar>(*node)
+                                       ->get_var_name()
+                    )
+                                   .strip_edges();
                 } else {
                     var_name =
-                        String(Object::cast_to<VisualScriptLocalVarSet>(*node)
-                                   ->get_var_name())
+                        String(
+                            Object::cast_to<VisualScriptLocalVarSet>(*node)
+                                ->get_var_name()
+                        )
                             .strip_edges();
                 }
 
@@ -2971,7 +2985,8 @@ void VisualScriptFunctionState::connect_to_signal(
     for (int i = 0; i < p_binds.size(); i++) {
         binds.push_back(p_binds[i]);
     }
-    binds.push_back(Ref<VisualScriptFunctionState>(this)
+    binds.push_back(
+        Ref<VisualScriptFunctionState>(this)
     ); // add myself on the back to avoid dying from unreferencing
     p_obj->connect(p_signal, this, "_signal_callback", binds, CONNECT_ONESHOT);
 }
@@ -3081,10 +3096,12 @@ bool VisualScriptLanguage::is_control_flow_keyword(String p_keyword) const {
     return false;
 }
 
-void VisualScriptLanguage::get_comment_delimiters(List<String>* p_delimiters
+void VisualScriptLanguage::get_comment_delimiters(
+    List<String>* p_delimiters
 ) const {}
 
-void VisualScriptLanguage::get_string_delimiters(List<String>* p_delimiters
+void VisualScriptLanguage::get_string_delimiters(
+    List<String>* p_delimiters
 ) const {}
 
 Ref<Script> VisualScriptLanguage::get_template(
@@ -3366,12 +3383,14 @@ void VisualScriptLanguage::reload_tool_script(
 
 /* LOADER FUNCTIONS */
 
-void VisualScriptLanguage::get_recognized_extensions(List<String>* p_extensions
+void VisualScriptLanguage::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("vs");
 }
 
-void VisualScriptLanguage::get_public_functions(List<MethodInfo>* p_functions
+void VisualScriptLanguage::get_public_functions(
+    List<MethodInfo>* p_functions
 ) const {}
 
 void VisualScriptLanguage::get_public_constants(

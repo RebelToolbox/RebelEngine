@@ -62,7 +62,8 @@ public:
     void set_breakpoint(bool p_breakpoint);
     bool is_breakpoint() const;
 
-    virtual VisualScriptNodeInstance* instance(VisualScriptInstance* p_instance
+    virtual VisualScriptNodeInstance* instance(
+        VisualScriptInstance* p_instance
     ) = 0;
 
     struct TypeGuess {
@@ -75,8 +76,10 @@ public:
         }
     };
 
-    virtual TypeGuess guess_output_type(TypeGuess* p_inputs, int p_output)
-        const;
+    virtual TypeGuess guess_output_type(
+        TypeGuess* p_inputs,
+        int p_output
+    ) const;
 
     VisualScriptNode();
 };
@@ -583,9 +586,11 @@ public:
 
     ScriptLanguage* get_language() override;
 
-    MultiplayerAPI::RPCMode get_rpc_mode(const StringName& p_method
+    MultiplayerAPI::RPCMode get_rpc_mode(
+        const StringName& p_method
     ) const override;
-    MultiplayerAPI::RPCMode get_rset_mode(const StringName& p_variable
+    MultiplayerAPI::RPCMode get_rset_mode(
+        const StringName& p_variable
     ) const override;
 
     VisualScriptInstance();
@@ -761,15 +766,20 @@ public:
     Script* create_script() const override;
     bool has_named_classes() const override;
     bool supports_builtin_mode() const override;
-    int find_function(const String& p_function, const String& p_code)
-        const override;
+    int find_function(
+        const String& p_function,
+        const String& p_code
+    ) const override;
     String make_function(
         const String& p_class,
         const String& p_name,
         const PoolStringArray& p_args
     ) const override;
-    void auto_indent_code(String& p_code, int p_from_line, int p_to_line)
-        const override;
+    void auto_indent_code(
+        String& p_code,
+        int p_from_line,
+        int p_to_line
+    ) const override;
     void add_global_constant(
         const StringName& p_variable,
         const Variant& p_value
@@ -810,13 +820,16 @@ public:
     ) override;
 
     void reload_all_scripts() override;
-    void reload_tool_script(const Ref<Script>& p_script, bool p_soft_reload)
-        override;
+    void reload_tool_script(
+        const Ref<Script>& p_script,
+        bool p_soft_reload
+    ) override;
     /* LOADER FUNCTIONS */
 
     void get_recognized_extensions(List<String>* p_extensions) const override;
     void get_public_functions(List<MethodInfo>* p_functions) const override;
-    void get_public_constants(List<Pair<String, Variant>>* p_constants
+    void get_public_constants(
+        List<Pair<String, Variant>>* p_constants
     ) const override;
 
     void profiling_start() override;
@@ -826,8 +839,10 @@ public:
         ProfilingInfo* p_info_arr,
         int p_info_max
     ) override;
-    int profiling_get_frame_data(ProfilingInfo* p_info_arr, int p_info_max)
-        override;
+    int profiling_get_frame_data(
+        ProfilingInfo* p_info_arr,
+        int p_info_max
+    ) override;
 
     void add_register_func(
         const String& p_name,

@@ -51,12 +51,14 @@ void ResourceFormatLoaderPluginScript::get_recognized_extensions(
     p_extensions->push_back(_language->get_extension());
 }
 
-bool ResourceFormatLoaderPluginScript::handles_type(const String& p_type
+bool ResourceFormatLoaderPluginScript::handles_type(
+    const String& p_type
 ) const {
     return p_type == "Script" || p_type == _language->get_type();
 }
 
-String ResourceFormatLoaderPluginScript::get_resource_type(const String& p_path
+String ResourceFormatLoaderPluginScript::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == _language->get_extension()) {

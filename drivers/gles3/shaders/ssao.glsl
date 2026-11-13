@@ -308,10 +308,10 @@ void main() {
         );
     }
 
-    A =
-        min(A,
-            max(0.0, 1.0 - sum * intensity_div_r62 * (5.0 / float(NUM_SAMPLES)))
-        );
+    A = min(
+        A,
+        max(0.0, 1.0 - sum * intensity_div_r62 * (5.0 / float(NUM_SAMPLES)))
+    );
 #endif
     // Bilateral box-filter over a quad for free, respecting depth edges
     // (the difference that this makes is subtle)

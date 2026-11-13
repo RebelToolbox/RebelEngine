@@ -1773,7 +1773,8 @@ public:
         if (same_track_type) {
             switch (animation->track_get_type(first_track)) {
                 case Animation::TYPE_TRANSFORM: {
-                    p_list->push_back(PropertyInfo(Variant::VECTOR3, "location")
+                    p_list->push_back(
+                        PropertyInfo(Variant::VECTOR3, "location")
                     );
                     p_list->push_back(PropertyInfo(Variant::QUAT, "rotation"));
                     p_list->push_back(PropertyInfo(Variant::VECTOR3, "scale"));
@@ -2073,7 +2074,8 @@ void AnimationTimelineEdit::_notification(int p_what) {
     }
 
     if (p_what == NOTIFICATION_RESIZED) {
-        len_hb->set_position(Vector2(get_size().width - get_buttons_width(), 0)
+        len_hb->set_position(
+            Vector2(get_size().width - get_buttons_width(), 0)
         );
         len_hb->set_size(Size2(get_buttons_width(), get_size().height));
     }
@@ -2570,7 +2572,8 @@ void AnimationTimelineEdit::_bind_methods() {
         PropertyInfo(Variant::BOOL, "drag")
     ));
     ADD_SIGNAL(MethodInfo("track_added", PropertyInfo(Variant::INT, "track")));
-    ADD_SIGNAL(MethodInfo("length_changed", PropertyInfo(Variant::REAL, "size"))
+    ADD_SIGNAL(
+        MethodInfo("length_changed", PropertyInfo(Variant::REAL, "size"))
     );
 }
 
@@ -4071,7 +4074,8 @@ void AnimationTrackEdit::_menu_selected(int p_index) {
                 Animation::InterpolationType(
                     p_index - MENU_INTERPOLATION_NEAREST
                 );
-            undo_redo->create_action(TTR("Change Animation Interpolation Mode")
+            undo_redo->create_action(
+                TTR("Change Animation Interpolation Mode")
             );
             undo_redo->add_do_method(
                 animation.ptr(),
@@ -4188,7 +4192,8 @@ void AnimationTrackEdit::_bind_methods() {
         PropertyInfo(Variant::REAL, "position"),
         PropertyInfo(Variant::BOOL, "drag")
     ));
-    ADD_SIGNAL(MethodInfo("remove_request", PropertyInfo(Variant::INT, "track"))
+    ADD_SIGNAL(
+        MethodInfo("remove_request", PropertyInfo(Variant::INT, "track"))
     );
     ADD_SIGNAL(MethodInfo(
         "dropped",
@@ -4205,7 +4210,8 @@ void AnimationTrackEdit::_bind_methods() {
     ADD_SIGNAL(MethodInfo("bezier_edit"));
 
     ADD_SIGNAL(MethodInfo("move_selection_begin"));
-    ADD_SIGNAL(MethodInfo("move_selection", PropertyInfo(Variant::REAL, "ofs"))
+    ADD_SIGNAL(
+        MethodInfo("move_selection", PropertyInfo(Variant::REAL, "ofs"))
     );
     ADD_SIGNAL(MethodInfo("move_selection_commit"));
     ADD_SIGNAL(MethodInfo("move_selection_cancel"));
@@ -6244,8 +6250,8 @@ void AnimationTrackEditor::_insert_key_from_track(float p_ofs, int p_track) {
     if (snap->is_pressed() && step->get_value() != 0) {
         p_ofs = snap_time(p_ofs);
     }
-    while (animation->track_find_key(p_track, p_ofs, true) != -1
-    ) { // make sure insertion point is valid
+    while (animation->track_find_key(p_track, p_ofs, true)
+           != -1) { // make sure insertion point is valid
         p_ofs += 0.001f;
     }
 
@@ -7611,9 +7617,10 @@ void AnimationTrackEditor::_edit_menu_pressed(int p_option) {
                     ->get_animation_list(&names);
                 for (List<StringName>::Element* E = names.front(); E;
                      E                            = E->next()) {
-                    _cleanup_animation(AnimationPlayerEditor::singleton
-                                           ->get_player()
-                                           ->get_animation(E->get()));
+                    _cleanup_animation(
+                        AnimationPlayerEditor::singleton->get_player()
+                            ->get_animation(E->get())
+                    );
                 }
             } else {
                 _cleanup_animation(animation);
@@ -7938,7 +7945,8 @@ void AnimationTrackEditor::_bind_methods() {
     ));
 }
 
-void AnimationTrackEditor::_pick_track_filter_text_changed(const String& p_text
+void AnimationTrackEditor::_pick_track_filter_text_changed(
+    const String& p_text
 ) {
     TreeItem* root_item =
         pick_track->get_scene_tree()->get_scene_tree()->get_root();
@@ -7995,7 +8003,8 @@ void AnimationTrackEditor::_pick_track_select_recursive(
     }
 }
 
-void AnimationTrackEditor::_pick_track_filter_input(const Ref<InputEvent>& p_ie
+void AnimationTrackEditor::_pick_track_filter_input(
+    const Ref<InputEvent>& p_ie
 ) {
     Ref<InputEventKey> k = p_ie;
 
@@ -8062,7 +8071,8 @@ AnimationTrackEditor::AnimationTrackEditor() {
     scroll->set_v_size_flags(SIZE_EXPAND_FILL);
     VScrollBar* sb = scroll->get_v_scrollbar();
     scroll->remove_child(sb);
-    timeline_scroll->add_child(sb
+    timeline_scroll->add_child(
+        sb
     ); // move here so timeline and tracks are always aligned
     scroll->connect("gui_input", this, "_scroll_input");
 
@@ -8096,8 +8106,9 @@ AnimationTrackEditor::AnimationTrackEditor() {
 
     imported_anim_warning = memnew(Button);
     imported_anim_warning->hide();
-    imported_anim_warning->set_tooltip(TTR("Warning: Editing imported animation"
-    ));
+    imported_anim_warning->set_tooltip(
+        TTR("Warning: Editing imported animation")
+    );
     imported_anim_warning
         ->connect("pressed", this, "_show_imported_anim_warning");
     bottom_hb->add_child(imported_anim_warning);

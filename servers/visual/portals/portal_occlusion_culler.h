@@ -92,8 +92,10 @@ private:
         return false;
     }
 
-    bool is_aabb_culled(const AABB& p_aabb, const LocalVector<Plane>& p_planes)
-        const {
+    bool is_aabb_culled(
+        const AABB& p_aabb,
+        const LocalVector<Plane>& p_planes
+    ) const {
         const Vector3& size  = p_aabb.size;
         Vector3 half_extents = size * 0.5;
         Vector3 ofs          = p_aabb.position + half_extents;

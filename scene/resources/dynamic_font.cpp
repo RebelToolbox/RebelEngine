@@ -1140,8 +1140,10 @@ void DynamicFont::set_fallback(int p_idx, const Ref<DynamicFontData>& p_data) {
 void DynamicFont::add_fallback(const Ref<DynamicFontData>& p_data) {
     ERR_FAIL_COND(p_data.is_null());
     fallbacks.push_back(p_data);
-    fallback_data_at_size.push_back(fallbacks.write[fallbacks.size() - 1]
-                                        ->_get_dynamic_font_at_size(cache_id)
+    fallback_data_at_size.push_back(
+        fallbacks.write[fallbacks.size() - 1]->_get_dynamic_font_at_size(
+            cache_id
+        )
     ); // const..
     if (outline_cache_id.outline_size > 0) {
         fallback_outline_data_at_size.push_back(
@@ -1502,7 +1504,8 @@ bool ResourceFormatLoaderDynamicFont::handles_type(const String& p_type) const {
     return (p_type == "DynamicFontData");
 }
 
-String ResourceFormatLoaderDynamicFont::get_resource_type(const String& p_path
+String ResourceFormatLoaderDynamicFont::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "ttf" || el == "otf" || el == "woff") {

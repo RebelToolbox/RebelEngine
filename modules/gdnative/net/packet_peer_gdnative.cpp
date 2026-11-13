@@ -25,7 +25,8 @@ Error PacketPeerGDNative::get_packet(
     int& r_buffer_size
 ) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
-    return (Error
+    return (
+               Error
     )interface->get_packet(interface->data, r_buffer, &r_buffer_size);
 }
 
@@ -34,7 +35,8 @@ Error PacketPeerGDNative::put_packet(
     int p_buffer_size
 ) {
     ERR_FAIL_COND_V(interface == nullptr, ERR_UNCONFIGURED);
-    return (Error
+    return (
+               Error
     )interface->put_packet(interface->data, p_buffer, p_buffer_size);
 }
 

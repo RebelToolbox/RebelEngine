@@ -426,7 +426,8 @@ private:
 
     Rect2 _get_text_rect();
     Ref<RichTextEffect> _get_custom_effect_by_code(String p_bbcode_identifier);
-    virtual Dictionary parse_expressions_for_values(Vector<String> p_expressions
+    virtual Dictionary parse_expressions_for_values(
+        Vector<String> p_expressions
     );
 
     bool use_bbcode;

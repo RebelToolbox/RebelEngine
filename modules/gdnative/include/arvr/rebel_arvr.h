@@ -33,7 +33,11 @@ typedef struct {
     rebel_bool (*initialize)(void*);
     void (*uninitialize)(void*);
     rebel_vector2 (*get_render_targetsize)(const void*);
-    rebel_transform (*get_transform_for_eye)(void*, rebel_int, rebel_transform*);
+    rebel_transform (*get_transform_for_eye)(
+        void*,
+        rebel_int,
+        rebel_transform*
+    );
     void (*fill_projection_for_eye)(
         void*,
         rebel_real*,

@@ -362,7 +362,8 @@ Error ImageLoaderTGA::load_image(
     return err;
 }
 
-void ImageLoaderTGA::get_recognized_extensions(List<String>* p_extensions
+void ImageLoaderTGA::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("tga");
 }

@@ -399,8 +399,8 @@ void MeshInstance::_initialize_skinning(
             }
 
             if (is_visible_in_tree()
-                && (software_skinning_flags & SoftwareSkinning::FLAG_BONES_READY
-                )) {
+                && (software_skinning_flags
+                    & SoftwareSkinning::FLAG_BONES_READY)) {
                 // Initialize from current skeleton pose.
                 _update_skinning();
             }

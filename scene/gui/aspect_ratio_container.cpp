@@ -43,7 +43,8 @@ void AspectRatioContainer::set_alignment_horizontal(
     queue_sort();
 }
 
-void AspectRatioContainer::set_alignment_vertical(AlignMode p_alignment_vertical
+void AspectRatioContainer::set_alignment_vertical(
+    AlignMode p_alignment_vertical
 ) {
     alignment_vertical = p_alignment_vertical;
     queue_sort();

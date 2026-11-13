@@ -55,8 +55,8 @@ bool select_word(const String& p_s, int p_col, int& r_beg, int& r_end) {
     if (s[beg] > 32 || beg == s.length()) {
         bool symbol = beg < s.length() && is_symbol(s[beg]);
 
-        while (beg > 0 && s[beg - 1] > 32 && (symbol == is_symbol(s[beg - 1]))
-        ) {
+        while (beg > 0 && s[beg - 1] > 32
+               && (symbol == is_symbol(s[beg - 1]))) {
             beg--;
         }
         while (end < s.length() && s[end + 1] > 32
@@ -921,8 +921,10 @@ Vector<String> String::rsplit(
     return ret;
 }
 
-Vector<float> String::split_floats(const String& p_splitter, bool p_allow_empty)
-    const {
+Vector<float> String::split_floats(
+    const String& p_splitter,
+    bool p_allow_empty
+) const {
     Vector<float> ret;
     int from = 0;
     int len  = length();
@@ -978,8 +980,10 @@ Vector<float> String::split_floats_mk(
     return ret;
 }
 
-Vector<int> String::split_ints(const String& p_splitter, bool p_allow_empty)
-    const {
+Vector<int> String::split_ints(
+    const String& p_splitter,
+    bool p_allow_empty
+) const {
     Vector<int> ret;
     int from = 0;
     int len  = length();
@@ -1714,30 +1718,38 @@ CharString String::utf8() const {
         } else if (c <= 0x001fffff) {                         // 21 bits
 
             APPEND_CHAR(uint32_t(0xf0 | ((c >> 18) & 0x07))); // Top 3 bits.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 12) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 12) & 0x3f))
             ); // Upper middle 6 bits.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 6) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 6) & 0x3f))
             );                                        // Lower middle 6 bits.
             APPEND_CHAR(uint32_t(0x80 | (c & 0x3f))); // Bottom 6 bits.
         } else if (c <= 0x03ffffff) {                 // 26 bits
 
             APPEND_CHAR(uint32_t(0xf8 | ((c >> 24) & 0x03))); // Top 2 bits.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 18) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 18) & 0x3f))
             ); // Upper middle 6 bits.
             APPEND_CHAR(uint32_t(0x80 | ((c >> 12) & 0x3f))); // middle 6 bits.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 6) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 6) & 0x3f))
             );                                        // Lower middle 6 bits.
             APPEND_CHAR(uint32_t(0x80 | (c & 0x3f))); // Bottom 6 bits.
         } else if (c <= 0x7fffffff) {                 // 31 bits
 
             APPEND_CHAR(uint32_t(0xfc | ((c >> 30) & 0x01))); // Top 1 bit.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 24) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 24) & 0x3f))
             ); // Upper upper middle 6 bits.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 18) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 18) & 0x3f))
             ); // Lower upper middle 6 bits.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 12) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 12) & 0x3f))
             ); // Upper lower middle 6 bits.
-            APPEND_CHAR(uint32_t(0x80 | ((c >> 6) & 0x3f))
+            APPEND_CHAR(
+                uint32_t(0x80 | ((c >> 6) & 0x3f))
             ); // Lower lower middle 6 bits.
             APPEND_CHAR(uint32_t(0x80 | (c & 0x3f))); // Bottom 6 bits.
         }

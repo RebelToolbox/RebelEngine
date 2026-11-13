@@ -414,7 +414,8 @@ void TileSetEditor::_notification(int p_what) {
             tools[SHAPE_KEEP_INSIDE_TILE]->set_icon(
                 get_icon("Snap", "EditorIcons")
             );
-            tools[TOOL_GRID_SNAP]->set_icon(get_icon("SnapGrid", "EditorIcons")
+            tools[TOOL_GRID_SNAP]->set_icon(
+                get_icon("SnapGrid", "EditorIcons")
             );
             tools[ZOOM_OUT]->set_icon(get_icon("ZoomLess", "EditorIcons"));
             tools[ZOOM_1]->set_icon(get_icon("ZoomReset", "EditorIcons"));
@@ -1224,8 +1225,9 @@ void TileSetEditor::_on_workspace_draw() {
                             get_current_tile(),
                             coord
                         );
-                        if (tileset->autotile_get_bitmask_mode(get_current_tile(
-                            ))
+                        if (tileset->autotile_get_bitmask_mode(
+                                get_current_tile()
+                            )
                             == TileSet::BITMASK_2X2) {
                             if (mask & TileSet::BIND_IGNORE_TOPLEFT) {
                                 workspace->draw_rect(
@@ -2106,7 +2108,8 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                     if (mb.is_valid()) {
                         if (mb->is_pressed()
                             && mb->get_button_index() == BUTTON_LEFT
-                            && current_tile_region.has_point(mb->get_position()
+                            && current_tile_region.has_point(
+                                mb->get_position()
                             )) {
                             Vector2 coord(
                                 (int)((mb->get_position().x
@@ -2274,7 +2277,8 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                     }
                     if (mm.is_valid()) {
                         if (dragging
-                            && current_tile_region.has_point(mm->get_position()
+                            && current_tile_region.has_point(
+                                mm->get_position()
                             )) {
                             Vector2 coord(
                                 (int)((mm->get_position().x
@@ -2352,8 +2356,9 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                                 new_mask &= ~(bit << 16);
                             }
                             if (old_mask != new_mask) {
-                                undo_redo->create_action(TTR("Edit Tile Bitmask"
-                                ));
+                                undo_redo->create_action(
+                                    TTR("Edit Tile Bitmask")
+                                );
                                 undo_redo->add_do_method(
                                     tileset.ptr(),
                                     "autotile_set_bitmask",
@@ -2498,8 +2503,8 @@ void TileSetEditor::_on_workspace_input(const Ref<InputEvent>& p_ie) {
                                         undo_redo->add_undo_method(
                                             edited_occlusion_shape.ptr(),
                                             "set_polygon",
-                                            edited_occlusion_shape->get_polygon(
-                                            )
+                                            edited_occlusion_shape
+                                                ->get_polygon()
                                         );
                                         undo_redo->add_do_method(
                                             this,
@@ -2955,7 +2960,8 @@ void TileSetEditor::_on_tool_clicked(int p_tool) {
                 } break;
                 case EDITMODE_OCCLUSION: {
                     if (!edited_occlusion_shape.is_null()) {
-                        undo_redo->create_action(TTR("Remove Occlusion Polygon")
+                        undo_redo->create_action(
+                            TTR("Remove Occlusion Polygon")
                         );
                         if (tileset->tile_get_tile_mode(get_current_tile())
                             == TileSet::SINGLE_TILE) {
@@ -3005,8 +3011,9 @@ void TileSetEditor::_on_tool_clicked(int p_tool) {
                 } break;
                 case EDITMODE_NAVIGATION: {
                     if (!edited_navigation_shape.is_null()) {
-                        undo_redo->create_action(TTR("Remove Navigation Polygon"
-                        ));
+                        undo_redo->create_action(
+                            TTR("Remove Navigation Polygon")
+                        );
                         if (tileset->tile_get_tile_mode(get_current_tile())
                             == TileSet::SINGLE_TILE) {
                             undo_redo->add_do_method(
@@ -4932,7 +4939,8 @@ void TileSetEditor::add_texture(Ref<Texture> p_texture) {
 }
 
 void TileSetEditor::remove_texture(Ref<Texture> p_texture) {
-    texture_list->remove_item(texture_list->find_metadata(p_texture->get_path())
+    texture_list->remove_item(
+        texture_list->find_metadata(p_texture->get_path())
     );
     texture_map.erase(p_texture->get_path());
 
@@ -5084,8 +5092,9 @@ void TileSetEditor::update_workspace_tile_mode() {
     } else if (tileset->tile_get_tile_mode(get_current_tile())
                == TileSet::AUTO_TILE) {
         if (edit_mode == EDITMODE_ICON) {
-            select_coord(tileset->autotile_get_icon_coordinate(get_current_tile(
-            )));
+            select_coord(
+                tileset->autotile_get_icon_coordinate(get_current_tile())
+            );
         } else {
             _select_edited_shape_coord();
         }
@@ -5097,8 +5106,9 @@ void TileSetEditor::update_workspace_tile_mode() {
             edit_mode = EDITMODE_COLLISION;
         }
         if (edit_mode == EDITMODE_ICON) {
-            select_coord(tileset->autotile_get_icon_coordinate(get_current_tile(
-            )));
+            select_coord(
+                tileset->autotile_get_icon_coordinate(get_current_tile())
+            );
         } else {
             _select_edited_shape_coord();
         }
@@ -5298,14 +5308,17 @@ bool TilesetEditorContext::_set(
         return false;
     }
 
-    tileset_editor->err_dialog->set_text(TTR("This property can't be changed.")
+    tileset_editor->err_dialog->set_text(
+        TTR("This property can't be changed.")
     );
     tileset_editor->err_dialog->popup_centered(Size2(300, 60));
     return false;
 }
 
-bool TilesetEditorContext::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool TilesetEditorContext::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     String name = p_name.operator String();
     bool v      = false;
 
@@ -5389,7 +5402,8 @@ bool TilesetEditorContext::_get(const StringName& p_name, Variant& r_ret)
     return v;
 }
 
-void TilesetEditorContext::_get_property_list(List<PropertyInfo>* p_list
+void TilesetEditorContext::_get_property_list(
+    List<PropertyInfo>* p_list
 ) const {
     if (snap_options_visible) {
         p_list->push_back(PropertyInfo(
@@ -5466,7 +5480,8 @@ void TilesetEditorContext::_get_property_list(List<PropertyInfo>* p_list
                 "0, 1024, 1"
             ));
         }
-        p_list->push_back(PropertyInfo(Variant::VECTOR2, "tile_occluder_offset")
+        p_list->push_back(
+            PropertyInfo(Variant::VECTOR2, "tile_occluder_offset")
         );
         p_list->push_back(
             PropertyInfo(Variant::VECTOR2, "tile_navigation_offset")

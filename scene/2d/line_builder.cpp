@@ -633,7 +633,8 @@ void LineBuilder::new_arc(
         }
         if (texture_mode != Line2D::LINE_TEXTURE_NONE) {
             Vector2 tsc = Vector2(Math::cos(tt), Math::sin(tt));
-            uvs.push_back(interpolate(uv_rect, 0.5f * (tsc + Vector2(1.f, 1.f)))
+            uvs.push_back(
+                interpolate(uv_rect, 0.5f * (tsc + Vector2(1.f, 1.f)))
             );
             tt += angle_step;
         }

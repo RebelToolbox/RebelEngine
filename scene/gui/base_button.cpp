@@ -91,8 +91,8 @@ void BaseButton::_notification(int p_what) {
     }
 
     if (p_what == NOTIFICATION_EXIT_TREE
-        || (p_what == NOTIFICATION_VISIBILITY_CHANGED && !is_visible_in_tree()
-        )) {
+        || (p_what == NOTIFICATION_VISIBILITY_CHANGED
+            && !is_visible_in_tree())) {
         if (!toggle_mode) {
             status.pressed = false;
         }
@@ -104,7 +104,8 @@ void BaseButton::_notification(int p_what) {
 
 void BaseButton::_pressed() {
     if (get_script_instance()) {
-        get_script_instance()->call(SceneStringNames::get_singleton()->_pressed
+        get_script_instance()->call(
+            SceneStringNames::get_singleton()->_pressed
         );
     }
     pressed();

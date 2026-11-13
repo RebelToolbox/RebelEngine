@@ -267,7 +267,8 @@ Error save_exr(
     size_t bytes = SaveEXRImageToMemory(&image, &header, &mem, &err);
 
     if (bytes == 0) {
-        print_error(String("Saving EXR failed. Error: {0}").format(varray(err))
+        print_error(
+            String("Saving EXR failed. Error: {0}").format(varray(err))
         );
         return ERR_FILE_CANT_WRITE;
     } else {

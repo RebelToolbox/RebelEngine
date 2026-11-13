@@ -208,8 +208,8 @@ public:
         return ret;
     }
 
-    Vector<uint8_t> to_byte_array(
-    ) const { // useful to pass stuff to gpu or variant
+    Vector<uint8_t> to_byte_array() const { // useful to pass stuff to gpu or
+                                            // variant
         Vector<uint8_t> ret;
         ret.resize(count * sizeof(T));
         uint8_t* w = ret.ptrw();

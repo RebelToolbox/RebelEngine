@@ -446,7 +446,8 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
                     print_verbose(
                         "specular real value: " + rtos(real_value->Value())
                     );
-                    spatial_material->set_specular(MIN(1.0, real_value->Value())
+                    spatial_material->set_specular(
+                        MIN(1.0, real_value->Value())
                     );
                 }
 
@@ -557,7 +558,8 @@ Ref<SpatialMaterial> FBXMaterial::import_material(ImportState& state) {
             } break;
             case PROPERTY_DESC_EMISSIVE_COLOR: {
                 if (vector_value
-                    && !vector_value->Value().is_equal_approx(Vector3(0, 0, 0)
+                    && !vector_value->Value().is_equal_approx(
+                        Vector3(0, 0, 0)
                     )) {
                     const Vector3& color = vector_value->Value();
                     Color c;

@@ -110,8 +110,10 @@ public:
         const StringName& p_name,
         const StringName& p_node_type
     ) const;
-    bool has_icon(const StringName& p_name, const StringName& p_node_type)
-        const;
+    bool has_icon(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
     bool has_icon_nocheck(
         const StringName& p_name,
         const StringName& p_node_type
@@ -135,8 +137,10 @@ public:
         const StringName& p_name,
         const StringName& p_node_type
     ) const;
-    bool has_shader(const StringName& p_name, const StringName& p_node_type)
-        const;
+    bool has_shader(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
     void clear_shader(const StringName& p_name, const StringName& p_node_type);
     void get_shader_list(
         const StringName& p_node_type,
@@ -152,8 +156,10 @@ public:
         const StringName& p_name,
         const StringName& p_node_type
     ) const;
-    bool has_stylebox(const StringName& p_name, const StringName& p_node_type)
-        const;
+    bool has_stylebox(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
     bool has_stylebox_nocheck(
         const StringName& p_name,
         const StringName& p_node_type
@@ -167,8 +173,10 @@ public:
         const StringName& p_name,
         const StringName& p_node_type
     );
-    void get_stylebox_list(StringName p_node_type, List<StringName>* p_list)
-        const;
+    void get_stylebox_list(
+        StringName p_node_type,
+        List<StringName>* p_list
+    ) const;
     void add_stylebox_type(const StringName& p_node_type);
     void get_stylebox_types(List<StringName>* p_list) const;
 
@@ -177,10 +185,14 @@ public:
         const StringName& p_node_type,
         const Ref<Font>& p_font
     );
-    Ref<Font> get_font(const StringName& p_name, const StringName& p_node_type)
-        const;
-    bool has_font(const StringName& p_name, const StringName& p_node_type)
-        const;
+    Ref<Font> get_font(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
+    bool has_font(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
     bool has_font_nocheck(
         const StringName& p_name,
         const StringName& p_node_type
@@ -200,10 +212,14 @@ public:
         const StringName& p_node_type,
         const Color& p_color
     );
-    Color get_color(const StringName& p_name, const StringName& p_node_type)
-        const;
-    bool has_color(const StringName& p_name, const StringName& p_node_type)
-        const;
+    Color get_color(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
+    bool has_color(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
     bool has_color_nocheck(
         const StringName& p_name,
         const StringName& p_node_type
@@ -223,10 +239,14 @@ public:
         const StringName& p_node_type,
         int p_constant
     );
-    int get_constant(const StringName& p_name, const StringName& p_node_type)
-        const;
-    bool has_constant(const StringName& p_name, const StringName& p_node_type)
-        const;
+    int get_constant(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
+    bool has_constant(
+        const StringName& p_name,
+        const StringName& p_node_type
+    ) const;
     bool has_constant_nocheck(
         const StringName& p_name,
         const StringName& p_node_type
@@ -240,8 +260,10 @@ public:
         const StringName& p_name,
         const StringName& p_node_type
     );
-    void get_constant_list(StringName p_node_type, List<StringName>* p_list)
-        const;
+    void get_constant_list(
+        StringName p_node_type,
+        List<StringName>* p_list
+    ) const;
     void add_constant_type(const StringName& p_node_type);
     void get_constant_types(List<StringName>* p_list) const;
 
@@ -286,8 +308,10 @@ public:
         DataType p_data_type,
         const StringName& p_node_type
     );
-    void get_theme_item_types(DataType p_data_type, List<StringName>* p_list)
-        const;
+    void get_theme_item_types(
+        DataType p_data_type,
+        List<StringName>* p_list
+    ) const;
 
     void get_type_list(List<StringName>* p_list) const;
 

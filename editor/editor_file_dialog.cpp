@@ -242,8 +242,9 @@ void EditorFileDialog::_post_popup() {
     }
 
     if (is_visible_in_tree() && get_current_file() != "") {
-        _request_single_thumbnail(get_current_dir().plus_file(get_current_file()
-        ));
+        _request_single_thumbnail(
+            get_current_dir().plus_file(get_current_file())
+        );
     }
 
     if (is_visible_in_tree()) {
@@ -485,8 +486,9 @@ void EditorFileDialog::_item_selected(int p_item) {
 
     if (!d["dir"]) {
         file->set_text(d["name"]);
-        _request_single_thumbnail(get_current_dir().plus_file(get_current_file()
-        ));
+        _request_single_thumbnail(
+            get_current_dir().plus_file(get_current_file())
+        );
     } else if (mode == MODE_OPEN_DIR) {
         get_ok()->set_text(TTR("Select This Folder"));
     }
@@ -504,8 +506,9 @@ void EditorFileDialog::_multi_selected(int p_item, bool p_selected) {
 
     if (!d["dir"] && p_selected) {
         file->set_text(d["name"]);
-        _request_single_thumbnail(get_current_dir().plus_file(get_current_file()
-        ));
+        _request_single_thumbnail(
+            get_current_dir().plus_file(get_current_file())
+        );
     }
 
     get_ok()->set_disabled(_is_open_should_be_disabled());
@@ -1040,8 +1043,9 @@ void EditorFileDialog::set_current_file(const String& p_file) {
     }
 
     if (is_visible_in_tree()) {
-        _request_single_thumbnail(get_current_dir().plus_file(get_current_file()
-        ));
+        _request_single_thumbnail(
+            get_current_dir().plus_file(get_current_file())
+        );
     }
 }
 
@@ -1153,8 +1157,8 @@ void EditorFileDialog::_make_dir_confirm() {
         update_filters();
         update_dir();
         _push_history();
-        EditorFileSystem::get_singleton()->scan_changes(
-        ); // we created a dir, so rescan changes
+        EditorFileSystem::get_singleton()
+            ->scan_changes(); // we created a dir, so rescan changes
     } else {
         mkdirerr->popup_centered_minsize(Size2(250, 50) * EDSCALE);
     }
@@ -1627,7 +1631,8 @@ void EditorFileDialog::_bind_methods() {
         "files_selected",
         PropertyInfo(Variant::POOL_STRING_ARRAY, "paths")
     ));
-    ADD_SIGNAL(MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir"))
+    ADD_SIGNAL(
+        MethodInfo("dir_selected", PropertyInfo(Variant::STRING, "dir"))
     );
 
     ADD_PROPERTY(

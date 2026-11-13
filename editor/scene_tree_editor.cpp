@@ -226,8 +226,8 @@ bool SceneTreeEditor::_add_nodes(
             );
             item->set_selectable(0, false);
 
-            if (!script.is_null(
-                )) { // make sure to mark the script if a custom type
+            if (!script.is_null()) { // make sure to mark the script if a custom
+                                     // type
                 item->add_button(
                     0,
                     get_icon("Script", "EditorIcons"),
@@ -1630,7 +1630,8 @@ void SceneTreeDialog::_bind_methods() {
         &SceneTreeDialog::_filter_changed
     );
 
-    ADD_SIGNAL(MethodInfo("selected", PropertyInfo(Variant::NODE_PATH, "path"))
+    ADD_SIGNAL(
+        MethodInfo("selected", PropertyInfo(Variant::NODE_PATH, "path"))
     );
 }
 

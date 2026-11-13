@@ -31,8 +31,10 @@ protected:
 
 public:
 #ifdef TOOLS_ENABLED
-    bool _edit_is_selected_on_click(const Point2& p_point, double p_tolerance)
-        const override;
+    bool _edit_is_selected_on_click(
+        const Point2& p_point,
+        double p_tolerance
+    ) const override;
 #endif // TOOLS_ENABLED
 
     void set_shape(const Ref<Shape2D>& p_shape);

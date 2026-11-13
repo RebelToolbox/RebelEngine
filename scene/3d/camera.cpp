@@ -96,7 +96,8 @@ void Camera::_notification(int p_what) {
         case NOTIFICATION_TRANSFORM_CHANGED: {
             _request_camera_update();
             if (doppler_tracking != DOPPLER_TRACKING_DISABLED) {
-                velocity_tracker->update_position(get_global_transform().origin
+                velocity_tracker->update_position(
+                    get_global_transform().origin
                 );
             }
         } break;

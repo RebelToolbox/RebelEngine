@@ -39,7 +39,8 @@ public:
     static SyntaxHighlighter* create();
 
     void _update_cache() override;
-    Map<int, TextEdit::HighlighterInfo> _get_line_syntax_highlighting(int p_line
+    Map<int, TextEdit::HighlighterInfo> _get_line_syntax_highlighting(
+        int p_line
     ) override;
 
     String get_name() const override;

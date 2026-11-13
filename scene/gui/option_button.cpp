@@ -385,7 +385,8 @@ void OptionButton::_bind_methods() {
         "_select_int",
         "get_selected"
     );
-    ADD_SIGNAL(MethodInfo("item_selected", PropertyInfo(Variant::INT, "index"))
+    ADD_SIGNAL(
+        MethodInfo("item_selected", PropertyInfo(Variant::INT, "index"))
     );
     ADD_SIGNAL(MethodInfo("item_focused", PropertyInfo(Variant::INT, "index")));
 }

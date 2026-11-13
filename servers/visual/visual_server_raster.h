@@ -479,7 +479,19 @@ public:
 
     BIND0R(RID, mesh_create)
 
-    BIND10(mesh_add_surface, RID, uint32_t, PrimitiveType, const PoolVector<uint8_t>&, int, const PoolVector<uint8_t>&, int, const AABB&, const Vector<PoolVector<uint8_t>>&, const Vector<AABB>&)
+    BIND10(
+        mesh_add_surface,
+        RID,
+        uint32_t,
+        PrimitiveType,
+        const PoolVector<uint8_t>&,
+        int,
+        const PoolVector<uint8_t>&,
+        int,
+        const AABB&,
+        const Vector<PoolVector<uint8_t>>&,
+        const Vector<AABB>&
+    )
 
     BIND2(mesh_set_blend_shape_count, RID, int)
     BIND1RC(int, mesh_get_blend_shape_count, RID)
@@ -940,12 +952,25 @@ public:
     BIND2(room_set_scenario, RID, RID)
     BIND4(room_add_instance, RID, RID, const AABB&, const Vector<Vector3>&)
     BIND3(room_add_ghost, RID, ObjectID, const AABB&)
-    BIND5(room_set_bound, RID, ObjectID, const Vector<Plane>&, const AABB&, const Vector<Vector3>&)
+    BIND5(
+        room_set_bound,
+        RID,
+        ObjectID,
+        const Vector<Plane>&,
+        const AABB&,
+        const Vector<Vector3>&
+    )
     BIND2(room_prepare, RID, int32_t)
     BIND1(rooms_and_portals_clear, RID)
     BIND2(rooms_unload, RID, String)
     BIND8(rooms_finalize, RID, bool, bool, bool, bool, String, bool, bool)
-    BIND4(rooms_override_camera, RID, bool, const Vector3&, const Vector<Plane>*)
+    BIND4(
+        rooms_override_camera,
+        RID,
+        bool,
+        const Vector3&,
+        const Vector<Plane>*
+    )
     BIND2(rooms_set_active, RID, bool)
     BIND3(rooms_set_params, RID, int, real_t)
     BIND3(rooms_set_debug_feature, RID, RoomsDebugFeature, bool)
@@ -1165,7 +1190,11 @@ public:
         const PoolVector<Vector2>&,
         bool
     )
-    BIND2(canvas_occluder_polygon_set_shape_as_lines, RID, const PoolVector<Vector2>&)
+    BIND2(
+        canvas_occluder_polygon_set_shape_as_lines,
+        RID,
+        const PoolVector<Vector2>&
+    )
 
     BIND2(
         canvas_occluder_polygon_set_cull_mode,
@@ -1181,8 +1210,12 @@ public:
         int p_right,
         int p_bottom
     ) override;
-    void black_bars_set_images(RID p_left, RID p_top, RID p_right, RID p_bottom)
-        override;
+    void black_bars_set_images(
+        RID p_left,
+        RID p_top,
+        RID p_right,
+        RID p_bottom
+    ) override;
 
     /* FREE */
 

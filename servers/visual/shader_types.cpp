@@ -293,7 +293,8 @@ ShaderTypes::ShaderTypes() {
     shader_modes[VS::SHADER_SPATIAL].modes.push_back("depth_draw_opaque");
     shader_modes[VS::SHADER_SPATIAL].modes.push_back("depth_draw_always");
     shader_modes[VS::SHADER_SPATIAL].modes.push_back("depth_draw_never");
-    shader_modes[VS::SHADER_SPATIAL].modes.push_back("depth_draw_alpha_prepass"
+    shader_modes[VS::SHADER_SPATIAL].modes.push_back(
+        "depth_draw_alpha_prepass"
     );
 
     shader_modes[VS::SHADER_SPATIAL].modes.push_back("depth_test_disable");
@@ -461,7 +462,8 @@ ShaderTypes::ShaderTypes() {
         .built_ins["POINT_COORD"] = constt(ShaderLanguage::TYPE_VEC2);
     shader_modes[VS::SHADER_CANVAS_ITEM].functions["light"].can_discard = true;
 
-    shader_modes[VS::SHADER_CANVAS_ITEM].modes.push_back("skip_vertex_transform"
+    shader_modes[VS::SHADER_CANVAS_ITEM].modes.push_back(
+        "skip_vertex_transform"
     );
 
     shader_modes[VS::SHADER_CANVAS_ITEM].modes.push_back("blend_mix");

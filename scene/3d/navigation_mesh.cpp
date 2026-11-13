@@ -49,8 +49,8 @@ void NavigationMesh::set_sample_partition_type(SamplePartitionType p_value) {
     partition_type = p_value;
 }
 
-NavigationMesh::SamplePartitionType NavigationMesh::get_sample_partition_type(
-) const {
+NavigationMesh::SamplePartitionType NavigationMesh::
+    get_sample_partition_type() const {
     return partition_type;
 }
 
@@ -60,8 +60,8 @@ void NavigationMesh::set_parsed_geometry_type(ParsedGeometryType p_value) {
     _change_notify();
 }
 
-NavigationMesh::ParsedGeometryType NavigationMesh::get_parsed_geometry_type(
-) const {
+NavigationMesh::ParsedGeometryType NavigationMesh::
+    get_parsed_geometry_type() const {
     return parsed_geometry_type;
 }
 
@@ -98,15 +98,16 @@ bool NavigationMesh::get_collision_mask_bit(int p_bit) const {
     return get_collision_mask() & (1 << p_bit);
 }
 
-void NavigationMesh::set_source_geometry_mode(SourceGeometryMode p_geometry_mode
+void NavigationMesh::set_source_geometry_mode(
+    SourceGeometryMode p_geometry_mode
 ) {
     ERR_FAIL_INDEX(p_geometry_mode, SOURCE_GEOMETRY_MAX);
     source_geometry_mode = p_geometry_mode;
     _change_notify();
 }
 
-NavigationMesh::SourceGeometryMode NavigationMesh::get_source_geometry_mode(
-) const {
+NavigationMesh::SourceGeometryMode NavigationMesh::
+    get_source_geometry_mode() const {
     return source_geometry_mode;
 }
 
@@ -939,8 +940,9 @@ void NavigationMeshInstance::set_enabled(bool p_enabled) {
     if (debug_view) {
         MeshInstance* dm = Object::cast_to<MeshInstance>(debug_view);
         if (is_enabled()) {
-            dm->set_material_override(get_tree()->get_debug_navigation_material(
-            ));
+            dm->set_material_override(
+                get_tree()->get_debug_navigation_material()
+            );
         } else {
             dm->set_material_override(
                 get_tree()->get_debug_navigation_disabled_material()

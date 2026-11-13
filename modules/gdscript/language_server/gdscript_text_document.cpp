@@ -440,8 +440,9 @@ Variant GDScriptTextDocument::declaration(const Dictionary& p_params) {
     List<const lsp::DocumentSymbol*> symbols;
     Array arr = this->find_symbols(params, symbols);
     if (arr.empty() && !symbols.empty()
-        && !symbols.front()->get()->native_class.empty(
-        )) { // Find a native symbol
+        && !symbols.front()
+                ->get()
+                ->native_class.empty()) { // Find a native symbol
         const lsp::DocumentSymbol* symbol = symbols.front()->get();
         if (GDScriptLanguageProtocol::get_singleton()
                 ->is_goto_native_symbols_enabled()) {

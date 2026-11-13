@@ -373,8 +373,8 @@ public:
     void set_root(const NodePath& p_root);
     NodePath get_root() const;
 
-    void clear_caches(
-    ); ///< must be called by hand if an animation was modified after added
+    void clear_caches(); ///< must be called by hand if an animation was
+                         ///< modified after added
 
     void get_argument_options(
         const StringName& p_function,

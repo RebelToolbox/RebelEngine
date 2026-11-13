@@ -27,8 +27,10 @@ protected:
 public:
     UnixOS();
 
-    void alert(const String& p_alert, const String& p_title = "ALERT!")
-        override;
+    void alert(
+        const String& p_alert,
+        const String& p_title = "ALERT!"
+    ) override;
     String get_stdin_string(bool p_block) override;
 
     Error open_dynamic_library(
@@ -74,8 +76,10 @@ public:
 
     bool has_environment(const String& p_var) const override;
     String get_environment(const String& p_var) const override;
-    bool set_environment(const String& p_var, const String& p_value)
-        const override;
+    bool set_environment(
+        const String& p_var,
+        const String& p_value
+    ) const override;
     String get_locale() const override;
 
     int get_processor_count() const override;

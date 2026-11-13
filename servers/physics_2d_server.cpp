@@ -39,7 +39,8 @@ void Physics2DDirectBodyState::integrate_forces() {
     set_angular_velocity(av);
 }
 
-Object* Physics2DDirectBodyState::get_contact_collider_object(int p_contact_idx
+Object* Physics2DDirectBodyState::get_contact_collider_object(
+    int p_contact_idx
 ) const {
     ObjectID objid = get_contact_collider_id(p_contact_idx);
     Object* obj    = ObjectDB::get_instance(objid);
@@ -262,7 +263,8 @@ RID Physics2DShapeQueryParameters::get_shape_rid() const {
     return shape;
 }
 
-void Physics2DShapeQueryParameters::set_transform(const Transform2D& p_transform
+void Physics2DShapeQueryParameters::set_transform(
+    const Transform2D& p_transform
 ) {
     transform = p_transform;
 }
@@ -287,7 +289,8 @@ float Physics2DShapeQueryParameters::get_margin() const {
     return margin;
 }
 
-void Physics2DShapeQueryParameters::set_collision_mask(uint32_t p_collision_mask
+void Physics2DShapeQueryParameters::set_collision_mask(
+    uint32_t p_collision_mask
 ) {
     collision_mask = p_collision_mask;
 }

@@ -140,7 +140,8 @@ void ProjectsListItem::_configure_item() {
         project_name_label->set_text(TTR("Missing project"));
         icon_texture->set_modulate(Color(1, 1, 1, 0.5));
         show_folder_button->set_icon(get_icon("FileBroken", "EditorIcons"));
-        show_folder_button->set_tooltip(TTR("Error: Project settings not found")
+        show_folder_button->set_tooltip(
+            TTR("Error: Project settings not found")
         );
     } else {
         project_name_label->set_text(project_name);

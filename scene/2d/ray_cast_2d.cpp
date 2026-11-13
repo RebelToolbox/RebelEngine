@@ -140,9 +140,10 @@ void RayCast2D::_notification(int p_what) {
                             ->get_rid()
                     );
                 } else {
-                    exclude.erase(Object::cast_to<CollisionObject2D>(get_parent(
-                                                                     ))
-                                      ->get_rid());
+                    exclude.erase(
+                        Object::cast_to<CollisionObject2D>(get_parent())
+                            ->get_rid()
+                    );
                 }
             }
         } break;
@@ -202,8 +203,9 @@ void RayCast2D::_update_raycast_state() {
     ERR_FAIL_COND(w2d.is_null());
 
     Physics2DDirectSpaceState* dss =
-        Physics2DServer::get_singleton()->space_get_direct_state(w2d->get_space(
-        ));
+        Physics2DServer::get_singleton()->space_get_direct_state(
+            w2d->get_space()
+        );
     ERR_FAIL_COND(!dss);
 
     Transform2D gt = get_global_transform();

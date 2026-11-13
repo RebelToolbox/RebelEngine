@@ -20,7 +20,8 @@ void BoxContainer::_resort() {
 
     Size2i new_size = get_size();
 
-    int sep = get_constant("separation"
+    int sep = get_constant(
+        "separation"
     ); //,vertical?"VBoxContainer":"HBoxContainer");
 
     bool first                = true;
@@ -79,7 +80,8 @@ void BoxContainer::_resort() {
        this will run while stretchable elements exist */
 
     bool has_stretched = false;
-    while (stretch_ratio_total > 0
+    while (
+        stretch_ratio_total > 0
     ) { // first of all, don't even be here if no stretchable objects exist
 
         has_stretched         = true;
@@ -196,7 +198,8 @@ Size2 BoxContainer::get_minimum_size() const {
     /* Calculate MINIMUM SIZE */
 
     Size2i minimum;
-    int sep = get_constant("separation"
+    int sep = get_constant(
+        "separation"
     ); //,vertical?"VBoxContainer":"HBoxContainer");
 
     bool first = true;

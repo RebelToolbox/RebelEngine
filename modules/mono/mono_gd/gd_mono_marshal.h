@@ -226,8 +226,10 @@ enum {
          && offsetof(Rect2, size) == (sizeof(Vector2) * 1)),
 
     MATCHES_Transform2D =
-        (MATCHES_Vector2 && (sizeof(Transform2D) == (sizeof(Vector2) * 3))
-        ), // No field offset required, it stores an array
+        (MATCHES_Vector2
+         && (sizeof(Transform2D)
+             == (sizeof(Vector2)
+                 * 3))), // No field offset required, it stores an array
 
     MATCHES_Vector3 =
         (MATCHES_real_t && (sizeof(Vector3) == (sizeof(real_t) * 3))
@@ -236,8 +238,10 @@ enum {
          && offsetof(Vector3, z) == (sizeof(real_t) * 2)),
 
     MATCHES_Basis =
-        (MATCHES_Vector3 && (sizeof(Basis) == (sizeof(Vector3) * 3))
-        ), // No field offset required, it stores an array
+        (MATCHES_Vector3
+         && (sizeof(Basis)
+             == (sizeof(Vector3)
+                 * 3))), // No field offset required, it stores an array
 
     MATCHES_Quat =
         (MATCHES_real_t && (sizeof(Quat) == (sizeof(real_t) * 4))
@@ -274,8 +278,9 @@ enum {
 // In the future we may force this if we want to ref return these structs
 #ifdef GD_MONO_FORCE_INTEROP_STRUCT_COPY
 GD_STATIC_ASSERT(
-    MATCHES_Vector2&& MATCHES_Rect2&& MATCHES_Transform2D&& MATCHES_Vector3&& MATCHES_Basis&& MATCHES_Quat&& MATCHES_Transform&& MATCHES_AABB&& MATCHES_Color&&
-        MATCHES_Plane
+    MATCHES_Vector2 && MATCHES_Rect2 && MATCHES_Transform2D && MATCHES_Vector3
+    && MATCHES_Basis && MATCHES_Quat && MATCHES_Transform && MATCHES_AABB
+    && MATCHES_Color && MATCHES_Plane
 );
 #endif
 
@@ -330,8 +335,8 @@ struct M_Transform2D {
         );
     }
 
-    static _FORCE_INLINE_ M_Transform2D convert_from(const Transform2D& p_from
-    ) {
+    static _FORCE_INLINE_ M_Transform2D
+    convert_from(const Transform2D& p_from) {
         M_Transform2D ret = {
             M_Vector2::convert_from(p_from.elements[0]),
             M_Vector2::convert_from(p_from.elements[1]),

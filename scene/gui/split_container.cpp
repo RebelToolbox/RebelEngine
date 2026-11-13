@@ -285,7 +285,8 @@ void SplitContainer::_gui_input(const Ref<InputEvent>& p_event) {
     }
 }
 
-Control::CursorShape SplitContainer::get_cursor_shape(const Point2& p_pos
+Control::CursorShape SplitContainer::get_cursor_shape(
+    const Point2& p_pos
 ) const {
     if (dragging) {
         return (vertical ? CURSOR_VSPLIT : CURSOR_HSPLIT);
@@ -344,8 +345,8 @@ void SplitContainer::set_dragger_visibility(DraggerVisibility p_visibility) {
     update();
 }
 
-SplitContainer::DraggerVisibility SplitContainer::get_dragger_visibility(
-) const {
+SplitContainer::DraggerVisibility SplitContainer::
+    get_dragger_visibility() const {
     return dragger_visibility;
 }
 

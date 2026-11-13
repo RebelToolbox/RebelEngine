@@ -138,7 +138,8 @@ constexpr array<size_t, sizeof...(P)> get_indices_for_type() {
     size_t float_idx = 0;
     (void)int_idx;   // Suppress 'unused' warning when parameter count is 0
     (void)float_idx; // Suppress 'unused' warning when parameter count is 0
-    return array<size_t, sizeof...(P)>{calc_m2n_index<P>(int_idx, float_idx)...
+    return array<size_t, sizeof...(P)>{
+        calc_m2n_index<P>(int_idx, float_idx)...
     };
 }
 
@@ -212,7 +213,11 @@ T m2n_arg_cast(Mono_InterpMethodArguments* p_margs, size_t p_idx) {
 }
 
 template <typename... P, size_t... Is>
-void m2n_trampoline_with_idx_seq(void* p_target_func, Mono_InterpMethodArguments* p_margs, IndexSequence<Is...>) {
+void m2n_trampoline_with_idx_seq(
+    void* p_target_func,
+    Mono_InterpMethodArguments* p_margs,
+    IndexSequence<Is...>
+) {
     constexpr array<size_t, sizeof...(P)> indices =
         get_indices_for_type<P...>();
     (void)indices; // Suppress 'unused' warning when parameter count is 0
@@ -222,7 +227,11 @@ void m2n_trampoline_with_idx_seq(void* p_target_func, Mono_InterpMethodArguments
 }
 
 template <typename R, typename... P, size_t... Is>
-void m2n_trampoline_with_idx_seq_r(void* p_target_func, Mono_InterpMethodArguments* p_margs, IndexSequence<Is...>) {
+void m2n_trampoline_with_idx_seq_r(
+    void* p_target_func,
+    Mono_InterpMethodArguments* p_margs,
+    IndexSequence<Is...>
+) {
     constexpr array<size_t, sizeof...(P)> indices =
         get_indices_for_type<P...>();
     (void)indices; // Suppress 'unused' warning when parameter count is 0

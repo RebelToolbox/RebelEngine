@@ -172,19 +172,21 @@ int VisualScriptFunctionCall::get_output_value_port_count() const {
     }
 }
 
-String VisualScriptFunctionCall::get_output_sequence_port_text(int p_port
+String VisualScriptFunctionCall::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptFunctionCall::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptFunctionCall::get_input_value_port_info(
+    int p_idx
 ) const {
     if (call_mode == CALL_MODE_INSTANCE || call_mode == CALL_MODE_BASIC_TYPE) {
         if (p_idx == 0) {
             PropertyInfo pi;
             pi.type =
-                (call_mode == CALL_MODE_INSTANCE ? Variant::OBJECT : basic_type
-                );
+                (call_mode == CALL_MODE_INSTANCE ? Variant::OBJECT
+                                                 : basic_type);
             pi.name =
                 (call_mode == CALL_MODE_INSTANCE
                      ? String("instance")
@@ -229,7 +231,8 @@ PropertyInfo VisualScriptFunctionCall::get_input_value_port_info(int p_idx
 #endif
 }
 
-PropertyInfo VisualScriptFunctionCall::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptFunctionCall::get_output_value_port_info(
+    int p_idx
 ) const {
 #ifdef DEBUG_METHODS_ENABLED
 
@@ -396,7 +399,8 @@ void VisualScriptFunctionCall::_update_method_cache() {
         if (base_script != String()) {
             if (!ResourceCache::has(base_script)
                 && ScriptServer::edit_request_func) {
-                ScriptServer::edit_request_func(base_script
+                ScriptServer::edit_request_func(
+                    base_script
                 ); // make sure it's loaded
             }
 
@@ -493,8 +497,8 @@ void VisualScriptFunctionCall::set_call_mode(CallMode p_mode) {
     ports_changed_notify();
 }
 
-VisualScriptFunctionCall::CallMode VisualScriptFunctionCall::get_call_mode(
-) const {
+VisualScriptFunctionCall::CallMode VisualScriptFunctionCall::
+    get_call_mode() const {
     return call_mode;
 }
 
@@ -544,7 +548,8 @@ Dictionary VisualScriptFunctionCall::_get_argument_cache() const {
     return method_cache;
 }
 
-void VisualScriptFunctionCall::_validate_property(PropertyInfo& property
+void VisualScriptFunctionCall::_validate_property(
+    PropertyInfo& property
 ) const {
     if (property.name == "base_type") {
         if (call_mode != CALL_MODE_INSTANCE) {
@@ -621,7 +626,8 @@ void VisualScriptFunctionCall::_validate_property(PropertyInfo& property
             if (base_script != String()) {
                 if (!ResourceCache::has(base_script)
                     && ScriptServer::edit_request_func) {
-                    ScriptServer::edit_request_func(base_script
+                    ScriptServer::edit_request_func(
+                        base_script
                     ); // make sure it's loaded
                 }
 
@@ -1194,13 +1200,14 @@ int VisualScriptPropertySet::get_input_value_port_count() const {
 }
 
 int VisualScriptPropertySet::get_output_value_port_count() const {
-    return (call_mode == CALL_MODE_BASIC_TYPE || call_mode == CALL_MODE_INSTANCE
-           )
+    return (call_mode == CALL_MODE_BASIC_TYPE
+            || call_mode == CALL_MODE_INSTANCE)
              ? 1
              : 0;
 }
 
-String VisualScriptPropertySet::get_output_sequence_port_text(int p_port
+String VisualScriptPropertySet::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
@@ -1215,14 +1222,15 @@ void VisualScriptPropertySet::_adjust_input_index(PropertyInfo& pinfo) const {
     }
 }
 
-PropertyInfo VisualScriptPropertySet::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptPropertySet::get_input_value_port_info(
+    int p_idx
 ) const {
     if (call_mode == CALL_MODE_INSTANCE || call_mode == CALL_MODE_BASIC_TYPE) {
         if (p_idx == 0) {
             PropertyInfo pi;
             pi.type =
-                (call_mode == CALL_MODE_INSTANCE ? Variant::OBJECT : basic_type
-                );
+                (call_mode == CALL_MODE_INSTANCE ? Variant::OBJECT
+                                                 : basic_type);
             pi.name =
                 (call_mode == CALL_MODE_INSTANCE
                      ? String("instance")
@@ -1256,7 +1264,8 @@ PropertyInfo VisualScriptPropertySet::get_input_value_port_info(int p_idx
     return pinfo;
 }
 
-PropertyInfo VisualScriptPropertySet::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptPropertySet::get_output_value_port_info(
+    int p_idx
 ) const {
     if (call_mode == CALL_MODE_BASIC_TYPE) {
         return PropertyInfo(basic_type, "pass");
@@ -1372,8 +1381,9 @@ void VisualScriptPropertySet::_update_cache() {
         return;
     }
 
-    if (!Engine::get_singleton()->is_editor_hint(
-        )) { // only update cache if editor exists, it's pointless otherwise
+    if (!Engine::get_singleton()
+             ->is_editor_hint()) { // only update cache if editor exists, it's
+                                   // pointless otherwise
         return;
     }
 
@@ -1416,7 +1426,8 @@ void VisualScriptPropertySet::_update_cache() {
             if (base_script != String()) {
                 if (!ResourceCache::has(base_script)
                     && ScriptServer::edit_request_func) {
-                    ScriptServer::edit_request_func(base_script
+                    ScriptServer::edit_request_func(
+                        base_script
                     ); // make sure it's loaded
                 }
 
@@ -1491,8 +1502,8 @@ void VisualScriptPropertySet::set_call_mode(CallMode p_mode) {
     ports_changed_notify();
 }
 
-VisualScriptPropertySet::CallMode VisualScriptPropertySet::get_call_mode(
-) const {
+VisualScriptPropertySet::CallMode VisualScriptPropertySet::
+    get_call_mode() const {
     return call_mode;
 }
 
@@ -1530,8 +1541,8 @@ void VisualScriptPropertySet::set_assign_op(AssignOp p_op) {
     ports_changed_notify();
 }
 
-VisualScriptPropertySet::AssignOp VisualScriptPropertySet::get_assign_op(
-) const {
+VisualScriptPropertySet::AssignOp VisualScriptPropertySet::
+    get_assign_op() const {
     return assign_op;
 }
 
@@ -1582,7 +1593,8 @@ void VisualScriptPropertySet::_validate_property(PropertyInfo& property) const {
             if (base_script != String()) {
                 if (!ResourceCache::has(base_script)
                     && ScriptServer::edit_request_func) {
-                    ScriptServer::edit_request_func(base_script
+                    ScriptServer::edit_request_func(
+                        base_script
                     ); // make sure it's loaded
                 }
 
@@ -2159,8 +2171,8 @@ StringName VisualScriptPropertyGet::_get_base_type() const {
 }
 
 int VisualScriptPropertyGet::get_input_value_port_count() const {
-    return (call_mode == CALL_MODE_BASIC_TYPE || call_mode == CALL_MODE_INSTANCE
-           )
+    return (call_mode == CALL_MODE_BASIC_TYPE
+            || call_mode == CALL_MODE_INSTANCE)
              ? 1
              : 0;
 }
@@ -2170,19 +2182,21 @@ int VisualScriptPropertyGet::get_output_value_port_count() const {
     return 1;
 }
 
-String VisualScriptPropertyGet::get_output_sequence_port_text(int p_port
+String VisualScriptPropertyGet::get_output_sequence_port_text(
+    int p_port
 ) const {
     return String();
 }
 
-PropertyInfo VisualScriptPropertyGet::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptPropertyGet::get_input_value_port_info(
+    int p_idx
 ) const {
     if (call_mode == CALL_MODE_INSTANCE || call_mode == CALL_MODE_BASIC_TYPE) {
         if (p_idx == 0) {
             PropertyInfo pi;
             pi.type =
-                (call_mode == CALL_MODE_INSTANCE ? Variant::OBJECT : basic_type
-                );
+                (call_mode == CALL_MODE_INSTANCE ? Variant::OBJECT
+                                                 : basic_type);
             pi.name =
                 (call_mode == CALL_MODE_INSTANCE
                      ? String("instance")
@@ -2193,7 +2207,8 @@ PropertyInfo VisualScriptPropertyGet::get_input_value_port_info(int p_idx
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptPropertyGet::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptPropertyGet::get_output_value_port_info(
+    int p_idx
 ) const {
     // port 'pass' not backported to 3.x to keep script backwards compatibility
     List<PropertyInfo> props;
@@ -2306,7 +2321,8 @@ void VisualScriptPropertyGet::_update_cache() {
             if (base_script != String()) {
                 if (!ResourceCache::has(base_script)
                     && ScriptServer::edit_request_func) {
-                    ScriptServer::edit_request_func(base_script
+                    ScriptServer::edit_request_func(
+                        base_script
                     ); // make sure it's loaded
                 }
 
@@ -2390,8 +2406,8 @@ void VisualScriptPropertyGet::set_call_mode(CallMode p_mode) {
     ports_changed_notify();
 }
 
-VisualScriptPropertyGet::CallMode VisualScriptPropertyGet::get_call_mode(
-) const {
+VisualScriptPropertyGet::CallMode VisualScriptPropertyGet::
+    get_call_mode() const {
     return call_mode;
 }
 
@@ -2490,7 +2506,8 @@ void VisualScriptPropertyGet::_validate_property(PropertyInfo& property) const {
             if (base_script != String()) {
                 if (!ResourceCache::has(base_script)
                     && ScriptServer::edit_request_func) {
-                    ScriptServer::edit_request_func(base_script
+                    ScriptServer::edit_request_func(
+                        base_script
                     ); // make sure it's loaded
                 }
 
@@ -2854,7 +2871,8 @@ String VisualScriptEmitSignal::get_output_sequence_port_text(int p_port) const {
     return String();
 }
 
-PropertyInfo VisualScriptEmitSignal::get_input_value_port_info(int p_idx
+PropertyInfo VisualScriptEmitSignal::get_input_value_port_info(
+    int p_idx
 ) const {
     Ref<VisualScript> vs = get_visual_script();
     if (vs.is_valid()) {
@@ -2871,7 +2889,8 @@ PropertyInfo VisualScriptEmitSignal::get_input_value_port_info(int p_idx
     return PropertyInfo();
 }
 
-PropertyInfo VisualScriptEmitSignal::get_output_value_port_info(int p_idx
+PropertyInfo VisualScriptEmitSignal::get_output_value_port_info(
+    int p_idx
 ) const {
     return PropertyInfo();
 }
@@ -3005,17 +3024,25 @@ static Ref<VisualScriptNode> create_basic_type_call_node(const String& p_name) {
 }
 
 void register_visual_script_func_nodes() {
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/call", create_node_generic<VisualScriptFunctionCall>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/set", create_node_generic<VisualScriptPropertySet>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/get", create_node_generic<VisualScriptPropertyGet>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/call",
+        create_node_generic<VisualScriptFunctionCall>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/set",
+        create_node_generic<VisualScriptPropertySet>
+    );
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/get",
+        create_node_generic<VisualScriptPropertyGet>
+    );
 
     // VisualScriptLanguage::singleton->add_register_func("functions/call_script/call_self",create_script_call_node<VisualScriptScriptCall::CALL_MODE_SELF>);
     // VisualScriptLanguage::singleton->add_register_func("functions/call_script/call_node",create_script_call_node<VisualScriptScriptCall::CALL_MODE_NODE_PATH>);
-    VisualScriptLanguage::singleton
-        ->add_register_func("functions/emit_signal", create_node_generic<VisualScriptEmitSignal>);
+    VisualScriptLanguage::singleton->add_register_func(
+        "functions/emit_signal",
+        create_node_generic<VisualScriptEmitSignal>
+    );
 
     for (int i = 0; i < Variant::VARIANT_MAX; i++) {
         Variant::Type t  = Variant::Type(i);

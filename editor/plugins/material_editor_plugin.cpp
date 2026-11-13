@@ -261,7 +261,8 @@ String SpatialMaterialConversionPlugin::converts_to() const {
     return "ShaderMaterial";
 }
 
-bool SpatialMaterialConversionPlugin::handles(const Ref<Resource>& p_resource
+bool SpatialMaterialConversionPlugin::handles(
+    const Ref<Resource>& p_resource
 ) const {
     Ref<SpatialMaterial> mat = p_resource;
     return mat.is_valid();
@@ -313,7 +314,8 @@ String ParticlesMaterialConversionPlugin::converts_to() const {
     return "ShaderMaterial";
 }
 
-bool ParticlesMaterialConversionPlugin::handles(const Ref<Resource>& p_resource
+bool ParticlesMaterialConversionPlugin::handles(
+    const Ref<Resource>& p_resource
 ) const {
     Ref<ParticlesMaterial> mat = p_resource;
     return mat.is_valid();
@@ -358,7 +360,8 @@ String CanvasItemMaterialConversionPlugin::converts_to() const {
     return "ShaderMaterial";
 }
 
-bool CanvasItemMaterialConversionPlugin::handles(const Ref<Resource>& p_resource
+bool CanvasItemMaterialConversionPlugin::handles(
+    const Ref<Resource>& p_resource
 ) const {
     Ref<CanvasItemMaterial> mat = p_resource;
     return mat.is_valid();

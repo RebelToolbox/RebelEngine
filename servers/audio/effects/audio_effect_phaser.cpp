@@ -38,20 +38,36 @@ void AudioEffectPhaserInstance::process(
         }
 
         // calculate output
-        float y = allpass[0][0].update(allpass[0][1].update(
-            allpass[0][2].update(allpass[0][3].update(allpass[0][4].update(
-                allpass[0][5].update(p_src_frames[i].l + h.l * base->feedback)
-            )))
-        ));
-        h.l     = y;
+        float y = allpass[0][0].update(
+            allpass[0][1].update(
+                allpass[0][2].update(
+                    allpass[0][3].update(
+                        allpass[0][4].update(
+                            allpass[0][5].update(
+                                p_src_frames[i].l + h.l * base->feedback
+                            )
+                        )
+                    )
+                )
+            )
+        );
+        h.l = y;
 
         p_dst_frames[i].l = p_src_frames[i].l + y * base->depth;
 
-        y   = allpass[1][0].update(allpass[1][1].update(
-            allpass[1][2].update(allpass[1][3].update(allpass[1][4].update(
-                allpass[1][5].update(p_src_frames[i].r + h.r * base->feedback)
-            )))
-        ));
+        y = allpass[1][0].update(
+            allpass[1][1].update(
+                allpass[1][2].update(
+                    allpass[1][3].update(
+                        allpass[1][4].update(
+                            allpass[1][5].update(
+                                p_src_frames[i].r + h.r * base->feedback
+                            )
+                        )
+                    )
+                )
+            )
+        );
         h.r = y;
 
         p_dst_frames[i].r = p_src_frames[i].r + y * base->depth;

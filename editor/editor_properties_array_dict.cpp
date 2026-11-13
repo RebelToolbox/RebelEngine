@@ -28,8 +28,10 @@ bool EditorPropertyArrayObject::_set(
     return false;
 }
 
-bool EditorPropertyArrayObject::_get(const StringName& p_name, Variant& r_ret)
-    const {
+bool EditorPropertyArrayObject::_get(
+    const StringName& p_name,
+    Variant& r_ret
+) const {
     String name = p_name;
 
     if (name.begins_with("indices")) {
@@ -124,7 +126,8 @@ Dictionary EditorPropertyDictionaryObject::get_dict() {
     return dict;
 }
 
-void EditorPropertyDictionaryObject::set_new_item_key(const Variant& p_new_item
+void EditorPropertyDictionaryObject::set_new_item_key(
+    const Variant& p_new_item
 ) {
     new_item_key = p_new_item;
 }
@@ -160,7 +163,8 @@ void EditorPropertyArray::_property_changed(
         emit_changed(get_edited_property(), array, "", true);
 
         if (array.get_type() == Variant::ARRAY) {
-            array = array.call("duplicate"
+            array = array.call(
+                "duplicate"
             ); // Duplicate, so undo/redo works better.
         }
         object->set_array(array);
@@ -315,8 +319,8 @@ void EditorPropertyArray::update_property() {
                               // moving.
                 }
 
-                child->queue_delete(
-                ); // Button still needed after pressed is called.
+                child->queue_delete(); // Button still needed after pressed is
+                                       // called.
                 vbox->remove_child(child);
             }
         }
@@ -803,9 +807,9 @@ void EditorPropertyArray::_bind_methods() {
 
 EditorPropertyArray::EditorPropertyArray() {
     object.instance();
-    page_length =
-        int(EDITOR_GET("interface/inspector/max_array_dictionary_items_per_page"
-        ));
+    page_length = int(
+        EDITOR_GET("interface/inspector/max_array_dictionary_items_per_page")
+    );
     edit = memnew(Button);
     edit->set_flat(true);
     edit->set_h_size_flags(SIZE_EXPAND_FILL);
@@ -934,7 +938,8 @@ void EditorPropertyDictionary::update_property() {
     Variant updated_val = get_edited_object()->get(get_edited_property());
 
     if (updated_val.get_type() == Variant::NIL) {
-        edit->set_text("Dictionary (Nil)"
+        edit->set_text(
+            "Dictionary (Nil)"
         ); // This provides symmetry with the array property.
         edit->set_pressed(false);
         if (vbox) {
@@ -1332,9 +1337,9 @@ void EditorPropertyDictionary::_bind_methods() {
 
 EditorPropertyDictionary::EditorPropertyDictionary() {
     object.instance();
-    page_length =
-        int(EDITOR_GET("interface/inspector/max_array_dictionary_items_per_page"
-        ));
+    page_length = int(
+        EDITOR_GET("interface/inspector/max_array_dictionary_items_per_page")
+    );
     edit = memnew(Button);
     edit->set_flat(true);
     edit->set_h_size_flags(SIZE_EXPAND_FILL);

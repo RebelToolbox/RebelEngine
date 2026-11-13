@@ -34,7 +34,7 @@ misrepresented as being the original software.
 
 class JacobianEntrySW {
 public:
-    JacobianEntrySW(){};
+    JacobianEntrySW() {};
 
     // constraint between two different rigidbodies
     JacobianEntrySW(
@@ -118,8 +118,10 @@ public:
     }
 
     // for two constraints on the same rigidbody (for example vehicle friction)
-    real_t getNonDiagonal(const JacobianEntrySW& jacB, const real_t massInvA)
-        const {
+    real_t getNonDiagonal(
+        const JacobianEntrySW& jacB,
+        const real_t massInvA
+    ) const {
         const JacobianEntrySW& jacA = *this;
         real_t lin =
             massInvA * jacA.m_linearJointAxis.dot(jacB.m_linearJointAxis);

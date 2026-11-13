@@ -214,8 +214,9 @@ public:
     void set_code(const String& p_code);
     Token get_token(int p_offset = 0) const override;
     StringName get_token_identifier(int p_offset = 0) const override;
-    GDScriptFunctions::Function get_token_built_in_func(int p_offset = 0)
-        const override;
+    GDScriptFunctions::Function get_token_built_in_func(
+        int p_offset = 0
+    ) const override;
     Variant::Type get_token_type(int p_offset = 0) const override;
     int get_token_line(int p_offset = 0) const override;
     int get_token_column(int p_offset = 0) const override;
@@ -260,8 +261,9 @@ public:
     static Vector<uint8_t> parse_code_string(const String& p_code);
     Token get_token(int p_offset = 0) const override;
     StringName get_token_identifier(int p_offset = 0) const override;
-    GDScriptFunctions::Function get_token_built_in_func(int p_offset = 0)
-        const override;
+    GDScriptFunctions::Function get_token_built_in_func(
+        int p_offset = 0
+    ) const override;
     Variant::Type get_token_type(int p_offset = 0) const override;
     int get_token_line(int p_offset = 0) const override;
     int get_token_column(int p_offset = 0) const override;

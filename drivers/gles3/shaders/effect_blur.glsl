@@ -460,8 +460,9 @@ void main() {
     float ssao = textureLod(source_ssao, uv_interp, 0.0).r;
 
     frag_color = vec4(
-        mix(color.rgb, color.rgb * mix(ssao_color.rgb, vec3(1.0), ssao), color.a
-        ),
+        mix(color.rgb,
+            color.rgb * mix(ssao_color.rgb, vec3(1.0), ssao),
+            color.a),
         1.0
     );
 

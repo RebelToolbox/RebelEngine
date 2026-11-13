@@ -119,8 +119,10 @@ public:
     void generate_debug_mesh_indices(Vector<Vector3>& r_points);
 
     Ref<Shape> create_trimesh_shape() const;
-    Ref<Shape> create_convex_shape(bool p_clean = true, bool p_simplify = false)
-        const;
+    Ref<Shape> create_convex_shape(
+        bool p_clean    = true,
+        bool p_simplify = false
+    ) const;
 
     Ref<Mesh> create_outline(float p_margin) const;
 
@@ -230,8 +232,10 @@ public:
     uint32_t surface_get_format(int p_idx) const override;
     PrimitiveType surface_get_primitive_type(int p_idx) const override;
 
-    void surface_set_material(int p_idx, const Ref<Material>& p_material)
-        override;
+    void surface_set_material(
+        int p_idx,
+        const Ref<Material>& p_material
+    ) override;
     Ref<Material> surface_get_material(int p_idx) const override;
 
     int surface_find_by_name(const String& p_name) const;

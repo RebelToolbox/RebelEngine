@@ -295,7 +295,8 @@ Error ImageLoaderWEBP::load_image(
     return err;
 }
 
-void ImageLoaderWEBP::get_recognized_extensions(List<String>* p_extensions
+void ImageLoaderWEBP::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("webp");
 }

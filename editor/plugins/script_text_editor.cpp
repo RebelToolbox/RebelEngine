@@ -521,7 +521,8 @@ void ScriptTextEditor::add_callback(
             script->get_language()->make_function("", p_function, p_args);
         // code=code+func;
         code_editor->get_text_edit()->cursor_set_line(pos + 1);
-        code_editor->get_text_edit()->cursor_set_column(1000000
+        code_editor->get_text_edit()->cursor_set_column(
+            1000000
         ); // none shall be that big
         code_editor->get_text_edit()->insert_text_at_cursor("\n\n" + func);
     }
@@ -551,9 +552,9 @@ void ScriptTextEditor::set_edit_state(const Variant& p_state) {
 
     Dictionary state = p_state;
     if (state.has("syntax_highlighter")) {
-        int idx =
-            highlighter_menu->get_item_idx_from_text(state["syntax_highlighter"]
-            );
+        int idx = highlighter_menu->get_item_idx_from_text(
+            state["syntax_highlighter"]
+        );
         if (idx >= 0) {
             _change_syntax_highlighter(idx);
         }
@@ -859,7 +860,8 @@ void ScriptTextEditor::_bookmark_item_pressed(int p_idx) {
     if (p_idx < 4) { // Any item before the separator.
         _edit_option(bookmarks_menu->get_item_id(p_idx));
     } else {
-        code_editor->goto_line_centered(bookmarks_menu->get_item_metadata(p_idx)
+        code_editor->goto_line_centered(
+            bookmarks_menu->get_item_metadata(p_idx)
         );
     }
 }
@@ -980,7 +982,8 @@ void ScriptEditor::_update_modified_scripts_for_external_editor(
             );
             ERR_CONTINUE(!rel_script.is_valid());
             script->set_source_code(rel_script->get_source_code());
-            script->set_last_modified_time(rel_script->get_last_modified_time()
+            script->set_last_modified_time(
+                rel_script->get_last_modified_time()
             );
             script->update_exports();
 
@@ -1083,7 +1086,8 @@ void ScriptTextEditor::_breakpoint_item_pressed(int p_idx) {
         _edit_option(breakpoints_menu->get_item_id(p_idx));
     } else {
         code_editor->goto_line(breakpoints_menu->get_item_metadata(p_idx));
-        code_editor->get_text_edit()->call_deferred("center_viewport_to_cursor"
+        code_editor->get_text_edit()->call_deferred(
+            "center_viewport_to_cursor"
         ); // Need to be deferred, because goto uses call_deferred().
     }
 }
@@ -1125,8 +1129,8 @@ void ScriptTextEditor::_lookup_symbol(
         }
 
     } else if (script->get_language()->lookup_code(
-                   code_editor->get_text_edit()->get_text_for_lookup_completion(
-                   ),
+                   code_editor->get_text_edit()
+                       ->get_text_for_lookup_completion(),
                    p_symbol,
                    script->get_path(),
                    base,
@@ -1523,8 +1527,9 @@ void ScriptTextEditor::_edit_option(int p_op) {
                 }
             }
 
-            code_editor->get_text_edit()->begin_complex_operation(
-            ); // prevents creating a two-step undo
+            code_editor->get_text_edit()
+                ->begin_complex_operation(); // prevents creating a two-step
+                                             // undo
             code_editor->get_text_edit()->insert_text_at_cursor(
                 results.join("\n")
             );
@@ -1695,13 +1700,15 @@ void ScriptTextEditor::_edit_option_toggle_inline_comment() {
     code_editor->toggle_inline_comment(delimiter);
 }
 
-void ScriptTextEditor::add_syntax_highlighter(SyntaxHighlighter* p_highlighter
+void ScriptTextEditor::add_syntax_highlighter(
+    SyntaxHighlighter* p_highlighter
 ) {
     highlighters[p_highlighter->get_name()] = p_highlighter;
     highlighter_menu->add_radio_check_item(p_highlighter->get_name());
 }
 
-void ScriptTextEditor::set_syntax_highlighter(SyntaxHighlighter* p_highlighter
+void ScriptTextEditor::set_syntax_highlighter(
+    SyntaxHighlighter* p_highlighter
 ) {
     TextEdit* te = code_editor->get_text_edit();
     te->_set_syntax_highlighting(p_highlighter);
@@ -1728,7 +1735,8 @@ void ScriptTextEditor::_change_syntax_highlighter(int p_idx) {
         el = el->next();
     }
     // highlighter_menu->set_item_checked(p_idx, true);
-    set_syntax_highlighter(highlighters[highlighter_menu->get_item_text(p_idx)]
+    set_syntax_highlighter(
+        highlighters[highlighter_menu->get_item_text(p_idx)]
     );
 }
 
@@ -2026,9 +2034,11 @@ void ScriptTextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
         int col, row;
         tx->_get_mouse_pos(local_pos, row, col);
 
-        tx->set_right_click_moves_caret(EditorSettings::get_singleton()->get(
-            "text_editor/cursor/right_click_moves_caret"
-        ));
+        tx->set_right_click_moves_caret(
+            EditorSettings::get_singleton()->get(
+                "text_editor/cursor/right_click_moves_caret"
+            )
+        );
         if (tx->is_right_click_moving_caret()) {
             if (tx->is_selection_active()) {
                 int from_line   = tx->get_selection_from_line();
@@ -2115,8 +2125,9 @@ void ScriptTextEditor::_text_edit_gui_input(const Ref<InputEvent>& ev) {
                         Color(color[0], color[1], color[2], alpha)
                     );
                 }
-                color_panel->set_position(get_global_transform().xform(local_pos
-                ));
+                color_panel->set_position(
+                    get_global_transform().xform(local_pos)
+                );
             } else {
                 has_color = false;
             }

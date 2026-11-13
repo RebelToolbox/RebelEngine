@@ -36,7 +36,8 @@ void Occluder::set_shape(const Ref<OccluderShape>& p_shape) {
             _shape->update_shape_to_visual_server();
             if (is_inside_tree()) {
                 _shape->update_active_to_visual_server(is_visible_in_tree());
-                _shape->update_transform_to_visual_server(get_global_transform()
+                _shape->update_transform_to_visual_server(
+                    get_global_transform()
                 );
             }
         }
@@ -82,7 +83,8 @@ void Occluder::_notification(int p_what) {
                 _shape->notification_enter_world(get_world()->get_scenario());
                 _shape->update_active_to_visual_server(is_visible_in_tree());
                 _shape->update_shape_to_visual_server();
-                _shape->update_transform_to_visual_server(get_global_transform()
+                _shape->update_transform_to_visual_server(
+                    get_global_transform()
                 );
             }
         } break;
@@ -98,7 +100,8 @@ void Occluder::_notification(int p_what) {
         } break;
         case NOTIFICATION_TRANSFORM_CHANGED: {
             if (_shape.is_valid()) {
-                _shape->update_transform_to_visual_server(get_global_transform()
+                _shape->update_transform_to_visual_server(
+                    get_global_transform()
                 );
 
 #ifdef TOOLS_ENABLED

@@ -61,8 +61,8 @@ void ProjectExportDialog::popup_export() {
 
     _update_presets();
     if (presets->get_current() >= 0) {
-        _update_current_preset(
-        ); // triggers rescan for templates if newly installed
+        _update_current_preset(); // triggers rescan for templates if newly
+                                  // installed
     }
 
     // Restore valid window bounds or pop up at default size.
@@ -791,7 +791,8 @@ void ProjectExportDialog::_tree_changed() {
             current->remove_export_file(path);
         }
     }
-    _refresh_parent_checks(item
+    _refresh_parent_checks(
+        item
     ); // Makes parent folder checked if all files/folders are checked.
 }
 
@@ -1238,7 +1239,8 @@ ProjectExportDialog::ProjectExportDialog() {
     export_filter = memnew(OptionButton);
     export_filter->add_item(TTR("Export all resources in the project"));
     export_filter->add_item(TTR("Export selected scenes (and dependencies)"));
-    export_filter->add_item(TTR("Export selected resources (and dependencies)")
+    export_filter->add_item(
+        TTR("Export selected resources (and dependencies)")
     );
     resources_vb->add_margin_child(TTR("Export Mode:"), export_filter);
     export_filter->connect("item_selected", this, "_export_type_changed");

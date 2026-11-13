@@ -14,7 +14,8 @@
 // Epsilon to account for floating point inaccuracies
 #define RAY_PENETRATION_DEPTH_EPSILON 0.01
 
-RayWorldAlgorithm::CreateFunc::CreateFunc(const btDiscreteDynamicsWorld* world
+RayWorldAlgorithm::CreateFunc::CreateFunc(
+    const btDiscreteDynamicsWorld* world
 ) :
     m_world(world) {}
 

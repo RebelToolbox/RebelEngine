@@ -337,7 +337,8 @@ void CollisionObject2D::shape_owner_set_transform(
     }
 }
 
-Transform2D CollisionObject2D::shape_owner_get_transform(uint32_t p_owner
+Transform2D CollisionObject2D::shape_owner_get_transform(
+    uint32_t p_owner
 ) const {
     ERR_FAIL_COND_V(!shapes.has(p_owner), Transform2D());
 

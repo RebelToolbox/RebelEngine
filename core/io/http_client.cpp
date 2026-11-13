@@ -611,8 +611,8 @@ PoolByteArray HTTPClient::read_response_body_chunk() {
 
                 chunk.push_back(b);
                 int cs = chunk.size();
-                if ((cs >= 2 && chunk[cs - 2] == '\r' && chunk[cs - 1] == '\n'
-                    )) {
+                if ((cs >= 2 && chunk[cs - 2] == '\r'
+                     && chunk[cs - 1] == '\n')) {
                     if (cs == 2) {
                         // Finally over
                         chunk_trailer_part = false;
@@ -1007,14 +1007,16 @@ void HTTPClient::_bind_methods() {
     BIND_ENUM_CONSTANT(METHOD_MAX);
 
     BIND_ENUM_CONSTANT(STATUS_DISCONNECTED);
-    BIND_ENUM_CONSTANT(STATUS_RESOLVING
+    BIND_ENUM_CONSTANT(
+        STATUS_RESOLVING
     ); // Resolving hostname (if hostname was passed in)
     BIND_ENUM_CONSTANT(STATUS_CANT_RESOLVE);
     BIND_ENUM_CONSTANT(STATUS_CONNECTING); // Connecting to IP
     BIND_ENUM_CONSTANT(STATUS_CANT_CONNECT);
     BIND_ENUM_CONSTANT(STATUS_CONNECTED);  // Connected, now accepting requests
     BIND_ENUM_CONSTANT(STATUS_REQUESTING); // Request in progress
-    BIND_ENUM_CONSTANT(STATUS_BODY
+    BIND_ENUM_CONSTANT(
+        STATUS_BODY
     ); // Request resulted in body which must be read
     BIND_ENUM_CONSTANT(STATUS_CONNECTION_ERROR);
     BIND_ENUM_CONSTANT(STATUS_SSL_HANDSHAKE_ERROR);

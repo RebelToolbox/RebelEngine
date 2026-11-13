@@ -105,7 +105,8 @@ String _diagnose_batch_flags_to_string(uint32_t p_flags) const {
     return sz;
 }
 
-String get_command_type_string(const RasterizerCanvas::Item::Command& p_command
+String get_command_type_string(
+    const RasterizerCanvas::Item::Command& p_command
 ) const {
     String sz = "";
 

@@ -1333,9 +1333,11 @@ void RasterizerCanvasBaseGLES3::canvas_light_shadow_buffer_update(
         Vector3 cam_target = Basis(Vector3(0, 0, Math_PI * 2 * (i / 4.0)))
                                  .xform(Vector3(0, 1, 0));
         projection = projection
-                   * CameraMatrix(Transform()
-                                      .looking_at(cam_target, Vector3(0, 0, -1))
-                                      .affine_inverse());
+                   * CameraMatrix(
+                         Transform()
+                             .looking_at(cam_target, Vector3(0, 0, -1))
+                             .affine_inverse()
+                   );
 
         state.canvas_shadow_shader.set_uniform(
             CanvasShadowShaderGLES3::PROJECTION_MATRIX,

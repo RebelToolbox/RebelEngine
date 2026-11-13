@@ -72,7 +72,8 @@ void EditorProfiler::clear() {
 
     updating_frame = true;
     cursor_metric_edit->set_min(0);
-    cursor_metric_edit->set_max(100
+    cursor_metric_edit->set_max(
+        100
     ); // Doesn't make much sense, but we can't have min == max. Doesn't hurt.
     cursor_metric_edit->set_value(0);
     updating_frame = false;
@@ -112,7 +113,8 @@ String EditorProfiler::_get_time_as_text(
     return "err";
 }
 
-Color EditorProfiler::_get_color_from_signature(const StringName& p_signature
+Color EditorProfiler::_get_color_from_signature(
+    const StringName& p_signature
 ) const {
     Color bc   = get_color("error_color", "Editor");
     double rot = ABS(double(p_signature.hash()) / double(0x7FFFFFFF));
@@ -563,7 +565,8 @@ void EditorProfiler::_graph_tex_input(const Ref<InputEvent>& p_ev) {
             }
 
             if (valid) {
-                cursor_metric_edit->set_value(frame_metrics[metric].frame_number
+                cursor_metric_edit->set_value(
+                    frame_metrics[metric].frame_number
                 );
             }
 

@@ -160,8 +160,10 @@ public:
         int p_layer = 0
     ) = 0;
 
-    virtual Ref<Image> texture_get_data(RID p_texture, int p_layer = 0)
-        const                                                       = 0;
+    virtual Ref<Image> texture_get_data(
+        RID p_texture,
+        int p_layer = 0
+    ) const                                                         = 0;
     virtual void texture_set_flags(RID p_texture, uint32_t p_flags) = 0;
     virtual uint32_t texture_get_flags(RID p_texture) const         = 0;
     virtual Image::Format texture_get_format(RID p_texture) const   = 0;
@@ -440,8 +442,10 @@ public:
     virtual RID mesh_surface_get_material(RID p_mesh, int p_surface) const = 0;
 
     virtual int mesh_surface_get_array_len(RID p_mesh, int p_surface) const = 0;
-    virtual int mesh_surface_get_array_index_len(RID p_mesh, int p_surface)
-        const = 0;
+    virtual int mesh_surface_get_array_index_len(
+        RID p_mesh,
+        int p_surface
+    ) const = 0;
 
     virtual PoolVector<uint8_t> mesh_surface_get_array(
         RID p_mesh,
@@ -453,11 +457,15 @@ public:
     ) const = 0;
 
     virtual Array mesh_surface_get_arrays(RID p_mesh, int p_surface) const;
-    virtual Array mesh_surface_get_blend_shape_arrays(RID p_mesh, int p_surface)
-        const;
+    virtual Array mesh_surface_get_blend_shape_arrays(
+        RID p_mesh,
+        int p_surface
+    ) const;
 
-    virtual uint32_t mesh_surface_get_format(RID p_mesh, int p_surface)
-        const = 0;
+    virtual uint32_t mesh_surface_get_format(
+        RID p_mesh,
+        int p_surface
+    ) const = 0;
     virtual PrimitiveType mesh_surface_get_primitive_type(
         RID p_mesh,
         int p_surface
@@ -547,8 +555,10 @@ public:
         RID p_multimesh,
         int p_index
     ) const = 0;
-    virtual Color multimesh_instance_get_color(RID p_multimesh, int p_index)
-        const = 0;
+    virtual Color multimesh_instance_get_color(
+        RID p_multimesh,
+        int p_index
+    ) const = 0;
     virtual Color multimesh_instance_get_custom_data(
         RID p_multimesh,
         int p_index
@@ -599,8 +609,10 @@ public:
         int p_bone,
         const Transform& p_transform
     ) = 0;
-    virtual Transform skeleton_bone_get_transform(RID p_skeleton, int p_bone)
-        const = 0;
+    virtual Transform skeleton_bone_get_transform(
+        RID p_skeleton,
+        int p_bone
+    ) const = 0;
     virtual void skeleton_bone_set_transform_2d(
         RID p_skeleton,
         int p_bone,
@@ -844,16 +856,19 @@ public:
     virtual void lightmap_capture_set_octree_cell_transform(
         RID p_capture,
         const Transform& p_xform
-    )       = 0;
-    virtual Transform lightmap_capture_get_octree_cell_transform(RID p_capture
+    ) = 0;
+    virtual Transform lightmap_capture_get_octree_cell_transform(
+        RID p_capture
     ) const = 0;
     virtual void lightmap_capture_set_octree_cell_subdiv(
         RID p_capture,
         int p_subdiv
-    )                                                                       = 0;
-    virtual int lightmap_capture_get_octree_cell_subdiv(RID p_capture
-    ) const                                                                 = 0;
-    virtual PoolVector<uint8_t> lightmap_capture_get_octree(RID p_capture
+    ) = 0;
+    virtual int lightmap_capture_get_octree_cell_subdiv(
+        RID p_capture
+    ) const = 0;
+    virtual PoolVector<uint8_t> lightmap_capture_get_octree(
+        RID p_capture
     ) const                                                                 = 0;
     virtual void lightmap_capture_set_energy(RID p_capture, float p_energy) = 0;
     virtual float lightmap_capture_get_energy(RID p_capture) const          = 0;
@@ -1559,8 +1574,10 @@ public:
         RID p_scenario = RID()
     ) const = 0;
 
-    Array _instances_cull_aabb_bind(const AABB& p_aabb, RID p_scenario = RID())
-        const;
+    Array _instances_cull_aabb_bind(
+        const AABB& p_aabb,
+        RID p_scenario = RID()
+    ) const;
     Array _instances_cull_ray_bind(
         const Vector3& p_from,
         const Vector3& p_to,
@@ -1954,7 +1971,8 @@ public:
 
     /* FREE */
 
-    virtual void free(RID p_rid
+    virtual void free(
+        RID p_rid
     ) = 0; ///< free RIDs associated with the visual server
 
     virtual void request_frame_drawn_callback(

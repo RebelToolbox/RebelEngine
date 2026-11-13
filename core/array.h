@@ -79,8 +79,12 @@ public:
 
     Array duplicate(bool p_deep = false) const;
 
-    Array slice(int p_begin, int p_end, int p_step = 1, bool p_deep = false)
-        const;
+    Array slice(
+        int p_begin,
+        int p_end,
+        int p_step  = 1,
+        bool p_deep = false
+    ) const;
 
     Variant min() const;
     Variant max() const;

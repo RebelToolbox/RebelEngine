@@ -8,7 +8,8 @@
 
 #include "core/math/delaunay.h"
 
-void AnimationNodeBlendSpace2D::get_parameter_list(List<PropertyInfo>* r_list
+void AnimationNodeBlendSpace2D::get_parameter_list(
+    List<PropertyInfo>* r_list
 ) const {
     r_list->push_back(PropertyInfo(Variant::VECTOR2, blend_position));
     r_list->push_back(
@@ -31,7 +32,8 @@ Variant AnimationNodeBlendSpace2D::get_parameter_default_value(
     }
 }
 
-void AnimationNodeBlendSpace2D::get_child_nodes(List<ChildNode>* r_child_nodes
+void AnimationNodeBlendSpace2D::get_child_nodes(
+    List<ChildNode>* r_child_nodes
 ) {
     for (int i = 0; i < blend_points_used; i++) {
         ChildNode cn;
@@ -635,7 +637,8 @@ String AnimationNodeBlendSpace2D::get_caption() const {
     return "BlendSpace2D";
 }
 
-void AnimationNodeBlendSpace2D::_validate_property(PropertyInfo& property
+void AnimationNodeBlendSpace2D::_validate_property(
+    PropertyInfo& property
 ) const {
     if (auto_triangles && property.name == "triangles") {
         property.usage = 0;
@@ -677,8 +680,8 @@ void AnimationNodeBlendSpace2D::set_blend_mode(BlendMode p_blend_mode) {
     blend_mode = p_blend_mode;
 }
 
-AnimationNodeBlendSpace2D::BlendMode AnimationNodeBlendSpace2D::get_blend_mode(
-) const {
+AnimationNodeBlendSpace2D::BlendMode AnimationNodeBlendSpace2D::
+    get_blend_mode() const {
     return blend_mode;
 }
 

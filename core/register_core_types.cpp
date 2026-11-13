@@ -278,10 +278,12 @@ void register_core_singletons() {
     Engine::get_singleton()->add_singleton(
         Engine::Singleton("Marshalls", _Marshalls::get_singleton())
     );
-    Engine::get_singleton()->add_singleton(Engine::Singleton(
-        "TranslationServer",
-        TranslationServer::get_singleton()
-    ));
+    Engine::get_singleton()->add_singleton(
+        Engine::Singleton(
+            "TranslationServer",
+            TranslationServer::get_singleton()
+        )
+    );
     Engine::get_singleton()->add_singleton(
         Engine::Singleton("Input", Input::get_singleton())
     );
@@ -321,7 +323,8 @@ void unregister_core_types() {
 
     ResourceSaver::remove_resource_format_saver(resource_format_saver_crypto);
     resource_format_saver_crypto.unref();
-    ResourceLoader::remove_resource_format_loader(resource_format_loader_crypto
+    ResourceLoader::remove_resource_format_loader(
+        resource_format_loader_crypto
     );
     resource_format_loader_crypto.unref();
 

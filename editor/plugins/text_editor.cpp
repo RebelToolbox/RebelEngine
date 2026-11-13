@@ -57,7 +57,8 @@ void TextEditor::_change_syntax_highlighter(int p_idx) {
         );
         el = el->next();
     }
-    set_syntax_highlighter(highlighters[highlighter_menu->get_item_text(p_idx)]
+    set_syntax_highlighter(
+        highlighters[highlighter_menu->get_item_text(p_idx)]
     );
 }
 
@@ -353,9 +354,9 @@ void TextEditor::set_edit_state(const Variant& p_state) {
 
     Dictionary state = p_state;
     if (state.has("syntax_highlighter")) {
-        int idx =
-            highlighter_menu->get_item_idx_from_text(state["syntax_highlighter"]
-            );
+        int idx = highlighter_menu->get_item_idx_from_text(
+            state["syntax_highlighter"]
+        );
         if (idx >= 0) {
             _change_syntax_highlighter(idx);
         }

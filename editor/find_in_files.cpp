@@ -963,8 +963,10 @@ void FindInFilesPanel::apply_replaces_in_file(
             // Make sure the replace is still valid in case the file was
             // tampered with.
             print_verbose(
-                String("Occurrence no longer matches, replace will be ignored "
-                       "in {0}: line {1}, col {2}")
+                String(
+                    "Occurrence no longer matches, replace will be ignored "
+                    "in {0}: line {1}, col {2}"
+                )
                     .format(varray(fpath, repl_line_number, repl_begin))
             );
             continue;

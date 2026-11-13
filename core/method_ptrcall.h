@@ -40,7 +40,8 @@ struct PtrToArg {};
     template <>                                                                \
     struct PtrToArg<m_type> {                                                  \
         _FORCE_INLINE_ static m_type convert(const void* p_ptr) {              \
-            return static_cast<m_type>(*reinterpret_cast<const m_conv*>(p_ptr) \
+            return static_cast<m_type>(                                        \
+                *reinterpret_cast<const m_conv*>(p_ptr)                        \
             );                                                                 \
         }                                                                      \
         _FORCE_INLINE_ static void encode(m_type p_val, void* p_ptr) {         \
@@ -50,7 +51,8 @@ struct PtrToArg {};
     template <>                                                                \
     struct PtrToArg<const m_type&> {                                           \
         _FORCE_INLINE_ static m_type convert(const void* p_ptr) {              \
-            return static_cast<m_type>(*reinterpret_cast<const m_conv*>(p_ptr) \
+            return static_cast<m_type>(                                        \
+                *reinterpret_cast<const m_conv*>(p_ptr)                        \
             );                                                                 \
         }                                                                      \
         _FORCE_INLINE_ static void encode(m_type p_val, void* p_ptr) {         \

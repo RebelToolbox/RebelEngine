@@ -611,7 +611,8 @@ void NetworkedMultiplayerENet::close_connection(uint32_t wait_usec) {
         enet_host_flush(host);
 
         if (wait_usec > 0) {
-            OS::get_singleton()->delay_usec(wait_usec
+            OS::get_singleton()->delay_usec(
+                wait_usec
             ); // Wait for disconnection packets to send
         }
     }
@@ -1437,7 +1438,8 @@ void NetworkedMultiplayerENet::set_dtls_key(Ref<CryptoKey> p_key) {
     dtls_key = p_key;
 }
 
-void NetworkedMultiplayerENet::set_dtls_certificate(Ref<X509Certificate> p_cert
+void NetworkedMultiplayerENet::set_dtls_certificate(
+    Ref<X509Certificate> p_cert
 ) {
     ERR_FAIL_COND(active);
     dtls_cert = p_cert;

@@ -152,7 +152,8 @@ void WindowsFileAccess::close() {
             }
             if (rename_error) {
                 attempts--;
-                OS::get_singleton()->delay_usec(100000
+                OS::get_singleton()->delay_usec(
+                    100000
                 ); // wait 100msec and try again
             }
         }
@@ -247,8 +248,10 @@ uint8_t WindowsFileAccess::get_8() const {
     return b;
 }
 
-uint64_t WindowsFileAccess::get_buffer(uint8_t* p_dst, uint64_t p_length)
-    const {
+uint64_t WindowsFileAccess::get_buffer(
+    uint8_t* p_dst,
+    uint64_t p_length
+) const {
     ERR_FAIL_COND_V(!p_dst && p_length > 0, -1);
     ERR_FAIL_COND_V(!f, -1);
 

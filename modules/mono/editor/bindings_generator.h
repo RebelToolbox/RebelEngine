@@ -321,7 +321,8 @@ class BindingsGenerator {
         List<PropertyInterface> properties;
         List<MethodInterface> methods;
 
-        const MethodInterface* find_method_by_name(const StringName& p_cname
+        const MethodInterface* find_method_by_name(
+            const StringName& p_cname
         ) const {
             for (const List<MethodInterface>::Element* E = methods.front(); E;
                  E                                       = E->next()) {
@@ -333,7 +334,8 @@ class BindingsGenerator {
             return NULL;
         }
 
-        const PropertyInterface* find_property_by_name(const StringName& p_cname
+        const PropertyInterface* find_property_by_name(
+            const StringName& p_cname
         ) const {
             for (const List<PropertyInterface>::Element* E = properties.front();
                  E;
@@ -643,7 +645,8 @@ class BindingsGenerator {
     void _generate_method_icalls(const TypeInterface& p_itype);
 
     const TypeInterface* _get_type_or_null(const TypeReference& p_typeref);
-    const TypeInterface* _get_type_or_placeholder(const TypeReference& p_typeref
+    const TypeInterface* _get_type_or_placeholder(
+        const TypeReference& p_typeref
     );
 
     StringName _get_int_type_name_from_meta(RebelTypeInfo::Metadata p_meta);

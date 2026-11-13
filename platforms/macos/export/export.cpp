@@ -123,7 +123,8 @@ public:
         return logo;
     }
 
-    List<String> get_binary_extensions(const Ref<EditorExportPreset>& p_preset
+    List<String> get_binary_extensions(
+        const Ref<EditorExportPreset>& p_preset
     ) const override {
         List<String> list;
         if (use_dmg()) {
@@ -178,7 +179,8 @@ void MacOSEditorExportPlatform::get_preset_features(
     r_features->push_back("64");
 }
 
-void MacOSEditorExportPlatform::get_export_options(List<ExportOption>* r_options
+void MacOSEditorExportPlatform::get_export_options(
+    List<ExportOption>* r_options
 ) {
     r_options->push_back(ExportOption(
         PropertyInfo(
@@ -596,18 +598,20 @@ void MacOSEditorExportPlatform::_make_icon(
     };
 
     static const MacOSIconInfo icon_infos[] = {
-        {"ic10", "",     true,  1024
-        }, // 1024x1024 32-bit PNG and 512x512@2x 32-bit "retina" PNG
-        {"ic09", "",     true,  512 }, // 512×512 32-bit PNG
-        {"ic14", "",     true,  512 }, // 256x256@2x 32-bit "retina" PNG
-        {"ic08", "",     true,  256 }, // 256×256 32-bit PNG
-        {"ic13", "",     true,  256 }, // 128x128@2x 32-bit "retina" PNG
-        {"ic07", "",     true,  128 }, // 128x128 32-bit PNG
-        {"ic12", "",     true,  64  }, // 32x32@2x 32-bit "retina" PNG
-        {"ic11", "",     true,  32  }, // 16x16@2x 32-bit "retina" PNG
-        {"il32", "l8mk", false, 32
-        }, // 32x32 24-bit RLE + 8-bit uncompressed mask
-        {"is32", "s8mk", false, 16  }
+        {"ic10",
+         "",             true,
+         1024                      }, // 1024x1024 32-bit PNG and 512x512@2x 32-bit "retina" PNG
+        {"ic09", "",     true,  512}, // 512×512 32-bit PNG
+        {"ic14", "",     true,  512}, // 256x256@2x 32-bit "retina" PNG
+        {"ic08", "",     true,  256}, // 256×256 32-bit PNG
+        {"ic13", "",     true,  256}, // 128x128@2x 32-bit "retina" PNG
+        {"ic07", "",     true,  128}, // 128x128 32-bit PNG
+        {"ic12", "",     true,  64 }, // 32x32@2x 32-bit "retina" PNG
+        {"ic11", "",     true,  32 }, // 16x16@2x 32-bit "retina" PNG
+        {"il32",
+         "l8mk",         false,
+         32                        }, // 32x32 24-bit RLE + 8-bit uncompressed mask
+        {"is32", "s8mk", false, 16 }
         // 16x16 24-bit RLE + 8-bit uncompressed mask
     };
 
@@ -1007,9 +1011,11 @@ Error MacOSEditorExportPlatform::export_project(
     String pkg_name;
     if (p_preset->get("application/name") != "") {
         pkg_name = p_preset->get("application/name"); // app_name
-    } else if (String(ProjectSettings::get_singleton()->get(
-                   "application/config/name"
-               ))
+    } else if (String(
+                   ProjectSettings::get_singleton()->get(
+                       "application/config/name"
+                   )
+               )
                != "") {
         pkg_name = String(
             ProjectSettings::get_singleton()->get("application/config/name")
@@ -1283,8 +1289,9 @@ Error MacOSEditorExportPlatform::export_project(
                         );
                         ent_f->store_line("<true/>");
                     }
-                    if ((bool)p_preset->get("codesign/entitlements/"
-                                            "allow_unsigned_executable_memory"
+                    if ((bool)p_preset->get(
+                            "codesign/entitlements/"
+                            "allow_unsigned_executable_memory"
                         )) {
                         ent_f->store_line(
                             "<key>com.apple.security.cs.allow-unsigned-"
@@ -1292,8 +1299,9 @@ Error MacOSEditorExportPlatform::export_project(
                         );
                         ent_f->store_line("<true/>");
                     }
-                    if ((bool)p_preset->get("codesign/entitlements/"
-                                            "allow_dyld_environment_variables"
+                    if ((bool)p_preset->get(
+                            "codesign/entitlements/"
+                            "allow_dyld_environment_variables"
                         )) {
                         ent_f->store_line(
                             "<key>com.apple.security.cs.allow-dyld-environment-"
@@ -1345,8 +1353,8 @@ Error MacOSEditorExportPlatform::export_project(
                     );
                     ent_f->store_line("<true/>");
                 }
-                if ((bool)p_preset->get("codesign/entitlements/photos_library"
-                    )) {
+                if ((bool)
+                        p_preset->get("codesign/entitlements/photos_library")) {
                     ent_f->store_line(
                         "<key>com.apple.security.personal-information.photos-"
                         "library</key>"
@@ -1366,8 +1374,8 @@ Error MacOSEditorExportPlatform::export_project(
                     ent_f->store_line("<true/>");
                 }
 
-                if ((bool
-                    )p_preset->get("codesign/entitlements/app_sandbox/enabled"
+                if ((bool)p_preset->get(
+                        "codesign/entitlements/app_sandbox/enabled"
                     )) {
                     ent_f->store_line(
                         "<key>com.apple.security.app-sandbox</key>"

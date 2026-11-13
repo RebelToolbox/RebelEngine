@@ -118,8 +118,8 @@ void AudioEffectSpectrumAnalyzerInstance::process(
             smbFft(fftw + fft_size * 4, fft_size * 2, -1);
             int next = (fft_pos + 1) % fft_count;
 
-            AudioFrame* hw = (AudioFrame*)fft_history[next].ptr(
-            ); // do not use write, avoid cow
+            AudioFrame* hw = (AudioFrame*)fft_history[next]
+                                 .ptr(); // do not use write, avoid cow
 
             for (int i = 0; i < fft_size; i++) {
                 // abs(vec)/fft_size normalizes each frequency
@@ -233,7 +233,8 @@ Ref<AudioEffectInstance> AudioEffectSpectrumAnalyzer::instance() {
     ); // x2 stereo, x2 amount of samples for freqs, x2 for input
     ins->temporal_fft_pos = 0;
     for (int i = 0; i < ins->fft_count; i++) {
-        ins->fft_history.write[i].resize(ins->fft_size
+        ins->fft_history.write[i].resize(
+            ins->fft_size
         ); // only magnitude matters
         for (int j = 0; j < ins->fft_size; j++) {
             ins->fft_history.write[i].write[j] = AudioFrame(0, 0);
@@ -263,8 +264,8 @@ void AudioEffectSpectrumAnalyzer::set_fft_size(FFT_Size p_fft_size) {
     fft_size = p_fft_size;
 }
 
-AudioEffectSpectrumAnalyzer::FFT_Size AudioEffectSpectrumAnalyzer::get_fft_size(
-) const {
+AudioEffectSpectrumAnalyzer::FFT_Size AudioEffectSpectrumAnalyzer::
+    get_fft_size() const {
     return fft_size;
 }
 

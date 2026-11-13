@@ -146,7 +146,8 @@ void VideoPlayer::_notification(int p_notification) {
                 return;
             }
 
-            playback->update(delta
+            playback->update(
+                delta
             ); // playback->is_playing() returns false in the last video frame
 
             if (!playback->is_playing()) {
@@ -192,7 +193,8 @@ void VideoPlayer::set_stream(const Ref<VideoStream>& p_stream) {
     stop();
 
     AudioServer::get_singleton()->lock();
-    mix_buffer.resize(AudioServer::get_singleton()->thread_get_mix_buffer_size()
+    mix_buffer.resize(
+        AudioServer::get_singleton()->thread_get_mix_buffer_size()
     );
     stream = p_stream;
     if (stream.is_valid()) {

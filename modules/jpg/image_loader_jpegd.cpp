@@ -109,7 +109,8 @@ Error ImageLoaderJPG::load_image(
     return err;
 }
 
-void ImageLoaderJPG::get_recognized_extensions(List<String>* p_extensions
+void ImageLoaderJPG::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("jpg");
     p_extensions->push_back("jpeg");

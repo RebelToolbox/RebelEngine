@@ -32,7 +32,13 @@ struct _CollectorCallback2D {
     }
 };
 
-typedef void (*GenerateContactsFunc)(const Vector2*, int, const Vector2*, int, _CollectorCallback2D*);
+typedef void (*GenerateContactsFunc)(
+    const Vector2*,
+    int,
+    const Vector2*,
+    int,
+    _CollectorCallback2D*
+);
 
 _FORCE_INLINE_ static void _generate_contacts_point_point(
     const Vector2* p_points_A,

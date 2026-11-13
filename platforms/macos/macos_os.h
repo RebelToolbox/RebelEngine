@@ -186,8 +186,10 @@ public:
 
     String get_name() const override;
 
-    void alert(const String& p_alert, const String& p_title = "ALERT!")
-        override;
+    void alert(
+        const String& p_alert,
+        const String& p_title = "ALERT!"
+    ) override;
 
     Error open_dynamic_library(
         const String p_path,
@@ -211,7 +213,8 @@ public:
     int get_mouse_button_state() const override;
     void update_real_mouse_position();
     void set_window_title(const String& p_title) override;
-    void set_window_mouse_passthrough(const PoolVector2Array& p_region
+    void set_window_mouse_passthrough(
+        const PoolVector2Array& p_region
     ) override;
 
     Size2 get_window_size() const override;
@@ -229,8 +232,10 @@ public:
     String get_bundle_icon_path() const override;
     String get_rebel_dir_name() const override;
 
-    String get_system_dir(SystemDir p_dir, bool p_shared_storage = true)
-        const override;
+    String get_system_dir(
+        SystemDir p_dir,
+        bool p_shared_storage = true
+    ) const override;
 
     bool can_draw() const override;
 
@@ -246,11 +251,15 @@ public:
 
     String get_locale() const override;
 
-    void set_video_mode(const VideoMode& p_video_mode, int p_screen = 0)
-        override;
+    void set_video_mode(
+        const VideoMode& p_video_mode,
+        int p_screen = 0
+    ) override;
     VideoMode get_video_mode(int p_screen = 0) const override;
-    void get_fullscreen_mode_list(List<VideoMode>* p_list, int p_screen = 0)
-        const override;
+    void get_fullscreen_mode_list(
+        List<VideoMode>* p_list,
+        int p_screen = 0
+    ) const override;
 
     String get_executable_path() const override;
     Error execute(

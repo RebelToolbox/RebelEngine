@@ -387,7 +387,8 @@ protected:
     void _notification(int p_what);
 
 public:
-    static void add_inspector_plugin(const Ref<EditorInspectorPlugin>& p_plugin
+    static void add_inspector_plugin(
+        const Ref<EditorInspectorPlugin>& p_plugin
     );
     static void remove_inspector_plugin(
         const Ref<EditorInspectorPlugin>& p_plugin

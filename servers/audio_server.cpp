@@ -215,7 +215,8 @@ void AudioDriverManager::initialize(int p_driver) {
 
     if (driver_count > 1
         && String(AudioDriver::get_singleton()->get_name()) == "Dummy") {
-        WARN_PRINT("All audio drivers failed, falling back to the dummy driver."
+        WARN_PRINT(
+            "All audio drivers failed, falling back to the dummy driver."
         );
     }
 }
@@ -957,8 +958,10 @@ float AudioServer::get_bus_peak_volume_left_db(int p_bus, int p_channel) const {
     return buses[p_bus]->channels[p_channel].peak_volume.l;
 }
 
-float AudioServer::get_bus_peak_volume_right_db(int p_bus, int p_channel)
-    const {
+float AudioServer::get_bus_peak_volume_right_db(
+    int p_bus,
+    int p_channel
+) const {
     ERR_FAIL_INDEX_V(p_bus, buses.size(), 0);
     ERR_FAIL_INDEX_V(p_channel, buses[p_bus]->channels.size(), 0);
 

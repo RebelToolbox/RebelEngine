@@ -140,15 +140,20 @@ static _WinTranslatePair _vk_to_keycode[] = {
     {KEY_LAUNCH0,       VK_LAUNCH_APP1        }, // (0xB6)
     {KEY_LAUNCH1,       VK_LAUNCH_APP2        }, // (0xB7)
     {KEY_SEMICOLON,     VK_OEM_1              }, // (0xBA)
-    {KEY_EQUAL,         VK_OEM_PLUS
+    {
+     KEY_EQUAL,         VK_OEM_PLUS
     }, // (0xBB) // Windows 2000/XP: For any country/region, the '+' key
-    {KEY_COMMA,         VK_OEM_COMMA
+    {
+     KEY_COMMA,         VK_OEM_COMMA
     }, // (0xBC) // Windows 2000/XP: For any country/region, the ',' key
-    {KEY_MINUS,         VK_OEM_MINUS
+    {
+     KEY_MINUS,         VK_OEM_MINUS
     }, // (0xBD) // Windows 2000/XP: For any country/region, the '-' key
-    {KEY_PERIOD,        VK_OEM_PERIOD
+    {
+     KEY_PERIOD,        VK_OEM_PERIOD
     }, // (0xBE) // Windows 2000/XP: For any country/region, the '.' key
-    {KEY_SLASH,         VK_OEM_2
+    {
+     KEY_SLASH,         VK_OEM_2
     }, // (0xBF) //Windows 2000/XP: For the US standard keyboard, the '/?' key
     {KEY_QUOTELEFT,     VK_OEM_3              }, // (0xC0)
     {KEY_BRACKETLEFT,   VK_OEM_4              }, // (0xDB)

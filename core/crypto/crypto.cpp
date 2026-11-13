@@ -240,7 +240,8 @@ bool ResourceFormatLoaderCrypto::handles_type(const String& p_type) const {
     return p_type == "X509Certificate" || p_type == "CryptoKey";
 }
 
-String ResourceFormatLoaderCrypto::get_resource_type(const String& p_path
+String ResourceFormatLoaderCrypto::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "crt") {

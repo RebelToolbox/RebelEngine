@@ -93,8 +93,11 @@ void UPNP::add_device_to_list(UPNPDev* dev, UPNPDev* devlist) {
     devices.push_back(new_device);
 }
 
-char* UPNP::load_description(const String& url, int* size, int* status_code)
-    const {
+char* UPNP::load_description(
+    const String& url,
+    int* size,
+    int* status_code
+) const {
     return (char*)miniwget(url.utf8().get_data(), size, 0, status_code);
 }
 

@@ -124,7 +124,8 @@ void NativeScript::_bind_methods() {
 
 #ifdef TOOLS_ENABLED
 
-void NativeScript::_update_placeholder(PlaceHolderScriptInstance* p_placeholder
+void NativeScript::_update_placeholder(
+    PlaceHolderScriptInstance* p_placeholder
 ) {
     NativeScriptDesc* script_data = get_script_desc();
 
@@ -142,7 +143,8 @@ void NativeScript::_update_placeholder(PlaceHolderScriptInstance* p_placeholder
     p_placeholder->update(info, values);
 }
 
-void NativeScript::_placeholder_erased(PlaceHolderScriptInstance* p_placeholder
+void NativeScript::_placeholder_erased(
+    PlaceHolderScriptInstance* p_placeholder
 ) {
     placeholders.erase(p_placeholder);
 }
@@ -498,7 +500,8 @@ String NativeScript::get_class_documentation() const {
     return script_data->documentation;
 }
 
-String NativeScript::get_method_documentation(const StringName& p_method
+String NativeScript::get_method_documentation(
+    const StringName& p_method
 ) const {
     NativeScriptDesc* script_data = get_script_desc();
 
@@ -525,7 +528,8 @@ String NativeScript::get_method_documentation(const StringName& p_method
     );
 }
 
-String NativeScript::get_signal_documentation(const StringName& p_signal_name
+String NativeScript::get_signal_documentation(
+    const StringName& p_signal_name
 ) const {
     NativeScriptDesc* script_data = get_script_desc();
 
@@ -552,7 +556,8 @@ String NativeScript::get_signal_documentation(const StringName& p_signal_name
     );
 }
 
-String NativeScript::get_property_documentation(const StringName& p_path
+String NativeScript::get_property_documentation(
+    const StringName& p_path
 ) const {
     NativeScriptDesc* script_data = get_script_desc();
 
@@ -761,7 +766,8 @@ bool NativeScriptInstance::get(const StringName& p_name, Variant& r_ret) const {
     return false;
 }
 
-void NativeScriptInstance::get_property_list(List<PropertyInfo>* p_properties
+void NativeScriptInstance::get_property_list(
+    List<PropertyInfo>* p_properties
 ) const {
     script->get_script_property_list(p_properties);
 
@@ -1171,7 +1177,8 @@ void NativeScriptLanguage::_unload_stuff(bool p_reload) {
 
             // free constructor/destructor
             if (C->get().create_func.free_func) {
-                C->get().create_func.free_func(C->get().create_func.method_data
+                C->get().create_func.free_func(
+                    C->get().create_func.method_data
                 );
             }
 
@@ -1303,10 +1310,12 @@ bool NativeScriptLanguage::is_control_flow_keyword(String p_keyword) const {
     return false;
 }
 
-void NativeScriptLanguage::get_comment_delimiters(List<String>* p_delimiters
+void NativeScriptLanguage::get_comment_delimiters(
+    List<String>* p_delimiters
 ) const {}
 
-void NativeScriptLanguage::get_string_delimiters(List<String>* p_delimiters
+void NativeScriptLanguage::get_string_delimiters(
+    List<String>* p_delimiters
 ) const {}
 
 Ref<Script> NativeScriptLanguage::get_template(
@@ -1432,12 +1441,14 @@ void NativeScriptLanguage::reload_tool_script(
     bool p_soft_reload
 ) {}
 
-void NativeScriptLanguage::get_recognized_extensions(List<String>* p_extensions
+void NativeScriptLanguage::get_recognized_extensions(
+    List<String>* p_extensions
 ) const {
     p_extensions->push_back("gdns");
 }
 
-void NativeScriptLanguage::get_public_functions(List<MethodInfo>* p_functions
+void NativeScriptLanguage::get_public_functions(
+    List<MethodInfo>* p_functions
 ) const {}
 
 void NativeScriptLanguage::get_public_constants(
@@ -2023,7 +2034,8 @@ void NativeScriptLanguage::thread_exit() {
 
 #endif // NO_THREADS
 
-bool NativeScriptLanguage::handles_global_class_type(const String& p_type
+bool NativeScriptLanguage::handles_global_class_type(
+    const String& p_type
 ) const {
     return p_type == "NativeScript";
 }
@@ -2212,12 +2224,14 @@ void ResourceFormatLoaderNativeScript::get_recognized_extensions(
     p_extensions->push_back("gdns");
 }
 
-bool ResourceFormatLoaderNativeScript::handles_type(const String& p_type
+bool ResourceFormatLoaderNativeScript::handles_type(
+    const String& p_type
 ) const {
     return (p_type == "Script" || p_type == "NativeScript");
 }
 
-String ResourceFormatLoaderNativeScript::get_resource_type(const String& p_path
+String ResourceFormatLoaderNativeScript::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "gdns") {

@@ -85,9 +85,9 @@ void MultiplayerAPI::poll() {
 
     network_peer->poll();
 
-    if (!network_peer.is_valid(
-        )) { // It's possible that polling might have resulted in a
-             // disconnection, so check here.
+    if (!network_peer
+             .is_valid()) { // It's possible that polling might have resulted in
+                            // a disconnection, so check here.
         return;
     }
 
@@ -676,7 +676,8 @@ void MultiplayerAPI::_send_rpc(
     int ofs = 0;
 
 #define MAKE_ROOM(m_amount)                                                    \
-    if (packet_cache.size() < m_amount) packet_cache.resize(m_amount);
+    if (packet_cache.size() < m_amount)                                        \
+        packet_cache.resize(m_amount);
 
     // Encode type.
     MAKE_ROOM(1);
@@ -795,7 +796,8 @@ void MultiplayerAPI::_send_rpc(
             Map<int, bool>::Element* F = psc->confirmed_peers.find(E->get());
             ERR_CONTINUE(!F); // Should never happen.
 
-            network_peer->set_target_peer(E->get()
+            network_peer->set_target_peer(
+                E->get()
             ); // To this one specifically.
 
             if (F->get()) {

@@ -101,9 +101,11 @@ void CylinderShape::_bind_methods() {
 }
 
 CylinderShape::CylinderShape() :
-    Shape(PhysicsServer::get_singleton()->shape_create(
-        PhysicsServer::SHAPE_CYLINDER
-    )) {
+    Shape(
+        PhysicsServer::get_singleton()->shape_create(
+            PhysicsServer::SHAPE_CYLINDER
+        )
+    ) {
     radius = 1.0;
     height = 2.0;
     _update_shape();

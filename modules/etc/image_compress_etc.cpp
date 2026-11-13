@@ -36,7 +36,8 @@ static Image::Format _get_etc2_mode(Image::DetectChannels format) {
     }
 }
 
-static Etc::Image::Format _image_format_to_etc2comp_format(Image::Format format
+static Etc::Image::Format _image_format_to_etc2comp_format(
+    Image::Format format
 ) {
     switch (format) {
         case Image::FORMAT_ETC:

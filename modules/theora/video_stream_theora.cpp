@@ -117,9 +117,9 @@ void VideoStreamPlaybackTheora::video_write() {
         format = Image::FORMAT_RGBA8;
     }
 
-    Ref<Image> img =
-        memnew(Image(size.x, size.y, 0, Image::FORMAT_RGBA8, frame_data)
-        ); // zero copy image creation
+    Ref<Image> img = memnew(
+        Image(size.x, size.y, 0, Image::FORMAT_RGBA8, frame_data)
+    ); // zero copy image creation
 
     texture->set_data(img); // zero copy send to visual server
 
@@ -802,7 +802,8 @@ bool ResourceFormatLoaderTheora::handles_type(const String& p_type) const {
     return ClassDB::is_parent_class(p_type, "VideoStream");
 }
 
-String ResourceFormatLoaderTheora::get_resource_type(const String& p_path
+String ResourceFormatLoaderTheora::get_resource_type(
+    const String& p_path
 ) const {
     String el = p_path.get_extension().to_lower();
     if (el == "ogv") {

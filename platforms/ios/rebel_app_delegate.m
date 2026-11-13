@@ -172,8 +172,8 @@ didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
     }
 }
 
-- (void
-)applicationProtectedDataWillBecomeUnavailable:(UIApplication*)application {
+- (void)applicationProtectedDataWillBecomeUnavailable:
+    (UIApplication*)application {
     for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
@@ -224,8 +224,8 @@ didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
 }
 
 - (BOOL)application:(UIApplication*)application
-    shouldRestoreSecureApplicationState:(NSCoder*)coder
-    API_AVAILABLE(ios(13.2)) {
+    shouldRestoreSecureApplicationState:
+        (NSCoder*)coder API_AVAILABLE(ios(13.2)) {
     BOOL result = NO;
 
     for (ApplicationDelegateService* service in services) {
@@ -332,7 +332,8 @@ didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
 - (BOOL)application:(UIApplication*)application
     continueUserActivity:(NSUserActivity*)userActivity
       restorationHandler:
-          (void (^)(NSArray<id<UIUserActivityRestoring>>* restorableObjects)
+          (
+              void (^)(NSArray<id<UIUserActivityRestoring>>* restorableObjects)
           )restorationHandler {
     BOOL result = NO;
 
@@ -408,8 +409,8 @@ didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
 
 // MARK: HealthKit
 
-- (void
-)applicationShouldRequestHealthAuthorization:(UIApplication*)application {
+- (void)applicationShouldRequestHealthAuthorization:
+    (UIApplication*)application {
     for (ApplicationDelegateService* service in services) {
         if (![service respondsToSelector:_cmd]) {
             continue;
@@ -440,8 +441,8 @@ didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
 // MARK: Disallowing Specified App Extension Types
 
 - (BOOL)application:(UIApplication*)application
-    shouldAllowExtensionPointIdentifier:(UIApplicationExtensionPointIdentifier
-                                        )extensionPointIdentifier {
+    shouldAllowExtensionPointIdentifier:
+        (UIApplicationExtensionPointIdentifier)extensionPointIdentifier {
     BOOL result = NO;
 
     for (ApplicationDelegateService* service in services) {

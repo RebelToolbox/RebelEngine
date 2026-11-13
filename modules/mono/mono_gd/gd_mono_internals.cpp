@@ -123,7 +123,8 @@ void unhandled_exception(MonoException* p_exc) {
         GD_UNREACHABLE();
     } else {
 #ifdef DEBUG_ENABLED
-        GDMonoUtils::debug_send_unhandled_exception_error((MonoException*)p_exc
+        GDMonoUtils::debug_send_unhandled_exception_error(
+            (MonoException*)p_exc
         );
         if (ScriptDebugger::get_singleton()) {
             ScriptDebugger::get_singleton()->idle_poll();

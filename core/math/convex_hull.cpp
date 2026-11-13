@@ -189,7 +189,7 @@ public:
         static Int128 mul(uint64_t a, uint64_t b);
 
         Int128 operator-() const {
-            return Int128((uint64_t) - (int64_t)low, ~high + (low == 0));
+            return Int128((uint64_t)-(int64_t)low, ~high + (low == 0));
         }
 
         Int128 operator+(const Int128& b) const {
@@ -729,7 +729,8 @@ public:
     real_t shrink(real_t amount, real_t p_clamp_amount);
 };
 
-ConvexHullInternal::Int128 ConvexHullInternal::Int128::operator*(int64_t b
+ConvexHullInternal::Int128 ConvexHullInternal::Int128::operator*(
+    int64_t b
 ) const {
     bool negative = (int64_t)high < 0;
     Int128 a      = negative ? -*this : *this;
@@ -969,8 +970,8 @@ bool ConvexHullInternal::merge_projection(
                     int32_t dx0 = (w0->point.x - v0->point.x) * sign;
                     int32_t dy0 = w0->point.y - v0->point.y;
                     if ((dy0 <= 0)
-                        && ((dx0 == 0) || ((dx0 < 0) && (dy0 * dx <= dy * dx0))
-                        )) {
+                        && ((dx0 == 0)
+                            || ((dx0 < 0) && (dy0 * dx <= dy * dx0)))) {
                         v0 = w0;
                         dx = (v1->point.x - v0->point.x) * sign;
                         continue;
@@ -983,8 +984,8 @@ bool ConvexHullInternal::merge_projection(
                     int32_t dy1 = w1->point.y - v1->point.y;
                     int32_t dxn = (w1->point.x - v0->point.x) * sign;
                     if ((dxn > 0) && (dy1 < 0)
-                        && ((dx1 == 0) || ((dx1 < 0) && (dy1 * dx < dy * dx1))
-                        )) {
+                        && ((dx1 == 0)
+                            || ((dx1 < 0) && (dy1 * dx < dy * dx1)))) {
                         v1 = w1;
                         dx = dxn;
                         continue;
@@ -1002,8 +1003,8 @@ bool ConvexHullInternal::merge_projection(
                     int32_t dx1 = (w1->point.x - v1->point.x) * sign;
                     int32_t dy1 = w1->point.y - v1->point.y;
                     if ((dy1 >= 0)
-                        && ((dx1 == 0) || ((dx1 < 0) && (dy1 * dx <= dy * dx1))
-                        )) {
+                        && ((dx1 == 0)
+                            || ((dx1 < 0) && (dy1 * dx <= dy * dx1)))) {
                         v1 = w1;
                         dx = (v1->point.x - v0->point.x) * sign;
                         continue;
@@ -1016,8 +1017,8 @@ bool ConvexHullInternal::merge_projection(
                     int32_t dy0 = w0->point.y - v0->point.y;
                     int32_t dxn = (v1->point.x - w0->point.x) * sign;
                     if ((dxn < 0) && (dy0 > 0)
-                        && ((dx0 == 0) || ((dx0 < 0) && (dy0 * dx < dy * dx0))
-                        )) {
+                        && ((dx0 == 0)
+                            || ((dx0 < 0) && (dy0 * dx < dy * dx0)))) {
                         v0 = w0;
                         dx = dxn;
                         continue;
@@ -1898,7 +1899,8 @@ real_t ConvexHullInternal::shrink(real_t p_amount, real_t p_clamp_amount) {
                         if (a && b) {
                             int64_t vol =
                                 (v->point - ref)
-                                    .dot((a->point - ref).cross(b->point - ref)
+                                    .dot(
+                                        (a->point - ref).cross(b->point - ref)
                                     );
                             CHULL_ASSERT(vol >= 0);
                             Point32 c = v->point + a->point + b->point + ref;
@@ -2283,8 +2285,8 @@ bool ConvexHullInternal::shift_face(
         }
 
         if (cmp || prev_cmp
-            || (prev_intersection->reverse->next->target != intersection->target
-            )) {
+            || (prev_intersection->reverse->next->target
+                != intersection->target)) {
             face_edge =
                 new_edge_pair(prev_intersection->target, intersection->target);
             if (prev_cmp == 0) {
