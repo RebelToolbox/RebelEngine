@@ -1,5 +1,5 @@
 [versions]
-androidGradlePlugin = "9.5.1"
+androidGradlePlugin = "9.5.2"
 androidxFragment = "1.9.1"
 
 [plugins]
