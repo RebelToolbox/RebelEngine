@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Rebel Editor\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-22 19:34+0000\n"
+"PO-Revision-Date: 2026-11-23 11:36+0000\n"
 "Last-Translator: fserrador <fserrador@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-editor/es/>\n"
@@ -3161,7 +3161,6 @@ msgid "Select android template file"
 msgstr "Seleccione el archivo de plantilla de Android"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid ""
 "This will set up your project for custom Android builds by installing a "
 "project template to \"res://android/project\".\n"
@@ -3174,8 +3173,8 @@ msgstr ""
 "Esto configurará tu proyecto para las compilaciones personalizadas de "
 "Android instalando la plantilla base en \"res://android/build\".\n"
 "Luego podrás aplicar las modificaciones y compilar tu propio APK "
-"personalizado al exportarlo (agregando módulos, cambiando el AndroidManifest."
-"xml, etc.).\n"
+"personalizado al exportarlo (agregando módulos, cambiando el "
+"AndroidManifest.xml, etc.).\n"
 "Ten en cuenta que para realizar compilaciones personalizadas en lugar de "
 "usar APKs predefinidos, la opción \"Use Custom Build\" debería estar "
 "habilitada en la configuración de exportación de Android."
@@ -6081,11 +6080,11 @@ msgstr "Crear Puntos de Emisión Desde el Nodo"
 
 #: editor/plugins/curve_editor_plugin.cpp
 msgid "Flat 0"
-msgstr "Flat 0"
+msgstr "Llano 0"
 
 #: editor/plugins/curve_editor_plugin.cpp
 msgid "Flat 1"
-msgstr "Flat 1"
+msgstr "Llano 1"
 
 #: editor/plugins/curve_editor_plugin.cpp editor/property_editor.cpp
 msgid "Ease In"
@@ -7458,7 +7457,7 @@ msgstr ""
 
 #: editor/plugins/shader_editor_plugin.cpp
 msgid "Shader"
-msgstr "Shader"
+msgstr "Sombreador"
 
 #: editor/plugins/skeleton_2d_editor_plugin.cpp
 msgid "This skeleton has no bones, create some children Bone2D nodes."
@@ -12763,7 +12762,6 @@ msgid "Unsupported export format!\n"
 msgstr "¡Formato de exportación no compatible!\n"
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
@@ -13088,12 +13086,10 @@ msgid "Project Type:"
 msgstr "Tipo del proyecto:"
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Godot Project"
 msgstr "Proyecto Godot"
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Please choose a \"project.godot\" file."
 msgstr "Por favor, elige un archivo \"project.godot\"."
 
@@ -13533,7 +13529,6 @@ msgstr ""
 "nodo ParallaxBackground."
 
 #: scene/2d/particles_2d.cpp
-#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
