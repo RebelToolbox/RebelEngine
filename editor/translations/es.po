@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Rebel Editor\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-23 11:36+0000\n"
+"PO-Revision-Date: 2026-11-25 21:51+0000\n"
 "Last-Translator: fserrador <fserrador@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-editor/es/>\n"
@@ -7930,27 +7930,27 @@ msgstr "Ajustar Objeto al Suelo"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "1 Viewport"
-msgstr "1 Viewport"
+msgstr "1 Puerto gráfico"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "2 Viewports"
-msgstr "2 Viewports"
+msgstr "2 Puertos gráficos"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "2 Viewports (Alt)"
-msgstr "2 Viewports (Alt)"
+msgstr "2 Puertos gráficos (Alt)"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "3 Viewports"
-msgstr "3 Viewports"
+msgstr "3 Puertos gráficos"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "3 Viewports (Alt)"
-msgstr "3 Viewports (Alt)"
+msgstr "3 Puertos gráficos (Alt)"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "4 Viewports"
-msgstr "4 Viewports"
+msgstr "4 Puertos gráficos"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "Gizmos"
