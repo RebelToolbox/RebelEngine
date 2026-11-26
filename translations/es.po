@@ -4810,7 +4810,6 @@ msgstr ""
 "con este método desde el diálogo."
 
 #: docs/AcceptDialog.xml
-#, fuzzy
 msgid ""
 "Adds a button with label [code]name[/code] and a cancel action to the dialog "
 "and returns the created button.\n"
@@ -4818,7 +4817,9 @@ msgid ""
 "this method from the dialog."
 msgstr ""
 "Añade un botón con la etiqueta [code]name[/code] y una acción de cancelación "
-"al diálogo y devuelve el botón creado."
+"al diálogo y devuelve el botón creado.\n"
+"Puede utilizar el método [method remove_button] para retirar un botón creado "
+"con este método desde el diálogo."
 
 #: docs/AcceptDialog.xml
 msgid ""
