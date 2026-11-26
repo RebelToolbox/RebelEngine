@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rebel Engine API\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
-"PO-Revision-Date: 2026-11-25 21:51+0000\n"
+"PO-Revision-Date: 2026-11-26 19:35+0000\n"
 "Last-Translator: fserrador <fserrador@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-engine-api/es/>\n"
@@ -130,7 +130,6 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns the arc cosine of [code]s[/code] in radians. Use to get the angle of "
 "cosine [code]s[/code]. [code]s[/code] must be between [code]-1.0[/code] and "
@@ -146,12 +145,11 @@ msgstr ""
 "[code]-1.0[/code] y [code]1.0[/code] (inclusive), en otro caso, [method "
 "acos] devolverá [constant NAN].\n"
 "[codeblock]\n"
-"# c es 0.523599 o 30 grados si se convierte con rad2deg(s)\n"
 "c = acos(0.866025)\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"[code]s[code] es 0.523599 o 30 grados si se convierte con [method rad2deg]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns the arc sine of [code]s[/code] in radians. Use to get the angle of "
 "sine [code]s[/code]. [code]s[/code] must be between [code]-1.0[/code] and "
@@ -162,14 +160,14 @@ msgid ""
 "[/codeblock]\n"
 "[code]s[/code] is 0.523599 or 30 degrees if converted with [method rad2deg]"
 msgstr ""
-"Devuelve el arcoseno de [code]s[/code] en radianes. Se usa para obtener el "
-"ángulo del seno de [code]s[/code]. [code]s[/code] debe estar entre "
-"[code]-1.0[/code] y [code]1.0[/code] (inclusive), en otro caso, [method "
-"asin] devolverá [constant NAN].\n"
+"Devuelve el arco seno de [code]s[/code] en radianes. Se usa para obtener el "
+"ángulo del seno de [code]s[/code]. [code]s[/code] debe estar entre [code]-"
+"1.0[/code] y [code]1.0[/code] (inclusive), en otro caso, [method asin] "
+"devolverá [constant NAN].\n"
 "[codeblock]\n"
-"# s es 0.523599 o 30 grados si se convierte conrad2deg(s)\n"
 "s = asin(0.5)\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"[code]s[/code] es 0.523599 o 30 grados si se convierte a [method rad2deg]"
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid ""
@@ -500,7 +498,6 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Rounds [code]s[/code] downward (towards negative infinity), returning the "
 "largest whole number that is not more than [code]s[/code].\n"
@@ -514,16 +511,17 @@ msgid ""
 "[code]s[/code] is a non-negative number, you can use [int][code](s)[/code] "
 "directly."
 msgstr ""
-"Redondea [code]s[/code] por debajo, devolviendo el número entero más grande "
-"que no es mayor que [code]s[/code].\n"
+"Redondea [code]s[/code] por debajo, (devolviendo infinito negativ), "
+"devolviendo el más último cuyo número que no sea más que [code]s[/code].\n"
 "[codeblock]\n"
 "a = floor(2.45)  # a es 2.0\n"
 "a = floor(2.99)  # a es 2.0\n"
 "a = floor(-2.99) # a es -3.0\n"
 "[/codeblock]\n"
-"Consulte también [method ceil], [method round], [method stepify], y [int].\n"
-"[b]Nota:[/b] Este método devuelve un valor en punto flotante. Si necesita "
-"uno entero y [code]s[/code] no lo es, use [code]int(s)[/code] directamente."
+"Consulte también [method ceil], [method round], [method stepify], e [int].\n"
+"[b]Nota:[/b] Este método devuelve un valor en coma flotante. Si necesita uno "
+"entero y [code]s[/code] es un número no negativo, puede utilizar [int][code]"
+"(s)[/code] directamente."
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid ""
@@ -709,7 +707,6 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns an interpolation or extrapolation factor considering the range "
 "specified in [code]from[/code] and [code]to[/code], and the interpolated "
@@ -731,11 +728,13 @@ msgid ""
 "See also [method lerp] which performs the reverse of this operation."
 msgstr ""
 "Devuelve un factor de interpolación o extrapolación considerando el rango "
-"especificado en `from` y `to`, y el valor interpolado especificado en "
-"`weight`. El valor devuelto estará entre `0.0` y `1.0` si `weight` está "
-"entre `from` y `to` (inclusive). Si `weight` se encuentra fuera de este "
-"rango, se devolverá un factor de extrapolación (valor inferior a `0.0` o "
-"superior a `1.0`).\n"
+"especificado en [code]from[/code] y [code]to[/code], y el valor interpolado "
+"especificado en [code]weight[/code]. El valor devuelto estará entre "
+"[code]0.0[/code] y [code]1.0[/code] si [code]weight[/code] está entre "
+"[code]from[/code] y [code]to[/code] (inclusive). Si [code]weight[/code] se "
+"encuentra fuera de este rango, se devolverá un factor de extrapolación "
+"(valor inferior a [code]0.0[/code] o superior a [code]1.0[/code]\n"
+"[codeblock]\n"
 "# La relación de interpolación en la llamada a `lerp()` a continuación es "
 "0.75.\n"
 "var middle = lerp(20, 30, 0.75)\n"
@@ -1382,11 +1381,12 @@ msgid ""
 "[/codeblock]\n"
 "[b]Note:[/b] This is equivalent to [code]randf() * (to - from) + from[/code]."
 msgstr ""
-"Rango aleatorio de cualquier número real entre [code]from[/code] y [code]to[/"
-"code].\n"
+"Devuelve un valor de coma flotante aleatoria entre [code]from[/code] y "
+"[code]to[/code] (ambos puntos finales inclusivos).\n"
 "[codeblock]\n"
-"prints(rand_range(0, 1), rand_range(0, 1)) # Imprime dos números aleatorios\n"
-"[/codeblock]"
+"prints(rand_range(0, 1), rand_range(0, 1)) # Imprime e.g. 0.135591 0.405263\n"
+"[/codeblock]\n"
+"[b]Note:[/b] Esto es equivalente a [code]randf() * (to - from) + from[/code]."
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid ""
@@ -1424,7 +1424,7 @@ msgid ""
 "randi() % 100 + 1 # Returns random integer between 1 and 100\n"
 "[/codeblock]"
 msgstr ""
-"Devuelve un entero aleatorio sin signo de 32 bits. Utiliza el resto para "
+"Devuelve un entero aleatorio sin signo de 32-bit. Utiliza el resto para "
 "obtener un valor aleatorio en el intervalo [code][0, N - 1][/code] (donde N "
 "es menor que 2^32).\n"
 "[codeblock]\n"
@@ -1492,15 +1492,20 @@ msgid ""
 "3\n"
 "[/codeblock]"
 msgstr ""
-"Devuelve una formación con el rango dado. El método [code]range()[/code] "
-"puede tener un argumento [code]N[/code] (0 a [code]N[/code] - 1), dos "
-"argumentos ([code]initial[/code], [code]final - 1[/code]) o tres argumentos "
+"Devuelve una matriz con el rango especificado. El rango puede ser 1 "
+"argumento[code]N[/code] (de 0 a [code]N[/code] - 1), dos argumentos "
+"([code]initial[/code], [code]final - 1[/code]) o tres argumentos "
 "([code]initial[/code], [code]final - 1[/code], [code]increment[/code]). "
-"[code]increment[/code] puede ser negativo, y en tal caso, [code]final - 1[/"
-"code] llega a ser [code]final + 1[/code]. También, el valor incial debe ser "
-"mayor que el valor final para que se ejecute la iteración.\n"
 "Devuelve una formación vacía si el rango no es válido (por ejemplo, "
 "[code]range(2, 5, -1)[/code] o [code]range(5, 5, 1)[/code]).\n"
+"Devuelve una formación con el rango especificado. [code]range()[/code] puede "
+"tener 1 argumento N ([code]0[/code] a [code]N - 1[/code]), dos argumentos "
+"([code]initial[/code], [code]final - 1[/code]) o tres argumentos "
+"([code]initial[/code], [code]final - 1[/code], [code]increment[/code]). "
+"[code]increment[/code] puede ser negativo. Si [code]increment[/code] es "
+"negativo, [code]final - 1[/code] se volverá [code]final + 1[/code]. Además, "
+"el valor inicial debe ser mayor que el valor final para el bucle a "
+"ejecutar.\n"
 "[codeblock]\n"
 "print(range(4))\n"
 "print(range(2, 5))\n"
@@ -1512,7 +1517,7 @@ msgstr ""
 "[2, 3, 4]\n"
 "[0, 2, 4]\n"
 "[/codeblock]\n"
-"Para iterar sobre un [Array] al revés, utilice:\n"
+"Para iterar sobre un formación [Array] al revés, utilice:\n"
 "[codeblock]\n"
 "var array = [3, 6, 9]\n"
 "var i := array.size() - 1\n"
@@ -1542,7 +1547,6 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Rounds [code]s[/code] to the nearest whole number, with halfway cases "
 "rounded away from zero.\n"
@@ -1556,8 +1560,11 @@ msgstr ""
 "Redondea [code]s[/code] al número entero más cercano, con los casos "
 "intermedios redondeados desde el cero.\n"
 "[codeblock]\n"
-"round(2.6) # Devuelve 3\n"
-"[/codeblock]"
+"a = round(2.49) # a es 2.0\n"
+"a = round(2.5)  # a es 3.0\n"
+"a = round(2.51) # a es 3.0\n"
+"[/codeblock]\n"
+"Consulte además [method floor], [method ceil], [method stepify], e [int]."
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid ""
@@ -1587,8 +1594,8 @@ msgstr ""
 "0.\n"
 "[codeblock]\n"
 "sign(-6) # Devuelve -1\n"
-"sign(0) # Devuelve 0\n"
-"sign(6) # Devuelve 1\n"
+"sign(0)   # Devuelve 0\n"
+"sign(6)   # Devuelve 1\n"
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
@@ -1618,7 +1625,6 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns the result of smoothly interpolating the value of [code]s[/code] "
 "between [code]0[/code] and [code]1[/code], based on the where [code]s[/code] "
@@ -1657,10 +1663,15 @@ msgstr ""
 "smoothstep(0, 2, 0.5) # Devuelve 0.15625\n"
 "smoothstep(0, 2, 1.0) # Devuelve 0.5\n"
 "smoothstep(0, 2, 2.0) # Devuelve 1.0\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"En comparación con [method ease] con un valor de curva de [code]-1.6521[/"
+"code], [method smoothstep] devuelve la curva más suave posible sin cambios "
+"bruscos en la derivada. Si necesita realizar transiciones más avanzadas, "
+"utilice [Tween] o [AnimationPlayer].\n"
+"[img caption=\"Comparación entre smoothstep() y ease(x, -1.6521) devuelve "
+"valores\"]/img/smoothstep_ease_comparison.png[/img]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns the square root of [code]s[/code], where [code]s[/code] is a non-"
 "negative number.\n"
@@ -1675,11 +1686,11 @@ msgstr ""
 "[codeblock]\n"
 "sqrt(9) # Devuelve 3\n"
 "[/codeblock]\n"
-"[b]Nota:[/b]Los valores negativos de [code]s[/code] devuelven NaN. Si "
-"necesita entradas negativas, use [code]System.Numerics.Complex[/code] en C#."
+"[b]Nota:[/b] Los valores negativos de [code]s[/code] devuelven NaN. Si "
+"necesita entradas negativas, emplee [code]System.Numerics.Complex[/code] en "
+"C#."
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns the position of the first non-zero digit, after the decimal point. "
 "Note that the maximum return value is 10, which is a design decision in the "
@@ -1694,16 +1705,12 @@ msgstr ""
 "Observe que el valor máximo de retorno es 10, el cual es una decisión de "
 "diseño en la implementación.\n"
 "[codeblock]\n"
-"# n es 0\n"
-"n = step_decimals(5)\n"
-"# n es 4\n"
-"n = step_decimals(1.0005)\n"
-"# n es 9\n"
-"n = step_decimals(0.000000005)\n"
+"n = step_decimals(5) # n es 0\n"
+"n = step_decimals(1.0005) # n es 4\n"
+"n = step_decimals(0.000000005) # n es 9\n"
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Snaps float value [code]s[/code] to a given [code]step[/code]. This can also "
 "be used to round a floating point number to an arbitrary number of "
@@ -1720,10 +1727,10 @@ msgstr ""
 "[codeblock]\n"
 "stepify(100, 32) # Devuelve 96\n"
 "stepify(3.14159, 0.01) # Devuelve 3.14\n"
-"[/codeblock]"
+"[/codeblock]\n"
+"Consulte además [method ceil], [method floor], [method round], e [int]."
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Converts one or more arguments of any type to string in the best way "
 "possible.\n"
@@ -1773,7 +1780,6 @@ msgstr ""
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns the hyperbolic tangent of [code]s[/code].\n"
 "[codeblock]\n"
@@ -1783,8 +1789,8 @@ msgid ""
 msgstr ""
 "Devuelve la tangente hiperbólica de[code]s[/code].\n"
 "[codeblock]\n"
-"a = log(2.0) # Devuelve 0.693147\n"
-"tanh(a)      # Devuelve 0.6\n"
+"a = log(2.0) # a es 0.693147\n"
+"b = tanh(a) #  b es 0.6\n"
 "[/codeblock]"
 
 #: modules/gdscript/docs/@GDScript.xml
@@ -1818,11 +1824,10 @@ msgstr ""
 "sino sólo un tipo [i]número[/i]. Por lo tanto, al convertir un texto de "
 "[Variant] a JSON se convertirán todos los valores numéricos a tipos "
 "[float].\n"
-"Véase también [JSON] para una forma alternativa de convertir un texto "
+"Consulte también [JSON] para una forma alternativa de convertir un texto "
 "[Variant] a JSON."
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "Returns whether the given class exists in [ClassDB].\n"
 "[codeblock]\n"
@@ -2112,12 +2117,13 @@ msgstr ""
 "encuentra contenido en su perímetro.Esto equivale a [code]TAU / 2[/code]."
 
 #: modules/gdscript/docs/@GDScript.xml
-#, fuzzy
 msgid ""
 "The circle constant, the circumference of the unit circle in radians. This "
 "is equivalent to [code]PI * 2[/code], or 360 degrees in rotations."
 msgstr ""
-"La constante del círculo, la circunferencia de la unidad círculo en radianes."
+"La constante del círculo, la circunferencia de la unidad círculo en "
+"radianes. Esto es equivalente a [code]PI * 2[/code], o 360 grados de "
+"rotación."
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid ""
@@ -2132,6 +2138,16 @@ msgid ""
 "code] will not result in [constant INF] and will result in a run-time error "
 "instead."
 msgstr ""
+"Infinito positivo de punto flotante. Este es el resultado de la división de "
+"punto flotante cuando el divisor es [code]0.0[/code]. Para infinito "
+"negativo, utilice [code]-INF[/code]. Dividiendo por [code]-0.0[/code] dará "
+"como resultado un infinito negativo si el numerador es positivo, por lo que "
+"dividir por [code]0.0[/code] no es lo mismo que dividir entre [code]-0.0[/"
+"code] (a pesar que [code]0.0 == -0.0[/code] devolviendo [code]true[/code]).\n"
+"[b]Nota:[/b] El infinito numérico es un concepto que solo existe con números "
+"de coma flotante y no tiene equivalente para los enteros. Dividir un número "
+"entero por [code]0[/code] no resultará en [constant INF] y dará como "
+"resultado un error en tiempo de ejecución."
 
 #: modules/gdscript/docs/@GDScript.xml
 msgid ""
@@ -2145,13 +2161,21 @@ msgid ""
 "[code]0[/code] will not result in [constant NAN] and will result in a run-"
 "time error instead."
 msgstr ""
+"\"No un Número\", un valor de coma flotante no válido. [constant NAN] tiene "
+"propiedades especiales, entre ellas que no es igual a sí mismo ([code]NAN == "
+"NAN[/code] devuelve [code]false[/code]). Se produce por algunas operaciones "
+"no válidas, como la división de números de coma flotante. [code]0.0[/code] "
+"por [code]0.0[/code].\n"
+"[b]Nota:[/b] \"No un Número\" es un concepto que solo se aplica a los "
+"números de coma flotante y no tiene equivalente para los enteros. Dividir un "
+"entero [code]0[/code] entre [code]0[/code] no resultará en [constant NAN] y "
+"dará como resultado un error en tiempo de ejecución.."
 
 #: docs/@GlobalScope.xml
 msgid "Global scope constants and variables."
 msgstr "Constantes y variables de alcance global."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid ""
 "Global scope constants and variables. This is all that resides in the "
 "globals, constants regarding error codes, scancodes, property hints, etc.\n"
@@ -2165,7 +2189,6 @@ msgstr ""
 "ellos desde cualquier lugar."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "The [ARVRServer] singleton."
 msgstr "El singleton [ARVRServer]."
 
@@ -2186,9 +2209,8 @@ msgid "The [Engine] singleton."
 msgstr "El singleton [Engine]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "The [Geometry] singleton."
-msgstr "El singleton [Geometry2D]."
+msgstr "El singleton [Geometry]."
 
 #: docs/@GlobalScope.xml
 msgid "The [IP] singleton."
@@ -2215,20 +2237,18 @@ msgstr ""
 "[b]Nota:[/b] Sólo implementado en Android."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid ""
 "The [JavaScript] singleton.\n"
 "[b]Note:[/b] Only implemented on the Web platform."
 msgstr ""
 "El singleton [JavaScript].\n"
-"[b]Nota:[/b] Sólo implementado en HTML5."
+"[b]Nota:[/b] Sólo implementado en la plataforma Web."
 
 #: docs/@GlobalScope.xml
 msgid "The [Marshalls] singleton."
 msgstr "El singleton [Marshalls]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "The [EditorNavigationMeshGenerator] singleton."
 msgstr "El singleton [NavigationMeshGenerator]."
 
@@ -2241,14 +2261,12 @@ msgid "The [Performance] singleton."
 msgstr "El singleton [Performance]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "The [Physics2DServer] singleton."
-msgstr "El singleton [PhysicsServer2D]."
+msgstr "El singleton [Physics2DServer]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "The [PhysicsServer] singleton."
-msgstr "El singleton [PhysicsServer2D]."
+msgstr "El singleton [PhysicsServer]."
 
 #: docs/@GlobalScope.xml
 msgid "The [ProjectSettings] singleton."
@@ -2271,9 +2289,8 @@ msgid "The [VisualScriptEditor] singleton."
 msgstr "El singleton [VisualScriptEditor]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "The [VisualServer] singleton."
-msgstr "El singleton [DisplayServer]."
+msgstr "El singleton [VisualServer]."
 
 #: docs/@GlobalScope.xml
 msgid "Left margin, usually used for [Control] or [StyleBox]-derived classes."
@@ -2359,9 +2376,8 @@ msgid "Vertical bottom alignment, usually for text-derived classes."
 msgstr "Alineación vertical inferior, generalmente para clases de texto."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Scancodes with this bit applied are non-printable."
-msgstr "Los códigos de tecla con este bit a 1 no son imprimibles."
+msgstr "Los códigos de tecla con este bit aplicado no son imprimibles."
 
 #: docs/@GlobalScope.xml
 msgid "Escape key."
@@ -2372,25 +2388,24 @@ msgid "Tab key."
 msgstr "Tecla Tabulador."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Shift+Tab key."
-msgstr "Shift + Tabulador."
+msgstr "Tecla Mayús + Tab."
 
 #: docs/@GlobalScope.xml
 msgid "Backspace key."
-msgstr "Tecla retorno."
+msgstr "Tecla Retroceso."
 
 #: docs/@GlobalScope.xml
 msgid "Return key (on the main keyboard)."
-msgstr "Devuelve la tecla (en el teclado principal)."
+msgstr "Tecla Retorno (en el teclado principal)."
 
 #: docs/@GlobalScope.xml
 msgid "Enter key on the numeric keypad."
-msgstr "Pulsa la tecla en el teclado numerico."
+msgstr "Pulsa la tecla en el teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Insert key."
-msgstr "Tecla Insert."
+msgstr "Tecla Insertar."
 
 #: docs/@GlobalScope.xml
 msgid "Delete key."
@@ -2406,11 +2421,11 @@ msgstr "Tecla Imprimir Pantalla."
 
 #: docs/@GlobalScope.xml
 msgid "System Request key."
-msgstr "Tecla Peticion de Sistema."
+msgstr "Tecla Petición del Sistema."
 
 #: docs/@GlobalScope.xml
 msgid "Clear key."
-msgstr "Tecla Clear."
+msgstr "Tecla Vaciar."
 
 #: docs/@GlobalScope.xml
 msgid "Home key."
@@ -2470,7 +2485,7 @@ msgstr "Tecla Bloque numerico."
 
 #: docs/@GlobalScope.xml
 msgid "Scroll Lock key."
-msgstr "Tecla Bloqueo Scroll."
+msgstr "Tecla Bloqueo Arrastre."
 
 #: docs/@GlobalScope.xml
 msgid "F1 key."
@@ -2558,43 +2573,43 @@ msgstr "Tecla Suma(+) del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 0 on the numeric keypad."
-msgstr "Tecla 0 del teclado numérico."
+msgstr "Número 0 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 1 on the numeric keypad."
-msgstr "Tecla 1 del teclado numérico."
+msgstr "Número 1 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 2 on the numeric keypad."
-msgstr "Tecla 2 del teclado numérico."
+msgstr "Número 2 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 3 on the numeric keypad."
-msgstr "Tecla 3 del teclado numérico."
+msgstr "Número 3 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 4 on the numeric keypad."
-msgstr "Tecla 4 del teclado numérico."
+msgstr "Número 4 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 5 on the numeric keypad."
-msgstr "Tecla 5 del teclado numérico."
+msgstr "Número 5 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 6 on the numeric keypad."
-msgstr "Tecla 6 del teclado numérico."
+msgstr "Número 6 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 7 on the numeric keypad."
-msgstr "Tecla 7 del teclado numérico."
+msgstr "Número 7 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 8 on the numeric keypad."
-msgstr "Tecla 8 del teclado numérico."
+msgstr "Número 8 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Number 9 on the numeric keypad."
-msgstr "Tecla 9 del teclado numérico."
+msgstr "Número 9 del teclado numérico."
 
 #: docs/@GlobalScope.xml
 msgid "Left Super key (Windows key)."
@@ -2636,30 +2651,28 @@ msgstr ""
 "un dispositivo Android."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Media forward key."
-msgstr "Tecla grabar."
+msgstr "Tecla avanzar medio."
 
 #: docs/@GlobalScope.xml
 msgid "Media stop key."
-msgstr "Tecla reproduccion parar."
+msgstr "Tecla detener medio."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Media refresh key."
-msgstr "Tecla grabar."
+msgstr "Tecla refrescar medio."
 
 #: docs/@GlobalScope.xml
 msgid "Volume down key."
-msgstr "Tecla Bajar Volumen."
+msgstr "Tecla bajar volumen."
 
 #: docs/@GlobalScope.xml
 msgid "Mute volume key."
-msgstr "Tecla Quitar Volumen."
+msgstr "Tecla enmudecer volumen."
 
 #: docs/@GlobalScope.xml
 msgid "Volume up key."
-msgstr "Tecla Subir Volumen."
+msgstr "Tecla subir volumen."
 
 #: docs/@GlobalScope.xml
 msgid "Bass Boost key."
@@ -2719,11 +2732,11 @@ msgstr "Tecla Abrir URL/Abrir el navegador."
 
 #: docs/@GlobalScope.xml
 msgid "Launch Mail key."
-msgstr "Tecla Abrir el Correo."
+msgstr "Tecla Abrir Correo."
 
 #: docs/@GlobalScope.xml
 msgid "Launch Media key."
-msgstr "Tecla lanzar Media."
+msgstr "Tecla Lanzar Media."
 
 #: docs/@GlobalScope.xml
 msgid "Launch Shortcut 0 key."
@@ -3355,7 +3368,7 @@ msgstr "Tecla meta máscara."
 
 #: docs/@GlobalScope.xml
 msgid "Ctrl key mask."
-msgstr "Tecla Control máscara."
+msgstr "Tecla Ctrl máscara."
 
 #: docs/@GlobalScope.xml
 msgid ""
@@ -3441,9 +3454,8 @@ msgid "Extra mouse button 2 mask."
 msgstr "Máscara de botón de ratón extra 2."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Invalid button or axis."
-msgstr "Duración inválida."
+msgstr "Botón o eje inválido."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad button 0."
@@ -3507,42 +3519,35 @@ msgstr "Botón 14 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad button 15."
-msgstr "Boton 15 del mando de juegos."
+msgstr "Botón 15 del mando de juegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad button 16."
-msgstr "Botón 1 del mando de videojuegos."
+msgstr "Botón 16 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad button 17."
-msgstr "Botón 1 del mando de videojuegos."
+msgstr "Botón 17 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad button 18."
-msgstr "Botón 1 del mando de videojuegos."
+msgstr "Botón 18 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad button 19."
-msgstr "Botón 1 del mando de videojuegos."
+msgstr "Botón 19 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad button 20."
-msgstr "Botón 2 del mando de videojuegos."
+msgstr "Botón 20 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad button 21."
-msgstr "Botón 2 del mando de videojuegos."
+msgstr "Botón 21 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad button 22."
-msgstr "Botón 2 del mando de videojuegos."
+msgstr "Botón 22 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid ""
@@ -3570,41 +3575,36 @@ msgid "DualShock triangle button."
 msgstr "Botón triángulo DualShock."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Xbox controller B button."
-msgstr "Botón B del mando de Nintendo."
+msgstr "Botón B del controlador Xbox."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Xbox controller A button."
-msgstr "Botón B del mando de Nintendo."
+msgstr "Botón A del controlador Xbox."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Xbox controller X button."
-msgstr "Botón X del mando de Nintendo."
+msgstr "Botón X del controlador Xbox."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Xbox controller Y button."
-msgstr "Botón Y del mando de Nintendo."
+msgstr "Botón Y del controlador Xbox."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Nintendo controller A button."
-msgstr "Botón B del mando de Nintendo."
+msgstr "Botón A del controlador Nintendo."
 
 #: docs/@GlobalScope.xml
 msgid "Nintendo controller B button."
-msgstr "Botón B del mando de Nintendo."
+msgstr "Botón B del controlador Nintendo."
 
 #: docs/@GlobalScope.xml
 msgid "Nintendo controller X button."
-msgstr "Botón X del mando de Nintendo."
+msgstr "Botón X del controlador Nintendo."
 
 #: docs/@GlobalScope.xml
 msgid "Nintendo controller Y button."
-msgstr "Botón Y del mando de Nintendo."
+msgstr "Botón Y del controlador Nintendo."
 
 #: docs/@GlobalScope.xml
 msgid "Grip (side) buttons on a VR controller."
@@ -3658,7 +3658,7 @@ msgstr "DPad arriba en el mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad DPad down."
-msgstr "Dpad abajo en el mando de videojuegos."
+msgstr "DPad abajo en el mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad DPad left."
@@ -3669,14 +3669,12 @@ msgid "Gamepad DPad right."
 msgstr "Dpad derecha en el mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad SDL guide button."
 msgstr "Botón guía del mando de juego SDL."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad SDL miscellaneous button."
-msgstr "Botón 0 del mando de videojuegos."
+msgstr "Botón misceláneo SDL de mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 #, fuzzy
@@ -3704,9 +3702,8 @@ msgid "Gamepad SDL touchpad button."
 msgstr "Botón 0 del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad left Shoulder button."
-msgstr "Botón del hombro izquierdo del mando de juego SDL."
+msgstr "Botón del hombro izquierdo del mando de juego."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad left trigger."
@@ -3717,9 +3714,8 @@ msgid "Gamepad left stick click."
 msgstr "Click en el palo izquierdo del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad right Shoulder button."
-msgstr "Botón del hombro derecho del mando de juego SDL."
+msgstr "Botón del hombro derecho del mando de juego."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad right trigger."
@@ -3731,21 +3727,19 @@ msgstr "Click derecho del palo del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad left stick horizontal axis."
-msgstr "Palo izquierdo del eje horizontal del mando de videojuegos."
+msgstr "Eje horizontal de stick izquierdo del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad left stick vertical axis."
-msgstr "Palo izquierdo del eje horizontal del mando de videojuegos."
+msgstr "Eje vertical de stick izquierdo del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid "Gamepad right stick horizontal axis."
-msgstr "Palo derecho del eje horizontal del mando de videojuegos."
+msgstr "Stick derecho del eje horizontal del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad right stick vertical axis."
-msgstr "Palo derecho del eje horizontal del mando de videojuegos."
+msgstr "Stick derecho del eje vertical del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid "Generic gamepad axis 4."
@@ -3756,14 +3750,12 @@ msgid "Generic gamepad axis 5."
 msgstr "Eje 5 del mando de videojuegos genérico."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad left trigger analog axis."
-msgstr "Gatillo izquierdo del mando de videojuegos."
+msgstr "Eje analógico del gatillo izquierdo del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Gamepad right trigger analog axis."
-msgstr "Gatillo derecho del mando de videojuegos."
+msgstr "Eje analógico del gatillo derecho del mando de videojuegos."
 
 #: docs/@GlobalScope.xml
 msgid "Generic gamepad axis 8."
@@ -3811,31 +3803,31 @@ msgstr ""
 
 #: docs/@GlobalScope.xml
 msgid "MIDI note OFF message."
-msgstr "Nota Midi Mensaje OFF."
+msgstr "Mensaje nota MIDI OFF."
 
 #: docs/@GlobalScope.xml
 msgid "MIDI note ON message."
-msgstr "Nota MIDI Mensaje ON."
+msgstr "Mensaje nota MIDI ON."
 
 #: docs/@GlobalScope.xml
 msgid "MIDI aftertouch message."
-msgstr "Nota MIDI Mensaje Despues de tocar."
+msgstr "Mensaje MIDI tras tocar."
 
 #: docs/@GlobalScope.xml
 msgid "MIDI control change message."
-msgstr "Nota MIDI Control cambiar mensaje."
+msgstr "Mensaje cambio de control MIDI."
 
 #: docs/@GlobalScope.xml
 msgid "MIDI program change message."
-msgstr "Nota MIDI Mensaje cambiar programa."
+msgstr "Mensaje cambiar programa MIDI."
 
 #: docs/@GlobalScope.xml
 msgid "MIDI channel pressure message."
-msgstr "Nota MIDI Mensaje presion de canal."
+msgstr "Mensaje presión de canal MIDI."
 
 #: docs/@GlobalScope.xml
 msgid "MIDI pitch bend message."
-msgstr "Nota MIDI Cambio de Tono."
+msgstr "Mensaje cambio de tono MIDI."
 
 #: docs/@GlobalScope.xml
 msgid ""
@@ -3915,15 +3907,15 @@ msgstr "Archivo: Error archivo ya esta siendo usado."
 
 #: docs/@GlobalScope.xml
 msgid "File: Can't open error."
-msgstr "Archivo: Error no se puede abrir."
+msgstr "Archivo: Error no puede abrir."
 
 #: docs/@GlobalScope.xml
 msgid "File: Can't write error."
-msgstr "Archivo: Error no se puede escribir."
+msgstr "Archivo: Error no puede escribir."
 
 #: docs/@GlobalScope.xml
 msgid "File: Can't read error."
-msgstr "Archivo: Error no se puede leer."
+msgstr "Archivo: Error no puede leer."
 
 #: docs/@GlobalScope.xml
 msgid "File: Unrecognized error."
@@ -3935,23 +3927,23 @@ msgstr "Archivo: Error de corrupción."
 
 #: docs/@GlobalScope.xml
 msgid "File: Missing dependencies error."
-msgstr "Archivo: Error no se encuentran las dependencias."
+msgstr "Archivo: Error de dependencia ausente."
 
 #: docs/@GlobalScope.xml
 msgid "File: End of file (EOF) error."
-msgstr "Archivo: Error Fin de fichero (EOF)."
+msgstr "Archivo: Error Fin de archivo (EFA)."
 
 #: docs/@GlobalScope.xml
 msgid "Can't open error."
-msgstr "Error no se puede abrir."
+msgstr "Error no puede abrir."
 
 #: docs/@GlobalScope.xml
 msgid "Can't create error."
-msgstr "Error no se puede crear."
+msgstr "Error no puede crear."
 
 #: docs/@GlobalScope.xml
 msgid "Query failed error."
-msgstr "Error fallo la consulta."
+msgstr "Error por fallo de consulta."
 
 #: docs/@GlobalScope.xml
 msgid "Already in use error."
@@ -3967,11 +3959,11 @@ msgstr "Error tiempo sobrepasado."
 
 #: docs/@GlobalScope.xml
 msgid "Can't connect error."
-msgstr "Error no se puede conectar."
+msgstr "Error no puede conectar."
 
 #: docs/@GlobalScope.xml
 msgid "Can't resolve error."
-msgstr "Error no se puede resolver."
+msgstr "Error no puede resolver."
 
 #: docs/@GlobalScope.xml
 msgid "Connection error."
@@ -3979,11 +3971,11 @@ msgstr "Error de conexión."
 
 #: docs/@GlobalScope.xml
 msgid "Can't acquire resource error."
-msgstr "Error, no se pudo adquirir el recurso."
+msgstr "Error, no puede adquirir recurso."
 
 #: docs/@GlobalScope.xml
 msgid "Can't fork process error."
-msgstr "Error, no se pudo dividir el proceso."
+msgstr "Error, no puede bifurcar proceso."
 
 #: docs/@GlobalScope.xml
 msgid "Invalid data error."
@@ -4043,7 +4035,7 @@ msgstr "Error de parseo."
 
 #: docs/@GlobalScope.xml
 msgid "Busy error."
-msgstr "Error recurso ocupado."
+msgstr "Error: recurso ocupado."
 
 #: docs/@GlobalScope.xml
 msgid "Skip error."
@@ -4087,7 +4079,6 @@ msgstr ""
 "or_lesser\"[/code]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid ""
 "Hints that a float property should be within an exponential range specified "
 "via the hint string [code]\"min,max\"[/code] or [code]\"min,max,step\"[/"
@@ -4097,12 +4088,12 @@ msgid ""
 "or_greater\"[/code]."
 msgstr ""
 "Sugiere que una propiedad entera o real debe estar dentro de un rango "
-"exponencial especificado mediante la string de sugerencias [code]\"min,"
-"max\"[/code] o [code]\"min,max,paso\"[/code]. La string de sugerencias puede "
-"incluir opcionalmente [code]\"or_greater\"[/code] y/o [code]\"or_lesser\"[/"
-"code] para permitir la entrada manual que va respectivamente por encima del "
-"máximo o por debajo de los valores mínimos. Ejemplo: [code]\"0.01,100,0.01,"
-"or_greater\"[/code]."
+"exponencial especificado mediante la string de sugerencias "
+"[code]\"min,max\"[/code] o [code]\"min,max,paso\"[/code]. La string de "
+"sugerencias puede incluir opcionalmente [code]\"or_greater\"[/code] y/o "
+"[code]\"or_lesser\"[/code] para permitir la entrada manual que va "
+"respectivamente por encima del máximo o por debajo de los valores mínimos. "
+"Ejemplo: [code]\"0.01,100,0.01,or_greater\"[/code]."
 
 #: docs/@GlobalScope.xml
 msgid ""
@@ -4114,6 +4105,15 @@ msgid ""
 "specified by appending [code]:integer[/code] to the name, e.g. [code]\"Zero,"
 "One,Three:3,Four,Six:6\"[/code]."
 msgstr ""
+"Indica que una propiedad entera, de coma flotante o de cadena es un valor "
+"enumerado que se puede seleccionar de una lista especificada mediante una "
+"cadena de sugerencia.\n"
+"La cadena de sugerencia es una lista de nombres separados por comas, como "
+"por ejemplo: [code]\"Hello,Something,Else\"[/code]. Para las propiedades "
+"enteras y de punto flotante, el primer nombre de la lista tiene el valor 0, "
+"el siguiente 1, y así sucesivamente. También se pueden especificar valores "
+"explícitos añadiendo [code]:entero[/code] al nombre, por ejemplo: "
+"[code]\"Zero,One,Three:3,Four,Six:6\"[/code]."
 
 #: docs/@GlobalScope.xml
 msgid ""
@@ -4214,7 +4214,6 @@ msgstr ""
 "para elegir la ruta."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid ""
 "Hints that a property is an instance of a [Resource]-derived type, "
 "optionally specified via the hint string (e.g. [code]\"Texture\"[/code]). "
@@ -4222,7 +4221,7 @@ msgid ""
 msgstr ""
 "Sugiere que una propiedad es una instancia de un tipo derivado de "
 "[Resource], opcionalmente especificado a través de la string de sugerencias "
-"(por ejemplo, [code]\"Texture2D\"[/code]). Al editarla se mostrará un menú "
+"(por ejemplo, [code]\"Textura\"[/code]). Al editarla se mostrará un menú "
 "emergente de tipos de recursos válidos para instanciar."
 
 #: docs/@GlobalScope.xml
@@ -4231,7 +4230,7 @@ msgid ""
 "a text input field where line breaks can be typed."
 msgstr ""
 "Sugiere que una propiedad string es texto con saltos de línea. Al editarla "
-"se mostrará un campo de entrada de texto donde se pueden escribir saltos de "
+"se mostrará un campo de entrada de texto donde se pueden teclear saltos de "
 "línea."
 
 #: docs/@GlobalScope.xml
@@ -4437,43 +4436,36 @@ msgid "Variable is of type [Array]."
 msgstr "La variable es de tipo [Array]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Variable is of type [PoolByteArray]."
-msgstr "La variable es de tipo [PackedByteArray]."
+msgstr "La variable es de tipo [PoolByteArray]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Variable is of type [PoolIntArray]."
-msgstr "La variable es de tipo [Array]."
+msgstr "La variable es de tipo [PoolIntArray]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Variable is of type [PoolRealArray]."
-msgstr "La variable es de tipo [Array]."
+msgstr "La variable es de tipo [PoolRealArray]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Variable is of type [PoolStringArray]."
-msgstr "La variable es de tipo [PackedStringArray]."
+msgstr "La variable es de tipo [PoolStringArray]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Variable is of type [PoolVector2Array]."
-msgstr "La variable es de tipo [PackedVector2Array]."
+msgstr "La variable es de tipo [PoolVector2Array]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Variable is of type [PoolVector3Array]."
-msgstr "La variable es de tipo [PackedVector3Array]."
+msgstr "La variable es de tipo [PoolVector3Array]."
 
 #: docs/@GlobalScope.xml
-#, fuzzy
 msgid "Variable is of type [PoolColorArray]."
-msgstr "La variable es de tipo [PackedColorArray]."
+msgstr "La variable es de tipo [PoolColorArray]."
 
 #: docs/@GlobalScope.xml
 msgid "Represents the size of the [enum Variant.Type] enum."
-msgstr "Representa el tamaño del enum [enum Variant.Type]."
+msgstr "Representa el tamaño [enum Variant.Type] del enum."
 
 #: docs/@GlobalScope.xml
 msgid "Equality operator ([code]==[/code])."
@@ -4577,14 +4569,13 @@ msgstr "Operador lógico In ([code]in[/code])."
 
 #: docs/@GlobalScope.xml
 msgid "Represents the size of the [enum Variant.Operator] enum."
-msgstr "Representa el tamaño del enum [enum Variant.Operator]."
+msgstr "Representa el tamaño [enum Variant.Operator] del enum."
 
 #: docs/AABB.xml
 msgid "Axis-Aligned Bounding Box."
 msgstr "Caja bordeada alineada con el eje."
 
 #: docs/AABB.xml
-#, fuzzy
 msgid ""
 "[AABB] consists of a position, a size, and several utility functions. It is "
 "typically used for fast overlap tests.\n"
@@ -4593,26 +4584,26 @@ msgid ""
 "[b]Note:[/b] Unlike [Rect2], [AABB] does not have a variant that uses "
 "integer coordinates."
 msgstr ""
-"[Rect2] consta de una posición, un tamaño y varias funciones de utilidad. Se "
+"[AABB] consta de una posición, un tamaño y varias funciones de utilidad. Se "
 "utiliza típicamente para pruebas de superposición rápida.\n"
-"Utiliza coordenadas reales."
+"Utiliza coordenadas reales. La contraparte 2D de [AABB] es [Rect2].\n"
+"[b]Nota:[/b] A diferencia de [Rect2], [AABB] no tiene una variante que "
+"utiliza coordenadas de entero."
 
 #: docs/AABB.xml docs/Basis.xml docs/Plane.xml docs/Rect2.xml
 #: docs/Transform.xml docs/Transform2D.xml docs/Vector2.xml docs/Vector3.xml
-#, fuzzy
 msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/math/index.html"
 msgstr "https://docs.rebeltoolbox.com/es/latest/tutorials/math/index.html"
 
 #: docs/AABB.xml docs/Rect2.xml docs/Vector2.xml docs/Vector3.xml
-#, fuzzy
 msgid "https://docs.rebeltoolbox.com/en/latest/tutorials/math/vector_math.html"
-msgstr "https://docs.rebeltoolbox.com/es/latest/tutorials/math/index.html"
+msgstr "https://docs.rebeltoolbox.com/es/latest/tutorials/math/vector_math.html"
 
 #: docs/AABB.xml docs/Rect2.xml docs/Vector2.xml docs/Vector3.xml
-#, fuzzy
 msgid ""
 "https://docs.rebeltoolbox.com/en/latest/tutorials/math/vectors_advanced.html"
-msgstr "https://docs.rebeltoolbox.com/es/latest/tutorials/math/index.html"
+msgstr ""
+"https://docs.rebeltoolbox.com/es/latest/tutorials/math/vectors_advanced.html"
 
 #: docs/AABB.xml
 msgid "Constructs an [AABB] from a position and size."
@@ -4644,6 +4635,16 @@ msgid ""
 "var box2 = box.expand(Vector3(0, -1, 2))\n"
 "[/codeblock]"
 msgstr ""
+"Devuelve una copia de este [AABB] ampliada para incluir un punto "
+"determinado.\n"
+"[b]Ejemplo:[/b]\n"
+"[codeblock]\n"
+"# posición (-3, 2, 0), tamaño (1, 1, 1)\n"
+"var box = AABB(Vector3(-3, 2, 0), Vector3(1, 1, 1))\n"
+"# posición (-3, -1, 0), size (3, 4, 2), por tanto cabemos ambos el original "
+"AABB y Vector3(0, -1, 2)\n"
+"var box2 = box.expand(Vector3(0, -1, 2))\n"
+"[/codeblock]"
 
 #: docs/AABB.xml
 msgid "Returns the volume of the [AABB]."
@@ -4769,15 +4770,14 @@ msgstr ""
 "Esquina de inicio. Normalmente tiene valores inferiores a [member end]."
 
 #: docs/AABB.xml docs/Rect2.xml
-#, fuzzy
 msgid ""
 "Size from [member position] to [member end]. Typically, all components are "
 "positive.\n"
 "If the size is negative, you can use [method abs] to fix it."
 msgstr ""
-"Tamaño desde [member position] hasta [member end]. Típicamente todos los "
+"Tamaño desde [member position] hasta [member end]. Típicamente, todos los "
 "componentes son positivos.\n"
-"Si el tamaño es negativo, puedes usar [method abs] para fijarlo."
+"Si el tamaño es negativo, puedes usar [method abs] para repararlo."
 
 #: docs/AcceptDialog.xml
 msgid "Base dialog for user notification."
@@ -4792,7 +4792,6 @@ msgstr ""
 "un evento. Sólo puede ser aceptado o cerrado, devolviendo el mismo resultado."
 
 #: docs/AcceptDialog.xml
-#, fuzzy
 msgid ""
 "Adds a button with label [code]text[/code] and a custom [code]action[/code] "
 "to the dialog and returns the created button. [code]action[/code] will be "
@@ -4806,7 +4805,9 @@ msgstr ""
 "personalizada al diálogo y devuelve el botón creado. [code]action[/code] se "
 "pasará a la señal [signal custom_action] cuando sea pulsado.\n"
 "Si [code]true[/code], [code]right[/code] colocará el botón a la derecha de "
-"cualquier botón hermano."
+"cualquier botón hermano.\n"
+"Puede utilizar el método [method remove_button] para retirar un botón creado "
+"con este método desde el diálogo."
 
 #: docs/AcceptDialog.xml
 #, fuzzy
