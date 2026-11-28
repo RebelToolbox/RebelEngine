@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Rebel Editor\n"
 "Report-Msgid-Bugs-To: https://github.com/RebelToolbox/RebelEngine\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-12-21 10:39+0000\n"
-"Last-Translator: Javier Ocampos <xavier.ocampos@gmail.com>\n"
+"PO-Revision-Date: 2026-11-25 21:51+0000\n"
+"Last-Translator: fserrador <fserrador@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rebel-toolbox/"
 "rebel-editor/es/>\n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10\n"
+"X-Generator: Weblate 2026.12.dev0\n"
 
 #: core/math/expression.cpp modules/gdscript/gdscript_functions.cpp
 #: modules/visual_script/visual_script_builtin_funcs.cpp
@@ -120,24 +120,20 @@ msgid "Insert Key Here"
 msgstr "Insertar Clave Aquí"
 
 #: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
-#, fuzzy
 msgid "Duplicate Selected Key"
-msgstr "Duplicar Clave(s) Seleccionada(s)"
+msgstr "Duplicar Clave Seleccionada"
 
 #: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
-#, fuzzy
 msgid "Delete Selected Key"
-msgstr "Eliminar Clave(s) Seleccionada(s)"
+msgstr "Eliminar Clave Seleccionada"
 
 #: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
-#, fuzzy
 msgid "Duplicate Selected Keys"
-msgstr "Duplicar Clave(s) Seleccionada(s)"
+msgstr "Duplicar Claves Seleccionadas"
 
 #: editor/animation_bezier_editor.cpp editor/animation_track_editor.cpp
-#, fuzzy
 msgid "Delete Selected Keys"
-msgstr "Eliminar Clave(s) Seleccionada(s)"
+msgstr "Eliminar Claves Seleccionadas"
 
 #: editor/animation_bezier_editor.cpp
 msgid "Add Bezier Point"
@@ -623,9 +619,8 @@ msgid "Use Bezier Curves"
 msgstr "Usar Curvas Bezier"
 
 #: editor/animation_track_editor.cpp
-#, fuzzy
 msgid "Create RESET Tracks"
-msgstr "Crear pista(s) RESET"
+msgstr "Crear Pistas RESET"
 
 #: editor/animation_track_editor.cpp
 msgid "Anim. Optimizer"
@@ -660,9 +655,8 @@ msgid "Clean-up all animations"
 msgstr "Limpiar todas las animaciones"
 
 #: editor/animation_track_editor.cpp
-#, fuzzy
 msgid "Clean-Up Animation (NO UNDO!)"
-msgstr "Limpiar Animación(es) (¡NO SE PUEDE DESHACER!)"
+msgstr "Purgar Animación (¡SIN DESHACER!)"
 
 #: editor/animation_track_editor.cpp
 msgid "Clean-Up"
@@ -1120,14 +1114,12 @@ msgid "Errors loading!"
 msgstr "¡Errores al cargar!"
 
 #: editor/dependency_editor.cpp
-#, fuzzy
 msgid "Permanently delete item? (No undo!)"
-msgstr "¿Eliminar permanentemente %d elemento(s)? (¡No se puede deshacer!)"
+msgstr "¿Eliminar permanentemente elemento? (¡Sin deshacer!)"
 
 #: editor/dependency_editor.cpp
-#, fuzzy
 msgid "Permanently delete %d items? (No undo!)"
-msgstr "¿Eliminar permanentemente %d elemento(s)? (¡No se puede deshacer!)"
+msgstr "¿Eliminar permanentemente %d elementos? (¡Sin deshacer!)"
 
 #: editor/dependency_editor.cpp
 msgid "Show Dependencies"
@@ -1163,7 +1155,7 @@ msgstr "Cambiar Valor del Diccionario"
 
 #: editor/editor_about.cpp
 msgid "Rebel Engine"
-msgstr ""
+msgstr "Rebel Engine"
 
 #: editor/editor_about.cpp editor/editor_node.cpp
 #: projects_manager/projects_manager.cpp
@@ -1175,26 +1167,27 @@ msgid ""
 "Rebel Engine is Free and Open Source Software; released under the MIT "
 "license.\n"
 msgstr ""
+"Rebel Engine es Gratis y de Software de Fuente Abierta; lanzado bajo la "
+"licencia de MIT.\n"
 
 #: editor/editor_about.cpp
 msgid ""
 "Games developed with Rebel Engine remain the property of the game developer."
 msgstr ""
+"Juegos desarrollados con Rebel Engine permanecen en propiedad del "
+"desarrollador del juego."
 
 #: editor/editor_about.cpp
-#, fuzzy
 msgid "Rebel Contributors"
-msgstr "Contribuidores de Godot"
+msgstr "Colaboradores de Rebel"
 
 #: editor/editor_about.cpp
-#, fuzzy
 msgid "Contributors"
-msgstr "Continuo"
+msgstr "Colaboradores"
 
 #: editor/editor_about.cpp
-#, fuzzy
 msgid "Sponsors"
-msgstr "Patrocinadores Oro"
+msgstr "Patrocinadores"
 
 #: editor/editor_about.cpp
 msgid "Donors"
@@ -1209,15 +1202,14 @@ msgid "Third-party Licenses"
 msgstr "Licencia de Terceros"
 
 #: editor/editor_about.cpp
-#, fuzzy
 msgid ""
 "Rebel Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following "
 "is an exhaustive list of all such third-party components with their "
 "respective copyright statements and license terms."
 msgstr ""
-"Godot Engine se basa en una serie de librerías libres y de código abierto de "
-"terceros, todas ellas compatibles con los términos de su licencia MIT. La "
+"Rebel Engine se basa en una serie de bibliotecas libres y de código abierto "
+"de terceros, todas ellas compatibles con los términos de su licencia MIT. La "
 "siguiente es una lista exhaustiva de todos estos componentes de terceros con "
 "sus respectivas declaraciones de derechos de autor y términos de licencia."
 
@@ -1244,15 +1236,12 @@ msgid "%s (already exists)"
 msgstr "%s (ya existe)"
 
 #: editor/editor_asset_installer.cpp
-#, fuzzy
 msgid "Contents of asset \"%s\" - 1 file conflicts with your project:"
-msgstr ""
-"Contenido del asset \"%s\" - No hay archivos en conflicto con el proyecto:"
+msgstr "Contenido del activo \"%s\" - 1 archivo en conflicto con el proyecto:"
 
 #: editor/editor_asset_installer.cpp
-#, fuzzy
 msgid "Contents of asset \"%s\" - %d files conflict with your project:"
-msgstr "El contenido del asset \"%s\" - %d entra en conflicto con el proyecto:"
+msgstr "Contenidos de activo \"%s\" - %d archivos en conflicto con su proyecto:"
 
 #: editor/editor_asset_installer.cpp
 msgid "Contents of asset \"%s\" - No files conflict with your project:"
@@ -1867,14 +1856,12 @@ msgid "New profile name:"
 msgstr "Nuevo nombre de perfil:"
 
 #: editor/editor_feature_profile.cpp
-#, fuzzy
 msgid "Rebel Feature Profile"
-msgstr "Perfil de Características de Godot"
+msgstr "Perfil de Características de Rebel"
 
 #: editor/editor_feature_profile.cpp
-#, fuzzy
 msgid "Import Profile"
-msgstr "Importar Perfil(es)"
+msgstr "Importar Perfil"
 
 #: editor/editor_feature_profile.cpp
 msgid "Export Profile"
@@ -1927,9 +1914,8 @@ msgid "Open a File"
 msgstr "Abrir un Archivo"
 
 #: editor/editor_file_dialog.cpp
-#, fuzzy
 msgid "Open Files"
-msgstr "Abrir Archivo"
+msgstr "Abrir Archivos"
 
 #: editor/editor_file_dialog.cpp scene/gui/file_dialog.cpp
 msgid "Open a Directory"
@@ -2531,22 +2517,20 @@ msgstr ""
 "¡%s ya no existe! Por favor, especifica una nueva ubicación de guardado."
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid ""
 "The current scene has no root node, but the modified external resource was "
 "saved anyway."
 msgstr ""
-"La escena actual no tiene un nodo raíz, pero %d recurso(s) externo(s) "
-"modificado(s) fueron guardados igualmente."
+"La escena actual no tiene un nodo raíz, pero el recurso externo modificado "
+"fueron guardados a pesar de todo."
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid ""
 "The current scene has no root node, but %d modified external resources were "
 "saved anyway."
 msgstr ""
-"La escena actual no tiene un nodo raíz, pero %d recurso(s) externo(s) "
-"modificado(s) fueron guardados igualmente."
+"La escena actual no tiene un nodo raíz, pero %d recursos externos "
+"modificados fueron guardados a pesar de todo."
 
 #: editor/editor_node.cpp
 msgid ""
@@ -2634,25 +2618,22 @@ msgid "Exit the editor?"
 msgstr "¿Salir del editor?"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "Open Projects Manager?"
-msgstr "¿Abrir el Administrador de Proyectos?"
+msgstr "¿Abrir Gestor de Proyectos?"
 
 #: editor/editor_node.cpp
 msgid "Save & Quit"
 msgstr "Guardar y salir"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "Save changes to the following scenes before quitting?"
-msgstr "¿Guardar los cambios en las siguientes escenas antes de salir?"
+msgstr "¿Guardar cambios en las escenas a continuación antes de salir?"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "Save changes to the following scenes before opening Projects Manager?"
 msgstr ""
-"¿Guardar los cambios en las siguientes escenas antes de abrir el "
-"Administrador de Proyectos?"
+"¿Guardo los cambios a las escenas siguientes antes de abrir el Gestor de "
+"Proyectos?"
 
 #: editor/editor_node.cpp
 msgid ""
@@ -2922,9 +2903,8 @@ msgid "Reload Current Project"
 msgstr "Recargar proyecto actual"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "Quit to Projects Manager"
-msgstr "Administrador de Proyectos"
+msgstr "Salir al Gestor de Proyectos"
 
 #: editor/editor_node.cpp editor/plugins/script_editor_plugin.cpp
 #: editor/project_export.cpp
@@ -3078,14 +3058,12 @@ msgid "Report a Bug"
 msgstr "Reportar un Bug"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "About Rebel"
-msgstr "Acerca de"
+msgstr "Acerca de Rebel"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "Support Rebel Development"
-msgstr "Apoyar el desarrollo de Godot"
+msgstr "Apoyar Desarrollo de Rebel"
 
 #: editor/editor_node.cpp
 msgid "Play the project."
@@ -3165,11 +3143,10 @@ msgid "Don't Save"
 msgstr "No Guardar"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "Android project template is missing, please install relevant templates."
 msgstr ""
-"Falta la plantilla de compilación de Android, por favor, instala las "
-"plantillas correspondientes."
+"Falta la plantilla del proyecto de Android, instala las plantillas "
+"pertinentes."
 
 #: editor/editor_node.cpp
 msgid "Manage Templates"
@@ -3180,12 +3157,10 @@ msgid "Install from file"
 msgstr "Instalar desde archivo"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid "Select android template file"
-msgstr "Seleccionar el archivo fuente de Android"
+msgstr "Seleccione el archivo de plantilla de Android"
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid ""
 "This will set up your project for custom Android builds by installing a "
 "project template to \"res://android/project\".\n"
@@ -3198,24 +3173,23 @@ msgstr ""
 "Esto configurará tu proyecto para las compilaciones personalizadas de "
 "Android instalando la plantilla base en \"res://android/build\".\n"
 "Luego podrás aplicar las modificaciones y compilar tu propio APK "
-"personalizado al exportarlo (agregando módulos, cambiando el AndroidManifest."
-"xml, etc.).\n"
+"personalizado al exportarlo (agregando módulos, cambiando el "
+"AndroidManifest.xml, etc.).\n"
 "Ten en cuenta que para realizar compilaciones personalizadas en lugar de "
 "usar APKs predefinidos, la opción \"Use Custom Build\" debería estar "
 "habilitada en la configuración de exportación de Android."
 
 #: editor/editor_node.cpp
-#, fuzzy
 msgid ""
 "The Android project template is already installed in this project and it "
 "won't be overwritten.\n"
 "Remove the \"res://android/project\" directory manually before attempting "
 "this operation again."
 msgstr ""
-"La plantilla de compilación de Android ya está instalada y no se "
-"sobrescribirá.\n"
-"Elimina el directorio \"res://android/build\" manualmente antes de intentar "
-"esta operación nuevamente."
+"La plantilla de del proyecto Android ya está instalada y este proyecto no "
+"sería sobrescrito.\n"
+"Retire el directorio \"res://android/project\" manualmente antes de intentar "
+"esta operación otra vez."
 
 #: editor/editor_node.cpp
 msgid "Import Templates From ZIP File"
@@ -3567,9 +3541,8 @@ msgstr ""
 "la tecla Mayús para cambios más precisos."
 
 #: editor/editor_sub_scene.cpp
-#, fuzzy
 msgid "Select Nodes to Import"
-msgstr "Selecciona nodo(s) a importar"
+msgstr "Seleccionar Nodos a Importar"
 
 #: editor/editor_sub_scene.cpp projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
@@ -3816,9 +3789,8 @@ msgid "Select Template File"
 msgstr "Seleccionar el archivo de la plantilla"
 
 #: editor/export_template_manager.cpp
-#, fuzzy
 msgid "Rebel Export Templates"
-msgstr "Administrar Plantillas de Exportación"
+msgstr "Plantillas Rebel de Exportación"
 
 #: editor/export_template_manager.cpp
 msgid ""
@@ -3888,6 +3860,11 @@ msgid ""
 "After renaming to an unknown extension, the file won't be shown in the "
 "editor anymore."
 msgstr ""
+"Esta extensión de archivo no reconocida por el editor.\n"
+"Si desea renombrarlo a pesar de todo, utilice su gestor de archivos del "
+"sistema operativo.\n"
+"Tras renombrar a una extensión desconocida, el archivo ya no sería mostrado "
+"más en el editor."
 
 #: editor/filesystem_dock.cpp
 msgid ""
@@ -5354,12 +5331,11 @@ msgstr ""
 "están contenidos dentro de la región cuadrangular [0,0,1,0]."
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
-#, fuzzy
 msgid ""
 "Rebel Editor was built without ray tracing support, lightmaps can't be baked."
 msgstr ""
-"El editor de Godot se construyó sin soporte para trazado de rayos, los "
-"lightmaps no pueden ser bakeados."
+"Rebel Editor fue construido sin soporte para trazado de rayo, los mapas de "
+"luz no pueden ser ‘horneados’."
 
 #: editor/plugins/baked_lightmap_editor_plugin.cpp
 msgid "Bake Lightmaps"
@@ -5634,9 +5610,8 @@ msgid "Clear Guides"
 msgstr "Limpiar Guías"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-#, fuzzy
 msgid "Create Custom Bones from Nodes"
-msgstr "Crear Hueso(s) Personalizado(s) a partir de Nodo(s)"
+msgstr "Crear Huesos Personalizados a partir de Nodos"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Clear Bones"
@@ -5824,9 +5799,8 @@ msgid "Show Bones"
 msgstr "Mostrar Huesos"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
-#, fuzzy
 msgid "Make Custom Bones from Nodes"
-msgstr "Crear Hueso(s) Personalizados a partir de Nodo(s)"
+msgstr "Realizar Huesos Personalizados a partir de Nodos"
 
 #: editor/plugins/canvas_item_editor_plugin.cpp
 msgid "Clear Custom Bones"
@@ -6106,11 +6080,11 @@ msgstr "Crear Puntos de Emisión Desde el Nodo"
 
 #: editor/plugins/curve_editor_plugin.cpp
 msgid "Flat 0"
-msgstr "Flat 0"
+msgstr "Llano 0"
 
 #: editor/plugins/curve_editor_plugin.cpp
 msgid "Flat 1"
-msgstr "Flat 1"
+msgstr "Llano 1"
 
 #: editor/plugins/curve_editor_plugin.cpp editor/property_editor.cpp
 msgid "Ease In"
@@ -7252,9 +7226,8 @@ msgid "Online Docs"
 msgstr "Documentación Online"
 
 #: editor/plugins/script_editor_plugin.cpp
-#, fuzzy
 msgid "Open Rebel Documentation online."
-msgstr "Abrir Documentación"
+msgstr "Abre la Documentación Rebel en línea."
 
 #: editor/plugins/script_editor_plugin.cpp
 msgid "Search the reference documentation."
@@ -7484,7 +7457,7 @@ msgstr ""
 
 #: editor/plugins/shader_editor_plugin.cpp
 msgid "Shader"
-msgstr "Shader"
+msgstr "Sombreador"
 
 #: editor/plugins/skeleton_2d_editor_plugin.cpp
 msgid "This skeleton has no bones, create some children Bone2D nodes."
@@ -7584,15 +7557,13 @@ msgstr "Perspectiva Trasera"
 
 #. TRANSLATORS: This will be appended to the view name when Auto Orthogonal is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-#, fuzzy
 msgid "[auto]"
-msgstr " [auto]"
+msgstr "[auto]"
 
 #. TRANSLATORS: This will be appended to the view name when Portal Occulusion is enabled.
 #: editor/plugins/spatial_editor_plugin.cpp
-#, fuzzy
 msgid "[portals active]"
-msgstr " [portals active]"
+msgstr "[activar portales]"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "Transform Aborted."
@@ -7959,27 +7930,27 @@ msgstr "Ajustar Objeto al Suelo"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "1 Viewport"
-msgstr "1 Viewport"
+msgstr "1 Puerto gráfico"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "2 Viewports"
-msgstr "2 Viewports"
+msgstr "2 Puertos gráficos"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "2 Viewports (Alt)"
-msgstr "2 Viewports (Alt)"
+msgstr "2 Puertos gráficos (Alt)"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "3 Viewports"
-msgstr "3 Viewports"
+msgstr "3 Puertos gráficos"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "3 Viewports (Alt)"
-msgstr "3 Viewports (Alt)"
+msgstr "3 Puertos gráficos (Alt)"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "4 Viewports"
-msgstr "4 Viewports"
+msgstr "4 Puertos gráficos"
 
 #: editor/plugins/spatial_editor_plugin.cpp
 msgid "Gizmos"
@@ -8167,14 +8138,12 @@ msgid "No Frames Selected"
 msgstr "No hay Fotogramas Seleccionados"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-#, fuzzy
 msgid "Add frame"
-msgstr "Añadir Fotograma"
+msgstr "Añadir fotograma"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
-#, fuzzy
 msgid "Add %d frames"
-msgstr "Añadir %d Fotograma(s)"
+msgstr "Añadir %d fotogramas"
 
 #: editor/plugins/sprite_frames_editor_plugin.cpp
 msgid "Add Frame"
@@ -8325,28 +8294,24 @@ msgid "Styleboxes"
 msgstr "Styleboxes"
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "1 color"
-msgstr "Colores"
+msgstr "1 color"
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "{num} colors"
-msgstr "{num} color(es)"
+msgstr "{num} colores"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No colors found."
 msgstr "No se encontraron colores."
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "1 constant"
-msgstr "Constante"
+msgstr "1 constante"
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "{num} constants"
-msgstr "{num} constant(s)"
+msgstr "{num} constantes"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No constants found."
@@ -8354,12 +8319,11 @@ msgstr "No se encontraron constants."
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "1 font"
-msgstr ""
+msgstr "1 fuente"
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "{num} fonts"
-msgstr "{num} font(s)"
+msgstr "{num} fuentes"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No fonts found."
@@ -8367,26 +8331,23 @@ msgstr "No se han encontrado fonts."
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "1 icon"
-msgstr ""
+msgstr "1 icono"
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "{num} icons"
-msgstr "{num} icon(s)"
+msgstr "{num} iconos"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No icons found."
 msgstr "No se han encontrado icons."
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "1 stylebox"
-msgstr "Styleboxes"
+msgstr "1 caja de estilo"
 
 #: editor/plugins/theme_editor_plugin.cpp
-#, fuzzy
 msgid "{num} styleboxes"
-msgstr "{num} stylebox(es)"
+msgstr "{num} cajas de estilo"
 
 #: editor/plugins/theme_editor_plugin.cpp
 msgid "No styleboxes found."
@@ -8981,9 +8942,8 @@ msgid "Clear Transform"
 msgstr "Reestablecer Transformación"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-#, fuzzy
 msgid "Add Texture to TileSet."
-msgstr "Agregar Textura(s) al TileSet."
+msgstr "Agregar Textura al Juego de Baldosas."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 msgid "Remove selected Texture from TileSet."
@@ -9164,14 +9124,12 @@ msgid "Remove Texture"
 msgstr "Eliminar Textura"
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-#, fuzzy
 msgid "1 file was not added, because it was already on the list."
-msgstr "%s archivo(s) no fueron agregados porque ya estaban en la lista."
+msgstr "1 archivo no fue agregado, porque ya estaba en la lista."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
-#, fuzzy
 msgid "%d files were not added, because they were already on the list."
-msgstr "%s archivo(s) no fueron agregados porque ya estaban en la lista."
+msgstr "%s archivos no fueron agregados porque ya estaban en la lista."
 
 #: editor/plugins/tile_set_editor_plugin.cpp
 msgid ""
@@ -9485,9 +9443,8 @@ msgid "Add Node to Visual Shader"
 msgstr "Añadir Nodo al Visual Shader"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
 msgid "Nodes moved"
-msgstr "Nodo Eliminado"
+msgstr "Nodos trasladados"
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid "Duplicate Nodes"
@@ -10192,16 +10149,15 @@ msgid "Vector uniform."
 msgstr "Vector uniforme."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
 msgid ""
 "Custom Rebel Shader Language expression, with custom amount of input and "
 "output ports. This is a direct injection of code into the vertex/fragment/"
 "light function, do not use it to write the function declarations inside."
 msgstr ""
-"Expresión personalizada del lenguaje de shaders de Godot, con una cantidad "
-"determinada de puertos de entrada y salida. Esta es una inyección directa de "
-"código en la función vertex/fragment/light, no la uses para escribir "
-"declaraciones de funciones en su interior."
+"Expresión personalizada del lenguaje de shaders de Rebel Shader, con una "
+"cantidad determinada de puertos de entrada y salida. Esta es una inyección "
+"directa de código en la función vertex/fragment/light, no la uses para "
+"escribir declaraciones de funciones en su interior."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
 msgid ""
@@ -10213,15 +10169,14 @@ msgstr ""
 "este)."
 
 #: editor/plugins/visual_shader_editor_plugin.cpp
-#, fuzzy
 msgid ""
 "Custom Rebel Shader Language expression, which is placed on top of the "
 "resulted shader. You can place various function definitions inside and call "
 "it later in the Expressions. You can also declare varyings, uniforms and "
 "constants."
 msgstr ""
-"Expresión personalizada del lenguaje de shaders de Godot, que se coloca "
-"encima del shader resultante. Puedes colocar varias definiciones de "
+"Expresión personalizada del lenguaje de shaders de Rebel Shader, que se "
+"coloca encima del shader resultante. Puedes colocar varias definiciones de "
 "funciones dentro y llamarlas más tarde en las Expresiones. También puedes "
 "declarar variaciones, uniformes y constantes."
 
@@ -10457,9 +10412,8 @@ msgid "ZIP File"
 msgstr "Archivo ZIP"
 
 #: editor/project_export.cpp
-#, fuzzy
 msgid "Rebel Game Pack"
-msgstr "Godot Game Pack"
+msgstr "Paquete del Juego Rebel"
 
 #: editor/project_export.cpp
 msgid "Export templates for this platform are missing:"
@@ -10526,9 +10480,8 @@ msgid "Device"
 msgstr "Dispositivo"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
 msgid "(Physical)"
-msgstr " (Física)"
+msgstr "(Física)"
 
 #: editor/project_settings_editor.cpp
 msgid "Mouse Button Index:"
@@ -10676,19 +10629,19 @@ msgstr "Eliminar Traducción"
 
 #: editor/project_settings_editor.cpp
 msgid "Add localization remap resource"
-msgstr ""
+msgstr "Agrega localización de recurso reasignado"
 
 #: editor/project_settings_editor.cpp
 msgid "Add %d localization remap resources"
-msgstr ""
+msgstr "Agrega %d recursos de localización reasignados"
 
 #: editor/project_settings_editor.cpp
 msgid "Add localization locale remap"
-msgstr ""
+msgstr "Agregar reasignación regional de localización"
 
 #: editor/project_settings_editor.cpp
 msgid "Add %d localization locale remaps"
-msgstr ""
+msgstr "Agregar %d reasignaciones locales de localización"
 
 #: editor/project_settings_editor.cpp
 msgid "Change Resource Remap Language"
@@ -10711,9 +10664,8 @@ msgid "Changed Locale Filter Mode"
 msgstr "Cambiar Modo de Filtro Local"
 
 #: editor/project_settings_editor.cpp
-#, fuzzy
 msgid "Project Settings (project.rebel)"
-msgstr "Configuración del Proyecto (project.godot)"
+msgstr "Ajustes del Proyecto (project.rebel)"
 
 #: editor/project_settings_editor.cpp editor/settings_config_dialog.cpp
 msgid "General"
@@ -11037,14 +10989,12 @@ msgstr ""
 "de uno de sus nodos."
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Instance scene"
-msgstr "Instanciar Escena(s)"
+msgstr "Escena de instancia"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Instance scenes"
-msgstr "Instanciar Escena(s)"
+msgstr "Escenas de instancia"
 
 #: editor/scene_tree_dock.cpp
 msgid "Replace with Branch Scene"
@@ -11059,14 +11009,12 @@ msgid "Can't paste root node into the same scene."
 msgstr "No se puede pegar el nodo raíz en la misma escena."
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Paste node"
-msgstr "Pegar Nodos"
+msgstr "Pegar nodo"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Paste nodes"
-msgstr "Pegar Nodos"
+msgstr "Pegar nodos"
 
 #: editor/scene_tree_dock.cpp
 msgid "Detach Script"
@@ -11085,14 +11033,12 @@ msgid "Move Nodes In Parent"
 msgstr "Mover Nodos Dentro del Padre"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Duplicate node"
-msgstr "Duplicar Nodos"
+msgstr "Duplicar nodo"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Duplicate nodes"
-msgstr "Duplicar Nodos"
+msgstr "Duplicar nodos"
 
 #: editor/scene_tree_dock.cpp
 msgid "Can't reparent nodes in inherited scenes, order of nodes can't change."
@@ -11153,6 +11099,10 @@ msgid ""
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
+"No puede guardar una rama la cual es descendiente de una escena ya "
+"instanciada.\n"
+"Para guardar esta rama en su propia escena, abre la escena original, haz "
+"clic secundario en esta rama y selecciona \"Guardar Rama como Escena\"."
 
 #: editor/scene_tree_dock.cpp
 msgid ""
@@ -11160,6 +11110,9 @@ msgid ""
 "To save this branch into its own scene, open the original scene, right click "
 "on this branch, and select \"Save Branch as Scene\"."
 msgstr ""
+"No puede guardar una rama que forma parte de una escena heredada.\n"
+"Para guardar esta rama en su propia escena, abre la escena original, pulse "
+"el botón secundario en esta rama y selecciona \"Guardar Rama como Escena\"."
 
 #: editor/scene_tree_dock.cpp
 msgid ""
@@ -11223,34 +11176,28 @@ msgid "Attach Script"
 msgstr "Añadir Script"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Cut node"
-msgstr "Cortar Nodos"
+msgstr "Cortar nodos"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Cut nodes"
-msgstr "Cortar Nodos"
+msgstr "Cortar nodos"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Remove node"
-msgstr "Eliminar Nodo(s)"
+msgstr "Retirar nodo"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Remove nodes"
-msgstr "Eliminar Nodo(s)"
+msgstr "Retirar nodos"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Change type of node"
-msgstr "Cambiar tipo de nodo(s)"
+msgstr "Cambiar tipo de nodo"
 
 #: editor/scene_tree_dock.cpp
-#, fuzzy
 msgid "Change type of nodes"
-msgstr "Cambiar tipo de nodo(s)"
+msgstr "Cambiar tipo de nodos"
 
 #: editor/scene_tree_dock.cpp
 msgid ""
@@ -11393,48 +11340,36 @@ msgid "Node configuration warning:"
 msgstr "Alerta de configuración de nodos:"
 
 #: editor/scene_tree_editor.cpp
-#, fuzzy
 msgid "Node is in a group."
-msgstr "Nodos dentro del Grupo"
+msgstr "Nodo interno al grupo."
 
 #: editor/scene_tree_editor.cpp
-#, fuzzy
 msgid "Node is in %d groups."
-msgstr "Nodos dentro del Grupo"
+msgstr "Nodo interno a %d grupos."
 
 #: editor/scene_tree_editor.cpp
 msgid "Node has a signal connection."
-msgstr ""
+msgstr "Nodo tiene una conexión de señal."
 
 #: editor/scene_tree_editor.cpp
-#, fuzzy
 msgid "Node has a signal connection and is in a group"
-msgstr ""
-"El nodo tiene %s conexión(es).\n"
-"Clic para mostrar el panel de señales."
+msgstr "Nodo tiene una conexión de señal y está dentro de un grupo"
 
 #: editor/scene_tree_editor.cpp
-#, fuzzy
 msgid "Node has a signal connection and is in %d groups"
-msgstr "Selecciona un único nodo para editar sus señales y grupos."
+msgstr "Nodo tiene una conexión de señal y está en %d grupos"
 
 #: editor/scene_tree_editor.cpp
 msgid "Node has %d signal connections"
-msgstr ""
+msgstr "Nodo tiene %d conexiones de señal"
 
 #: editor/scene_tree_editor.cpp
-#, fuzzy
 msgid "Node has %d signal connections and is in a group"
-msgstr ""
-"El nodo tiene %s conexión(es).\n"
-"Clic para mostrar el panel de señales."
+msgstr "Nodo tiene %d conexiones de señal y está en un grupo"
 
 #: editor/scene_tree_editor.cpp
-#, fuzzy
 msgid "Node has %d signal connections and is in %d groups"
-msgstr ""
-"El nodo tiene %s conexión(es).\n"
-"Clic para mostrar el panel de señales."
+msgstr "Nodo tiene %d conexiones de señal y está dentro de %d grupos"
 
 #: editor/scene_tree_editor.cpp
 msgid "Open Script:"
@@ -12369,24 +12304,20 @@ msgid "Add Preload Node"
 msgstr "Añadir Nodo Preload"
 
 #: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
 msgid "Add Node)"
-msgstr "Añadir Nodo"
+msgstr "Añadir Nodo)"
 
 #: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
 msgid "Add Nodes)"
-msgstr "Añadir Nodo(s)"
+msgstr "Añadir Nodos)"
 
 #: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
 msgid "Add Node from Tree"
-msgstr "Añadir nodo(s) desde árbol"
+msgstr "Añadir Nodo desde Árbol"
 
 #: modules/visual_script/visual_script_editor.cpp
-#, fuzzy
 msgid "Add Nodes from Tree"
-msgstr "Añadir nodo(s) desde árbol"
+msgstr "Añadir Nodo) desde Árbol"
 
 #: modules/visual_script/visual_script_editor.cpp
 msgid ""
@@ -12644,13 +12575,12 @@ msgid "Unable to find the 'apksigner' tool."
 msgstr "No se pudo encontrar la herramienta 'apksigner'."
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "The Android project template is not installed. It can be installed from the "
 "Project menu."
 msgstr ""
-"La plantilla de exportación de Android no esta instalada en el proyecto. "
-"Instalala desde el menú de Proyecto."
+"La plantilla del proyecto Android no esta instalada. Puede ser instalado "
+"desde el menú de Proyecto."
 
 #: platforms/android/export/export_plugin.cpp
 msgid ""
@@ -12745,36 +12675,46 @@ msgstr ""
 "\"Export AAB\" sólo es válido cuando \"Use Custom Build\" está activado."
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "\"Target Sdk\" version must be greater or equal to \"Min Sdk\" version.\n"
 msgstr ""
 "La versión de \"Target Sdk\" debe ser mayor o igual que la versión de \"Min "
-"Sdk\"."
+"Sdk\".\n"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current minimum is \"%d\".\n"
 msgstr ""
+"\"Min Sdk\" está puesto a \"%d\", mientras que el mínimo actual es \"%d\".\n"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "\"Min Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
+"\"Min Sdl\" está puesto a \"%d\", mientras que el predeterminado actual es "
+"\"%d\".\n"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "\"Target Sdk\" is set to \"%d\", while the current default is \"%d\".\n"
 msgstr ""
+"\"Target Sdk\" está establecido a \"%d\", mientras que el predeterminado "
+"actual es \"%d\".\n"
 
 #: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Min Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Min Sdk\" to \"%d\".\n"
 msgstr ""
+"La opción \"Min Sdk\" no tiene efecto a menos que esté habilitada la opción "
+"\"Usar compilación personalizada\".\n"
+"Para silenciar esta advertencia, establezca \"Min Sdk\" en \"%d\".\n"
 
 #: platforms/android/export/export_plugin.cpp
 msgid ""
 "\"Target Sdk\" has no effect unless \"Use Custom Build\" is enabled.\n"
 "To silence this warning set \"Target Sdk\" to \"%d\".\n"
 msgstr ""
+"La opción \"Target Sdk\" no tiene efecto a menos que esté habilitada la "
+"opción \"Use Custom Build\".\n"
+"Para silenciar esta advertencia, establezca \"Target Sdk\" en \"%d\".\n"
 
 #: platforms/android/export/export_plugin.cpp
 msgid ""
@@ -12822,7 +12762,6 @@ msgid "Unsupported export format!\n"
 msgstr "¡Formato de exportación no compatible!\n"
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "Trying to build from a custom project template, but no version info for it "
 "exists. Please reinstall from the 'Project' menu."
@@ -12832,31 +12771,29 @@ msgstr ""
 "'Proyecto'."
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "Android build version mismatch:\n"
 "   Template installed: %s\n"
 "   Rebel Version: %s\n"
 "Please reinstall Android project template from 'Project' menu."
 msgstr ""
-"La versión de compilación de Android no coincide:\n"
+"La versión de creación de Android no coincide:\n"
 "   Plantilla instalada: %s\n"
-"   Versión de Godot: %s\n"
+"   Versión de Rebel: %s\n"
 "Por favor, reinstala la plantilla de compilación de Android desde el menú "
 "'Proyecto'."
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "Unable to overwrite res://android/project/src/main/res/*.xml files with "
 "project name"
 msgstr ""
-"No se puede sobrescribir los archivos res://android/build/res/*.xml con el "
-"nombre del proyecto"
+"No es posible sobrescribir los archivos res://android/project/src/main/res/"
+"*.xml con el nombre del proyecto"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Could not export project files to gradle project\n"
-msgstr "No se pueden exportar los archivos del proyecto a un proyecto gradle\n"
+msgstr "No se pudo exportar los archivos del proyecto a un proyecto gradle\n"
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Could not write expansion package file!"
@@ -12867,15 +12804,15 @@ msgid "Building Android Project (gradle)"
 msgstr "Construir Proyecto Android (gradle)"
 
 #: platforms/android/export/export_plugin.cpp
-#, fuzzy
 msgid ""
 "Building of Android project failed, check output for the error.\n"
 "Alternatively visit https://docs.rebeltoolbox.com for Android build "
 "documentation."
 msgstr ""
-"La construcción del proyecto Android falló, comprueba la salida del error.\n"
-"También puedes visitar docs.rebeltoolbox.com para consultar la documentación "
-"de compilación de Android."
+"La construcción del proyecto Android ha fallado, comprueba la salida del "
+"error.\n"
+"También puedes visitar https://docs.rebeltoolbox.com para consultar la "
+"documentación de compilación de Android."
 
 #: platforms/android/export/export_plugin.cpp
 msgid "Moving output"
@@ -12948,19 +12885,19 @@ msgstr "Identificador de paquete no válido:"
 
 #: platforms/macos/export/export.cpp
 msgid "Notarization: code signing required."
-msgstr "Notarización: se requiere firma de código."
+msgstr "Nota: se requiere firma de código."
 
 #: platforms/macos/export/export.cpp
 msgid "Notarization: hardened runtime required."
-msgstr "Notarización: se requiere tiempo de ejecución reforzado."
+msgstr "Nota: se requiere tiempo de ejecución reforzado."
 
 #: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID name not specified."
-msgstr "Notarización: nombre de ID de Apple no especificado."
+msgstr "Nota: nombre de ID de Apple no especificado."
 
 #: platforms/macos/export/export.cpp
 msgid "Notarization: Apple ID password not specified."
-msgstr "Notarización: contraseña de ID de Apple no especificada."
+msgstr "Nota: contraseña de ID de Apple no especificada."
 
 #: platforms/uwp/export/export.cpp
 msgid "Invalid package short name."
@@ -12995,37 +12932,37 @@ msgstr ""
 #: platforms/uwp/export/export.cpp
 msgid "Invalid square 44x44 logo image dimensions (should be 44x44)."
 msgstr ""
-"Las dimensiones de la imagen para el logo cuadrado de 44x44 son inválidas "
-"(debería ser 44x44)."
+"Las dimensiones de la imagen para el logo cuadrado de 44✕44 son inválidas "
+"(debería ser 44✕44)."
 
 #: platforms/uwp/export/export.cpp
 msgid "Invalid square 71x71 logo image dimensions (should be 71x71)."
 msgstr ""
-"Las dimensiones de la imagen para el logo cuadrado de 71x71 son inválidas "
-"(debería ser 71x71)."
+"Las dimensiones de la imagen para el logo cuadrado de 71✕71 son inválidas "
+"(debería ser 71✕71)."
 
 #: platforms/uwp/export/export.cpp
 msgid "Invalid square 150x150 logo image dimensions (should be 150x150)."
 msgstr ""
-"Las dimensiones de la imagen para el logo cuadrado de 150x150 son inválidas "
-"(debería ser 150x150)."
+"Las dimensiones de la imagen para el logo cuadrado de 150✕150 son inválidas "
+"(debería ser 150✕150)."
 
 #: platforms/uwp/export/export.cpp
 msgid "Invalid square 310x310 logo image dimensions (should be 310x310)."
 msgstr ""
-"Las dimensiones de la imagen para el logo cuadrado de 310x310 son inválidas "
-"(debería ser 310x310)."
+"Las dimensiones de la imagen para el logo cuadrado de 310✕310 son inválidas "
+"(debería ser 310✕310)."
 
 #: platforms/uwp/export/export.cpp
 msgid "Invalid wide 310x150 logo image dimensions (should be 310x150)."
 msgstr ""
-"Las dimensiones de la imagen para el logo ancho de 310x150 son inválidas "
-"(debería ser 310x150)."
+"Las dimensiones de la imagen para el logo ancho de 310✕150 son inválidas "
+"(debería ser 310✕150)."
 
 #: platforms/uwp/export/export.cpp
 msgid "Invalid splash screen image dimensions (should be 620x300)."
 msgstr ""
-"Las dimensiones de la imagen del splash son inválidas (debería ser 620x300)."
+"Las dimensiones de la imagen del splash son inválidas (debería ser 620✕300)."
 
 #: platforms/web/export/export.cpp
 msgid "Stop HTTP Server"
@@ -13068,82 +13005,71 @@ msgid "Error starting HTTP server:"
 msgstr "Error al iniciar el servidor HTTP:"
 
 #: projects_manager/add_project_dialog.cpp
-#, fuzzy
 msgid "Add Existing Project"
-msgstr "Importar Proyecto Existente"
+msgstr "Añadir Proyecto Existente"
 
 #: projects_manager/add_project_dialog.cpp
 #: projects_manager/extract_zip_file_dialog.cpp
-#, fuzzy
 msgid "Add & Edit"
-msgstr "Añadir Punto"
+msgstr "Añadir y Editar"
 
 #: projects_manager/add_project_dialog.cpp
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Project File:"
-msgstr "Nombre del Proyecto:"
+msgstr "Archivo del proyecto:"
 
 #: projects_manager/add_project_dialog.cpp
-#, fuzzy
 msgid "Please choose a \"project.rebel\" or \".zip\" file."
-msgstr "Por favor, elige un archivo \"project.godot\" o \".zip\"."
+msgstr "Por favor, elige un archivo \"project.rebel\" o \".zip\"."
 
 #: projects_manager/add_project_dialog.cpp
 msgid "Extract"
-msgstr ""
+msgstr "Extraer"
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 #: projects_manager/rename_project_dialog.cpp
 msgid "Project Name:"
-msgstr "Nombre del Proyecto:"
+msgstr "Nombre del proyecto:"
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
 #: projects_manager/rename_project_dialog.cpp
-#, fuzzy
 msgid "Project Folder:"
-msgstr "Abrir Carpeta de Datos del Proyecto"
+msgstr "Carpeta del proyecto:"
 
 #: projects_manager/extract_zip_file_dialog.cpp
 msgid "Extract zip file: "
-msgstr ""
+msgstr "Extraer archivo zip: "
 
 #: projects_manager/extract_zip_file_dialog.cpp
-#, fuzzy
 msgid "Unable to open zip file: "
-msgstr "No se han podido actualizar las dependencias:"
+msgstr "No se ha podido abrir al zip: "
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
-#, fuzzy
 msgid "Cannot create a folder with this project name."
-msgstr "No se puede mover una carpeta a dentro de sí misma."
+msgstr "No se puede crear una carpeta con este nombre de proyecto."
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
-#, fuzzy
 msgid "Cannot open the current project folder."
-msgstr "No se puede abrir el archivo de plantillas de exportación."
+msgstr "No se puede abrir la carpeta actual del proyecto."
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
-#, fuzzy
 msgid "There is already a folder with this project name."
-msgstr "Ya hay una carpeta en esta ruta con ese nombre."
+msgstr "Ya hay una carpeta con ese nombre del proyecto."
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
-#, fuzzy
 msgid "Couldn't create a folder with this project name."
-msgstr "No se pudo crear project.godot en la ruta del proyecto."
+msgstr "No pudo crear una carpeta con este nombre de proyecto."
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/new_project_dialog.cpp
-#, fuzzy
 msgid "The project folder does not exist."
-msgstr "La ruta especificada no existe."
+msgstr "La carpeta del proyecto no existe."
 
 #: projects_manager/extract_zip_file_dialog.cpp
 #: projects_manager/import_project_dialog.cpp
@@ -13152,47 +13078,40 @@ msgid "Please choose an empty folder."
 msgstr "Por favor elija una carpeta vacía."
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Import Project"
-msgstr "Exportar Proyecto"
+msgstr "Importar Proyecto"
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Project Type:"
-msgstr "Nombre del Proyecto:"
+msgstr "Tipo del proyecto:"
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Godot Project"
-msgstr "Editar Proyecto"
+msgstr "Proyecto Godot"
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Please choose a \"project.godot\" file."
-msgstr "Por favor, elige un archivo \"project.godot\" o \".zip\"."
+msgstr "Por favor, elige un archivo \"project.godot\"."
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Destination Folder:"
-msgstr "Renombrar carpeta:"
+msgstr "Carpeta destino:"
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Please select a valid destination folder."
-msgstr "Por favor, selecciona primero un directorio base."
+msgstr "Selecciona una carpeta de destino válida."
 
 #: projects_manager/import_project_dialog.cpp
-#, fuzzy
 msgid "Please select a valid project file."
-msgstr "Por favor, selecciona primero un directorio base."
+msgstr "Selecciona un fichero de proyecto válido."
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create New Project"
-msgstr "Crear Nuevo Proyecto"
+msgstr "Crear Proyecto Nuevo"
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Create & Edit"
-msgstr "Crear y editar"
+msgstr "Crear y Editar"
 
 #: projects_manager/new_project_dialog.cpp
 msgid "Renderer:"
@@ -13204,7 +13123,7 @@ msgstr "OpenGL ES 3.0"
 
 #: projects_manager/new_project_dialog.cpp
 msgid "OpenGL ES 3.0 is not supported by your graphics card."
-msgstr ""
+msgstr "OpenGL ES 3.0 no está admitido por su tarjeta gráfica."
 
 #: projects_manager/new_project_dialog.cpp
 msgid ""
@@ -13242,21 +13161,19 @@ msgstr ""
 
 #: projects_manager/new_project_dialog.cpp
 msgid "My Game"
-msgstr ""
+msgstr "Mi Juego"
 
 #: projects_manager/new_project_dialog.cpp
-#, fuzzy
 msgid "Please give your project a name."
-msgstr "Nombre de Proyecto Inválido."
+msgstr "Póngale un nombre a su proyecto."
 
 #: projects_manager/new_project_dialog.cpp
-#, fuzzy
 msgid "Couldn't create a project in this project folder."
-msgstr "No se pudo crear project.godot en la ruta del proyecto."
+msgstr "No pudo crear un proyecto en esta carpeta del proyecto."
 
 #: projects_manager/projects_list.cpp
 msgid "Last Modified"
-msgstr "Ultima Modificación"
+msgstr "Último Modificado"
 
 #: projects_manager/projects_list.cpp
 msgid "Filter projects"
@@ -13274,49 +13191,41 @@ msgstr ""
 "al menos un carácter `/`."
 
 #: projects_manager/projects_list_item.cpp
-#, fuzzy
 msgid "Missing project"
-msgstr "Proyecto Faltante"
+msgstr "Proyecto ausente"
 
 #: projects_manager/projects_list_item.cpp
-#, fuzzy
 msgid "Error: Project settings not found"
-msgstr "Error: Proyecto faltante en el sistema de archivos."
+msgstr "Error: Ajustes del proyecto no encontrados"
 
 #: projects_manager/projects_list_item.cpp
-#, fuzzy
 msgid "Unnamed project"
-msgstr "Proyecto Sin Nombre"
+msgstr "Proyecto sin nombre"
 
 #. TRANSLATORS: Projects Manager is the application used to manage projects.
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Projects Manager"
-msgstr "Administrador de Proyectos"
+msgstr "Gestor de Proyectos"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Create new project"
-msgstr "Crear Nuevo Proyecto"
+msgstr "Crear proyecto nuevo"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Add existing project"
-msgstr "Importar Proyecto Existente"
+msgstr "Agregar proyecto existente"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Import non-Rebel project"
-msgstr "Crear Nuevo Proyecto"
+msgstr "Importar proyecto no Rebel"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Search for existing projects"
-msgstr "Importar Proyecto Existente"
+msgstr "Buscar proyectos existentes"
 
 #: projects_manager/projects_manager.cpp
 msgid "Remove Missing"
-msgstr "Eliminar Faltantes"
+msgstr "Retirar Ausentes"
 
 #: projects_manager/projects_manager.cpp
 msgid "Edit Project"
@@ -13324,7 +13233,7 @@ msgstr "Editar Proyecto"
 
 #: projects_manager/projects_manager.cpp
 msgid "Run Project"
-msgstr "Reproducir Proyecto"
+msgstr "Ejecutar Proyecto"
 
 #: projects_manager/projects_manager.cpp
 #: projects_manager/rename_project_dialog.cpp
@@ -13333,34 +13242,31 @@ msgstr "Renombrar Proyecto"
 
 #: projects_manager/projects_manager.cpp
 msgid "Remove Project"
-msgstr "Eliminar Proyecto"
+msgstr "Retirar Proyecto"
 
 #: projects_manager/projects_manager.cpp
 msgid "About"
 msgstr "Acerca de"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Are you sure you want to add or search multiple files and folders?"
-msgstr ""
-"¿Estás seguro/a que quieres eliminar todas las conexiones de esta señal?"
+msgstr "¿Seguro/a que deseas agregar o buscar múltiples archivos y carpetas?"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Are you sure you want to edit more than one project?"
-msgstr "¿Seguro que quieres abrir más de un proyecto?"
+msgstr "¿Seguro que desea editar más de un proyecto?"
 
 #: projects_manager/projects_manager.cpp
 msgid "Can't run project"
-msgstr "No se puede ejecutar el proyecto"
+msgstr "No puedo ejecutar el proyecto"
 
 #: projects_manager/projects_manager.cpp
 msgid ""
 "Can't run project: Assets need to be imported.\n"
 "Please edit the project to trigger the initial import."
 msgstr ""
-"No se puede ejecutar el proyecto: Los assets necesitan ser importados.\n"
-"Por favor, edita el proyecto para activar el importado inicial."
+"No puedo ejecutar el proyecto: Los activos necesitan ser importados.\n"
+"Por favor, edita el proyecto para provocar la importación inicial."
 
 #: projects_manager/projects_manager.cpp
 msgid ""
@@ -13368,9 +13274,9 @@ msgid ""
 "Please edit the project and set the main scene in the Project Settings under "
 "the \"Application\" category."
 msgstr ""
-"No se puede ejecutar el proyecto: no hay una escena principal definida.\n"
-"Por favor, edita el proyecto y configura la escena principal en "
-"Configuración del Proyecto, en la categoría \"Application\"."
+"No puede ejecutar el proyecto: no hay una escena principal definida.\n"
+"Por favor, edita el proyecto y fije la escena principal en Ajustes del "
+"Proyecto, en la categoría \"Application\"."
 
 #: projects_manager/projects_manager.cpp
 msgid ""
@@ -13378,84 +13284,75 @@ msgid ""
 "Would you like to explore official example projects in the Asset Library?"
 msgstr ""
 "Actualmente no tienes ningún proyecto.\n"
-"¿Quieres explorar proyectos de ejemplo oficiales en la Librería de Assets?"
+"¿Quieres explorar proyectos de ejemplo oficiales en la Biblioteca de Activos?"
 
 #: projects_manager/projects_manager.cpp
 msgid "Local Projects"
 msgstr "Proyectos Locales"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Also delete project folder?"
-msgstr "También eliminar el contenido del proyecto (¡no se puede deshacer!)"
+msgstr "¿Además elimino la carpeta del proyecto?"
 
 #: projects_manager/projects_manager.cpp
 msgid ""
 "Remove all missing projects from the list?\n"
 "The project folders' contents won't be modified."
 msgstr ""
-"¿Eliminar todos los proyectos faltantes de la lista?\n"
-"El contenido de las carpetas del proyecto no se modificará."
+"¿Eliminar todos los proyectos ausentes del listado?\n"
+"El contenido de las carpetas del proyecto no serían modificados."
 
 #: projects_manager/projects_manager.cpp
 msgid "Remove All"
-msgstr "Eliminar Todos"
+msgstr "Eliminar Todo"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid ""
 "Language changed.\n"
 "The interface will be updated after restarting Projects Manager."
 msgstr ""
 "Idioma cambiado.\n"
-"La interfaz se actualizará después de reiniciar el editor o el administrador "
-"de proyectos."
+"La interfaz será actualizada tras reiniciar el Gestor de Proyectos."
 
 #: projects_manager/projects_manager.cpp
 msgid "Restart Now"
 msgstr "Reiniciar Ahora"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Select a Folder to Search"
-msgstr "Selecciona una carpeta para escanear"
+msgstr "Selecciona una Carpeta para Búsqueda"
 
 #: projects_manager/projects_manager.cpp
 msgid "Asset Library Projects"
-msgstr "Proyectos de la Librería de Assets"
+msgstr "Proyectos de la Biblioteca de Activos"
 
 #: projects_manager/projects_manager.cpp
 msgid "Remove %d projects from the list?"
-msgstr "¿Quitar %d proyectos de la lista?"
+msgstr "¿Retiro %d proyectos del listado?"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Remove selected project from the list?"
-msgstr "¿Quitar %d proyectos de la lista?"
+msgstr "¿Retiro proyectos seleccionados de la lista?"
 
 #: projects_manager/projects_manager.cpp
 msgid "Are you sure to run %d projects at once?"
-msgstr "¿Estás seguro de que vas a ejecutar %d proyectos a la vez?"
+msgstr "¿Seguro que ejecuta %d proyectos a la vez?"
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid "Can't open project settings file "
-msgstr "No se puede abrir el proyecto en '%s'."
+msgstr "No puede abrir los ajustes del archivo del proyecto "
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid ""
 "The project settings were created with a newer version of Rebel Engine.\n"
 msgstr ""
-"La configuración del proyecto fue creada por una nueva versión del motor, "
-"cuya configuración no es compatible con esta versión."
+"Los ajustes del proyecto fue creada por una versión nueva de Rebel Engine.\n"
 
 #: projects_manager/projects_manager.cpp
 msgid "Can't open project at '%s'."
-msgstr "No se puede abrir el proyecto en '%s'."
+msgstr "No puede abrir el proyecto en '%s'."
 
 #: projects_manager/projects_manager.cpp
-#, fuzzy
 msgid ""
 "The following project settings file %s was created with an older version of "
 "Rebel Editor.\n"
@@ -13463,23 +13360,19 @@ msgid ""
 "Warning: You will not be able to open the project with the previous version "
 "of Rebel Editor again."
 msgstr ""
-"El archivo de configuración del proyecto fue generado en una versión "
-"anterior del motor, por lo que es necesario convertirlo para esta versión:\n"
-"\n"
-"%s\n"
-"\n"
-"¿Quieres convertirlo?\n"
-"Advertencia: Ya no podrá abrir el proyecto con versiones anteriores del "
-"motor."
+"A continuación los ajustes del proyecto en el archivo %s fue creado con una "
+"versión anterior de Rebel Editor.\n"
+"¿Desea mejorar el archivo de ajustes?\n"
+"Advertencia: No podrá volver a abrir el proyecto con la versión anterior de "
+"Rebel Editor."
 
 #: projects_manager/rename_project_dialog.cpp
-#, fuzzy
 msgid ""
 "Couldn't load project.rebel in the project folder.\n"
 "The file or folder is missing or corrupt."
 msgstr ""
-"No se pudo cargar project.godot desde la ruta de proyecto (error %d). La "
-"ruta no existe o está corrupta."
+"No pudo cargar project.rebel desde la carpeta del proyecto.\n"
+"El archivo o la carpeta está ausente o corrupta."
 
 #: scene/2d/animated_sprite.cpp
 msgid ""
@@ -13487,7 +13380,7 @@ msgid ""
 "order for AnimatedSprite to display frames."
 msgstr ""
 "Se debe crear o establecer un recurso SpriteFrames en la propiedad "
-"\"Frames\" para que AnimatedSprite pueda mostrar los fotogramas."
+"\"Frames\" para que AnimatedSprite pueda exhibir los fotogramas."
 
 #: scene/2d/canvas_modulate.cpp
 msgid ""
@@ -13636,7 +13529,6 @@ msgstr ""
 "nodo ParallaxBackground."
 
 #: scene/2d/particles_2d.cpp
-#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles2D node instead. You can use the \"Convert to "
@@ -13655,6 +13547,12 @@ msgid ""
 "You can use the \"Convert to CPUParticles2D\" toolbar option for this "
 "purpose."
 msgstr ""
+"En macOS, la renderización con Particles2D es mucho más lenta que con "
+"CPUParticles2D debido a que la retroalimentación de transformación se "
+"implementa en la CPU en lugar de la GPU.\n"
+"Considere usar CPUParticles2D al renderizar en macOS.\n"
+"Puede usar la opción \"Convertir a CPUParticles2D\" de la barra de "
+"herramientas para ello."
 
 #: scene/2d/particles_2d.cpp scene/3d/particles.cpp
 msgid ""
@@ -13904,16 +13802,14 @@ msgid "Only uniform scales are supported."
 msgstr "Sólo se admiten escalas uniformes."
 
 #: scene/3d/particles.cpp
-#, fuzzy
 msgid ""
 "GPU-based particles are not supported by the GLES2 video driver.\n"
 "Use the CPUParticles node instead. You can use the \"Convert to "
 "CPUParticles\" toolbar option for this purpose."
 msgstr ""
-"Las partículas basadas en la GPU no son compatibles con el controlador de "
-"vídeo GLES2.\n"
-"En su lugar, utiliza el nodo CPUParticles. Para ello puedes utilizar la "
-"opción \"Convertir a CPUParticles\"."
+"El controlador de vídeo GLES2 no admite partículas basadas en GPU.\n"
+"Utilice el nodo CPUParticles en su lugar. Para ello, puede usar la opción "
+"\"Convertir a CPUParticles\" de la barra de herramientas."
 
 #: scene/3d/particles.cpp
 msgid ""
@@ -13922,6 +13818,12 @@ msgid ""
 "Consider using CPUParticles instead when targeting macOS.\n"
 "You can use the \"Convert to CPUParticles\" toolbar option for this purpose."
 msgstr ""
+"En macOS, la renderización de partículas es mucho más lenta que la de "
+"partículas de CPU debido a que la retroalimentación de transformación se "
+"implementa en la CPU en lugar de la GPU.\n"
+"Considere usar partículas de CPU al renderizar en macOS.\n"
+"Puede usar la opción \"Convertir a partículas de CPU\" de la barra de "
+"herramientas para ello."
 
 #: scene/3d/particles.cpp
 msgid ""
@@ -14007,7 +13909,7 @@ msgstr "Una Room no puede tener otra Room como hija o nieta."
 
 #: scene/3d/room.cpp
 msgid "The RoomManager should not be placed inside a Room."
-msgstr "El RoomManager no debe ubicarse dentro de una Room."
+msgstr "El RoomManager no debe situarse dentro de una Room."
 
 #: scene/3d/room.cpp
 msgid "A RoomGroup should not be placed inside a Room."
@@ -14207,7 +14109,7 @@ msgstr "HSV"
 
 #: scene/gui/color_picker.cpp
 msgid "Raw"
-msgstr "Raw"
+msgstr "Sin formato"
 
 #: scene/gui/color_picker.cpp
 msgid "Switch between hexadecimal and code values."
@@ -14302,8 +14204,8 @@ msgid ""
 "Default Environment as specified in Project Settings (Rendering -> "
 "Environment -> Default Environment) could not be loaded."
 msgstr ""
-"El Entorno por Defecto como se especifica en Configuración del Proyecto "
-"(Rendering -> Environment -> Default Environment) no se ha podido cargar."
+"El Entorno por Defecto como se especifica en Ajustes del Proyecto (Rendering "
+"→ Environment → Default Environment) no se ha podido cargar."
 
 #: scene/main/timer.cpp
 msgid ""
